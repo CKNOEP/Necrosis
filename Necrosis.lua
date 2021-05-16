@@ -432,7 +432,7 @@ function UpdateIcons()
 
 	-- If the stone was not used, and there is no stone in inventory -> Mode 1 || Si la Pierre n'a pas été utilisée, et qu'il n'y a pas de pierre en inventaire -> Mode 1
 	if not (Local.Stone.Soul.OnHand or SoulstoneInUse) then
-		print ("mode1")
+		--print ("mode1")
 		Local.Stone.Soul.Mode = 1
 	end
 
@@ -478,12 +478,12 @@ function UpdateIcons()
 					lvl  = "",
 					guid = "",
 					}
-_G["DEFAULT_CHAT_FRAME"]:AddMessage("UpdateIcons - soul stone timer"
-.." s'"..tostring(start or "nyl").."'"
-.." d'"..tostring(duration or "nyl").."'"
-.." l1'"..tostring(Local.Stone.Soul.Location[1] or "nyl").."'"
-.." l2'"..tostring(Local.Stone.Soul.Location[2] or "nyl").."'"
-)
+						_G["DEFAULT_CHAT_FRAME"]:AddMessage("UpdateIcons - soul stone timer"
+						.." s'"..tostring(start or "nyl").."'"
+						.." d'"..tostring(duration or "nyl").."'"
+						.." l1'"..tostring(Local.Stone.Soul.Location[1] or "nyl").."'"
+						.." l2'"..tostring(Local.Stone.Soul.Location[2] or "nyl").."'"
+						)
 				Local.TimerManagement = Necrosis:TimerInsert(cast_info, target, Local.TimerManagement, "soul stone in inventory cool down", start, duration, spell.Cooldown)
 				Local.Stone.Soul.Mode = 4
 				Local.Stone.Soul.Timer = true
