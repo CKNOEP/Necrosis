@@ -1335,6 +1335,8 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
 		end
 	-- AntiFear button hide on target change || AntiFear button hide on target change
 	elseif event == "PLAYER_TARGET_CHANGED" then
+		
+		--print(NecrosisConfig.AntiFearAlert , Local.Warning.Antifear.Immune)
 		if NecrosisConfig.AntiFearAlert and Local.Warning.Antifear.Immune then
 			Local.Warning.Antifear.Immune = false
 		end
@@ -1345,8 +1347,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
 				if UnitCreatureType("target") == Necrosis.Unit.Demon then
 					NecrosisCreatureAlertButton:Show()
 					NecrosisCreatureAlertButton:SetNormalTexture("Interface\\Addons\\Necrosis\\UI\\DemonAlert")
-					NecrosisCreatureAlertButton:SetAttribute("unit", "player")
-
+					
 					--Todo :
 					--Ajoute une fonction onclick pour asservir
 					
@@ -1355,9 +1356,13 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
 					NecrosisCreatureAlertButton:SetNormalTexture("Interface\\Addons\\Necrosis\\UI\\ElemAlert")
 					--Todo :
 					--Ajoute une fonction onclick pour bannir
+				else
+				NecrosisCreatureAlertButton:Hide()
 				end
 		elseif Local.Warning.Banishable then
 			Local.Warning.Banishable = false
+			NecrosisCreatureAlertButton:Hide()
+		else
 			NecrosisCreatureAlertButton:Hide()
 		end
 
