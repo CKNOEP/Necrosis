@@ -25,7 +25,7 @@ local function SetSSAttribs(nostone, reason)
 --		str = "/cast Create "..L["SOUL_STONE"] -- 
 		f:SetAttribute("type2", "spell") -- 51
 		str = Necrosis.GetSpellCastName("soulstone")
-		print(Necrosis.GetSpellCastName("soulstone"))
+		--print(Necrosis.GetSpellCastName("soulstone"))
 		--print("Spell dans le bouton",str)
 		--print(NecrosisConfig.ItemSwitchCombat[4])
 		f:SetAttribute("spell2", str) 

@@ -478,12 +478,8 @@ function UpdateIcons()
 					lvl  = "",
 					guid = "",
 					}
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("UpdateIcons - soul stone timer"
-						.." s'"..tostring(start or "nyl").."'"
-						.." d'"..tostring(duration or "nyl").."'"
-						.." l1'"..tostring(Local.Stone.Soul.Location[1] or "nyl").."'"
-						.." l2'"..tostring(Local.Stone.Soul.Location[2] or "nyl").."'"
-						)
+
+					
 				Local.TimerManagement = Necrosis:TimerInsert(cast_info, target, Local.TimerManagement, "soul stone in inventory cool down", start, duration, spell.Cooldown)
 				Local.Stone.Soul.Mode = 4
 				Local.Stone.Soul.Timer = true
