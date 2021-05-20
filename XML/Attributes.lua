@@ -25,6 +25,7 @@ local function SetSSAttribs(nostone, reason)
 --		str = "/cast Create "..L["SOUL_STONE"] -- 
 		f:SetAttribute("type2", "spell") -- 51
 		str = Necrosis.GetSpellCastName("soulstone")
+		print(Necrosis.GetSpellCastName("soulstone"))
 		--print("Spell dans le bouton",str)
 		--print(NecrosisConfig.ItemSwitchCombat[4])
 		f:SetAttribute("spell2", str) 
@@ -32,7 +33,7 @@ local function SetSSAttribs(nostone, reason)
 		f:SetAttribute("type1", "item")
 		f:SetAttribute("type3", "item")
 --		f:SetAttribute("unit", "target") -- forces player to target self first
-		NecrosisConfig.ItemSwitchCombat[4] = "Pierre d'âme magistrale"
+		--NecrosisConfig.ItemSwitchCombat[4] = "Pierre d'âme magistrale"
 		f:SetAttribute("item1", NecrosisConfig.ItemSwitchCombat[4])
 		f:SetAttribute("item3", NecrosisConfig.ItemSwitchCombat[4])
 

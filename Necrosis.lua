@@ -1349,9 +1349,16 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
 				if UnitCreatureType("target") == Necrosis.Unit.Demon then
 					NecrosisCreatureAlertButton:Show()
 					NecrosisCreatureAlertButton:SetNormalTexture("Interface\\Addons\\Necrosis\\UI\\DemonAlert")
+					NecrosisCreatureAlertButton:SetAttribute("unit", "player")
+
+					--Todo :
+					--Ajoute une fonction onclick pour asservir
+					
 				elseif UnitCreatureType("target") == Necrosis.Unit.Elemental then
 					NecrosisCreatureAlertButton:Show()
 					NecrosisCreatureAlertButton:SetNormalTexture("Interface\\Addons\\Necrosis\\UI\\ElemAlert")
+					--Todo :
+					--Ajoute une fonction onclick pour bannir
 				end
 		elseif Local.Warning.Banishable then
 			Local.Warning.Banishable = false

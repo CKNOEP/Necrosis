@@ -971,7 +971,7 @@ function Necrosis.GetSpellCastName(usage)
 			
 			Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].CastName
 	else
-		return ""
+		return
 	end
 end
 
@@ -1094,14 +1094,14 @@ function Necrosis.IsSoulStone(id)
 	local res = false -- assume not
 	for i, v in pairs (Necrosis.Warlock_Lists.soul_stones) do
 		if id == v.id then
-		--	print(id,v.id)
+			--print(id,v.id)
 			res = true
 			break
 		else
 			-- nothing
 		end
 	end
-	--print(res)
+	
 	return res
 end
 

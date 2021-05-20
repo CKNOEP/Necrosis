@@ -437,7 +437,7 @@ function Necrosis:CreateWarlockPopup()
 	frame = nil
 	frame = _G["NecrosisCreatureAlertButton"]
 	if not frame then
-		frame = CreateFrame("Button", "NecrosisCreatureAlertButton", UIParent)
+		frame = CreateFrame("Button", "NecrosisCreatureAlertButton", UIParent, "SecureActionButtonTemplate")
 	end
 
 	-- Define its attributes || Définition de ses attributs
@@ -448,13 +448,19 @@ function Necrosis:CreateWarlockPopup()
 	frame:SetHeight(40)
 	frame:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\ElemAlert")
 	frame:RegisterForDrag("LeftButton")
+	frame:RegisterForClicks("AnyUp")
 	frame:Hide()
 
 	-- Edit the scripts associated with the button || Edition des scripts associés au bouton
 	frame:SetScript("OnMouseUp", function(self) Necrosis:OnDragStop(self) end)
 	frame:SetScript("OnDragStart", function(self) Necrosis:OnDragStart(self) end)
 	frame:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
+	
 
+	frame:SetAttribute("shift-type*", "spell")
+	frame:SetAttribute("shift-spell*", Necrosis.GetSpellCastName("Ritual_of_Souls")) 
+	print("Spell",Necrosis.GetSpellCastName("Ritual_of_Souls"))
+	
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
 	if NecrosisConfig.FramePosition then
 		if NecrosisConfig.FramePosition["NecrosisCreatureAlertButton"] then
