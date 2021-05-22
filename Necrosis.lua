@@ -673,12 +673,12 @@ function SelfEffect(action, nom)
 	if NecrosisConfig.LeftMount then
 		local NomCheval1 = GetSpellInfo(NecrosisConfig.LeftMount)
 	else
-		local NomCheval1 = Necrosis.Warlock_Spells[23161].Name
+		local NomCheval1 = Necrosis.Warlock_Spells[23161].Name  -- Pallefroi 100 %
 	end
 	if NecrosisConfig.RightMount then
 		local NomCheval2 = GetSpellInfo(NecrosisConfig.RightMount)
 	else
-		local NomCheval2 = Necrosis.Warlock_Spells[5784].Name
+		local NomCheval2 = Necrosis.Warlock_Spells[5784].Name -- Pallefroi 60%
 	end
 
 	local f = _G[Necrosis.Warlock_Buttons.mounts.f]
@@ -1350,7 +1350,22 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
 					
 					--Todo :
 					--Ajoute une fonction onclick pour asservir
+					DemmonToolTip = CreateFrame("GameTooltip","EnslaveToolTip",NecrosisCreatureAlertButton,"GameTooltipTemplate")
+					DemmonToolTip:SetOwner( NecrosisCreatureAlertButton, "ANCHOR_RIGHT" );
+					DemmonToolTip:SetText("Enslave", 0.7, 0, 1)		
+					NecrosisCreatureAlertButton:SetScript("OnEnter", function(self) Necrosis:BuildButtonTooltip(DemmonToolTip) end)
+					NecrosisCreatureAlertButton:SetScript("OnLeave", function() GameTooltip:Hide() end)
+					DemmonToolTip:Hide()
 					
+					local high = Necrosis.GetSpellCastName("enslave")
+										
+					NecrosisCreatureAlertButton:SetAttribute("type*", "spell")
+					NecrosisCreatureAlertButton:SetAttribute("spell",high)
+
+					
+				
+				
+				
 				elseif UnitCreatureType("target") == Necrosis.Unit.Elemental then
 					NecrosisCreatureAlertButton:Show()
 					NecrosisCreatureAlertButton:SetNormalTexture("Interface\\Addons\\Necrosis\\UI\\ElemAlert")
@@ -1713,9 +1728,9 @@ function Necrosis:BuildButtonTooltip(button)
 	end
 
 	local f = button:GetName()
-	
+	--print(f)
 	if f == "BanElementalToolTip" then f = "NecrosisBuffMenu09" end
-	
+	if f == "EnslaveToolTip" then f = "NecrosisPetMenu08" end
 	local Type = ""
 	local b = nil
 	-- look up the button info

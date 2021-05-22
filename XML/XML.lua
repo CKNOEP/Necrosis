@@ -459,10 +459,7 @@ function Necrosis:CreateWarlockPopup()
 	frame:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
 	
 
-	frame:SetAttribute("shift-type*", "spell")
-	frame:SetAttribute("shift-spell*", Necrosis.GetSpellCastName("Ritual_of_Souls")) 
-	--print("Spell",Necrosis.GetSpellCastName("Ritual_of_Souls"))
-	
+
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
 	if NecrosisConfig.FramePosition then
 		if NecrosisConfig.FramePosition["NecrosisCreatureAlertButton"] then
