@@ -36,7 +36,7 @@ Necrosis.Debug = {
 	timers 			= false	, -- track as they are created and removed
 	buttons 		= false, -- buttons and menus as they are created and updated
 	bags			= false, -- what is found in bags and shard management - could be very chatty on large, full bags
-	tool_tips		= false, -- spell info that goes into tool tips
+	tool_tips		= true, -- spell info that goes into tool tips
 	speech			= false, -- steps to produce the 'speech' when summoning
 	}
 

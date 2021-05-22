@@ -1354,8 +1354,32 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
 				elseif UnitCreatureType("target") == Necrosis.Unit.Elemental then
 					NecrosisCreatureAlertButton:Show()
 					NecrosisCreatureAlertButton:SetNormalTexture("Interface\\Addons\\Necrosis\\UI\\ElemAlert")
+							--Frame TooltipData
+							ElementalToolTip = CreateFrame("GameTooltip","BanElementalToolTip",NecrosisCreatureAlertButton,"GameTooltipTemplate")
+							ElementalToolTip:SetOwner( NecrosisCreatureAlertButton, "ANCHOR_RIGHT" );
+							ElementalToolTip:SetText("Ban", 0.7, 0, 1)
+							--ElementalToolTip:AddLine("qsd ", 1, 1, 1)
+							NecrosisCreatureAlertButton:SetScript("OnEnter", function(self) Necrosis:BuildButtonTooltip(ElementalToolTip) end)
+							NecrosisCreatureAlertButton:SetScript("OnLeave", function() GameTooltip:Hide() end)
+							ElementalToolTip:Hide()
 					--Todo :
 					--Ajoute une fonction onclick pour bannir
+					--NecrosisCreatureAlertButton:SetScript("OnClick",function(self, button)
+					
+					local high = Necrosis.GetSpellCastName("banish")
+					local derank = string.gsub(high, 2, 1)
+					
+					NecrosisCreatureAlertButton:SetAttribute("type1", "spell")
+					NecrosisCreatureAlertButton:SetAttribute("type2", "spell2")
+					NecrosisCreatureAlertButton:SetAttribute("spell",high)
+					NecrosisCreatureAlertButton:SetAttribute("spell2",derank)
+					
+
+					--end )
+						
+
+					
+					
 				else
 				NecrosisCreatureAlertButton:Hide()
 				end
@@ -1689,6 +1713,9 @@ function Necrosis:BuildButtonTooltip(button)
 	end
 
 	local f = button:GetName()
+	
+	if f == "BanElementalToolTip" then f = "NecrosisBuffMenu09" end
+	
 	local Type = ""
 	local b = nil
 	-- look up the button info

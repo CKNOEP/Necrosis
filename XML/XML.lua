@@ -303,7 +303,7 @@ function Necrosis:CreateMenuItem(i)
 		)
 	end
 
-	-- Create the button || Creaton du bouton
+	-- Create the button || Creation du bouton
 	local frame = _G[b.f] 
 	if not frame then
 		frame = CreateFrame("Button", b.f, UIParent, "SecureActionButtonTemplate")
@@ -438,6 +438,8 @@ function Necrosis:CreateWarlockPopup()
 	frame = _G["NecrosisCreatureAlertButton"]
 	if not frame then
 		frame = CreateFrame("Button", "NecrosisCreatureAlertButton", UIParent, "SecureActionButtonTemplate")
+
+	
 	end
 
 	-- Define its attributes || Définition de ses attributs
