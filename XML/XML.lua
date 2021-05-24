@@ -135,7 +135,7 @@ function Necrosis:CreateWarlockUI()
 		FontString = frame:CreateFontString("NecrosisShardCount", nil, "GameFontNormal")
 	end
 
-	-- Define its attributes || Définition de ses attributs
+	-- Define its attributes || Définition de ses attributs , le restes des attributs sont dans Attibutes.lua - Necrosis:MainButtonAttribute()
 	FontString:SetText("00")
 	FontString:SetPoint("CENTER")
 	FontString:SetTextColor(1, 1, 1)
@@ -323,7 +323,9 @@ function Necrosis:CreateMenuItem(i)
 		frame.pet = b.pet
 		
 		-- Set the tooltip label to the localized name if not given one already
+		
 		Necrosis.TooltipData[b.tip].Label = White(Necrosis.GetSpellName(i.high_of)) 
+		
 	end
 
 	frame:SetNormalTexture(b.norm)

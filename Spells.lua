@@ -522,7 +522,7 @@ Necrosis.Warlock_Buttons = {
 					norm = "Interface\\AddOns\\Necrosis\\UI\\SoulstoneButton-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\SoulstoneButton-04",
 					}, --
-	mounts 		= {f = "NecrosisMountButton", anchor = "ANCHOR_LEFT",
+	mounts 		= {f = "NecrosisMountButton", tip = "Mount",anchor = "ANCHOR_LEFT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\MountButton-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\MountButton-02",
 					}, --

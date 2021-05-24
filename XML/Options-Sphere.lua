@@ -76,16 +76,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 					NBx / (NecrosisConfig.NecrosisButtonScale / 100), 
 					NBy / (NecrosisConfig.NecrosisButtonScale / 100)
 					)
---				f:SetPoint("CENTER", "UIParent", "CENTER", NBx, NBy)
---[[
-				f:SetPoint(
-					NecrosisConfig.FramePosition["NecrosisButton"][1],
-					NecrosisConfig.FramePosition["NecrosisButton"][2],
-					NecrosisConfig.FramePosition["NecrosisButton"][3],
-					NecrosisConfig.FramePosition["NecrosisButton"][4],
-					NecrosisConfig.FramePosition["NecrosisButton"][5]
-				)
---]]
+
 				f:SetScale(NecrosisConfig.NecrosisButtonScale / 100)
 				Necrosis:ButtonSetup()
 			end
@@ -140,6 +131,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 
 		UIDropDownMenu_SetWidth(frame, 125)
 
+
 		-------------------------------------------------
 		-- Affiche ou masque le compteur numérique
 		frame = CreateFrame("CheckButton", "NecrosisShowCount", NecrosisSphereConfig, "UICheckButtonTemplate")
@@ -149,18 +141,42 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 25, 200)
-
+		frame:SetChecked(NecrosisConfig.deleteshards)
 		frame:SetScript("OnClick", function(self)
-			NecrosisConfig.ShowCount = self:GetChecked()
+			NecrosisConfig.deleteshards = self:GetChecked()
 			Necrosis:BagExplore()
 		end)
-
 		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
 		FontString:Show()
 		FontString:ClearAllPoints()
 		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
 		FontString:SetTextColor(1, 1, 1)
 		frame:SetFontString(FontString)
+		
+
+		-------------------------------------------------
+		-- Option Supression des shards via shift+clic sur le sphere
+		frame = CreateFrame("CheckButton", "NecrosisDeleteShardsOutCount", NecrosisSphereConfig, "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", -175, 240)
+		frame:SetChecked(NecrosisConfig.DestroyShardwithsphere)
+		frame:SetScript("OnClick", function(self)
+			
+			NecrosisConfig.DestroyShardwithsphere = self:GetChecked()
+			Necrosis:BagExplore()
+		end)
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		frame:SetFontString(FontString)
+		
+
 
 		-- Evenement montré par le compteur
 		frame = CreateFrame("Frame", "NecrosisCountSelection", NecrosisSphereConfig, "UIDropDownMenuTemplate")
@@ -189,6 +205,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 	NecrosisSpellSelectionT:SetText(self.Config.Sphere["Sort caste par la sphere"])
 	NecrosisShowCount:SetText(self.Config.Sphere["Afficher le compteur numerique"])
 	NecrosisCountSelectionT:SetText(self.Config.Sphere["Type de compteur numerique"])
+	NecrosisDeleteShardsOutCount:SetText(self.Config.Sphere["Shift+Clic on Sphere to del. Shards"].."Shards > "..tostring(NecrosisConfig.DestroyCount))
 
 	NecrosisSphereSize:SetValue(NecrosisConfig.NecrosisButtonScale)
 	NecrosisShowCount:SetChecked(NecrosisConfig.ShowCount)

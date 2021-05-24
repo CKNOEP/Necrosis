@@ -34,7 +34,7 @@ Necrosis.Debug = {
 	spells_init 	= false, -- setting spell data and highest and helper tables
 	spells_cast 	= false, -- spells as they are cast and some resulting actions and auras; overlap with events
 	timers 			= false	, -- track as they are created and removed
-	buttons 		= false, -- buttons and menus as they are created and updated
+	buttons 		= false , -- buttons and menus as they are created and updated
 	bags			= false, -- what is found in bags and shard management - could be very chatty on large, full bags
 	tool_tips		= false, -- spell info that goes into tool tips
 	speech			= false, -- steps to produce the 'speech' when summoning
@@ -134,7 +134,7 @@ function Necrosis:Initialize(Config)
 
 	Necrosis:Initialize_Speech()
 	-- On charge (ou on crée la configuration pour le joueur et on l'affiche sur la console
-	if not Necrosis.Data.LastConfig or  Necrosis.Data.LastConfig > Necrosis.Data.Version then
+	if not Necrosis.Data.LastConfig or  Necrosis.Data.LastConfig > Necrosis.Data.Version or NecrosisConfig.Version == nil then
 		
 		print(Necrosis.Data.LastConfig,Necrosis.Data.Version, NecrosisConfig.Version,NecrosisConfig.Language)
 		
@@ -144,7 +144,7 @@ function Necrosis:Initialize(Config)
 		self:Msg(self.ChatMessage.Interface.DefaultConfig, "USER")
 	else
 		self:Msg(self.ChatMessage.Interface.UserConfig, "USER")
-		print(Necrosis.Data.LastConfig,Necrosis.Data.Version, NecrosisConfig.Version,NecrosisConfig.Language)
+		print("Necrosis", Necrosis.Data.LastConfig,Necrosis.Data.Version, NecrosisConfig.Version,NecrosisConfig.Language)
 	end
 	
 	if NecrosisConfig.PetInfo then -- just in case... pet config info was redone for speech

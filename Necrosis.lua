@@ -142,6 +142,7 @@ Local.DefaultConfig = {
 	Language = GetLocale(),
 	ShowCount = true,
 	CountType = 1,
+	DestroyShardwithsphere = true,
 	ShadowTranceScale = 100,
 	NecrosisButtonScale = 90,
 	NecrosisColor = "Rose",
@@ -1735,6 +1736,7 @@ function Necrosis:BuildButtonTooltip(button)
 	local b = nil
 	-- look up the button info
 	for i, v in pairs (Necrosis.Warlock_Buttons) do
+		--print (Necrosis.Warlock_Buttons[i].tip)
 		if v.f == f then
 			Type = Necrosis.Warlock_Buttons[i].tip
 			b = v
@@ -1742,6 +1744,7 @@ function Necrosis:BuildButtonTooltip(button)
 		else
 		end
 	end
+	print (b.tip)
 	if b.tip == nil then
 		return -- a button we are not interested in was given
 	else
@@ -1783,6 +1786,7 @@ function Necrosis:BuildButtonTooltip(button)
 	-- ..... for the main button ||..... pour le bouton principal
 	if (Type == "Main") then
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count)
+		GameTooltip:AddLine("|CFF808080 Ctrl+Clic on Sphere to delete the  stock overage")		
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.InfernalStone..Local.Reagent.Infernal)
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.DemoniacStone..Local.Reagent.Demoniac)
 		local SoulOnHand = false
@@ -1924,18 +1928,32 @@ function Necrosis:BuildButtonTooltip(button)
 		GameTooltip:SetText(Necrosis.TooltipData[Type].Label.."          |CFF808080"..Necrosis.GetSpellCastName("bolt").."|r")
 	-- ..... for other buffs and demons, the mana cost ... ||..... pour les autres buffs et démons, le coût en mana...
 	elseif (Type == "Enslave") then AddCastAndCost("enslave"); AddShard()
+	
 	elseif (Type == "Mount") and Necrosis.Warlock_Spells[23161].InSpellBook then
+	
 		
-		print("mount in spell book ?",Necrosis.Warlock_Spells[23161].InSpellBook) 
 		if (NecrosisConfig.LeftMount) then
 			local leftMountName = GetSpellInfo(NecrosisConfig.LeftMount);
+			if leftMountName then
+			else
+			local leftMountName = Necrosis.Utils.GetItemLink(NecrosisConfig.LeftMount);
+				print("hereLM",GetSpellInfo(NecrosisConfig.LeftMount),Necrosis.Utils.GetItemLink(NecrosisConfig.LeftMount))
+			end
 			GameTooltip:AddLine(leftMountName);
 		else
 			--use tooltip for default mounts
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Text);
 		end
+		print("RM conf",NecrosisConfig.RightMount)
 		if (NecrosisConfig.RightMount) then
 			local rightMountName = GetSpellInfo(NecrosisConfig.RightMount)
+			if rightMountName then
+			print("hereRM",GetSpellInfo(NecrosisConfig.RightMount))
+			else
+			local rightMountName = Necrosis.Utils.GetItemLink(NecrosisConfig.RightMount);
+				print("hereRM",GetSpellInfo(NecrosisConfig.RightMount),Necrosis.Utils.GetItemLink(NecrosisConfig.RightMount))
+			end
+			
 			GameTooltip:AddLine(rightMountName);
 		end
 
@@ -1987,6 +2005,7 @@ function Necrosis:BuildButtonTooltip(button)
 	elseif (Type == "Voidwalker")	then AddCastAndCost("voidwalker"); AddShard(); AddDominion(start, duration)
 	elseif (Type == "Succubus")		then AddCastAndCost("succubus"); AddShard(); AddDominion(start, duration)
 	elseif (Type == "Felhunter")	then AddCastAndCost("felhunter"); AddShard(); AddDominion(start, duration)
+	elseif (Type == "felguard")		then AddCastAndCost("felguard"); AddShard(); AddDominion(start, duration)	
 	elseif (Type == "Infernal")		then AddCastAndCost("inferno"); AddInfernalReagent()
 	elseif (Type == "Doomguard")	then AddCastAndCost("ritual_doom"); AddDemoniacReagent()
 	elseif (Type == "BuffMenu")		then AddMenuTip(Type)
@@ -2429,11 +2448,13 @@ function Necrosis:BagExplore(arg)
 								if (CursorHasItem() and infoType == "item" and tonumber(info1) == Necrosis.Warlock_Lists.reagents.soul_shard.id) then
 									DeleteCursorItem()
 									Local.Soulshard.Count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
-									--ClearCursor()
+									ClearCursor()
 									RemainingShardsToDelete = RemainingShardsToDelete - 1
-									---print ("Delete slot "..container.."-"..slot..". "
-									--	..GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id).."/"..NecrosisConfig.DestroyCount.." shards remain."
-									--	.. " Will delete "..RemainingShardsToDelete.." more.")
+									if RemainingShardsToDelete  == 0 then
+									print ("Delete slot "..container.."-"..slot..". "
+										..GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id).."/"..NecrosisConfig.DestroyCount.." shards remain."
+										.. " Will delete "..RemainingShardsToDelete.." more.")
+									end
 								end
 							end
 							--break
@@ -2473,7 +2494,7 @@ function Necrosis:BagExplore(arg)
 			if Local.Soulshard.Count < 10 then
 				NecrosisShardCount:SetText("0"..Local.Soulshard.Count)
 			else
-				NecrosisShardCount:SetText(Local.Soulshard.Count)
+				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
 			end
 		end
 	else

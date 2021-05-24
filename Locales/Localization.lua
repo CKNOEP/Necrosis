@@ -151,6 +151,7 @@ L["SPHERE_SIZE"] = "Size of the Necrosis button"
 L["SPHERE_SKIN"] = "Skin of the Sphere"
 L["SPHERE_EVENT"] = "Event shown by the Sphere"
 L["SPHERE_SPELL"] = "Spell casted by the Sphere"
+L["SPHERE_SPELL+CTRL"] = "Del. Shard on Ctrl+Clic Sphere"
 L["SPHERE_COUNTER"] = "Show the digital counter"
 L["SPHERE_STONE"] = "Stone type counted"
 --	Colour

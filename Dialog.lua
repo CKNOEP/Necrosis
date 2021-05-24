@@ -389,6 +389,7 @@ Necrosis.Config.Sphere = {
 	["Evenement montre par la sphere"] = L["SPHERE_EVENT"],
 	["Sort caste par la sphere"] = L["SPHERE_SPELL"],
 	["Afficher le compteur numerique"] = L["SPHERE_COUNTER"],
+	["Shift+Clic on Sphere to del. Shards"] = L["SPHERE_SPELL+CTRL"],
 	["Type de compteur numerique"] = L["SPHERE_STONE"],
 }
 Necrosis.Config.Sphere.Colour = {

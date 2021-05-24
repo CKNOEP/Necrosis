@@ -536,6 +536,8 @@ function Necrosis:MainButtonAttribute()
 	end
 
 	local main_cast = Necrosis.GetSpellCastName(NecrosisConfig.MainSpell) --Necrosis:GetSpellName(NecrosisConfig.MainSpell)
+	 
+	
 	if Necrosis.Debug.buttons then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("MainButtonAttribute"
 		.." '"..tostring(NecrosisConfig.MainSpell or "nyl").."'"
@@ -543,11 +545,21 @@ function Necrosis:MainButtonAttribute()
 		)
 	end
 	
+		
 	if main_cast ~= "" then 
 		f:SetAttribute("type1", "spell")
 		f:SetAttribute("spell", main_cast)
 	end
-end
+
+	f:SetAttribute("ctrl-type*", "Delete")	
+	f.Delete = function()
+		if not InCombatLockdown() then
+			Necrosis:BagExplore()
+		end
+	end
+
+	end
+
 
 
 ------------------------------------------------------------------------------------------------------
