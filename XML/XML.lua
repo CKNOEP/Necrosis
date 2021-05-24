@@ -91,6 +91,7 @@ function Necrosis:CreateWarlockUI()
 		NecrosisConfig.FramePosition["NecrosisSpellTimerButton"][4],
 		NecrosisConfig.FramePosition["NecrosisSpellTimerButton"][5]
 	)
+
 	frame:Show()
 
 
@@ -148,7 +149,7 @@ local function CreateStoneButton(stone)
 	-- Create the stone button || Création du bouton de la pierre
 	local b = stone
 	if Necrosis.Debug.buttons then
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("CreateStoneButton"
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("Create-StoneButton"
 		.." i'"..tostring(stone).."'"
 		.." b'"..tostring(b and b.f).."'"
 		--.." tn'"..tostring(b.norm).."'"
@@ -233,7 +234,7 @@ end
 ------------------------------------------------------------------------------------------------------
 
 local function CreateMenuButton(button)
-	-- Create a Menu (Open/Close) button || Creaton du bouton d'ouverture du menu
+	-- Create a Menu (Open/Close) button || Creation du bouton d'ouverture du menu
 	local b = button
 	local frame = CreateFrame("Button", b.f, UIParent, "SecureHandlerAttributeTemplate SecureHandlerClickTemplate SecureHandlerEnterLeaveTemplate")
 

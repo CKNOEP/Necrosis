@@ -415,6 +415,9 @@ Necrosis.Config.Buttons = {
 	["Choix des boutons a afficher"] = L["BUTTONS_SELECTION"],
 	["Monture - Clic gauche"] = L["BUTTONS_LEFT"],
 	["Monture - Clic droit"] = L["BUTTONS_RIGHT"],
+	["Monture - Ctrl+Clic gauche"] = L["BUTTONS_CTRL-LEFT"],
+	["Monture - Ctrl+Clic droit"] = L["BUTTONS_CTRL-RIGHT"],
+
 }
 Necrosis.Config.Buttons.Name = {
 	L["SHOW_FIRE_STONE"],

@@ -12,7 +12,7 @@ NECROSIS_ID = "Necrosis"
 Necrosis.Data = {
 	Version = GetAddOnMetadata("Necrosis", "Version"),
 	AppName = "Necrosis",
-	LastConfig = 20210515,
+	LastConfig = "7.6",
 	Enabled = false,
 }
 
@@ -134,13 +134,17 @@ function Necrosis:Initialize(Config)
 
 	Necrosis:Initialize_Speech()
 	-- On charge (ou on crée la configuration pour le joueur et on l'affiche sur la console
-	if not NecrosisConfig.Version or type(NecrosisConfig.Version) == "string" or Necrosis.Data.LastConfig > NecrosisConfig.Version then
+	if not Necrosis.Data.LastConfig or  Necrosis.Data.LastConfig > Necrosis.Data.Version then
+		
+		print(Necrosis.Data.LastConfig,Necrosis.Data.Version, NecrosisConfig.Version,NecrosisConfig.Language)
+		
 		NecrosisConfig = {}
 		NecrosisConfig = Config
 		NecrosisConfig.Version = Necrosis.Data.LastConfig
 		self:Msg(self.ChatMessage.Interface.DefaultConfig, "USER")
 	else
 		self:Msg(self.ChatMessage.Interface.UserConfig, "USER")
+		print(Necrosis.Data.LastConfig,Necrosis.Data.Version, NecrosisConfig.Version,NecrosisConfig.Language)
 	end
 	
 	if NecrosisConfig.PetInfo then -- just in case... pet config info was redone for speech

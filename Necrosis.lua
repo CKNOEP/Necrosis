@@ -155,7 +155,7 @@ Local.DefaultConfig = {
 	DemonSummon = true,
 	BanishScale = 100,
 	ItemSwitchCombat = {},
-	DestroyCount = 6,
+	DestroyCount = 32,
 	FramePosition = {
 		["NecrosisSpellTimerButton"] = {"CENTER", "UIParent", "CENTER", 100, 300},
 		["NecrosisButton"] = {"CENTER", "UIParent", "CENTER", 0, -200},
@@ -1925,6 +1925,8 @@ function Necrosis:BuildButtonTooltip(button)
 	-- ..... for other buffs and demons, the mana cost ... ||..... pour les autres buffs et démons, le coût en mana...
 	elseif (Type == "Enslave") then AddCastAndCost("enslave"); AddShard()
 	elseif (Type == "Mount") and Necrosis.Warlock_Spells[23161].InSpellBook then
+		
+		print("mount in spell book ?",Necrosis.Warlock_Spells[23161].InSpellBook) 
 		if (NecrosisConfig.LeftMount) then
 			local leftMountName = GetSpellInfo(NecrosisConfig.LeftMount);
 			GameTooltip:AddLine(leftMountName);
@@ -2407,29 +2409,37 @@ function Necrosis:BagExplore(arg)
 				Necrosis.Warlock_Lists.reagents.demonic_figurine.count = GetItemCount(Necrosis.Warlock_Lists.reagents.demonic_figurine.id)
 	-- Destroy extra shards (if enabled) || Si il y a un nombre maximum de fragments à conserver, on enlève les supplémentaires
 	if NecrosisConfig.DestroyShard
-		and NecrosisConfig.DestroyCount
-		and NecrosisConfig.DestroyCount > 0
+		--and NecrosisConfig.DestroyCount
+		--and NecrosisConfig.DestroyCount > 0
 		then
+			Local.Soulshard.Count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
+			local RemainingShardsToDelete = Local.Soulshard.Count - NecrosisConfig.DestroyCount 
 			for container = 0, NUM_BAG_SLOTS, 1 do
 				if Local.BagIsSoulPouch[container] then break end
 				for slot=1, GetContainerNumSlots(container), 1 do
+					if math.floor(NecrosisConfig.DestroyCount) >= Local.Soulshard.Count then break end
 					local itemLink = GetContainerItemLink(container, slot)
 					if (itemLink) then
 						local itemID, itemName = Necrosis.Utils.ParseItemLink(itemLink) --GetContainerItemLink(container, slot))
 						itemID = tonumber(itemID)
 						if (itemID == Necrosis.Warlock_Lists.reagents.soul_shard.id) then
-							if (math.floor(NecrosisConfig.DestroyCount) < GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)) then
+							if (RemainingShardsToDelete > 0) then
 								PickupContainerItem(container, slot)
-								if (CursorHasItem()) then
+								local infoType, info1, info2 = GetCursorInfo()
+								if (CursorHasItem() and infoType == "item" and tonumber(info1) == Necrosis.Warlock_Lists.reagents.soul_shard.id) then
 									DeleteCursorItem()
 									Local.Soulshard.Count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
+									--ClearCursor()
+									RemainingShardsToDelete = RemainingShardsToDelete - 1
+									---print ("Delete slot "..container.."-"..slot..". "
+									--	..GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id).."/"..NecrosisConfig.DestroyCount.." shards remain."
+									--	.. " Will delete "..RemainingShardsToDelete.." more.")
 								end
 							end
-							break
+							--break
 						end
 					end
 				end
-				if math.floor(NecrosisConfig.DestroyCount) >= Local.Soulshard.Count then break end
 			end
 	end
 

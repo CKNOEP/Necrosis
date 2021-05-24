@@ -172,8 +172,11 @@ L["BUTTONS_ROTATION"] = "Buttons rotation"
 L["BUTTONS_STICK"] = "Stick buttons around the Sphere"
 L["BUTTONS_MOUNT"] = "Use my own mounts"
 L["BUTTONS_SELECTION"] = "Selection of buttons to be shown"
-L["BUTTONS_LEFT"] = "Left click"
-L["BUTTONS_RIGHT"] = "Right click"
+L["BUTTONS_LEFT"] = "Mount - Left click"
+L["BUTTONS_RIGHT"] = "Mount - Right click"
+L["BUTTONS_CTRL-LEFT"] = "Mount - Ctrl + Left click"
+L["BUTTONS_CTRL-RIGHT"] = "Mount - Ctrl + Right click"
+
 --
 L["SHOW_FIRE_STONE"] = "Show Firestone button"
 L["SHOW_SPELL_STONE"] = "Show Spellstone button"
