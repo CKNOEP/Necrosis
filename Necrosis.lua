@@ -1937,21 +1937,21 @@ function Necrosis:BuildButtonTooltip(button)
 			if leftMountName then
 			else
 			local leftMountName = Necrosis.Utils.GetItemLink(NecrosisConfig.LeftMount);
-				print("hereLM",GetSpellInfo(NecrosisConfig.LeftMount),Necrosis.Utils.GetItemLink(NecrosisConfig.LeftMount))
+				--print("hereLM",GetSpellInfo(NecrosisConfig.LeftMount),Necrosis.Utils.GetItemLink(NecrosisConfig.LeftMount))
 			end
 			GameTooltip:AddLine(leftMountName);
 		else
 			--use tooltip for default mounts
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Text);
 		end
-		print("RM conf",NecrosisConfig.RightMount)
+		--"RM conf",NecrosisConfig.RightMount)
 		if (NecrosisConfig.RightMount) then
 			local rightMountName = GetSpellInfo(NecrosisConfig.RightMount)
 			if rightMountName then
-			print("hereRM",GetSpellInfo(NecrosisConfig.RightMount))
+			--print("hereRM",GetSpellInfo(NecrosisConfig.RightMount))
 			else
 			local rightMountName = Necrosis.Utils.GetItemLink(NecrosisConfig.RightMount);
-				print("hereRM",GetSpellInfo(NecrosisConfig.RightMount),Necrosis.Utils.GetItemLink(NecrosisConfig.RightMount))
+				--print("hereRM",GetSpellInfo(NecrosisConfig.RightMount),Necrosis.Utils.GetItemLink(NecrosisConfig.RightMount))
 			end
 			
 			GameTooltip:AddLine(rightMountName);
