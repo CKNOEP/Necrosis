@@ -1744,7 +1744,7 @@ function Necrosis:BuildButtonTooltip(button)
 		else
 		end
 	end
-	print (b.tip)
+	--print (b.tip)
 	if b.tip == nil then
 		return -- a button we are not interested in was given
 	else
@@ -1931,32 +1931,53 @@ function Necrosis:BuildButtonTooltip(button)
 	
 	elseif (Type == "Mount") and Necrosis.Warlock_Spells[23161].InSpellBook then
 	
-		
-		if (NecrosisConfig.LeftMount) then
-			local leftMountName = GetSpellInfo(NecrosisConfig.LeftMount);
-			if leftMountName then
+-- TTip Left MOUNT			
+		if NecrosisConfig.LeftMount then
+			local LeftMountName = Necrosis.Utils.GetSpellName(NecrosisConfig.LeftMount)
+			if LeftMountName then
+					local wrapText = "<-"..LeftMountName
+					--print(wrapText)
+					GameTooltip:AddLine("Mount1:"..wrapText);	
 			else
-			local leftMountName = Necrosis.Utils.GetItemLink(NecrosisConfig.LeftMount);
-				--print("hereLM",GetSpellInfo(NecrosisConfig.LeftMount),Necrosis.Utils.GetItemLink(NecrosisConfig.LeftMount))
+			
+			local LeftMountName = Necrosis.Utils.GetItemInfo(NecrosisConfig.LeftMount);
+			if LeftMountName then
+					local wrapText = "<-"..LeftMountName	
+					--print(wrapText)
+					GameTooltip:AddLine("Mount1:"..wrapText);	
 			end
-			GameTooltip:AddLine(leftMountName);
+			end		
+							
 		else
-			--use tooltip for default mounts
+			
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Text);
 		end
-		--"RM conf",NecrosisConfig.RightMount)
-		if (NecrosisConfig.RightMount) then
-			local rightMountName = GetSpellInfo(NecrosisConfig.RightMount)
-			if rightMountName then
-			--print("hereRM",GetSpellInfo(NecrosisConfig.RightMount))
+-- TTip RIGHT MOUNT		
+		if NecrosisConfig.RightMount then
+			local RightMountName = Necrosis.Utils.GetSpellName(NecrosisConfig.RightMount)
+			if RightMountName then
+					local wrapText = RightMountName.."->"
+					
+					GameTooltip:AddDoubleLine(_,"Mount2:"..wrapText);
+					--GameTooltip:AddLine("Mount2:"..wrapText);	
 			else
-			local rightMountName = Necrosis.Utils.GetItemLink(NecrosisConfig.RightMount);
-				--print("hereRM",GetSpellInfo(NecrosisConfig.RightMount),Necrosis.Utils.GetItemLink(NecrosisConfig.RightMount))
-			end
 			
-			GameTooltip:AddLine(rightMountName);
-		end
+			local RightMountName = Necrosis.Utils.GetItemInfo(NecrosisConfig.RightMount);
+			if RightMountName then
+					local wrapText = RightMountName.."->"	
+					
+					GameTooltip:AddLine("Mount2:"..wrapText);	
+			end
+			end		
+							
+		else
+			
+		end			
 
+	
+	--End ToolTip Mount	
+	
+		
 	elseif (Type == "Armor") 		then AddCastAndCost("armor")
 	elseif (Type == "Invisible")	then AddCastAndCost("invisible")
 	elseif (Type == "Aqua")			then AddCastAndCost("breath")

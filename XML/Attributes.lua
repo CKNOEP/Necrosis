@@ -461,7 +461,7 @@ function Necrosis:StoneAttribute(Steed)
 			local RightMountName = GetSpellInfo(NecrosisConfig.RightMount)
 			if RightMountName == nil 
 			then 
-			RightMountName,SpellID = GetItemSpell(NecrosisConfig.CtrlRightMount) 
+			RightMountName,SpellID = GetItemSpell(NecrosisConfig.RightMount) 
 				f:SetAttribute("item2", RightMountName)
 			else
 				f:SetAttribute("spell2", RightMountName)

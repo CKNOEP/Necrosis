@@ -47,7 +47,10 @@ function Necrosis.Utils.GetItemName(itemID)
 	return name
 end
 function Necrosis.Utils.GetItemLink(itemID) 
-	local itemLink = Necrosis.Utils.GetItemInfo(itemID)
+	local itemName, itemLink, itemRarity, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount,
+	itemEquipLoc, itemIcon, itemSellPrice, itemClassID, itemSubClassID, bindType, expacID, itemSetID, 
+	isCraftingReagent 
+	= GetItemInfo(itemID)
 	return itemLink
 end
 
