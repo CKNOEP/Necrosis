@@ -351,6 +351,7 @@ end
 -- Associating the frames to buttons, and creating stones on right-click.
 -- Association de la monture au bouton, et de la création des pierres sur un clic droit
 function Necrosis:StoneAttribute(Steed)
+	
 	if InCombatLockdown() then
 		return
 	end

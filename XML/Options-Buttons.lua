@@ -285,6 +285,7 @@ function Necrosis:SetButtonsConfig()
 			NecrosisSelectedMountLeft:SetNormalTexture(132238)
 			NecrosisInitSelectedMountButton(NecrosisSelectedMountLeft, 23161);
 			NecrosisConfig.LeftMount = 23161;
+			Necrosis:StoneAttribute(true)
 		end)		
 	
 		frame = CreateFrame("Button", "NecrosisSelectedMountRight", NecrosisMountsSelectionFrame, "UICheckButtonTemplate")
@@ -309,6 +310,7 @@ function Necrosis:SetButtonsConfig()
 			NecrosisSelectedMountRight:SetNormalTexture(132238)
 			NecrosisInitSelectedMountButton(NecrosisSelectedMountRight, 5784);
 			NecrosisConfig.RightMount = 5784;
+			Necrosis:StoneAttribute(true)
 		end)
 			
 		frame = CreateFrame("Button", "NecrosisSelectedMountCtrlLeft", NecrosisMountsSelectionFrame, "UICheckButtonTemplate")
@@ -333,6 +335,7 @@ function Necrosis:SetButtonsConfig()
 			NecrosisSelectedMountCtrlLeft:SetNormalTexture(132238)
 			NecrosisInitSelectedMountButton(NecrosisSelectedMountCtrlLeft, 23161);
 			NecrosisConfig.CtrlLeftMount = 23161;
+			Necrosis:StoneAttribute(true)
 		end)	
 
 		
@@ -358,6 +361,7 @@ function Necrosis:SetButtonsConfig()
 			NecrosisSelectedMountCtrlRight:SetNormalTexture(132238)
 			NecrosisInitSelectedMountButton(NecrosisSelectedMountCtrlRight, 23161);
 			NecrosisConfig.CtrlRightMount = 23161;
+			Necrosis:StoneAttribute(true)
 		end)
 		
 		--Text Frame/button Mount
@@ -405,7 +409,7 @@ function Necrosis:SetButtonsConfig()
 	--Necrosis:SetCompanionPage(0)
 
 	-- make sure our mount buttons are updated
-	Necrosis:UpdateMountButtons()
+	
 	
 	-- the spellID's (not creatureID's) for the selected left & right mounts are stored in savedvariables
 	-- if nothing is specified (empty / reset config) then use felsteed (5784) and dreadsteed (23161) as the default spellids
@@ -455,7 +459,7 @@ function Necrosis:SetButtonsConfig()
 	name, _, _, _, _, _, _, _, _,CTRL_RM = GetItemInfo(NecrosisConfig.CtrlRightMount)
 	end	
 	
-	
+	Necrosis:UpdateMountButtons()
 	--print(LM,RM,CTRL_LM,CTRL_RM)
 	
 	NecrosisSelectedMountLeft:SetNormalTexture(LM);
