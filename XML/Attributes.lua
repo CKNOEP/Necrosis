@@ -529,7 +529,7 @@ function Necrosis:MainButtonAttribute()
 	if not f then return end
 
 	-- Le clic droit ouvre le Menu des options
-	f:SetAttribute("type2", "Open")
+	f:SetAttribute("ctrl-type*", "Open")
 	f.Open = function()
 		if not InCombatLockdown() then
 			Necrosis:OpenConfigPanel()
@@ -552,9 +552,10 @@ function Necrosis:MainButtonAttribute()
 		f:SetAttribute("spell", main_cast)
 	end
 
-	f:SetAttribute("ctrl-type*", "Delete")	
+	f:SetAttribute("type2", "Delete")
 	f.Delete = function()
 		if not InCombatLockdown() then
+			Necrosis:DeleteShards()
 			Necrosis:BagExplore()
 		end
 	end
