@@ -200,12 +200,16 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 		end
 		-- update the timer display || Association effective au timer
 		Timer.SpellTimer[#Timer.SpellTimer].Gtimer = TimerLibre
-		local FontString, StatusBar = Necrosis:AddFrame("NecrosisTimerFrame"..TimerLibre)
+		local spellTexture = GetSpellTexture(spell.ID)		
+		local FontString, StatusBar = Necrosis:AddFrame("NecrosisTimerFrame"..TimerLibre,spellTexture)
 		FontString:SetText(Timer.SpellTimer[#Timer.SpellTimer].Name)
 		StatusBar:SetMinMaxValues(
 			Timer.SpellTimer[#Timer.SpellTimer].TimeMax - Timer.SpellTimer[#Timer.SpellTimer].Time,
 			Timer.SpellTimer[#Timer.SpellTimer].TimeMax
 		)
+	
+		
+		
 	end
 
 	if NecrosisConfig.TimerType > 0 then

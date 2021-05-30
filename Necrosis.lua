@@ -2472,9 +2472,9 @@ function Necrosis:BagExplore(arg)
 									ClearCursor()
 									RemainingShardsToDelete = RemainingShardsToDelete - 1
 									if RemainingShardsToDelete  == 0 then
-									print ("Delete slot "..container.."-"..slot..". "
-										..GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id).."/"..NecrosisConfig.DestroyCount.." shards remain."
-										.. " Will delete "..RemainingShardsToDelete.." more.")
+									--print ("Delete slot "..container.."-"..slot..". "
+									--	..GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id).."/"..NecrosisConfig.DestroyCount.." shards remain."
+									--	.. " Will delete "..RemainingShardsToDelete.." more.")
 									end
 								end
 							end

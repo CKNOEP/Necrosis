@@ -351,6 +351,11 @@ Notes:
 	[25311] = {UsageRank = 7, SpellRank = 7, Timer = true, Usage = "corruption", Length = 18, }, --  
 	[27216] = {UsageRank = 8, SpellRank = 8, Timer = true, Usage = "corruption", Length = 18, }, --
 	
+	[30108]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "unstable_affliction", Length = 18, }, -- Affliction instable 
+	[30404]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "unstable_affliction", Length = 15, }, --  
+	[30405]	= {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "unstable_affliction", Length = 18, }, --  
+	
+	
 	-- ::: Spells
 	[348]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "immolate", Length = 15, }, -- Immolate 
 	[707]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "immolate", Length = 15, }, --  
