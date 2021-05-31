@@ -2512,10 +2512,14 @@ function Necrosis:BagExplore(arg)
 		if NecrosisConfig.CountType == 2 then
 			NecrosisShardCount:SetText(Local.Reagent.Infernal.." / "..Local.Reagent.Demoniac)
 		elseif NecrosisConfig.CountType == 1 then
-			if Local.Soulshard.Count < 10 then
-				NecrosisShardCount:SetText("0"..Local.Soulshard.Count)
+			if NecrosisConfig.DestroyShard then
+				if Local.Soulshard.Count < 10 then
+					NecrosisShardCount:SetText("0"..Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
+				else
+					NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
+				end
 			else
-				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
+				NecrosisShardCount:SetText(Local.Soulshard.Count)
 			end
 		end
 	else
