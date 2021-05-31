@@ -144,7 +144,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		frame:SetChecked(NecrosisConfig.deleteshards)
 		frame:SetScript("OnClick", function(self)
 			NecrosisConfig.deleteshards = self:GetChecked()
-			Necrosis:BagExplore()
+            Necrosis:BagExplore()
 		end)
 		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
 		FontString:Show()
@@ -167,7 +167,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		frame:SetScript("OnClick", function(self)
 			
 			NecrosisConfig.DestroyShardwithsphere = self:GetChecked()
-			Necrosis:BagExplore()
+            Necrosis:BagExplore()
 		end)
 		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
 		FontString:Show()

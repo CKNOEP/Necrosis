@@ -1786,7 +1786,7 @@ function Necrosis:BuildButtonTooltip(button)
 	-- ..... for the main button ||..... pour le bouton principal
 	if (Type == "Main") then
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count)
-		GameTooltip:AddLine("|CFF808080 Ctrl+Clic on Sphere to delete the  stock overage")		
+		GameTooltip:AddLine("|CFF808080"..L["SPHERE_SPELL_RIGHTCLICK"])
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.InfernalStone..Local.Reagent.Infernal)
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.DemoniacStone..Local.Reagent.Demoniac)
 		local SoulOnHand = false
@@ -1797,6 +1797,7 @@ function Necrosis:BuildButtonTooltip(button)
 		if Local.Stone.Health.OnHand then HealthOnHand = true end
 		if Local.Stone.Spell.OnHand then SpellOnHand = true end
 		if Local.Stone.Fire.OnHand then FireOnHand = true end
+		GameTooltip:AddLine("\n")
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Soulstone..Necrosis.TooltipData[Type].Stone[SoulOnHand])
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Healthstone..Necrosis.TooltipData[Type].Stone[HealthOnHand])
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Spellstone..Necrosis.TooltipData[Type].Stone[SpellOnHand])
@@ -2236,18 +2237,6 @@ function FindSlot(shardIndex, shardSlot)
 			break
 		end
 	end
-	-- Destroy extra shards if the option is enabled || Destruction des fragments en sur-nombre si l'option est activée
-	if (full and NecrosisConfig.SoulshardDestroy) then
-
-		if (math.floor(NecrosisConfig.DestroyCount) < Local.Soulshard.Count) then
-			PickupContainerItem(shardIndex, shardSlot)
-			if (CursorHasItem()) then
-				DeleteCursorItem()
-				Local.Soulshard.Count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
-				Necrosis.Warlock_Lists.reagents.soul_shard.count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
-			end
-		end
-	end
 end
 
 -- Allows you to find / arrange shards in bags || Fonction qui permet de trouver / ranger les fragments dans les sacs
@@ -2448,42 +2437,6 @@ function Necrosis:BagExplore(arg)
 	Local.Reagent.Demoniac = GetItemCount(Necrosis.Warlock_Lists.reagents.demonic_figurine.id)
 				Necrosis.Warlock_Lists.reagents.demonic_figurine.count = GetItemCount(Necrosis.Warlock_Lists.reagents.demonic_figurine.id)
 	-- Destroy extra shards (if enabled) || Si il y a un nombre maximum de fragments à conserver, on enlève les supplémentaires
-	if NecrosisConfig.DestroyShard
-		--and NecrosisConfig.DestroyCount
-		--and NecrosisConfig.DestroyCount > 0
-		then
-			Local.Soulshard.Count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
-			local RemainingShardsToDelete = Local.Soulshard.Count - NecrosisConfig.DestroyCount 
-			for container = 0, NUM_BAG_SLOTS, 1 do
-				if Local.BagIsSoulPouch[container] then break end
-				for slot=1, GetContainerNumSlots(container), 1 do
-					if math.floor(NecrosisConfig.DestroyCount) >= Local.Soulshard.Count then break end
-					local itemLink = GetContainerItemLink(container, slot)
-					if (itemLink) then
-						local itemID, itemName = Necrosis.Utils.ParseItemLink(itemLink) --GetContainerItemLink(container, slot))
-						itemID = tonumber(itemID)
-						if (itemID == Necrosis.Warlock_Lists.reagents.soul_shard.id) then
-							if (RemainingShardsToDelete > 0) then
-								PickupContainerItem(container, slot)
-								local infoType, info1, info2 = GetCursorInfo()
-								if (CursorHasItem() and infoType == "item" and tonumber(info1) == Necrosis.Warlock_Lists.reagents.soul_shard.id) then
-									DeleteCursorItem()
-									Local.Soulshard.Count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
-									ClearCursor()
-									RemainingShardsToDelete = RemainingShardsToDelete - 1
-									if RemainingShardsToDelete  == 0 then
-									--print ("Delete slot "..container.."-"..slot..". "
-									--	..GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id).."/"..NecrosisConfig.DestroyCount.." shards remain."
-									--	.. " Will delete "..RemainingShardsToDelete.." more.")
-									end
-								end
-							end
-							--break
-						end
-					end
-				end
-			end
-	end
 
 	local f = _G[Necrosis.Warlock_Buttons.main.f]
 	-- Update the main (sphere) button display || Affichage du bouton principal de Necrosis
@@ -3044,4 +2997,35 @@ function Necrosis:SymetrieTimer(bool)
 			NecrosisConfig.SpellTimerPos * 23, 10
 		)
 	end
+end
+
+function Necrosis:DeleteShards()
+    ev_out(event, "DeleteShards() called", false, true, false)
+    if NecrosisConfig.DestroyShard then
+        Local.Soulshard.Count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
+        local RemainingShardsToDelete = Local.Soulshard.Count - NecrosisConfig.DestroyCount
+        for container = 0, NUM_BAG_SLOTS, 1 do
+            if Local.BagIsSoulPouch[container] then break end
+            for slot=1, GetContainerNumSlots(container), 1 do
+                if math.floor(NecrosisConfig.DestroyCount) >= Local.Soulshard.Count then break end
+                local itemLink = GetContainerItemLink(container, slot)
+                if (itemLink) then
+                    local itemID, itemName = Necrosis.Utils.ParseItemLink(itemLink) --GetContainerItemLink(container, slot))
+                    itemID = tonumber(itemID)
+                    if (itemID == Necrosis.Warlock_Lists.reagents.soul_shard.id) then
+                        if (RemainingShardsToDelete > 0) then
+                            PickupContainerItem(container, slot)
+                            local infoType, info1, info2 = GetCursorInfo()
+                            if (CursorHasItem() and infoType == "item" and tonumber(info1) == Necrosis.Warlock_Lists.reagents.soul_shard.id) then
+                                DeleteCursorItem()
+                                Local.Soulshard.Count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
+                                ClearCursor()
+                                RemainingShardsToDelete = RemainingShardsToDelete - 1
+                            end
+                        end
+                    end
+                end
+            end
+        end
+    end
 end
