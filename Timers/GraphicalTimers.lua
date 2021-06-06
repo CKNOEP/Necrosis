@@ -184,7 +184,7 @@ function Necrosis:AddFrame(FrameName,spellTexture)
 	--print(spellTexture)
 	--texture:SetTexture(spellTexture)
 	icon:SetTexture(spellTexture)
-	icon:SetBlendMode("ADD")
+	
 	icon:ClearAllPoints()
 	icon:SetPoint("TOPLEFT", StatusBar, "TOPLEFT", -17, 0)
 	icon:Show()

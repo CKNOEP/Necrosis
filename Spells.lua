@@ -271,10 +271,12 @@ Notes:
 	[11733] = {UsageRank = 5, SpellRank = 3, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
 	[11734] = {UsageRank = 6, SpellRank = 4, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
 	[11735] = {UsageRank = 7, SpellRank = 5, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
-	--TBC Fef Armor
-	[28176]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
-	[28189]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, --  
+	--TBC Fel Armor
+	[28176]	= {UsageRank = 8, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
+	[28189]	= {UsageRank = 9, SpellRank = 2, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --  
 	
+	--[28176]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
+	--[28189]	= {UsageRank = 2, SpellRank = 2, Timer = false, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 	
 	--
 	[5697]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "breath", Length = 600, Buff = true, }, -- Unending Breath || Respiration interminable
 	[126]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "eye", Length = 45, Buff = true, SelfOnly = true, }, -- Eye of Kilrogg
@@ -547,9 +549,15 @@ Necrosis.Warlock_Buttons = {
 
 	armor 		= {f = "NecrosisBuffMenu01", tip = "Armor", anchor = "ANCHOR_RIGHT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Armor-01",
-					high = "Interface\\AddOns\\Necrosis\\UI\\Armor-02",
-					}, --
-	breath 		= {f = "NecrosisBuffMenu02", tip = "Aqua", anchor = "ANCHOR_RIGHT", can_target = true,
+					high = "Interface\\AddOns\\Necrosis\\UI\\FelArmor-01",
+				  }, --
+	
+	fel_armor	= {f = "NecrosisBuffMenu02", tip = "FelArmor", anchor = "ANCHOR_RIGHT",
+				norm = "Interface\\AddOns\\Necrosis\\UI\\FelArmor-01",
+				high = "Interface\\AddOns\\Necrosis\\UI\\FelArmor-01",
+			      }, --
+					
+	breath 		= {f = "NecrosisBuffMenu10", tip = "Aqua", anchor = "ANCHOR_RIGHT", can_target = true,
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Aqua-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\Aqua-02",
 					}, --
@@ -712,6 +720,7 @@ Necrosis.Warlock_Lists = {
 		[6] = {f_ptr = "link", high_of = "link", },
 		[7] = {f_ptr = "ward", high_of = "ward", },
 		[8] = {f_ptr = "banish", high_of = "banish", },
+		--[9] = {f_ptr = "fel_armor", high_of = "fel_armor", },			
 	},
 -- 			15, 3, 4, 5, 6, 8, 30, 35, 44, 59
 	["pets"] = { -- 2 types: summon pet and (buff or temporary) pet

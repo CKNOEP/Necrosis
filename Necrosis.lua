@@ -1980,6 +1980,7 @@ function Necrosis:BuildButtonTooltip(button)
 	
 		
 	elseif (Type == "Armor") 		then AddCastAndCost("armor")
+	elseif (Type == "FelArmor") 	then AddCastAndCost("fel_armor")
 	elseif (Type == "Invisible")	then AddCastAndCost("invisible")
 	elseif (Type == "Aqua")			then AddCastAndCost("breath")
 	elseif (Type == "Kilrogg")		then AddCastAndCost("eye")
@@ -2998,7 +2999,7 @@ function Necrosis:SymetrieTimer(bool)
 		)
 	end
 end
-
+--TBC Add : Delete shards out of stock
 function Necrosis:DeleteShards()
     ev_out(event, "DeleteShards() called", false, true, false)
     if NecrosisConfig.DestroyShard then
