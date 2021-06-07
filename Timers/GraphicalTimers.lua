@@ -125,7 +125,7 @@ function Necrosis:AddFrame(FrameName,spellTexture)
 	texture:SetTexture(0, 0, 0, 0.5)
 	texture:ClearAllPoints()
 	texture:SetPoint(NecrosisConfig.SpellTimerJust, FrameName, NecrosisConfig.SpellTimerJust, 0, 0)
-	--	print(NecrosisConfig.SpellTimerJust, FrameName, NecrosisConfig.SpellTimerJust,spellTexture)
+	--	(NecrosisConfig.SpellTimerJust, FrameName, NecrosisConfig.SpellTimerJust,spellTexture)
 	--texture:Show()
 
 	-- Définition de ses textes
@@ -179,12 +179,8 @@ function Necrosis:AddFrame(FrameName,spellTexture)
 	icon = StatusBar:CreateTexture(FrameName.."Icon", "OVERLAY")
 	icon:SetWidth(15)
 	icon:SetHeight(15)
-	
-	--local spellTexture = GetSpellTexture(spell.ID)
-	--print(spellTexture)
-	--texture:SetTexture(spellTexture)
 	icon:SetTexture(spellTexture)
-	
+	--print("create:",FrameName,spellTexture)
 	icon:ClearAllPoints()
 	icon:SetPoint("TOPLEFT", StatusBar, "TOPLEFT", -17, 0)
 	icon:Show()

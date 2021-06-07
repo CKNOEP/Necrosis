@@ -382,8 +382,8 @@ Notes:
 	
 	[6789]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "death_coil", Length = 3, Cooldown = 180,}, -- Death Coil || Voile mortel 
 	[17925] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "death_coil", Length = 3, Cooldown = 180,}, --  
-	[17926] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "death_coil", Length = 3, Cooldown = 180,}, --  
-	[27223] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "death_coil", Length = 3, Cooldown = 180,}, --TBC
+	[17926] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "death_coil", Length = 2, Cooldown = 120,}, --  
+	[27223] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "death_coil", Length = 2, Cooldown = 120,}, --TBC
 	
 	[17877] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "shadowburn", Cooldown = 15,}, -- Shadowburn || Brûlure de l'ombre 
 	[18867] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "shadowburn", Cooldown = 15,}, --  
