@@ -261,7 +261,7 @@ Notes:
 	[17951] = {UsageRank = 2, SpellRank = 2, Timer = false, Usage = "firestone",}, -- 36 || https://classicdb.ch/?spell=17951 || https://classicdb.ch/?item=13699
 	[17952] = {UsageRank = 3, SpellRank = 3, Timer = false, Usage = "firestone",}, -- 46 || https://classicdb.ch/?spell=17952 || https://classicdb.ch/?item=13700
 	[17953] = {UsageRank = 4, SpellRank = 4, Timer = false, Usage = "firestone",}, -- 56 || https://classicdb.ch/?spell=17953 || https://classicdb.ch/?item=13701
-	[27250] = {UsageRank = 4, SpellRank = 5, Timer = false, Usage = "firestone",},
+	[27250] = {UsageRank = 5, SpellRank = 5, Timer = false, Usage = "firestone",},
 	
 	-- ::: Buffs
 	[687]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Demon Skin || Peau de démon 
