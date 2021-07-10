@@ -423,6 +423,7 @@ function UpdateIcons()
 	local SoulstoneInUse = false
 	if Local.TimerManagement.SpellTimer then
 		for index = 1, #Local.TimerManagement.SpellTimer, 1 do
+		--print(Local.TimerManagement.SpellTimer[index].Name)
 			if  Local.TimerManagement.SpellTimer[index].Name == Necrosis.GetSpellName("soulstone") 
 			and Local.TimerManagement.SpellTimer[index].TimeMax > 0 then
 				SoulstoneInUse = true
@@ -958,7 +959,7 @@ function Necrosis:OnUpdate(something, elapsed)
 
 	-- Every second || Toutes les secondes
 	if Local.LastUpdate[1] > 1 then
-	-- If configured, sorting fragments every second || Si configuré, tri des fragment toutes les secondes
+	-- If configured, sorting fragments every second || Si configuré, tri des fragments toutes les secondes
 		if NecrosisConfig.SoulshardSort and Local.Soulshard.Move > 0  then
 			Necrosis:SoulshardSwitch("MOVE")
 		end
@@ -966,7 +967,9 @@ function Necrosis:OnUpdate(something, elapsed)
 		-- Timers Table Course || Parcours du tableau des Timers
 		if Local.TimerManagement.SpellTimer[1] then
 			for index = 1, #Local.TimerManagement.SpellTimer, 1 do
+				
 				if Local.TimerManagement.SpellTimer[index] then
+					--print ("timers",Local.TimerManagement.SpellTimer[index].Name)
 					-- We remove the completed timers || On enlève les timers terminés
 					local TimeLocal = GetTime()
 					if TimeLocal >= (Local.TimerManagement.SpellTimer[index].TimeMax - 0.5) then

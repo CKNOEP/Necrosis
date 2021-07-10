@@ -240,7 +240,7 @@ Notes:
 	[20755] = {UsageRank = 3, SpellRank = 3, Timer = false, Usage = "soulstone",}, -- 40 || https://classicdb.ch/?spell=20755 || https://classicdb.ch/?item=16893
 	[20756] = {UsageRank = 4, SpellRank = 4, Timer = false, Usage = "soulstone",}, -- greater 50|| https://classicdb.ch/?spell=20756 || https://classicdb.ch/?item=16895
 	[20757] = {UsageRank = 5, SpellRank = 5, Timer = false, Usage = "soulstone",}, -- major 60|| https://classicdb.ch/?spell=20757 || https://classicdb.ch/?item=16896
-	[27238] = {UsageRank = 6, SpellRank = 6, Timer = false, Usage = "soulstone",}, --  TBC 70
+	[27238] = {UsageRank = 6, SpellRank = 6, Timer = true, Usage = "soulstone",}, --  TBC 70
 	
 	-- Create Healthstone minor || Création pierre de soin
 	[6201]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "healthstone",}, -- minor 10 || https://classicdb.ch/?spell=6201 ||
@@ -463,11 +463,11 @@ Notes:
 	Note: WoW will only allow one soul stone at a time so we do not have to worry about multiple stones...
 	--]] 
 	[20707] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "minor_ss_used", Result = true, Cooldown = 1800, Group = 1, }, -- ss_rez
-	[20762] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "lesser_ss_used", Result = true, Cooldown = 1800, Group = 1, }, -- 
-	[20763] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "ss_used", Result = true, Cooldown = 1800, Group = 1, }, -- 
-	[20764] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "greater_ss_used", Result = true, Cooldown = 1800, Group = 1, }, -- 
-	[20765] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "major_ss_used", Result = true, Cooldown = 1800, Group = 1, }, --
-	[27239] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "master_ss_used", Result = true, Cooldown = 1800, Group = 1, }, -- 	
+	[20762] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "lesser_ss_used", Result = true, Cooldown = 1800, Group = 1, }, -- 
+	[20763] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ss_used", Result = true, Cooldown = 1800, Group = 1, }, -- 
+	[20764] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "greater_ss_used", Result = true, Cooldown = 1800, Group = 1, }, -- 
+	[20765] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "major_ss_used", Result = true, Cooldown = 1800, Group = 1, }, --
+	[27239] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "master_ss_used", Result = true, Cooldown = 1800, Group = 1, }, -- 	
 
 	-- Health stone
 	-- When a health stone is used it could be one of several spells because each gives different health amounts
@@ -1035,12 +1035,15 @@ function Necrosis.IsSpellDemon(name)
 end
 
 function Necrosis.IsSpellRez(name)
+	
+	--print (name)
 	if name == (Necrosis.Warlock_Spell_Use["minor_ss_used"] and Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use["minor_ss_used"]].Name or "")
 	or name == (Necrosis.Warlock_Spell_Use["lesser_ss_used"] and Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use["lesser_ss_used"]].Name or "")
 	or name == (Necrosis.Warlock_Spell_Use["ss_used"] and Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use["ss_used"]].Name or "")
 	or name == (Necrosis.Warlock_Spell_Use["greater_ss_used"] and Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use["greater_ss_used"]].Name or "")
 	or name == (Necrosis.Warlock_Spell_Use["major_ss_used"] and Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use["major_ss_used"]].Name or "")
 	or name == (Necrosis.Warlock_Spell_Use["master_ss_used"] and Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use["master_ss_used"]].Name or "") -- TBC
+	
 	then
 		return true
 	else

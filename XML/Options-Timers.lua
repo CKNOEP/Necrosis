@@ -216,6 +216,7 @@ function Necrosis:SetTimersConfig()
 		-- timers
 		local initY = 395
 		for i = 1, #NecrosisConfig.Timers, 1 do
+			--print("usage",NecrosisConfig.Timers[i].usage)
 			frame = CreateFrame("CheckButton", "NecrosisTimerShow"..i, NecrosisTimersConfig2, "UICheckButtonTemplate")
 			frame:EnableMouse(true)
 			frame:SetWidth(24)

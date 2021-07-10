@@ -14,9 +14,13 @@ local _G = getfenv(0)
 function Necrosis:RezStoneUpdate(SpellTimer)
 	local Time, TimeMax, Minutes, Secondes
 	for index, valeur in ipairs(SpellTimer) do
+	--print ("Spell : ",Necrosis.GetSpellName(SpellTimer[index].Usage))
 		if Necrosis.IsSpellRez(Necrosis.GetSpellName(SpellTimer[index].Usage)) then 
+
 			Time = valeur.Time
 			TimeMax = valeur.TimeMax
+			--print("Timer ",Necrosis.GetSpellName(SpellTimer[index].Usage),Time,TimeMax)
+			
 			break
 		end
 	end
@@ -36,15 +40,15 @@ function Necrosis:RezStoneUpdate(SpellTimer)
 	else
 		if f then f.font_string:SetText("") end -- cleanup for safety
 	end
---[[
-_G["DEFAULT_CHAT_FRAME"]:AddMessage("RezStoneUpdate"
-.." t'"..(tostring(Time)).."'"
-.." m'"..(tostring(Minutes)).."'"
-.." s'"..(tostring(Secondes)).."'"
-.." ss'"..(tostring(ss)).."'"
-.." f'"..(tostring(f)).."'"
-)
---]]
+
+--_G["DEFAULT_CHAT_FRAME"]:AddMessage("RezStoneUpdate"
+--.." t'"..(tostring(Time)).."'"
+--.." m'"..(tostring(Minutes)).."'"
+--.." s'"..(tostring(Secondes)).."'"
+--.." ss'"..(tostring(ss)).."'"
+--.." f'"..(tostring(f)).."'"
+--)
+
 end
 
 -- Displays the resurrection timer in the sphere || Permet l'affichage du timer de rez dans la Sphere
