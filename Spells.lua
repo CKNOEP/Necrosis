@@ -240,7 +240,7 @@ Notes:
 	[20755] = {UsageRank = 3, SpellRank = 3, Timer = false, Usage = "soulstone",}, -- 40 || https://classicdb.ch/?spell=20755 || https://classicdb.ch/?item=16893
 	[20756] = {UsageRank = 4, SpellRank = 4, Timer = false, Usage = "soulstone",}, -- greater 50|| https://classicdb.ch/?spell=20756 || https://classicdb.ch/?item=16895
 	[20757] = {UsageRank = 5, SpellRank = 5, Timer = false, Usage = "soulstone",}, -- major 60|| https://classicdb.ch/?spell=20757 || https://classicdb.ch/?item=16896
-	[27238] = {UsageRank = 6, SpellRank = 6, Timer = true, Usage = "soulstone",}, --  TBC 70
+	[27238] = {UsageRank = 6, SpellRank = 6, Timer = true,  Usage = "soulstone",}, --  TBC 70
 	
 	-- Create Healthstone minor || Création pierre de soin
 	[6201]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "healthstone",}, -- minor 10 || https://classicdb.ch/?spell=6201 ||
@@ -272,11 +272,11 @@ Notes:
 	[11734] = {UsageRank = 6, SpellRank = 4, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
 	[11735] = {UsageRank = 7, SpellRank = 5, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
 	--TBC Fel Armor
-	[28176]	= {UsageRank = 8, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
-	[28189]	= {UsageRank = 9, SpellRank = 2, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --  
+	--[28176]	= {UsageRank = 8, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
+	--[28189]	= {UsageRank = 9, SpellRank = 2, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --  
 	
-	--[28176]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
-	--[28189]	= {UsageRank = 2, SpellRank = 2, Timer = false, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 	
+	[28176]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
+	[28189]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 	
 	--
 	[5697]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "breath", Length = 600, Buff = true, }, -- Unending Breath || Respiration interminable
 	[126]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "eye", Length = 45, Buff = true, SelfOnly = true, }, -- Eye of Kilrogg
@@ -462,12 +462,12 @@ Notes:
 	From the id, WoW knows the health and mana to give if the soul stone is used.
 	Note: WoW will only allow one soul stone at a time so we do not have to worry about multiple stones...
 	--]] 
-	[20707] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "minor_ss_used", Result = true, Cooldown = 1800, Group = 1, }, -- ss_rez
-	[20762] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "lesser_ss_used", Result = true, Cooldown = 1800, Group = 1, }, -- 
-	[20763] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ss_used", Result = true, Cooldown = 1800, Group = 1, }, -- 
+	[20707] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "minor_ss_used",   Result = true, Cooldown = 1800, Group = 1, }, -- ss_rez
+	[20762] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "lesser_ss_used",  Result = true, Cooldown = 1800, Group = 1, }, -- 
+	[20763] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ss_used",         Result = true, Cooldown = 1800, Group = 1, }, -- 
 	[20764] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "greater_ss_used", Result = true, Cooldown = 1800, Group = 1, }, -- 
-	[20765] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "major_ss_used", Result = true, Cooldown = 1800, Group = 1, }, --
-	[27239] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "master_ss_used", Result = true, Cooldown = 1800, Group = 1, }, -- 	
+	[20765] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "major_ss_used",   Result = true, Cooldown = 1800, Group = 1, }, --
+	[27239] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "master_ss_used",  Result = true, Cooldown = 1800, Group = 1, }, -- 	
 
 	-- Health stone
 	-- When a health stone is used it could be one of several spells because each gives different health amounts
@@ -720,7 +720,7 @@ Necrosis.Warlock_Lists = {
 		[6] = {f_ptr = "link", high_of = "link", },
 		[7] = {f_ptr = "ward", high_of = "ward", },
 		[8] = {f_ptr = "banish", high_of = "banish", },
-		--[9] = {f_ptr = "fel_armor", high_of = "fel_armor", },			
+		[9] = {f_ptr = "fel_armor", high_of = "fel_armor", },			
 	},
 -- 			15, 3, 4, 5, 6, 8, 30, 35, 44, 59
 	["pets"] = { -- 2 types: summon pet and (buff or temporary) pet

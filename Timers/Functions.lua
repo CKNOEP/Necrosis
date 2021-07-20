@@ -185,7 +185,7 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 	-- attach a graphical timer if enabled || Association d'un timer graphique au timer
 	-- associate it to the frame (if present) || Si il y a une frame timer de libérée, on l'associe au timer
 	if NecrosisConfig.TimerType == 1 then
-		local TimerLibre = nil
+		local TimerLibre = nilz
 		for index, valeur in ipairs(Timer.TimerTable) do
 			if not valeur then
 				TimerLibre = index
@@ -201,6 +201,7 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 		-- update the timer display || Association effective au timer
 		Timer.SpellTimer[#Timer.SpellTimer].Gtimer = TimerLibre
 		local spellTexture = GetSpellTexture(spell.ID)		
+		--print (spellTexture,"spell",spell.ID,spell.Name)
 		local FontString, StatusBar = Necrosis:AddFrame("NecrosisTimerFrame"..TimerLibre,spellTexture)
 		--print("update:",spellTexture)
 		FontString:SetText(Timer.SpellTimer[#Timer.SpellTimer].Name)

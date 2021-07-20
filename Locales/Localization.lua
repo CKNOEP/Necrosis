@@ -152,6 +152,8 @@ L["SPHERE_SKIN"] = "Skin of the Sphere"
 L["SPHERE_EVENT"] = "Event shown by the Sphere"
 L["SPHERE_SPELL"] = "Spell casted by the Sphere"
 L["SPHERE_SPELL_RIGHTCLICK"] = "Right click on Sphere to delete the stock overage"
+L["SPHERE_SPELL_RIGHTCLICK_L2"] = "Ctrl+Left click to open config menu"
+
 L["SPHERE_SPELL+CTRL"] = "Open options menu"
 L["SPHERE_COUNTER"] = "Show the digital counter"
 L["SPHERE_STONE"] = "Stone type counted"

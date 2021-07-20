@@ -1797,6 +1797,7 @@ function Necrosis:BuildButtonTooltip(button)
 	if (Type == "Main") then
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count)
 		GameTooltip:AddLine("|CFF808080"..L["SPHERE_SPELL_RIGHTCLICK"])
+		GameTooltip:AddLine("|CFF808080"..L["SPHERE_SPELL_RIGHTCLICK_L2"])	
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.InfernalStone..Local.Reagent.Infernal)
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.DemoniacStone..Local.Reagent.Demoniac)
 		local SoulOnHand = false
