@@ -549,7 +549,7 @@ Necrosis.Warlock_Buttons = {
 
 	armor 		= {f = "NecrosisBuffMenu01", tip = "Armor", anchor = "ANCHOR_RIGHT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Armor-01",
-					high = "Interface\\AddOns\\Necrosis\\UI\\FelArmor-01",
+					high = "Interface\\AddOns\\Necrosis\\UI\\Armor-01",
 				  }, --
 	
 	fel_armor	= {f = "NecrosisBuffMenu02", tip = "FelArmor", anchor = "ANCHOR_RIGHT",

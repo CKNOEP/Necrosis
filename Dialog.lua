@@ -295,6 +295,9 @@ Necrosis.TooltipData = {
 	["Armor"] = {
 		Label = ""
 	},
+	["FelArmor"] = {
+		Label = ""
+	},
 	["Aqua"] = {
 		Label = ""
 	},
