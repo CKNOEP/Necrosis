@@ -181,6 +181,8 @@ Local.DefaultConfig = {
 		[5] = {usage = "summoning", show = true},
 		[6] = {usage = "ward", show = true},
 		[7] = {usage = "banish", show = true},
+		[8] = {usage = "fel_armor", show = true},
+		[9] = {usage = "sacrifice", show = true},		
 	},
 }
 
@@ -1547,7 +1549,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
 			if (UnitName("player") == sourceName) then
 				Local.TimerManagement = Necrosis:RemoveTimerByNameAndGuid(Effect, destGUID, Local.TimerManagement, "SPELL_AURA_REMOVED")
 			end
-		-- Debian Detection || Détection du Déban
+		-- Deban Detection || Détection du Déban
 		-- Resist / immune detection || Détection des résists / immunes
 		elseif subevent == "SPELL_MISSED" and sourceGUID == UnitGUID("player") then
 			-- The 1st 8 arguments are always timestamp, event, sourceGUID, sourceName, sourceFlags, destGUID, destName, destFlags

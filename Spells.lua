@@ -240,7 +240,7 @@ Notes:
 	[20755] = {UsageRank = 3, SpellRank = 3, Timer = false, Usage = "soulstone",}, -- 40 || https://classicdb.ch/?spell=20755 || https://classicdb.ch/?item=16893
 	[20756] = {UsageRank = 4, SpellRank = 4, Timer = false, Usage = "soulstone",}, -- greater 50|| https://classicdb.ch/?spell=20756 || https://classicdb.ch/?item=16895
 	[20757] = {UsageRank = 5, SpellRank = 5, Timer = false, Usage = "soulstone",}, -- major 60|| https://classicdb.ch/?spell=20757 || https://classicdb.ch/?item=16896
-	[27238] = {UsageRank = 6, SpellRank = 6, Timer = true,  Usage = "soulstone",}, --  TBC 70
+	[27238] = {UsageRank = 6, SpellRank = 6, Timer = false, Usage = "soulstone",}, --  TBC 70
 	
 	-- Create Healthstone minor || Création pierre de soin
 	[6201]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "healthstone",}, -- minor 10 || https://classicdb.ch/?spell=6201 ||
@@ -420,12 +420,22 @@ Notes:
 	[11689] = {UsageRank = 6, SpellRank = 6, Timer = false, Usage = "life_tap"}, --
 	[27222] = {UsageRank = 7, SpellRank = 7, Timer = false, Usage = "life_tap"}, --	
 	
-	[7812]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice", Length = 30,  NeedPet = true, }, -- Sacrifice || Sacrifice démoniaque 
+	[7812]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice", Length = 30,  NeedPet = true,}, -- Sacrifice || Sacrifice démoniaque 
 	[19438] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "sacrifice", Length = 30,  NeedPet = true,}, --  
 	[19440] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "sacrifice", Length = 30,  NeedPet = true,}, --  
 	[19441] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "sacrifice", Length = 30,  NeedPet = true,}, --  
 	[19442] = {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "sacrifice", Length = 30,  NeedPet = true,}, --  
-	[19443] = {UsageRank = 6, SpellRank = 6, Timer = true, Usage = "sacrifice", Length = 30,  NeedPet = true,}, -- 
+	[19443] = {UsageRank = 6, SpellRank = 6, Timer = true, Usage = "sacrifice", Length = 30,  NeedPet = true,}, --
+	
+	
+-- To do Demonic Sacrifice
+	[18789] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Imp", Length = 300, Buff = true, }, --
+	[18790] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Voidwalker", Length = 300, Buff = true, }, -- 
+	[18791] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Succubus", Length = 300, Buff = true, }, -- 
+	[18792] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Felhunter", Length = 300, Buff = true, }, -- 
+	[35701] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Felguard", Length = 300, Buff = true, }, -- 
+
+
 	
 	[686]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "bolt"}, -- Shadow Bolt
 	[695]	= {UsageRank = 2, SpellRank = 2, Timer = false, Usage = "bolt"}, -- 
@@ -553,8 +563,8 @@ Necrosis.Warlock_Buttons = {
 				  }, --
 	
 	fel_armor	= {f = "NecrosisBuffMenu02", tip = "FelArmor", anchor = "ANCHOR_RIGHT",
-				norm = "Interface\\AddOns\\Necrosis\\UI\\FelArmor-01",
-				high = "Interface\\AddOns\\Necrosis\\UI\\FelArmor-01",
+					norm = "Interface\\AddOns\\Necrosis\\UI\\FelArmor-01",
+					high = "Interface\\AddOns\\Necrosis\\UI\\FelArmor-01",
 			      }, --
 					
 	breath 		= {f = "NecrosisBuffMenu10", tip = "Aqua", anchor = "ANCHOR_RIGHT", can_target = true,
@@ -729,11 +739,11 @@ Necrosis.Warlock_Lists = {
 		[3] = {f_ptr = "voidwalker", high_of = "voidwalker", },
 		[4] = {f_ptr = "succubus", high_of = "succubus", },
 		[5] = {f_ptr = "felhunter", high_of = "felhunter", },
-	   [10] = {f_ptr = "felguard", high_of = "felguard", },--TBC
 		[6] = {f_ptr = "inferno", high_of = "inferno", },
 		[7] = {f_ptr = "rit_of_doom", high_of = "rit_of_doom", },
 		[8] = {f_ptr = "enslave", high_of = "enslave", },
 		[9] = {f_ptr = "sacrifice", high_of = "sacrifice", },
+		[10] = {f_ptr = "felguard", high_of = "felguard", },--TBC
 	},
 -- 23, -- Curse of weakness 22, -- Curse of agony 25, -- Curse of tongues 40, -- Curse of exhaustion 26, -- Curse of the elements 16, -- Curse of doom 14 -- Corruption
 	["curses"] = {

@@ -149,6 +149,7 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 			}
 		)
 		OutputTimer("Insert", spell.Usage, #Timer.SpellTimer, Timer, note)
+	
 	end
 	
 	-- check for a cool down to show
@@ -184,8 +185,9 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 
 	-- attach a graphical timer if enabled || Association d'un timer graphique au timer
 	-- associate it to the frame (if present) || Si il y a une frame timer de libérée, on l'associe au timer
-	if NecrosisConfig.TimerType == 1 then
-		local TimerLibre = nilz
+	if NecrosisConfig.TimerType == 1 then -- si timer graphics
+		
+	    local TimerLibre = nil
 		for index, valeur in ipairs(Timer.TimerTable) do
 			if not valeur then
 				TimerLibre = index
@@ -193,7 +195,7 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 				break
 			end
 		end
-		-- if there is no frame, add one || Si il n'y a pas de frame de libérée, on rajoute une frame
+		-- Si il n'y a pas de frame de libérée, on rajoute une frame || if there is no frame, add one 
 		if not TimerLibre then
 			Timer.TimerTable:insert(true)
 			TimerLibre = #Timer.TimerTable
@@ -202,9 +204,13 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 		Timer.SpellTimer[#Timer.SpellTimer].Gtimer = TimerLibre
 		local spellTexture = GetSpellTexture(spell.ID)		
 		--print (spellTexture,"spell",spell.ID,spell.Name)
-		local FontString, StatusBar = Necrosis:AddFrame("NecrosisTimerFrame"..TimerLibre,spellTexture)
+		local FontString, StatusBar , Icon_Spell = Necrosis:AddFrame("NecrosisTimerFrame"..TimerLibre,spellTexture)
 		--print("update:",spellTexture)
 		FontString:SetText(Timer.SpellTimer[#Timer.SpellTimer].Name)
+
+		--print("icon ", GetSpellTexture(spell.ID), spell.Name,"NecrosisTimerFrame"..TimerLibre)
+		
+		
 		StatusBar:SetMinMaxValues(
 			Timer.SpellTimer[#Timer.SpellTimer].TimeMax - Timer.SpellTimer[#Timer.SpellTimer].Time,
 			Timer.SpellTimer[#Timer.SpellTimer].TimeMax
@@ -255,6 +261,9 @@ function Necrosis:RetraitTimerParIndex(index, Timer, note)
 			if Timer.SpellTimer[index].Gtimer and Timer.TimerTable[Timer.SpellTimer[index].Gtimer] then
 				Timer.TimerTable[Timer.SpellTimer[index].Gtimer] = false
 				_G["NecrosisTimerFrame"..Timer.SpellTimer[index].Gtimer]:Hide()
+				
+				print("hide",_G["NecrosisTimerFrame"..Timer.SpellTimer[index].Gtimer.."Icon"]:GetTexture())
+				--_G["NecrosisTimerFrame"..Timer.SpellTimer[index].Gtimer.."Icon"]:SetTexture(nil)
 			end
 		end
 

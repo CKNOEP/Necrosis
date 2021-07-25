@@ -92,8 +92,9 @@ local function CreateGroup(SpellGroup, index)
 
 	
 	OutputGroup(SpellGroup, index, "create")
-
+	
 	return frame
+	
 end
 
 -- Creation of the timers || Création des timers
@@ -104,7 +105,15 @@ function Necrosis:AddFrame(FrameName,spellTexture)
 		f:ClearAllPoints()
 		f:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
 		f:Show()
+		--print("Show",FrameName.."Bar",spellTexture, _G[FrameName.."Icon"]:GetTexture())
+		
+		if spellTexture ~= _G[FrameName.."Icon"]:GetTexture() then
+		--print ("different")
+		_G[FrameName.."Icon"]:SetTexture(spellTexture)
+		end
+		
 		return _G[FrameName.."Text"], _G[FrameName.."Bar"]
+
 	end
 
 	-- Création de la frame principale du timer
@@ -126,7 +135,7 @@ function Necrosis:AddFrame(FrameName,spellTexture)
 	texture:ClearAllPoints()
 	texture:SetPoint(NecrosisConfig.SpellTimerJust, FrameName, NecrosisConfig.SpellTimerJust, 0, 0)
 	--	(NecrosisConfig.SpellTimerJust, FrameName, NecrosisConfig.SpellTimerJust,spellTexture)
-	--texture:Show()
+	texture:Show()
 
 	-- Définition de ses textes
 	-- Extérieur
@@ -176,18 +185,18 @@ function Necrosis:AddFrame(FrameName,spellTexture)
 	
 	
 	-- Définition de l'icone à gauche de la barre
-	icon = StatusBar:CreateTexture(FrameName.."Icon", "OVERLAY")
-	icon:SetWidth(15)
-	icon:SetHeight(15)
-	icon:SetTexture(spellTexture)
-	--print("create:",FrameName,spellTexture)
-	icon:ClearAllPoints()
-	icon:SetPoint("TOPLEFT", StatusBar, "TOPLEFT", -17, 0)
-	icon:Show()
-
+	local Icon_Spell = StatusBar:CreateTexture(FrameName.."Icon", "OVERLAY")
+	
+	Icon_Spell:SetWidth(15)
+	Icon_Spell:SetHeight(15)
+	Icon_Spell:SetTexture(spellTexture)
+	Icon_Spell:ClearAllPoints()
+	Icon_Spell:SetPoint("TOPLEFT", StatusBar, "TOPLEFT", -17, 0)
+	Icon_Spell:Show()
+	print(FrameName,_G[FrameName.."Icon"]:GetTexture())
 	
 	-- Définition de l'étincelle en bout de barre
-	texture = StatusBar:CreateTexture(FrameName.."Spark", "OVERLAY")
+	local texture = StatusBar:CreateTexture(FrameName.."Spark", "OVERLAY")
 
 	texture:SetWidth(32)
 	texture:SetHeight(32)
@@ -197,7 +206,7 @@ function Necrosis:AddFrame(FrameName,spellTexture)
 	texture:SetPoint("CENTER", StatusBar, "LEFT", 0, 0)
 	texture:Show()
 
-	return FontString, StatusBar
+	return FontString, StatusBar , Icon_Spell
 end
 
 
@@ -234,6 +243,8 @@ function NecrosisUpdateTimer(tableau, Changement)
 		local Spark = _G["NecrosisTimerFrame"..tableau[index].Gtimer.."Spark"]
 		local Text = _G["NecrosisTimerFrame"..tableau[index].Gtimer.."OutText"]
 		
+		--print ("change", Frame, Text)
+		
 		-- move frames to ensure they dont overlap || Déplacement des Frames si besoin pour qu'elles ne se chevauchent pas
 		if Changement then
 			-- if the frame belongs to a mob group, then move the whole group || Si les Frames appartiennent à un groupe de mob, et qu'on doit changer de groupe
@@ -244,10 +255,12 @@ function NecrosisUpdateTimer(tableau, Changement)
 				f:SetPoint(LastPoint[1], LastPoint[2], LastPoint[3], LastPoint[4], LastPoint[5])
 				LastPoint[5] = LastPoint[5] + 0.2 * yPosition--0.2
 				LastGroup = tableau[index].Group
+
 			end
 			Frame:ClearAllPoints()
 			LastPoint[5] = LastPoint[5] + yPosition
 			Frame:SetPoint(LastPoint[1], LastPoint[2], LastPoint[3], LastPoint[4], LastPoint[5])
+		
 		end
 
 		-- creation of color timers || Création de la couleur des timers en fonction du temps
@@ -303,5 +316,6 @@ function NecrosisUpdateTimer(tableau, Changement)
 		end
 
 		Text:SetText(affichage)
+		--print("Update",tableau[index].spell.ID, _G["NecrosisTimerFrame"..tableau[index].Gtimer.."Icon"]:GetTexture())
 	end
 end
