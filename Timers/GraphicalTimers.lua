@@ -193,7 +193,7 @@ function Necrosis:AddFrame(FrameName,spellTexture)
 	Icon_Spell:ClearAllPoints()
 	Icon_Spell:SetPoint("TOPLEFT", StatusBar, "TOPLEFT", -17, 0)
 	Icon_Spell:Show()
-	print(FrameName,_G[FrameName.."Icon"]:GetTexture())
+	--print(FrameName,_G[FrameName.."Icon"]:GetTexture())
 	
 	-- Définition de l'étincelle en bout de barre
 	local texture = StatusBar:CreateTexture(FrameName.."Spark", "OVERLAY")

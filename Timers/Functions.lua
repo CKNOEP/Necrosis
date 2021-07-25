@@ -262,7 +262,7 @@ function Necrosis:RetraitTimerParIndex(index, Timer, note)
 				Timer.TimerTable[Timer.SpellTimer[index].Gtimer] = false
 				_G["NecrosisTimerFrame"..Timer.SpellTimer[index].Gtimer]:Hide()
 				
-				print("hide",_G["NecrosisTimerFrame"..Timer.SpellTimer[index].Gtimer.."Icon"]:GetTexture())
+				--print("hide",_G["NecrosisTimerFrame"..Timer.SpellTimer[index].Gtimer.."Icon"]:GetTexture())
 				--_G["NecrosisTimerFrame"..Timer.SpellTimer[index].Gtimer.."Icon"]:SetTexture(nil)
 			end
 		end
