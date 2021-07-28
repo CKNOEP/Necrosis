@@ -91,7 +91,7 @@ Local.DefaultConfig = {
 	CreatureAlert = true,
 	NecrosisLockServ = true,
 	NecrosisAngle = 180,
-	StonePosition = {1, 2, 3, 4, 5, 6, 7, 8}, -- options to show or hide
+	StonePosition = {1, 2, 3, 4, 5, 6, 7, 8, 9}, -- options to show or hide
 		-- 1 = Firestone
 		-- 2 = Spellstone
 		-- 3 = Healthstone
@@ -100,7 +100,7 @@ Local.DefaultConfig = {
 		-- 6 = Mounts
 		-- 7 = Demon menu
 		-- 8 = Curse menu
-		-- 9 = Hearthstone
+		-- 9 = Destroy Shard
 	DemonSpellPosition = {1, 2, 3, 4, 5, 6, 8, 9, 10, -11},
 		-- 1 = Fel Domination || Domination corrompue
 		-- 2 = Summon Imp
@@ -172,6 +172,7 @@ Local.DefaultConfig = {
 		["NecrosisMountButton"] = {"CENTER", "UIParent", "CENTER", 53,-100},
 		["NecrosisPetMenuButton"] = {"CENTER", "UIParent", "CENTER", 87,-100},
 		["NecrosisCurseMenuButton"] = {"CENTER", "UIParent", "CENTER", 121,-100},
+		["NecrosisDestroyShardsButton"] = {"CENTER", "UIParent", "CENTER", 154,-100},
 	},
 	Timers = { -- Order is for options screen; overrides Warlock_Spells Timer
 		[1] = {usage = "armor", show = true},
@@ -1951,14 +1952,14 @@ function Necrosis:BuildButtonTooltip(button)
 			if LeftMountName then
 					local wrapText = "<-"..LeftMountName
 					--print(wrapText)
-					GameTooltip:AddLine("Mount1:"..wrapText);	
+					GameTooltip:AddLine("Mount1 : "..wrapText);	
 			else
 			
 			local LeftMountName = Necrosis.Utils.GetItemInfo(NecrosisConfig.LeftMount);
 			if LeftMountName then
 					local wrapText = "<-"..LeftMountName	
 					--print(wrapText)
-					GameTooltip:AddLine("Mount1:"..wrapText);	
+					GameTooltip:AddLine("Mount1 : "..wrapText);	
 			end
 			end		
 							
@@ -2047,6 +2048,7 @@ function Necrosis:BuildButtonTooltip(button)
 	elseif (Type == "BuffMenu")		then AddMenuTip(Type)
 	elseif (Type == "CurseMenu")	then AddMenuTip(Type)
 	elseif (Type == "PetMenu")		then AddMenuTip(Type)
+	elseif (Type == "DestroyShards")then AddMenuTip(Type)
 	end
 	-- And hop, posting! || Et hop, affichage !
 	GameTooltip:Show()

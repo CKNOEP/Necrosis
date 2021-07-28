@@ -84,19 +84,35 @@ function Necrosis:SetMiscConfig()
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-			GameTooltip:SetText(5-math.floor(self:GetValue()))
+			local bagName = GetBagName(5-math.floor(self:GetValue())-1);  
+			GameTooltip:SetText(bagName)
+		
+		
 		end)
+		
 		frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
+		
 		frame:SetScript("OnMouseUp", function(self)
-			GameTooltip:SetText(5 - self:GetValue())
+			local bagName = GetBagName(5-math.floor(self:GetValue())-1);  
+			GameTooltip:SetText(bagName)
+			
 			NecrosisConfig.SoulshardContainer = 4 - math.floor(self:GetValue())
+			
 			-- print(NecrosisConfig.SoulshardContainer)
 			Necrosis:SoulshardSwitch("MOVE")
 		end)
-		frame:SetScript("OnValueChanged", function(self) GameTooltip:SetText(5 - self:GetValue()) end)
+		
+		frame:SetScript("OnValueChanged", function(self) 
+		local bagName = GetBagName(5-math.floor(self:GetValue())-1);  
+		GameTooltip:SetText(bagName)
+		
+		
+		end)
 
-		NecrosisShardBagLow:SetText("5")
-		NecrosisShardBagHigh:SetText("1")
+		NecrosisShardBagLow:SetText("Bag#5")
+		NecrosisShardBagHigh:SetText("Bag#1")
+
+
 
 		-- Set the number of shards to keep || Destruction des fragments après X
 		frame = CreateFrame("CheckButton", "NecrosisDestroyShard", NecrosisMiscConfig, "UICheckButtonTemplate")

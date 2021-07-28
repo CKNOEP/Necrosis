@@ -245,9 +245,15 @@ Necrosis.TooltipData = {
 	},
 	["CurseMenu"] = {
 		Label = L["CURSE_MENU_LABEL"],
-		Text = L["CURSE_MENU_TEXT_1"],
+		Text = L["CURSE_MENU_LABEL"],
 		Text2 = L["CURSE_MENU_TEXT_2"],
 	},
+	
+	["DestroyShards"] = {
+		Label = L["DESTROY_SHARD_MENU_LABEL"],
+		Text = L["DESTROY_SHARD_MENU_TEXT"],
+	},
+	
 	["DominationCooldown"] = L["DOMINATION_COOLDOWN"],
 	-- These are filled when the frame is created and the localized spell names are known
 	-- curses
@@ -401,6 +407,7 @@ Necrosis.Config.Sphere.Colour = {
 	L["ORANGE"],
 	L["TURQUOISE"],
 	L["PURPLE"],
+	L["PURPLE2"],	
 	L["666"],
 	L["X"],
 }
@@ -432,6 +439,7 @@ Necrosis.Config.Buttons.Name = {
 	L["SHOW_STEED"],
 	L["SHOW_DEMON"],
 	L["SHOW_CURSE"],
+	L["SHOW_DESTROY_SHARDS"],
 }
 
 Necrosis.Config.Menus = {

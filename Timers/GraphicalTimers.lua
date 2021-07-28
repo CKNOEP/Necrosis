@@ -176,13 +176,23 @@ function Necrosis:AddFrame(FrameName,spellTexture)
 	StatusBar:SetWidth(150)
 	StatusBar:SetHeight(15)
 	StatusBar:SetStatusBarTexture("Interface\\TargetingFrame\\UI-StatusBar")
-	StatusBar:SetStatusBarColor(1, 1, 0)
+	StatusBar:SetStatusBarColor(1, 1, 1, 1)
 	StatusBar:SetFrameLevel(StatusBar:GetFrameLevel() - 1)
 	StatusBar:ClearAllPoints()
 	StatusBar:SetPoint(NecrosisConfig.SpellTimerJust, FrameName, NecrosisConfig.SpellTimerJust, 10, 0)
-	--StatusBar:SetPoint("TOPLEFT", FrameName, "TOPLEFT", 10, 20)
+
+	StatusBar.bg = StatusBar:CreateTexture(nil, "BACKGROUND")
+	StatusBar.bg:SetTexture("Interface\\TARGETINGFRAME\\UI-StatusBar")
+	StatusBar.bg:SetAllPoints(true)
+	StatusBar.bg:SetVertexColor(0, 0, 0 , 1/2)
+
+
+
+
+
+
 	StatusBar:Show()
-	
+	StatusBar.bg:Show()
 	
 	-- Définition de l'icone à gauche de la barre
 	local Icon_Spell = StatusBar:CreateTexture(FrameName.."Icon", "OVERLAY")

@@ -349,7 +349,7 @@ function Necrosis:CurseSpellAttribute()
 end
 
 -- Associating the frames to buttons, and creating stones on right-click.
--- Association de la monture au bouton, et de la création des pierres sur un clic droit
+-- Association de la monture au bouton, et de la création des pierres sur un clic droit + bouton destroy shards over limit
 function Necrosis:StoneAttribute(Steed)
 	
 	if InCombatLockdown() then
@@ -384,6 +384,16 @@ function Necrosis:StoneAttribute(Steed)
 			f:SetAttribute("spell2", Necrosis.GetSpellCastName("healthstone")) 
 		end
 	end
+	
+	-- Destroy Shards button is a new type, with function attached
+	local destroy_shards_button = _G[Necrosis.Warlock_Buttons.destroy_shards.f]
+	if (destroy_shards_button) then
+		destroy_shards_button:SetScript(
+			"OnClick",
+			Necrosis.Warlock_Buttons.destroy_shards.func
+		)
+	end
+	
 	
 	SetSSAttribs(nil, "Icon update")
 
@@ -503,9 +513,9 @@ function Necrosis:StoneAttribute(Steed)
 	f = _G[f]
 	if f then
 		-- hearthstone || Pour la pierre de foyer
-		f:SetAttribute("unit1", "target")
+		--f:SetAttribute("unit1", "target")
 		f:SetAttribute("type1", "macro")
-		f:SetAttribute("macrotext", "/focus")
+		f:SetAttribute("macrotext", "/necrosis")
 		f:SetAttribute("type2", "item")
 		f:SetAttribute("item", self.Translation.Item.Hearthstone)
 	end
@@ -515,7 +525,7 @@ function Necrosis:StoneAttribute(Steed)
 	if f then
 		f:SetAttribute("unit1", "target")
 		f:SetAttribute("type1", "macro")
-		f:SetAttribute("macrotext", "/focus")
+		f:SetAttribute("macrotext", "/necrosis timer2")
 		f:SetAttribute("type2", "item")
 		f:SetAttribute("item", self.Translation.Item.Hearthstone)
 	end

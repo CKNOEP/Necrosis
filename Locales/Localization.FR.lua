@@ -58,6 +58,9 @@ L["SPELLTIMER_RIGHT"] = "Clic droit pour pierre de foyer vers "
 L["SHADOW_TRANCE_LABEL"] = "|c00FFFFFF".."Transe de l'ombre".."|r"
 L["BACKLASH_LABEL"] = "|c00FFFFFF".."Contrecoup".."|r"
 L["BANISH_TEXT"] = "Clic droit pour Rang 1"
+L["DESTROY_SHARD_MENU_LABEL"] = "|c00FF99FF".."Destruction des Shard(s)".."|r"
+L["DESTROY_SHARD_MENU_TEXT"] = "Click pour Suppr. les Shards en trop"
+
 -- Pets
 L["IMP_LABEL"] = "|c00FFFFFF".."Diablotin".."|r"
 L["IMP"] = "Diablotin"
@@ -170,6 +173,8 @@ L["SHOW_SPELL"] = "Afficher le bouton des sorts"
 L["SHOW_STEED"] = "Afficher le bouton de la Monture"
 L["SHOW_DEMON"] = "Afficher le bouton d'invocation des D\195\169mons"
 L["SHOW_CURSE"] = "Afficher le bouton des Mal\195\169dictions"
+L["SHOW_DESTROY_SHARDS"]= "Afficher le bouton de destruction des shards"
+
 --
 L["MENU_GENERAL"] = "Options G\195\169n\195\169rales"
 L["MENU_SPELLS"] = "Menu des sorts"

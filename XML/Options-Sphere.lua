@@ -210,7 +210,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 	NecrosisSphereSize:SetValue(NecrosisConfig.NecrosisButtonScale)
 	NecrosisShowCount:SetChecked(NecrosisConfig.ShowCount)
 
-	local couleur = {"Rose", "Bleu", "Orange", "Turquoise", "Violet", "666", "X"}
+	local couleur = {"Rose", "Bleu", "Orange", "Turquoise", "Violet1", "Violet2", "666", "X"}
 	for i in ipairs(couleur) do
 		if couleur[i] == NecrosisConfig.NecrosisColor then
 			UIDropDownMenu_SetSelectedID(NecrosisSkinSelection, i)
@@ -253,7 +253,7 @@ end
 
 function Necrosis.Skin_Click(self)
 	local ID = self:GetID()
-	local couleur = {"Rose", "Bleu", "Orange", "Turquoise", "Violet", "666", "X"}
+	local couleur = {"Rose", "Bleu", "Orange", "Turquoise", "Violet1","Violet2", "666", "X"}
 	UIDropDownMenu_SetSelectedID(NecrosisSkinSelection, ID)
 	NecrosisConfig.NecrosisColor = couleur[ID]
 	local f = _G[Necrosis.Warlock_Buttons.main.f]

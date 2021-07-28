@@ -626,6 +626,12 @@ Necrosis.Warlock_Buttons = {
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Felguard-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\Felguard-02",
 					}, --					
+	
+	destroy_shards = {f = "NecrosisDestroyShardsButton", tip = "DestroyShards", anchor = "ANCHOR_RIGHT",
+					norm = "Interface\\AddOns\\Necrosis\\UI\\ShardDestroy-01",
+					high = "Interface\\AddOns\\Necrosis\\UI\\ShardDestroy-02",
+					func = function() Necrosis:DeleteShards() end
+					}, --				
 --TBC
 					
 	inferno 	= {f = "NecrosisPetMenu06", tip = "Infernal", anchor = "ANCHOR_RIGHT", 
@@ -717,6 +723,8 @@ Necrosis.Warlock_Lists = {
 		[6] = {f_ptr = "mounts", high_of = "mount",},
 		[7] = {f_ptr = "pets", menu = "pets", },
 		[8] = {f_ptr = "curses", menu = "curses", },
+		[9] = {f_ptr = "destroy_shards", high_of = "mount", },
+		
 --		[9] = {f_ptr = "hearth_stone", item = "Hearthstone",},
 	},
 -- 31=Demon Armor | 47=Fel Armor | 32=Unending Breath | 33=Detect Invis | 34=Eye of Kilrogg | 37=Ritual of Summoning | 38=Soul Link | 43=Shadow Ward | 35=Enslave Demon | 59=Demonic Empowerment | 9=Banish
