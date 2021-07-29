@@ -108,6 +108,7 @@ and crosses login / reload does NOT have both a duration AND a cool down in Spel
 --]]
 local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, duration, note)
 	-- 
+	 
 	local target = Target
 	local ttype = 0
 	if target == nil or target == {} then
@@ -284,6 +285,7 @@ function Necrosis:RetraitTimerParIndex(index, Timer, note)
 		-- Cheat: Was called from another remove so do not output twice
 	else 
 		OutputTimer("RetraitTimerParIndex", "", index, Timer, note)
+
 	end
 
 	-- remove the timer from the list || On enlève le timer de la liste
@@ -349,8 +351,11 @@ end
 
 -- remove combat timers  || Fonction pour enlever les timers de combat lors de la regen
 function Necrosis:RetraitTimerCombat(Timer, note)
+	--print(Timer.Type, note)
+	
 	local top = #Timer.SpellTimer
 	for index = 1, #Timer.SpellTimer, 1 do
+		--print (Timer.SpellTimer[index].Type,Timer.SpellTimer[index].Name)
 		if Timer.SpellTimer[index] then
 			-- remove if its a cooldown timer || Si les cooldowns sont nominatifs, on enlève le nom
 			if Timer.SpellTimer[index].Type == 3 then
@@ -363,8 +368,12 @@ function Necrosis:RetraitTimerCombat(Timer, note)
 				or Timer.SpellTimer[index].Type == 5
 				or Timer.SpellTimer[index].Type == 6
 				then
+								
+					if not Timer.SpellTimer[index].Name == Necrosis.GetSpellName("enslave") then
 					OutputTimer("RetraitTimerCombat", "", index, Timer, note)
 					Timer = self:RetraitTimerParIndex(index, Timer)
+					end
+					
 			end
 		end
 	end

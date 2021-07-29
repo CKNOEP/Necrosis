@@ -183,7 +183,8 @@ Local.DefaultConfig = {
 		[6] = {usage = "ward", show = true},
 		[7] = {usage = "banish", show = true},
 		[8] = {usage = "fel_armor", show = true},
-		[9] = {usage = "sacrifice", show = true},		
+		[9] = {usage = "sacrifice", show = true},
+	   [10] = {usage = "enslave", show = true},	
 	},
 }
 
@@ -621,12 +622,13 @@ function SpellManagement(SpellCasted)
 	local cast_spell = SpellCasted
 	if (cast_spell.Name) then
 	
-		-- print ('casting on target '..cast_spell.TargetName)
+		
 		-- Messages Posts Cast (Démons et TP)
 		Local.SpeechManagement.SpellSucceed = Necrosis:Speech_Then(cast_spell, Local.SpeechManagement)
 
 		-- Handle any timers on cast spells
 		local spell = Necrosis.GetSpellById(cast_spell.Id)
+		
 		if spell.Buff then
 			-- Handled by the aura events
 		elseif spell.Timer then
@@ -664,6 +666,8 @@ function SpellManagement(SpellCasted)
 				.." tg'"..tostring(target.guid or "nyl").."'"
 				)
 			end
+		--print (spell.Usage,cast_spell.Id,cast_spell.Guid)
+		--print (cast_spell.TargetName,cast_spell.TargetLevel,cast_spell.TargetGUID)
 			Local.TimerManagement = Necrosis:TimerInsert(cast_info, target, Local.TimerManagement, "spell cast")
 		end
 	end
@@ -787,6 +791,7 @@ local function ChangeDemon()
 		if UnitHasEffect("pet", Necrosis.GetSpellName("enslave")) then 
 			if (not Local.Summon.DemonEnslaved) then
 				Local.Summon.DemonEnslaved = true
+				--Necrosis:Msg("ENSLAVE", "USER")
 --[[ timer should have been put in place on spell cast...
 --]]
 			end
@@ -989,7 +994,9 @@ function Necrosis:OnUpdate(something, elapsed)
 						-- Otherwise we remove the timer silently (but not in case of enslave) || Sinon on enlève le timer silencieusement (mais pas en cas d'enslave)
 						local enslave = -- get name if known
 							Necrosis.GetSpellName("enslave") -- 10
+						--print (enslave,Local.TimerManagement.SpellTimer[index].Name)
 						if not (Local.TimerManagement.SpellTimer[index].Name == enslave) then
+							
 							Local.TimerManagement = Necrosis:RetraitTimerParIndex(index, Local.TimerManagement, "spell expired")
 							index = 0
 							if StoneFade then
@@ -1429,7 +1436,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
 	elseif (event == "PLAYER_REGEN_ENABLED") then
 		Local.PlayerInCombat = false
 		Local.TimerManagement = Necrosis:RetraitTimerCombat(Local.TimerManagement, "PLAYER_REGEN_ENABLED")
-
+		--Necrosis:Msg("regen enabled", "USER")
 		-- We are redefining the attributes of spell buttons in a situational way || On redéfinit les attributs des boutons de sorts de manière situationnelle
 		Necrosis:NoCombatAttribute(Local.Stone.Soul.Mode, Local.Stone.Fire.Mode, Local.Stone.Spell.Mode, Local.Menu.Pet, Local.Menu.Buff, Local.Menu.Curse)
 		UpdateIcons()

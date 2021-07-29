@@ -290,12 +290,12 @@ Notes:
 	[11740] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- 
 	[28610] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- 
 
-	[1098] 	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "enslave", Length = 300, Buff = true, }, -- Enslave Demon
-	[11725] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "enslave", Length = 300, Buff = true, }, -- 
-	[11726] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "enslave", Length = 300, Buff = true, }, --  
+	[1098] 	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "enslave", Length = 300, Buff = false, }, -- Enslave Demon
+	[11725] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "enslave", Length = 300, Buff = false, }, -- 
+	[11726] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "enslave", Length = 300, Buff = false, }, --  
 
-	[710]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "banish", Length = 20, Buff = true, }, -- Banish 
-	[18647] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "banish", Length = 30, Buff = true, }, --  
+	[710]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "banish", Length = 20, Buff = false, }, -- Banish 
+	[18647] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "banish", Length = 30, Buff = false, }, --  
 
 	[132]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "invisible", Length = 600, Buff = true, }, -- 26 || Detect Invisibility || https://classicdb.ch/?spell=132
 	[2970]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "invisible", Length = 600, Buff = true, }, -- 38 || https://classicdb.ch/?spell=2970
