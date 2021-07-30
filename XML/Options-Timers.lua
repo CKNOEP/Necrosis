@@ -194,7 +194,7 @@ function Necrosis:SetTimersConfig()
 		frame:EnableMouse(true)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisTimersConfig2, "BOTTOMRIGHT", 40, 135)
+		frame:SetPoint("RIGHT", NecrosisTimersConfig2, "BOTTOMRIGHT", 40, 125)
 
 		frame:SetScript("OnClick", function()
 			NecrosisTimersConfig1:Show()
@@ -206,7 +206,7 @@ function Necrosis:SetTimersConfig()
 		frame:EnableMouse(true)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisTimersConfig2, "BOTTOMLEFT", 40, 135)
+		frame:SetPoint("LEFT", NecrosisTimersConfig2, "BOTTOMLEFT", 40, 125)
 
 		frame:SetScript("OnClick", function()
 			NecrosisTimersConfig1:Show()
@@ -215,6 +215,8 @@ function Necrosis:SetTimersConfig()
 
 		-- timers
 		local initY = 395
+		local initX = 25
+		
 		for i = 1, #NecrosisConfig.Timers, 1 do
 			--print("usage",NecrosisConfig.Timers[i].usage)
 			frame = CreateFrame("CheckButton", "NecrosisTimerShow"..i, NecrosisTimersConfig2, "UICheckButtonTemplate")
@@ -223,7 +225,16 @@ function Necrosis:SetTimersConfig()
 			frame:SetHeight(24)
 			frame:Show()
 			frame:ClearAllPoints()
-			frame:SetPoint("LEFT", NecrosisTimersConfig2, "BOTTOMLEFT", 25, initY - (25 * i))
+			
+			
+			if i < 8 then
+				frame:SetPoint("LEFT", NecrosisTimersConfig2, "BOTTOMLEFT", initX , initY - (25 * i))			
+			else
+				frame:SetPoint("LEFT", NecrosisTimersConfig2, "BOTTOMLEFT", initX + 200, initY - (25 * (i-7)))				
+			end
+			
+			
+
 
 			frame:SetScript("OnClick", function(self)
 				Necrosis.UpdateSpellTimer(i, self:GetChecked())

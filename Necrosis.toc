@@ -1,11 +1,11 @@
 ## Interface: 20501
-## Title: Necrosis 7.6b
+## Title: Necrosis 7.6c
 ## Title-ruRU: Necrosis (Русский)
 ## Title-frFR: Necrosis (Français)
 ## Notes: Warlock UI & Shard Management
 ## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir 
 ## Notes-ruRU: Менеджер заклинаний, камней и демонов для чернокнижника.
-## Version: 7.6b
+## Version: 7.6c
 ## Website: https://github.com/CKNOEP/Necrosis
 ## DefaultState: Enabled
 ## X-Original-Author: Lomig,lädygaga - sulfuron EUR
