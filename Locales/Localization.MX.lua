@@ -137,7 +137,7 @@ L["MSG_RANDOM_SOULS"] = "Activar discursos aleatorios para el Ritual de las Alma
 L["MSG_SOUNDS"] = "Activar sonidos"
 L["MSG_WARN_FEAR"] = "Av\195\173same cuando mi objetivo no pueda ser asustado"
 L["MSG_WARN_BANISH"] = "Av\195\173same cuando mi objetivo pueda ser desterrado o esclavizado"
-L["MSG_WARN_TRANCE"] = "Al\195\169rtame cuando entre en un Trance"
+L["MSG_WARN_TRANCE"] = "Al\195\169rtame cuando entre en un Trance/Backlash"
 --
 L["SPHERE_SIZE"] = "Tama\195\177o del bot\195\179n Necrosis"
 L["SPHERE_SKIN"] = "Color de la Esfera Necrosis"

@@ -378,6 +378,14 @@ function Necrosis:SetMessagesConfig()
 		FontString:SetTextColor(1, 1, 1)
 		frame:SetFontString(FontString)
 
+		local Glow = NecrosisMessagesConfig:CreateFontString(nil, nil, "GameFontNormalSmall")
+		Glow:Show()
+		Glow:ClearAllPoints()
+		Glow:SetPoint("LEFT", NecrosisMessagesConfig, "TOPLEFT", x_offset + 20 ,  y+y_offset + 10 )
+		Glow:SetTextColor(1, 0.5, 0)
+		Glow:SetText("Glow button, support Default Action Bars,Dominos,ElvUI,Bartender")
+
+
 	end
 
 	NecrosisShowTooltip:SetChecked(NecrosisConfig.NecrosisToolTip)

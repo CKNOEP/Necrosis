@@ -113,11 +113,11 @@ function Necrosis:OpenConfigPanel()
 		-- Titre de section au bas de la page
 		FontString = frame:CreateFontString("NecrosisGeneralPageText", nil, "GameFontNormal")
 		FontString:SetTextColor(1, 0.8, 0)
-		FontString:SetWidth(150) -- 102
+		FontString:SetWidth(250) -- 102
 		FontString:SetHeight(0)
 		FontString:Show()
 		FontString:ClearAllPoints()
-		FontString:SetPoint("BOTTOM", 0, 96)
+		FontString:SetPoint("BOTTOM", 0, 85)
 
 		-- Bouton de fermeture de la fenêtre
 		frame = CreateFrame("Button", "NecrosisGeneralCloseButton", NecrosisGeneralFrame, "UIPanelCloseButton")

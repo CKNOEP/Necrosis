@@ -135,7 +135,7 @@ L["MSG_RANDOM_SOULS"] = "Activer \195\169galement les messages pour le Rituel de
 L["MSG_SOUNDS"] = "Activer les sons"
 L["MSG_WARN_FEAR"] = "Alerter quand la cible est insensible \195\160 la peur"
 L["MSG_WARN_BANISH"] = "Alerter quand la cible peut \195\170tre banie ou asservie"
-L["MSG_WARN_TRANCE"] = "M'alerter quand j'entre en Transe"
+L["MSG_WARN_TRANCE"] = "M'alerter quand j'entre en Transe/Backlash"
 --
 L["SPHERE_SIZE"] = "Taille de la sph\195\168re"
 L["SPHERE_SKIN"] = "Skin de la sph\195\168re"

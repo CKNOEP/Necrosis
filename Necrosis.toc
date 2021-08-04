@@ -8,7 +8,7 @@
 ## Version: 7.6c
 ## Website: https://github.com/CKNOEP/Necrosis
 ## DefaultState: Enabled
-## X-Original-Author: Lomig,lädygaga - sulfuron EUR
+## X-Original-Author: Lomig,lädygaga - sulfuron EUR - lancestre
 ## X-Localizations: enUS, enGB, deDE, frFR, koKR, zhCN, zhTW, esES, ruRU
 ## X-Category: Warlock
 ## LoadOnDemand: 0
@@ -56,6 +56,8 @@ Speech\Speech-ru.lua
 
 Message.lua
 Spells.lua
+
+SpellActivations\SpellActivations.lua
 
 Timers\Functions.lua
 Timers\GraphicalTimers.lua

@@ -137,7 +137,7 @@ L["MSG_RANDOM_SOULS"] = "Zuf\195\164llige Spr\195\188che f\195\188r das Ritual d
 L["MSG_SOUNDS"] = "Aktiviere Sounds"
 L["MSG_WARN_FEAR"] = "Warnung, wenn Ziel immun gegen\195\188ber Fear ist"
 L["MSG_WARN_BANISH"] = "Warnung, wenn ein Ziel verbannt\\versklavt werden kann"
-L["MSG_WARN_TRANCE"] = "Warnung, wenn Trance eintritt"
+L["MSG_WARN_TRANCE"] = "Warnung, wenn Trance/Backlash eintritt"
 --
 L["SPHERE_SIZE"] = "Gr\195\182\195\159e der Sph\195\164re"
 L["SPHERE_SKIN"] = "Aussehen der Necrosis Sph\195\164re"

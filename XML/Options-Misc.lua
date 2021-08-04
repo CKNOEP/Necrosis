@@ -52,22 +52,22 @@ function Necrosis:SetMiscConfig()
 		frame:SetFontString(FontString)
 
 		-- Destruction des fragments quand le sac est plein
-		frame = CreateFrame("CheckButton", "NecrosisDestroyShardBag", NecrosisMiscConfig, "UICheckButtonTemplate")
-		frame:EnableMouse(true)
-		frame:SetWidth(24)
-		frame:SetHeight(24)
-		frame:Show()
-		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 50, 380)
+		--frame = CreateFrame("CheckButton", "NecrosisDestroyShardBag", NecrosisMiscConfig, "UICheckButtonTemplate")
+		--frame:EnableMouse(true)
+		--frame:SetWidth(24)
+		--frame:SetHeight(24)
+		--frame:Show()
+		--frame:ClearAllPoints()
+		--frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 50, 380)
 
-		frame:SetScript("OnClick", function(self) NecrosisConfig.SoulshardDestroy = self:GetChecked() end)
+		--frame:SetScript("OnClick", function(self) NecrosisConfig.SoulshardDestroy = self:GetChecked() end)
 
-		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
-		FontString:Show()
-		FontString:ClearAllPoints()
-		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
-		FontString:SetTextColor(1, 1, 1)
-		frame:SetFontString(FontString)
+		--FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		--FontString:Show()
+		--FontString:ClearAllPoints()
+		--FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		--FontString:SetTextColor(1, 1, 1)
+		--frame:SetFontString(FontString)
 		--frame:SetDisabledTextColor(0.75, 0.75, 0.75)
 
 		-- Choose the bag for storing soul shards || Choix du sac à fragments
@@ -321,7 +321,7 @@ function Necrosis:SetMiscConfig()
 	end
 
 	NecrosisMoveShard:SetChecked(NecrosisConfig.SoulshardSort)
-	NecrosisDestroyShardBag:SetChecked(NecrosisConfig.SoulshardDestroy)
+	--NecrosisDestroyShardBag:SetChecked(NecrosisConfig.SoulshardDestroy)
 	NecrosisShardBag:SetValue(4 - NecrosisConfig.SoulshardContainer)
 	NecrosisDestroyShard:SetChecked(NecrosisConfig.DestroyShard)
 
@@ -335,7 +335,7 @@ function Necrosis:SetMiscConfig()
 	NecrosisHiddenSize:SetValue(NecrosisConfig.ShadowTranceScale)
 
 	NecrosisMoveShard:SetText(self.Config.Misc["Deplace les fragments"])
-	NecrosisDestroyShardBag:SetText(self.Config.Misc["Detruit les fragments si le sac plein"])
+	--NecrosisDestroyShardBag:SetText(self.Config.Misc["Detruit les fragments si le sac plein"])
 	NecrosisShardBagText:SetText(self.Config.Misc["Choix du sac contenant les fragments"])
 	NecrosisDestroyShard:SetText(self.Config.Misc["Nombre maximum de fragments a conserver"])
 	NecrosisLock:SetText(self.Config.Misc["Verrouiller Necrosis sur l'interface"])
@@ -343,9 +343,9 @@ function Necrosis:SetMiscConfig()
 	NecrosisHiddenSizeText:SetText(self.Config.Misc["Taille des boutons caches"])
 
 	if NecrosisConfig.SoulshardSort then
-		NecrosisDestroyShardBag:Enable()
+		--NecrosisDestroyShardBag:Enable()
 	else
-		NecrosisDestroyShardBag:Disable()
+		--NecrosisDestroyShardBag:Disable()
 	end
 
 	frame:Show()

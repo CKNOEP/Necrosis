@@ -148,7 +148,7 @@ L["MSG_RANDOM_SOULS"] = "Activate random speeches for Ritual of Souls"
 L["MSG_SOUNDS"] = "Activate sounds"
 L["MSG_WARN_FEAR"] = "Warn when the target cannot be feared"
 L["MSG_WARN_BANISH"] = "Warn when the target is banishable or enslavable"
-L["MSG_WARN_TRANCE"] = "Warn me when I enter a Trance State"
+L["MSG_WARN_TRANCE"] = "Warn me when I enter a Trance/Backlash State"
 --
 L["SPHERE_SIZE"] = "Size of the Necrosis button"
 L["SPHERE_SKIN"] = "Skin of the Sphere"
