@@ -726,7 +726,7 @@ function SelfEffect(action, nom)
 		elseif nom == Necrosis.Translation.Proc.Backlash and NecrosisConfig.ShadowTranceAlert then
 			Necrosis:Msg(Necrosis.ProcText.Backlash, "USER")
 			if NecrosisConfig.Sound then PlaySoundFile(Necrosis.Sound.Backlash) end
-			print(Necrosis.Sound.Backlash)
+			---print(Necrosis.Sound.Backlash)
 			fb:Show()
 			
 		-- If Twilight, to display the icon and sound || si Crépuscule, pouf on affiche l'icone et on proc le son
