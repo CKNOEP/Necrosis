@@ -1,0 +1,6 @@
+
+package-as: Necrosis TBC Classic
+
+enable-nolib-creation: no
+
+manual-changelog: CHANGES.txt

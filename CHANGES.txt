@@ -1,0 +1,189 @@
+R7.6.9.11:
+* Add Lights up spell activation when Shadow Trance or Bakslash
+
+R7.6.9.10
+*  toc update
+
+R7.6.9.9
+*  fix message Err
+
+R7.6.9.8 :
+* Fix enslave and bannish timer
+*
+r7.5
+* Make the center alerts respond to the Necrosis 'lock'
+* Banish 1 and 2 should be correct now wrt right and left buttons
+
+r7.4
+* Updated toc to add MX (doh!)
+* Added explicit options to turn on / off messages for summoning and soul stones; added explicit short messages for each
+- Added new translation strings for config messages using Google Translate
+
+r7.3
+* Many changes for Speech so it will work as expected
+- <player>, <target>, <pet> should work as expected in Speech table
+- Now ignored <emote>, <yell>; They can be in Speech text but are ignored
+* Added reminder to Options that Speech only works in instance / party / raid
+* Added MX which is a copy of ES
+
+r7.2
+* Fix so Fel Dominion (if known) is used on right click of pet summon menu icon
+* Fix Inferno and Ritual of Doom tool tip to show proper reagent, respectively
+* Buff timers can be turned off per user selection in options (Timers > Page 2)
+* Speech when summoning should work as expected
+* Added a message when summoning (only when in party or raid) : "Necrosis: <player> summoned <target>"
+- Regardless whether speech is on or off
+* Changed Soulstone so R & L click should work in or out of combat
+- tool tip being grey does NOT prevent R & L click - you may get a Blizzard 'error' / warning 
+* Fix for soul stone cool down timer disappearing
+* Changed images from 64x64 to 128x128 - should look a bit better on higher resolutions monitors
+
+r7.1
+* Fix so scaling stays across logins and reloads
+* Fix so sphere does not jump when changing scaling in options
+* Fix so pet names are correct in 'speech' messages
+
+r7.0
+* Rewritten!
+* Added Curse of Recklessness back in.
+* Added soul shard count to tool tip of spells that require one
+* Added timer to soul stone off sphere - shows two digits: minutes (light purple) then seconds (purple)
+* On initialization add timers from the existing buffs - on self only
+* Demon pet selected now shows its button highlighted (brighter ring)
+* Options: Sliders should use integer increments now (not floating point)
+* Options: "Spell casted by the Sphere" now shows all spells in drop down. Spells not learned are gray and not selectable.
+Internal
+* UNIT_DIED passes proper target (dest) guid for timer cleanup
+* Fixed delete timer by GUID
+* Use all spell ids (Spells.lua) rather than string names; pull localized spell names and rank from WoW API; 
+   use short name, not numeric, to get spell info; use 'getter' routines for readability and to hide long table references
+* Move frame names to a list (Spells.lua) 
+   Use a table to hold frame info (name; texture; tool tip reference; reference using short name).
+   Create frames and buttons using the list to remove 'complex' exception coding
+* Get and use more localized strings - 'stones', soul bag names; plus more
+   Use getters and setters to hide ids; use short name to reference spells and list items
+   Use GET_ITEM_INFO_RECEIVED event to ensure item info is stored when retrieved & available
+* Added several timer helper routines to remove timers by usage / name / guid or combination
+* Change init steps to allow localized string info to be ready before initialing Necrosis.
+* Added debug 'paths' - now one can trigger a subset of debug statements (Initialize.lua)
+* Cleanup and remove spells not in Classic
+* More comments explaining spell tables and various lists
+* Consolidated files and cleanup of non Classic code
+   - Location.lua => Initialize.lua
+
+r6.4
+* Fix for 'stones' not sorting properly in some languages (FR)
+
+r6.3
+* Fix for main sphere not showing on login
+* Spellstone, Firestone and Detect Lesser Invisibility should now show highest levels
+* Sounds and 'speech' should work for DE and TW languages
+* Tweaked initialization for "UpdateMana" error and other errors at login
+
+r6.2:
+* Fix for soulstone & healthstone not using the highest available
+* For readabilaty and reduce confusion - Added spell name to soul / health stone icon tool tips and to curse icon tool tips
+
+r6.1:
+* Tightened the initialization process further
+
+r6.0:
+* Most localization strings now use the Ace library (AceLocale-3.0)
+* Tightened the initialization process, removed extra frames
+
+r226:
+* TOC and version number updated for patch 3.3.5 (for real this time)
+
+r225:
+* TOC and version number updated for patch 3.3.5
+* fixed the keybindings for Corruption, Curse of the Elements and Curse of Doom.
+* fixed an error with some text timers when no target found [ticket #130]
+* fixed a possible taint issue [ticket #143]
+* localisation updates:
+  - fixed the soulstone cooldown duration in all languages except Chinese (need some help with those translations).
+  - Russian localisation provided by StingerSoft [ticket #119 and #120 resolved]
+  - French localisation provided by oXid_FoX [ticket #151 resolved]
+
+r224:
+* TOC and version number updated 
+* attention mount collectors: its now a lot easier to select your mounts!!!
+* Ritual of Summoning can be cast by Shift+Click on the Soulstone button
+* Haunt will now refresh the Corruption timer
+* updated spell cooldown timers:
+  - SoulShatter (3 mins)
+  - Fel Domination (3 mins)
+  - Infernal (10 mins)
+  - Soulstone Resurrection (15 mins)
+* removed the <target> parameter from some summoning messages (English only - the other languages need to be translated)
+
+r223:
+* max soulshard handling has been fixed by removing the inputbox and replacing with a slider
+
+r222:
+* fixed an issue with the keybinding templates
+* updated spell cooldown timers:
+  - Ritual of Doom (30 mins)
+  - Ritual of Summoning (2 mins)
+  - Demon Charge (45 seconds)
+  - Life Tap (40 seconds)
+  - Immolation Aura (30 seconds)
+  - Challenging Howl (15 seconds)
+  - Conflagrate (10 seconds)
+  - Life Tap (40 seconds)
+
+r221:
+* Curse of Recklessness removed in patch 3.1
+* TOC and version number updated
+r226:
+* TOC and version number updated for patch 3.3.5 (for real this time)
+
+r225:
+* TOC and version number updated for patch 3.3.5
+* fixed the keybindings for Corruption, Curse of the Elements and Curse of Doom.
+* fixed an error with some text timers when no target found [ticket #130]
+* fixed a possible taint issue [ticket #143]
+* localisation updates:
+  - fixed the soulstone cooldown duration in all languages except Chinese (need some help with those translations).
+  - Russian localisation provided by StingerSoft [ticket #119 and #120 resolved]
+  - French localisation provided by oXid_FoX [ticket #151 resolved]
+
+r224:
+* TOC and version number updated 
+* attention mount collectors: its now a lot easier to select your mounts!!!
+* Ritual of Summoning can be cast by Shift+Click on the Soulstone button
+* Haunt will now refresh the Corruption timer
+* updated spell cooldown timers:
+  - SoulShatter (3 mins)
+  - Fel Domination (3 mins)
+  - Infernal (10 mins)
+  - Soulstone Resurrection (15 mins)
+* removed the <target> parameter from some summoning messages (English only - the other languages need to be translated)
+
+r223:
+* max soulshard handling has been fixed by removing the inputbox and replacing with a slider
+
+r222:
+* fixed an issue with the keybinding templates
+* updated spell cooldown timers:
+  - Ritual of Doom (30 mins)
+  - Ritual of Summoning (2 mins)
+  - Demon Charge (45 seconds)
+  - Life Tap (40 seconds)
+  - Immolation Aura (30 seconds)
+  - Challenging Howl (15 seconds)
+  - Conflagrate (10 seconds)
+  - Life Tap (40 seconds)
+
+r221:
+* Curse of Recklessness removed in patch 3.1
+* TOC and version number updated
+lightweight tag 699f76f0033a2a4bc6a200d102d4c12cc154132a 8.8-bcc
+Author:	kricklen <dirion@gmx.net>
+Date:	Mon Jun 21 21:53:15 2021 +0200
+
+commit 699f76f0033a2a4bc6a200d102d4c12cc154132a
+Author: kricklen <dirion@gmx.net>
+Date:   Mon Jun 21 21:53:15 2021 +0200
+
+    Add Soulshatter button, fix master stone casts
+
