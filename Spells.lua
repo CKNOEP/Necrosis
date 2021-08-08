@@ -271,6 +271,8 @@ Notes:
 	[11733] = {UsageRank = 5, SpellRank = 3, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
 	[11734] = {UsageRank = 6, SpellRank = 4, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
 	[11735] = {UsageRank = 7, SpellRank = 5, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
+	[27260] = {UsageRank = 8, SpellRank = 6, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
+	
 	--TBC Fel Armor
 	--[28176]	= {UsageRank = 8, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
 	--[28189]	= {UsageRank = 9, SpellRank = 2, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --  

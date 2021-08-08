@@ -212,6 +212,7 @@ L["UPWARDS"] = "Upwards"
 L["DOWNWARDS"] = "Downwards"
 --
 L["TIMER_TYPE"] = "Timer type"
+L["TIMER_ALPHA"]  = "Transparency of timer bars"
 L["TIMER_SPELL"] = "Show the Spell Timer Button"
 L["TIMER_LEFT"] = "Show timers on the left side of the button"
 L["TIMER_UP"] = "Timers grow upwards"

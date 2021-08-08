@@ -463,6 +463,7 @@ Necrosis.Config.Menus.Orientation = {
 Necrosis.Config.Timers = {
 	["Type de timers"] = L["TIMER_TYPE"],
 	["Afficher le bouton des timers"] = L["TIMER_SPELL"],
+	["Transparence des timers"] = L["TIMER_ALPHA"],	
 	["Afficher les timers sur la gauche du bouton"] = L["TIMER_LEFT"],
 	["Afficher les timers de bas en haut"] = L["TIMER_UP"],
 }

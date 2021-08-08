@@ -89,6 +89,7 @@ Local.DefaultConfig = {
 	ShowSpellTimers = true,
 	AntiFearAlert = true,
 	CreatureAlert = true,
+	NecrosisAlphaBar = 1,
 	NecrosisLockServ = true,
 	NecrosisAngle = 180,
 	StonePosition = {1, 2, 3, 4, 5, 6, 7, 8, 9}, -- options to show or hide

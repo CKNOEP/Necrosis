@@ -161,7 +161,43 @@ function Necrosis:SetTimersConfig()
 		FontString:SetTextColor(1, 1, 1)
 		frame:SetFontString(FontString)
 		-- frame:SetDisabledTextColor(0.75, 0.75, 0.75)
+		
+		
+		-- transparence de la barre de sort
+		frame = CreateFrame("Slider", "NecrosisAlphaBar", NecrosisTimersConfig1, "OptionsSliderTemplate")
+		frame:SetMinMaxValues(1, 100)
+		frame:SetValueStep(1)
+		frame:SetObeyStepOnDrag(true)
+		frame:SetStepsPerPage(1)
+		frame:SetWidth(150)
+		frame:SetHeight(15)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("CENTER", NecrosisTimersConfig1, "BOTTOMLEFT", 225, 355)
 
+		frame:SetScript("OnEnter", function(self)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+			GameTooltip:SetText(self:GetValue())
+		end)
+		
+		frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
+		frame:SetScript("OnValueChanged", function(self) GameTooltip:SetText(math.floor(self:GetValue())) end)
+		frame:SetScript("OnMouseUp", function(self)
+			GameTooltip:SetText(self:GetValue())
+			NecrosisConfig.NecrosisAlphaBar = math.floor(self:GetValue())
+
+		end)
+		
+		local FontString = frame:CreateFontString("NecrosisAlphaBarT", "OVERLAY", "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("CENTER", frame, "CENTER", 0, 12)
+		FontString:SetTextColor(1, 1, 1)
+		
+
+
+		NecrosisAlphaBarLow:SetText("1")
+		NecrosisAlphaBarHigh:SetText("100")
 
 		-- Create page 2
 		frame = {}
@@ -254,11 +290,19 @@ function Necrosis:SetTimersConfig()
 	end
 
 	UIDropDownMenu_Initialize(NecrosisTimerSelection, Necrosis.Timer_Init)
-
+	
 	NecrosisTimerSelectionT:SetText(self.Config.Timers["Type de timers"])
 	NecrosisShowSpellTimerButton:SetText(self.Config.Timers["Afficher le bouton des timers"])
 	NecrosisTimerOnLeft:SetText(self.Config.Timers["Afficher les timers sur la gauche du bouton"])
 	NecrosisTimerUpward:SetText(self.Config.Timers["Afficher les timers de bas en haut"])
+	--transparence
+	NecrosisAlphaBarT:SetText(self.Config.Timers["Transparence des timers"])
+	if NecrosisConfig.NecrosisAlphaBar then
+		NecrosisAlphaBar:SetValue(NecrosisConfig.NecrosisAlphaBar)
+	else
+		NecrosisAlphaBar:SetValue(100)
+	end
+
 
 	UIDropDownMenu_SetSelectedID(NecrosisTimerSelection, (NecrosisConfig.TimerType + 1))
 	UIDropDownMenu_SetText(NecrosisTimerSelection, Necrosis.Config.Timers.Type[NecrosisConfig.TimerType + 1])
