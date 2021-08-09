@@ -1938,6 +1938,7 @@ function Necrosis:BuildButtonTooltip(button)
 		local cool = ""
 		local color = ""
 		local str = Necrosis.TooltipData[Type].Right..GetBindLocation()
+		local str2 = Necrosis.TooltipData[Type].Left
 		if Local.Stone.Hearth.Location[1] and Local.Stone.Hearth.Location[2] then
 			local startTime, duration, isEnabled = GetContainerItemCooldown(Local.Stone.Hearth.Location[1], Local.Stone.Hearth.Location[2])
 			if startTime == 0 then
@@ -1948,6 +1949,7 @@ function Necrosis:BuildButtonTooltip(button)
 			end
 		end
 		GameTooltip:AddLine(color..str..cool.."|r")
+		GameTooltip:AddLine(color..str2..cool.."|r")
 	-- ..... for the shadow trance button ||..... pour le bouton de la Transe de l'ombre
 	elseif (Type == "ShadowTrance") then
 		GameTooltip:SetText(Necrosis.TooltipData[Type].Label.."          |CFF808080"..Necrosis.GetSpellCastName("bolt").."|r")
@@ -1959,17 +1961,18 @@ function Necrosis:BuildButtonTooltip(button)
 -- TTip Left MOUNT			
 		if NecrosisConfig.LeftMount then
 			local LeftMountName = Necrosis.Utils.GetSpellName(NecrosisConfig.LeftMount)
+			
 			if LeftMountName then
-					local wrapText = "<-"..LeftMountName
-					--print(wrapText)
-					GameTooltip:AddLine("Mount1 : "..wrapText);	
+					local icon_texture = GetSpellTexture(NecrosisConfig.LeftMount)
+					GameTooltip:AddDoubleLine(L["BUTTONS_LEFT"]," |T"..icon_texture..":0:0:0:0|t".." "..LeftMountName);
 			else
 			
 			local LeftMountName = Necrosis.Utils.GetItemInfo(NecrosisConfig.LeftMount);
+			local icon_texture = GetItemIcon(NecrosisConfig.LeftMount)
 			if LeftMountName then
-					local wrapText = "<-"..LeftMountName	
+					local wrapText = LeftMountName	
 					--print(wrapText)
-					GameTooltip:AddLine("Mount1 : "..wrapText);	
+					GameTooltip:AddDoubleLine(L["BUTTONS_LEFT"]," |T"..icon_texture..":0:0:0:0|t".." "..LeftMountName);	
 			end
 			end		
 							
@@ -1980,18 +1983,21 @@ function Necrosis:BuildButtonTooltip(button)
 -- TTip RIGHT MOUNT		
 		if NecrosisConfig.RightMount then
 			local RightMountName = Necrosis.Utils.GetSpellName(NecrosisConfig.RightMount)
-			if RightMountName then
-					local wrapText = RightMountName.."->"
-					
-					GameTooltip:AddDoubleLine(_,"Mount2:"..wrapText);
-					--GameTooltip:AddLine("Mount2:"..wrapText);	
+			
+			--if mount is spell
+			if RightMountName then 
+					local icon_texture = GetSpellTexture(NecrosisConfig.RightMount)
+					GameTooltip:AddDoubleLine(L["BUTTONS_RIGHT"]," |T"..icon_texture..":0:0:0:0|t".." "..RightMountName);
 			else
 			
+			--else the the mount is item	
 			local RightMountName = Necrosis.Utils.GetItemInfo(NecrosisConfig.RightMount);
+			
+			local icon_texture = GetItemIcon(NecrosisConfig.RightMount)
 			if RightMountName then
-					local wrapText = RightMountName.."->"	
+					local wrapText = NecrosisConfig.RightMount	
 					
-					GameTooltip:AddLine("Mount2:"..wrapText);	
+					GameTooltip:AddDoubleLine(L["BUTTONS_RIGHT"]," |T"..icon_texture..":0:0:0:0|t".." "..RightMountName);
 			end
 			end		
 							

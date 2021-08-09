@@ -197,7 +197,8 @@ Necrosis.TooltipData = {
 	["SpellTimer"] = {
 		Label = L["SPELLTIMER_LABEL"],
 		Text = L["SPELLTIMER_TEXT"],
-		Right = L["SPELLTIMER_RIGHT"]
+		Right = L["SPELLTIMER_RIGHT"],
+		Left = L["SPELLTIMER_LEFT"]
 	},
 	["ShadowTrance"] = {
 		Label = L["SHADOW_TRANCE_LABEL"]

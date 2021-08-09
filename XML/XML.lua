@@ -23,10 +23,19 @@ function Necrosis:CreateTimerAnchor()
 		if not f then
 			f = CreateFrame("Frame", "NecrosisTimerFrame0", UIParent)
 			f:SetWidth(150)
-			f:SetHeight(10)
+			f:SetHeight(150)
+			f:SetMovable(true)
+			f:EnableMouse(true)
+			
 			f:Show()
 			f:ClearAllPoints()
 			f:SetPoint("LEFT", ft, "CENTER", 50, 0)
+		
+			f:SetScript("OnLoad", function(self)
+			self:RegisterForDrag("LeftButton")
+			self:RegisterForClicks("RightButtonUp")
+			end)
+		
 		end
 	elseif NecrosisConfig.TimerType == 2 then
 		-- Create the text timer || Création de la liste des Timers Textes
@@ -76,7 +85,7 @@ function Necrosis:CreateWarlockUI()
 		self:RegisterForClicks("RightButtonUp")
 	end)
 	frame:SetScript("OnEnter", function(self) Necrosis:BuildButtonTooltip(self) end)
---	frame:SetScript("OnEnter", function(self) Necrosis:BuildTooltip(self, "SpellTimer", "ANCHOR_RIGHT", "Timer") end)
+	--frame:SetScript("OnEnter", function(self) Necrosis:BuildTooltip(self, "SpellTimer", "ANCHOR_RIGHT", "Timer") end)
 	frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
 	frame:SetScript("OnMouseUp", function(self) Necrosis:OnDragStop(self) end)
 	frame:SetScript("OnDragStart", function(self) Necrosis:OnDragStart(self) end)
