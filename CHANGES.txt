@@ -1,6 +1,7 @@
-R7.6.9.12:
-*Add cursor for the transparency of the timer
+R7.6.9.12-14:
+*Add cursor for the transparency of the timer- default value 0.85
 *Fix last rank armor  demoniac on the sphere
+*UI update  : Mount, Sphere ToolTip 
 
 R7.6.9.11:
 * Add Lights up spell activation when Shadow Trance or Bakslash
