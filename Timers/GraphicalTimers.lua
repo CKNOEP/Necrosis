@@ -177,7 +177,7 @@ function Necrosis:AddFrame(FrameName,spellTexture)
 	StatusBar:SetHeight(15)
 	StatusBar:SetStatusBarTexture("Interface\\TargetingFrame\\UI-StatusBar")
 	StatusBar:SetStatusBarColor(1, 1, 1, 1)
-	StatusBar:SetAlpha(NecrosisConfig.NecrosisAlphaBar/100); 
+	StatusBar:SetAlpha(85/100); 
 	StatusBar:SetFrameLevel(StatusBar:GetFrameLevel() - 1)
 	StatusBar:ClearAllPoints()
 	StatusBar:SetPoint(NecrosisConfig.SpellTimerJust, FrameName, NecrosisConfig.SpellTimerJust, 10, 0)
@@ -203,7 +203,7 @@ function Necrosis:AddFrame(FrameName,spellTexture)
 	Icon_Spell:SetTexture(spellTexture)
 	Icon_Spell:ClearAllPoints()
 	Icon_Spell:SetPoint("TOPLEFT", StatusBar, "TOPLEFT", -17, 0)
-	Icon_Spell:SetAlpha(NecrosisConfig.NecrosisAlphaBar/100); 
+	Icon_Spell:SetAlpha(85/100); 
 	Icon_Spell:Show()
 	--print(FrameName,_G[FrameName.."Icon"]:GetTexture())
 	

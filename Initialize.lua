@@ -155,10 +155,15 @@ function Necrosis:Initialize(Config)
 	if NecrosisConfig.Timers then -- just in case... was added in 7.2
 	else	
 		NecrosisConfig.Timers = Config.Timers
+		
 	end
-	Necrosis.UpdateSpellTimers(NecrosisConfig.Timers)
+	--  Add new parameter between 2 version
+	if NecrosisConfig.NecrosisAlphaBar then
+	else
+	NecrosisConfig.NecrosisAlphaBar = 85 -- just in case... was added in 7.6
+	end
 	
-	
+	Necrosis.UpdateSpellTimers(NecrosisConfig.Timers)-- init timers
 	self:CreateWarlockUI()
 	self:CreateWarlockPopup()
 	-----------------------------------------------------------
