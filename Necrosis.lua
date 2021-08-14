@@ -161,7 +161,8 @@ Local.DefaultConfig = {
 	FramePosition = {
 		["NecrosisSpellTimerButton"] = {"CENTER", "UIParent", "CENTER", 100, 300},
 		["NecrosisButton"] = {"CENTER", "UIParent", "CENTER", 0, -200},
-		["NecrosisCreatureAlertButton"] = {"CENTER", "UIParent", "CENTER", -60, 0},
+		["NecrosisCreatureAlertButton_elemental"] = {"CENTER", "UIParent", "CENTER", -60, 0},
+		["NecrosisCreatureAlertButton_demon"] = {"CENTER", "UIParent", "CENTER", -50, 0},		
 		["NecrosisAntiFearButton"] = {"CENTER", "UIParent", "CENTER", -20, 0},
 		["NecrosisShadowTranceButton"] = {"CENTER", "UIParent", "CENTER", 20, 0},
 		["NecrosisBacklashButton"] = {"CENTER", "UIParent", "CENTER", 60, 0},
@@ -1357,78 +1358,30 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
 		if NecrosisConfig.AntiFearAlert and Local.Warning.Antifear.Immune then
 			Local.Warning.Antifear.Immune = false
 		end
-		if NecrosisConfig.CreatureAlert
-			and UnitCanAttack("player", "target")
-			and not UnitIsDead("target") then
-				Local.Warning.Banishable = true
-	-- Button Alerte Demon	
+		if NecrosisConfig.CreatureAlert	and UnitCanAttack("player", "target") and not UnitIsDead("target") then
+		
+		usable, nomana = IsUsableSpell(Necrosis.GetSpellName("enslave"));
+		print(usable,nomana)
+		
 			if UnitCreatureType("target") == Necrosis.Unit.Demon then 	
-						if UnitAffectingCombat("player") == false then 
-						NecrosisCreatureAlertButton:Show() 
-						
-						NecrosisCreatureAlertButton:SetNormalTexture("Interface\\Addons\\Necrosis\\UI\\DemonAlert")
-						
-						--Todo q:
-						--Ajoute une fonction onclick pour asservir
-						DemmonToolTip = CreateFrame("GameTooltip","EnslaveToolTip",NecrosisCreatureAlertButton,"GameTooltipTemplate")
-						DemmonToolTip:SetOwner( NecrosisCreatureAlertButton, "ANCHOR_RIGHT" );
-						DemmonToolTip:SetText("Enslave", 0.7, 0, 1)		
-						NecrosisCreatureAlertButton:SetScript("OnEnter", function(self) Necrosis:BuildButtonTooltip(DemmonToolTip) end)
-						NecrosisCreatureAlertButton:SetScript("OnLeave", function() GameTooltip:Hide() end)
-						DemmonToolTip:Hide()
-						
-						local high = Necrosis.GetSpellCastName("enslave")
-											
-						NecrosisCreatureAlertButton:SetAttribute("type*", "spell")
-						NecrosisCreatureAlertButton:SetAttribute("spell",high)
-						end
-					
-	-- Button Alerte Elemental				
+			NecrosisCreatureAlertButton_demon:SetAlpha(1)		-- Button Alerte Demon	
+			NecrosisCreatureAlertButton_elemental:SetAlpha(1)-- Button Alerte Elemental
+			
 			elseif UnitCreatureType("target") == Necrosis.Unit.Elemental then
-						if UnitAffectingCombat("player") == false then 
-						NecrosisCreatureAlertButton:Show()
-						
-						NecrosisCreatureAlertButton:SetNormalTexture("Interface\\Addons\\Necrosis\\UI\\ElemAlert")
-								--Frame TooltipData
-								ElementalToolTip = CreateFrame("GameTooltip","BanElementalToolTip",NecrosisCreatureAlertButton,"GameTooltipTemplate")
-								ElementalToolTip:SetOwner( NecrosisCreatureAlertButton, "ANCHOR_RIGHT" );
-								ElementalToolTip:SetText("Ban", 0.7, 0, 1)
-								--ElementalToolTip:AddLine("qsd ", 1, 1, 1)
-								NecrosisCreatureAlertButton:SetScript("OnEnter", function(self) Necrosis:BuildButtonTooltip(ElementalToolTip) end)
-								NecrosisCreatureAlertButton:SetScript("OnLeave", function() GameTooltip:Hide() end)
-								ElementalToolTip:Hide()
-						--Todo :
-						--Ajoute une fonction onclick pour bannir
-						--NecrosisCreatureAlertButton:SetScript("OnClick",function(self, button)
-						
-						local high = Necrosis.GetSpellCastName("banish")
-						local derank = string.gsub(high, 2, 1)
-						
-						NecrosisCreatureAlertButton:SetAttribute("type1", "spell")
-						NecrosisCreatureAlertButton:SetAttribute("type2", "spell2")
-						NecrosisCreatureAlertButton:SetAttribute("spell",high)
-						NecrosisCreatureAlertButton:SetAttribute("spell2",derank)
-						else
-						
-						end
+			NecrosisCreatureAlertButton_elemental:SetAlpha(1)-- Button Alerte Elemental
+			
 			else
-
-			if UnitAffectingCombat("player") == false then NecrosisCreatureAlertButton:Hide() end
-				
+			NecrosisCreatureAlertButton_demon:SetAlpha(0) 
+			NecrosisCreatureAlertButton_elemental:SetAlpha(0) 
+			
 			end
 		else
-			if Local.Warning.Banishable then
-		
-			Local.Warning.Banishable = false
-			if UnitAffectingCombat("player") == false then NecrosisCreatureAlertButton:Hide() end
-			
-			else
+		NecrosisCreatureAlertButton_demon:SetAlpha(0) 
+		NecrosisCreatureAlertButton_elemental:SetAlpha(0) 	
+		--print(UnitCreatureType("target"))
 
 			
-			if UnitAffectingCombat("player") == false then NecrosisCreatureAlertButton:Hide() end
-
-			end
-		end
+	  end
 	-- If the Warlock learns a new spell / spell, we get the new spells list || Si le Démoniste apprend un nouveau sort / rang de sort, on récupère la nouvelle liste des sorts
 	-- If the Warlock learns a new buff or summon spell, the buttons are recreated || Si le Démoniste apprend un nouveau sort de buff ou d'invocation, on recrée les boutons
 	elseif (event == "LEARNED_SPELL_IN_TAB") then
@@ -1751,15 +1704,19 @@ function Necrosis:BuildButtonTooltip(button)
 		return
 	end
 
-	local f = button:GetName()
-	--print(f)
-	if f == "BanElementalToolTip" then f = "NecrosisBuffMenu09" end
-	if f == "EnslaveToolTip" then f = "NecrosisPetMenu08" end
+
+	
+	if button == "ElementalToolTip" then button = NecrosisBuffMenu09 end -- lorsque button provient du bouton spécial elem/demon
+	if button == "EnslaveToolTip" then button = NecrosisPetMenu08 end
+	
+	local f = button:GetName()	
+		
 	local Type = ""
 	local b = nil
 	-- look up the button info
 	for i, v in pairs (Necrosis.Warlock_Buttons) do
-		--print (Necrosis.Warlock_Buttons[i].tip)
+		
+	
 		if v.f == f then
 			Type = Necrosis.Warlock_Buttons[i].tip
 			b = v
@@ -1767,10 +1724,11 @@ function Necrosis:BuildButtonTooltip(button)
 		else
 		end
 	end
-	--print (b.tip)
-	if b.tip == nil then
+	
+	if b == nil or b.tip == nil then
 		return -- a button we are not interested in was given
 	else
+	
 		Type = b.tip
 	end
 

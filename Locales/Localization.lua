@@ -183,6 +183,8 @@ L["BUTTONS_MOUNT"] = "Use my own mounts"
 L["BUTTONS_SELECTION"] = "Selection of buttons to be shown"
 L["BUTTONS_LEFT"] = "Mount - Left click"
 L["BUTTONS_RIGHT"] = "Mount - Right click"
+L["BUTTONS_L"] = "Left click"
+L["BUTTONS_R"] = "Right click"
 L["BUTTONS_CTRL-LEFT"] = "Mount - Ctrl + Left click"
 L["BUTTONS_CTRL-RIGHT"] = "Mount - Ctrl + Right click"
 

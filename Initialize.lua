@@ -164,6 +164,10 @@ function Necrosis:Initialize(Config)
 	end
 	
 	Necrosis.UpdateSpellTimers(NecrosisConfig.Timers)-- init timers
+	
+	-- Création de la liste des sorts disponibles
+	self:SpellSetup("Initialize")
+	-- Dessine les UI et button Popoup
 	self:CreateWarlockUI()
 	self:CreateWarlockPopup()
 	-----------------------------------------------------------
@@ -171,8 +175,6 @@ function Necrosis:Initialize(Config)
 	-----------------------------------------------------------
 	-- Affichage d'un message sur la console
 	self:Msg(self.ChatMessage.Interface.Welcome, "USER")
-	-- Création de la liste des sorts disponibles
-	self:SpellSetup("Initialize")
 
     -- Enregistrement de la commande console
 	SlashCmdList["NecrosisCommand"] = Necrosis.SlashHandler

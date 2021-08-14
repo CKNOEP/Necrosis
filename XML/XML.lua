@@ -5,8 +5,9 @@
 
 -- On définit G comme étant le tableau contenant toutes les frames existantes.
 local _G = getfenv(0)
+local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
 
-local function White(str)
+function White(str)
 	return "|c00FFFFFF"..str.."|r"
 end
 
@@ -445,13 +446,67 @@ function Necrosis:CreateWarlockPopup()
 	)
 
 ------------------------------------------------------------------------------------------------------
-	-- Create the Elemental alert button || Creation du bouton de détection des cibles banissables / asservissables
+	-- Create the Elemental alert button || 
 	frame = nil
-	frame = _G["NecrosisCreatureAlertButton"]
-	if not frame then
-		frame = CreateFrame("Button", "NecrosisCreatureAlertButton", UIParent, "SecureActionButtonTemplate")
-
 	
+	frame = _G["NecrosisCreatureAlertButton_demon"]
+	if not frame then
+		frame = CreateFrame("Button", "NecrosisCreatureAlertButton_demon", UIParent,  "SecureActionButtonTemplate")
+	end
+
+	-- Define its attributes || Définition de ses attributs
+	frame:SetMovable(true)
+	frame:EnableMouse(true)
+	frame:SetFrameStrata("HIGH")
+	frame:SetWidth(40)
+	frame:SetHeight(40)
+	frame:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\DemonAlert")
+	frame:RegisterForDrag("LeftButton")
+	frame:RegisterForClicks("AnyUp")
+	frame:SetAlpha(0/100)
+	local high = Necrosis.GetSpellCastName("enslave")
+	frame:SetAttribute("type1", "macro")
+	frame:SetAttribute("type2", "macro")
+	frame:SetAttribute("macrotext1","/focus\n/cast "..high)
+	frame:SetAttribute("macrotext2","/focus\n/cast "..high)
+	-- Edit the scripts associated with the button || Edition des scripts associés au bouton
+	frame:SetScript("OnMouseUp", function(self) Necrosis:OnDragStop(self) end)
+	frame:SetScript("OnDragStart", function(self) Necrosis:OnDragStart(self) end)
+	frame:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
+	frame:SetScript("OnEnter", function(self) 
+
+		if frame:GetAlpha() == 0 then
+		else
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+		GameTooltip:SetText(White(Necrosis.GetSpellName("enslave")))
+		GameTooltip:AddDoubleLine(L["BUTTONS_L"], high)
+		GameTooltip:AddDoubleLine(L["BUTTONS_R"], high)						
+		GameTooltip:Show()
+		end
+	
+	end)
+	frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
+
+	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
+	if NecrosisConfig.FramePosition then
+		if NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_demon"] then
+			frame:ClearAllPoints()
+			frame:SetPoint(
+				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_demon"][1],
+				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_demon"][2],
+				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_demon"][3],
+				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_demon"][4],
+				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_demon"][5]
+			)
+		end
+	else
+		frame:ClearAllPoints()
+		frame:SetPoint("CENTER", UIParent, "CENTER", -50, 0)
+	end
+
+	frame = _G["NecrosisCreatureAlertButton_elemental"]
+	if not frame then
+		frame = CreateFrame("Button", "NecrosisCreatureAlertButton_elemental", UIParent,  "SecureActionButtonTemplate")
 	end
 
 	-- Define its attributes || Définition de ses attributs
@@ -463,25 +518,46 @@ function Necrosis:CreateWarlockPopup()
 	frame:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\ElemAlert")
 	frame:RegisterForDrag("LeftButton")
 	frame:RegisterForClicks("AnyUp")
-	frame:Hide()
+	frame:SetAlpha(0/100)
+	local hight_rank = Necrosis.GetSpellCastName("banish")
+	local derank = string.gsub(hight_rank, 2, 1)
+	frame:SetAttribute("type1", "macro")
+	frame:SetAttribute("type2", "macro")
+	frame:SetAttribute("macrotext1","/focus\n/cast "..hight_rank)
+	frame:SetAttribute("macrotext2","/focus\n/cast "..derank)
+	
+	
 
 	-- Edit the scripts associated with the button || Edition des scripts associés au bouton
 	frame:SetScript("OnMouseUp", function(self) Necrosis:OnDragStop(self) end)
 	frame:SetScript("OnDragStart", function(self) Necrosis:OnDragStart(self) end)
 	frame:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
-	
+	frame:SetScript("OnEnter", function(self) 
+		--Necrosis:BuildButtonTooltip("ElementalToolTip")
+		--print(Frame:GetAlpha()) 
+		if frame:GetAlpha() == 0 then
+		-- NOTHING TO SHOW			
+		else
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+		GameTooltip:SetText(White(Necrosis.GetSpellName("banish")))
+		GameTooltip:AddDoubleLine(L["BUTTONS_L"], hight_rank)
+		GameTooltip:AddDoubleLine(L["BUTTONS_R"], derank)			
+		GameTooltip:Show()
+		end
+	end)
+	frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
 
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
 	if NecrosisConfig.FramePosition then
-		if NecrosisConfig.FramePosition["NecrosisCreatureAlertButton"] then
+		if NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_elemental"] then
 			frame:ClearAllPoints()
 			frame:SetPoint(
-				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton"][1],
-				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton"][2],
-				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton"][3],
-				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton"][4],
-				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton"][5]
+				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_elemental"][1],
+				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_elemental"][2],
+				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_elemental"][3],
+				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_elemental"][4],
+				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_elemental"][5]
 			)
 		end
 	else
@@ -489,6 +565,9 @@ function Necrosis:CreateWarlockPopup()
 		frame:SetPoint("CENTER", UIParent, "CENTER", -50, 0)
 	end
 
+	
+	-- TTIP
+		
 ------------------------------------------------------------------------------------------------------
 	-- Create the AntiFear button || Creation du bouton de détection des cibles protégées contre la peur
 	local frame = _G["NecrosisAntiFearButton"]
@@ -510,6 +589,7 @@ function Necrosis:CreateWarlockPopup()
 	frame:SetScript("OnMouseUp", function(self) Necrosis:OnDragStop(self) end)
 	frame:SetScript("OnDragStart", function(self) Necrosis:OnDragStart(self) end)
 	frame:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
+
 
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
 	if NecrosisConfig.FramePosition then

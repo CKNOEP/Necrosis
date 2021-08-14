@@ -696,9 +696,12 @@ Necrosis.Warlock_Buttons = {
 	backlash 	= {f = "NecrosisBacklashButton", anchor = "ANCHOR_RIGHT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Backlash-Icon",
 					pos = {"CENTER", "UIParent", "CENTER", 60, 0},}, --
-	elemental 	= {f = "NecrosisCreatureAlertButton",
+	elemental 	= {f = "NecrosisCreatureAlertButton_elemental",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\ElemAlert",
-					pos = {"CENTER", "UIParent", "CENTER", -60, 0},}, --
+					pos = {"CENTER", "UIParent", "CENTER", 140, 0},}, --
+	demon 	    = {f = "NecrosisCreatureAlertButton_demon",
+					norm = "Interface\\AddOns\\Necrosis\\UI\\ElemDemon",
+					pos = {"CENTER", "UIParent", "CENTER", 100, 0},}, --
 	anti_fear 	= {f = "NecrosisAntiFearButton",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\AntiFear-01",
 					pos = {"CENTER", "UIParent", "CENTER", -20, 0},}, --
@@ -996,15 +999,16 @@ function Necrosis.GetSpellById(id) -- return the Warlock_Spells table (pointer)
 end
 
 function Necrosis.GetSpellCastName(usage)
+	
 	if Necrosis.Warlock_Spell_Use[usage] -- 
 	then
+	
 		if usage == "soulstone" then
 		--print("SS",Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].CastName)
 		end
 		
-		return 
-			
-			Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].CastName
+		return	
+		Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].CastName
 	else
 		return
 	end
@@ -1226,6 +1230,7 @@ end
 -- Select the highest available spell in the case of stones. || Pour les pierres, elle sélectionne le plus haut rang connu
 function Necrosis:SpellSetup(reason)
 --    print("SpellSetup")
+	
 	Necrosis.Warlock_Spell_Use = {}
 
 	local spellID = 1

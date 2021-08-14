@@ -56,15 +56,16 @@ Speech\Speech-ru.lua
 
 Message.lua
 Spells.lua
-
 SpellActivations\SpellActivations.lua
 
 Timers\Functions.lua
 Timers\GraphicalTimers.lua
 Timers\OtherTimers.lua
 
+
+
+
 XML\Attributes.lua
-XML\XML.lua
 
 XML\Panel.lua
 XML\Options-Messages.lua
@@ -75,3 +76,4 @@ XML\Options-Timers.lua
 XML\Options-Misc.lua
 
 Necrosis.lua
+XML\XML.lua

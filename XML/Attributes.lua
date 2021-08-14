@@ -202,16 +202,15 @@ function Necrosis:SetBuffSpellAttribute(button)
 			local Rank1 = self.Warlock_Spells[710].InSpellBook and self.Warlock_Spells[710].CastName
 			if Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[f.high_of]].SpellRank == 2 then -- has rank 2
 				local Rank2 = self.Warlock_Spells[18647].InSpellBook and self.Warlock_Spells[18647].CastName
+				
 				-- so lets use the "harmbutton" special attribute!
 				-- assign Banish(rank 2) to LEFT click 
-				f:SetAttribute("harmbutton"..l_click, "banishrank2")
-				f:SetAttribute("type-banishrank2", "macro")
-				f:SetAttribute("macrotext-banishrank2", "/focus\n/cast "..Rank2)
+				f:SetAttribute("type1", "macro")
+				f:SetAttribute("macrotext1", "/focus\n/cast "..Rank1)
 				
 				-- assign Banish(rank 1) to RIGHT click 
-				f:SetAttribute("harmbutton"..r_click, "banishrank1")
-				f:SetAttribute("type-banishrank1", "macro")
-				f:SetAttribute("macrotext-banishrank1", "/focus\n/cast "..Rank1) 
+				f:SetAttribute("type2", "macro")
+				f:SetAttribute("macrotext2q", "/focus\n/cast "..Rank2)
 
 				-- allow focused target to be rebanished with CTRL+LEFT or RIGHT click
 				f:SetAttribute("ctrl-type"..l_click, "spell")
@@ -342,8 +341,9 @@ function Necrosis:CurseSpellAttribute()
 		local fr = Necrosis.Warlock_Buttons[v.f_ptr].f
 		if Necrosis.IsSpellKnown(v.high_of) -- in spell book
 --		and NecrosisConfig.DemonSpellPosition[i] > 0 -- and requested
+		
 		then
-			Necrosis:SetCurseSpellAttribute(fr)
+			
 		end
 	end
 end
