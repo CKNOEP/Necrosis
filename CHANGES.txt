@@ -1,3 +1,6 @@
+R7.6.9.16
+*redesign of the ban button now usable in combat
+
 R7.6.9.12-14:
 *Add cursor for the transparency of the timer- default value 0.85
 *Fix last rank armor  demoniac on the sphere
