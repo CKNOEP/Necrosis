@@ -1010,7 +1010,7 @@ function Necrosis.GetSpellCastName(usage)
 		return	
 		Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].CastName
 	else
-		return
+		return ""
 	end
 end
 

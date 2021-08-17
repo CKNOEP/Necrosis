@@ -465,6 +465,9 @@ function Necrosis:CreateWarlockPopup()
 	frame:RegisterForClicks("AnyUp")
 	frame:SetAlpha(0/100)
 	local high = Necrosis.GetSpellCastName("enslave")
+	
+	if high == nil then high = "" end -- if the spell is not Know
+	--else
 	frame:SetAttribute("type1", "macro")
 	frame:SetAttribute("type2", "macro")
 	frame:SetAttribute("macrotext1","/focus\n/cast "..high)
@@ -520,7 +523,17 @@ function Necrosis:CreateWarlockPopup()
 	frame:RegisterForClicks("AnyUp")
 	frame:SetAlpha(0/100)
 	local hight_rank = Necrosis.GetSpellCastName("banish")
-	local derank = string.gsub(hight_rank, 2, 1)
+	
+	local derank = ""
+	
+	if hight_rank == nil then 
+	derank = ""
+	hight_rank = ""
+	else
+	derank = string.gsub(hight_rank, 2, 1)
+	end
+	
+
 	frame:SetAttribute("type1", "macro")
 	frame:SetAttribute("type2", "macro")
 	frame:SetAttribute("macrotext1","/focus\n/cast "..hight_rank)

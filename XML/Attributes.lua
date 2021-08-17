@@ -382,6 +382,9 @@ function Necrosis:StoneAttribute(Steed)
 		if f then
 			f:SetAttribute("type2", "spell")
 			f:SetAttribute("spell2", Necrosis.GetSpellCastName("healthstone")) 
+			f:SetAttribute("shift-type*", "spell")
+			f:SetAttribute("shift-spell*", Necrosis.GetSpellCastName("Ritual_of_Souls")) 			
+
 		end
 	end
 	
