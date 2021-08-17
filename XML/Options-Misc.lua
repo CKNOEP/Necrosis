@@ -207,7 +207,7 @@ function Necrosis:SetMiscConfig()
 			end
 		end)
 
-		FontString = frame:CreateFontStridng(nil, nil, "GameFontNormalSmall")
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
 		FontString:Show()
 		FontString:ClearAllPoints()
 		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
