@@ -349,7 +349,9 @@ function Necrosis.Timer_Click(self)
 	UIDropDownMenu_SetSelectedID(NecrosisTimerSelection, ID)
 	NecrosisConfig.TimerType = ID - 1
 	if not (ID == 1) then Necrosis:CreateTimerAnchor() end
-	if ID == 1 then
+	
+	
+	if ID == 1 then -- Disable Timer
 		NecrosisTimerUpward:Disable()
 		NecrosisTimerOnLeft:Disable()
 		if _G["NecrosisListSpells"] then NecrosisListSpells:SetText("") end
@@ -358,7 +360,7 @@ function Necrosis.Timer_Click(self)
 			_G["NecrosisTimerFrame"..index]:Hide()
 			index = index + 1
 		end
-	elseif ID == 3 then
+	elseif ID == 3 then -- Timer Texture Text
 		NecrosisTimerUpward:Disable()
 		NecrosisTimerOnLeft:Enable()
 		local index = 1
@@ -366,9 +368,10 @@ function Necrosis.Timer_Click(self)
 			_G["NecrosisTimerFrame"..index]:Hide()
 			index = index + 1
 		end
-	else
-		NecrosisTimerUpward:Enable()
-		NecrosisTimerOnLeft:Enable()
+	else -- Timer graphique
+
+
+		SetupBuffTimers()
 		if _G["NecrosisListSpells"] then NecrosisListSpells:SetText("") end
 	end
 end

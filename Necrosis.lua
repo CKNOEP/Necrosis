@@ -884,7 +884,7 @@ This routine is invoked during initialization to get warlock buffs, if any.
 However, it seems buffs are not available until after Necrosis initializes on a login. 
 Use variables above and OnUpdate to get them, if needed.
 --]]
-local function SetupBuffTimers()
+function SetupBuffTimers()
 --		print(("%d=%s, %s, %.2f minutes left."):format(i,name,icon,(etime-GetTime())/60))
 	if Necrosis.Debug.init_path then
 		print("SetupBuffTimers"
@@ -956,6 +956,7 @@ end
 
 -- Function started when updating the interface (main) - every 0.1 seconds || Fonction lancée à la mise à jour de l'interface (main) -- Toutes les 0,1 secondes environ
 function Necrosis:OnUpdate(something, elapsed)
+	
 	Local.LastUpdate[1] = Local.LastUpdate[1] + elapsed
 	Local.LastUpdate[2] = Local.LastUpdate[2] + elapsed
 

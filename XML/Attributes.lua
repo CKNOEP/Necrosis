@@ -310,6 +310,7 @@ end
 
 -- On associe les malédictions au clic sur le bouton concerné
 function Necrosis:SetCurseSpellAttribute(button)
+
 	if InCombatLockdown() then
 		return
 	end
@@ -343,7 +344,7 @@ function Necrosis:CurseSpellAttribute()
 --		and NecrosisConfig.DemonSpellPosition[i] > 0 -- and requested
 		
 		then
-			
+		Necrosis:SetCurseSpellAttribute(fr)	
 		end
 	end
 end

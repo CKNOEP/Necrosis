@@ -455,7 +455,7 @@ function Necrosis:CreateWarlockPopup()
 	end
 
 	-- Define its attributes || Définition de ses attributs
-	frame:SetMovable(true)
+	frame:SetMovable(false)
 	frame:EnableMouse(true)
 	frame:SetFrameStrata("HIGH")
 	frame:SetWidth(40)
