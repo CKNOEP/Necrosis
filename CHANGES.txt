@@ -1,3 +1,8 @@
+R7.6.9.18
+*Ritual of soul in the healthstone button
+*Ban button before lvl 48
+*fix undesirable message with print()
+
 R7.6.9.16
 *redesign of the ban button now usable in combat
 
