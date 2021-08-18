@@ -456,7 +456,7 @@ function Necrosis:CreateWarlockPopup()
 
 	-- Define its attributes || Définition de ses attributs
 	frame:SetMovable(false)
-	frame:EnableMouse(true)
+	frame:EnableMouse(false)
 	frame:SetFrameStrata("HIGH")
 	frame:SetWidth(40)
 	frame:SetHeight(40)
@@ -479,6 +479,9 @@ function Necrosis:CreateWarlockPopup()
 	frame:SetScript("OnEnter", function(self) 
 
 		if frame:GetAlpha() == 0 then
+	
+		GameTooltip:Hide()
+		frame:EnableMouse(false)
 		else
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 		GameTooltip:SetText(White(Necrosis.GetSpellName("enslave")))
@@ -547,15 +550,17 @@ function Necrosis:CreateWarlockPopup()
 	frame:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
 	frame:SetScript("OnEnter", function(self) 
 		--Necrosis:BuildButtonTooltip("ElementalToolTip")
-		--print(Frame:GetAlpha()) 
+		
 		if frame:GetAlpha() == 0 then
 		-- NOTHING TO SHOW			
+		frame:EnableMouse(false)
 		else
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 		GameTooltip:SetText(White(Necrosis.GetSpellName("banish")))
 		GameTooltip:AddDoubleLine(L["BUTTONS_L"], hight_rank)
 		GameTooltip:AddDoubleLine(L["BUTTONS_R"], derank)			
 		GameTooltip:Show()
+
 		end
 	end)
 	frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
