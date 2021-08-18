@@ -431,11 +431,11 @@ Notes:
 	
 	
 -- To do Demonic Sacrifice
-	[18789] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Imp", Length = 300, Buff = true, }, --
-	[18790] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Voidwalker", Length = 300, Buff = true, }, -- 
-	[18791] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Succubus", Length = 300, Buff = true, }, -- 
-	[18792] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Felhunter", Length = 300, Buff = true, }, -- 
-	[35701] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Felguard", Length = 300, Buff = true, }, -- 
+	[18789] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Imp", Length = 1800, Buff = true, }, --
+	[18790] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Voidwalker", Length = 1800, Buff = true, }, -- 
+	[18791] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Succubus", Length = 1800, Buff = true, }, -- 
+	[18792] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Felhunter", Length = 1800, Buff = true, }, -- 
+	[35701] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Felguard", Length = 1800, Buff = true, }, -- 
 
 
 	

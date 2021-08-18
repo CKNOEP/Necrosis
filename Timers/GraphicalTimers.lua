@@ -186,12 +186,6 @@ function Necrosis:AddFrame(FrameName,spellTexture)
 	StatusBar.bg:SetTexture("Interface\\TARGETINGFRAME\\UI-StatusBar")
 	StatusBar.bg:SetAllPoints(true)
 	StatusBar.bg:SetVertexColor(0, 0, 0 , 1/2)
-
-
-
-
-
-
 	StatusBar:Show()
 	StatusBar.bg:Show()
 	
@@ -227,8 +221,16 @@ end
 ------------------------------------------------------------------------------------------------------
 
 function NecrosisUpdateTimer(tableau, Changement)
-	if not (NecrosisConfig.TimerType == 1 and tableau[1]) then
+	if not (NecrosisConfig.TimerType == 1 and tableau[1]) 
+	then
 		return
+	else
+	
+ 	table.sort(tableau, function(a,b) return a.Time < b.Time end)
+	
+	--for k,v in pairs(tableau) do print(k,v,v.Time) end
+
+	
 	end
 
 	local LastPoint = {}
@@ -255,7 +257,9 @@ function NecrosisUpdateTimer(tableau, Changement)
 		local Spark = _G["NecrosisTimerFrame"..tableau[index].Gtimer.."Spark"]
 		local Text = _G["NecrosisTimerFrame"..tableau[index].Gtimer.."OutText"]
 		
-		--print ("change", Frame, Text)
+		--print(tableau[index].Name,tableau[index].Time)
+		--	todo for index =  1, #tableau, 1 do
+
 		
 		-- move frames to ensure they dont overlap || Déplacement des Frames si besoin pour qu'elles ne se chevauchent pas
 		if Changement then
@@ -279,20 +283,24 @@ function NecrosisUpdateTimer(tableau, Changement)
 		local r, g
 		local b = 37/255
 		local b_end = tableau[index].TimeMax -- tableau[index].MaxBar tableau[index].TimeMax
-		local PercentColor = (b_end - Now) / tableau[index].Time
-		if PercentColor > 0.5 then
+		local PercentColor = (b_end - Now) / tableau[index].MaxBar
+		--print (b_end - Now ,tableau[index].Time,tableau[index].MaxBar)
+		if PercentColor > 0.5 then -- red varient
 			r = (207/255) - (1 - PercentColor) * 2 * (207/255)
 			g = 1
-		else
+		else -- green varient
 			r = 1
 			g = (207/255) - (0.5 - PercentColor) * 2 * (207/255)
 		end
 
 		-- calculate the position of the spark on the timer || Calcul de la position de l'étincelle sur la barre de status
-		local sparkPosition = 150 * (b_end - Now) / tableau[index].Time
+		
+		--local sparkPosition = 150 * (b_end - Now) / tableau[index].Time
+		local sparkPosition = (150 * PercentColor)+1
 		if sparkPosition < 1 then sparkPosition = 1 end
 
 		-- set the color and determine the portion to be filled || Définition de la couleur du timer et de la quantitée de jauge remplie
+		statusMin, statusMax = StatusBar:GetMinMaxValues()
 		StatusBar:SetValue(2 * b_end - (tableau[index].Time + Now))
 		StatusBar:SetStatusBarColor(r, g, b)
 		StatusBar:SetAlpha(NecrosisConfig.NecrosisAlphaBar/100); 
@@ -328,7 +336,8 @@ function NecrosisUpdateTimer(tableau, Changement)
 			end
 		end
 
-		Text:SetText(affichage)
+
+		Text:SetText(affichage.." - "..floor(tableau[index].MaxBar / 60 ).."'")
 		--print("Update",tableau[index].spell.ID, _G["NecrosisTimerFrame"..tableau[index].Gtimer.."Icon"]:GetTexture())
 	end
 end

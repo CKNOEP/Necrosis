@@ -20,9 +20,11 @@ For 7.0 This was rewritten to use data driven logic based on the spell data in W
 
 -- sort timers according to their group || On trie les timers selon leur groupe
 local function Tri(SpellTimer, clef)
+	--print (SpellTimer, clef,SpellTimer.index)
+	
 	return SpellTimer:sort(
-		function (SubTab1, SubTab2)
-			return SubTab1[clef] < SubTab2[clef]
+		function (SubTab2, SubTab1)
+			return SubTab1[clef] > SubTab2[clef]
 		end)
 end
 
@@ -57,6 +59,7 @@ local function Parsing(SpellGroup, SpellTimer)
 	end
 
 	Tri(SpellTimer, "Group")
+	
 	return SpellGroup, SpellTimer
 end
 
@@ -214,17 +217,18 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 		
 		StatusBar:SetMinMaxValues(
 			Timer.SpellTimer[#Timer.SpellTimer].TimeMax - Timer.SpellTimer[#Timer.SpellTimer].Time,
-			Timer.SpellTimer[#Timer.SpellTimer].TimeMax
+			Timer.SpellTimer[#Timer.SpellTimer].TimeMax - Timer.SpellTimer[#Timer.SpellTimer].Time + Timer.SpellTimer[#Timer.SpellTimer].MaxBar
 		)
-	
+		statusMin, statusMax = StatusBar:GetMinMaxValues()
+		--print (statusMin, statusMax,statusMax-statusMin,StatusBar:GetValue(),Timer.SpellTimer[#Timer.SpellTimer].MaxBar)
 		
 		
 	end
 
 	if NecrosisConfig.TimerType > 0 then
 		-- sort the timers by type || Tri des entrées par type de sort
-		Tri(Timer.SpellTimer, "Type")
-
+		--Tri(Timer.SpellTimer, "Type")
+		Tri(Timer.SpellTimer, "Time")
 		-- Create timers by mob group || Création des groupes (noms des mobs) des timers
 		Timer.SpellGroup, Timer.SpellTimer = Parsing(Timer.SpellGroup, Timer.SpellTimer)
 

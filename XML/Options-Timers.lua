@@ -165,7 +165,7 @@ function Necrosis:SetTimersConfig()
 		
 		-- transparence de la barre de sort
 		frame = CreateFrame("Slider", "NecrosisAlphaBar", NecrosisTimersConfig1, "OptionsSliderTemplate")
-		frame:SetMinMaxValues(1, 100)
+		frame:SetMinMaxValues(1, 100)-- Alpha slider min max
 		frame:SetValueStep(1)
 		frame:SetObeyStepOnDrag(true)
 		frame:SetStepsPerPage(1)
