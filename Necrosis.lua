@@ -1364,13 +1364,13 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
 		--usable, nomana = IsUsableSpell(Necrosis.GetSpellName("enslave"));
 		--print(usable,nomana)
 		
-			if UnitCreatureType("target") == Necrosis.Unit.Demon then 	
+			if UnitCreatureType("target") == Necrosis.Unit.Demon and NecrosisConfig.Banish == true then 	
 			NecrosisCreatureAlertButton_demon:SetAlpha(1)		-- Button Alerte Demon	
 			NecrosisCreatureAlertButton_demon:EnableMouse(true)
 			NecrosisCreatureAlertButton_elemental:SetAlpha(1)-- Button Alerte Elemental
 			NecrosisCreatureAlertButton_elemental:EnableMouse(true)
 			
-			elseif UnitCreatureType("target") == Necrosis.Unit.Elemental then
+			elseif UnitCreatureType("target") == Necrosis.Unit.Elemental and NecrosisConfig.Banish == true then
 			NecrosisCreatureAlertButton_elemental:SetAlpha(1)-- Button Alerte Elemental
 			NecrosisCreatureAlertButton_elemental:EnableMouse(true)			
 			else
