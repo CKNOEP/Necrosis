@@ -2532,10 +2532,11 @@ function Necrosis:ButtonSetup()
 			)
 		end
 		local f = _G[fr]
+		local sp = NecrosisConfig.StonePosition[index]
 		if (Necrosis.IsSpellKnown(v.high_of) 	-- in spell book
 		or v.menu                           -- or on menu of spells
 		or v.item)                          -- or item to use
-		and NecrosisConfig.StonePosition[index] > 0 -- and requested
+		and (sp and sp > 0) -- and requested
 		then
 			if not f then
 				f = Necrosis:CreateSphereButtons(Necrosis.Warlock_Buttons[v.f_ptr])
