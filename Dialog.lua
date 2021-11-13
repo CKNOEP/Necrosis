@@ -256,6 +256,7 @@ Necrosis.TooltipData = {
 	},
 	
 	["DominationCooldown"] = L["DOMINATION_COOLDOWN"],
+	["DominationCooldown2"] = "Shift-Clic[R] to Sacrifice",	
 	-- These are filled when the frame is created and the localized spell names are known
 	-- curses
 	["Weakness"] = {
@@ -452,6 +453,7 @@ Necrosis.Config.Menus = {
 	["Afficher automatiquement les menus en combat"] = L["MENU_AUTO_COMBAT"],
 	["Fermer le menu apres un clic sur un de ses elements"] = L["MENU_CLOSE_CLICK"],
 	["Orientation du menu"] = L["MENU_ORIENTATION"],
+	["Quick Sacrifice (Summ. & Sacr."] = L["MENU_QUICK_SACRIFICE"],	
 	["Changer la symetrie verticale des boutons"] = L["MENU_VERT"],
 	["Taille du bouton Banir"] = L["MENU_BANISH"],
 }
@@ -507,6 +509,16 @@ Necrosis.Translation.DemonName = {
 	[5] = L["FELGUARD"],
 	[6] = L["INFERNAL"],
 	[7] = L["DOOMGUARD"],
+}
+
+Necrosis.NameDemon = {
+	[1] = "imp",
+	[2] = "Voidwalker",
+	[3] = "Succubus",
+	[4] = "Felhunter",
+	[5] = "Felguard",
+	[6] = "Infernal",
+	[7] = "Doomguard",
 }
 
 -- Traduction du nom des objets utilisés par Necrosis
@@ -565,6 +577,7 @@ Necrosis.Translation.Misc = {
 	["Rank"] = L["RANK"],
 	["Create"] = L["CREATE"],
 }
+
 
 -- Gestion de la détection des cibles protégées contre la peur
 Necrosis.AntiFear = {

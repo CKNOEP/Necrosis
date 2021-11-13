@@ -207,6 +207,7 @@ L["MENU_ALWAYS"] = "Always show menus"
 L["MENU_AUTO_COMBAT"] = "Automatically display menus while in combat"
 L["MENU_CLOSE_CLICK"] = "Close a menu whenever you click on one of its items"
 L["MENU_ORIENTATION"] = "Menu orientation"
+L["MENU_QUICK_SACRIFICE"] = "Quick Sacrifice : Summon+Sacrifice"
 L["MENU_VERT"] = "Change the vertical symmetry of buttons"
 L["MENU_BANISH"] = "Size of the Banish button"
 --

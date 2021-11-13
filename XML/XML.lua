@@ -296,6 +296,7 @@ end
 
 function Necrosis:CreateMenuItem(i)
 	local b = nil
+	
 	-- look up the button info
 	for idx, v in pairs (Necrosis.Warlock_Buttons) do
 		if idx == i.f_ptr then
@@ -325,7 +326,7 @@ function Necrosis:CreateMenuItem(i)
 		frame:SetWidth(40)
 		frame:SetHeight(40)
 		frame:SetHighlightTexture(b.high) --("Interface\\AddOns\\Necrosis\\UI\\"...)
-		frame:RegisterForClicks("LeftButtonUp", "RightButtonUp")
+		frame:RegisterForClicks("LeftButtonUp", "MiddleButton" , "RightButtonUp")
 
 		-- ======  hidden but effective
 		-- Add valuable data to the frame for retrieval later

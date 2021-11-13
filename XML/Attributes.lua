@@ -116,18 +116,27 @@ function Necrosis:MenuAttribute(menu)
 	menuButton:SetAttribute("_onclick", [[
 		self:SetAttribute("lastClick", button)
 		local Etat = self:GetAttribute("state")
+		
+		if  button == "MiddleButton" then
+		
+		
+		
+		
+		end
+		
 		if  Etat == "Ferme" then
 			if button == "RightButton" then
 				self:SetAttribute("state", "ClicDroit")
-			else
+			elseif button == "LeftButton" then
 				self:SetAttribute("state", "Ouvert")
 			end
 		elseif Etat == "Ouvert" then
 			if button == "RightButton" then
 				self:SetAttribute("state", "ClicDroit")
-			else
+			elseif button == "LeftButton" then
 				self:SetAttribute("state", "Ferme")
 			end
+		
 		elseif Etat == "Combat" then
 			for i, button in ipairs(ButtonList) do
 				if button:IsShown() then
@@ -138,7 +147,10 @@ function Necrosis:MenuAttribute(menu)
 			end
 		elseif Etat == "ClicDroit" and button == "LeftButton" then
 			self:SetAttribute("state", "Ferme")
+		
 		end
+		
+		
 	]])
 	
 	menuButton:SetAttribute("_onattributechanged", [[
@@ -261,9 +273,11 @@ function Necrosis:SetPetSpellAttribute(button)
 	if InCombatLockdown() then
 		return
 	end
-
+	
 	local f = _G[button]
+	
 	if f then
+			
 		if Necrosis.Debug.buttons then
 			_G["DEFAULT_CHAT_FRAME"]:AddMessage("SetPetSpellAttribute"
 			.." f'"..tostring(button).."'"
@@ -274,20 +288,37 @@ function Necrosis:SetPetSpellAttribute(button)
 		end
 
 		if f.pet then
+	--print (Necrosis.NameDemon[NecrosisConfig.NecrosisDemonSacrifice],f.high_of )
 			f:SetAttribute("type1", "spell")
 			f:SetAttribute("spell", Necrosis.GetSpellCastName(f.high_of)) 
+						
+			--Dominiation sur clic droit
 			if Necrosis.IsSpellKnown("domination") then 
 				f:SetAttribute("type2", "macro")
 				local str = 
 					"/cast "..Necrosis.GetSpellCastName("domination")
-					.."\n/stopcasting\n/cast "..Necrosis.GetSpellCastName(f.high_of) 
---print(str)
-				f:SetAttribute("macrotext",str)
+					.."\n/stopcasting\n/cast "..Necrosis.GetSpellCastName(f.high_of)
+
+
+				f:SetAttribute("macrotext2",str)
+			if Necrosis.NameDemon[NecrosisConfig.NecrosisDemonSacrifice] == f.high_of 
+			then
+			f:SetAttribute("shift-type2", "spell")
+			str2 = Necrosis.GetSpellCastName("sacrifice")			
+			f:SetAttribute("shift-spell2", str2)
+			--print (str2)
+
 			end
+			
+			end
+				
+		
 		else
 			f:SetAttribute("type", "spell")
-			f:SetAttribute("spell", Necrosis.GetSpellCastName(f.high_of)) 
+			f:SetAttribute("spell", Necrosis.GetSpellCastName(f.high_of))
+--			
 		end
+	
 	else
 	end
 end
@@ -297,13 +328,27 @@ function Necrosis:PetSpellAttribute()
 		return
 	end
 
+	
 	for index = 1, #Necrosis.Warlock_Lists.pets, 1 do
 		local v = Necrosis.Warlock_Lists.pets[index]
 		local f = Necrosis.Warlock_Buttons[v.f_ptr].f
+		
+		if v.high_of == 'sacrifice'
+		then
+			
+			
+			Necrosis:SetPetSpellAttribute(f)
+			
+		end
+		
+		
+		
 		if Necrosis.IsSpellKnown(v.high_of) -- in spell book
 --		and NecrosisConfig.DemonSpellPosition[index] > 0 -- and requested
 		then
+		
 			Necrosis:SetPetSpellAttribute(f)
+			
 		end
 	end
 end

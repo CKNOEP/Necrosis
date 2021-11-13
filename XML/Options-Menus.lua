@@ -462,6 +462,30 @@ function Necrosis:SetMenusConfig()
 		FontString:SetTextColor(1, 1, 1)
 
 		UIDropDownMenu_SetWidth(frame, 125)
+		
+		-- Choix du démon a sacrifié sur le Shift Clic du boutton
+		frame = CreateFrame("Frame", "NecrosisDemonSacrifice", NecrosisMenusConfig3, "UIDropDownMenuTemplate")
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("RIGHT", NecrosisMenusConfig3, "BOTTOMRIGHT", 40, 300)
+
+		local FontString = frame:CreateFontString("NecrosisDemonSacrificeT", "OVERLAY", "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 35, 303)
+		FontString:SetTextColor(1, 1, 1)
+
+		UIDropDownMenu_SetWidth(frame, 125)		
+		for i in ipairs(Necrosis.Translation.DemonName) do
+			if i == NecrosisConfig.NecrosisDemonSacrifice then
+				UIDropDownMenu_SetSelectedID(NecrosisDemonSacrifice, i)
+				UIDropDownMenu_SetText(NecrosisDemonSacrifice, Necrosis.Translation.DemonName[i])
+				break
+			end
+		end
+
+		
+		
 
 		-- Choix du sens du menu
 		frame = CreateFrame("CheckButton", "NecrosisDemonSens", NecrosisMenusConfig3, "UICheckButtonTemplate")
@@ -480,6 +504,8 @@ function Necrosis:SetMenusConfig()
 			end
 			Necrosis:CreateMenu()
 		end)
+
+		
 
 		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
 		FontString:Show()
@@ -669,6 +695,7 @@ function Necrosis:SetMenusConfig()
 	UIDropDownMenu_Initialize(NecrosisBuffVector, self.BuffVector_Init)
 	UIDropDownMenu_Initialize(NecrosisDemonVector, self.DemonVector_Init)
 	UIDropDownMenu_Initialize(NecrosisCurseVector, self.CurseVector_Init)
+	UIDropDownMenu_Initialize(NecrosisDemonSacrifice, self.Sacrifice_Init)
 
 	NecrosisMenusConfig1Text:SetText(self.Config.Menus["Options Generales"])
 	NecrosisMenusConfig2Text:SetText(self.Config.Menus["Menu des Buffs"])
@@ -680,6 +707,8 @@ function Necrosis:SetMenusConfig()
 	NecrosisCloseMenu:SetText(self.Config.Menus["Fermer le menu apres un clic sur un de ses elements"])
 
 	NecrosisBuffVectorT:SetText(self.Config.Menus["Orientation du menu"])
+	NecrosisDemonSacrificeT:SetText(self.Config.Menus["Quick Sacrifice (Summ. & Sacr."])
+	
 	NecrosisBuffSens:SetText(self.Config.Menus["Changer la symetrie verticale des boutons"])
 	NecrosisBanishSizeText:SetText(self.Config.Menus["Taille du bouton Banir"])
 
@@ -707,6 +736,7 @@ function Necrosis:SetMenusConfig()
 	NecrosisBanishSize:SetValue(NecrosisConfig.BanishScale)
 	NecrosisBuffOx:SetValue(NecrosisConfig.BuffMenuDecalage.x)
 	NecrosisBuffOy:SetValue(NecrosisConfig.BuffMenuDecalage.y)
+	
 
 	if not (NecrosisConfig.PetMenuPos.x == 0) then
 		UIDropDownMenu_SetSelectedID(NecrosisDemonVector, 1)
@@ -736,6 +766,8 @@ function Necrosis:SetMenusConfig()
 	NecrosisCurseOx:SetValue(NecrosisConfig.CurseMenuDecalage.x)
 	NecrosisCurseOy:SetValue(NecrosisConfig.CurseMenuDecalage.y)
 
+	
+
 	if NecrosisConfig.BlockedMenu then
 		NecrosisAutoMenu:Disable()
 		NecrosisCloseMenu:Disable()
@@ -764,6 +796,24 @@ function Necrosis.BuffVector_Init()
 		UIDropDownMenu_AddButton(element)
 	end
 end
+-- Fonctions du Dropdown des Sacrifice Dem.
+function Necrosis.Sacrifice_Init()
+	local element = {}
+		
+	for i in ipairs(Necrosis.Translation.DemonName) do
+		
+		element.text = Necrosis.Translation.DemonName[i]
+		element.checked = false
+		element.func = Necrosis.Sacrifice_Click
+		UIDropDownMenu_AddButton(element)
+	end
+end
+function Necrosis.Sacrifice_Click(self)
+	local ID = self:GetID()
+	UIDropDownMenu_SetSelectedID(NecrosisDemonSacrifice, ID)
+	NecrosisConfig.NecrosisDemonSacrifice = ID
+	end
+
 
 function Necrosis.BuffVector_Click(self)
 	local ID = self:GetID()

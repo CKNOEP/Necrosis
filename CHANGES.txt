@@ -1,3 +1,6 @@
+R7.6.9.24
+Add Sacrifice demoniac into Menu Pet
+
 R7.6.9.23
 Fix Show hide button Enslave and Bannish when the option is checked
 

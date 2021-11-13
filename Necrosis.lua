@@ -1681,6 +1681,7 @@ end
 local function AddDominion(start, duration)
 	if not (start > 0 and duration > 0) then
 		GameTooltip:AddLine(Necrosis.TooltipData.DominationCooldown)
+		GameTooltip:AddLine(Necrosis.TooltipData.DominationCooldown2)
 	end
 end
 local function AddMenuTip(Type)
@@ -2170,6 +2171,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis:UpdateMana"
 	local usage = "domination" -- 15
 	if Necrosis.IsSpellKnown(usage) then
 		local f = _G[Necrosis.Warlock_Buttons[usage].f]
+		
 		local spell = Necrosis.GetSpell(usage)
 		if f and not Local.BuffActif.Domination then
 --[[
@@ -2684,9 +2686,13 @@ function Necrosis:CreateMenu()
 		for index = 1, #Necrosis.Warlock_Lists.pets, 1 do
 			local v = Necrosis.Warlock_Lists.pets[index]
 			local f = Necrosis.Warlock_Buttons[v.f_ptr].f
-			if Necrosis.IsSpellKnown(v.high_of) -- in spell book
---			and NecrosisConfig.DemonSpellPosition[index] > 0 -- and requested
+								
+			if Necrosis.IsSpellKnown(v.high_of) or v.f_ptr == "sacrifice"  -- in spell book or sacrifice
+--			
+
+			and NecrosisConfig.DemonSpellPosition[index] > 0 -- and requested
 			then
+			
 				if Necrosis.Debug.buttons then
 					_G["DEFAULT_CHAT_FRAME"]:AddMessage("CreateMenu pets"
 					.." f'"..(v.f_ptr or "nyl")..'"'

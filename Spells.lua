@@ -422,15 +422,19 @@ Notes:
 	[11689] = {UsageRank = 6, SpellRank = 6, Timer = false, Usage = "life_tap"}, --
 	[27222] = {UsageRank = 7, SpellRank = 7, Timer = false, Usage = "life_tap"}, --	
 	
-	[7812]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice", Length = 30,  NeedPet = true,}, -- Sacrifice || Sacrifice démoniaque 
-	[19438] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "sacrifice", Length = 30,  NeedPet = true,}, --  
-	[19440] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "sacrifice", Length = 30,  NeedPet = true,}, --  
-	[19441] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "sacrifice", Length = 30,  NeedPet = true,}, --  
-	[19442] = {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "sacrifice", Length = 30,  NeedPet = true,}, --  
-	[19443] = {UsageRank = 6, SpellRank = 6, Timer = true, Usage = "sacrifice", Length = 30,  NeedPet = true,}, --
+	[7812]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R1- Sacrifice Voidwalker
+	[19438] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R2 
+	[19440] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R3 
+	[19441] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R4
+	[19442] = {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R5 
+	[19443] = {UsageRank = 6, SpellRank = 6, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R6
+	[27273] = {UsageRank = 7, SpellRank = 7, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R7	
 	
 	
--- To do Demonic Sacrifice
+	[18788] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice", Length = 30,  NeedPet = true,}, -- Demoniac sacrifice	
+
+-- buff Demonic Sacrifice
+
 	[18789] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Imp", Length = 1800, Buff = true, }, --
 	[18790] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Voidwalker", Length = 1800, Buff = true, }, -- 
 	[18791] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_demonic_Succubus", Length = 1800, Buff = true, }, -- 
@@ -622,18 +626,6 @@ Necrosis.Warlock_Buttons = {
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Felhunter-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\Felhunter-02",
 					}, --
-
---TBC
-	felguard 	= {f = "NecrosisPetMenu10", tip = "Felguard", anchor = "ANCHOR_RIGHT", pet = true,
-					norm = "Interface\\AddOns\\Necrosis\\UI\\Felguard-01",
-					high = "Interface\\AddOns\\Necrosis\\UI\\Felguard-02",
-					}, --					
-	
-	destroy_shards = {f = "NecrosisDestroyShardsButton", tip = "DestroyShards", anchor = "ANCHOR_RIGHT",
-					norm = "Interface\\AddOns\\Necrosis\\UI\\ShardDestroy-01",
-					high = "Interface\\AddOns\\Necrosis\\UI\\ShardDestroy-02",
-					func = function() Necrosis:DeleteShards() end
-					}, --				
 --TBC
 					
 	inferno 	= {f = "NecrosisPetMenu06", tip = "Infernal", anchor = "ANCHOR_RIGHT", 
@@ -652,6 +644,18 @@ Necrosis.Warlock_Buttons = {
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Sacrifice-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\Sacrifice-02",
 					}, --
+--TBC
+	felguard 	= {f = "NecrosisPetMenu10", tip = "Felguard", anchor = "ANCHOR_RIGHT", pet = true,
+					norm = "Interface\\AddOns\\Necrosis\\UI\\Felguard-01",
+					high = "Interface\\AddOns\\Necrosis\\UI\\Felguard-02",
+					}, --					
+	
+	destroy_shards = {f = "NecrosisDestroyShardsButton", tip = "DestroyShards", anchor = "ANCHOR_RIGHT",
+					norm = "Interface\\AddOns\\Necrosis\\UI\\ShardDestroy-01",
+					high = "Interface\\AddOns\\Necrosis\\UI\\ShardDestroy-02",
+					func = function() Necrosis:DeleteShards() end
+					}, --				
+-- CURSE
 
 	weakness 	= {f = "NecrosisCurseMenu01", tip = "Weakness", anchor = "ANCHOR_RIGHT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Weakness-01",
@@ -747,15 +751,15 @@ Necrosis.Warlock_Lists = {
 	},
 -- 			15, 3, 4, 5, 6, 8, 30, 35, 44, 59
 	["pets"] = { -- 2 types: summon pet and (buff or temporary) pet
-		[1] = {f_ptr = "domination", high_of = "domination",},
-		[2] = {f_ptr = "imp", high_of = "imp", s_type = "summon", },
-		[3] = {f_ptr = "voidwalker", high_of = "voidwalker", },
-		[4] = {f_ptr = "succubus", high_of = "succubus", },
-		[5] = {f_ptr = "felhunter", high_of = "felhunter", },
-		[6] = {f_ptr = "inferno", high_of = "inferno", },
-		[7] = {f_ptr = "rit_of_doom", high_of = "rit_of_doom", },
-		[8] = {f_ptr = "enslave", high_of = "enslave", },
-		[9] = {f_ptr = "sacrifice", high_of = "sacrifice", },
+		[1]  = {f_ptr = "domination", high_of = "domination", },
+		[2]  = {f_ptr = "imp", high_of = "imp", s_type = "summon", },
+		[3]  = {f_ptr = "voidwalker", high_of = "voidwalker", },
+		[4]  = {f_ptr = "succubus", high_of = "succubus", },
+		[5]  = {f_ptr = "felhunter", high_of = "felhunter", },
+		[6]  = {f_ptr = "inferno", high_of = "inferno", },
+		[9]  = {f_ptr = "rit_of_doom", high_of = "rit_of_doom", },
+		[8]  = {f_ptr = "enslave", high_of = "enslave", },
+		[7]  = {f_ptr = "sacrifice", high_of = "sacrifice", },
 		[10] = {f_ptr = "felguard", high_of = "felguard", },--TBC
 	},
 -- 23, -- Curse of weakness 22, -- Curse of agony 25, -- Curse of tongues 40, -- Curse of exhaustion 26, -- Curse of the elements 16, -- Curse of doom 14 -- Corruption
@@ -781,8 +785,18 @@ Necrosis.Warlock_Lists = {
 		[7] = {high_of = "pact", },
 		[8] = {high_of = "banish", },
 		[9] = {high_of = "fel_armor", }		
-
 	},
+	["sacrifice"] = { -- demoniac sacrifice
+		[1]  = {f_ptr = "imp", high_of = "sacrifice_demonic_Imp", },
+		[2]  = {f_ptr = "voidwalker", high_of = "sacrifice_demonic_Voidwalker", },
+		[3]  = {f_ptr = "succubus", high_of = "sacrifice_demonic_Succubus", },
+		[4]  = {f_ptr = "felhunter", high_of = "sacrifice_demonic_Felhunter", },
+		[5] = {f_ptr = "felguard", high_of = "sacrifice_demonic_Felguard", },--TBC
+	},	
+	
+	
+	
+	
 	-- Only using ids for comparison. Dialog contains localized strings
 	["reagents"] = {
 		soul_shard			= {id = 6265, count = 0, }, --
@@ -1336,6 +1350,7 @@ function Necrosis:SpellSetup(reason)
 	local str = ""
 	-- Search through the spell book (abilities)
 	for i = 1, MAX_SKILLLINE_TABS do
+	   
 	   local name, texture, offset, numSpells = GetSpellTabInfo(i);
 
 		if name then -- tab exists
