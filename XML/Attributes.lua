@@ -582,8 +582,9 @@ function Necrosis:StoneAttribute(Steed)
 end
 
 -- Connection Association to the central button if the spell is available || Association de la Connexion au bouton central si le sort est disponible
-function Necrosis:MainButtonAttribute()
+function Necrosis:MainButtonAttribute(self)
 	local f = Necrosis.Warlock_Buttons.main.f
+	
 	f = _G[f]
 	if not f then return end
 
@@ -596,7 +597,7 @@ function Necrosis:MainButtonAttribute()
 	end
 
 	local main_cast = Necrosis.GetSpellCastName(NecrosisConfig.MainSpell) --Necrosis:GetSpellName(NecrosisConfig.MainSpell)
-	 
+	local second_cast = Necrosis.GetSpellCastName(NecrosisConfig.MainSpell2) 
 	
 	if Necrosis.Debug.buttons then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("MainButtonAttribute"
@@ -609,6 +610,12 @@ function Necrosis:MainButtonAttribute()
 	if main_cast ~= "" then 
 		f:SetAttribute("type1", "spell")
 		f:SetAttribute("spell", main_cast)
+	end
+	if second_cast ~= "" then 
+		f:SetAttribute("shift-type1", "spell")
+		f:SetAttribute("shift-spell1", second_cast)
+		f:SetAttribute("shift-type2", "spell")
+		f:SetAttribute("shift-spell2", second_cast)
 	end
 
 	f:SetAttribute("type2", "Delete")
