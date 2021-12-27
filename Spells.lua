@@ -747,7 +747,7 @@ Necrosis.Warlock_Lists = {
 		[6] = {f_ptr = "link", high_of = "link", },
 		[7] = {f_ptr = "ward", high_of = "ward", },
 		[8] = {f_ptr = "banish", high_of = "banish", },
-		[9] = {f_ptr = "fel_armor", high_of = "fel_armor", },			
+		--[9] = {f_ptr = "armor", high_of = "armor", },			
 	},
 -- 			15, 3, 4, 5, 6, 8, 30, 35, 44, 59
 	["pets"] = { -- 2 types: summon pet and (buff or temporary) pet
@@ -760,7 +760,7 @@ Necrosis.Warlock_Lists = {
 		[9]  = {f_ptr = "rit_of_doom", high_of = "rit_of_doom", },
 		[8]  = {f_ptr = "enslave", high_of = "enslave", },
 		[7]  = {f_ptr = "sacrifice", high_of = "sacrifice", },
-		[10] = {f_ptr = "felguard", high_of = "felguard", },--TBC
+		--[10] = {f_ptr = "felguard", high_of = "felguard", },--TBC
 	},
 -- 23, -- Curse of weakness 22, -- Curse of agony 25, -- Curse of tongues 40, -- Curse of exhaustion 26, -- Curse of the elements 16, -- Curse of doom 14 -- Corruption
 	["curses"] = {
@@ -772,7 +772,7 @@ Necrosis.Warlock_Lists = {
 		[6] = {f_ptr = "doom", high_of = "doom", },
 		[7] = {f_ptr = "corruption", high_of = "corruption", },
 		[8] = {f_ptr = "recklessness", high_of = "recklessness", },
---		[9] = {f_ptr = "shadow", high_of = "shadow", },
+ 		[9] = {f_ptr = "shadow", high_of = "shadow", },
 	},
 	-- {19, 31, 37, 41, 43, 44, 55} See GetMainSpellList
 	["config_main_spell"] = {
@@ -784,7 +784,7 @@ Necrosis.Warlock_Lists = {
 		[6] = {high_of = "sacrifice", },
 		[7] = {high_of = "pact", },
 		[8] = {high_of = "banish", },
-		[9] = {high_of = "fel_armor", }		
+		[9] = {high_of = "armor", }		
 	},
 	["sacrifice"] = { -- demoniac sacrifice
 		[1]  = {f_ptr = "imp", high_of = "sacrifice_demonic_Imp", },
@@ -989,6 +989,7 @@ function Necrosis.GetSpellRank(usage)
 end
 
 function Necrosis.GetSpellName(usage)
+	--print (usage)
 	if Necrosis.Warlock_Spell_Use[usage] -- 
 	then
 		return 
