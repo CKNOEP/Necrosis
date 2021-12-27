@@ -3005,16 +3005,19 @@ function Necrosis:SymetrieTimer(bool)
 end
 --TBC Add : Delete shards out of stock
 function Necrosis:DeleteShards()
-    ev_out(event, "DeleteShards() called", false, true, false)
-    if NecrosisConfig.DestroyShard then
+  
+	ev_out(event, "DeleteShards() called", false, true, false)
+    
+	if NecrosisConfig.DestroyShard then
         Local.Soulshard.Count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
         local RemainingShardsToDelete = Local.Soulshard.Count - NecrosisConfig.DestroyCount
         for container = 0, NUM_BAG_SLOTS, 1 do
-            if Local.BagIsSoulPouch[container] then break end
+            --if Local.BagIsSoulPouch[container] then break end
             for slot=1, GetContainerNumSlots(container), 1 do
                 if math.floor(NecrosisConfig.DestroyCount) >= Local.Soulshard.Count then break end
                 local itemLink = GetContainerItemLink(container, slot)
-                if (itemLink) then
+                 print ('delete',itemLink)  
+				if (itemLink) then
                     local itemID, itemName = Necrosis.Utils.ParseItemLink(itemLink) --GetContainerItemLink(container, slot))
                     itemID = tonumber(itemID)
                     if (itemID == Necrosis.Warlock_Lists.reagents.soul_shard.id) then
