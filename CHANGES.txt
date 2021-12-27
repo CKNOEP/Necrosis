@@ -1,3 +1,6 @@
+R7.6.9.27
+Push new version after Mastery version 
+R7.6.9.26
 R7.6.9.25
 Add second bin in the sphere with shift+clic.
 
