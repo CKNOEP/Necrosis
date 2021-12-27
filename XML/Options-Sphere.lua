@@ -90,12 +90,12 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		frame = CreateFrame("Frame", "NecrosisSkinSelection", NecrosisSphereConfig, "UIDropDownMenuTemplate")
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 40, 325)
+		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 40, 345)
 
 		local FontString = frame:CreateFontString("NecrosisSkinSelectionT", "OVERLAY", "GameFontNormalSmall")
 		FontString:Show()
 		FontString:ClearAllPoints()
-		FontString:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 35, 328)
+		FontString:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 35, 348)
 		FontString:SetTextColor(1, 1, 1)
 
 		UIDropDownMenu_SetWidth(frame, 125)
@@ -105,12 +105,12 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		frame = CreateFrame("Frame", "NecrosisEventSelection", NecrosisSphereConfig, "UIDropDownMenuTemplate")
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 40, 300)
+		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 40, 315)
 
 		FontString = frame:CreateFontString("NecrosisEventSelectionT", "OVERLAY", "GameFontNormalSmall")
 		FontString:Show()
 		FontString:ClearAllPoints()
-		FontString:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 35, 303)
+		FontString:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 35, 318)
 		FontString:SetTextColor(1, 1, 1)
 
 		UIDropDownMenu_SetWidth(frame, 125)
@@ -121,16 +121,29 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		UIDropDownMenu_SetText(NecrosisSpellSelection, Necrosis.GetSpellName(NecrosisConfig.MainSpell))
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 40, 275)
+		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 40, 285)
 
 		FontString = frame:CreateFontString("NecrosisSpellSelectionT", "OVERLAY", "GameFontNormalSmall")
 		FontString:Show()
 		FontString:ClearAllPoints()
-		FontString:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 35, 278)
+		FontString:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 35, 288)
 		FontString:SetTextColor(1, 1, 1)
 
 		UIDropDownMenu_SetWidth(frame, 125)
 
+		frame = CreateFrame("Frame", "NecrosisSpellSelection2", NecrosisSphereConfig, "UIDropDownMenuTemplate")
+		UIDropDownMenu_SetText(NecrosisSpellSelection2, Necrosis.GetSpellName(NecrosisConfig.MainSpell2))
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 40, 255)
+
+		FontString = frame:CreateFontString("NecrosisSpellSelectionT2", "OVERLAY", "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 35, 258)
+		FontString:SetTextColor(1, 1, 1)
+
+		UIDropDownMenu_SetWidth(frame, 125)
 
 		-------------------------------------------------
 		-- Affiche ou masque le compteur numérique
@@ -162,7 +175,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", -175, 240)
+		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 25, 225)
 		frame:SetChecked(NecrosisConfig.DestroyShardwithsphere)
 		frame:SetScript("OnClick", function(self)
 			
@@ -197,12 +210,14 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 	UIDropDownMenu_Initialize(NecrosisSkinSelection, Necrosis.Skin_Init)
 	UIDropDownMenu_Initialize(NecrosisEventSelection, Necrosis.Event_Init)
 	UIDropDownMenu_Initialize(NecrosisSpellSelection, Necrosis.Spell_Init)
+	UIDropDownMenu_Initialize(NecrosisSpellSelection2, Necrosis.Spell_Init2)
 	UIDropDownMenu_Initialize(NecrosisCountSelection, Necrosis.Count_Init)
 
 	NecrosisSphereSizeText:SetText(self.Config.Sphere["Taille de la sphere"])
 	NecrosisSkinSelectionT:SetText(self.Config.Sphere["Skin de la pierre Necrosis"])
 	NecrosisEventSelectionT:SetText(self.Config.Sphere["Evenement montre par la sphere"])
 	NecrosisSpellSelectionT:SetText(self.Config.Sphere["Sort caste par la sphere"])
+	NecrosisSpellSelectionT2:SetText(self.Config.Sphere["Sort caste par la sphere2"])
 	NecrosisShowCount:SetText(self.Config.Sphere["Afficher le compteur numerique"])
 	NecrosisCountSelectionT:SetText(self.Config.Sphere["Type de compteur numerique"])
 	NecrosisDeleteShardsOutCount:SetText(self.Config.Sphere["Shift+Clic on Sphere to del. Shards"].."Shards > "..tostring(NecrosisConfig.DestroyCount))
@@ -309,7 +324,32 @@ function Necrosis.Spell_Init()
 		UIDropDownMenu_AddButton(element)
 	end
 end
+function Necrosis.Spell_Init2()
+	local element = UIDropDownMenu_CreateInfo()
+	local selected = ""
+	local main_spell2 = Necrosis.GetMainSpellList()
+	local color = ""
 
+	for i = 1, #main_spell2, 1 do
+		if Necrosis.IsSpellKnown(main_spell2[i]) then  -- known
+			color = "|CFFFFFFFF"
+			element.func = Necrosis.Spell_Click2
+		else
+			color = "|CFF808080"
+		end
+		spell = color..Necrosis.GetSpellName(main_spell2[i]).."|r"
+		element.text = spell
+		element.arg1 = i
+		
+		if (NecrosisConfig.MainSpell2 == main_spell2[i]) then
+			element.checked = true
+			selected = spell
+		else
+			element.checked = false
+		end
+		UIDropDownMenu_AddButton(element)
+	end
+end
 function Necrosis.Spell_Click(self, arg1, arg2, checked)
 	local main_spell = Necrosis.GetMainSpellList()
 	local ID = self:GetID()
@@ -324,7 +364,19 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("Spell_Click"
 	UIDropDownMenu_SetSelectedID(NecrosisSpellSelection, arg1)
 --	UIDropDownMenu_SetText(NecrosisSpellSelection, Necrosis.GetSpellName(main_spell[ID]))
 	NecrosisConfig.MainSpell = main_spell[arg1]
-	Necrosis.MainButtonAttribute()
+	
+	Necrosis.MainButtonAttribute(self)
+end
+
+function Necrosis.Spell_Click2(self, arg1, arg2, checked)
+	local main_spell = Necrosis.GetMainSpellList()
+	local ID = self:GetID()
+
+	UIDropDownMenu_SetSelectedID(NecrosisSpellSelection2, arg1)
+
+	
+	NecrosisConfig.MainSpell2 = main_spell[arg1]
+	Necrosis.MainButtonAttribute(self)
 end
 
 -- Fonctions du Dropdown des Events du compteur
