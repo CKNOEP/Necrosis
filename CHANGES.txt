@@ -1,3 +1,6 @@
+R7.6.9.25
+Add second bin in the sphere with shift+clic.
+
 R7.6.9.24
 Add Sacrifice demoniac into Menu Pet
 
