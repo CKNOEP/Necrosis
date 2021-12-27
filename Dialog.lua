@@ -399,8 +399,9 @@ Necrosis.Config.Sphere = {
 	["Skin de la pierre Necrosis"] = L["SPHERE_SKIN"],
 	["Evenement montre par la sphere"] = L["SPHERE_EVENT"],
 	["Sort caste par la sphere"] = L["SPHERE_SPELL"],
+	["Sort caste par la sphere2"] = L["SPHERE_SPELL2"],
 	["Afficher le compteur numerique"] = L["SPHERE_COUNTER"],
-	["Shift+Clic on Sphere to del. Shards"] = L["SPHERE_SPELL+CTRL"],
+	["Shift+Clic on Sphere to del. Shards"] = L["SPHERE_SPELL_RIGHTCLICK"],
 	["Type de compteur numerique"] = L["SPHERE_STONE"],
 }
 Necrosis.Config.Sphere.Colour = {
