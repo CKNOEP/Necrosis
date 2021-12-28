@@ -308,7 +308,7 @@ function Necrosis:SetButtonsConfig()
 		button:SetWidth(70)
         button:SetHeight(17)
 		button:SetScript("OnClick", function()
-			NecrosisSelectedMountRight:SetNormalTexture(132238)
+			NecrosisSelectedMountRight:SetNormalTexture(136103)
 			NecrosisInitSelectedMountButton(NecrosisSelectedMountRight, 5784);
 			NecrosisConfig.RightMount = 5784;
 			Necrosis:StoneAttribute(true)
@@ -440,7 +440,7 @@ function Necrosis:SetButtonsConfig()
 	
 	
 	if NecrosisConfig.RightMount ==23161 or NecrosisConfig.RightMount ==5784 or NecrosisConfig.RightMount == nil then 
-	RM = 132238
+	RM = 136103
 	else
 	name, _, _, _, _, _, _, _, _,RM = GetItemInfo(NecrosisConfig.RightMount)
 	end
@@ -593,31 +593,34 @@ function isMount(self)
 	end
 end
 function NecrosisSelectedMountButton_OnReceiveDrag(self)
+		
+	local infoType, info1, info2, info3 = GetCursorInfo();
 	
 	
-	
-	
-	local infoType, info1, info2 = GetCursorInfo();
 	local itemName, itemLink, itemQuality, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount,
 itemEquipLoc, itemTexture, sellPrice, classID, subclassID, bindType, expacID, setID, isCraftingReagent
    = GetItemInfo(info1) 
 	
 	local spellName, spellID = GetItemSpell(info2)
 	
-	if classID == 15 and subclassID == 5 then -- == Test is Mout
+	if classID == 15 and subclassID == 5 then -- == Test is Mount
 					
-			infoType = "companion"
+			infoTypeDrag = "companion"
 	
-	else
-			
+	elseif
+	info3 == 23161 or info3 == 5784 then -- == Test is Mount spell
+					
+			infoTypeDrag = "companion"
+	
+	else			
 	
 	end
-	print (infoType, info1, info2 ,isMount(info1))
+	print (infoType, info1, info2 , info3, isMount(info1))
 	if isMount(info1) == true then 
-	infoType = "companion"
+	infoTypeDrag = "companion"
 	end
 	
-	if (infoType == "companion") then
+	if (infoTypeDrag == "companion" and infoType =="item" ) then
 		-- info1 contains the mount index 
 		-- info2 contains the companion type, e.g. "MOUNT" or "CRITTER"
 	  --local creatureID, creatureName, spellID, icon, active = GetCompanionInfo("MOUNT", info1);
@@ -672,6 +675,59 @@ itemEquipLoc, itemTexture, sellPrice, classID, subclassID, bindType, expacID, se
 		--Necrosis:BindName();
 		
 	end
+	
+	if (infoTypeDrag == "companion" and infoType =="spell" ) then -- Mount to summon : Spell not item
+		local name, rank, icon, castTime, minRange, maxRange = GetSpellInfo(info3)
+		local creatureID=info3 
+		local creatureName=name 
+		local spellID=info3
+		local icon=icon
+		local active=true
+		
+		local button = _G[self:GetName()];
+		
+		-- a mount was dragged to the left/right selected mount button boxes, so save the spellID to savedvariables
+		-- note: 
+		--   using spellID because the API GetSpellInfo() will always return the correctly localised creature name.
+		--   The creatureID cannot be used because the API GetCompanionInfo() does not always return the correctly localised creature name.
+		if (button == NecrosisSelectedMountLeft) then
+			NecrosisConfig.LeftMount = creatureID;
+		end
+		if (button == NecrosisSelectedMountRight) then
+			NecrosisConfig.RightMount = creatureID;
+		end
+		if (button == NecrosisSelectedMountCtrlLeft) then
+			NecrosisConfig.CtrlLeftMount = creatureID;
+		end
+		if (button == NecrosisSelectedMountCtrlRight) then
+			NecrosisConfig.CtrlRightMount = creatureID;
+		end		
+			
+		button.creatureID = creatureID;
+		button.creatureName = creatureName;
+		button.spellID = spellID;
+		button.active = active;
+		
+		if ( creatureID ) then
+			button:SetNormalTexture(icon);
+			button:Enable();
+		else
+			button:Disable();
+		end
+		
+		if ( active ) then
+			--_G[self:GetName().."ActiveTexture"]:Show();
+		else
+			--_G[self:GetName().."ActiveTexture"]:Hide();
+		end
+		
+		--update mount button (on the sphere) and also the keybindings
+		Necrosis:StoneAttribute("Own");
+		--Necrosis:BindName();
+		
+	end
+	
+	
 	ClearCursor();
 end
 
