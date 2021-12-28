@@ -494,11 +494,14 @@ function Necrosis:StoneAttribute(Steed)
 		
 		if (NecrosisConfig.LeftMount) then
 			local LeftMountName = GetSpellInfo(NecrosisConfig.LeftMount)
-			if LeftMountName == nil
-			then
-				LeftMountName = GetItemInfo(NecrosisConfig.LeftMount) 
+			--print (LeftMountName)
+			if LeftMountName == nil -- then mount is not a spell, is item
+			then -- Mount is a item
+			
+				LeftMountName = GetItemInfo(NecrosisConfig.LeftMount)
+				--print (LeftMountName)
 				f:SetAttribute("item1", LeftMountName)
-			else
+			else -- Mount is a spell
 				f:SetAttribute("spell1", LeftMountName)				
 			end
 		else

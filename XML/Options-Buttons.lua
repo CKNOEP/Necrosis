@@ -565,28 +565,33 @@ function isMount(self)
 	
 
 	if self then
-	
+	local itemID, itemType, itemSubType, itemEquipLoc, icon, classID, subclassID = GetItemInfoInstant(self) 
+	--print ("self ",self, itemID)
 	local itemName, itemLink, itemQuality, itemLevel, itemMinLevel, itemType, itemSubType, itemStackCount,itemEquipLoc, itemTexture, sellPrice, classID, subclassID, bindType, expacID, setID, isCraftingReagent
     = GetItemInfo(self) 
 	
 	
 	local spellName, spellID = GetItemSpell(self)
 	
-	if classID == 15 then -- == Test is Mout
-		if  subclassID == 5 then
-			return true
-		else
-			return false
+		if classID == 15 and subclassID == 5 then -- == Test is Mout
 			
+				return true
+		elseif
+				self == 34061 or itemID == 34061 then -- ingeneer mount
+				return true
+				
+		elseif
+				self == 27445 or itemID == 27445 then -- For test 
+				return true
+		
+		else
+				return false
+		
+		
 		end
-		return false
-	else
-	return false
-	end
 	
 	end
 end
-
 function NecrosisSelectedMountButton_OnReceiveDrag(self)
 	
 	
@@ -599,14 +604,18 @@ itemEquipLoc, itemTexture, sellPrice, classID, subclassID, bindType, expacID, se
 	
 	local spellName, spellID = GetItemSpell(info2)
 	
-	if classID == 15 then -- == Test is Mout
-		if  subclassID == 5 then
-			
+	if classID == 15 and subclassID == 5 then -- == Test is Mout
+					
 			infoType = "companion"
-		end
-
-	end
 	
+	else
+			
+	
+	end
+	print (infoType, info1, info2 ,isMount(info1))
+	if isMount(info1) == true then 
+	infoType = "companion"
+	end
 	
 	if (infoType == "companion") then
 		-- info1 contains the mount index 
