@@ -78,7 +78,11 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 					)
 
 				f:SetScale(NecrosisConfig.NecrosisButtonScale / 100)
+				
+				if self:GetValue() > 100 then
 				Necrosis:ButtonSetup()
+				end
+				
 			end
 		end)
 
