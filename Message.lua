@@ -261,7 +261,8 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("Speech_It summon::::"
 		then
 			if usage == "imp" then Speeches.DemonId = 1 
 			elseif usage == "voidwalker" then Speeches.DemonId = 2 
-			elseif usage == "succubus"   then Speeches.DemonId = 3 
+			elseif usage == "succubus"   then Speeches.DemonId = 3
+			elseif usage == "inccubus"   then Speeches.DemonId = 3			
 			elseif usage == "felhunter"  then Speeches.DemonId = 4 
 			else -- should never happen...
 			end

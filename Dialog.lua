@@ -218,6 +218,9 @@ Necrosis.TooltipData = {
 	["Succubus"] = {
 		Label = "" --L["SUCCUBUS_LABEL"]
 	},
+	["Inccubus"] = {
+		Label = "" --L["SUCCUBUS_LABEL"]
+	},
 	["Felhunter"] = {
 		Label = "" --L["FELHUNTER_LABEL"]
 	},
@@ -506,20 +509,22 @@ Necrosis.Translation.DemonName = {
 	[1] = L["IMP"],
 	[2] = L["VOIDWALKER"],
 	[3] = L["SUCCUBUS"],
-	[4] = L["FELHUNTER"],
-	[5] = L["FELGUARD"],
-	[6] = L["INFERNAL"],
-	[7] = L["DOOMGUARD"],
+	[4] = L["INCCUBUS"],
+	[5] = L["FELHUNTER"],
+	[6] = L["FELGUARD"],
+	[7] = L["INFERNAL"],
+	[8] = L["DOOMGUARD"],
 }
 
 Necrosis.NameDemon = {
 	[1] = "imp",
 	[2] = "Voidwalker",
 	[3] = "Succubus",
-	[4] = "Felhunter",
-	[5] = "Felguard",
-	[6] = "Infernal",
-	[7] = "Doomguard",
+	[4] = "Inccubus",
+	[5] = "Felhunter",
+	[6] = "Felguard",
+	[7] = "Infernal",
+	[8] = "Doomguard",
 }
 
 -- Traduction du nom des objets utilisés par Necrosis
