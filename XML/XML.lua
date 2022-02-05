@@ -327,7 +327,10 @@ function Necrosis:CreateMenuItem(i)
 		frame:SetHeight(40)
 		frame:SetHighlightTexture(b.high) --("Interface\\AddOns\\Necrosis\\UI\\"...)
 		frame:RegisterForClicks("LeftButtonUp", "MiddleButton" , "RightButtonUp")
-
+--
+-- essai bt movable
+		frame:RegisterForDrag("MiddleButton")
+--
 		-- ======  hidden but effective
 		-- Add valuable data to the frame for retrieval later
 		frame.high_of = i.high_of
@@ -343,8 +346,18 @@ function Necrosis:CreateMenuItem(i)
 	frame:Hide()
 
 	-- Edit the scripts associated with the button || Edition des scripts associés au bouton 
-	frame:SetScript("OnEnter", function(self) Necrosis:BuildButtonTooltip(self) end)
-	frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
+	frame:SetScript("OnEnter", function(self) 
+	Necrosis:BuildButtonTooltip(self)
+	--Necrosis:OnDragStart(self)
+	end)
+	frame:SetScript("OnDragStart", frame.StartMoving)
+	frame:SetScript("OnDragStop", frame.StopMovingOrSizing)
+	frame:SetScript("OnLeave", function(self)
+	GameTooltip:Hide() 
+	--Necrosis:OnDragStop(self)
+	end)
+	
+
 
 	--============= Special settings per button
 	--

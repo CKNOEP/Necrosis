@@ -102,13 +102,13 @@ Local.DefaultConfig = {
 		-- 7 = Demon menu
 		-- 8 = Curse menu
 		-- 9 = Destroy Shard
-	DemonSpellPosition = {1, 2, 3, 4, 5, 6, 8, 9, 10, -11},
+	DemonSpellPosition = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
 		-- 1 = Fel Domination || Domination corrompue
 		-- 2 = Summon Imp
 		-- 3 = Summon Voidwalker || Marcheur
 		-- 4 = Summon Succubus
 		-- 5 = Summon Felhunter
-		-- 6 = Felguard || Gangregarde
+		-- 6 = Felguard || Gangregarde<<
 		-- 7 = Infernal
 		-- 8 = Doomguard
 		-- 9 = Enslave || Asservissement
@@ -2137,6 +2137,8 @@ function Necrosis:UpdateMana()
 		end
 		-- pets
 		for i, v in ipairs(Necrosis.Warlock_Lists.pets) do
+			
+			--print (Necrosis.Warlock_Buttons[v.f_ptr],i)
 			local b = Necrosis.Warlock_Buttons[v.f_ptr]
 			local f = _G[b.f]
 			local spell = Necrosis.GetSpell(v.high_of)
@@ -2686,13 +2688,27 @@ function Necrosis:CreateMenu()
 		end
 
 		for index = 1, #Necrosis.Warlock_Lists.pets, 1 do
+--		
+			if NecrosisConfig.PetShow[index] == true 		then
+				show = NecrosisConfig.PetShow[index]
+			elseif NecrosisConfig.PetShow[index] == false 	then
+				show = NecrosisConfig.PetShow[index]
+			elseif not NecrosisConfig.PetShow[index] 			then
+				show = true
+			else 
+			
+			end
+		--print (show,NecrosisConfig.PetShow[index],#Necrosis.Warlock_Lists.pets)
+		if  show  == true then
+		
 			local v = Necrosis.Warlock_Lists.pets[index]
 			local f = Necrosis.Warlock_Buttons[v.f_ptr].f
-								
+			--print (v,f)					
 			if Necrosis.IsSpellKnown(v.high_of) or v.f_ptr == "sacrifice"  -- in spell book or sacrifice
 --			
 
-			and NecrosisConfig.DemonSpellPosition[index] > 0 -- and requested
+			--and NecrosisConfig.DemonSpellPosition[index] > 0 -- and requested
+			
 			then
 			
 				if Necrosis.Debug.buttons then
@@ -2713,7 +2729,7 @@ function Necrosis:CreateMenu()
 				Local.Menu.Pet:insert(menuVariable)
 			end
 		end
-
+		end
 		-- Display the pets menu button || Maintenant que tous les boutons de pet sont placés les uns à côté des autres, on affiche les disponibles
 		if Local.Menu.Pet[1] then
 			local f = _G[Necrosis.Warlock_Buttons.pets.f]

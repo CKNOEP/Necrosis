@@ -229,10 +229,8 @@ Notes:
 	[691]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "felhunter", PetId = 417, reagent = "soul_shard", }, -- Felhunter
 	[30146]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "felguard", PetId = 17252, reagent = "soul_shard", }, -- Felguard
 
-	[1122]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "inferno", 
-			Length = 5, Cooldown = 3600, reagent = "infernal_stone", }, -- 5852 Inferno || https://classicdb.ch/?spell=1122 -- Infernals https://classic.wowhead.com/spell=23426 Needs research
-	[18540] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "rit_of_doom", 
-			Length = 0, Cooldown = 3600, reagent = "demonic_figurine", }, -- 11859 Ritual of Doom || Rituel funeste || https://classicdb.ch/?spell=18540
+	[1122]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "inferno", Length = 5, Cooldown = 3600, reagent = "infernal_stone", }, -- 5852 Inferno || https://classicdb.ch/?spell=1122 -- Infernals https://classic.wowhead.com/spell=23426 Needs research
+	[18540] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "rit_of_doom", Length = 0, Cooldown = 3600, reagent = "demonic_figurine", }, -- 11859 Ritual of Doom || Rituel funeste || https://classicdb.ch/?spell=18540
 	
 	-- ::: Stones
 	-- Create Soulstone minor || Création pierre d'âme
@@ -633,6 +631,10 @@ Necrosis.Warlock_Buttons = {
 					high = "Interface\\AddOns\\Necrosis\\UI\\Felhunter-02",
 					}, --
 --TBC
+	felguard 	= {f = "NecrosisPetMenu10", tip = "Felguard", anchor = "ANCHOR_RIGHT", pet = true,
+					norm = "Interface\\AddOns\\Necrosis\\UI\\Felguard-01",
+					high = "Interface\\AddOns\\Necrosis\\UI\\Felguard-02",
+					}, --	
 					
 	inferno 	= {f = "NecrosisPetMenu06", tip = "Infernal", anchor = "ANCHOR_RIGHT", 
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Infernal-01",
@@ -650,11 +652,7 @@ Necrosis.Warlock_Buttons = {
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Sacrifice-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\Sacrifice-02",
 					}, --
---TBC
-	felguard 	= {f = "NecrosisPetMenu10", tip = "Felguard", anchor = "ANCHOR_RIGHT", pet = true,
-					norm = "Interface\\AddOns\\Necrosis\\UI\\Felguard-01",
-					high = "Interface\\AddOns\\Necrosis\\UI\\Felguard-02",
-					}, --					
+				
 	
 	destroy_shards = {f = "NecrosisDestroyShardsButton", tip = "DestroyShards", anchor = "ANCHOR_RIGHT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\ShardDestroy-01",
@@ -757,17 +755,21 @@ Necrosis.Warlock_Lists = {
 	},
 -- 			15, 3, 4, 5, 6, 8, 30, 35, 44, 59
 	["pets"] = { -- 2 types: summon pet and (buff or temporary) pet
-		[1]  = {f_ptr = "domination", high_of = "domination", },
-		[2]  = {f_ptr = "imp", high_of = "imp", s_type = "summon", },
-		[3]  = {f_ptr = "voidwalker", high_of = "voidwalker", },
-		[4]  = {f_ptr = "succubus", high_of = "succubus", },
-		[5]  = {f_ptr = "inccubus", high_of = "inccubus", },
-		[6]  = {f_ptr = "felhunter", high_of = "felhunter", },
-		[7]  = {f_ptr = "inferno", high_of = "inferno", },
-		[8]  = {f_ptr = "rit_of_doom", high_of = "rit_of_doom", },
-		[9]  = {f_ptr = "enslave", high_of = "enslave", },
-		[10] = {f_ptr = "sacrifice", high_of = "sacrifice", },
-		[11] = {f_ptr = "felguard", high_of = "felguard", },--TBC
+
+		[1]  = {f_ptr = "imp", high_of = "imp", s_type = "summon", },
+		[2]  = {f_ptr = "voidwalker", high_of = "voidwalker", },
+		[3]  = {f_ptr = "succubus", high_of = "succubus", },
+		[4]  = {f_ptr = "inccubus", high_of = "inccubus", },
+		[5]  = {f_ptr = "felhunter", high_of = "felhunter", },
+		[6]  = {f_ptr = "felguard", high_of = "felguard", },--TBC
+		[7]  = {f_ptr = "inferno", high_of = "inferno",  s_type = "summon",},--TBC
+		[8]  = {f_ptr = "rit_of_doom", high_of = "rit_of_doom", },--TBC
+		----spell for pet--
+		[9]  = {f_ptr = "domination", high_of = "domination", },
+		[10] = {f_ptr = "enslave", high_of = "enslave", },
+		[11] = {f_ptr = "sacrifice", high_of = "sacrifice", },
+		--
+
 	},
 -- 23, -- Curse of weakness 22, -- Curse of agony 25, -- Curse of tongues 40, -- Curse of exhaustion 26, -- Curse of the elements 16, -- Curse of doom 14 -- Corruption
 	["curses"] = {
@@ -879,6 +881,11 @@ Necrosis.Warlock_Lists = {
 		trance				= {f_ptr = "trance", x = -20, y = 0,}, -- 
 	},
 }
+
+
+
+
+
 
 -- helper routines for config screens
 --[[
@@ -1068,8 +1075,8 @@ end
 function Necrosis.IsSpellDemon(name)
 	if name == Necrosis.GetSpellName("imp") -- 3 
 	or name == Necrosis.GetSpellName("voidwalker") -- 4 
-	or name == Necrosis.GetSpellName("inccubus") -- 5 
 	or name == Necrosis.GetSpellName("succubus") -- 5 
+	or name == Necrosis.GetSpellName("inccubus") -- 5 
 	or name == Necrosis.GetSpellName("felhunter") -- 6 
 	or name == Necrosis.GetSpellName("felguard") -- 10 -TBC
 	

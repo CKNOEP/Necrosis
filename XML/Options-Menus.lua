@@ -23,7 +23,7 @@ function Necrosis:SetMenusConfig()
 		frame:SetMovable(false)
 		frame:EnableMouse(true)
 		frame:SetWidth(350)
-		frame:SetHeight(452)
+		frame:SetHeight(600)
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("BOTTOMLEFT")
@@ -34,7 +34,7 @@ function Necrosis:SetMenusConfig()
 		frame:SetMovable(false)
 		frame:EnableMouse(true)
 		frame:SetWidth(350)
-		frame:SetHeight(452)
+		frame:SetHeight(600)
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetAllPoints(NecrosisMenusConfig)
@@ -81,7 +81,7 @@ function Necrosis:SetMenusConfig()
 		frame:SetMovable(false)
 		frame:EnableMouse(true)
 		frame:SetWidth(350)
-		frame:SetHeight(452)
+		frame:SetHeight(600)
 		frame:Hide()
 		frame:ClearAllPoints()
 		frame:SetAllPoints(NecrosisMenusConfig)
@@ -128,7 +128,7 @@ function Necrosis:SetMenusConfig()
 		frame:SetMovable(false)
 		frame:EnableMouse(true)
 		frame:SetWidth(350)
-		frame:SetHeight(452)
+		frame:SetHeight(600)
 		frame:Hide()
 		frame:ClearAllPoints()
 		frame:SetAllPoints(NecrosisMenusConfig)
@@ -175,7 +175,7 @@ function Necrosis:SetMenusConfig()
 		frame:SetMovable(false)
 		frame:EnableMouse(true)
 		frame:SetWidth(350)
-		frame:SetHeight(452)
+		frame:SetHeight(600)
 		frame:Hide()
 		frame:ClearAllPoints()
 		frame:SetAllPoints(NecrosisMenusConfig)
@@ -299,8 +299,10 @@ function Necrosis:SetMenusConfig()
 		FontString:SetTextColor(1, 1, 1)
 		frame:SetFontString(FontString)
 		--frame:SetDisabledTextColor(0.75, 0.75, 0.75)
-
+--------------------------------------------------
 		-- BUFF
+--------------------------------------------------
+
 		-- Choix de l'orientation du menu
 		frame = CreateFrame("Frame", "NecrosisBuffVector", NecrosisMenusConfig2, "UIDropDownMenuTemplate")
 		frame:Show()
@@ -447,8 +449,11 @@ function Necrosis:SetMenusConfig()
 		NecrosisBuffOyText:SetText("Offset Y")
 		NecrosisBuffOyLow:SetText("")
 		NecrosisBuffOyHigh:SetText("")
-
+		
+--------------------------------------------------
 		-- DEMON
+--------------------------------------------------
+
 		-- Choix de l'orientation du menu
 		frame = CreateFrame("Frame", "NecrosisDemonVector", NecrosisMenusConfig3, "UIDropDownMenuTemplate")
 		frame:Show()
@@ -467,34 +472,70 @@ function Necrosis:SetMenusConfig()
 		frame = CreateFrame("Frame", "NecrosisDemonSacrifice", NecrosisMenusConfig3, "UIDropDownMenuTemplate")
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisMenusConfig3, "BOTTOMRIGHT", 40, 300)
+		frame:SetPoint("RIGHT", NecrosisMenusConfig3, "BOTTOMRIGHT", 40, 320)
 
 		local FontString = frame:CreateFontString("NecrosisDemonSacrificeT", "OVERLAY", "GameFontNormalSmall")
 		FontString:Show()
 		FontString:ClearAllPoints()
-		FontString:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 35, 303)
+		FontString:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 35, 320)
 		FontString:SetTextColor(1, 1, 1)
 
 		UIDropDownMenu_SetWidth(frame, 125)		
 		for i in ipairs(Necrosis.Translation.DemonName) do
-			if i == NecrosisConfig.NecrosisDemonSacrifice then
+			
+			
 				UIDropDownMenu_SetSelectedID(NecrosisDemonSacrifice, i)
 				UIDropDownMenu_SetText(NecrosisDemonSacrifice, Necrosis.Translation.DemonName[i])
-				break
-			end
+				
+			
 		end
 
-		
-		
+		-- option Pet visisble dans le menus
+		for i in ipairs(Necrosis.Translation.DemonName) do
 
-		-- Choix du sens du menu
+				
+			frame = CreateFrame("CheckButton", "NecrosisDemonShow"..i, NecrosisMenusConfig3, "UICheckButtonTemplate")
+			frame:EnableMouse(true)
+			frame:SetWidth(24)
+			frame:SetHeight(24)
+			frame:Show()
+			frame:ClearAllPoints()
+			
+			if i > 4 then
+			frame:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 50, (140 + i*18) )
+			else
+			frame:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 250, (140 + i*18)+72 )
+			end
+			frame.text = _G["NecrosisDemonShow"..i.."Text"]
+			frame.text:SetText(Necrosis.Translation.DemonName[i])
+			
+			frame:SetText(Necrosis.Translation.DemonName[i])
+			
+
+			frame:SetChecked(NecrosisConfig.PetShow[i])
+			
+			--print (NecrosisConfig.PetShow[i].show)
+		
+			frame:SetScript("OnClick", function(self)
+				if self:GetChecked() then
+					NecrosisConfig.PetShow[i] = true
+
+				else
+					NecrosisConfig.PetShow[i] = false
+				end
+				Necrosis:CreateMenu()
+			end)
+				
+		end
+
+		-- Choix du sens du menu symétrie
 		frame = CreateFrame("CheckButton", "NecrosisDemonSens", NecrosisMenusConfig3, "UICheckButtonTemplate")
 		frame:EnableMouse(true)
 		frame:SetWidth(24)
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 50, 325)
+		frame:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 50, 385)
 
 		frame:SetScript("OnClick", function(self)
 			if self:GetChecked() then
@@ -523,7 +564,7 @@ function Necrosis:SetMenusConfig()
 		frame:SetHeight(15)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 35, 200)
+		frame:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 35, 160)
 
 		local State = "Ferme"
 		if NecrosisConfig.BlockedMenu then
@@ -557,7 +598,7 @@ function Necrosis:SetMenusConfig()
 		frame:SetHeight(15)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisMenusConfig3, "BOTTOMRIGHT", 40, 200)
+		frame:SetPoint("RIGHT", NecrosisMenusConfig3, "BOTTOMRIGHT", 40, 160)
 
 		local State = "Ferme"
 		if NecrosisConfig.BlockedMenu then
@@ -801,11 +842,12 @@ function Necrosis.Sacrifice_Init()
 	local element = {}
 		
 	for i in ipairs(Necrosis.Translation.DemonName) do
-		
-		element.text = Necrosis.Translation.DemonName[i]
-		element.checked = false
-		element.func = Necrosis.Sacrifice_Click
-		UIDropDownMenu_AddButton(element)
+		if i <6 then	
+			element.text = Necrosis.Translation.DemonName[i]
+			element.checked = false
+			element.func = Necrosis.Sacrifice_Click
+			UIDropDownMenu_AddButton(element)
+		end
 	end
 end
 function Necrosis.Sacrifice_Click(self)
