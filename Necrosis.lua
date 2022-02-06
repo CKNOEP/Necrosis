@@ -176,6 +176,12 @@ Local.DefaultConfig = {
 		["NecrosisCurseMenuButton"] = {"CENTER", "UIParent", "CENTER", 121,-100},
 		["NecrosisDestroyShardsButton"] = {"CENTER", "UIParent", "CENTER", 154,-100},
 	},
+	
+	PetShow = {
+	true,true,true,true,true,true,true,true,
+	},
+
+
 	Timers = { -- Order is for options screen; overrides Warlock_Spells Timer
 		[1] = {usage = "armor", show = true},
 		[2] = {usage = "breath", show = true},

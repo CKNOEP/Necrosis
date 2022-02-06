@@ -98,7 +98,7 @@ function Necrosis:Localization_Speech_Fr()
 				"Attendez, je sors mon briquet !",
 			},
 		},
-		-- Marcheur éthéré
+		-- Marcheur ï¿½thï¿½rï¿½
 		[2] = {
 			[1] = {
 				"Oups, je vais sans doute avoir besoin d'un idiot pour prendre les coups \195\160 ma place...",
@@ -145,7 +145,7 @@ function Necrosis:Localization_Speech_Fr()
 				"<sacrifice>Retourne dans les limbes et donne moi de ta puissance, D\195\169mon !"
 			},
 		},
-		-- Phrase pour la première invocation de pet (quand Necrosis ne connait pas encore leur nom)
+		-- Phrase pour la premiï¿½re invocation de pet (quand Necrosis ne connait pas encore leur nom)
 		[6] = {
 			[1] = {
 				"La p\195\170che au d\195\169mon ? Rien de plus facile !",
@@ -190,13 +190,13 @@ function Necrosis:Localization_Speech_Fr()
 end
 
 
--- Pour les caractères spéciaux :
--- é = \195\169 ---- è = \195\168
--- à = \195\160 ---- â = \195\162
--- ô = \195\180 ---- ê = \195\170
--- û = \195\187 ---- ä = \195\164
--- - = \195\132 ---- ö = \195\182
--- Ö = \195\150 ---- ü = \195\188
--- _ = \195\156 ---- î = \195\159
--- ç = \195\167 ---- î = \195\174
+-- Pour les caractï¿½res spï¿½ciaux :
+-- ï¿½ = \195\169 ---- ï¿½ = \195\168
+-- ï¿½ = \195\160 ---- ï¿½ = \195\162
+-- ï¿½ = \195\180 ---- ï¿½ = \195\170
+-- ï¿½ = \195\187 ---- ï¿½ = \195\164
+-- - = \195\132 ---- ï¿½ = \195\182
+-- ï¿½ = \195\150 ---- ï¿½ = \195\188
+-- _ = \195\156 ---- ï¿½ = \195\159
+-- ï¿½ = \195\167 ---- ï¿½ = \195\174
 

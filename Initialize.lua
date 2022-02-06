@@ -12,7 +12,7 @@ NECROSIS_ID = "Necrosis"
 Necrosis.Data = {
 	Version = GetAddOnMetadata("Necrosis", "Version"),
 	AppName = "Necrosis",
-	LastConfig = "7.6c",
+	LastConfig = "7.6d",
 	Enabled = false,
 }
 
