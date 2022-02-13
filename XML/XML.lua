@@ -459,8 +459,14 @@ function Necrosis:CreateWarlockPopup()
 		NecrosisConfig.FramePosition["NecrosisBacklashButton"][5]
 	)
 
-------------------------------------------------------------------------------------------------------
-	-- Create the Elemental alert button || 
+---------------------------------------------
+	-- Create the Elemental & demon alert button || 
+---------------------------------------------
+
+
+--------
+--demon
+--------
 	frame = nil
 	
 	frame = _G["NecrosisCreatureAlertButton_demon"]
@@ -469,8 +475,8 @@ function Necrosis:CreateWarlockPopup()
 	end
 
 	-- Define its attributes || Définition de ses attributs
-	frame:SetMovable(false)
-	frame:EnableMouse(false)
+	frame:SetMovable(true)
+	frame:EnableMouse(true)
 	frame:SetFrameStrata("HIGH")
 	frame:SetWidth(40)
 	frame:SetHeight(40)
@@ -523,6 +529,10 @@ function Necrosis:CreateWarlockPopup()
 		frame:ClearAllPoints()
 		frame:SetPoint("CENTER", UIParent, "CENTER", -50, 0)
 	end
+
+---------------
+-- Elemental --
+---------------
 
 	frame = _G["NecrosisCreatureAlertButton_elemental"]
 	if not frame then

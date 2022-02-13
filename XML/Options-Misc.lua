@@ -25,8 +25,11 @@ function Necrosis:SetMiscConfig()
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("BOTTOMLEFT")
-
+		
+		--------------------------------------
 		-- Déplacement des fragments
+		--------------------------------------
+		
 		frame = CreateFrame("CheckButton", "NecrosisMoveShard", NecrosisMiscConfig, "UICheckButtonTemplate")
 		frame:EnableMouse(true)
 		frame:SetWidth(24)
@@ -37,11 +40,12 @@ function Necrosis:SetMiscConfig()
 
 		frame:SetScript("OnClick", function(self)
 			NecrosisConfig.SoulshardSort = self:GetChecked()
-			if NecrosisConfig.SoulshardSort then
-				NecrosisMoveShardShardBag:Enable()
-			else
-				NecrosisMoveShardShardBag:Disable()
-			end
+			
+			--if NecrosisConfig.SoulshardSort then
+				--NecrosisMoveShard:SetChecked("true")
+			--else
+				--NecrosisMoveShard:SetChecked("false")
+			--end
 		end)
 
 		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
@@ -70,7 +74,9 @@ function Necrosis:SetMiscConfig()
 		--frame:SetFontString(FontString)
 		--frame:SetDisabledTextColor(0.75, 0.75, 0.75)
 
+		----------------------------------------------------------------------
 		-- Choose the bag for storing soul shards || Choix du sac à fragments
+		----------------------------------------------------------------------
 		frame = CreateFrame("Slider", "NecrosisShardBag", NecrosisMiscConfig, "OptionsSliderTemplate")
 		frame:SetMinMaxValues(0, 4)
 		frame:SetValueStep(1)
@@ -166,7 +172,10 @@ function Necrosis:SetMiscConfig()
 		FontString:SetFont("Fonts\\ARIALN.TTF", 12)
 		FontString:SetTextColor(1, 1, 1)
 --]]
-		-- Verrouillage de Necrosis
+		------------------------------------
+			-- Verrouillage de Necrosis
+		-------------------------------------
+		
 		frame = CreateFrame("CheckButton", "NecrosisLock", NecrosisMiscConfig, "UICheckButtonTemplate")
 		frame:EnableMouse(true)
 		frame:SetWidth(24)
@@ -213,8 +222,10 @@ function Necrosis:SetMiscConfig()
 		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
 		FontString:SetTextColor(1, 1, 1)
 		frame:SetFontString(FontString)
-
-		-- Affichage des boutons cachés
+		
+		--------------------------------------------
+				-- Affichage des boutons cachés
+		-------------------------------------------		
 		frame = CreateFrame("CheckButton", "NecrosisHiddenButtons", NecrosisMiscConfig, "UICheckButtonTemplate")
 		frame:EnableMouse(true)
 		frame:SetWidth(24)

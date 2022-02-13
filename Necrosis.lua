@@ -1381,17 +1381,17 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
 			NecrosisCreatureAlertButton_elemental:EnableMouse(true)			
 			else
 			NecrosisCreatureAlertButton_demon:SetAlpha(0)
-			NecrosisCreatureAlertButton_demon:EnableMouse(false)
+			NecrosisCreatureAlertButton_demon:EnableMouse(true)
 			
 			NecrosisCreatureAlertButton_elemental:SetAlpha(0) 
-			NecrosisCreatureAlertButton_elemental:EnableMouse(false)
+			NecrosisCreatureAlertButton_elemental:EnableMouse(true)
 	
 			end
 		else
 		NecrosisCreatureAlertButton_demon:SetAlpha(0) 
 		NecrosisCreatureAlertButton_elemental:SetAlpha(0) 	
-		NecrosisCreatureAlertButton_demon:EnableMouse(false)		
-		NecrosisCreatureAlertButton_elemental:EnableMouse(false)	
+		NecrosisCreatureAlertButton_demon:EnableMouse(true)		
+		NecrosisCreatureAlertButton_elemental:EnableMouse(true)	
 		--print(UnitCreatureType("target"))
 
 			
