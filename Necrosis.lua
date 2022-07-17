@@ -745,7 +745,7 @@ function SelfEffect(action, nom)
 			fs:Show()
 		end
 	else
-		-- Changing the mount button when the Warlock is disassembled || Changement du bouton de monture quand le Démoniste est démonté
+		-- Changing the mount button when the Warlock is dismount || Changement du bouton de monture quand le Démoniste est démonté
 		if nom == Necrosis.Warlock_Spells[5784].Name or  nom == Necrosis.Warlock_Spells[23161].Name or nom == "NomCheval1" or nom == "NomCheval2" then
 			Local.BuffActif.Mount = false
 			if f then
@@ -856,11 +856,15 @@ local function SetupSpells(reason)
 	Necrosis:SpellSetup(reason)
 
 	-- associate the mounts to the sphere button || Association du sort de monture correct au bouton
-	if (Necrosis.Warlock_Spells[5784].InSpellBook) or (Necrosis.Warlock_Spells[23161].InSpellBook) then
+	if GetSpellInfo(GetSpellInfo(5784)) or GetSpellInfo(GetSpellInfo(23161)) then
 		Local.Summon.SteedAvailable = true
 	else
 		Local.Summon.SteedAvailable = false
 	end
+    
+	
+
+
 
 	if not InCombatLockdown() then
 		Necrosis:MainButtonAttribute()
@@ -1929,8 +1933,8 @@ function Necrosis:BuildButtonTooltip(button)
 	-- ..... for other buffs and demons, the mana cost ... ||..... pour les autres buffs et démons, le coût en mana...
 	elseif (Type == "Enslave") then AddCastAndCost("enslave"); AddShard()
 	
-	elseif (Type == "Mount") and Necrosis.Warlock_Spells[23161].InSpellBook then
-	
+	--elseif (Type == "Mount") and Necrosis.Warlock_Spells[23161].InSpellBook then
+	elseif (Type == "Mount")  then
 -- TTip Left MOUNT			
 		if NecrosisConfig.LeftMount then
 			local LeftMountName = Necrosis.Utils.GetSpellName(NecrosisConfig.LeftMount)
@@ -2533,10 +2537,12 @@ function Necrosis:ButtonSetup()
 	end
 	local fm = Necrosis.Warlock_Buttons.main.f
 	local indexScale = -36
+	
 	for index=1, #Necrosis.Warlock_Lists.on_sphere, 1 do
 		local v = Necrosis.Warlock_Lists.on_sphere[index]
 		local fr = Necrosis.Warlock_Buttons[v.f_ptr].f
-
+		
+		
 		if Necrosis.Debug.buttons then
 			_G["DEFAULT_CHAT_FRAME"]:AddMessage("ButtonSetup"
 			.." '"..tostring(fr)
@@ -2544,15 +2550,21 @@ function Necrosis:ButtonSetup()
 		end
 		local f = _G[fr]
 		local sp = NecrosisConfig.StonePosition[index]
+
+		--if (GetSpellInfo(GetSpellInfo(v.high_of))
+		
 		if (Necrosis.IsSpellKnown(v.high_of) 	-- in spell book
-		or v.menu                           -- or on menu of spells
-		or v.item)                          -- or item to use
+		or v.menu                           	-- or on menu of spells
+		or v.item)                           	-- or item to use
 		and (sp and sp > 0) -- and requested
 		then
+		
 			if not f then
 				f = Necrosis:CreateSphereButtons(Necrosis.Warlock_Buttons[v.f_ptr])
+
 				Necrosis:StoneAttribute(Local.Summon.SteedAvailable)
 			end
+					
 			f:ClearAllPoints()
 ---[[
 			if NecrosisConfig.NecrosisLockServ then
@@ -2576,7 +2588,7 @@ function Necrosis:ButtonSetup()
 			f:SetScale(NBRScale)
 		else
 			if f then
-				f:Hide()
+				--f:Hide()
 			end
 		end
 	end
@@ -2967,6 +2979,7 @@ function Necrosis:GetCompanionInfo(type, id)
 		creatureName = GetSpellInfo(creatureSpellID)
 	end
 
+	print (creatureID, creatureName, creatureSpellID, icon, issummoned)
 	return creatureID, creatureName, creatureSpellID, icon, issummoned
 end
 

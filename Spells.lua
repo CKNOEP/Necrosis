@@ -219,8 +219,8 @@ Notes:
 - Ritual of Souls (90429) was removed when Mists of Pandaria released
 --]]
 	-- ::: Summon something
-	[5784]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "mount"}, -- 40 Felsteed  mount
-	[23161]	= {UsageRank = 2, SpellRank = 2, Timer = false, Usage = "mount"}, -- 60 Dreadsteed mount
+	[5784]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "mounts"}, -- 40 Felsteed  mount
+	[23161]	= {UsageRank = 2, SpellRank = 2, Timer = false, Usage = "mounts"}, -- 60 Dreadsteed mount
 	
 	[688]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "imp", PetId = 416,}, -- Imp || Diablotin
 	[697]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "voidwalker", PetId = 1860, reagent = "soul_shard", }, -- Voidwalker || Marcheur Pet-0-4379-0-47-1860-1700179E68
@@ -733,10 +733,10 @@ Necrosis.Warlock_Lists = {
 		[3] = {f_ptr = "health_stone", high_of = "healthstone",},
 		[4] = {f_ptr = "soul_stone", high_of = "soulstone",},
 		[5] = {f_ptr = "buffs",	menu = "buffs", },
-		[6] = {f_ptr = "mounts", high_of = "mount",},
+		[6] = {f_ptr = "mounts", high_of = "mounts",},
 		[7] = {f_ptr = "pets", menu = "pets", },
 		[8] = {f_ptr = "curses", menu = "curses", },
-		[9] = {f_ptr = "destroy_shards", high_of = "mount", },
+		[9] = {f_ptr = "destroy_shards", high_of = "destroy_shards", },
 		
 --		[9] = {f_ptr = "hearth_stone", item = "Hearthstone",},
 	},
@@ -938,10 +938,22 @@ end
 
 -- helper routines to get spell info / determine if a spell is usable
 function Necrosis.IsSpellKnown(usage)
+	if usage and usage =="mounts" then
+	--print ("usage "..usage)
+	end
+	
+	if usage and usage =="destroy_shards" then
+	return true
+	end
+	
+	
 	if Necrosis.Warlock_Spell_Use[usage] -- get spell id
 	then
-		return 
-			Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].InSpellBook
+		if GetSpellInfo(GetSpellInfo(Necrosis.Warlock_Spell_Use[usage])) then --- test if spell is know
+		return true
+		
+		--return Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].InSpellBook
+		end
 	else
 		return false -- safety
 	end
