@@ -1,4 +1,5 @@
-## Interface: 20503
+## Interface: 30400
+## X-Min-Interface-Wrath: 30400
 ## Title: Necrosis 8.0 Woltk
 ## Title-ruRU: Necrosis (Русский)
 ## Title-frFR: Necrosis (Français)
