@@ -1,4 +1,4 @@
-## Interface: 20503
+## Interface: 20504
 ## Title: Necrosis 7.6d
 ## Title-ruRU: Necrosis (Русский)
 ## Title-frFR: Necrosis (Français)
