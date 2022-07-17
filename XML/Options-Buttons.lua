@@ -210,6 +210,7 @@ function Necrosis:SetButtonsConfig()
 				else
 					NecrosisConfig.StonePosition[i] = - math.abs(NecrosisConfig.StonePosition[i])
 				end
+				--print (boutons[i])
 				Necrosis:ButtonSetup()
 			end)
 

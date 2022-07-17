@@ -2588,7 +2588,7 @@ function Necrosis:ButtonSetup()
 			f:SetScale(NBRScale)
 		else
 			if f then
-				--f:Hide()
+				f:Hide()
 			end
 		end
 	end
