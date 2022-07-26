@@ -211,7 +211,8 @@ function Necrosis:SetBuffSpellAttribute(button)
 		if f.high_of == 'banish' then
 			local high = Necrosis.GetSpellCastName(f.high_of)
 			-- Do NOT like hard coding but leave for now...
-			local Rank1 = self.Warlock_Spells[710].InSpellBook and self.Warlock_Spells[710].CastName
+			--local Rank1 = self.Warlock_Spells[710].InSpellBook and self.Warlock_Spells[710].CastName
+			local Rank1 = GetSpellInfo(710)..GetSpellSubtext(710)
 			if Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[f.high_of]].SpellRank == 2 then -- has rank 2
 				local Rank2 = self.Warlock_Spells[18647].InSpellBook and self.Warlock_Spells[18647].CastName
 				
