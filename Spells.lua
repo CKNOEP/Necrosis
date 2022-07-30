@@ -514,7 +514,8 @@ Notes:
 	[20763] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ss_used",         Result = true, Cooldown = 1800, Group = 1, }, -- 
 	[20764] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "greater_ss_used", Result = true, Cooldown = 1800, Group = 1, }, -- 
 	[20765] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "major_ss_used",   Result = true, Cooldown = 1800, Group = 1, }, --
-	[27239] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "master_ss_used",  Result = true, Cooldown = 1800, Group = 1, }, -- 	
+	[27239] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "master_ss_used",  Result = true, Cooldown = 1800, Group = 1, }, -- 
+	[47883] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "demonic_ss_used",  Result = true, Cooldown = 1800, Group = 1, }, -- 	
 
 	-- Health stone
 	-- When a health stone is used it could be one of several spells because each gives different health amounts
@@ -524,6 +525,9 @@ Notes:
 	[5723] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "greater_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- greater 800
 	[11732] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "major_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- major 1200
 	[27235] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "master_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- major 1200
+	[47872] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "demonic_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- major 1200
+	[47875] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "fel_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- major 1200
+
 	}
 
 --[[ Warlock_Buttons
@@ -869,6 +873,12 @@ Necrosis.Warlock_Lists = {
 		master_hs_1			= {id = 22103, }, --2080
 		master_hs_2			= {id = 22104, }, --2288
 		master_hs_3			= {id = 22105, }, --2496
+		fel_hs_1			= {id = 36892, }, --4280
+		fel_hs_2			= {id = 36893, }, --4708
+		fel_hs_3			= {id = 36894, }, --5136
+		demonic_hs_1		= {id = 36889, }, --3500
+		demonic_hs_2		= {id = 36890, }, --3850
+		demonic_hs_3		= {id = 36891, }, --4200
 	},
 	["soul_stones"] = {
 		minor_ss			= {id = 5232, }, --
@@ -877,6 +887,8 @@ Necrosis.Warlock_Lists = {
 		greater_ss			= {id = 16895, }, --
 		major_ss			= {id = 16896, }, --
 		master_ss			= {id = 22116, }, --
+		demonic_ss			= {id = 36895, }, --
+
 	},
 	["spell_stones"] = {
 		spell				= {id = 41191, }, --
@@ -1146,6 +1158,7 @@ function Necrosis.IsSpellRez(name)
 	or name == (Necrosis.Warlock_Spell_Use["greater_ss_used"] and Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use["greater_ss_used"]].Name or "")
 	or name == (Necrosis.Warlock_Spell_Use["major_ss_used"] and Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use["major_ss_used"]].Name or "")
 	or name == (Necrosis.Warlock_Spell_Use["master_ss_used"] and Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use["master_ss_used"]].Name or "") -- TBC
+	or name == (Necrosis.Warlock_Spell_Use["demonic_ss_used"] and Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use["demonic_ss_used"]].Name or "") -- TBC
 	
 	then
 		return true
