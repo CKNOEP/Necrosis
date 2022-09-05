@@ -509,13 +509,13 @@ Notes:
 	From the id, WoW knows the health and mana to give if the soul stone is used.
 	Note: WoW will only allow one soul stone at a time so we do not have to worry about multiple stones...
 	--]] 
-	[20707] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "minor_ss_used",   Result = true, Cooldown = 1800, Group = 1, }, -- ss_rez
-	[20762] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "lesser_ss_used",  Result = true, Cooldown = 1800, Group = 1, }, -- 
-	[20763] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ss_used",         Result = true, Cooldown = 1800, Group = 1, }, -- 
-	[20764] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "greater_ss_used", Result = true, Cooldown = 1800, Group = 1, }, -- 
-	[20765] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "major_ss_used",   Result = true, Cooldown = 1800, Group = 1, }, --
-	[27239] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "master_ss_used",  Result = true, Cooldown = 1800, Group = 1, }, -- 
-	[47883] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "demonic_ss_used",  Result = true, Cooldown = 1800, Group = 1, }, -- 	
+	[20707] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "minor_ss_used",   Result = true, Cooldown = 900, Group = 1, }, -- ss_rez
+	[20762] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "lesser_ss_used",  Result = true, Cooldown = 900, Group = 1, }, -- 
+	[20763] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ss_used",         Result = true, Cooldown = 900, Group = 1, }, -- 
+	[20764] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "greater_ss_used", Result = true, Cooldown = 900, Group = 1, }, -- 
+	[20765] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "major_ss_used",   Result = true, Cooldown = 900, Group = 1, }, --
+	[27239] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "master_ss_used",  Result = true, Cooldown = 900, Group = 1, }, -- 
+	[47883] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "demonic_ss_used",  Result = true, Cooldown = 900, Group = 1, }, -- 	
 
 	-- Health stone
 	-- When a health stone is used it could be one of several spells because each gives different health amounts
