@@ -379,6 +379,8 @@ Notes:
 	[47841]	= {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "unstable_affliction", Length = 18, }, --  
 	[47843]	= {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "unstable_affliction", Length = 18, }, --  	
 	
+	[48181]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "haunt", Length = 12, }, -- Affliction instable 
+	
 	-- ::: Spells
 	[348]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "immolate", Length = 15, }, -- Immolate 
 	[707]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "immolate", Length = 15, }, --  
