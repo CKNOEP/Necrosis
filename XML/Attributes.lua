@@ -334,12 +334,9 @@ function Necrosis:PetSpellAttribute()
 		local v = Necrosis.Warlock_Lists.pets[index]
 		local f = Necrosis.Warlock_Buttons[v.f_ptr].f
 		
-		if v.high_of == 'sacrifice'
-		then
-			
-			
+		if v.high_of == 'sacrifice'	then
+						
 			Necrosis:SetPetSpellAttribute(f)
-			
 		end
 		
 		

@@ -470,12 +470,12 @@ function Necrosis:SetMenusConfig()
 		
 		-- Choix du démon a sacrifié sur le Shift Clic du boutton
 		frame = CreateFrame("Frame", "NecrosisDemonSacrifice", NecrosisMenusConfig3, "UIDropDownMenuTemplate")
-		frame:Show()
+		frame:Hide()--Hide for WLTK
 		frame:ClearAllPoints()
 		frame:SetPoint("RIGHT", NecrosisMenusConfig3, "BOTTOMRIGHT", 40, 320)
 
 		local FontString = frame:CreateFontString("NecrosisDemonSacrificeT", "OVERLAY", "GameFontNormalSmall")
-		FontString:Show()
+		FontString:Hide()--Hide for WLTK
 		FontString:ClearAllPoints()
 		FontString:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 35, 320)
 		FontString:SetTextColor(1, 1, 1)
@@ -525,9 +525,35 @@ function Necrosis:SetMenusConfig()
 				end
 				Necrosis:CreateMenu()
 			end)
-				
+	
 		end
+		-- Show Hide Subjugation 
+			frame = CreateFrame("CheckButton", "NecrosisDemonShowSubjugation", NecrosisMenusConfig3, "UICheckButtonTemplate")
+			frame:EnableMouse(true)
+			frame:SetWidth(24)
+			frame:SetHeight(24)
+			frame:Show()
+			frame:ClearAllPoints()
+			
+			frame:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 50, (140 + 4*18) )
+			frame.text = _G["NecrosisDemonShowSubjugation".."Text"]
+			frame.text:SetText(Necrosis.GetSpellCastName("enslave"))
+			frame:SetText(Necrosis.GetSpellCastName("enslave"))
+			frame:SetChecked(NecrosisConfig.PetShow[10])
+			frame:SetScript("OnClick", function(self)
+				if self:GetChecked() then
+					NecrosisConfig.PetShow[10] = true
 
+				else
+					NecrosisConfig.PetShow[10] = false
+				end
+				Necrosis:CreateMenu()
+			end)
+
+
+	
+	
+		
 		-- Choix du sens du menu symétrie
 		frame = CreateFrame("CheckButton", "NecrosisDemonSens", NecrosisMenusConfig3, "UICheckButtonTemplate")
 		frame:EnableMouse(true)
@@ -645,7 +671,7 @@ function Necrosis:SetMenusConfig()
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisMenusConfig4, "BOTTOMLEFT", 50, 325)
+		frame:SetPoint("LEFT", NecrosisMenusConfig4, "BOTTOMLEFT", 50, 385)
 
 		frame:SetScript("OnClick", function(self)
 			if self:GetChecked() then
@@ -663,6 +689,46 @@ function Necrosis:SetMenusConfig()
 		FontString:SetTextColor(1, 1, 1)
 		frame:SetFontString(FontString)
 
+			for  i = 1, #Necrosis.Warlock_Lists.curses, 1 do
+
+				
+			frame = CreateFrame("CheckButton", "NecrosisShowCurse"..i, NecrosisMenusConfig4, "UICheckButtonTemplate")
+			frame:EnableMouse(true)
+			frame:SetWidth(24)
+			frame:SetHeight(24)
+			frame:Show()
+			frame:ClearAllPoints()
+			
+			if i > 4 then
+			frame:SetPoint("LEFT", NecrosisMenusConfig4, "BOTTOMLEFT", 250, (140 + i*18) )
+			else
+			frame:SetPoint("LEFT", NecrosisMenusConfig4, "BOTTOMLEFT", 50, (140 + i*18)+72 )
+			end
+			frame.text = _G["NecrosisShowCurse"..i.."Text"]
+			
+					local c = Necrosis.Warlock_Lists.curses[i].f_ptr
+					
+					frame.text:SetText(c)
+					frame:SetText(c)
+			
+			frame:SetChecked(NecrosisConfig.CurseShow[i])
+			
+		
+		
+			frame:SetScript("OnClick", function(self)
+				if self:GetChecked() then
+					NecrosisConfig.CurseShow[i] = true
+
+				else
+					NecrosisConfig.CurseShow[i] = false
+				end
+				Necrosis:CreateMenu()
+			end)
+	
+		end
+
+
+
 		-- Création du slider d'Offset X
 		frame = CreateFrame("Slider", "NecrosisCurseOx", NecrosisMenusConfig4, "OptionsSliderTemplate")
 		frame:SetMinMaxValues(-65, 65)
@@ -672,7 +738,7 @@ function Necrosis:SetMenusConfig()
 		frame:SetHeight(15)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisMenusConfig4, "BOTTOMLEFT", 35, 200)
+		frame:SetPoint("LEFT", NecrosisMenusConfig4, "BOTTOMLEFT", 35, 160)
 
 		local State = "Ferme"
 		if NecrosisConfig.BlockedMenu then
@@ -706,7 +772,7 @@ function Necrosis:SetMenusConfig()
 		frame:SetHeight(15)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisMenusConfig4, "BOTTOMRIGHT", 40, 200)
+		frame:SetPoint("RIGHT", NecrosisMenusConfig4, "BOTTOMRIGHT", 40, 160)
 
 		local State = "Ferme"
 		if NecrosisConfig.BlockedMenu then

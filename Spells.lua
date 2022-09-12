@@ -805,7 +805,7 @@ Necrosis.Warlock_Lists = {
 		----spell for pet--
 		[9]  = {f_ptr = "domination", high_of = "domination", },
 		[10] = {f_ptr = "enslave", high_of = "enslave", },
-		[11] = {f_ptr = "sacrifice", high_of = "sacrifice", },
+		--[11] = {f_ptr = "sacrifice", high_of = "sacrifice", },--WOTLK disuse
 		--
 
 	},
@@ -814,11 +814,11 @@ Necrosis.Warlock_Lists = {
 		[1] = {f_ptr = "weakness", high_of = "weakness", },
 		[2] = {f_ptr = "agony", high_of = "agony", },
 		[3] = {f_ptr = "tongues", high_of = "tongues", },
-		[4] = {f_ptr = "exhaustion", high_of = "exhaustion", },
+		[4] = {f_ptr = "corruption", high_of = "corruption", },
 		[5] = {f_ptr = "elements", high_of = "elements", },
 		[6] = {f_ptr = "doom", high_of = "doom", },
-		[7] = {f_ptr = "corruption", high_of = "corruption", },
-		[8] = {f_ptr = "recklessness", high_of = "recklessness", },
+	  --[7] = {f_ptr = "exhaustion", high_of = "exhaustion", },
+	  --[8] = {f_ptr = "recklessness", high_of = "recklessness", },
 --		[9] = {f_ptr = "shadow", high_of = "shadow", },
 	},
 	-- {19, 31, 37, 41, 43, 44, 55} See GetMainSpellList

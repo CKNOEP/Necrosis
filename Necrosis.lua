@@ -177,10 +177,9 @@ Local.DefaultConfig = {
 		["NecrosisDestroyShardsButton"] = {"CENTER", "UIParent", "CENTER", 154,-100},
 	},
 	
-	PetShow = {
-	true,true,true,true,true,true,true,true,
-	},
-
+	PetShow = {true,true,true,true,true,true,true,true,true,},
+	
+	CurseShow = {true,true,true,true,true,true,true,true,},
 
 	Timers = { -- Order is for options screen; overrides Warlock_Spells Timer
 		[1] = {usage = "armor", show = true},
@@ -1377,12 +1376,18 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
 			if UnitCreatureType("target") == Necrosis.Unit.Demon  then 	-- Button Alerte Demon	
 			NecrosisCreatureAlertButton_demon:SetAlpha(1)		
 			NecrosisCreatureAlertButton_demon:EnableMouse(true)
+			
 			NecrosisCreatureAlertButton_elemental:SetAlpha(1) 
 			NecrosisCreatureAlertButton_elemental:EnableMouse(true)
+			NecrosisCreatureAlertButton_elemental:SetMovable(true)
 			
+			elseif UnitCreatureType("target") == Necrosis.Unit.Elemental then-- Button Alerte Elemental
 			NecrosisCreatureAlertButton_elemental:SetAlpha(1)
+			NecrosisCreatureAlertButton_elemental:EnableMouse(true)
 			NecrosisCreatureAlertButton_demon:SetAlpha(0)
-		
+			NecrosisCreatureAlertButton_demon:EnableMouse(true)
+			NecrosisCreatureAlertButton_elemental:SetMovable(true)
+	
 			else
 			NecrosisCreatureAlertButton_demon:SetAlpha(0)
 			NecrosisCreatureAlertButton_demon:EnableMouse(true)
@@ -1395,7 +1400,9 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
 		NecrosisCreatureAlertButton_demon:SetAlpha(0) 
 		NecrosisCreatureAlertButton_elemental:SetAlpha(0) 	
 		NecrosisCreatureAlertButton_demon:EnableMouse(true)		
-		NecrosisCreatureAlertButton_elemental:EnableMouse(true)	
+		NecrosisCreatureAlertButton_elemental:EnableMouse(true)
+		NecrosisCreatureAlertButton_demon:SetMovable(true)		
+		NecrosisCreatureAlertButton_elemental:SetMovable(true)			
 		--print(UnitCreatureType("target"))
 
 			
@@ -2706,7 +2713,7 @@ function Necrosis:CreateMenu()
 		end
 
 		for index = 1, #Necrosis.Warlock_Lists.pets, 1 do
---		
+		
 			if NecrosisConfig.PetShow[index] == true 		then
 				show = NecrosisConfig.PetShow[index]
 			elseif NecrosisConfig.PetShow[index] == false 	then
@@ -2860,6 +2867,19 @@ function Necrosis:CreateMenu()
 		end
 
 		for index = 1, #Necrosis.Warlock_Lists.curses, 1 do
+			
+			if NecrosisConfig.CurseShow[index] == true 		then
+				show = NecrosisConfig.CurseShow[index]
+			elseif NecrosisConfig.CurseShow[index] == false 	then
+				show = NecrosisConfig.CurseShow[index]
+			elseif not NecrosisConfig.CurseShow[index] 			then
+				show = true
+			else 
+			
+			end
+			
+			
+			if  show  == true then
 			local v = Necrosis.Warlock_Lists.curses[index]
 			local f = Necrosis.Warlock_Buttons[v.f_ptr].f
 			if Necrosis.IsSpellKnown(v.high_of) -- in spell book
@@ -2875,6 +2895,7 @@ function Necrosis:CreateMenu()
 --				menuVariable.high_of = v.high_of
 				prior_button = f -- anchor the next button
 				Local.Menu.Curse:insert(menuVariable)
+			end
 			end
 		end
 		-- Display the curse menu button on the sphere || Maintenant que tous les boutons de curse sont placés les uns à côté des autres, on affiche les disponibles
