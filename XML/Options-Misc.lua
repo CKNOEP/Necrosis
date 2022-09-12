@@ -241,8 +241,10 @@ function Necrosis:SetMiscConfig()
 				ShowUIPanel(NecrosisAntiFearButton)
 				NecrosisCreatureAlertButton_elemental:SetAlpha(1)
 				NecrosisCreatureAlertButton_elemental:SetMovable(true)
+				
 				NecrosisCreatureAlertButton_demon:SetMovable(true)				
 				NecrosisCreatureAlertButton_demon:SetAlpha(1)
+				
 				NecrosisShadowTranceButton:RegisterForDrag("LeftButton")
 				NecrosisBacklashButton:RegisterForDrag("LeftButton")
 				NecrosisAntiFearButton:RegisterForDrag("LeftButton")

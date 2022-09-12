@@ -577,7 +577,8 @@ function Necrosis:CreateWarlockPopup()
 		
 		if frame:GetAlpha() == 0 then
 		-- NOTHING TO SHOW			
-		frame:EnableMouse(false)
+		frame:EnableMouse(true)
+		frame:SetMovable(true)
 		else
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 		GameTooltip:SetText(White(Necrosis.GetSpellName("banish")))

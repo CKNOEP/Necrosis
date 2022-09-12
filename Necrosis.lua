@@ -1371,18 +1371,18 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
 		end
 		if NecrosisConfig.CreatureAlert	and UnitCanAttack("player", "target") and not UnitIsDead("target") then
 		
-		--usable, nomana = IsUsableSpell(Necrosis.GetSpellName("enslave"));
-		--print(usable,nomana)
+		usable, nomana = IsUsableSpell(Necrosis.GetSpellName("enslave"));
+		--print(usable,nomana,Necrosis.Unit.Demon,Necrosis.Unit.Elemental)
 		
-			if UnitCreatureType("target") == Necrosis.Unit.Demon and NecrosisConfig.Banish == true then 	
-			NecrosisCreatureAlertButton_demon:SetAlpha(1)		-- Button Alerte Demon	
+			if UnitCreatureType("target") == Necrosis.Unit.Demon  then 	-- Button Alerte Demon	
+			NecrosisCreatureAlertButton_demon:SetAlpha(1)		
 			NecrosisCreatureAlertButton_demon:EnableMouse(true)
-			NecrosisCreatureAlertButton_elemental:SetAlpha(1)-- Button Alerte Elemental
+			NecrosisCreatureAlertButton_elemental:SetAlpha(1) 
 			NecrosisCreatureAlertButton_elemental:EnableMouse(true)
 			
-			elseif UnitCreatureType("target") == Necrosis.Unit.Elemental and NecrosisConfig.Banish == true then
-			NecrosisCreatureAlertButton_elemental:SetAlpha(1)-- Button Alerte Elemental
-			NecrosisCreatureAlertButton_elemental:EnableMouse(true)			
+			NecrosisCreatureAlertButton_elemental:SetAlpha(1)
+			NecrosisCreatureAlertButton_demon:SetAlpha(0)
+		
 			else
 			NecrosisCreatureAlertButton_demon:SetAlpha(0)
 			NecrosisCreatureAlertButton_demon:EnableMouse(true)
