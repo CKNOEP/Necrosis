@@ -438,6 +438,12 @@ function Necrosis:StoneAttribute(Steed)
 		destroy_shards_button:SetScript(
 			"OnClick",
 			Necrosis.Warlock_Buttons.destroy_shards.func
+			
+		)
+		destroy_shards_button:SetScript(
+			"OnMouseWheel",
+			Necrosis.Warlock_Buttons.destroy_shards.func
+			
 		)
 	end
 	

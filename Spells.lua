@@ -695,7 +695,38 @@ Necrosis.Warlock_Buttons = {
 	destroy_shards = {f = "NecrosisDestroyShardsButton", tip = "DestroyShards", anchor = "ANCHOR_RIGHT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\ShardDestroy-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\ShardDestroy-02",
-					func = function() Necrosis:DeleteShards() end
+					func = function(self,arg1) 
+					
+						if arg1 == "RightButton" then
+						Necrosis:DeleteShards()
+						Necrosis:BuildButtonTooltip(self)
+						elseif arg1 == "LeftButton" then
+						--Move shard to the specific bag
+						--Necrosis:SoulshardSwitch("CHECK")
+						for i=1, GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id) do
+						--print ("Move Shard ",i," to ", GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id))
+						Necrosis:SoulshardSwitch(i)
+						end
+						
+						elseif arg1 == 1 then
+						
+							if NecrosisConfig.DestroyCount < 32 then 
+							NecrosisConfig.DestroyCount = NecrosisConfig.DestroyCount + 1 
+							Necrosis:BuildButtonTooltip(self)
+							Necrosis:BagExplore()
+							end
+						elseif arg1 == -1 then
+							if NecrosisConfig.DestroyCount >0 then 
+							NecrosisConfig.DestroyCount = NecrosisConfig.DestroyCount - 1 
+							Necrosis:BuildButtonTooltip(self)
+							Necrosis:BagExplore()
+							end
+						
+						
+						
+						else
+						end
+					end
 					}, --				
 -- CURSE
 

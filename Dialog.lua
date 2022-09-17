@@ -256,6 +256,7 @@ Necrosis.TooltipData = {
 	["DestroyShards"] = {
 		Label = L["DESTROY_SHARD_MENU_LABEL"],
 		Text = L["DESTROY_SHARD_MENU_TEXT"],
+		
 	},
 	
 	["DominationCooldown"] = L["DOMINATION_COOLDOWN"],

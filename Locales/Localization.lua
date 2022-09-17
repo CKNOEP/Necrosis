@@ -48,7 +48,7 @@ L["ENSLAVED_DEMON"] = "Demon: Enslaved"
 L["NO_CURRENT_DEMON"] = "Demon: None"
 L["HEARTH_STONE"] = "Hearthstone"
 L["DESTROY_SHARD_MENU_LABEL"] = "|c00FF99FF".."Destroy Shard(s)".."|r"
-L["DESTROY_SHARD_MENU_TEXT"] = "Click to destroy Soul Shards to the limit  "
+L["DESTROY_SHARD_MENU_TEXT"] = "Right Click to destroy Soul Shards to the limit : "
 
 --
 L["SOULSTONE_TEXT_1"] = "Right click to create"

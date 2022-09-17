@@ -260,6 +260,7 @@ local function CreateMenuButton(button)
 	-- Define its attributes || Définition de ses attributs
 	frame:SetMovable(true)
 	frame:EnableMouse(true)
+	
 	frame:SetWidth(34)
 	frame:SetHeight(34)
 	frame:SetNormalTexture(b.norm) 

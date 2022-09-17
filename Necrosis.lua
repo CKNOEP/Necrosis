@@ -983,7 +983,7 @@ function Necrosis:OnUpdate(something, elapsed)
 	if Local.LastUpdate[1] > 1 then
 	-- If configured, sorting fragments every second || Si configuré, tri des fragments toutes les secondes
 		if NecrosisConfig.SoulshardSort and Local.Soulshard.Move > 0  then
-			Necrosis:SoulshardSwitch("MOVE")
+			--Necrosis:SoulshardSwitch("MOVE")
 		end
 
 		-- Timers Table Course || Parcours du tableau des Timers
@@ -1195,7 +1195,7 @@ function Necrosis:OnEvent(self, event,...)
 	if (event == "BAG_UPDATE") then
 		Necrosis:BagExplore(arg1)
 		if (NecrosisConfig.SoulshardSort) then
-			Necrosis:SoulshardSwitch("CHECK")
+			--Necrosis:SoulshardSwitch("CHECK")
 		end
 	-- If the player wins or loses mana || Si le joueur gagne ou perd de la mana
 	elseif (event == "UNIT_MANA") and arg1 == "player" then
@@ -1695,6 +1695,16 @@ local function AddShard()
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count)
 	end
 end
+local function AddDestroyCount()
+
+
+	if NecrosisConfig.DestroyCount then
+		GameTooltip:AddLine("|c00FF4444"..Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count.."|r".."/".."|c00FF4444"..NecrosisConfig.DestroyCount.."|r")
+		GameTooltip:AddLine("|c00FFFFFF".."Use MouseWheel to increase or decrease the limit ..")
+		GameTooltip:AddLine("|c00FFFFFF".."Use LeftClick to move shard to the specific bag ..")
+	end
+end
+
 local function AddDominion(start, duration)
 	if not (start > 0 and duration > 0) then
 		GameTooltip:AddLine(Necrosis.TooltipData.DominationCooldown)
@@ -1756,6 +1766,7 @@ function Necrosis:BuildButtonTooltip(button)
 	else
 	
 		Type = b.tip
+		
 	end
 
 	if Necrosis.Debug.tool_tips then
@@ -1770,6 +1781,7 @@ function Necrosis:BuildButtonTooltip(button)
 
 	-- If the tooltip is associated with a menu button, we change the anchoring of the tooltip according to its meaning ||Si la bulle d'aide est associée à un bouton de menu, on change l'ancrage de la tooltip suivant son sens
 	if b.menu then
+	
 		if (b.menu == "Pet" and NecrosisConfig.PetMenuPos.direction < 0)
 			or
 				(b.menu == "Buff" and NecrosisConfig.BuffMenuPos.direction < 0)
@@ -2049,7 +2061,7 @@ function Necrosis:BuildButtonTooltip(button)
 	elseif (Type == "BuffMenu")		then AddMenuTip(Type)
 	elseif (Type == "CurseMenu")	then AddMenuTip(Type)
 	elseif (Type == "PetMenu")		then AddMenuTip(Type)
-	elseif (Type == "DestroyShards")then AddMenuTip(Type)
+	elseif (Type == "DestroyShards")then AddMenuTip(Type);AddDestroyCount()
 	end
 	-- And hop, posting! || Et hop, affichage !
 	GameTooltip:Show()
@@ -2234,61 +2246,82 @@ end
 -- FUNCTIONS MANAGING STONES & SHARDS || FONCTIONS DES PIERRES ET DES FRAGMENTS
 ------------------------------------------------------------------------------------------------------
 
--- Finds a new bag / slot when moving shards || Pendant le déplacement des fragments, il faut trouver un nouvel emplacement aux objets déplacés :)
-function FindSlot(shardIndex, shardSlot)
-	local full = true -- Assume the bag is full of shards
-	for slot=1, GetContainerNumSlots(NecrosisConfig.SoulshardContainer), 1 do
-		local itemLink = GetContainerItemLink(NecrosisConfig.SoulshardContainer, slot)
-		local itemID, item_name = Necrosis.Utils.ParseItemLink(itemLink)
-		if (itemID == Necrosis.Warlock_Lists.reagents.soul_shard.id) then
-			-- Found a shard; Nothing to do
-		else
-			-- swap the given shard
-			PickupContainerItem(shardIndex, shardSlot)
-			PickupContainerItem(NecrosisConfig.SoulshardContainer, slot)
-			if (CursorHasItem()) then
-				if shardIndex == 0 then
-					PutItemInBackpack()
-				else
-					PutItemInBag(19 + shardIndex)
-				end
-			end
-			full = false
-			break
-		end
-	end
+-- ondeplace un shard et on relance une recherche.
+function Necrosis:MoveShard(nshard)
+	
+	
+	  
+		  for n in pairs(Necrosis.ShardToMove) do 
+
+		  PickupContainerItem(Necrosis.ShardToMove[n].FromContainer, Necrosis.ShardToMove[n].FromSlot)
+	      PickupContainerItem(Necrosis.EmptySlot[n].ToContainer, Necrosis.EmptySlot[n].ToSlot)
+		  --endS
+		  
+		  end
+		  --print("N",getN)
+		--Necrosis:SoulshardSwitch()
+
+
 end
 
 -- Allows you to find / arrange shards in bags || Fonction qui permet de trouver / ranger les fragments dans les sacs
-function Necrosis:SoulshardSwitch(Type)
-	-- print (TYPE .. "SS type check".. Local.Soulshard.Move)
-	if (Type == "CHECK") then Local.Soulshard.Move = 0 end
+function Necrosis:SoulshardSwitch(nshard)
+	
+	Necrosis.ShardToMove = {}
+	Necrosis.EmptySlot = {}
+	ShardToMoveCount = 0
+	ShardOrMoveCount = 0
+	
 	for container = 0, NUM_BAG_SLOTS, 1 do
-		if Local.BagIsSoulPouch[container] then break end
-		if not (container == NecrosisConfig.SoulshardContainer) then
+		if Local.BagIsSoulPouch[container] then 
+		
+		end
+	
+		--if not (container == NecrosisConfig.SoulshardContainer) then
 			for slot = 1, GetContainerNumSlots(container), 1 do
 				local itemLink = GetContainerItemLink(container, slot)
 				if (itemLink) then
-					local itemID, item_name = Necrosis.Utils.ParseItemLink(itemLink)
-					if (itemID == Necrosis.Warlock_Lists.reagents.soul_shard.id) then
-						if (Type == "CHECK") then
-							Local.Soulshard.Move = Local.Soulshard.Move + 1
-						elseif (Type == "MOVE") then
-							FindSlot(container, slot)
-							Local.Soulshard.Move = Local.Soulshard.Move - 1
-						end
-						if Necrosis.Debug.bags then
-							_G["DEFAULT_CHAT_FRAME"]:AddMessage("SoulshardSwitch shard found"
-							.." t'"..(Type or "nyl")..'"'
-							.." m'"..(Local.Soulshard.Move or "nyl")..'"'
-							)
-						end
+					
+					local itemID, itemType, itemSubType, itemEquipLoc, icon, classID, subclassID = GetItemInfoInstant(itemLink)
+					
+					
+					if (itemID == Necrosis.Warlock_Lists.reagents.soul_shard.id) then --Search the Shard in the bags before to search a place for each one 
+						ShardOrMoveCount = ShardOrMoveCount + 1
+						Necrosis.ShardToMove[ShardOrMoveCount] = {FromContainer = container, FromSlot = slot}
+											
 					end
-				end
+				end	
 			end
+		--else	
+		--Search slot empty, 
+			for i=1,GetContainerNumSlots(NecrosisConfig.SoulshardContainer) do
+						icon, itemCount, locked, quality, readable, lootable, itemLink, isFiltered, noValue, itemID, isBound = GetContainerItemInfo(NecrosisConfig.SoulshardContainer, i)
+						
+							
+							-- If destination bag is soulbag or not
+							if not itemCount or itemID ~= 6265 then -- Search empty Slot empty to put the shard
+							ShardToMoveCount = ShardToMoveCount + 1 
+							Necrosis.EmptySlot[ShardToMoveCount] = {ToContainer = NecrosisConfig.SoulshardContainer, ToSlot = i}
+							
+							end
+												
+			end	
+					if Necrosis.Debug.bags then
+										_G["DEFAULT_CHAT_FRAME"]:AddMessage("SoulshardSwitch shard found"
+										.." t'"..(Type or "nyl")..'"'
+										.." m'"..(Local.Soulshard.Move or "nyl")..'"'
+										)
+					end
+			--end
 		end
-	end
+
+	 
+	 Necrosis:MoveShard()
+
 end
+
+
+
 
 -- Explore bags for stones & shards || Fonction qui fait l'inventaire des éléments utilisés en démonologie : Pierres, Fragments, Composants d'invocation
 function Necrosis:BagExplore(arg)
@@ -2486,7 +2519,8 @@ function Necrosis:BagExplore(arg)
 			NecrosisShardCount:SetText(Local.Reagent.Infernal.." / "..Local.Reagent.Demoniac)
 		elseif NecrosisConfig.CountType == 1 then
 			if Local.Soulshard.Count < 10 then
-				NecrosisShardCount:SetText("0"..Local.Soulshard.Count)
+				--NecrosisShardCount:SetText("0"..Local.Soulshard.Count)
+				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
 			else
 				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
 			end
@@ -3000,7 +3034,7 @@ function Necrosis:GetCompanionInfo(type, id)
 		creatureName = GetSpellInfo(creatureSpellID)
 	end
 
-	print (creatureID, creatureName, creatureSpellID, icon, issummoned)
+	--print (creatureID, creatureName, creatureSpellID, icon, issummoned)
 	return creatureID, creatureName, creatureSpellID, icon, issummoned
 end
 
@@ -3063,7 +3097,8 @@ end
 --TBC Add : Delete shards out of stock
 function Necrosis:DeleteShards()
     ev_out(event, "DeleteShards() called", false, true, false)
-    if NecrosisConfig.DestroyShard then
+    	
+	if NecrosisConfig.DestroyShard then
         Local.Soulshard.Count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
         local RemainingShardsToDelete = Local.Soulshard.Count - NecrosisConfig.DestroyCount
         for container = 0, NUM_BAG_SLOTS, 1 do

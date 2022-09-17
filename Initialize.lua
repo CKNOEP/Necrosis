@@ -254,7 +254,7 @@ function Necrosis:Initialize(Config)
 
 	-- We check that the fragments are in the bag defined by the Warlock || On vérifie que les fragments sont dans le sac défini par le Démoniste
 	if NecrosisConfig.SoulshardSort then
-		self:SoulshardSwitch("CHECK")
+		--self:SoulshardSwitch("CHECK")
 	end
 end
 
