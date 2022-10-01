@@ -32,6 +32,7 @@ local spellNamesByID = {
     [25307] = "ShadowBolt", -- 10
     [27209] = "ShadowBolt", -- 11
 	[47808] = "ShadowBolt", -- 12
+	[47809] = "ShadowBolt", -- 13
 	[29722] = "Incinerate", -- 1
 	[32231] = "Incinerate", -- 2
 	[47837] = "Incinerate", -- 3
