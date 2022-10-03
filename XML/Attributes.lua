@@ -860,14 +860,16 @@ function Necrosis:HealthstoneUpdateAttribute(nostone)
 		return
 	end
 
-	f:SetAttribute("type1", "macro")
-	f:SetAttribute("macrotext1", "/stopcasting \n/use "..NecrosisConfig.ItemSwitchCombat[3])
-	f:SetAttribute("type3", "Trade")
-	f:SetAttribute("ctrl-type1", "Trade")
-	f:SetAttribute("shift-type*", "spell")
-	f:SetAttribute("shift-spell*", Necrosis.GetSpellCastName("Ritual_of_Souls")) 
-	
-	f.Trade = function () self:TradeStone() end
+	if NecrosisConfig.ItemSwitchCombat[3] then
+		f:SetAttribute("type1", "macro")
+		f:SetAttribute("macrotext1", "/stopcasting \n/use "..NecrosisConfig.ItemSwitchCombat[3])
+		f:SetAttribute("type3", "Trade")
+		f:SetAttribute("ctrl-type1", "Trade")
+		f:SetAttribute("shift-type*", "spell")
+		f:SetAttribute("shift-spell*", Necrosis.GetSpellCastName("Ritual_of_Souls")) 
+		
+		f.Trade = function () self:TradeStone() end
+	end
 end
 
 function Necrosis:SpellstoneUpdateAttribute(nostone)
