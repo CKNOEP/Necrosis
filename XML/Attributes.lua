@@ -211,7 +211,8 @@ function Necrosis:SetBuffSpellAttribute(button)
 		if f.high_of == 'banish' then
 			local high = Necrosis.GetSpellCastName(f.high_of)
 			-- Do NOT like hard coding but leave for now...
-			local Rank1 = self.Warlock_Spells[710].InSpellBook and self.Warlock_Spells[710].CastName
+			--local Rank1 = self.Warlock_Spells[710].InSpellBook and self.Warlock_Spells[710].CastName
+			local Rank1 = GetSpellInfo(710)..GetSpellSubtext(710)
 			if Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[f.high_of]].SpellRank == 2 then -- has rank 2
 				local Rank2 = self.Warlock_Spells[18647].InSpellBook and self.Warlock_Spells[18647].CastName
 				
@@ -333,12 +334,9 @@ function Necrosis:PetSpellAttribute()
 		local v = Necrosis.Warlock_Lists.pets[index]
 		local f = Necrosis.Warlock_Buttons[v.f_ptr].f
 		
-		if v.high_of == 'sacrifice'
-		then
-			
-			
+		if v.high_of == 'sacrifice'	then
+						
 			Necrosis:SetPetSpellAttribute(f)
-			
 		end
 		
 		
@@ -440,6 +438,12 @@ function Necrosis:StoneAttribute(Steed)
 		destroy_shards_button:SetScript(
 			"OnClick",
 			Necrosis.Warlock_Buttons.destroy_shards.func
+			
+		)
+		destroy_shards_button:SetScript(
+			"OnMouseWheel",
+			Necrosis.Warlock_Buttons.destroy_shards.func
+			
 		)
 	end
 	
@@ -450,40 +454,42 @@ function Necrosis:StoneAttribute(Steed)
 	local f = Necrosis.Warlock_Buttons.mounts.f
 	f = _G[f]
 	
-	
+	--print ("Monture "..tostring(Steed))
 	if Steed and f then
+	
+	
 		f:SetAttribute("type1", "spell")
 		f:SetAttribute("type2", "spell")
 		f:SetAttribute("ctrl-type1", "spell")
 		f:SetAttribute("ctrl-type2", "spell")
 	
 		
-		if  isMount(NecrosisConfig.LeftMount)  == true then
-				f:SetAttribute("type1", "item")
+		if  (NecrosisConfig.LeftMount)  == true then
+				f:SetAttribute("type1", "spell")
 		
 		else
 				f:SetAttribute("type1", "spell")
 	
 		end
 				
-		if  isMount(NecrosisConfig.RightMount)  == true then
-				f:SetAttribute("type2", "item")
+		if  (NecrosisConfig.RightMount)  == true then
+				f:SetAttribute("type2", "spell")
 	
 		else
 				f:SetAttribute("type2", "spell")
 
 		end
 		
-		if  isMount(NecrosisConfig.CtrlLeftMount)  == true then
-				f:SetAttribute("ctrl-type1", "item")
+		if  (NecrosisConfig.CtrlLeftMount)  == true then
+				f:SetAttribute("ctrl-type1", "spell")
 
 		else
 				f:SetAttribute("ctrl-type1", "spell")
 
 		end
 		
-		if  isMount(NecrosisConfig.CtrlRightMount)  == true then
-				f:SetAttribute("ctrl-type2", "item")
+		if  (NecrosisConfig.CtrlRightMount)  == true then
+				f:SetAttribute("ctrl-type2", "spell")
 				--print("ismount True")
 		else
 				f:SetAttribute("ctrl-type2", "spell")
@@ -500,7 +506,7 @@ function Necrosis:StoneAttribute(Steed)
 			
 				LeftMountName = GetItemInfo(NecrosisConfig.LeftMount)
 				--print (LeftMountName)
-				f:SetAttribute("item1", LeftMountName)
+				f:SetAttribute("spell1", LeftMountName)
 			else -- Mount is a spell
 				f:SetAttribute("spell1", LeftMountName)				
 			end
@@ -525,7 +531,7 @@ function Necrosis:StoneAttribute(Steed)
 			if RightMountName == nil 
 			then 
 				RightMountName = GetItemInfo(NecrosisConfig.RightMount) 
-				f:SetAttribute("item2", RightMountName)
+				f:SetAttribute("spell2", RightMountName)
 			else
 				f:SetAttribute("spell2", RightMountName)
 			
@@ -537,7 +543,7 @@ function Necrosis:StoneAttribute(Steed)
 			if CtrlRightMountName == nil 
 			then 
 				CtrlRightMountName = GetItemInfo(NecrosisConfig.CtrlRightMount) 
-				f:SetAttribute("ctrl-item1", CtrlRightMountName)
+				f:SetAttribute("ctrl-spell1", CtrlRightMountName)
 			else
 				f:SetAttribute("ctrl-spell1", CtrlRightMountName)
 			
@@ -550,7 +556,7 @@ function Necrosis:StoneAttribute(Steed)
 			if CtrlLeftMountName == nil
 			then 
 				CtrlLeftMountName = GetItemInfo(NecrosisConfig.CtrlLeftMount)
-				f:SetAttribute("ctrl-item2", CtrlLeftMountName)
+				f:SetAttribute("ctrl-spell2", CtrlLeftMountName)
 			else
 				f:SetAttribute("ctrl-spell2", CtrlLeftMountName)			
 			end

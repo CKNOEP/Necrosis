@@ -1,12 +1,10 @@
-lightweight tag 92fe677fb03cafae2275ab02150723013b83a099 7.6.9.32
-Author:	CKNOEP <c.knoepffler@free.fr>
-Date:	Sat Feb 5 20:48:36 2022 +0100
+lightweight tag e807b965f3e342af28b889ac7dd2ae28db52106a 8.0.4b
+Author:	LANCESTRE <lancetre@intenebris.org>
+Date:	Tue Sep 13 17:07:43 2022 +0200
 
-commit 92fe677fb03cafae2275ab02150723013b83a099
-Author: CKNOEP <c.knoepffler@free.fr>
-Date:   Sat Feb 5 20:48:36 2022 +0100
+commit e807b965f3e342af28b889ac7dd2ae28db52106a
+Author: LANCESTRE <lancetre@intenebris.org>
+Date:   Tue Sep 13 17:07:43 2022 +0200
 
-    demon menu  upgrade
-    
-    movable and selectable buttons demon
+    Update Necrosis.toc
 
