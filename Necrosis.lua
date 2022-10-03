@@ -2388,8 +2388,7 @@ function Necrosis:BagExplore(arg)
 			
 			item_id = tonumber(item_id)
 			local itemName = itemString
-			
-			
+						
 			--print (item_id)
 --[[
 			if Necrosis.Debug.bags then
