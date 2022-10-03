@@ -177,10 +177,9 @@ Local.DefaultConfig = {
 		["NecrosisDestroyShardsButton"] = {"CENTER", "UIParent", "CENTER", 154,-100},
 	},
 	
-	PetShow = {
-	true,true,true,true,true,true,true,true,
-	},
-
+	PetShow = {true,true,true,true,true,true,true,true,true,},
+	
+	CurseShow = {true,true,true,true,true,true,true,true,},
 
 	Timers = { -- Order is for options screen; overrides Warlock_Spells Timer
 		[1] = {usage = "armor", show = true},
@@ -745,7 +744,7 @@ function SelfEffect(action, nom)
 			fs:Show()
 		end
 	else
-		-- Changing the mount button when the Warlock is disassembled || Changement du bouton de monture quand le Démoniste est démonté
+		-- Changing the mount button when the Warlock is dismount || Changement du bouton de monture quand le Démoniste est démonté
 		if nom == Necrosis.Warlock_Spells[5784].Name or  nom == Necrosis.Warlock_Spells[23161].Name or nom == "NomCheval1" or nom == "NomCheval2" then
 			Local.BuffActif.Mount = false
 			if f then
@@ -856,11 +855,15 @@ local function SetupSpells(reason)
 	Necrosis:SpellSetup(reason)
 
 	-- associate the mounts to the sphere button || Association du sort de monture correct au bouton
-	if (Necrosis.Warlock_Spells[5784].InSpellBook) or (Necrosis.Warlock_Spells[23161].InSpellBook) then
+	if GetSpellInfo(GetSpellInfo(5784)) or GetSpellInfo(GetSpellInfo(23161)) then
 		Local.Summon.SteedAvailable = true
 	else
 		Local.Summon.SteedAvailable = false
 	end
+    
+	
+
+
 
 	if not InCombatLockdown() then
 		Necrosis:MainButtonAttribute()
@@ -980,7 +983,7 @@ function Necrosis:OnUpdate(something, elapsed)
 	if Local.LastUpdate[1] > 1 then
 	-- If configured, sorting fragments every second || Si configuré, tri des fragments toutes les secondes
 		if NecrosisConfig.SoulshardSort and Local.Soulshard.Move > 0  then
-			Necrosis:SoulshardSwitch("MOVE")
+			--Necrosis:SoulshardSwitch("MOVE")
 		end
 
 		-- Timers Table Course || Parcours du tableau des Timers
@@ -1192,7 +1195,7 @@ function Necrosis:OnEvent(self, event,...)
 	if (event == "BAG_UPDATE") then
 		Necrosis:BagExplore(arg1)
 		if (NecrosisConfig.SoulshardSort) then
-			Necrosis:SoulshardSwitch("CHECK")
+			--Necrosis:SoulshardSwitch("CHECK")
 		end
 	-- If the player wins or loses mana || Si le joueur gagne ou perd de la mana
 	elseif (event == "UNIT_MANA") and arg1 == "player" then
@@ -1367,18 +1370,24 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
 		end
 		if NecrosisConfig.CreatureAlert	and UnitCanAttack("player", "target") and not UnitIsDead("target") then
 		
-		--usable, nomana = IsUsableSpell(Necrosis.GetSpellName("enslave"));
-		--print(usable,nomana)
+		usable, nomana = IsUsableSpell(Necrosis.GetSpellName("enslave"));
+		--print(usable,nomana,Necrosis.Unit.Demon,Necrosis.Unit.Elemental)
 		
-			if UnitCreatureType("target") == Necrosis.Unit.Demon and NecrosisConfig.Banish == true then 	
-			NecrosisCreatureAlertButton_demon:SetAlpha(1)		-- Button Alerte Demon	
+			if UnitCreatureType("target") == Necrosis.Unit.Demon  then 	-- Button Alerte Demon	
+			NecrosisCreatureAlertButton_demon:SetAlpha(1)		
 			NecrosisCreatureAlertButton_demon:EnableMouse(true)
-			NecrosisCreatureAlertButton_elemental:SetAlpha(1)-- Button Alerte Elemental
-			NecrosisCreatureAlertButton_elemental:EnableMouse(true)
 			
-			elseif UnitCreatureType("target") == Necrosis.Unit.Elemental and NecrosisConfig.Banish == true then
-			NecrosisCreatureAlertButton_elemental:SetAlpha(1)-- Button Alerte Elemental
-			NecrosisCreatureAlertButton_elemental:EnableMouse(true)			
+			NecrosisCreatureAlertButton_elemental:SetAlpha(1) 
+			NecrosisCreatureAlertButton_elemental:EnableMouse(true)
+			NecrosisCreatureAlertButton_elemental:SetMovable(true)
+			
+			elseif UnitCreatureType("target") == Necrosis.Unit.Elemental then-- Button Alerte Elemental
+			NecrosisCreatureAlertButton_elemental:SetAlpha(1)
+			NecrosisCreatureAlertButton_elemental:EnableMouse(true)
+			NecrosisCreatureAlertButton_demon:SetAlpha(0)
+			NecrosisCreatureAlertButton_demon:EnableMouse(true)
+			NecrosisCreatureAlertButton_elemental:SetMovable(true)
+	
 			else
 			NecrosisCreatureAlertButton_demon:SetAlpha(0)
 			NecrosisCreatureAlertButton_demon:EnableMouse(true)
@@ -1391,7 +1400,9 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
 		NecrosisCreatureAlertButton_demon:SetAlpha(0) 
 		NecrosisCreatureAlertButton_elemental:SetAlpha(0) 	
 		NecrosisCreatureAlertButton_demon:EnableMouse(true)		
-		NecrosisCreatureAlertButton_elemental:EnableMouse(true)	
+		NecrosisCreatureAlertButton_elemental:EnableMouse(true)
+		NecrosisCreatureAlertButton_demon:SetMovable(true)		
+		NecrosisCreatureAlertButton_elemental:SetMovable(true)			
 		--print(UnitCreatureType("target"))
 
 			
@@ -1684,6 +1695,16 @@ local function AddShard()
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count)
 	end
 end
+local function AddDestroyCount()
+
+
+	if NecrosisConfig.DestroyCount then
+		GameTooltip:AddLine("|c00FF4444"..Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count.."|r".."/".."|c00FF4444"..NecrosisConfig.DestroyCount.."|r")
+		GameTooltip:AddLine("|c00FFFFFF".."Use MouseWheel to increase or decrease the limit ..")
+		GameTooltip:AddLine("|c00FFFFFF".."Use LeftClick to move shard to the specific bag ..")
+	end
+end
+
 local function AddDominion(start, duration)
 	if not (start > 0 and duration > 0) then
 		GameTooltip:AddLine(Necrosis.TooltipData.DominationCooldown)
@@ -1745,6 +1766,7 @@ function Necrosis:BuildButtonTooltip(button)
 	else
 	
 		Type = b.tip
+		
 	end
 
 	if Necrosis.Debug.tool_tips then
@@ -1759,6 +1781,7 @@ function Necrosis:BuildButtonTooltip(button)
 
 	-- If the tooltip is associated with a menu button, we change the anchoring of the tooltip according to its meaning ||Si la bulle d'aide est associée à un bouton de menu, on change l'ancrage de la tooltip suivant son sens
 	if b.menu then
+	
 		if (b.menu == "Pet" and NecrosisConfig.PetMenuPos.direction < 0)
 			or
 				(b.menu == "Buff" and NecrosisConfig.BuffMenuPos.direction < 0)
@@ -1929,8 +1952,8 @@ function Necrosis:BuildButtonTooltip(button)
 	-- ..... for other buffs and demons, the mana cost ... ||..... pour les autres buffs et démons, le coût en mana...
 	elseif (Type == "Enslave") then AddCastAndCost("enslave"); AddShard()
 	
-	elseif (Type == "Mount") and Necrosis.Warlock_Spells[23161].InSpellBook then
-	
+	--elseif (Type == "Mount") and Necrosis.Warlock_Spells[23161].InSpellBook then
+	elseif (Type == "Mount")  then
 -- TTip Left MOUNT			
 		if NecrosisConfig.LeftMount then
 			local LeftMountName = Necrosis.Utils.GetSpellName(NecrosisConfig.LeftMount)
@@ -2038,7 +2061,7 @@ function Necrosis:BuildButtonTooltip(button)
 	elseif (Type == "BuffMenu")		then AddMenuTip(Type)
 	elseif (Type == "CurseMenu")	then AddMenuTip(Type)
 	elseif (Type == "PetMenu")		then AddMenuTip(Type)
-	elseif (Type == "DestroyShards")then AddMenuTip(Type)
+	elseif (Type == "DestroyShards")then AddMenuTip(Type);AddDestroyCount()
 	end
 	-- And hop, posting! || Et hop, affichage !
 	GameTooltip:Show()
@@ -2223,61 +2246,82 @@ end
 -- FUNCTIONS MANAGING STONES & SHARDS || FONCTIONS DES PIERRES ET DES FRAGMENTS
 ------------------------------------------------------------------------------------------------------
 
--- Finds a new bag / slot when moving shards || Pendant le déplacement des fragments, il faut trouver un nouvel emplacement aux objets déplacés :)
-function FindSlot(shardIndex, shardSlot)
-	local full = true -- Assume the bag is full of shards
-	for slot=1, GetContainerNumSlots(NecrosisConfig.SoulshardContainer), 1 do
-		local itemLink = GetContainerItemLink(NecrosisConfig.SoulshardContainer, slot)
-		local itemID, item_name = Necrosis.Utils.ParseItemLink(itemLink)
-		if (itemID == Necrosis.Warlock_Lists.reagents.soul_shard.id) then
-			-- Found a shard; Nothing to do
-		else
-			-- swap the given shard
-			PickupContainerItem(shardIndex, shardSlot)
-			PickupContainerItem(NecrosisConfig.SoulshardContainer, slot)
-			if (CursorHasItem()) then
-				if shardIndex == 0 then
-					PutItemInBackpack()
-				else
-					PutItemInBag(19 + shardIndex)
-				end
-			end
-			full = false
-			break
-		end
-	end
+-- ondeplace un shard et on relance une recherche.
+function Necrosis:MoveShard(nshard)
+	
+	
+	  
+		  for n in pairs(Necrosis.ShardToMove) do 
+
+		  PickupContainerItem(Necrosis.ShardToMove[n].FromContainer, Necrosis.ShardToMove[n].FromSlot)
+	      PickupContainerItem(Necrosis.EmptySlot[n].ToContainer, Necrosis.EmptySlot[n].ToSlot)
+		  --endS
+		  
+		  end
+		  --print("N",getN)
+		--Necrosis:SoulshardSwitch()
+
+
 end
 
 -- Allows you to find / arrange shards in bags || Fonction qui permet de trouver / ranger les fragments dans les sacs
-function Necrosis:SoulshardSwitch(Type)
-	-- print (TYPE .. "SS type check".. Local.Soulshard.Move)
-	if (Type == "CHECK") then Local.Soulshard.Move = 0 end
+function Necrosis:SoulshardSwitch(nshard)
+	
+	Necrosis.ShardToMove = {}
+	Necrosis.EmptySlot = {}
+	ShardToMoveCount = 0
+	ShardOrMoveCount = 0
+	
 	for container = 0, NUM_BAG_SLOTS, 1 do
-		if Local.BagIsSoulPouch[container] then break end
-		if not (container == NecrosisConfig.SoulshardContainer) then
+		if Local.BagIsSoulPouch[container] then 
+		
+		end
+	
+		--if not (container == NecrosisConfig.SoulshardContainer) then
 			for slot = 1, GetContainerNumSlots(container), 1 do
 				local itemLink = GetContainerItemLink(container, slot)
 				if (itemLink) then
-					local itemID, item_name = Necrosis.Utils.ParseItemLink(itemLink)
-					if (itemID == Necrosis.Warlock_Lists.reagents.soul_shard.id) then
-						if (Type == "CHECK") then
-							Local.Soulshard.Move = Local.Soulshard.Move + 1
-						elseif (Type == "MOVE") then
-							FindSlot(container, slot)
-							Local.Soulshard.Move = Local.Soulshard.Move - 1
-						end
-						if Necrosis.Debug.bags then
-							_G["DEFAULT_CHAT_FRAME"]:AddMessage("SoulshardSwitch shard found"
-							.." t'"..(Type or "nyl")..'"'
-							.." m'"..(Local.Soulshard.Move or "nyl")..'"'
-							)
-						end
+					
+					local itemID, itemType, itemSubType, itemEquipLoc, icon, classID, subclassID = GetItemInfoInstant(itemLink)
+					
+					
+					if (itemID == Necrosis.Warlock_Lists.reagents.soul_shard.id) then --Search the Shard in the bags before to search a place for each one 
+						ShardOrMoveCount = ShardOrMoveCount + 1
+						Necrosis.ShardToMove[ShardOrMoveCount] = {FromContainer = container, FromSlot = slot}
+											
 					end
-				end
+				end	
 			end
+		--else	
+		--Search slot empty, 
+			for i=1,GetContainerNumSlots(NecrosisConfig.SoulshardContainer) do
+						icon, itemCount, locked, quality, readable, lootable, itemLink, isFiltered, noValue, itemID, isBound = GetContainerItemInfo(NecrosisConfig.SoulshardContainer, i)
+						
+							
+							-- If destination bag is soulbag or not
+							if not itemCount or itemID ~= 6265 then -- Search empty Slot empty to put the shard
+							ShardToMoveCount = ShardToMoveCount + 1 
+							Necrosis.EmptySlot[ShardToMoveCount] = {ToContainer = NecrosisConfig.SoulshardContainer, ToSlot = i}
+							
+							end
+												
+			end	
+					if Necrosis.Debug.bags then
+										_G["DEFAULT_CHAT_FRAME"]:AddMessage("SoulshardSwitch shard found"
+										.." t'"..(Type or "nyl")..'"'
+										.." m'"..(Local.Soulshard.Move or "nyl")..'"'
+										)
+					end
+			--end
 		end
-	end
+
+	 
+	 Necrosis:MoveShard()
+
 end
+
+
+
 
 -- Explore bags for stones & shards || Fonction qui fait l'inventaire des éléments utilisés en démonologie : Pierres, Fragments, Composants d'invocation
 function Necrosis:BagExplore(arg)
@@ -2344,8 +2388,7 @@ function Necrosis:BagExplore(arg)
 			
 			item_id = tonumber(item_id)
 			local itemName = itemString
-			
-			
+						
 			--print (item_id)
 --[[
 			if Necrosis.Debug.bags then
@@ -2475,7 +2518,8 @@ function Necrosis:BagExplore(arg)
 			NecrosisShardCount:SetText(Local.Reagent.Infernal.." / "..Local.Reagent.Demoniac)
 		elseif NecrosisConfig.CountType == 1 then
 			if Local.Soulshard.Count < 10 then
-				NecrosisShardCount:SetText("0"..Local.Soulshard.Count)
+				--NecrosisShardCount:SetText("0"..Local.Soulshard.Count)
+				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
 			else
 				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
 			end
@@ -2533,10 +2577,12 @@ function Necrosis:ButtonSetup()
 	end
 	local fm = Necrosis.Warlock_Buttons.main.f
 	local indexScale = -36
+	
 	for index=1, #Necrosis.Warlock_Lists.on_sphere, 1 do
 		local v = Necrosis.Warlock_Lists.on_sphere[index]
 		local fr = Necrosis.Warlock_Buttons[v.f_ptr].f
-
+		
+		
 		if Necrosis.Debug.buttons then
 			_G["DEFAULT_CHAT_FRAME"]:AddMessage("ButtonSetup"
 			.." '"..tostring(fr)
@@ -2544,15 +2590,21 @@ function Necrosis:ButtonSetup()
 		end
 		local f = _G[fr]
 		local sp = NecrosisConfig.StonePosition[index]
+
+		--if (GetSpellInfo(GetSpellInfo(v.high_of))
+		
 		if (Necrosis.IsSpellKnown(v.high_of) 	-- in spell book
-		or v.menu                           -- or on menu of spells
-		or v.item)                          -- or item to use
+		or v.menu                           	-- or on menu of spells
+		or v.item)                           	-- or item to use
 		and (sp and sp > 0) -- and requested
 		then
+		
 			if not f then
 				f = Necrosis:CreateSphereButtons(Necrosis.Warlock_Buttons[v.f_ptr])
+
 				Necrosis:StoneAttribute(Local.Summon.SteedAvailable)
 			end
+					
 			f:ClearAllPoints()
 ---[[
 			if NecrosisConfig.NecrosisLockServ then
@@ -2694,7 +2746,7 @@ function Necrosis:CreateMenu()
 		end
 
 		for index = 1, #Necrosis.Warlock_Lists.pets, 1 do
---		
+		
 			if NecrosisConfig.PetShow[index] == true 		then
 				show = NecrosisConfig.PetShow[index]
 			elseif NecrosisConfig.PetShow[index] == false 	then
@@ -2848,6 +2900,19 @@ function Necrosis:CreateMenu()
 		end
 
 		for index = 1, #Necrosis.Warlock_Lists.curses, 1 do
+			
+			if NecrosisConfig.CurseShow[index] == true 		then
+				show = NecrosisConfig.CurseShow[index]
+			elseif NecrosisConfig.CurseShow[index] == false 	then
+				show = NecrosisConfig.CurseShow[index]
+			elseif not NecrosisConfig.CurseShow[index] 			then
+				show = true
+			else 
+			
+			end
+			
+			
+			if  show  == true then
 			local v = Necrosis.Warlock_Lists.curses[index]
 			local f = Necrosis.Warlock_Buttons[v.f_ptr].f
 			if Necrosis.IsSpellKnown(v.high_of) -- in spell book
@@ -2863,6 +2928,7 @@ function Necrosis:CreateMenu()
 --				menuVariable.high_of = v.high_of
 				prior_button = f -- anchor the next button
 				Local.Menu.Curse:insert(menuVariable)
+			end
 			end
 		end
 		-- Display the curse menu button on the sphere || Maintenant que tous les boutons de curse sont placés les uns à côté des autres, on affiche les disponibles
@@ -2967,6 +3033,7 @@ function Necrosis:GetCompanionInfo(type, id)
 		creatureName = GetSpellInfo(creatureSpellID)
 	end
 
+	--print (creatureID, creatureName, creatureSpellID, icon, issummoned)
 	return creatureID, creatureName, creatureSpellID, icon, issummoned
 end
 
@@ -3029,7 +3096,8 @@ end
 --TBC Add : Delete shards out of stock
 function Necrosis:DeleteShards()
     ev_out(event, "DeleteShards() called", false, true, false)
-    if NecrosisConfig.DestroyShard then
+    	
+	if NecrosisConfig.DestroyShard then
         Local.Soulshard.Count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
         local RemainingShardsToDelete = Local.Soulshard.Count - NecrosisConfig.DestroyCount
         for container = 0, NUM_BAG_SLOTS, 1 do

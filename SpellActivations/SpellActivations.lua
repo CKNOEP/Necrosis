@@ -20,19 +20,22 @@ local activations = {}
 local LBG
 
 local spellNamesByID = {
-    [686] = "ShadowBolt",
-    [695] = "ShadowBolt",
-    [705] = "ShadowBolt",
-    [1088] = "ShadowBolt",
-    [1106] = "ShadowBolt",
-    [7641] = "ShadowBolt",
-    [11659] = "ShadowBolt",
-    [11660] = "ShadowBolt",
-    [11661] = "ShadowBolt",
-    [25307] = "ShadowBolt",
-    [27209] = "ShadowBolt",
-	[29722] = "Incinerate",
-	[32231] = "Incinerate",
+    [686] = "ShadowBolt", -- 1
+    [695] = "ShadowBolt", -- 2
+    [705] = "ShadowBolt", -- 3
+    [1088] = "ShadowBolt", -- 4
+    [1106] = "ShadowBolt", -- 5
+    [7641] = "ShadowBolt", -- 6
+    [11659] = "ShadowBolt", -- 7
+    [11660] = "ShadowBolt", -- 8
+    [11661] = "ShadowBolt", -- 9
+    [25307] = "ShadowBolt", -- 10
+    [27209] = "ShadowBolt", -- 11
+	[47808] = "ShadowBolt", -- 12
+	[47809] = "ShadowBolt", -- 13
+	[29722] = "Incinerate", -- 1
+	[32231] = "Incinerate", -- 2
+	[47837] = "Incinerate", -- 3
 }
 
 f:RegisterEvent("PLAYER_LOGIN")

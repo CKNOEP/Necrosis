@@ -1,11 +1,12 @@
-## Interface: 20504
-## Title: Necrosis 7.6d
-## Title-ruRU: Necrosis (Русский)
-## Title-frFR: Necrosis (Français)
+## Interface: 30400
+## X-Min-Interface-Wrath: 30400
+## Title: Necrosis 8.0.4 Wotlk
+## Title-ruRU: Necrosis Woltk (Русский)
+## Title-frFR: Necrosis Woltk (Français)
 ## Notes: Warlock UI & Shard Management
 ## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir 
 ## Notes-ruRU: Менеджер заклинаний, камней и демонов для чернокнижника.
-## Version: 7.6d
+## Version: 8.0.4
 ## Website: https://github.com/CKNOEP/Necrosis
 ## DefaultState: Enabled
 ## X-Original-Author: Lomig,lädygaga - sulfuron EUR - lancestre

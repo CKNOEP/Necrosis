@@ -60,7 +60,7 @@ L["SHADOW_TRANCE_LABEL"] = "|c00FFFFFF".."Transe de l'ombre".."|r"
 L["BACKLASH_LABEL"] = "|c00FFFFFF".."Contrecoup".."|r"
 L["BANISH_TEXT"] = "Clic droit pour Rang 1"
 L["DESTROY_SHARD_MENU_LABEL"] = "|c00FF99FF".."Destruction des Shard(s)".."|r"
-L["DESTROY_SHARD_MENU_TEXT"] = "Click pour Suppr. les Shards en trop"
+L["DESTROY_SHARD_MENU_TEXT"] = "Click droit pour Suppr. les Shards au dela de la limite : "
 
 -- Pets
 L["IMP_LABEL"] = "|c00FFFFFF".."Diablotin".."|r"

@@ -260,6 +260,7 @@ local function CreateMenuButton(button)
 	-- Define its attributes || Définition de ses attributs
 	frame:SetMovable(true)
 	frame:EnableMouse(true)
+	
 	frame:SetWidth(34)
 	frame:SetHeight(34)
 	frame:SetNormalTexture(b.norm) 
@@ -577,7 +578,8 @@ function Necrosis:CreateWarlockPopup()
 		
 		if frame:GetAlpha() == 0 then
 		-- NOTHING TO SHOW			
-		frame:EnableMouse(false)
+		frame:EnableMouse(true)
+		frame:SetMovable(true)
 		else
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 		GameTooltip:SetText(White(Necrosis.GetSpellName("banish")))

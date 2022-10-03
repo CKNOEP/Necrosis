@@ -29,23 +29,23 @@ function Necrosis:SetMiscConfig()
 		--------------------------------------
 		-- Déplacement des fragments
 		--------------------------------------
-		
+			
 		frame = CreateFrame("CheckButton", "NecrosisMoveShard", NecrosisMiscConfig, "UICheckButtonTemplate")
 		frame:EnableMouse(true)
 		frame:SetWidth(24)
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 25, 400)
+		frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 25, 360)
 
 		frame:SetScript("OnClick", function(self)
 			NecrosisConfig.SoulshardSort = self:GetChecked()
 			
-			--if NecrosisConfig.SoulshardSort then
+			if NecrosisConfig.SoulshardSort then
 				--NecrosisMoveShard:SetChecked("true")
-			--else
+			else
 				--NecrosisMoveShard:SetChecked("false")
-			--end
+			end
 		end)
 
 		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
@@ -55,6 +55,23 @@ function Necrosis:SetMiscConfig()
 		FontString:SetTextColor(1, 1, 1)
 		frame:SetFontString(FontString)
 
+		-- MESSSAGE INFORMATION--
+		local Glow = NecrosisMiscConfig:CreateFontString(nil, nil, "GameFontHighlightSmall")
+		Glow:SetWidth(365)
+		Glow:SetJustifyH('LEFT')
+		Glow:SetJustifyV('TOP')
+		Glow:SetNonSpaceWrap("  ")
+		Glow:SetMaxLines(4)
+		Glow:SetWordWrap(true)
+		Glow:Show()
+		Glow:ClearAllPoints()
+		Glow:SetPoint("LEFT", frame, "TOPLEFT" , 25, 25 )
+		Glow:SetTextColor(1, 0.5, 0)
+		Glow:SetText("Unfortunately with TBC, Blizzard has decided to remove    the ability for addons to automatically delete shards.    "..
+		"auto-sorting after combat is no longer supported.  "..
+		"Now use shard button to manage Shards")
+	
+		
 		-- Destruction des fragments quand le sac est plein
 		--frame = CreateFrame("CheckButton", "NecrosisDestroyShardBag", NecrosisMiscConfig, "UICheckButtonTemplate")
 		--frame:EnableMouse(true)
@@ -86,12 +103,12 @@ function Necrosis:SetMiscConfig()
 		frame:SetHeight(15)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("CENTER", NecrosisMiscConfig, "BOTTOMLEFT", 225, 340)
+		frame:SetPoint("CENTER", NecrosisMiscConfig, "BOTTOMLEFT", 225, 320)
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 			local bagName = GetBagName(5-math.floor(self:GetValue())-1);  
-			GameTooltip:SetText(bagName)
+			if bagName then GameTooltip:SetText(bagName) end
 		
 		
 		end)
@@ -105,12 +122,18 @@ function Necrosis:SetMiscConfig()
 			NecrosisConfig.SoulshardContainer = 4 - math.floor(self:GetValue())
 			
 			-- print(NecrosisConfig.SoulshardContainer)
+			--Count the Shard to move a loop 
+			
+			for i=1, GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id) do
+			--print ("Move Shard ",i," to ", GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id))
 			Necrosis:SoulshardSwitch("MOVE")
+			end
+		
 		end)
 		
 		frame:SetScript("OnValueChanged", function(self) 
 		local bagName = GetBagName(5-math.floor(self:GetValue())-1);  
-		GameTooltip:SetText(bagName)
+		if bagName then GameTooltip:SetText(bagName) end
 		
 		
 		end)
@@ -131,7 +154,7 @@ function Necrosis:SetMiscConfig()
 
 		frame:SetScript("OnClick", function(self)
 			NecrosisConfig.DestroyShard = self:GetChecked()
-			Necrosis:BagExplore()
+
 		end)
 
 		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
@@ -163,6 +186,8 @@ function Necrosis:SetMiscConfig()
 			NecrosisConfig.DestroyCount = math.floor(self:GetValue())
 			NecrosisDestroyShard:SetChecked(true)
 			NecrosisConfig.DestroyShard = true
+			
+			Necrosis:BagExplore()
 		end)
 
 		NecrosisDestroyCountLow:SetText("1")
@@ -241,8 +266,10 @@ function Necrosis:SetMiscConfig()
 				ShowUIPanel(NecrosisAntiFearButton)
 				NecrosisCreatureAlertButton_elemental:SetAlpha(1)
 				NecrosisCreatureAlertButton_elemental:SetMovable(true)
+				
 				NecrosisCreatureAlertButton_demon:SetMovable(true)				
 				NecrosisCreatureAlertButton_demon:SetAlpha(1)
+				
 				NecrosisShadowTranceButton:RegisterForDrag("LeftButton")
 				NecrosisBacklashButton:RegisterForDrag("LeftButton")
 				NecrosisAntiFearButton:RegisterForDrag("LeftButton")
@@ -366,6 +393,7 @@ function Necrosis:SetMiscConfig()
 
 	if NecrosisConfig.DestroyCount then
 		NecrosisDestroyCount:SetValue(NecrosisConfig.DestroyCount)
+		
 	else
 		NecrosisDestroyCount:SetValue(32)
 	end
@@ -381,7 +409,7 @@ function Necrosis:SetMiscConfig()
 	NecrosisHiddenButtons:SetText(self.Config.Misc["Afficher les boutons caches"])
 	NecrosisHiddenSizeText:SetText(self.Config.Misc["Taille des boutons caches"])
 
-	if NecrosisConfig.SoulshardSort then
+	if NecrosisConfig.SoulshardSort then --See Necrosis:SoulshardSwitch("MOVE")
 		--NecrosisDestroyShardBag:Enable()
 	else
 		--NecrosisDestroyShardBag:Disable()
