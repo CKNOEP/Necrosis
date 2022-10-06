@@ -295,6 +295,7 @@ Notes:
 	[126]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "eye", Length = 45, Buff = true, SelfOnly = true, }, -- Eye of Kilrogg
 	[698]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "summoning", Length = 600, Buff = true, }, -- Ritual of Summoning || Rituel d'invocation
 	[29893]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "Ritual_of_Souls", Length = 600, Buff = true, }, -- Ritual of Souls || Rituel des âmes
+	[58887]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "Ritual_of_Souls", Length = 600, Buff = true, }, -- Ritual of Souls || 25 Stones --https://www.wowhead.com/wotlk/spell=58887/ritual-of-souls
 	
 	[19028] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "link", Buff = true, SelfOnly = true, }, -- Soul Link || Lien spirituel
 
