@@ -242,6 +242,7 @@ L["ELEMENTAL"] = "Elemental"
 --
 L["BACKLASH"] = "Backlash"
 L["SHADOW_TRANCE"] = "Shadow Trance"
+--L["MOLTENCORE"] = select(1, GetSpellInfo(47247))
 --
 L["BAG_SOUL_POUCH"] = "Soul Pouch"
 L["BAG_SMALL_SOUL_POUCH"] = "Small Soul Pouch"

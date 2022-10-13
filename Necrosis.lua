@@ -686,6 +686,7 @@ end
 -- Manage the appearing and disappearing effects on the warlock || Permet de gérer les effets apparaissants et disparaissants sur le démoniste
 -- Based on CombatLog || Basé sur le CombatLog
 function SelfEffect(action, nom)
+--print (action, nom)
 	if NecrosisConfig.LeftMount then
 		local NomCheval1 = GetSpellInfo(NecrosisConfig.LeftMount)
 	else
@@ -728,9 +729,10 @@ function SelfEffect(action, nom)
 				f:SetNormalTexture(Necrosis.Warlock_Buttons.link.high)
 				f:GetNormalTexture():SetDesaturated(nil)
 			end
-		-- If Backlash, to display the icon and we proc the sound || si Contrecoup, pouf on affiche l'icone et on proc le son
+		-- If Backlash or MoltenCore, to display the icon and we proc the sound || si Contrecoup, pouf on affiche l'icone et on proc le son
 		-- If By-effect, one-on-one icon and one proc the sound || if By-effect, pouf one posts the icon and one proc the sound
-		elseif nom == Necrosis.Translation.Proc.Backlash and NecrosisConfig.ShadowTranceAlert then
+		
+		elseif nom == Necrosis.Translation.Proc.Backlash or nom == select(1, GetSpellInfo(47247)) and NecrosisConfig.ShadowTranceAlert then
 			Necrosis:Msg(Necrosis.ProcText.Backlash, "USER")
 			if NecrosisConfig.Sound then PlaySoundFile(Necrosis.Sound.Backlash) end
 			---print(Necrosis.Sound.Backlash)
@@ -769,7 +771,7 @@ function SelfEffect(action, nom)
 				f:SetNormalTexture(Necrosis.Warlock_Buttons.link.norm)
 			end
 		-- Hide the shadowtrance (nightfall) or backlash buttons when the state is ended
-		elseif nom == Necrosis.Translation.Proc.ShadowTrance or nom == Necrosis.Translation.Proc.Backlash then
+		elseif nom == Necrosis.Translation.Proc.ShadowTrance or nom == select(1, GetSpellInfo(47247)) or nom == Necrosis.Translation.Proc.Backlash then
 			local fs = _G[Necrosis.Warlock_Buttons.trance.f]
 			local fb = _G[Necrosis.Warlock_Buttons.backlash.f]
 			fs:Hide()
@@ -2901,7 +2903,7 @@ function Necrosis:CreateMenu()
 
 		for index = 1, #Necrosis.Warlock_Lists.curses, 1 do
 			
-			if NecrosisConfig.CurseShow[index] == true 		then
+			if NecrosisConfig.CurseShow[index] and NecrosisConfig.CurseShow[index] == true 		then
 				show = NecrosisConfig.CurseShow[index]
 			elseif NecrosisConfig.CurseShow[index] == false 	then
 				show = NecrosisConfig.CurseShow[index]
