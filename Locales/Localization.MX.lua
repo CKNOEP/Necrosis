@@ -100,6 +100,7 @@ L["SOUND_BACKLASH"] = "Interface\\AddOns\\Necrosis\\sounds\\Backlash-Fr.mp3"
 --
 L["PROC_SHADOW_TRANCE"] = "<white>Tr<lightPurple1>a<lightPurple2>n<purple>c<darkPurple1>e<darkPurple2> de las S<darkPurple1>o<purple>m<lightPurple2>b<lightPurple1>r<white>as"
 L["PROC_BACKLASH"] = "<white>B<lightPurple1>a<lightPurple2>c<purple>k<darkPurple1>l<darkPurple2>a<darkPurple1>s<purple>h"
+L["PROC_MOLTENCORE"] = "<white>M<lightPurple1>o<lightPurple2>l<purple>t<darkPurple1>e<darkPurple2>n<darkPurple1>c<purple>o<lightPurple2>r<lightPurple1>e"
 
 L["BAG_FULL_PREFIX"] = "\194\161 Tu "
 L["BAG_FULL_SUFFIX"] = " est\195\161 llena !"
@@ -137,7 +138,7 @@ L["MSG_RANDOM_SOULS"] = "Activar discursos aleatorios para el Ritual de las Alma
 L["MSG_SOUNDS"] = "Activar sonidos"
 L["MSG_WARN_FEAR"] = "Av\195\173same cuando mi objetivo no pueda ser asustado"
 L["MSG_WARN_BANISH"] = "Av\195\173same cuando mi objetivo pueda ser desterrado o esclavizado"
-L["MSG_WARN_TRANCE"] = "Al\195\169rtame cuando entre en un Trance/Backlash"
+L["MSG_WARN_TRANCE"] = "Al\195\169rtame cuando entre en un Trance/Backlash/Moltencore"
 --
 L["SPHERE_SIZE"] = "Tama\195\177o del bot\195\179n Necrosis"
 L["SPHERE_SKIN"] = "Color de la Esfera Necrosis"

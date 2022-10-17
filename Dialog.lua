@@ -341,6 +341,7 @@ Necrosis.Sound = {
 Necrosis.ProcText = {
 	["ShadowTrance"] = L["PROC_SHADOW_TRANCE"],
 	["Backlash"] = L["PROC_BACKLASH"],
+	["Moltencore"] = L["PROC_MOLTENCORE"],	
 }
 
 

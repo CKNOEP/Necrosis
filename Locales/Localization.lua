@@ -114,6 +114,8 @@ L["SOUND_BACKLASH"] = "Interface\\AddOns\\Necrosis\\sounds\\Backlash-Fr.mp3"
 --
 L["PROC_SHADOW_TRANCE"] = "<white>S<lightPurple1>h<lightPurple2>a<purple>d<darkPurple1>o<darkPurple2>w T<darkPurple1>r<purple>a<lightPurple2>n<lightPurple1>c<white>e"
 L["PROC_BACKLASH"] = "<white>B<lightPurple1>a<lightPurple2>c<purple>k<darkPurple1>l<darkPurple2>a<darkPurple1>s<purple>h"
+L["PROC_MOLTENCORE"] = "<white>M<lightPurple1>o<lightPurple2>l<purple>t<darkPurple1>e<darkPurple2>n<darkPurple1>c<purple>o<lightPurple2>r<lightPurple1>e"
+
 
 L["BAG_FULL_PREFIX"] = "Your "
 L["BAG_FULL_SUFFIX"] = " is full!"
@@ -151,7 +153,7 @@ L["MSG_RANDOM_SOULS"] = "Activate random speeches for Ritual of Souls"
 L["MSG_SOUNDS"] = "Activate sounds"
 L["MSG_WARN_FEAR"] = "Warn when the target cannot be feared"
 L["MSG_WARN_BANISH"] = "Warn when the target is banishable or enslavable"
-L["MSG_WARN_TRANCE"] = "Warn me when I enter a Trance/Backlash State"
+L["MSG_WARN_TRANCE"] = "Warn me when I enter a Trance/Backlash/Moltencore State"
 --
 L["SPHERE_SIZE"] = "Size of the Necrosis button"
 L["SPHERE_SKIN"] = "Skin of the Sphere"

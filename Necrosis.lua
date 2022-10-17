@@ -700,6 +700,7 @@ function SelfEffect(action, nom)
 
 	local f = _G[Necrosis.Warlock_Buttons.mounts.f]
 	if action == "BUFF" then
+	--print (nom)
 		local fs = _G[Necrosis.Warlock_Buttons.trance.f]
 		local fb = _G[Necrosis.Warlock_Buttons.backlash.f]
 		-- Changing the mount button when the Warlock is disassembled || Changement du bouton de monture quand le Démoniste est démonté
@@ -732,10 +733,22 @@ function SelfEffect(action, nom)
 		-- If Backlash or MoltenCore, to display the icon and we proc the sound || si Contrecoup, pouf on affiche l'icone et on proc le son
 		-- If By-effect, one-on-one icon and one proc the sound || if By-effect, pouf one posts the icon and one proc the sound
 		
-		elseif nom == Necrosis.Translation.Proc.Backlash or nom == select(1, GetSpellInfo(47247)) and NecrosisConfig.ShadowTranceAlert then
-			Necrosis:Msg(Necrosis.ProcText.Backlash, "USER")
-			if NecrosisConfig.Sound then PlaySoundFile(Necrosis.Sound.Backlash) end
-			---print(Necrosis.Sound.Backlash)
+		elseif nom == Necrosis.Translation.Proc.Backlash  or nom == select(1, GetSpellInfo(47247)) and NecrosisConfig.ShadowTranceAlert then
+			
+			
+			
+			if nom == select(1, GetSpellInfo(47247)) then -- Motencore
+				--print (select(1, GetSpellInfo(47247)))
+				Necrosis:Msg(Necrosis.ProcText.MoltenCore, "USER")
+				if NecrosisConfig.Sound then PlaySound(12977) end	
+
+			else
+				Necrosis:Msg(Necrosis.ProcText.Backlash, "USER")
+				if NecrosisConfig.Sound then PlaySoundFile(Necrosis.Sound.Backlash) end	
+			
+			end
+			
+			
 			fb:Show()
 			
 		-- If Twilight, to display the icon and sound || si Crépuscule, pouf on affiche l'icone et on proc le son
@@ -2994,6 +3007,19 @@ function Necrosis:Recall()
 		Necrosis:OnDragStop(f)
 	end
 end
+function Necrosis:Redraw()
+	for i,v in pairs(Necrosis.Warlock_Lists.recall) do
+		local f = _G[Necrosis.Warlock_Buttons[v.f_ptr].f]
+		
+		if v.show then
+			f:Show()
+		else
+			f:Hide()
+		end
+		Necrosis:OnDragStop(f)
+	end
+end
+
 
 function Necrosis:SetOfxy(menu)
 	local fb = _G[Necrosis.Warlock_Buttons.buffs.f]
