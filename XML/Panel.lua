@@ -31,7 +31,7 @@ function Necrosis:OpenConfigPanel()
 		frame:SetMovable(true)
 		frame:EnableMouse(true)
 		frame:SetToplevel(true)
-		frame:SetWidth(450)
+		frame:SetWidth(512)
 		frame:SetHeight(512)
 		frame:Show()
 		frame:ClearAllPoints()
@@ -53,54 +53,56 @@ function Necrosis:OpenConfigPanel()
 		frame:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
 
 		-- Texture en haut à gauche : icone
-		local texture = frame:CreateTexture("NecrosisGeneralIcon", "BACKGROUND")
-		texture:SetWidth(75)
-		texture:SetHeight(61)
-		texture:SetTexture("Interface\\Spellbook\\Spellbook-Icon")
-		texture:Show()
-		texture:ClearAllPoints()
-		texture:SetPoint("TOPLEFT", 10, -6)
+		--local texture = frame:CreateTexture("NecrosisGeneralIcon", "BACKGROUND")
+		--texture:SetWidth(60)
+		--texture:SetHeight(60)
+		--texture:SetTexture("Interface\\AddOns\\Necrosis\\XML\\Interface\\Spellbook-Icon")
+		--texture:Show()
+		--texture:ClearAllPoints()
+		--texture:SetPoint("TOPLEFT", 10, -10)
 
 		-- Textures du cadre
 		texture = frame:CreateTexture(nil, "BORDER")
-		texture:SetWidth(322)
-		texture:SetHeight(256)
-		texture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-General-TopLeft")
+		texture:SetWidth(256)
+		texture:SetHeight(frame:GetHeight()/2) -- BLP format need proportion 1:1 or 2:1-1:2
+		texture:SetTexture("Interface\\AddOns\\Necrosis\\XML\\Interface\\UI-Character-General-TopLeft.blp")
 		texture:Show()
 		texture:ClearAllPoints()
 		texture:SetPoint("TOPLEFT")
 
 		texture = frame:CreateTexture(nil, "BORDER")
-		texture:SetWidth(128)
-		texture:SetHeight(256)
-		texture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-General-TopRight")
+		texture:SetWidth(256)
+		texture:SetHeight(frame:GetHeight()/2)
+		texture:SetTexture("Interface\\AddOns\\Necrosis\\XML\\Interface\\UI-Character-General-TopRight.blp")
 		texture:Show()
 		texture:ClearAllPoints()
 		texture:SetPoint("TOPRIGHT")
 
 		texture = frame:CreateTexture(nil, "BORDER")
-		texture:SetWidth(322)
-		texture:SetHeight(256)
-		texture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-General-BottomLeft")
+		texture:SetWidth(256)
+		texture:SetHeight(frame:GetHeight()/2)
+		texture:SetTexture("Interface\\AddOns\\Necrosis\\XML\\Interface\\UI-Character-General-BottomLeft.blp")
 		texture:Show()
 		texture:ClearAllPoints()
 		texture:SetPoint("BOTTOMLEFT")
 
 		texture = frame:CreateTexture(nil, "BORDER")
-		texture:SetWidth(128)
-		texture:SetHeight(256)
-		texture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-General-BottomRight")
+		texture:SetWidth(256)
+		texture:SetHeight(frame:GetHeight()/2)
+		texture:SetTexture("Interface\\AddOns\\Necrosis\\XML\\Interface\\UI-Character-General-BottomRight.blp")
 		texture:Show()
 		texture:ClearAllPoints()
 		texture:SetPoint("BOTTOMRIGHT")
+		
+		
 
 		-- Texte du titre
 		local FontString = frame:CreateFontString(nil, nil, "GameFontNormal")
-		FontString:SetTextColor(1, 0.8, 0)
+		FontString:SetTextColor(255, 255, 0)
 		FontString:SetText(self.Data.Label)
 		FontString:Show()
 		FontString:ClearAllPoints()
-		FontString:SetPoint("CENTER", 6, 233)
+		FontString:SetPoint("CENTER", 0, 210)
 --[[
 		-- Crédits
 		FontString = frame:CreateFontString(nil, nil, "GameFontNormal")
@@ -110,19 +112,19 @@ function Necrosis:OpenConfigPanel()
 		FontString:ClearAllPoints()
 		FontString:SetPoint("TOP", 0, -48)
 --]]
-		-- Titre de section au bas de la page
+		-- Sous Titre de section haut de la page
 		FontString = frame:CreateFontString("NecrosisGeneralPageText", nil, "GameFontNormal")
 		FontString:SetTextColor(1, 0.8, 0)
 		FontString:SetWidth(250) -- 102
 		FontString:SetHeight(0)
 		FontString:Show()
 		FontString:ClearAllPoints()
-		FontString:SetPoint("BOTTOM", 0, 85)
+		FontString:SetPoint("TOP", 0, -55)
 
 		-- Bouton de fermeture de la fenêtre
 		frame = CreateFrame("Button", "NecrosisGeneralCloseButton", NecrosisGeneralFrame, "UIPanelCloseButton")
 		frame:ClearAllPoints()
-		frame:SetPoint("CENTER", "NecrosisGeneralFrame", "TOPRIGHT", -46, -24)
+		frame:SetPoint("CENTER", "NecrosisGeneralFrame", "TOPRIGHT",-32,-32)
 
 		-- Premier onglet du panneau de configuration
 		frame = CreateFrame("CheckButton", "NecrosisGeneralTab1", NecrosisGeneralFrame)
@@ -130,7 +132,7 @@ function Necrosis:OpenConfigPanel()
 		frame:SetHeight(32)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("TOPLEFT", "NecrosisGeneralFrame", "TOPRIGHT", -32, -65)
+		frame:SetPoint("TOPLEFT", "NecrosisGeneralFrame", "TOPRIGHT", -18, -90)
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")

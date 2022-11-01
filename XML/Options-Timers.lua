@@ -41,7 +41,7 @@ function Necrosis:SetTimersConfig()
 		local FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
 		FontString:Show()
 		FontString:ClearAllPoints()
-		FontString:SetPoint("BOTTOM", frame, "BOTTOM", 50, 130)
+		FontString:SetPoint("BOTTOM", frame, "BOTTOM", 90, 90)
 		FontString:SetText("1 / 2")
 
 		FontString = frame:CreateFontString("NecrosisTimersConfig1Text", nil, "GameFontNormalSmall")
@@ -55,7 +55,7 @@ function Necrosis:SetTimersConfig()
 		frame:EnableMouse(true)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisTimersConfig1, "BOTTOMRIGHT", 40, 135)
+		frame:SetPoint("RIGHT", NecrosisTimersConfig1, "BOTTOMRIGHT", 120, 100)
 
 		frame:SetScript("OnClick", function()
 			NecrosisTimersConfig2:Show()
@@ -67,7 +67,7 @@ function Necrosis:SetTimersConfig()
 		frame:EnableMouse(true)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisTimersConfig1, "BOTTOMLEFT", 40, 135)
+		frame:SetPoint("LEFT", NecrosisTimersConfig1, "BOTTOMLEFT", 40, 100)
 
 		frame:SetScript("OnClick", function()
 			NecrosisTimersConfig2:Show()
@@ -96,7 +96,7 @@ function Necrosis:SetTimersConfig()
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisTimersConfig1, "BOTTOMLEFT", 25, 325)
+		frame:SetPoint("LEFT", NecrosisTimersConfig1, "BOTTOMLEFT", 40, 325)
 
 		local f = _G[Necrosis.Warlock_Buttons.timer.f]
 		frame:SetScript("OnClick", function(self)
@@ -123,7 +123,7 @@ function Necrosis:SetTimersConfig()
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisTimersConfig1, "BOTTOMLEFT", 25, 300)
+		frame:SetPoint("LEFT", NecrosisTimersConfig1, "BOTTOMLEFT", 40, 300)
 
 		frame:SetScript("OnClick", function(self)
 			Necrosis:SymetrieTimer(self:GetChecked())
@@ -144,7 +144,7 @@ function Necrosis:SetTimersConfig()
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisTimersConfig1, "BOTTOMLEFT", 25, 275)
+		frame:SetPoint("LEFT", NecrosisTimersConfig1, "BOTTOMLEFT", 40, 275)
 
 		frame:SetScript("OnClick", function(self)
 			if (self:GetChecked()) then
@@ -215,7 +215,7 @@ function Necrosis:SetTimersConfig()
 		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
 		FontString:Show()
 		FontString:ClearAllPoints()
-		FontString:SetPoint("BOTTOM", frame, "BOTTOM", 50, 130)
+		FontString:SetPoint("BOTTOM", frame, "BOTTOM", 90, 95)
 		FontString:SetText("2 / 2")
 
 		FontString = frame:CreateFontString("NecrosisTimersConfig2Text", nil, "GameFontNormalSmall")
@@ -230,7 +230,7 @@ function Necrosis:SetTimersConfig()
 		frame:EnableMouse(true)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisTimersConfig2, "BOTTOMRIGHT", 40, 125)
+		frame:SetPoint("RIGHT", NecrosisTimersConfig2, "BOTTOMRIGHT", 120, 100)
 
 		frame:SetScript("OnClick", function()
 			NecrosisTimersConfig1:Show()
@@ -242,7 +242,7 @@ function Necrosis:SetTimersConfig()
 		frame:EnableMouse(true)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisTimersConfig2, "BOTTOMLEFT", 40, 125)
+		frame:SetPoint("LEFT", NecrosisTimersConfig2, "BOTTOMLEFT", 40, 100)
 
 		frame:SetScript("OnClick", function()
 			NecrosisTimersConfig1:Show()
@@ -251,7 +251,7 @@ function Necrosis:SetTimersConfig()
 
 		-- timers
 		local initY = 395
-		local initX = 25
+		local initX = 40
 		
 		for i = 1, #NecrosisConfig.Timers, 1 do
 			--print("usage",NecrosisConfig.Timers[i].usage)
@@ -266,7 +266,7 @@ function Necrosis:SetTimersConfig()
 			if i < 8 then
 				frame:SetPoint("LEFT", NecrosisTimersConfig2, "BOTTOMLEFT", initX , initY - (25 * i))			
 			else
-				frame:SetPoint("LEFT", NecrosisTimersConfig2, "BOTTOMLEFT", initX + 200, initY - (25 * (i-7)))				
+				frame:SetPoint("LEFT", NecrosisTimersConfig2, "BOTTOMLEFT", initX + 250, initY - (25 * (i-7)))				
 			end
 			
 			

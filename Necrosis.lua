@@ -809,7 +809,7 @@ end
 -- Event : UNIT_PET
 -- Allows the servo to be timed, as well as to prevent for servo breaks || Permet de timer les asservissements, ainsi que de prévenir pour les ruptures d'asservissement
 -- Also change the name of the pet to the replacement of it || Change également le nom du pet au remplacement de celui-ci
-local function ChangeDemon()
+function Necrosis:ChangeDemon()
 	if Necrosis.IsSpellKnown("enslave") then -- can enslave a demon
 		-- If the new demon is a slave demon, we put a 5 minute timer || Si le nouveau démon est un démon asservi, on place un timer de 5 minutes
 		if UnitHasEffect("pet", Necrosis.GetSpellName("enslave")) then 
@@ -900,7 +900,7 @@ local function SetupSpells(reason)
 		on a reload / crash / other reason.
 		The event UNIT_PET is triggered at init / reload IF a pet is out
 	--]]
-	ChangeDemon() 
+	Necrosis:ChangeDemon() 
 end
 
 --[[ SetupBuffTimers
@@ -1439,7 +1439,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
 
 	-- When the warlock changes demon || Quand le démoniste change de démon
 	elseif (event == "UNIT_PET" and arg1 == "player") then
-		ChangeDemon()
+		Necrosis:ChangeDemon()
 
 	-- ============= COMBAT_LOG_EVENT_UNFILTERED
 	-- Reading the combat log || Lecture du journal de combat
@@ -2578,13 +2578,33 @@ end
 -- Display or Hide buttons depending on spell availability || Affiche ou masque les boutons de sort à chaque nouveau sort appris
 function Necrosis:ButtonSetup()
 
-	local NBRScale = (100 + (NecrosisConfig.NecrosisButtonScale - 85)) / 100
-	local dist = 35 * NBRScale
-	dist = dist
-	if NecrosisConfig.NecrosisButtonScale <= 100 then
-		NBRScale = 1.1
-		dist = 40 * NBRScale
+	
+	local NBRScale 
+	local dist
+		
+	if NecrosisConfig.NecrosisButtonScale <= 200 then
+		--NBRScale = 1.05
+		NBRScale = ((NecrosisConfig.NecrosisButtonScale/100)) * 1.1
+		Scaler  = ((NecrosisConfig.NecrosisButtonScale/100))
+		fact = 50
+		dist = (fact * Scaler)
+		div = NecrosisConfig.NecrosisButtonScale/ (fact*NBRScale )
+		dist =  dist / div
+	
+		--dist = (45 * NBRScale)/((NecrosisConfig.NecrosisButtonScale/100)*45)
+	elseif NecrosisConfig.NecrosisButtonScale <= 160 then
+	
+		NBRScale = ((NecrosisConfig.NecrosisButtonScale/100)) * 1.2
+		Scaler  = ((NecrosisConfig.NecrosisButtonScale/100))
+		fact = 30
+		dist = (fact * Scaler) + 30
+		div = NecrosisConfig.NecrosisButtonScale/ (fact*NBRScale )
+		dist =  dist / div
+
+	else
+	
 	end
+	print (dist,NBRScale,NecrosisConfig.NecrosisButtonScale)
 
 ---[==[
 	if Necrosis.Debug.buttons then
@@ -2592,7 +2612,7 @@ function Necrosis:ButtonSetup()
 		)
 	end
 	local fm = Necrosis.Warlock_Buttons.main.f
-	local indexScale = -36
+	local indexScale = - 36
 	
 	for index=1, #Necrosis.Warlock_Lists.on_sphere, 1 do
 		local v = Necrosis.Warlock_Lists.on_sphere[index]

@@ -272,6 +272,8 @@ function Necrosis.SlashHandler(arg1)
 	elseif arg1:lower():find("glasofruix") then
 		NecrosisConfig.Smooth = not NecrosisConfig.Smooth
 		Necrosis:Msg("SpellTimer smoothing  : <lightBlue>Toggled", "USER")
+		self:CreateWarlockUI()
+		
 	else
 		Necrosis:OpenConfigPanel()
 	end

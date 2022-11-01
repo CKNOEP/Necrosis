@@ -37,9 +37,9 @@ function Necrosis:SetMessagesConfig()
 
 	local frame = _G["NecrosisMessagesConfig"]
 	if not frame then
-		local y = -25 -- initial offset
+		local y = -35 -- initial offset
 		local y_offset = -23
-		local x_offset = 25
+		local x_offset = 30
 
 		-- Création de la fenêtre
 		frame = CreateFrame("Frame", "NecrosisMessagesConfig", NecrosisGeneralFrame)

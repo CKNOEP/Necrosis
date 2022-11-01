@@ -1,8 +1,10 @@
 ## Interface: 30400
 ## X-Min-Interface-Wrath: 30400
-## Title: Necrosis 8.0.4 Wotlk
-## Title-ruRU: Necrosis Woltk (Русский)
-## Title-frFR: Necrosis Woltk (Français)
+
+## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Wotlk
+## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Woltk (Русский)
+## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Woltk (Français)
+
 ## Notes: Warlock UI & Shard Management
 ## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir 
 ## Notes-ruRU: Менеджер заклинаний, камней и демонов для чернокнижника.
