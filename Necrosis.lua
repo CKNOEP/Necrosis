@@ -1792,7 +1792,7 @@ function Necrosis:BuildButtonTooltip(button)
 		.." l'"..tostring(Necrosis.TooltipData[Type].Label).."'"
 		)
 	end
-	print (b.anchor)
+	
 	anchor = b.anchor or "ANCHOR_RIGHT" -- put to right in case not specified...
 
 	-- If the tooltip is associated with a menu button, we change the anchoring of the tooltip according to its meaning ||Si la bulle d'aide est associée à un bouton de menu, on change l'ancrage de la tooltip suivant son sens
