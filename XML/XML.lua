@@ -137,7 +137,7 @@ function Necrosis:CreateWarlockUI()
 		NecrosisConfig.FramePosition["NecrosisButton"][5]
 	)
 
-	frame:SetScale(NecrosisConfig.NecrosisButtonScale / 100)
+	frame:SetScale((NecrosisConfig.NecrosisButtonScale / 100))
 	
 	-- Create the soulshard counter || Création du compteur de fragments d'âme
 	local FontString = _G["NecrosisShardCount"]

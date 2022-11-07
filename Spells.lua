@@ -380,7 +380,7 @@ Notes:
 	[47841]	= {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "unstable_affliction", Length = 18, }, --  
 	[47843]	= {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "unstable_affliction", Length = 18, }, --  	
 	
-	[48181]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "haunt", Length = 12, }, -- Affliction instable 
+	[59161]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "haunt", Length = 12, }, -- Haunt
 	
 	-- ::: Spells
 	[348]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "immolate", Length = 15, }, -- Immolate 
@@ -583,7 +583,7 @@ Necrosis.Warlock_Buttons = {
 					norm = "Interface\\AddOns\\Necrosis\\UI\\SoulstoneButton-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\SoulstoneButton-04",
 					}, --
-	mounts 		= {f = "NecrosisMountButton", tip = "Mount",anchor = "ANCHOR_LEFT",
+	mounts 		= {f = "NecrosisMountButton", tip = "Mount",anchor = "ANCHOR_RIGHT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\MountButton-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\MountButton-02",
 					}, --

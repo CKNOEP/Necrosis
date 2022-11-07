@@ -146,6 +146,7 @@ Local.DefaultConfig = {
 	DestroyShardwithsphere = true,
 	ShadowTranceScale = 100,
 	NecrosisButtonScale = 90,
+	NecroisButtonRadius = 1,
 	NecrosisColor = "Rose",
 	Sound = true,
 	SpellTimerPos = 1,
@@ -1791,7 +1792,7 @@ function Necrosis:BuildButtonTooltip(button)
 		.." l'"..tostring(Necrosis.TooltipData[Type].Label).."'"
 		)
 	end
-	
+	print (b.anchor)
 	anchor = b.anchor or "ANCHOR_RIGHT" -- put to right in case not specified...
 
 	-- If the tooltip is associated with a menu button, we change the anchoring of the tooltip according to its meaning ||Si la bulle d'aide est associée à un bouton de menu, on change l'ancrage de la tooltip suivant son sens
@@ -2577,40 +2578,44 @@ end
 
 -- Display or Hide buttons depending on spell availability || Affiche ou masque les boutons de sort à chaque nouveau sort appris
 function Necrosis:ButtonSetup()
-
+	local NBRScale, rayondebase ,rayon , dist
 	
-	local NBRScale 
-	local dist
+-- (Min)50 to 100 
+if  NecrosisConfig.NecrosisButtonScale <= 100 then
+
+		NBRScale = 1.1
+		dist = 40 * NBRScale
+end	
+--  100 to 150
+if NecrosisConfig.NecrosisButtonScale < 150 and NecrosisConfig.NecrosisButtonScale > 100 then
+		 NBRScale = (100 + (NecrosisConfig.NecrosisButtonScale - 85)) / 100
+		 rayondebase = 8
+		 rayon = rayondebase * (NecrosisConfig.NecrosisButtonScale/100)
+		 dist = 35 * NBRScale * 0.85
+		dist = dist - ((rayon-rayondebase)) 
+end
+
+-- 160 to 200 (max)		
+if NecrosisConfig.NecrosisButtonScale >= 150 then
+		 NBRScale = (100 + (NecrosisConfig.NecrosisButtonScale - 85)) / 100
+		 rayondebase = 13
+		 rayon = rayondebase * (NecrosisConfig.NecrosisButtonScale/100)
+		 dist = 35 * NBRScale * 0.85
+		dist = dist - ((rayon-rayondebase))
+end
+	
+
+
 		
-	if NecrosisConfig.NecrosisButtonScale <= 200 then
-		--NBRScale = 1.05
-		NBRScale = ((NecrosisConfig.NecrosisButtonScale/100)) * 1.1
-		Scaler  = ((NecrosisConfig.NecrosisButtonScale/100))
-		fact = 50
-		dist = (fact * Scaler)
-		div = NecrosisConfig.NecrosisButtonScale/ (fact*NBRScale )
-		dist =  dist / div
 	
-		--dist = (45 * NBRScale)/((NecrosisConfig.NecrosisButtonScale/100)*45)
-	elseif NecrosisConfig.NecrosisButtonScale <= 160 then
-	
-		NBRScale = ((NecrosisConfig.NecrosisButtonScale/100)) * 1.2
-		Scaler  = ((NecrosisConfig.NecrosisButtonScale/100))
-		fact = 30
-		dist = (fact * Scaler) + 30
-		div = NecrosisConfig.NecrosisButtonScale/ (fact*NBRScale )
-		dist =  dist / div
-
-	else
-	
-	end
-	print (dist,NBRScale,NecrosisConfig.NecrosisButtonScale)
+	--print (dist,NBRScale,NecrosisConfig.NecrosisButtonScale)
 
 ---[==[
 	if Necrosis.Debug.buttons then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("ButtonSetup === Begin"
 		)
 	end
+	
 	local fm = Necrosis.Warlock_Buttons.main.f
 	local indexScale = - 36
 	
@@ -2630,9 +2635,9 @@ function Necrosis:ButtonSetup()
 		--if (GetSpellInfo(GetSpellInfo(v.high_of))
 		
 		if (Necrosis.IsSpellKnown(v.high_of) 	-- in spell book
-		or v.menu                           	-- or on menu of spells
-		or v.item)                           	-- or item to use
-		and (sp and sp > 0) -- and requested
+			or v.menu                           	-- or on menu of spells
+			or v.item)                           	-- or item to use
+			and (sp and sp > 0) 					-- and requested
 		then
 		
 			if not f then
@@ -2646,8 +2651,8 @@ function Necrosis:ButtonSetup()
 			if NecrosisConfig.NecrosisLockServ then
 				f:SetPoint(
 					"CENTER", fm, "CENTER",
-					((dist) * cos(NecrosisConfig.NecrosisAngle - indexScale)),
-					((dist) * sin(NecrosisConfig.NecrosisAngle - indexScale))
+					((dist) * cos(NecrosisConfig.NecrosisAngle - indexScale)),-- Offset X
+					((dist) * sin(NecrosisConfig.NecrosisAngle - indexScale)) -- Offset Y
 				)
 				indexScale = indexScale + 36
 			else

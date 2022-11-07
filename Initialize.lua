@@ -251,7 +251,8 @@ function Necrosis:Initialize(Config)
 	-- If the sphere must indicate life or mana, we go there || Si la sphere doit indiquer la vie ou la mana, on y va
 	Necrosis:UpdateHealth()
 	Necrosis:UpdateMana()
-
+	Necrosis:ButtonSetup()
+	
 	-- We check that the fragments are in the bag defined by the Warlock || On vérifie que les fragments sont dans le sac défini par le Démoniste
 	if NecrosisConfig.SoulshardSort then
 		--self:SoulshardSwitch("CHECK")
