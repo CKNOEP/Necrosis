@@ -355,6 +355,7 @@ Notes:
 
 	[603]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "doom", Length = 60, Cooldown = 60,}, -- Curse of Doom || Malédiction funeste 
 	[30910]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "doom", Length = 60, Cooldown = 60,},
+	[47867]	= {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "doom", Length = 60, Cooldown = 60,}, -- r3:  https://www.wowhead.com/wotlk/spell=47867/curse-of-doom
 	
 	
 	[704]	= {UsageRank = 1, SpellRank = 1 , Timer = true, Usage = "recklessness", Length = 120, }, -- Curse of Recklessness - removed in patch 3.1 || Malédiction Témérité || 
