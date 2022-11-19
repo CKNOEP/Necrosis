@@ -626,8 +626,11 @@ end
 -- Event : UNIT_SPELLCAST_SUCCEEDED
 -- Manages everything related to successful spell casts || Permet de gérer tout ce qui touche aux sorts une fois leur incantation réussie
 function SpellManagement(SpellCasted)
+	
+	
 	local SortActif = false
 	local cast_spell = SpellCasted
+	
 	if (cast_spell.Name) then
 	
 		
@@ -637,6 +640,9 @@ function SpellManagement(SpellCasted)
 		-- Handle any timers on cast spells
 		local spell = Necrosis.GetSpellById(cast_spell.Id)
 		
+		
+		
+			
 		if spell.Buff then
 			-- Handled by the aura events
 		elseif spell.Timer then
@@ -660,6 +666,7 @@ function SpellManagement(SpellCasted)
 --			end
 
 			local cast_info = {}
+			local spell = Necrosis.GetSpellById(cast_spell.Id)
 			cast_info = {
 				usage = spell.Usage,
 				spell_id  = cast_spell.Id,
@@ -676,13 +683,85 @@ function SpellManagement(SpellCasted)
 			end
 		--print (spell.Usage,cast_spell.Id,cast_spell.Guid)
 		--print (cast_spell.TargetName,cast_spell.TargetLevel,cast_spell.TargetGUID)
+		--print (cast_spell.TargetName,cast_spell.TargetLevel,cast_spell.TargetGUID)
 			Local.TimerManagement = Necrosis:TimerInsert(cast_info, target, Local.TimerManagement, "spell cast")
+			
+			--print (spell.Usage,cast_spell.Id,cast_spell.Guid)
 		end
 	end
 
 	return
 end
 
+function CheckCorruptionRefresh(target, cast_guid, spell_id)
+
+-- On verifie si la corruption doit etre refresh , si le talent(Afflication eternelle) est appris, a la suite de SB ou hanter le timer de la corru est réinitialisé
+			local guid = UnitGUID("target")
+			local name = select(1, GetSpellInfo(spell_id))
+			
+			if not target or not guid or target == "Player" or not Necrosis.GetSpellById(spell_id)  then
+			
+			-- nothing to do
+			return nil
+			
+			elseif Necrosis.Warlock_Spells[spell_id].Usage == "bolt" or Necrosis.Warlock_Spells[spell_id].Usage == "haunt" then-- Trait de l'ombre ou Hanter
+			--print (guid, cast_guid, spell_id , name, Necrosis.Warlock_Spells[spell_id].Usage)
+			
+				for i=1,40 do 
+						local NameDebuff, _, _, _, _,expirationTime = UnitAura("target", i, "PLAYER|HARMFUL")
+						
+						--On verifie que sur la cible on a bien corruption
+						if NameDebuff == Necrosis.GetSpellName("corruption") then
+									
+							
+								for index = 1, #Local.TimerManagement.SpellTimer, 1 do
+							
+									-- On recherche dans la table des Timer la corruption correspondante à la cible
+									--if Local.TimerManagement.SpellTimer[index] then
+									--print(Necrosis.TimerManagement.SpellTimer[index].Name,NameDebuff,Necrosis.TimerManagement.SpellTimer[index].TargetGUID,UnitGUID("target"))
+										if Necrosis.TimerManagement.SpellTimer[index].Name == NameDebuff and  Necrosis.TimerManagement.SpellTimer[index].TargetGUID == UnitGUID("target") then
+										
+									-- On delete le timer actuel pour le remplacer
+										Necrosis:RetraitTimerParIndex(index, Local.TimerManagement, "spell expired")
+										--print ("spell deleted",index)
+									-- On rajoute une Corruption avec un timer refresh
+										SpellManagement(Local.SpellCasted[cast_guid])
+																			
+										Necrosis.GetSpellName("corruption")
+										local spell = Necrosis.GetSpellById(Necrosis.GetSpell("corruption").ID)
+										local cast_info = {}
+										cast_info = {
+											usage = "corruption",
+											spell_id  = Necrosis.GetSpell("corruption").ID,
+											guid = cast_guid,
+											}
+										target = {
+											name = UnitName("Target"),--
+											lvl  = UnitLevel("Target"),
+											guid = UnitGUID("Target")
+											}
+										--Local.TimerManagement = Necrosis:TimerInsert(cast_info, target, Necrosis.TimerManagement, "spell cast")
+										
+										Local.TimerManagement = Necrosis:TimerInsert(cast_info, target, Local.TimerManagement, "spell cast")
+										
+										
+										
+										SpellManagement(Local.SpellCasted[cast_guid])
+										
+										
+										end
+						
+									
+									--end
+						
+								end
+						end
+				
+				end	
+
+			
+		end
+end
 -- Events : CHAT_MSG_SPELL_PERIODIC_SELF_BUFFS, CHAT_MSG_SPELL_AURA_GONE_SELF et CHAT_MSG_SPELL_BREAK_AURA
 -- Manage the appearing and disappearing effects on the warlock || Permet de gérer les effets apparaissants et disparaissants sur le démoniste
 -- Based on CombatLog || Basé sur le CombatLog
@@ -1007,9 +1086,11 @@ function Necrosis:OnUpdate(something, elapsed)
 			for index = 1, #Local.TimerManagement.SpellTimer, 1 do
 				
 				if Local.TimerManagement.SpellTimer[index] then
-					--print ("timers",Local.TimerManagement.SpellTimer[index].Name)
+				
+					
 					-- We remove the completed timers || On enlève les timers terminés
 					local TimeLocal = GetTime()
+					
 					if TimeLocal >= (Local.TimerManagement.SpellTimer[index].TimeMax - 0.5) then
 						local StoneFade = false
 						-- If the timer was that of Soul Stone, warn the Warlock || Si le timer était celui de la Pierre d'âme, on prévient le Démoniste
@@ -1025,6 +1106,7 @@ function Necrosis:OnUpdate(something, elapsed)
 						local enslave = -- get name if known
 							Necrosis.GetSpellName("enslave") -- 10
 						--print (enslave,Local.TimerManagement.SpellTimer[index].Name)
+												
 						if not (Local.TimerManagement.SpellTimer[index].Name == enslave) then
 							
 							Local.TimerManagement = Necrosis:RetraitTimerParIndex(index, Local.TimerManagement, "spell expired")
@@ -1051,6 +1133,8 @@ function Necrosis:OnUpdate(something, elapsed)
 		if not NecrosisConfig.Smooth then
 			NecrosisUpdateTimer(Local.TimerManagement.SpellTimer)
 		end
+		
+		
 		-- If configured, display warnings from Antifear || Si configuré, affichage des avertissements d'Antifear
 		if NecrosisConfig.AntiFearAlert then
 			ShowAntiFearWarning()
@@ -1253,10 +1337,13 @@ function Necrosis:OnEvent(self, event,...)
 		-- UNIT_SPELLCAST_SUCCEEDED: "unitTarget", "castGUID", spellID || https://wow.gamepedia.com/UNIT_SPELLCAST_SUCCEEDED
 		-- This can get chatty as other 'casts' are sent such as enchanting / skinning / ...
 		local target, cast_guid, spell_id = arg1, arg2, arg3
+		
+		
 		msg = " sid'"..tostring(spell_id or "nyl").."'"
 			.." t'"..tostring(target or "nyl").."'"
 			.." cg'"..tostring(cast_guid or "nyl").."'"
 		ev_out(event, msg, false, true, true)
+		
 		if Local.SpellCasted[cast_guid] then -- processing this one
 			local sc = Local.SpellCasted[cast_guid]
 
@@ -1285,6 +1372,7 @@ function Necrosis:OnEvent(self, event,...)
 			sc = nil
 
 			SpellManagement(Local.SpellCasted[cast_guid])
+			CheckCorruptionRefresh(target, cast_guid, spell_id)
 			Local.SpellCasted[cast_guid] = {} -- processed so clear
 		end
 		target, cast_guid, spell_id = nil, nil, nil
@@ -1297,16 +1385,21 @@ function Necrosis:OnEvent(self, event,...)
 		-- Rely on castGUID to be unique. This allows the exact timer, if any, to added or removed as needed
 
 		local unit, target, cast_guid, spell_id = arg1, arg2, arg3, arg4
+			
 		msg = " sid'"..tostring(spell_id or "nyl").."'"
 			.." sg'"..tostring(cast_guid or "nyl").."'"
 			.." u'"..tostring(unit or "nyl").."'"
 			.." t'"..tostring(target or "nyl").."'"
 		ev_out(event, msg, false, true, true)
 
+		
+		
+		
+		
 		Local.SpellCasted[cast_guid] = {} -- start an entry
 		if spell_id and Necrosis.GetSpellById(spell_id) then -- it is a spell to process
 			local spell = Necrosis.GetSpellById(spell_id)
-
+	
 			if (target == nil or target == "")
 			and spell.SelfOnly
 			then
@@ -1315,15 +1408,7 @@ function Necrosis:OnEvent(self, event,...)
 				Local.SpellCasted[cast_guid].TargetGUID = UnitGUID("player")
 				Local.SpellCasted[cast_guid].TargetLevel = UnitLevel("player")
 			elseif target == nil or target == "" then
---[[
-_G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT - set target "
-.." sid'"..tostring(spell_id or "nyl").."'"
-.." sg'"..tostring(cast_guid or "nyl").."'"
-.." u'"..tostring(unit or "nyl").."'"
-.." t'"..tostring(target or "nyl").."'"
-.." > '"..tostring(UnitName("target") or "nyl").."'"
-)
---]]
+
 				Local.SpellCasted[cast_guid].TargetName = UnitName("target")
 				Local.SpellCasted[cast_guid].TargetGUID = UnitGUID("target")
 				Local.SpellCasted[cast_guid].TargetLevel = UnitLevel("target")

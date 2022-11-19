@@ -279,8 +279,8 @@ Notes:
 	[11734] = {UsageRank = 6, SpellRank = 4, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
 	[11735] = {UsageRank = 7, SpellRank = 5, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
 	[27260] = {UsageRank = 8, SpellRank = 6, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
-	[47793] = {UsageRank = 8, SpellRank = 7, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
-	[47889] = {UsageRank = 8, SpellRank = 8, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --
+	[47793] = {UsageRank = 9, SpellRank = 7, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
+	[47889] = {UsageRank = 10, SpellRank = 8, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --
  	
 	--TBC Fel Armor
 	--[28176]	= {UsageRank = 8, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
@@ -487,7 +487,9 @@ Notes:
 	[11661] = {UsageRank = 9, SpellRank = 9, Timer = false, Usage = "bolt"}, --
 	[28307] = {UsageRank = 10, SpellRank = 10, Timer = false, Usage = "bolt"}, --
 	[27209] = {UsageRank = 11, SpellRank = 11, Timer = false, Usage = "bolt"}, --
-
+	[47808] = {UsageRank = 12, SpellRank = 12, Timer = false, Usage = "bolt"},
+	[47809] = {UsageRank = 13, SpellRank = 13, Timer = false, Usage = "bolt"},
+	
 	[18220] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "pact"}, -- Dark Pact || Pacte noir
 	[18937] = {UsageRank = 2, SpellRank = 2, Timer = false, Usage = "pact"}, 
 	[18938] = {UsageRank = 3, SpellRank = 3, Timer = false, Usage = "pact"},
