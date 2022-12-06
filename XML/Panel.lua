@@ -163,6 +163,7 @@ function Necrosis:OpenConfigPanel()
 			"INV_Wand_1H_Stratholme_D_02",
 			"Spell_Nature_TimeStop",
 			"Ability_Creature_Disease_05",
+			"spell_fire_playingwithfire",
 		}
 	 
 		for i in ipairs(tex) do
@@ -216,7 +217,7 @@ end
 -- Function to display different pages of the control panel || Fonction permettant l'affichage des différentes pages du panneau de configuration
 function Necrosis:SetPanel(PanelID)
 	local TabName
-	for index=1, 6, 1 do
+	for index=1, 7, 1 do
 		TabName = _G["NecrosisGeneralTab"..index]
 		if index == PanelID then
 			TabName:SetChecked(1)
@@ -231,6 +232,8 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisMenusConfig)
 		HideUIPanel(NecrosisTimersConfig)
 		HideUIPanel(NecrosisMiscConfig)
+		HideUIPanel(NecrosisOverlayConfig)
+		
 		self:SetMessagesConfig()
 	elseif PanelID == 2 then
 		HideUIPanel(NecrosisMessagesConfig)
@@ -238,6 +241,7 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisMenusConfig)
 		HideUIPanel(NecrosisTimersConfig)
 		HideUIPanel(NecrosisMiscConfig)
+		HideUIPanel(NecrosisOverlayConfig)
 		self:SetSphereConfig()
 	elseif PanelID == 3 then
 		HideUIPanel(NecrosisMessagesConfig)
@@ -245,6 +249,7 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisMenusConfig)
 		HideUIPanel(NecrosisTimersConfig)
 		HideUIPanel(NecrosisMiscConfig)
+		HideUIPanel(NecrosisOverlayConfig)
 		self:SetButtonsConfig()
 	elseif PanelID == 4 then
 		HideUIPanel(NecrosisMessagesConfig)
@@ -252,6 +257,7 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisButtonsConfig)
 		HideUIPanel(NecrosisTimersConfig)
 		HideUIPanel(NecrosisMiscConfig)
+		HideUIPanel(NecrosisOverlayConfig)
 		self:SetMenusConfig()
 	elseif PanelID == 5 then
 		HideUIPanel(NecrosisMessagesConfig)
@@ -259,6 +265,7 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisButtonsConfig)
 		HideUIPanel(NecrosisMenusConfig)
 		HideUIPanel(NecrosisMiscConfig)
+		HideUIPanel(NecrosisOverlayConfig)
 		self:SetTimersConfig()
 	elseif PanelID == 6 then
 		HideUIPanel(NecrosisMessagesConfig)
@@ -266,6 +273,15 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisButtonsConfig)
 		HideUIPanel(NecrosisMenusConfig)
 		HideUIPanel(NecrosisTimersConfig)
+		HideUIPanel(NecrosisOverlayConfig)
 		self:SetMiscConfig()
+	elseif PanelID == 7 then
+		HideUIPanel(NecrosisMessagesConfig)
+		HideUIPanel(NecrosisSphereConfig)
+		HideUIPanel(NecrosisButtonsConfig)
+		HideUIPanel(NecrosisMenusConfig)
+		HideUIPanel(NecrosisTimersConfig)
+		HideUIPanel(NecrosisMiscConfig)
+		self:SetOverlayConfig()
 	end
 end

@@ -132,6 +132,7 @@ function f:SPELLS_CHANGED()
         local hasBacklashTalent = IsPlayerSpell(34939) or IsPlayerSpell(34938) or IsPlayerSpell(34935)
         local hasMoltenCore = IsPlayerSpell(47245) or IsPlayerSpell(47246) or IsPlayerSpell(47247)
 		local hasDecimation = IsPlayerSpell(63158) or IsPlayerSpell(63156) or IsPlayerSpell(63167) or IsPlayerSpell(63165) 
+
 		
 		if hasNightfallTalent or hasBacklashTalent or hasMoltenCore or hasDecimation then
             self:RegisterUnitEvent("UNIT_AURA", "player")
@@ -331,3 +332,6 @@ function f:COMBAT_LOG_EVENT_UNFILTERED(event)
 
     procCombatLog(eventType, isSrcPlayer, isDstPlayer, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10)
 end
+
+
+

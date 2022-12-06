@@ -77,6 +77,6 @@ XML\Options-Buttons.lua
 XML\Options-Menus.lua
 XML\Options-Timers.lua
 XML\Options-Misc.lua
-
+XML\Options-Overlay.lua
 Necrosis.lua
 XML\XML.lua

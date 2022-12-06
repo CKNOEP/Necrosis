@@ -139,6 +139,7 @@ L["CONFIG_BUTTON"] = "Button Settings"
 L["CONFIG_MENU"] = "Menu Settings"
 L["CONFIG_TIMER"] = "Timer Settings"
 L["CONFIG_MISC"] = "Miscellaneous"
+L["CONFIG_OVERLAY"] = "Overlay On Proc (Under Construction) "
 --
 L["MSG_POSITION"] = "<- Necrosis system messages will appear here ->"
 L["MSG_SHOW_TIPS"] = "Show tooltips"
