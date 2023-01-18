@@ -1518,6 +1518,11 @@ function Necrosis:OnEvent(self, event,...)
 	elseif (event == "PLAYER_REGEN_ENABLED") then
 		Local.PlayerInCombat = false
 		Local.TimerManagement = Necrosis:RetraitTimerCombat(Local.TimerManagement, "PLAYER_REGEN_ENABLED")
+		NecrosisCreatureAlertButton_demon:EnableMouse(true)		
+		NecrosisCreatureAlertButton_elemental:EnableMouse(true)
+		
+		
+		
 		--Necrosis:Msg("regen enabled", "USER")
 		-- We are redefining the attributes of spell buttons in a situational way || On redéfinit les attributs des boutons de sorts de manière situationnelle
 		Necrosis:NoCombatAttribute(Local.Stone.Soul.Mode, Local.Stone.Fire.Mode, Local.Stone.Spell.Mode, Local.Menu.Pet, Local.Menu.Buff, Local.Menu.Curse)
@@ -2225,7 +2230,7 @@ function Necrosis:UpdateMana()
 	if Local.Dead then return end
 --	if UnitIsDead("player") then return end
 
-	local ptype = UnitPowerType("player")
+	local ptype,ptype_txt = UnitPowerType("player")
 	local mana = UnitPower("player",ptype)
 	local manaMax = UnitPowerMax("player", ptype)
 
@@ -2484,8 +2489,8 @@ function Necrosis:BagExplore(arg)
 			break 
 		end
 
-		for slot=1, GetContainerNumSlots(container), 1 do
-			local item_link = GetContainerItemLink(container, slot)
+		for slot=1, C_Container.GetContainerNumSlots(container), 1 do
+			local item_link = C_Container.GetContainerItemLink(container, slot)
 			local item_id = Necrosis.Utils.ParseItemLink(item_link) --GetContainerItemLink(container, slot))
 			
 			item_id = tonumber(item_id)
@@ -2634,7 +2639,7 @@ function Necrosis:BagExplore(arg)
 
 	-- If bags are full (or if we have reached the limit) then display a notification message || S'il y a plus de fragment que d'emplacements dans le sac défini, on affiche un message d'avertissement
 	if NecrosisConfig.SoulshardSort then
-		local CompteMax = GetContainerNumSlots(NecrosisConfig.SoulshardContainer)
+		local CompteMax = C_Container.GetContainerNumSlots(NecrosisConfig.SoulshardContainer)
 		if Necrosis.Debug.bags then
 			_G["DEFAULT_CHAT_FRAME"]:AddMessage("BagExplore shard sort"
 			.." c'"..(NecrosisConfig.SoulshardContainer or "nyl")..'"'

@@ -873,6 +873,7 @@ function Necrosis:HealthstoneUpdateAttribute(nostone)
 end
 
 function Necrosis:SpellstoneUpdateAttribute(nostone)
+	
 	local f = Necrosis.Warlock_Buttons.spell_stone.f
 	f = _G[f]
 
@@ -896,10 +897,10 @@ function Necrosis:SpellstoneUpdateAttribute(nostone)
 		return
 	end
 
-	f:SetAttribute("type1", "item")
-	f:SetAttribute("item1", NecrosisConfig.ItemSwitchCombat[1])
---	f:SetAttribute("type1", "macro")
---	f:SetAttribute("macrotext*", "/cast "..NecrosisConfig.ItemSwitchCombat[1].."\n/use 16")
+--	f:SetAttribute("type1", "item")
+--	f:SetAttribute("item1", NecrosisConfig.ItemSwitchCombat[1])
+	f:SetAttribute("type1", "macro")
+	f:SetAttribute("macrotext*", "/cast "..NecrosisConfig.ItemSwitchCombat[1].."\n/use 16")
 end
 
 function Necrosis:FirestoneUpdateAttribute(nostone)

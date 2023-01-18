@@ -89,7 +89,7 @@ end
  At times, at some initial logins, it seems this returns nil...
 --]]
 function Necrosis.Utils.GetBagName(container)
-	local name = GetBagName(container)
+	local name = C_Container.GetBagName(container)
 	local id = nil
 	-- for some reason the API will not return info for Backpack or the name not be in cache
 	if name == "Backpack" 

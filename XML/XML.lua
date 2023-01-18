@@ -327,7 +327,7 @@ function Necrosis:CreateMenuItem(i)
 		frame:SetWidth(40)
 		frame:SetHeight(40)
 		frame:SetHighlightTexture(b.high) --("Interface\\AddOns\\Necrosis\\UI\\"...)
-		frame:RegisterForClicks("LeftButtonUp", "MiddleButton" , "RightButtonUp")
+		frame:RegisterForClicks("LeftButtonUp", "MiddleButtonUp" , "RightButtonUp")
 --
 -- essai bt movable
 		frame:RegisterForDrag("MiddleButton")

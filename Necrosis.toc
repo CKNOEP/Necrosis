@@ -1,5 +1,5 @@
-## Interface: 30400
-## X-Min-Interface-Wrath: 30400
+## Interface: 30401
+## X-Min-Interface-Wrath: 30401
 
 ## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Wotlk
 ## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Woltk (Русский)
