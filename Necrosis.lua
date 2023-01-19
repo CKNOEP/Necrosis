@@ -459,7 +459,7 @@ function UpdateIcons()
 	--]]
 	if Local.Stone.Soul.OnHand and (not SoulstoneInUse) then
 		-- If the stone in inventory contains a timer, and we leave a RL -> Mode 4 || Si la pierre en inventaire contient un timer, et qu'on sort d'un RL --> Mode 4
-		local start, duration = GetContainerItemCooldown(Local.Stone.Soul.Location[1],Local.Stone.Soul.Location[2])
+		local start, duration = C_Container.GetContainerItemCooldown(Local.Stone.Soul.Location[1],Local.Stone.Soul.Location[2])
 		if Necrosis.Debug.timers then
 			_G["DEFAULT_CHAT_FRAME"]:AddMessage("UpdateIcons - soul stone found"
 			.." s'"..tostring(start or "nyl").."'"
@@ -1949,7 +1949,7 @@ function Necrosis:BuildButtonTooltip(button)
 			local str = ""
 			local cool = ""
 			if Local.Stone.Soul.Location[1] and Local.Stone.Soul.Location[2] then
-				local startTime, duration, isEnabled = GetContainerItemCooldown(Local.Stone.Soul.Location[1], Local.Stone.Soul.Location[2])
+				local startTime, duration, isEnabled = C_Container.GetContainerItemCooldown(Local.Stone.Soul.Location[1], Local.Stone.Soul.Location[2])
 				if startTime == 0 then
 					-- not on cool down
 				else
@@ -1999,7 +1999,7 @@ function Necrosis:BuildButtonTooltip(button)
 				)
 			end
 			if Local.Stone.Health.Location[1] and Local.Stone.Health.Location[2] then
-				local startTime, duration, isEnabled = GetContainerItemCooldown(Local.Stone.Health.Location[1], Local.Stone.Health.Location[2])
+				local startTime, duration, isEnabled = C_Container.GetContainerItemCooldown(Local.Stone.Health.Location[1], Local.Stone.Health.Location[2])
 				if startTime == 0 then
 					-- not on cool down
 				else
@@ -2043,7 +2043,7 @@ function Necrosis:BuildButtonTooltip(button)
 		local str = Necrosis.TooltipData[Type].Right..GetBindLocation()
 		local str2 = Necrosis.TooltipData[Type].Left
 		if Local.Stone.Hearth.Location[1] and Local.Stone.Hearth.Location[2] then
-			local startTime, duration, isEnabled = GetContainerItemCooldown(Local.Stone.Hearth.Location[1], Local.Stone.Hearth.Location[2])
+			local startTime, duration, isEnabled = C_Container.GetContainerItemCooldown(Local.Stone.Hearth.Location[1], Local.Stone.Hearth.Location[2])
 			if startTime == 0 then
 				color = "|CFFFFFFFF"
 			else
@@ -2333,7 +2333,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis:UpdateMana"
 	-- Timers button || Bouton des Timers
 	-----------------------------------------------
 	if Local.Stone.Hearth.Location[1] then
-		local start, duration, enable = GetContainerItemCooldown(Local.Stone.Hearth.Location[1], Local.Stone.Hearth.Location[2])
+		local start, duration, enable = C_Container.GetContainerItemCooldown(Local.Stone.Hearth.Location[1], Local.Stone.Hearth.Location[2])
 		local ft = _G[Necrosis.Warlock_Buttons.timer.f]
 		if duration > 20 and start > 0 then
 			if not Local.Stone.Hearth.Cooldown then
@@ -2360,8 +2360,8 @@ function Necrosis:MoveShard(nshard)
 	  
 		  for n in pairs(Necrosis.ShardToMove) do 
 
-		  PickupContainerItem(Necrosis.ShardToMove[n].FromContainer, Necrosis.ShardToMove[n].FromSlot)
-	      PickupContainerItem(Necrosis.EmptySlot[n].ToContainer, Necrosis.EmptySlot[n].ToSlot)
+		  C_Container.PickupContainerItem(Necrosis.ShardToMove[n].FromContainer, Necrosis.ShardToMove[n].FromSlot)
+	      C_Container.PickupContainerItem(Necrosis.EmptySlot[n].ToContainer, Necrosis.EmptySlot[n].ToSlot)
 		  --endS
 		  
 		  end
@@ -2385,8 +2385,8 @@ function Necrosis:SoulshardSwitch(nshard)
 		end
 	
 		--if not (container == NecrosisConfig.SoulshardContainer) then
-			for slot = 1, GetContainerNumSlots(container), 1 do
-				local itemLink = GetContainerItemLink(container, slot)
+			for slot = 1, C_Container.GetContainerNumSlots(container), 1 do
+				local itemLink = C_Container.GetContainerItemLink(container, slot)
 				if (itemLink) then
 					
 					local itemID, itemType, itemSubType, itemEquipLoc, icon, classID, subclassID = GetItemInfoInstant(itemLink)
@@ -2401,8 +2401,8 @@ function Necrosis:SoulshardSwitch(nshard)
 			end
 		--else	
 		--Search slot empty, 
-			for i=1,GetContainerNumSlots(NecrosisConfig.SoulshardContainer) do
-						icon, itemCount, locked, quality, readable, lootable, itemLink, isFiltered, noValue, itemID, isBound = GetContainerItemInfo(NecrosisConfig.SoulshardContainer, i)
+			for i=1,C_Container.GetContainerNumSlots(NecrosisConfig.SoulshardContainer) do
+						icon, itemCount, locked, quality, readable, lootable, itemLink, isFiltered, noValue, itemID, isBound = C_Container.GetContainerItemInfo(NecrosisConfig.SoulshardContainer, i)
 						
 							
 							-- If destination bag is soulbag or not
@@ -2779,13 +2779,13 @@ function Necrosis:TradeStone()
 		-- If a friendly target is selected then trade the stone || Dans ce cas si un pj allié est sélectionné, on lui donne la pierre
 		-- Else use it || Sinon, on l'utilise
 		if Local.Trade.Request and Local.Stone.Health.OnHand and not Local.Trade.Complete then
-			PickupContainerItem(Local.Stone.Health.Location[1], Local.Stone.Health.Location[2])
+			C_Container.PickupContainerItem(Local.Stone.Health.Location[1], Local.Stone.Health.Location[2])
 			ClickTradeButton(1)
 			Local.Trade.Complete = true
 			return
 		elseif UnitExists("target") and UnitIsPlayer("target")
 		and not (UnitCanAttack("player", "target") or UnitName("target") == UnitName("player")) then
-				PickupContainerItem(Local.Stone.Health.Location[1], Local.Stone.Health.Location[2])
+				C_Container.PickupContainerItem(Local.Stone.Health.Location[1], Local.Stone.Health.Location[2])
 				if CursorHasItem() then
 					DropItemOnUnit("target")
 					Local.Trade.Complete = true
@@ -3246,15 +3246,15 @@ function Necrosis:DeleteShards()
         local RemainingShardsToDelete = Local.Soulshard.Count - NecrosisConfig.DestroyCount
         for container = 0, NUM_BAG_SLOTS, 1 do
             if Local.BagIsSoulPouch[container] then break end
-            for slot=1, GetContainerNumSlots(container), 1 do
+            for slot=1, C_Container.GetContainerNumSlots(container), 1 do
                 if math.floor(NecrosisConfig.DestroyCount) >= Local.Soulshard.Count then break end
-                local itemLink = GetContainerItemLink(container, slot)
+                local itemLink = C_Container.GetContainerItemLink(container, slot)
                 if (itemLink) then
                     local itemID, itemName = Necrosis.Utils.ParseItemLink(itemLink) --GetContainerItemLink(container, slot))
                     itemID = tonumber(itemID)
                     if (itemID == Necrosis.Warlock_Lists.reagents.soul_shard.id) then
                         if (RemainingShardsToDelete > 0) then
-                            PickupContainerItem(container, slot)
+                            C_Container.PickupContainerItem(container, slot)
                             local infoType, info1, info2 = GetCursorInfo()
                             if (CursorHasItem() and infoType == "item" and tonumber(info1) == Necrosis.Warlock_Lists.reagents.soul_shard.id) then
                                 DeleteCursorItem()
