@@ -31,7 +31,7 @@ for index, classicTexture in pairs(texName) do
   -- For now, all textures are copied locally in the addon's texture folder
   local fullTextureName = "Interface\\Addons\\Necrosis\\SpellActivations\\textures\\"..classicTexture:gsub(" ", "_"):gsub("'", "");
   Overlay.TextureName[strlower(classicTexture)] = fullTextureName;
-  print (fullTextureName)
+ -- print (fullTextureName)
   Overlay.TextureName[strlower(classicTexture):gsub(" ", "_"):gsub("'", "")] = fullTextureName;
 end
 

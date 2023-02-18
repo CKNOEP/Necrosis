@@ -9,7 +9,7 @@ local AddonName, OVERLAY = ...
 -- testStacks if defined, forces the number of stacks for the test function
 -- testAuraID optional spell ID used to test the aura in lieu of auraID
 function OVERLAY.AddOverlayOption(self, talentID, auraID, count, talentSubText, variants, testStacks, testAuraID)
- 	print(self, talentID, auraID, count, talentSubText, variants, testStacks, testAuraID)   
+ 	--print(self, talentID, auraID, count, talentSubText, variants, testStacks, testAuraID)   
 	
 	local className = self.CurrentClass.Intrinsics[1];
     local classFile = self.CurrentClass.Intrinsics[2];

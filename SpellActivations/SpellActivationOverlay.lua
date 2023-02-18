@@ -20,7 +20,7 @@ function SpellActivationOverlay_OnLoad(self)
 	local className, classFile, classId = UnitClass("player"); -- Démoniste - WARLOCK - 9
 	local class = OVERLAY.Class["WARLOCK"];
 
-	print (class)
+	--print (class)
 	if class then
 		class.Intrinsics = { className, "WARLOCK", 9 };
 		OVERLAY.CurrentClass = class;
@@ -31,9 +31,9 @@ function SpellActivationOverlay_OnLoad(self)
 				self:RegisterEvent(key);
 			end
 		end
-	print("Class load : "..select(1, UnitClass("player")));
+	--print("Class load : "..select(1, UnitClass("player")));
 	else
-		print("Class unknown or not converted yet: "..select(1, UnitClass("player")));
+		--print("Class unknown or not converted yet: "..select(1, UnitClass("player")));
 	end
 	
 	-- These events do not exist in Classic Era, BC Classic, nor Wrath Classic

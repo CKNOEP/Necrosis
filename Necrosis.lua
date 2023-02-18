@@ -1476,32 +1476,31 @@ function Necrosis:OnEvent(self, event,...)
 		
 			if UnitCreatureType("target") == Necrosis.Unit.Demon  then 	-- Button Alerte Demon	
 			NecrosisCreatureAlertButton_demon:SetAlpha(1)		
-			NecrosisCreatureAlertButton_demon:EnableMouse(true)
+			--NecrosisCreatureAlertButton_demon:EnableMouse(true)
 			
 			NecrosisCreatureAlertButton_elemental:SetAlpha(1) 
-			NecrosisCreatureAlertButton_elemental:EnableMouse(true)
+			--NecrosisCreatureAlertButton_elemental:EnableMouse(true)
 			NecrosisCreatureAlertButton_elemental:SetMovable(true)
 			
 			elseif UnitCreatureType("target") == Necrosis.Unit.Elemental then-- Button Alerte Elemental
 			NecrosisCreatureAlertButton_elemental:SetAlpha(1)
-			NecrosisCreatureAlertButton_elemental:EnableMouse(true)
+			--NecrosisCreatureAlertButton_elemental:EnableMouse(true)
 			NecrosisCreatureAlertButton_demon:SetAlpha(0)
-			NecrosisCreatureAlertButton_demon:EnableMouse(true)
+			--NecrosisCreatureAlertButton_demon:EnableMouse(true)
 			NecrosisCreatureAlertButton_elemental:SetMovable(true)
 	
 			else
 			NecrosisCreatureAlertButton_demon:SetAlpha(0)
-			NecrosisCreatureAlertButton_demon:EnableMouse(true)
+			--NecrosisCreatureAlertButton_demon:EnableMouse(true)
 			
 			NecrosisCreatureAlertButton_elemental:SetAlpha(0) 
-			NecrosisCreatureAlertButton_elemental:EnableMouse(true)
+			--NecrosisCreatureAlertButton_elemental:EnableMouse(true)
 	
 			end
 		else
 		NecrosisCreatureAlertButton_demon:SetAlpha(0) 
 		NecrosisCreatureAlertButton_elemental:SetAlpha(0) 	
-		NecrosisCreatureAlertButton_demon:EnableMouse(true)		
-		NecrosisCreatureAlertButton_elemental:EnableMouse(true)
+
 		NecrosisCreatureAlertButton_demon:SetMovable(true)		
 		NecrosisCreatureAlertButton_elemental:SetMovable(true)			
 		--print(UnitCreatureType("target"))
