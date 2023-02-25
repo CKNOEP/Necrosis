@@ -288,3 +288,11 @@ L["ABOUT_CATEGORY"] = "Category";
 L["ABOUT_EMAIL"] = "E-mail";
 L["ABOUT_WEB"] = "Website";
 L["ABOUT_LICENSE"] = "License";
+
+---AFK Stand Alone
+AFKS_CAMPON = "\124cFFFFEA00CAMPING ON\124r"
+AFKS_CAMPOFF = "\124cFFFFEA00CAMPING OFF\124r"
+
+AFKS_NOGUILD = "No Guild"
+AFKS_DATEFORMAT = "%d-%d-%d\n%s\n\n%s"
+

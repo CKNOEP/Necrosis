@@ -48,7 +48,7 @@ Locales\Localization.MX.lua
 
 Dialog.lua
 Functions.lua
-
+AFKS.lua
 Speech\Speech-fr.lua
 Speech\Speech-en.lua
 Speech\Speech-de.lua

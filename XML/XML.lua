@@ -576,18 +576,14 @@ function Necrosis:CreateWarlockPopup()
 	frame:SetScript("OnEnter", function(self) 
 		--Necrosis:BuildButtonTooltip("ElementalToolTip")
 		
-		if frame:GetAlpha() == 0 then
-		-- NOTHING TO SHOW			
-		frame:EnableMouse(true)
-		frame:SetMovable(true)
-		else
+
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 		GameTooltip:SetText(White(Necrosis.GetSpellName("banish")))
 		GameTooltip:AddDoubleLine(L["BUTTONS_L"], hight_rank)
 		GameTooltip:AddDoubleLine(L["BUTTONS_R"], derank)			
 		GameTooltip:Show()
 
-		end
+
 	end)
 	frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
 

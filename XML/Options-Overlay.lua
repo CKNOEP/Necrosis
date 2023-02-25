@@ -74,24 +74,28 @@ function Necrosis:SetOverlayConfig()
 				ShowUIPanel(NecrosisShadowTranceButton)
 				ShowUIPanel(NecrosisBacklashButton)
 				ShowUIPanel(NecrosisAntiFearButton)
-				NecrosisCreatureAlertButton_elemental:SetAlpha(1)
-				NecrosisCreatureAlertButton_elemental:SetMovable(true)
+				ShowUIPanel(NecrosisCreatureAlertButton_elemental)
 				
-				NecrosisCreatureAlertButton_demon:SetMovable(true)				
+				NecrosisCreatureAlertButton_elemental:SetAlpha(1)
 				NecrosisCreatureAlertButton_demon:SetAlpha(1)
+				NecrosisCreatureAlertButton_elemental:SetMovable(true)
+				NecrosisCreatureAlertButton_demon:SetMovable(true)				
+
 				
 				NecrosisShadowTranceButton:RegisterForDrag("LeftButton")
 				NecrosisBacklashButton:RegisterForDrag("LeftButton")
 				NecrosisAntiFearButton:RegisterForDrag("LeftButton")
 				NecrosisCreatureAlertButton_demon:RegisterForDrag("LeftButton")
 				NecrosisCreatureAlertButton_elemental:RegisterForDrag("LeftButton")				
+			
 			else
 				HideUIPanel(NecrosisShadowTranceButton)
 				HideUIPanel(NecrosisBacklashButton)
 				HideUIPanel(NecrosisAntiFearButton)
+				HideUIPanel(NecrosisCreatureAlertButton_elemental)
+				
 				NecrosisCreatureAlertButton_elemental:SetAlpha(0)
 				NecrosisCreatureAlertButton_demon:SetAlpha(0)
-				
 				NecrosisCreatureAlertButton_elemental:SetMovable(false)
 				NecrosisCreatureAlertButton_demon:SetMovable(false)
 
