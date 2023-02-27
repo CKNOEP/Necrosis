@@ -84,6 +84,7 @@ Local.InWorld = false -- as addon id loaded / parsed
 -- Configuration defaults || Configuration par défaut
 -- To be used if the configuration savedvariables is missing, or if the NecrosisConfig.Version number is changed. || Se charge en cas d'absence de configuration ou de changement de version
 Local.DefaultConfig = {
+	AFK = true,
 	SoulshardContainer = 4,
 	ShadowTranceAlert = true,
 	ShowSpellTimers = true,

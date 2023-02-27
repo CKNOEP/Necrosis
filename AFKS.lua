@@ -610,6 +610,11 @@ function AFKS:UpdateTimer()
 end
 
 function AFKS:SetAFK(status)
+
+	if NecrosisConfig.AFK == false then 
+	return 
+	end
+	
 	if(status) then
 		MoveViewLeftStart(CAMERA_SPEED)
 		self.AFKMode:Show()

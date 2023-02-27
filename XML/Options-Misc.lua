@@ -197,8 +197,25 @@ function Necrosis:SetMiscConfig()
 		FontString:SetFont("Fonts\\ARIALN.TTF", 12)
 		FontString:SetTextColor(1, 1, 1)
 --]]
-		
-		
+		-- Set AFK Module
+		frame = CreateFrame("CheckButton", "NecrosisAFK", NecrosisMiscConfig, "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 220)
+
+		frame:SetScript("OnClick", function(self)
+			NecrosisConfig.AFK = self:GetChecked()
+			--print (self:GetChecked(),NecrosisConfig.AFK)
+		end)		
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		frame:SetFontString(FontString)
 		
 
 		
@@ -222,7 +239,7 @@ function Necrosis:SetMiscConfig()
 	--NecrosisDestroyShardBag:SetText(self.Config.Misc["Detruit les fragments si le sac plein"])--deprecated
 	NecrosisShardBagText:SetText(self.Config.Misc["Choix du sac contenant les fragments"])
 	NecrosisDestroyShard:SetText(self.Config.Misc["Nombre maximum de fragments a conserver"])
-	
+	NecrosisAFK:SetText("AFK Screen")
 
 
 	if NecrosisConfig.SoulshardSort then --See Necrosis:SoulshardSwitch("MOVE")

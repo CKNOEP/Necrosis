@@ -26,7 +26,7 @@ function Necrosis:CreateTimerAnchor()
 			f:SetWidth(150)
 			f:SetHeight(150)
 			f:SetMovable(true)
-			f:EnableMouse(true)
+			--f:EnableMouse(true)
 			
 			f:Show()
 			f:ClearAllPoints()
@@ -70,7 +70,7 @@ function Necrosis:CreateWarlockUI()
 	-- Define its attributes || Définition de ses attributs
 	frame:SetFrameStrata("MEDIUM")
 	frame:SetMovable(true)
-	frame:EnableMouse(true)
+	--frame:EnableMouse(true)
 	frame:SetWidth(34)
 	frame:SetHeight(34)
 	frame:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\SpellTimerButton-Normal")
@@ -502,7 +502,7 @@ function Necrosis:CreateWarlockPopup()
 		if frame:GetAlpha() == 0 then
 	
 		GameTooltip:Hide()
-		frame:EnableMouse(false)
+		--frame:EnableMouse(false)
 		else
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 		GameTooltip:SetText(White(Necrosis.GetSpellName("enslave")))
@@ -542,7 +542,7 @@ function Necrosis:CreateWarlockPopup()
 
 	-- Define its attributes || Définition de ses attributs
 	frame:SetMovable(true)
-	frame:EnableMouse(true)
+	--frame:EnableMouse(true)
 	frame:SetFrameStrata("HIGH")
 	frame:SetWidth(40)
 	frame:SetHeight(40)
@@ -617,7 +617,7 @@ function Necrosis:CreateWarlockPopup()
 
 	-- Define its attributes || Définition de ses attributs
 	frame:SetMovable(true)
-	frame:EnableMouse(true)
+	--frame:EnableMouse(true)
 	frame:SetFrameStrata("HIGH")
 	frame:SetWidth(40)
 	frame:SetHeight(40)
