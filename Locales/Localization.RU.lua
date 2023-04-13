@@ -3,8 +3,7 @@
     Copyright (C) - copyright file included in this release
 --]]
 
-local L = LibStub("AceLocale-3.0"):NewLocale(NECROSIS_ID,"ruRU")
-if not L then return end
+local L = LibStub("AceLocale-3.0"):NewLocale(NECROSIS_ID,"ruRU",true)
 
 L["NECROSIS"] = "Necrosis";
 L["NECROSIS_ONLY"] = "Necrosis";
@@ -12,33 +11,36 @@ L["NECROSIS_DEBUG"] = "<Necrosis>";
 L["NECROSIS_PRINT"] = "Necrosis";
 
 -- Configuration
-L["HEALTHSTONE_COOLDOWN"] = "Healthstone Cooldown"
-L["USE"] = "Use"
-L["TRADE"] = "Trade"
+L["HEALTHSTONE_COOLDOWN"] = "Перезарядки Hearthstone"
+L["USE"] = "использование"
+L["TRADE"] = "Торговля"
 L["NECROSIS_LABEL"] = "|c00FFFFFF".."Necrosis".."|r"
 L["YES"] = "Есть"
 L["NO"] = "Нет"
 L["ON"] = "Вкл"
 L["OFF"] = "Выкл"
+L["SPEECH_API"] = "Напоминание: Появляется только в инстансе, партии или рейде"
 --
 L["SOUL_SHARD"] = "Осколок души"
 L["SOUL_SHARD_LABEL"] = "Осколки душ: "
 L["INFERNAL_STONE"] = "Камень инфернала"
 L["INFERNAL_STONE_LABEL"] = "Камни инфернала: "
 L["DEMONIAC_STONE"] = "Демоническая статуэтка"
-L["DEMONIAC_STONE_LABEL"] = "Demonic Figurine(s): "
+L["DEMONIAC_STONE_LABEL"] = "Демоническая фигурка(и): "
 L["SOUL_STONE"] = "[Кк]амень души"
 L["SOUL_STONE_LABEL"] = "Камень души: "
 L["HEALTH_STONE"] = "[Кк]амень здоровья"
-L["HEALTH_STONE_LABEL"] = "Камень огня: "
+L["HEALTH_STONE_LABEL"] = "Камень здоровья: "
 L["SPELL_STONE"] = "[Кк]амень чар"
-L["SPELL_STONE_LABEL"] = "Spellstone: "
+L["SPELL_STONE_LABEL"] = "Камень чар: "
 L["FIRE_STONE"] = "[Кк]амень огня"
 L["FIRE_STONE_LABEL"] = "Камень огня: "
 L["CURRENT_DEMON"] = "Демон: "
 L["ENSLAVED_DEMON"] = "Демон: Порабощенный"
 L["NO_CURRENT_DEMON"] = "Демон: Отсутствует"
 L["HEARTH_STONE"] = "Камень возвращения"
+L["DESTROY_SHARD_MENU_LABEL"] = "|c00FF99FF".."Уничтожить осколок(и)".."|r"
+L["DESTROY_SHARD_MENU_TEXT"] = "Щелкните правой кнопкой мыши, чтобы уничтожить осколки души до предела : "
 --
 L["SOULSTONE_TEXT_1"] = "[Правый Клик] Создать"
 L["SOULSTONE_TEXT_2"] = "[Левый Клик] Использовать"
@@ -60,6 +62,7 @@ L["FIRESTONE_TEXT_4"] = "Созданный ранее камень полнос
 L["SPELLTIMER_LABEL"] = "|c00FFFFFF".."Таймер заклинаний".."|r"
 L["SPELLTIMER_TEXT"] = "Активное заклинание на цели"
 L["SPELLTIMER_RIGHT"] = "[Правый Клик] Использовать Камень Возвращения в "
+L["SPELLTIMER_LEFT"] = "[Левый Клик] для открытия конфигурации "
 L["SHADOW_TRANCE_LABEL"] = "|c00FFFFFF".."Теневой транс".."|r"
 L["BACKLASH_LABEL"] = "|c00FFFFFF".."Ответный Удар".."|r"
 L["BANISH_TEXT"] = "[Правый Клик] для применения Уровня 1"
@@ -70,6 +73,8 @@ L["VOIDWALKER_LABEL"] = "|c00FFFFFF".."Демон Бездны".."|r"
 L["VOIDWALKER"] = "Демон Бездны"
 L["SUCCUBUS_LABEL"] = "|c00FFFFFF".."Суккуба".."|r"
 L["SUCCUBUS"] = "Суккуба"
+L["INCCUBUS_LABEL"] = "|c00FFFFFF".."Инккуб".."|r"
+L["INCCUBUS"] = "Инккуб"
 L["FELHUNTER_LABEL"] = "|c00FFFFFF".."Охотник Скверны".."|r"
 L["FELHUNTER"] = "Охотник Скверны"
 L["FELGUARD_LABEL"] = "|c00FFFFFF".."Страж Скверны".."|r"
@@ -100,6 +105,7 @@ L["SOUND_BACKLASH"] = "Interface\\AddOns\\Necrosis\\sounds\\Backlash-Ru.mp3"
 --
 L["PROC_SHADOW_TRANCE"] = "<white>Т<lightPurple1>е<lightPurple2>н<purple>е<darkPurple1>в<darkPurple2>о<darkPurple1>й Т<purple>р<lightPurple2>а<lightPurple1>н<white>с"
 L["PROC_BACKLASH"] = "<white>О<lightPurple1>т<lightPurple2>в<purple>е<darkPurple1>т<darkPurple2>н<darkPurple1>ы<darkPurple2>й У<purple>д<lightPurple2>а<lightPurple1>р"
+L["PROC_MOLTENCORE"] = "<white>О<lightPurple1>г<lightPurple2>н<purple>е<darkPurple1>н<darkPurple2>н<purple>ы<darkPurple1>е Н<purple>е<lightPurple2>д<lightPurple1>р<white>а"
 
 L["BAG_FULL_PREFIX"] = "Ваша "
 L["BAG_FULL_SUFFIX"] = " полна!"
@@ -123,6 +129,7 @@ L["CONFIG_BUTTON"] = "Настройки Кнопок"
 L["CONFIG_MENU"] = "Настройки Меню"
 L["CONFIG_TIMER"] = "Настройки Таймера"
 L["CONFIG_MISC"] = "Разное"
+L["CONFIG_OVERLAY"] = "Overlay On Proc (Under Construction) "
 --
 L["MSG_POSITION"] = "<- Сообщения Necrosis будут расположены здесь ->"
 L["MSG_SHOW_TIPS"] = "Показывать подсказки"
@@ -143,6 +150,11 @@ L["SPHERE_SIZE"] = "Размер кнопок Necrosis"
 L["SPHERE_SKIN"] = "Вид Сферы"
 L["SPHERE_EVENT"] = "На Сфере отображать"
 L["SPHERE_SPELL"] = "Заклинание Сферы"
+L["SPHERE_SPELL2"] = "Заклинание Сферы (Shift+клик)"
+L["SPHERE_SPELL_RIGHTCLICK"] = "Щелкните правой кнопкой мыши на Сфере, чтобы удалить избыток запасов"
+L["SPHERE_SPELL_RIGHTCLICK_L2"] = "Ctrl+Левый щелчок для открытия меню конфигурации"
+
+L["SPHERE_SPELL+CTRL"] = "Открыть меню опций"
 L["SPHERE_COUNTER"] = "Показывать отсчет цифрами"
 L["SPHERE_STONE"] = "Показывать количество камней"
 --	Colour
@@ -151,6 +163,7 @@ L["BLUE"] = "Синий"
 L["ORANGE"] = "Оранжевый"
 L["TURQUOISE"] = "Бирюзовый"
 L["PURPLE"] = "Пурпурный"
+L["PURPLE2"] = "Пурпурный2"
 L["666"] = "666"
 L["X"] = "X"
 -- Count
@@ -164,8 +177,12 @@ L["BUTTONS_ROTATION"] = "Вращение кнопок"
 L["BUTTONS_STICK"] = "Закрепить кнопки вокруг Сферы"
 L["BUTTONS_MOUNT"] = "Использовать мой транспорт"
 L["BUTTONS_SELECTION"] = "Выбор кнопок, которые будут показаны"
-L["BUTTONS_LEFT"] = "[Левый Клик]"
-L["BUTTONS_RIGHT"] = "[Правый Клик]"
+L["BUTTONS_LEFT"] = "Прикреплено - [Левый Клик]"
+L["BUTTONS_RIGHT"] = "Прикреплено - [Правый Клик]"
+L["BUTTONS_L"] = "[Левый Клик]"
+L["BUTTONS_R"] = "[Правый Клик]"
+L["BUTTONS_CTRL-LEFT"] = "Прикреплено - Ctrl + Левый Клик"
+L["BUTTONS_CTRL-RIGHT"] = "Прикреплено - Ctrl + Правый Клик"
 --
 L["SHOW_FIRE_STONE"] = "Показывать кнопку Камня огня"
 L["SHOW_SPELL_STONE"] = "Показывать кнопку Камня чар"
@@ -175,6 +192,7 @@ L["SHOW_SPELL"] = "Показывать кнопку Заклинаний"
 L["SHOW_STEED"] = "Показывать кнопку вызова Коня"
 L["SHOW_DEMON"] = "Показывать кнопку Демонов"
 L["SHOW_CURSE"] = "Показывать кнопку Проклятий"
+L["SHOW_DESTROY_SHARDS"]= "Показывать кнопку Уничтожения осколков"
 --
 L["MENU_GENERAL"] = "Основные настройки"
 L["MENU_SPELLS"] = "Меню заклинаний"
@@ -184,6 +202,7 @@ L["MENU_ALWAYS"] = "Всегда показывать меню"
 L["MENU_AUTO_COMBAT"] = "Показывать меню автоматически во время боя"
 L["MENU_CLOSE_CLICK"] = "Закрывать меню тогда, когда Вы нажали на его элемент"
 L["MENU_ORIENTATION"] = "Размещение меню"
+L["MENU_QUICK_SACRIFICE"] = "Быстрое жертвоприношение : Призыв + Жертвоприношение"
 L["MENU_VERT"] = "Изменить вертикальную симметрию кнопок (зеркальное\nотражение при выбранном размещении меню: Горизонтально)"
 L["MENU_BANISH"] = "Размер кнопки Изгнания"
 --
@@ -192,6 +211,7 @@ L["UPWARDS"] = "Вверх"
 L["DOWNWARDS"] = "Вниз"
 --
 L["TIMER_TYPE"] = "Тип таймера"
+L["TIMER_ALPHA"]  = "Прозрачность полос таймера"
 L["TIMER_SPELL"] = "Показывать кнопку таймера заклинаний"
 L["TIMER_LEFT"] = "Показывать строки таймера слева от кнопки таймера"
 L["TIMER_UP"] = "Таймер растёт вверх"
@@ -243,8 +263,8 @@ L["ANTI_FEAR_BUFF_ICE"]			= "Ледяная преграда"
 L["ANTI_FEAR_BUFF_PROTECT"]		= "Божественная защита"
 L["ANTI_FEAR_BUFF_SHIELD"]		= "Божественный щит"
 L["ANTI_FEAR_BUFF_TREMOR"]		= "Тотем трепета"
-L["ANTI_FEAR_BUFF_ABOLISH"]		= "Abolish Magic"
-L["ANTI_FEAR_DEBUFF_RECKLESS"]	= "Curse of Recklessness"
+L["ANTI_FEAR_BUFF_ABOLISH"]		= "Рассеяние чар"
+L["ANTI_FEAR_DEBUFF_RECKLESS"]	= "Проклятие безрассудства"
 
 -- Speech
 
@@ -256,3 +276,11 @@ L["ABOUT_CATEGORY"] = "Category";
 L["ABOUT_EMAIL"] = "E-mail";
 L["ABOUT_WEB"] = "Website";
 L["ABOUT_LICENSE"] = "License";
+
+---AFK Stand Alone
+AFKS_CAMPON = "\124cFFFFEA00ОТДЫХ ВКЛ\124r"
+AFKS_CAMPOFF = "\124cFFFFEA00ОТДЫХ ВыКЛ\124r"
+
+AFKS_NOGUILD = "Нет гильдии"
+AFKS_DATEFORMAT = "%d-%d-%d\n%s\n\n%s"
+
