@@ -100,7 +100,6 @@ L["SOUND_BACKLASH"] = "Interface\\AddOns\\Necrosis\\sounds\\Backlash-Fr.mp3"
 --
 L["PROC_SHADOW_TRANCE"] = "你沒有任何的暗影箭法術。"
 L["PROC_BACKLASH"] = "<white>暗<lightPurple1>影<lightPurple2>冥<purple>思<darkPurple1>！<darkPurple2>暗<darkPurple1>影<purple>冥<lightPurple2>思<lightPurple1>！<white>！"
-L["PROC_MOLTENCORE"] = "<white>M<lightPurple1>o<lightPurple2>l<purple>t<darkPurple1>e<darkPurple2>n<darkPurple1>c<purple>o<lightPurple2>r<lightPurple1>e"
 
 L["BAG_FULL_PREFIX"] = "你的 "
 L["BAG_FULL_SUFFIX"] = " 滿了!"

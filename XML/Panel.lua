@@ -31,7 +31,7 @@ function Necrosis:OpenConfigPanel()
 		frame:SetMovable(true)
 		frame:EnableMouse(true)
 		frame:SetToplevel(true)
-		frame:SetWidth(512)
+		frame:SetWidth(450)
 		frame:SetHeight(512)
 		frame:Show()
 		frame:ClearAllPoints()
@@ -53,56 +53,54 @@ function Necrosis:OpenConfigPanel()
 		frame:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
 
 		-- Texture en haut à gauche : icone
-		--local texture = frame:CreateTexture("NecrosisGeneralIcon", "BACKGROUND")
-		--texture:SetWidth(60)
-		--texture:SetHeight(60)
-		--texture:SetTexture("Interface\\AddOns\\Necrosis\\XML\\Interface\\Spellbook-Icon")
-		--texture:Show()
-		--texture:ClearAllPoints()
-		--texture:SetPoint("TOPLEFT", 10, -10)
+		local texture = frame:CreateTexture("NecrosisGeneralIcon", "BACKGROUND")
+		texture:SetWidth(75)
+		texture:SetHeight(61)
+		texture:SetTexture("Interface\\Spellbook\\Spellbook-Icon")
+		texture:Show()
+		texture:ClearAllPoints()
+		texture:SetPoint("TOPLEFT", 10, -6)
 
 		-- Textures du cadre
 		texture = frame:CreateTexture(nil, "BORDER")
-		texture:SetWidth(256)
-		texture:SetHeight(frame:GetHeight()/2) -- BLP format need proportion 1:1 or 2:1-1:2
-		texture:SetTexture("Interface\\AddOns\\Necrosis\\XML\\Interface\\UI-Character-General-TopLeft.blp")
+		texture:SetWidth(322)
+		texture:SetHeight(256)
+		texture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-General-TopLeft")
 		texture:Show()
 		texture:ClearAllPoints()
 		texture:SetPoint("TOPLEFT")
 
 		texture = frame:CreateTexture(nil, "BORDER")
-		texture:SetWidth(256)
-		texture:SetHeight(frame:GetHeight()/2)
-		texture:SetTexture("Interface\\AddOns\\Necrosis\\XML\\Interface\\UI-Character-General-TopRight.blp")
+		texture:SetWidth(128)
+		texture:SetHeight(256)
+		texture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-General-TopRight")
 		texture:Show()
 		texture:ClearAllPoints()
 		texture:SetPoint("TOPRIGHT")
 
 		texture = frame:CreateTexture(nil, "BORDER")
-		texture:SetWidth(256)
-		texture:SetHeight(frame:GetHeight()/2)
-		texture:SetTexture("Interface\\AddOns\\Necrosis\\XML\\Interface\\UI-Character-General-BottomLeft.blp")
+		texture:SetWidth(322)
+		texture:SetHeight(256)
+		texture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-General-BottomLeft")
 		texture:Show()
 		texture:ClearAllPoints()
 		texture:SetPoint("BOTTOMLEFT")
 
 		texture = frame:CreateTexture(nil, "BORDER")
-		texture:SetWidth(256)
-		texture:SetHeight(frame:GetHeight()/2)
-		texture:SetTexture("Interface\\AddOns\\Necrosis\\XML\\Interface\\UI-Character-General-BottomRight.blp")
+		texture:SetWidth(128)
+		texture:SetHeight(256)
+		texture:SetTexture("Interface\\PaperDollInfoFrame\\UI-Character-General-BottomRight")
 		texture:Show()
 		texture:ClearAllPoints()
 		texture:SetPoint("BOTTOMRIGHT")
-		
-		
 
 		-- Texte du titre
 		local FontString = frame:CreateFontString(nil, nil, "GameFontNormal")
-		FontString:SetTextColor(255, 255, 0)
+		FontString:SetTextColor(1, 0.8, 0)
 		FontString:SetText(self.Data.Label)
 		FontString:Show()
 		FontString:ClearAllPoints()
-		FontString:SetPoint("CENTER", 0, 210)
+		FontString:SetPoint("CENTER", 6, 233)
 --[[
 		-- Crédits
 		FontString = frame:CreateFontString(nil, nil, "GameFontNormal")
@@ -112,19 +110,19 @@ function Necrosis:OpenConfigPanel()
 		FontString:ClearAllPoints()
 		FontString:SetPoint("TOP", 0, -48)
 --]]
-		-- Sous Titre de section haut de la page
+		-- Titre de section au bas de la page
 		FontString = frame:CreateFontString("NecrosisGeneralPageText", nil, "GameFontNormal")
 		FontString:SetTextColor(1, 0.8, 0)
 		FontString:SetWidth(250) -- 102
 		FontString:SetHeight(0)
 		FontString:Show()
 		FontString:ClearAllPoints()
-		FontString:SetPoint("TOP", 0, -55)
+		FontString:SetPoint("BOTTOM", 0, 85)
 
 		-- Bouton de fermeture de la fenêtre
 		frame = CreateFrame("Button", "NecrosisGeneralCloseButton", NecrosisGeneralFrame, "UIPanelCloseButton")
 		frame:ClearAllPoints()
-		frame:SetPoint("CENTER", "NecrosisGeneralFrame", "TOPRIGHT",-32,-32)
+		frame:SetPoint("CENTER", "NecrosisGeneralFrame", "TOPRIGHT", -46, -24)
 
 		-- Premier onglet du panneau de configuration
 		frame = CreateFrame("CheckButton", "NecrosisGeneralTab1", NecrosisGeneralFrame)
@@ -132,7 +130,7 @@ function Necrosis:OpenConfigPanel()
 		frame:SetHeight(32)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("TOPLEFT", "NecrosisGeneralFrame", "TOPRIGHT", -18, -90)
+		frame:SetPoint("TOPLEFT", "NecrosisGeneralFrame", "TOPRIGHT", -32, -65)
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -163,7 +161,6 @@ function Necrosis:OpenConfigPanel()
 			"INV_Wand_1H_Stratholme_D_02",
 			"Spell_Nature_TimeStop",
 			"Ability_Creature_Disease_05",
-			"spell_fire_playingwithfire",
 		}
 	 
 		for i in ipairs(tex) do
@@ -217,7 +214,7 @@ end
 -- Function to display different pages of the control panel || Fonction permettant l'affichage des différentes pages du panneau de configuration
 function Necrosis:SetPanel(PanelID)
 	local TabName
-	for index=1, 7, 1 do
+	for index=1, 6, 1 do
 		TabName = _G["NecrosisGeneralTab"..index]
 		if index == PanelID then
 			TabName:SetChecked(1)
@@ -232,8 +229,6 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisMenusConfig)
 		HideUIPanel(NecrosisTimersConfig)
 		HideUIPanel(NecrosisMiscConfig)
-		HideUIPanel(NecrosisOverlayConfig)
-		
 		self:SetMessagesConfig()
 	elseif PanelID == 2 then
 		HideUIPanel(NecrosisMessagesConfig)
@@ -241,7 +236,6 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisMenusConfig)
 		HideUIPanel(NecrosisTimersConfig)
 		HideUIPanel(NecrosisMiscConfig)
-		HideUIPanel(NecrosisOverlayConfig)
 		self:SetSphereConfig()
 	elseif PanelID == 3 then
 		HideUIPanel(NecrosisMessagesConfig)
@@ -249,7 +243,6 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisMenusConfig)
 		HideUIPanel(NecrosisTimersConfig)
 		HideUIPanel(NecrosisMiscConfig)
-		HideUIPanel(NecrosisOverlayConfig)
 		self:SetButtonsConfig()
 	elseif PanelID == 4 then
 		HideUIPanel(NecrosisMessagesConfig)
@@ -257,7 +250,6 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisButtonsConfig)
 		HideUIPanel(NecrosisTimersConfig)
 		HideUIPanel(NecrosisMiscConfig)
-		HideUIPanel(NecrosisOverlayConfig)
 		self:SetMenusConfig()
 	elseif PanelID == 5 then
 		HideUIPanel(NecrosisMessagesConfig)
@@ -265,7 +257,6 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisButtonsConfig)
 		HideUIPanel(NecrosisMenusConfig)
 		HideUIPanel(NecrosisMiscConfig)
-		HideUIPanel(NecrosisOverlayConfig)
 		self:SetTimersConfig()
 	elseif PanelID == 6 then
 		HideUIPanel(NecrosisMessagesConfig)
@@ -273,15 +264,6 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisButtonsConfig)
 		HideUIPanel(NecrosisMenusConfig)
 		HideUIPanel(NecrosisTimersConfig)
-		HideUIPanel(NecrosisOverlayConfig)
 		self:SetMiscConfig()
-	elseif PanelID == 7 then
-		HideUIPanel(NecrosisMessagesConfig)
-		HideUIPanel(NecrosisSphereConfig)
-		HideUIPanel(NecrosisButtonsConfig)
-		HideUIPanel(NecrosisMenusConfig)
-		HideUIPanel(NecrosisTimersConfig)
-		HideUIPanel(NecrosisMiscConfig)
-		self:SetOverlayConfig()
 	end
 end

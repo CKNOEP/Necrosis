@@ -111,7 +111,6 @@ and crosses login / reload does NOT have both a duration AND a cool down in Spel
 --]]
 local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, duration, note)
 	-- 
-	-- print ("insert the timer ",spell, cast_guid, Target, Timer, start_time, duration, note)
 	 
 	local target = Target
 	local ttype = 0
@@ -153,9 +152,8 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 				Gtimer = nil
 			}
 		)
-		
 		OutputTimer("Insert", spell.Usage, #Timer.SpellTimer, Timer, note)
-		
+	
 	end
 	
 	-- check for a cool down to show
@@ -247,8 +245,8 @@ function Necrosis:TimerInsert(Cast, Target, Timer, note, start_time, duration, m
 	if spell.Timer then
 		-- Cleanup, if needed
 		Timer = Necrosis:RemoveTimerByNameAndGuid(spell.Name, Target.guid, Timer, note)
+
 		Timer = InsertThisTimer(spell, Cast.Guid, Target, Timer, start_time, duration, note)
-		
 	else
 		-- safety - no timer associated with spell
 	end
@@ -299,7 +297,7 @@ function Necrosis:RetraitTimerParIndex(index, Timer, note)
 
 	-- update the display || On met à jour l'affichage
 	NecrosisUpdateTimer(Timer.SpellTimer, Timer.SpellGroup)
-	
+
 	return Timer
 end
 
@@ -345,7 +343,6 @@ end
 
 function Necrosis:RemoveTimerByNameAndGuid(name, guid, Timer, note)
 	for index = 1, #Timer.SpellTimer, 1 do
-		
 		if Timer.SpellTimer[index].Name == name
 		and Timer.SpellTimer[index].TargetGUID == guid then
 			OutputTimer("RemoveTimerByNameAndGuid", "", index, Timer, note)
@@ -355,12 +352,6 @@ function Necrosis:RemoveTimerByNameAndGuid(name, guid, Timer, note)
 	end
 	return Timer
 end
-
--- refresh Timer
-
-
-
-
 
 -- remove combat timers  || Fonction pour enlever les timers de combat lors de la regen
 function Necrosis:RetraitTimerCombat(Timer, note)

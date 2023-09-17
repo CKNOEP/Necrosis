@@ -37,9 +37,9 @@ function Necrosis:SetMessagesConfig()
 
 	local frame = _G["NecrosisMessagesConfig"]
 	if not frame then
-		local y = -35 -- initial offset
+		local y = -25 -- initial offset
 		local y_offset = -23
-		local x_offset = 30
+		local x_offset = 25
 
 		-- Création de la fenêtre
 		frame = CreateFrame("Frame", "NecrosisMessagesConfig", NecrosisGeneralFrame)
@@ -359,7 +359,31 @@ function Necrosis:SetMessagesConfig()
 		FontString:SetTextColor(1, 1, 1)
 		frame:SetFontString(FontString)
 
-	
+		-- Alertes transes
+		y = y + y_offset
+		frame = CreateFrame("CheckButton", "NecrosisTrance", NecrosisMessagesConfig, "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("LEFT", NecrosisMessagesConfig, "TOPLEFT", x_offset, y)
+
+		frame:SetScript("OnClick", function(self) NecrosisConfig.ShadowTranceAlert = self:GetChecked() end)
+
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		frame:SetFontString(FontString)
+
+		local Glow = NecrosisMessagesConfig:CreateFontString(nil, nil, "GameFontNormalSmall")
+		Glow:Show()
+		Glow:ClearAllPoints()
+		Glow:SetPoint("LEFT", NecrosisMessagesConfig, "TOPLEFT", x_offset + 20 ,  y+y_offset + 10 )
+		Glow:SetTextColor(1, 0.5, 0)
+		Glow:SetText("Glow button, support Default Action Bars,Dominos,ElvUI,Bartender")
 
 
 	end
@@ -377,7 +401,7 @@ function Necrosis:SetMessagesConfig()
 	NecrosisSound:SetChecked(NecrosisConfig.Sound)
 	NecrosisFear:SetChecked(NecrosisConfig.AntiFearAlert)
 	NecrosisBanish:SetChecked(NecrosisConfig.Banish)
-	
+	NecrosisTrance:SetChecked(NecrosisConfig.ShadowTranceAlert)
 
 
 	NecrosisShowTooltip:SetText(self.Config.Messages["Afficher les bulles d'aide"])
@@ -394,7 +418,7 @@ function Necrosis:SetMessagesConfig()
 	NecrosisSound:SetText(self.Config.Messages["Activer les sons"])
 	NecrosisFear:SetText(self.Config.Messages["Alerter quand la cible est insensible a la peur"])
 	NecrosisBanish:SetText(self.Config.Messages["Alerter quand la cible peut etre banie ou asservie"])
-	
+	NecrosisTrance:SetText(self.Config.Messages["M'alerter quand j'entre en Transe"])
 
 	SetRandom(NecrosisConfig.ChatMsg)
 	frame:Show()

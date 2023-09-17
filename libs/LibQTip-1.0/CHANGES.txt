@@ -1,8 +1,21 @@
-Changes since tag 9.0.1.2
+------------------------------------------------------------------------
+r188 | Torhal | 2018-07-21 06:14:41 +0000 (Sat, 21 Jul 2018) | 1 line
+Changed paths:
+   M /trunk/LibQTip-1.0.toc
 
-commit 4c6a3d882373fa0b52c6b71d09acc0b87ec1ae00
-Author: Elkano <elkano@gmx.de>
-Date:   Wed Nov 3 19:49:57 2021 +0100
+Updating ToC Interface to 80000
+------------------------------------------------------------------------
+r187 | Torhal | 2018-07-21 06:13:54 +0000 (Sat, 21 Jul 2018) | 1 line
+Changed paths:
+   A /trunk/LibStub
+   A /trunk/LibStub/LibStub.lua
 
-    update for WoW 9.1.5's new TooltipBackdropTemplate
+Hard-embed LibStub, to stop the WoW 8.x client from complaining about being unable to load it under a dev environment.
+------------------------------------------------------------------------
+r186 | Torhal | 2018-07-21 06:13:15 +0000 (Sat, 21 Jul 2018) | 1 line
+Changed paths:
+   M /trunk/.pkgmeta
+
+Hard-embed LibStub, to stop the WoW 8.x client from complaining about being unable to load it under a dev environment.
+------------------------------------------------------------------------
 

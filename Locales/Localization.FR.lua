@@ -60,7 +60,7 @@ L["SHADOW_TRANCE_LABEL"] = "|c00FFFFFF".."Transe de l'ombre".."|r"
 L["BACKLASH_LABEL"] = "|c00FFFFFF".."Contrecoup".."|r"
 L["BANISH_TEXT"] = "Clic droit pour Rang 1"
 L["DESTROY_SHARD_MENU_LABEL"] = "|c00FF99FF".."Destruction des Shard(s)".."|r"
-L["DESTROY_SHARD_MENU_TEXT"] = "Click droit pour Suppr. les Shards au dela de la limite : "
+L["DESTROY_SHARD_MENU_TEXT"] = "Click pour Suppr. les Shards en trop"
 
 -- Pets
 L["IMP_LABEL"] = "|c00FFFFFF".."Diablotin".."|r"
@@ -99,7 +99,7 @@ L["SOUND_BACKLASH"] = "Interface\\AddOns\\Necrosis\\sounds\\Backlash-Fr.mp3"
 --
 L["PROC_SHADOW_TRANCE"] = "<white>T<lightPurple1>r<lightPurple2>a<purple>n<darkPurple1>s<darkPurple2>e d<darkPurple1>e l<purple>'<lightPurple2>o<lightPurple1>m<white>b<lightPurple1>r<lightPurple2>e"
 L["PROC_BACKLASH"] = "<white>C<lightPurple1>o<lightPurple2>n<purple>t<darkPurple1>r<darkPurple2>e<darkPurple1>c<purple>o<lightPurple2>u<lightPurple1>p"
-L["PROC_MOLTENCORE"] = "<white>M<lightPurple1>o<lightPurple2>l<purple>t<darkPurple1>e<darkPurple2>n<darkPurple1>c<purple>o<lightPurple2>r<lightPurple1>e"
+
 L["BAG_FULL_PREFIX"] = "Votre "
 L["BAG_FULL_SUFFIX"] = " est plein !"
 L["BAG_FULL_DESTROY_PREFIX"] = " est plein ; Les prochains fragments seront d\195\169truits !"
@@ -136,7 +136,7 @@ L["MSG_RANDOM_SOULS"] = "Activer \195\169galement les messages pour le Rituel de
 L["MSG_SOUNDS"] = "Activer les sons"
 L["MSG_WARN_FEAR"] = "Alerter quand la cible est insensible \195\160 la peur"
 L["MSG_WARN_BANISH"] = "Alerter quand la cible peut \195\170tre banie ou asservie"
-L["MSG_WARN_TRANCE"] = "Alerter pour Proc: Transe/Backlash/Moltencore.."
+L["MSG_WARN_TRANCE"] = "M'alerter quand j'entre en Transe/Backlash"
 --
 L["SPHERE_SIZE"] = "Taille de la sph\195\168re"
 L["SPHERE_SKIN"] = "Skin de la sph\195\168re"

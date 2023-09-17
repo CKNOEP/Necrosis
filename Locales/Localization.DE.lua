@@ -100,7 +100,6 @@ L["SOUND_BACKLASH"] = "Interface\\AddOns\\Necrosis\\sounds\\Backlash-Fr.mp3"
 --
 L["PROC_SHADOW_TRANCE"] = "<white>S<lightPurple1>c<lightPurple2>h<purple>a<darkPurple1>tt<darkPurple2>en<darkPurple1>tr<purple>a<lightPurple2>n<lightPurple1>c<white>e"
 L["PROC_BACKLASH"] = "<white>H<lightPurple1>e<lightPurple2>i<purple>m<darkPurple1>z<darkPurple2>a<darkPurple1>h<purple>l<lightPurple2>e<lightPurple1>n"
-L["PROC_MOLTENCORE"] = "<white>M<lightPurple1>o<lightPurple2>l<purple>t<darkPurple1>e<darkPurple2>n<darkPurple1>c<purple>o<lightPurple2>r<lightPurple1>e"
 
 L["BAG_FULL_PREFIX"] = "Dein "
 L["BAG_FULL_SUFFIX"] = " ist voll !"
@@ -138,7 +137,7 @@ L["MSG_RANDOM_SOULS"] = "Zuf\195\164llige Spr\195\188che f\195\188r das Ritual d
 L["MSG_SOUNDS"] = "Aktiviere Sounds"
 L["MSG_WARN_FEAR"] = "Warnung, wenn Ziel immun gegen\195\188ber Fear ist"
 L["MSG_WARN_BANISH"] = "Warnung, wenn ein Ziel verbannt\\versklavt werden kann"
-L["MSG_WARN_TRANCE"] = "Warnung, wenn Trance/Backlash/Moltencore eintritt"
+L["MSG_WARN_TRANCE"] = "Warnung, wenn Trance/Backlash eintritt"
 --
 L["SPHERE_SIZE"] = "Gr\195\182\195\159e der Sph\195\164re"
 L["SPHERE_SKIN"] = "Aussehen der Necrosis Sph\195\164re"

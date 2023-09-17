@@ -218,9 +218,6 @@ Necrosis.TooltipData = {
 	["Succubus"] = {
 		Label = "" --L["SUCCUBUS_LABEL"]
 	},
-	["Inccubus"] = {
-		Label = "" --L["SUCCUBUS_LABEL"]
-	},
 	["Felhunter"] = {
 		Label = "" --L["FELHUNTER_LABEL"]
 	},
@@ -256,7 +253,6 @@ Necrosis.TooltipData = {
 	["DestroyShards"] = {
 		Label = L["DESTROY_SHARD_MENU_LABEL"],
 		Text = L["DESTROY_SHARD_MENU_TEXT"],
-		
 	},
 	
 	["DominationCooldown"] = L["DOMINATION_COOLDOWN"],
@@ -341,7 +337,6 @@ Necrosis.Sound = {
 Necrosis.ProcText = {
 	["ShadowTrance"] = L["PROC_SHADOW_TRANCE"],
 	["Backlash"] = L["PROC_BACKLASH"],
-	["Moltencore"] = L["PROC_MOLTENCORE"],	
 }
 
 
@@ -380,7 +375,6 @@ Necrosis.Config.Panel = {
 	L["CONFIG_MENU"],
 	L["CONFIG_TIMER"],
 	L["CONFIG_MISC"],
-	L["CONFIG_OVERLAY"],	
 }
 
 Necrosis.Config.Messages = {
@@ -405,9 +399,8 @@ Necrosis.Config.Sphere = {
 	["Skin de la pierre Necrosis"] = L["SPHERE_SKIN"],
 	["Evenement montre par la sphere"] = L["SPHERE_EVENT"],
 	["Sort caste par la sphere"] = L["SPHERE_SPELL"],
-	["Sort caste par la sphere2"] = L["SPHERE_SPELL2"],
 	["Afficher le compteur numerique"] = L["SPHERE_COUNTER"],
-	["Shift+Clic on Sphere to del. Shards"] = L["SPHERE_SPELL_RIGHTCLICK"],
+	["Shift+Clic on Sphere to del. Shards"] = L["SPHERE_SPELL+CTRL"],
 	["Type de compteur numerique"] = L["SPHERE_STONE"],
 }
 Necrosis.Config.Sphere.Colour = {
@@ -512,22 +505,20 @@ Necrosis.Translation.DemonName = {
 	[1] = L["IMP"],
 	[2] = L["VOIDWALKER"],
 	[3] = L["SUCCUBUS"],
-	[4] = L["INCCUBUS"],
-	[5] = L["FELHUNTER"],
-	[6] = L["FELGUARD"],
-	[7] = L["INFERNAL"],
-	[8] = L["DOOMGUARD"],
+	[4] = L["FELHUNTER"],
+	[5] = L["FELGUARD"],
+	[6] = L["INFERNAL"],
+	[7] = L["DOOMGUARD"],
 }
 
 Necrosis.NameDemon = {
 	[1] = "imp",
 	[2] = "Voidwalker",
 	[3] = "Succubus",
-	[4] = "Inccubus",
-	[5] = "Felhunter",
-	[6] = "Felguard",
-	[7] = "Infernal",
-	[8] = "Doomguard",
+	[4] = "Felhunter",
+	[5] = "Felguard",
+	[6] = "Infernal",
+	[7] = "Doomguard",
 }
 
 -- Traduction du nom des objets utilisés par Necrosis
