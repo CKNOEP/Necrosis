@@ -228,7 +228,7 @@ function NecrosisUpdateTimer(tableau, Changement)
 	
  	table.sort(tableau, function(a,b) return a.Time < b.Time end)
 	
-	--for k,v in pairs(tableau) do print(k,v,v.Time) end
+
 
 	
 	end

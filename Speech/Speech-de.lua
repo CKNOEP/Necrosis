@@ -28,7 +28,7 @@ function Necrosis:Localization_Speech_De()
 
 	self.Speech.Rez = {
 		[0] = {
-			"<after>--> <target> hat nun einen Seelenstein aktiv f\195\188r 15 Minuten <--",
+			"<after>--> <target> hat nun einen Seelenstein aktiv f\195\188r 30 Minuten <--",
 		},
 		[1] = {
 			"<after>Solltet Ihr einen Massenselbstmord erw\195\164gen, denkt daran dass <target> sich nun selbst wiederbeleben kann. Alles wird gut werden, auf in den Kampf !",
@@ -48,7 +48,7 @@ function Necrosis:Localization_Speech_De()
 	}
 
 	self.Speech.ShortMessage = {
-		{{"<after>--> <target> hat nun einen Seelenstein aktiv f\195\188r 15 Minuten <--"}},
+		{{"<after>--> <target> hat nun einen Seelenstein aktiv f\195\188r 30 Minuten <--"}},
 		{{"<after><Portal> Ich beschw\195\182re <target>, bitte klickt auf das Tor <Portal>"}},
 		{{"Summoning a Ritual of Souls"}},
 	}
@@ -76,7 +76,7 @@ function Necrosis:Localization_Speech_De()
 				"<pet>, Baby, sei ein Schatzi und hilf mir!",
 			},
 		},
-		-- Teufelsj�ger
+		-- Teufelsjäger
 		[4] = {
 			[1] = {
 				"<pet> ! <pet> ! Bei Fu\195\159, mein Guter, bei Fu\195\159 ! <pet> !",
@@ -92,7 +92,7 @@ function Necrosis:Localization_Speech_De()
 				"<sacrifice>Please return in the Limbs you are from, Demon, and give me your power in exchange !"
 			},
 		},
-		-- S�tze f�r die erste Beschw�rung : Wenn Necrosis den Namen Deines D�mons noch nicht kennt
+		-- Sätze für die erste Beschwörung : Wenn Necrosis den Namen Deines Dämons noch nicht kennt
 		[6] = {
 			[1] = {
 				"Angeln ? Oh jaaa, ich liebe Angeln, schau !",
@@ -103,7 +103,7 @@ function Necrosis:Localization_Speech_De()
 				"KOMM ZU MIR, KREATUR, DIE DU KOMMST AUS DER H\195\150LLE UND ENDLOSEN ALPTR\195\132UMEN !",
 			},
 		},
-		-- Spr�che zur Beschw�rung des Mounts
+		-- Sprüche zur Beschwörung des Mounts
 		[7] = {
 			[1] = {
 				"Hey, ich bin sp\195\164t dran ! Ich hoffe ich finde ein Pferd das rennt wie ein ge\195\182lter Blitz !",
@@ -119,12 +119,12 @@ end
 
 
 -- Besondere Zeichen :
--- � = \195\169 ---- � = \195\168
--- � = \195\160 ---- � = \195\162
--- � = \195\180 ---- � = \195\170
--- � = \195\187 ---- � = \195\164
--- � = \195\132 ---- � = \195\182
--- � = \195\150 ---- � = \195\188
--- � = \195\156 ---- � = \195\159
--- � = \195\167 ---- � = \195\174
+-- é = \195\169 ---- è = \195\168
+-- à = \195\160 ---- â = \195\162
+-- ô = \195\180 ---- ê = \195\170
+-- û = \195\187 ---- ä = \195\164
+-- Ä = \195\132 ---- ö = \195\182
+-- Ö = \195\150 ---- ü = \195\188
+-- Ü = \195\156 ---- ß = \195\159
+-- ç = \195\167 ---- î = \195\174
 

@@ -1,11 +1,14 @@
-## Interface: 11404
-## Title: Necrosis 7.6c
-## Title-ruRU: Necrosis (Русский)
-## Title-frFR: Necrosis (Français)
+## Interface: 30403
+## X-Min-Interface-Wrath: 30401
+
+## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Wotlk
+## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Woltk (Русский)
+## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Woltk (Français)
+
 ## Notes: Warlock UI & Shard Management
 ## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir 
 ## Notes-ruRU: Менеджер заклинаний, камней и демонов для чернокнижника.
-## Version: 7.6c
+## Version: 8.0.4
 ## Website: https://github.com/CKNOEP/Necrosis
 ## DefaultState: Enabled
 ## X-Original-Author: Lomig,lädygaga - sulfuron EUR - lancestre
@@ -45,7 +48,7 @@ Locales\Localization.MX.lua
 
 Dialog.lua
 Functions.lua
-
+AFKS.lua
 Speech\Speech-fr.lua
 Speech\Speech-en.lua
 Speech\Speech-de.lua
@@ -74,6 +77,6 @@ XML\Options-Buttons.lua
 XML\Options-Menus.lua
 XML\Options-Timers.lua
 XML\Options-Misc.lua
-
+XML\Options-Overlay.lua
 Necrosis.lua
 XML\XML.lua

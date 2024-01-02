@@ -48,7 +48,7 @@ L["ENSLAVED_DEMON"] = "Demon: Enslaved"
 L["NO_CURRENT_DEMON"] = "Demon: None"
 L["HEARTH_STONE"] = "Hearthstone"
 L["DESTROY_SHARD_MENU_LABEL"] = "|c00FF99FF".."Destroy Shard(s)".."|r"
-L["DESTROY_SHARD_MENU_TEXT"] = "Click to destroy Soul Shards to the limit  "
+L["DESTROY_SHARD_MENU_TEXT"] = "Right Click to destroy Soul Shards to the limit : "
 
 --
 L["SOULSTONE_TEXT_1"] = "Right click to create"
@@ -82,6 +82,8 @@ L["VOIDWALKER_LABEL"] = "|c00FFFFFF".."Voidwalker".."|r"
 L["VOIDWALKER"] = "Voidwalker"
 L["SUCCUBUS_LABEL"] = "|c00FFFFFF".."Succubus".."|r"
 L["SUCCUBUS"] = "Succubus"
+L["INCCUBUS_LABEL"] = "|c00FFFFFF".."Inccubus".."|r"
+L["INCCUBUS"] = "Inccubus"
 L["FELHUNTER_LABEL"] = "|c00FFFFFF".."Felhunter".."|r"
 L["FELHUNTER"] = "Felhunter"
 L["FELGUARD_LABEL"] = "|c00FFFFFF".."Felguard".."|r"
@@ -112,6 +114,8 @@ L["SOUND_BACKLASH"] = "Interface\\AddOns\\Necrosis\\sounds\\Backlash-Fr.mp3"
 --
 L["PROC_SHADOW_TRANCE"] = "<white>S<lightPurple1>h<lightPurple2>a<purple>d<darkPurple1>o<darkPurple2>w T<darkPurple1>r<purple>a<lightPurple2>n<lightPurple1>c<white>e"
 L["PROC_BACKLASH"] = "<white>B<lightPurple1>a<lightPurple2>c<purple>k<darkPurple1>l<darkPurple2>a<darkPurple1>s<purple>h"
+L["PROC_MOLTENCORE"] = "<white>M<lightPurple1>o<lightPurple2>l<purple>t<darkPurple1>e<darkPurple2>n<darkPurple1>c<purple>o<lightPurple2>r<lightPurple1>e"
+
 
 L["BAG_FULL_PREFIX"] = "Your "
 L["BAG_FULL_SUFFIX"] = " is full!"
@@ -135,6 +139,7 @@ L["CONFIG_BUTTON"] = "Button Settings"
 L["CONFIG_MENU"] = "Menu Settings"
 L["CONFIG_TIMER"] = "Timer Settings"
 L["CONFIG_MISC"] = "Miscellaneous"
+L["CONFIG_OVERLAY"] = "Overlay On Proc (Under Construction) "
 --
 L["MSG_POSITION"] = "<- Necrosis system messages will appear here ->"
 L["MSG_SHOW_TIPS"] = "Show tooltips"
@@ -149,13 +154,14 @@ L["MSG_RANDOM_SOULS"] = "Activate random speeches for Ritual of Souls"
 L["MSG_SOUNDS"] = "Activate sounds"
 L["MSG_WARN_FEAR"] = "Warn when the target cannot be feared"
 L["MSG_WARN_BANISH"] = "Warn when the target is banishable or enslavable"
-L["MSG_WARN_TRANCE"] = "Warn me when I enter a Trance/Backlash State"
+L["MSG_WARN_TRANCE"] = "Warn me when I enter a Trance/Backlash/Moltencore State"
 --
 L["SPHERE_SIZE"] = "Size of the Necrosis button"
 L["SPHERE_SKIN"] = "Skin of the Sphere"
 L["SPHERE_EVENT"] = "Event shown by the Sphere"
 L["SPHERE_SPELL"] = "Spell casted by the Sphere"
-L["SPHERE_SPELL_RIGHTCLICK"] = "Right click on Sphere to delete the stock overage"
+L["SPHERE_SPELL2"] = "Spell casted by the Sphere (Shift+clic)"
+L["SPHERE_SPELL_RIGHTCLICK"] = "Right click on Sphere to del. the stock overage"
 L["SPHERE_SPELL_RIGHTCLICK_L2"] = "Ctrl+Left click to open config menu"
 
 L["SPHERE_SPELL+CTRL"] = "Open options menu"
@@ -239,6 +245,7 @@ L["ELEMENTAL"] = "Elemental"
 --
 L["BACKLASH"] = "Backlash"
 L["SHADOW_TRANCE"] = "Shadow Trance"
+--L["MOLTENCORE"] = select(1, GetSpellInfo(47247))
 --
 L["BAG_SOUL_POUCH"] = "Soul Pouch"
 L["BAG_SMALL_SOUL_POUCH"] = "Small Soul Pouch"
@@ -281,3 +288,11 @@ L["ABOUT_CATEGORY"] = "Category";
 L["ABOUT_EMAIL"] = "E-mail";
 L["ABOUT_WEB"] = "Website";
 L["ABOUT_LICENSE"] = "License";
+
+---AFK Stand Alone
+AFKS_CAMPON = "\124cFFFFEA00CAMPING ON\124r"
+AFKS_CAMPOFF = "\124cFFFFEA00CAMPING OFF\124r"
+
+AFKS_NOGUILD = "No Guild"
+AFKS_DATEFORMAT = "%d-%d-%d\n%s\n\n%s"
+
