@@ -11,7 +11,7 @@
 ## Version: 8.0.4
 ## Website: https://github.com/CKNOEP/Necrosis
 ## DefaultState: Enabled
-## X-Original-Author: Lomig,lädygaga - sulfuron EUR - lancestre
+## X-Original-Author: Lomig,lädygaga - sulfuron EUR - As lancestre
 ## X-Localizations: enUS, enGB, deDE, frFR, koKR, zhCN, zhTW, esES, ruRU
 ## X-Category: Warlock
 ## LoadOnDemand: 0
