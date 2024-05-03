@@ -168,6 +168,7 @@ L["SPHERE_SPELL+CTRL"] = "Open options menu"
 L["SPHERE_COUNTER"] = "Show the digital counter"
 L["SPHERE_STONE"] = "Stone type counted"
 --	Colour
+L["CATA"] = "Cataclysme"
 L["PINK"] = "Pink"
 L["BLUE"] = "Blue"
 L["ORANGE"] = "Orange"

@@ -102,7 +102,7 @@ Local.DefaultConfig = {
 		-- 6 = Mounts
 		-- 7 = Demon menu
 		-- 8 = Curse menu
-		-- 9 = Destroy Shard
+		-- 9 = Soul Harvest
 	DemonSpellPosition = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11},
 		-- 1 = Fel Domination || Domination corrompue
 		-- 2 = Summon Imp
@@ -144,11 +144,11 @@ Local.DefaultConfig = {
 	Language = GetLocale(),
 	ShowCount = true,
 	CountType = 1,
-	DestroyShardwithsphere = true,
+	DestroyShardwithsphere = false,
 	ShadowTranceScale = 100,
 	NecrosisButtonScale = 90,
 	NecroisButtonRadius = 1,
-	NecrosisColor = "Rose",
+	NecrosisColor = "Cata",
 	Sound = true,
 	SpellTimerPos = 1,
 	SpellTimerJust = "LEFT",
@@ -159,7 +159,7 @@ Local.DefaultConfig = {
 	DemonSummon = true,
 	BanishScale = 100,
 	ItemSwitchCombat = {},
-	DestroyCount = 32,
+	DestroyCount = 3,
 	FramePosition = {
 		["NecrosisSpellTimerButton"] = {"CENTER", "UIParent", "CENTER", 100, 300},
 		["NecrosisButton"] = {"CENTER", "UIParent", "CENTER", 0, -200},
@@ -1077,10 +1077,7 @@ function Necrosis:OnUpdate(something, elapsed)
 
 	-- Every second || Toutes les secondes
 	if Local.LastUpdate[1] > 1 then
-	-- If configured, sorting fragments every second || Si configuré, tri des fragments toutes les secondes
-		if NecrosisConfig.SoulshardSort and Local.Soulshard.Move > 0  then
-			--Necrosis:SoulshardSwitch("MOVE")
-		end
+
 
 		-- Timers Table Course || Parcours du tableau des Timers
 		if Local.TimerManagement.SpellTimer[1] then
@@ -1295,16 +1292,22 @@ function Necrosis:OnEvent(self, event,...)
 	-- If the contents of the bags have changed, we check that Soul Fragments are always in the right bag || Si le contenu des sacs a changé, on vérifie que les Fragments d'âme sont toujours dans le bon sac
 	if (event == "BAG_UPDATE") then
 		Necrosis:BagExplore(arg1)
-		if (NecrosisConfig.SoulshardSort) then
-			--Necrosis:SoulshardSwitch("CHECK")
-		end
+		
 	-- If the player wins or loses mana || Si le joueur gagne ou perd de la mana
 	elseif (event == "UNIT_MANA") and arg1 == "player" then
 		Necrosis:UpdateMana()
 	-- If the player wins or loses his life || Si le joueur gagneou perd de la vie
 	elseif (event == "UNIT_HEALTH") and arg1 == "player" then
 		Necrosis:UpdateHealth()
-	-- If the player dies || Si le joueur meurt
+	-- If the player wins or loses his life || Si le joueur gagneou perd de la vie
+	elseif (event == "UNIT_POWER_UPDATE") and arg1 == "player" then
+		
+	
+		Necrosis:UpdatePower()
+	
+	
+	
+		-- If the player dies || Si le joueur meurt
 	elseif (event == "PLAYER_DEAD") then
 		-- It may hide the Twilight or Backlit buttons. || On cache éventuellement les boutons de Crépuscule ou Contrecoup.
 		Local.Dead = true
@@ -1801,15 +1804,7 @@ local function AddShard()
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count)
 	end
 end
-local function AddDestroyCount()
 
-
-	if NecrosisConfig.DestroyCount then
-		GameTooltip:AddLine("|c00FF4444"..Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count.."|r".."/".."|c00FF4444"..NecrosisConfig.DestroyCount.."|r")
-		GameTooltip:AddLine("|c00FFFFFF".."Use MouseWheel to increase or decrease the limit ..")
-		GameTooltip:AddLine("|c00FFFFFF".."Use LeftClick to move shard to the specific bag ..")
-	end
-end
 
 local function AddDominion(start, duration)
 	if not (start > 0 and duration > 0) then
@@ -2016,24 +2011,11 @@ function Necrosis:BuildButtonTooltip(button)
 				GameTooltip:AddLine(itemName)
 			end
 --]]
-			if  Local.Soulshard.Count > 0 then
+			if  Local.Soulshard.Count >= 0 then
 				GameTooltip:AddLine(Necrosis.TooltipData[Type].Ritual)
 			end
 		-- Stone of spell ||Pierre de sort
-		elseif (Type == "Spellstone") then
-			-- Eadem ||Eadem
-			if Local.Stone.Spell.Mode == 1 then
-				AddCastAndCost("spellstone")
-			end
-			GameTooltip:AddLine(Necrosis.TooltipData[Type].Text[Local.Stone.Spell.Mode])
-			GameTooltip:AddLine(GetItemCount(41196, nil, true).." Charges")
-		-- Fire stone ||Pierre de feu
-		elseif (Type == "Firestone") then
-			-- Idem ||Idem
-			if Local.Stone.Fire.Mode == 1 then
-				AddCastAndCost("firestone")
-			end
-			GameTooltip:AddLine(Necrosis.TooltipData[Type].Text[Local.Stone.Fire.Mode])
+
 		end
 	-- ..... for the Timers button ||..... pour le bouton des Timers
 	elseif (Type == "SpellTimer") then
@@ -2168,7 +2150,7 @@ function Necrosis:BuildButtonTooltip(button)
 	elseif (Type == "BuffMenu")		then AddMenuTip(Type)
 	elseif (Type == "CurseMenu")	then AddMenuTip(Type)
 	elseif (Type == "PetMenu")		then AddMenuTip(Type)
-	elseif (Type == "DestroyShards")then AddMenuTip(Type);AddDestroyCount()
+	elseif (Type == "DestroyShards")then AddMenuTip(Type)
 	end
 	-- And hop, posting! || Et hop, affichage !
 	GameTooltip:Show()
@@ -2197,6 +2179,22 @@ function Necrosis:UpdateHealth()
 	if NecrosisConfig.CountType == 5 then
 		NecrosisShardCount:SetText(health)
 	end
+end
+-- Update the sphere according to frags || Update de la sphere en fonction des fragments
+function Necrosis:UpdatePower()
+	local Power = UnitPower("player", Enum.PowerType.SoulShards)
+	
+	if NecrosisConfig.Circle == 1 then
+		print ("event Pwer"..Power)
+		local fm = _G[Necrosis.Warlock_Buttons.main.f]
+		
+			if not (Local.LastSphereSkin == NecrosisConfig.NecrosisColor.."\\Shard32") then
+				Local.LastSphereSkin = NecrosisConfig.NecrosisColor.."\\Shard"..Power.."-2"
+				fm:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..Local.LastSphereSkin)
+			end
+		
+	end
+
 end
 
 local function SetTexPerMana(f, spell, mana) -- frame and warlock spell
@@ -2616,7 +2614,8 @@ function Necrosis:BagExplore(arg)
 	if NecrosisConfig.Circle == 1 then
 		if (Local.Soulshard.Count <= 32) then
 			if not (Local.LastSphereSkin == NecrosisConfig.NecrosisColor.."\\Shard"..Local.Soulshard.Count) then
-				Local.LastSphereSkin = NecrosisConfig.NecrosisColor.."\\Shard"..Local.Soulshard.Count
+				--Local.LastSphereSkin = NecrosisConfig.NecrosisColor.."\\Shard"..Local.Soulshard.Count
+				Local.LastSphereSkin = NecrosisConfig.NecrosisColor.."\\Shard"..Local.Soulshard.Count.."-2"
 				f:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..Local.LastSphereSkin)
 			end
 		elseif not (Local.LastSphereSkin == NecrosisConfig.NecrosisColor.."\\Shard32") then
@@ -2640,9 +2639,9 @@ function Necrosis:BagExplore(arg)
 		elseif NecrosisConfig.CountType == 1 then
 			if Local.Soulshard.Count < 10 then
 				--NecrosisShardCount:SetText("0"..Local.Soulshard.Count)
-				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
+				NecrosisShardCount:SetText(Local.Soulshard.Count.."/3")
 			else
-				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
+				NecrosisShardCount:SetText(Local.Soulshard.Count.."/3")
 			end
 		end
 	else

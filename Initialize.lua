@@ -12,7 +12,7 @@ NECROSIS_ID = "Necrosis"
 Necrosis.Data = {
 	Version = GetAddOnMetadata("Necrosis", "Version"),
 	AppName = "Necrosis",
-	LastConfig = "8.0.4",
+	LastConfig = "8.0.5",
 	Enabled = false,
 }
 
@@ -67,6 +67,7 @@ local Events = {
 	"UNIT_SPELLCAST_SENT",
 	"UNIT_MANA",
 	"UNIT_HEALTH",
+	"UNIT_POWER_UPDATE",
 	"LEARNED_SPELL_IN_TAB",
 	"PLAYER_TARGET_CHANGED",
 	"TRADE_REQUEST",

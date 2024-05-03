@@ -411,7 +411,7 @@ Necrosis.Config.Sphere = {
 	["Type de compteur numerique"] = L["SPHERE_STONE"],
 }
 Necrosis.Config.Sphere.Colour = {
-	L["PINK"],
+	L["CATA"],
 	L["BLUE"],
 	L["ORANGE"],
 	L["TURQUOISE"],
