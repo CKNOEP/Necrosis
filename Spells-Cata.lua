@@ -247,118 +247,48 @@ Notes:
 
 	-- ::: Buffs
 	[687]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Demon Armor || Armure démoniaque
---	[696]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --  
---	[706]	= {UsageRank = 3, SpellRank = 1, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Demon Armor || Armure démoniaque
---	[1086]	= {UsageRank = 4, SpellRank = 2, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
---	[11733] = {UsageRank = 5, SpellRank = 3, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
---	[11734] = {UsageRank = 6, SpellRank = 4, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
---	[11735] = {UsageRank = 7, SpellRank = 5, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
---	[27260] = {UsageRank = 8, SpellRank = 6, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
---	[47793] = {UsageRank = 9, SpellRank = 7, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
---	[47889] = {UsageRank = 10, SpellRank = 8, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --
- 	
-	--TBC Fel Armor
-	--[28176]	= {UsageRank = 8, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
-	--[28189]	= {UsageRank = 9, SpellRank = 2, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --  
-	
 	[28176]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
-	[28189]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
-	[47892]	= {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 	
-	[47893]	= {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 		
-	--
 	[5697]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "breath", Length = 600, Buff = true, }, -- Unending Breath || Respiration interminable
 	[126]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "eye", Length = 45, Buff = true, SelfOnly = true, }, -- Eye of Kilrogg
 	[698]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "summoning", Length = 600, Buff = true, }, -- Ritual of Summoning || Rituel d'invocation
 	[29893]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "Ritual_of_Souls", Length = 600, Buff = true, }, -- Ritual of Souls || Rituel des âmes
-	[58887]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "Ritual_of_Souls", Length = 600, Buff = true, }, -- Ritual of Souls || 25 Stones --https://www.wowhead.com/wotlk/spell=58887/ritual-of-souls
-	
 	[19028] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "link", Buff = true, SelfOnly = true, }, -- Soul Link || Lien spirituel
-
 	[6229]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- Shadow Ward || Gardien de l'ombre
-
-		
 	[1098] 	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "enslave", Length = 300, Buff = false, }, -- Enslave Demon
-
-	
 	[710]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "banish", Length = 20, Buff = false, }, -- Banish 
- 
+	[74434]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "soulburn", Length = 15, Cooldown = 45, Buff = false, },-- Brûlure d'âme
+	[29858]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "soulshatter", Length = 20, Cooldown = 120, Buff = false, },-- Brise-âme
 
 
 	-- ::: Curses
 	[702]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "weakness", Length = 120, }, -- Curse of Weakness || Malédiction Faiblesse 
-
-	
 	[980]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "agony", Length = 24, }, -- Curse of Agony || Malédiction Agonie 
-
-	
 	[1714]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "tongues", Length = 30, }, -- Curse of Tongues || Malédiction Langage 
- 
-
-	[18223] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "exhaustion", Length = 12, }, -- Curse of Exhaustion || Malédiction de fatigue || improved via talent points
-
+ 	[18223] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "exhaustion", Length = 12, }, -- Curse of Exhaustion || Malédiction de fatigue || improved via talent points
 	[1490]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "elements", Length = 300, }, -- Curse of the Elements || Malédiction Eléments 
- 	
-	
-	--[17862]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "shadow", Length = 300, }, -- Curse of Shadow 
-	--[17937] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "shadow", Length = 300, }, --  
-
-	[603]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "doom", Length = 60, Cooldown = 60,}, -- Curse of Doom || Malédiction funeste 
-	[30910]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "doom", Length = 60, Cooldown = 60,},
-	[47867]	= {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "doom", Length = 60, Cooldown = 60,}, -- r3:  https://www.wowhead.com/wotlk/spell=47867/curse-of-doom
-	
+ 	[603]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "doom", Length = 60, Cooldown = 60,}, -- Curse of Doom || Malédiction funeste 
 			
 	[172]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "corruption", Length = 18, }, -- Corruption 
-
-	
 	[30108]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "unstable_affliction", Length = 18, }, -- Affliction instable 
-	
-	
 	[59161]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "haunt", Length = 12, }, -- Haunt
 	
 	-- ::: Spells
 	[348]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "immolate", Length = 15, }, -- Immolate 
-
-	
 	[5782]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "fear", Length = 10, }, -- Fear 
-
-	
 	[18708] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "domination", Length = 15, Cooldown = 900,}, -- Fel Domination || Domination corrompue 
-	
 	[6353]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "soul_fire", Cooldown = 60,}, -- Soul Fire || Feu de l'âme 
-
-	
-	
 	[6789]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "death_coil", Length = 3, Cooldown = 120,}, -- Death Coil || Voile mortel 
 	[79268]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "soul_harvest", Length = 3, Cooldown = 30,}, -- soul_harvest || Récolte d'âmes
-
-
 	[17962] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "conflagration"}, -- Conflagration 
-
-	
 	[18265] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "siphon_life", Length = 30, }, -- Siphon Life || Syphon de vie 
-	
-	
 	[5484]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "howl", Length = 10, Cooldown = 40}, -- Howl of Terror || Hurlement de terreur 
-
-	
 	[1454]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "life_tap"}, -- Life Tap || Connexion
 
 	
-
 	--With the release of Wrath of the Lich King, all grimoires where taken out of the game. You pet will now automatically learn their new ability and the new level of it.
 
 	[7812]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R1- Sacrifice Voidwalker
-
-
-
-
-	
 	[686]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "bolt"}, -- Shadow Bolt
-	
-	
-	
- 	
-
 	[1120] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "drain_soul", Length = 15,}, -- Ignore Improved Drain Soul (Affliction talent points)
 
 	
@@ -376,19 +306,9 @@ Notes:
 	--]] 
 	[20707] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "minor_ss_used",   Result = true, Cooldown = 900, Group = 1, }, -- ss_rez
 
-
-
-
 	-- Health stone
 	-- When a health stone is used it could be one of several spells because each gives different health amounts
 	[6262] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "minor_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- minor 120
-	--[6263] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "lesser_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- lesser 250
-	--[5720] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "hs_used", Result = true, Cooldown = 120, Group = 2, }, -- 500
-	--[5723] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "greater_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- greater 800
-	--[11732] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "major_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- major 1200
-	--[27235] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "master_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- major 1200
-	--[47872] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "demonic_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- major 1200
-	--[47875] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "fel_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- major 1200
 
 	}
 
@@ -422,14 +342,7 @@ Necrosis.Warlock_Buttons = {
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Shard",
 					}, --
 
-	fire_stone 	= {f = "NecrosisFirestoneButton", tip = "Firestone", anchor = "ANCHOR_LEFT",
-					norm = "Interface\\AddOns\\Necrosis\\UI\\FirestoneButton-01",
-					high = "Interface\\AddOns\\Necrosis\\UI\\FirestoneButton-03",
-					}, --
-	spell_stone = {f = "NecrosisSpellstoneButton", tip = "Spellstone", anchor = "ANCHOR_LEFT",
-					norm = "Interface\\AddOns\\Necrosis\\UI\\SpellstoneButton-01",
-					high = "Interface\\AddOns\\Necrosis\\UI\\SpellstoneButton-03",
-					}, --
+
 	health_stone= {f = "NecrosisHealthstoneButton", tip = "Healthstone", anchor = "ANCHOR_LEFT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\HealthstoneButton-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\HealthstoneButton-03",
@@ -657,30 +570,26 @@ It seemed better to collect the various lists in one place for ease of change.
 --]=]
 Necrosis.Warlock_Lists = {
 	["on_sphere"] = {
-		[1] = {f_ptr = "fire_stone", high_of = "firestone",},
-		[2] = {f_ptr = "spell_stone", high_of = "spellstone",},
-		[3] = {f_ptr = "health_stone", high_of = "healthstone",},
-		[4] = {f_ptr = "soul_stone", high_of = "soulstone",},
-		[5] = {f_ptr = "buffs",	menu = "buffs", },
-		[6] = {f_ptr = "mounts", high_of = "mounts",},
-		[7] = {f_ptr = "pets", menu = "pets", },
-		[8] = {f_ptr = "curses", menu = "curses", },
-		[9] = {f_ptr = "destroy_shards", high_of = "destroy_shards", },
+		[1] = {f_ptr = "health_stone", high_of = "healthstone",},
+		[2] = {f_ptr = "soul_stone", high_of = "soulstone",},
+		[3] = {f_ptr = "buffs",	menu = "buffs", },
+		[4] = {f_ptr = "mounts", high_of = "mounts",},
+		[5] = {f_ptr = "pets", menu = "pets", },
+		[6] = {f_ptr = "curses", menu = "curses", },
+		--[7] = {f_ptr = "destroy_shards", high_of = "destroy_shards", },
 		
 --		[9] = {f_ptr = "hearth_stone", item = "Hearthstone",},
 	},
 -- 31=Demon Armor | 47=Fel Armor | 32=Unending Breath | 33=Detect Invis | 34=Eye of Kilrogg | 37=Ritual of Summoning | 38=Soul Link | 43=Shadow Ward | 35=Enslave Demon | 59=Demonic Empowerment | 9=Banish
 --	local buffID = {31, 47, 32, 33, 34, 37, 38, 43, 59, 9}
 	["buffs"] = {
-		[1] = {f_ptr = "armor", high_of = "armor", },
-		[2] = {f_ptr = "breath", high_of = "breath", },
-		[3] = {f_ptr = "invis", high_of = "invisible", },
-		[4] = {f_ptr = "eye", high_of = "eye", },
-		[5] = {f_ptr = "summoning", high_of = "summoning", },
-		[6] = {f_ptr = "link", high_of = "link", },
-		[7] = {f_ptr = "ward", high_of = "ward", },
-		[8] = {f_ptr = "banish", high_of = "banish", },
-		[9] = {f_ptr = "fel_armor", high_of = "fel_armor", },			
+		[1] = {f_ptr = "breath", high_of = "breath", },
+		[2] = {f_ptr = "eye", high_of = "eye", },
+		[3] = {f_ptr = "summoning", high_of = "summoning", },
+		[4] = {f_ptr = "link", high_of = "link", },
+		[5] = {f_ptr = "ward", high_of = "ward", },
+		[6] = {f_ptr = "banish", high_of = "banish", },
+				
 	},
 -- 			15, 3, 4, 5, 6, 8, 30, 35, 44, 59
 	["pets"] = { -- 2 types: summon pet and (buff or temporary) pet
@@ -984,8 +893,15 @@ function Necrosis.GetSpellCastName(usage)
 		--print("SS",Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].CastName)
 		end
 		
-		return	
-		Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].CastName
+		if Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].CastName
+		then
+			return	
+			Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].CastName
+		else
+			return	
+			Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].Name		
+		end
+
 	else
 		return ""
 	end

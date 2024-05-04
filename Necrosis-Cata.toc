@@ -69,12 +69,12 @@ Timers\OtherTimers.lua
 
 
 
-XML\Attributes.lua
+XML\Attributes-cata.lua
 
 XML\Panel.lua
 XML\Options-Messages.lua
 XML\Options-Sphere-Cata.lua
-XML\Options-Buttons.lua
+XML\Options-Buttons-Cata.lua
 XML\Options-Menus.lua
 XML\Options-Timers.lua
 XML\Options-Misc-Cata.lua

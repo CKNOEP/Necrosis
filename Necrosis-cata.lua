@@ -93,9 +93,8 @@ Local.DefaultConfig = {
 	NecrosisAlphaBar = 85,
 	NecrosisLockServ = true,
 	NecrosisAngle = 180,
-	StonePosition = {1, 2, 3, 4, 5, 6, 7, 8, 9}, -- options to show or hide
-		-- 1 = Firestone
-		-- 2 = Spellstone
+	StonePosition = {1, 2, 3, 4, 5, 6, 7 }, -- options to show or hide
+
 		-- 3 = Healthstone
 		-- 4 = Soulstone
 		-- 5 = Buff menu
@@ -128,7 +127,7 @@ Local.DefaultConfig = {
 		-- 10 = Banish || Bannir
 	NecrosisToolTip = true,
 
-	MainSpell = "armor",
+	MainSpell = "soul_harvest",
 
 	PetMenuPos = {x=1, y=0, direction=1},
 	PetMenuDecalage = {x=1, y=26},
@@ -184,16 +183,15 @@ Local.DefaultConfig = {
 	CurseShow = {true,true,true,true,true,true,true,true,},
 
 	Timers = { -- Order is for options screen; overrides Warlock_Spells Timer
-		[1] = {usage = "armor", show = true},
-		[2] = {usage = "breath", show = true},
-		[3] = {usage = "invisible", show = true},
-		[4] = {usage = "eye", show = false},
-		[5] = {usage = "summoning", show = true},
-		[6] = {usage = "ward", show = true},
-		[7] = {usage = "banish", show = true},
-		[8] = {usage = "fel_armor", show = true},
-		[9] = {usage = "sacrifice", show = true},
-	   [10] = {usage = "enslave", show = true},	
+
+		[1] = {usage = "breath", show = true},
+		[2] = {usage = "eye", show = false},
+		[3] = {usage = "summoning", show = true},
+		[4] = {usage = "ward", show = true},
+		[5] = {usage = "banish", show = true},
+	    [6] = {usage = "enslave", show = true},
+	    [7] = {usage = "soulburn", show = true},
+		[8] = {usage = "soulshatter", show = true},			
 	},
 }
 
@@ -585,43 +583,9 @@ function UpdateIcons()
 		end
 	end
 
-	-- Display of the mode icon || Affichage de l'icone liée au mode
-	local f = _G[Necrosis.Warlock_Buttons.spell_stone.f]
-	if f then
-		f:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\SpellstoneButton-0"..Local.Stone.Spell.Mode)
-	end
 
-	-- Fire stone || Pierre de feu
-	-----------------------------------------------
 
-	-- Stone in the inventory ... || Pierre dans l'inventaire...
-	if Local.Stone.Fire.OnHand then
-		-- ... and on the weapon = mode 3, otherwise = mode 2 || ... et sur l'arme = mode 3, sinon = mode 2
-		if Local.SomethingOnHand == NecrosisConfig.ItemSwitchCombat[2] then
-			Local.Stone.Fire.Mode = 3
-		else
-			Local.Stone.Fire.Mode = 2
-		end
-	-- Stone nonexistent ... || Pierre inexistante...
-	else
-		-- ... but on the weapon = mode 4, otherwise = mode 1 || ... mais sur l'arme = mode 4, sinon = mode 1
-		if Local.SomethingOnHand == NecrosisConfig.ItemSwitchCombat[2] then
-			Local.Stone.Fire.Mode = 4
-		else
-			Local.Stone.Fire.Mode = 1
-		end
-		-- If out of combat and we can create a stone, we associate the left button to create a stone. || Si hors combat et qu'on peut créer une pierre, on associe le bouton gauche à créer une pierre.
-		if Necrosis.IsSpellKnown("firestone") 
-		and NecrosisConfig.ItemSwitchCombat[2] then
-			Necrosis:FirestoneUpdateAttribute("NoStone")
-		end
-	end
 
-	-- Display of the mode icon || Affichage de l'icone liée au mode
-	local f = _G[Necrosis.Warlock_Buttons.fire_stone.f]
-	if f then
-		f:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\FirestoneButton-0"..Local.Stone.Fire.Mode)
-	end
 end
 
 -- Event : UNIT_SPELLCAST_SUCCEEDED
@@ -2812,8 +2776,7 @@ local function ClearAll(f)
 end
 -- Function (XML) to restore the default attachment points of the buttons || Fonction (XML) pour rétablir les points d'attache par défaut des boutons
 function Necrosis:ClearAllPoints()
-	ClearAll(_G[Necrosis.Warlock_Buttons.fire_stone.f])
-	ClearAll(_G[Necrosis.Warlock_Buttons.spell_stone.f])
+
 	ClearAll(_G[Necrosis.Warlock_Buttons.health_stone.f])
 	ClearAll(_G[Necrosis.Warlock_Buttons.soul_stone.f])
 	ClearAll(_G[Necrosis.Warlock_Buttons.mounts.f])
@@ -2829,8 +2792,7 @@ end
 function Necrosis:NoDrag()
 	local val = ""
 
-	SetDrag(_G[Necrosis.Warlock_Buttons.fire_stone.f], val)
-	SetDrag(_G[Necrosis.Warlock_Buttons.spell_stone.f], val)
+
 	SetDrag(_G[Necrosis.Warlock_Buttons.health_stone.f], val)
 	SetDrag(_G[Necrosis.Warlock_Buttons.soul_stone.f], val)
 	SetDrag(_G[Necrosis.Warlock_Buttons.mounts.f], val)
@@ -2843,8 +2805,7 @@ end
 function Necrosis:Drag()
 	local val = "LeftButton"
 
-	SetDrag(_G[Necrosis.Warlock_Buttons.fire_stone.f], val)
-	SetDrag(_G[Necrosis.Warlock_Buttons.spell_stone.f], val)
+
 	SetDrag(_G[Necrosis.Warlock_Buttons.health_stone.f], val)
 	SetDrag(_G[Necrosis.Warlock_Buttons.soul_stone.f], val)
 	SetDrag(_G[Necrosis.Warlock_Buttons.mounts.f], val)
@@ -3035,7 +2996,7 @@ function Necrosis:CreateMenu()
 		end
 	end
 
-	if NecrosisConfig.StonePosition[8] > 0 then -- curses
+	if NecrosisConfig.StonePosition[7] > 0 then -- curses
 		-- Setup the buttons available on the curses menu 
 		local prior_button = Necrosis.Warlock_Buttons.curses.f -- menu button on sphere
 		-- Create on demand 
