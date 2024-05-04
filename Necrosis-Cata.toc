@@ -47,7 +47,11 @@ Locales\Localization.RU.lua
 Locales\Localization.TW.lua
 Locales\Localization.MX.lua
 
+<<<<<<< HEAD
 Dialog.lua
+=======
+Dialog-Cata.lua
+>>>>>>> 8bb23aa (Initial)
 Functions.lua
 AFKS.lua
 Speech\Speech-fr.lua
@@ -69,12 +73,20 @@ Timers\OtherTimers.lua
 
 
 
+<<<<<<< HEAD
 XML\Attributes.lua
+=======
+XML\Attributes-cata.lua
+>>>>>>> 8bb23aa (Initial)
 
 XML\Panel.lua
 XML\Options-Messages.lua
 XML\Options-Sphere-Cata.lua
+<<<<<<< HEAD
 XML\Options-Buttons.lua
+=======
+XML\Options-Buttons-Cata.lua
+>>>>>>> 8bb23aa (Initial)
 XML\Options-Menus.lua
 XML\Options-Timers.lua
 XML\Options-Misc-Cata.lua

@@ -41,31 +41,7 @@ local function SetSSAttribs(nostone, reason)
 --		else	
 --		end
 --[[
-<<<<<<< HEAD
-_G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSSAttribs"
-.." a'"..(tostring(nostone) or "nyl").."'"
-.." s'"..(tostring(NecrosisConfig.ItemSwitchCombat[4])).."'"
-.." f'"..(tostring(Necrosis.Warlock_Buttons.soul_stone.f)).."'"
-.." r'"..(tostring(reason))..'"'
-)
-_G["DEFAULT_CHAT_FRAME"]:AddMessage(">>>"
-.." 1'"..(tostring(f:GetAttribute("type1"))).."'"
-.." i'"..(tostring(f:GetAttribute("item1"))).."'"
-.." m'"..(tostring(f:GetAttribute("macro1"))).."'"
-)
-_G["DEFAULT_CHAT_FRAME"]:AddMessage(">>>"
-.." 2'"..(tostring(f:GetAttribute("type2"))).."'"
-.." s'"..(tostring(f:GetAttribute("spell2"))).."'"
-.." m'"..(tostring(f:GetAttribute("macro2"))).."'"
-)
-_G["DEFAULT_CHAT_FRAME"]:AddMessage(">>>"
-.." 3'"..(tostring(f:GetAttribute("type3"))).."'"
-.." i'"..(tostring(f:GetAttribute("item3"))).."'"
-.." m'"..(tostring(f:GetAttribute("macro3"))).."'"
-)
-=======
 
->>>>>>> 8bb23aa (Initial)
 --]]
 
 		-- if the 'Ritual of Summoning' spell is known, then associate it to the soulstone icon as shift-click.
@@ -293,28 +269,16 @@ function Necrosis:SetPetSpellAttribute(button)
 		end
 
 		if f.pet then
-	--print (Necrosis.NameDemon[NecrosisConfig.NecrosisDemonSacrifice],f.high_of )
+	
 			f:SetAttribute("type1", "spell")
 			f:SetAttribute("spell", Necrosis.GetSpellCastName(f.high_of)) 
-						
-			--Dominiation sur clic droit
-			if Necrosis.IsSpellKnown("domination") then 
+	
+			--Soulburn sur clic droit
+			if Necrosis.IsSpellKnown("soulburn") then
+                
 				f:SetAttribute("type2", "macro")
-				local str = 
-					"/cast "..Necrosis.GetSpellCastName("domination")
-					.."\n/stopcasting\n/cast "..Necrosis.GetSpellCastName(f.high_of)
-
-
-				f:SetAttribute("macrotext2",str)
-			if Necrosis.NameDemon[NecrosisConfig.NecrosisDemonSacrifice] == f.high_of 
-			then
-			f:SetAttribute("shift-type2", "spell")
-			str2 = Necrosis.GetSpellCastName("sacrifice")			
-			f:SetAttribute("shift-spell2", str2)
-			--print (str2)
-
-			end
-			
+				local str = "/cast "..Necrosis.GetSpellCastName("soulburn").."\n/stopcasting\n/cast "..Necrosis.GetSpellCastName(f.high_of)
+                		
 			end
 				
 		
@@ -338,12 +302,7 @@ function Necrosis:PetSpellAttribute()
 		local v = Necrosis.Warlock_Lists.pets[index]
 		local f = Necrosis.Warlock_Buttons[v.f_ptr].f
 		
-		if v.high_of == 'sacrifice'	then
 						
-			Necrosis:SetPetSpellAttribute(f)
-		end
-		
-		
 		
 		if Necrosis.IsSpellKnown(v.high_of) -- in spell book
 --		and NecrosisConfig.DemonSpellPosition[index] > 0 -- and requested
