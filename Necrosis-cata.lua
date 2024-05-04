@@ -184,7 +184,6 @@ Local.DefaultConfig = {
 	CurseShow = {true,true,true,true,true,true,true,true,},
 
 	Timers = { -- Order is for options screen; overrides Warlock_Spells Timer
-<<<<<<< HEAD
 		[1] = {usage = "armor", show = true},
 		[2] = {usage = "breath", show = true},
 		[3] = {usage = "invisible", show = true},
@@ -195,16 +194,6 @@ Local.DefaultConfig = {
 		[8] = {usage = "fel_armor", show = true},
 		[9] = {usage = "sacrifice", show = true},
 	   [10] = {usage = "enslave", show = true},	
-=======
-
-		[1] = {usage = "breath", show = true},
-		[2] = {usage = "eye", show = false},
-		[3] = {usage = "summoning", show = true},
-		[4] = {usage = "ward", show = true},
-		[5] = {usage = "banish", show = true},
-		[6] = {usage = "soulshatter", show = true},
-	    [7] = {usage = "enslave", show = true},	
->>>>>>> 8bb23aa (Initial)
 	},
 }
 
@@ -596,7 +585,6 @@ function UpdateIcons()
 		end
 	end
 
-<<<<<<< HEAD
 	-- Display of the mode icon || Affichage de l'icone liée au mode
 	local f = _G[Necrosis.Warlock_Buttons.spell_stone.f]
 	if f then
@@ -634,13 +622,6 @@ function UpdateIcons()
 	if f then
 		f:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\FirestoneButton-0"..Local.Stone.Fire.Mode)
 	end
-=======
-
-
-	
-
-
->>>>>>> 8bb23aa (Initial)
 end
 
 -- Event : UNIT_SPELLCAST_SUCCEEDED
@@ -1840,28 +1821,16 @@ local function AddMenuTip(Type)
 end
 local function AddInfernalReagent()
 	if Local.Reagent.Infernal == 0 then
-<<<<<<< HEAD
 		GameTooltip:AddLine("|c00FF4444"..Necrosis.TooltipData.Main.InfernalStone..Local.Reagent.Infernal.."|r")
 	else
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.InfernalStone..Local.Reagent.Infernal)
-=======
-		--GameTooltip:AddLine("|c00FF4444"..Necrosis.TooltipData.Main.InfernalStone..Local.Reagent.Infernal.."|r")
-	else
-		--GameTooltip:AddLine(Necrosis.TooltipData.Main.InfernalStone..Local.Reagent.Infernal)
->>>>>>> 8bb23aa (Initial)
 	end
 end
 local function AddDemoniacReagent()
 	if Local.Reagent.Demoniac == 0 then
-<<<<<<< HEAD
 		GameTooltip:AddLine("|c00FF4444"..Necrosis.TooltipData.Main.DemoniacStone..Local.Reagent.Demoniac.."|r")
 	else
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.DemoniacStone..Local.Reagent.Demoniac)
-=======
-		--GameTooltip:AddLine("|c00FF4444"..Necrosis.TooltipData.Main.DemoniacStone..Local.Reagent.Demoniac.."|r")
-	else
-		--GameTooltip:AddLine(Necrosis.TooltipData.Main.DemoniacStone..Local.Reagent.Demoniac)
->>>>>>> 8bb23aa (Initial)
 	end
 end
 
@@ -1939,13 +1908,8 @@ function Necrosis:BuildButtonTooltip(button)
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count)
 		GameTooltip:AddLine("|CFF808080"..L["SPHERE_SPELL_RIGHTCLICK"])
 		GameTooltip:AddLine("|CFF808080"..L["SPHERE_SPELL_RIGHTCLICK_L2"])	
-<<<<<<< HEAD
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.InfernalStone..Local.Reagent.Infernal)
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.DemoniacStone..Local.Reagent.Demoniac)
-=======
-		--GameTooltip:AddLine(Necrosis.TooltipData.Main.InfernalStone..Local.Reagent.Infernal)
-		--GameTooltip:AddLine(Necrosis.TooltipData.Main.DemoniacStone..Local.Reagent.Demoniac)
->>>>>>> 8bb23aa (Initial)
 		local SoulOnHand = false
 		local HealthOnHand = false
 		local SpellOnHand = false
@@ -1957,13 +1921,8 @@ function Necrosis:BuildButtonTooltip(button)
 		GameTooltip:AddLine("\n")
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Soulstone..Necrosis.TooltipData[Type].Stone[SoulOnHand])
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Healthstone..Necrosis.TooltipData[Type].Stone[HealthOnHand])
-<<<<<<< HEAD
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Spellstone..Necrosis.TooltipData[Type].Stone[SpellOnHand] )
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Firestone..Necrosis.TooltipData[Type].Stone[FireOnHand])
-=======
-		--GameTooltip:AddLine(Necrosis.TooltipData.Main.Spellstone..Necrosis.TooltipData[Type].Stone[SpellOnHand] )
-		--GameTooltip:AddLine(Necrosis.TooltipData.Main.Firestone..Necrosis.TooltipData[Type].Stone[FireOnHand])
->>>>>>> 8bb23aa (Initial)
 		-- View the name of the daemon, or if it is slave, or "None" if no daemon is present ||Affichage du nom du démon, ou s'il est asservi, ou "Aucun" si aucun démon n'est présent
 		if (Local.Summon.DemonType) then
 			GameTooltip:AddLine(Necrosis.TooltipData.Main.CurrentDemon..Local.Summon.DemonType)
@@ -2181,7 +2140,6 @@ function Necrosis:BuildButtonTooltip(button)
 			GameTooltip:AddLine("Cooldown : "..affiche)
 		end
 	elseif (Type == "Imp")			then AddCastAndCost("imp"); AddDominion(start, duration)
-<<<<<<< HEAD
 	elseif (Type == "Voidwalker")	then AddCastAndCost("voidwalker"); AddShard(); AddDominion(start, duration)
 	elseif (Type == "Succubus")		then AddCastAndCost("succubus"); AddShard(); AddDominion(start, duration)
 	elseif (Type == "Inccubus")		then AddCastAndCost("inccubus"); AddShard(); AddDominion(start, duration)
@@ -2189,15 +2147,6 @@ function Necrosis:BuildButtonTooltip(button)
 	elseif (Type == "felguard")		then AddCastAndCost("felguard"); AddShard(); AddDominion(start, duration)	
 	elseif (Type == "Infernal")		then AddCastAndCost("inferno"); AddInfernalReagent()
 	elseif (Type == "Doomguard")	then AddCastAndCost("ritual_doom"); AddDemoniacReagent()
-=======
-	elseif (Type == "Voidwalker")	then AddCastAndCost("voidwalker");  AddDominion(start, duration)
-	elseif (Type == "Succubus")		then AddCastAndCost("succubus");  AddDominion(start, duration)
-	elseif (Type == "Inccubus")		then AddCastAndCost("inccubus");  AddDominion(start, duration)
-	elseif (Type == "Felhunter")	then AddCastAndCost("felhunter");  AddDominion(start, duration)
-	elseif (Type == "felguard")		then AddCastAndCost("felguard");  AddDominion(start, duration)	
-	elseif (Type == "Infernal")		then AddCastAndCost("inferno"); 
-	elseif (Type == "Doomguard")	then AddCastAndCost("ritual_doom"); 
->>>>>>> 8bb23aa (Initial)
 	elseif (Type == "BuffMenu")		then AddMenuTip(Type)
 	elseif (Type == "CurseMenu")	then AddMenuTip(Type)
 	elseif (Type == "PetMenu")		then AddMenuTip(Type)
@@ -2880,12 +2829,8 @@ end
 function Necrosis:NoDrag()
 	local val = ""
 
-<<<<<<< HEAD
 	SetDrag(_G[Necrosis.Warlock_Buttons.fire_stone.f], val)
 	SetDrag(_G[Necrosis.Warlock_Buttons.spell_stone.f], val)
-=======
-
->>>>>>> 8bb23aa (Initial)
 	SetDrag(_G[Necrosis.Warlock_Buttons.health_stone.f], val)
 	SetDrag(_G[Necrosis.Warlock_Buttons.soul_stone.f], val)
 	SetDrag(_G[Necrosis.Warlock_Buttons.mounts.f], val)
@@ -2898,12 +2843,8 @@ end
 function Necrosis:Drag()
 	local val = "LeftButton"
 
-<<<<<<< HEAD
 	SetDrag(_G[Necrosis.Warlock_Buttons.fire_stone.f], val)
 	SetDrag(_G[Necrosis.Warlock_Buttons.spell_stone.f], val)
-=======
-
->>>>>>> 8bb23aa (Initial)
 	SetDrag(_G[Necrosis.Warlock_Buttons.health_stone.f], val)
 	SetDrag(_G[Necrosis.Warlock_Buttons.soul_stone.f], val)
 	SetDrag(_G[Necrosis.Warlock_Buttons.mounts.f], val)

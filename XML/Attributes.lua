@@ -41,7 +41,6 @@ local function SetSSAttribs(nostone, reason)
 --		else	
 --		end
 --[[
-<<<<<<< HEAD
 _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSSAttribs"
 .." a'"..(tostring(nostone) or "nyl").."'"
 .." s'"..(tostring(NecrosisConfig.ItemSwitchCombat[4])).."'"
@@ -63,9 +62,6 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage(">>>"
 .." i'"..(tostring(f:GetAttribute("item3"))).."'"
 .." m'"..(tostring(f:GetAttribute("macro3"))).."'"
 )
-=======
-
->>>>>>> 8bb23aa (Initial)
 --]]
 
 		-- if the 'Ritual of Summoning' spell is known, then associate it to the soulstone icon as shift-click.
