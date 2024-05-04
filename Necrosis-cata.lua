@@ -2185,7 +2185,7 @@ function Necrosis:UpdatePower()
 	local Power = UnitPower("player", Enum.PowerType.SoulShards)
 	
 	if NecrosisConfig.Circle == 1 then
-		print ("event Pwer"..Power)
+		-- debug print ("event Pwer"..Power)
 		local fm = _G[Necrosis.Warlock_Buttons.main.f]
 		
 			if not (Local.LastSphereSkin == NecrosisConfig.NecrosisColor.."\\Shard32") then
