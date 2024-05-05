@@ -1,6 +1,10 @@
-local AddonName, OVERLAY = ...
+local AddonName, SAO = ...
 
-function OVERLAY.AddGlowingOption(self, talentID, spellID, glowID, talentSubText, spellSubText)
+function SAO.AddGlowingOption(self, talentID, spellID, glowID, talentSubText, spellSubText, variants)
+    if (talentID and not GetSpellInfo(talentID)) or (not self:IsFakeSpell(glowID) and not GetSpellInfo(glowID)) then
+        return;
+    end
+
     local className = self.CurrentClass.Intrinsics[1];
     local classFile = self.CurrentClass.Intrinsics[2];
 
@@ -48,19 +52,19 @@ function OVERLAY.AddGlowingOption(self, talentID, spellID, glowID, talentSubText
     local testFunc = function(start)
         local fakeOffset = 42000000;
         if (start) then
-            self:AddGlow(fakeOffset+spellID, { GetSpellInfo(glowID) });
+            self:AddGlow(fakeOffset+spellID, { (GetSpellInfo(glowID)) });
         else
             self:RemoveGlow(fakeOffset+spellID);
         end
     end
 
-    self:AddOption("glow", spellID, glowID, nil, applyTextFunc, testFunc, { frame = SpellActivationOverlayOptionsPanelGlowingButtons, xOffset = 16, yOffset = 2 });
+    self:AddOption("glow", spellID, glowID, type(variants) == 'table' and variants.values, applyTextFunc, testFunc, { frame = SpellActivationOverlayOptionsPanelGlowingButtons, xOffset = 16, yOffset = 2 });
 end
 
-function OVERLAY.AddGlowingLink(self, srcOption, dstOption)
+function SAO.AddGlowingLink(self, srcOption, dstOption)
     return self:AddOptionLink("glow", srcOption, dstOption);
 end
 
-function OVERLAY.GetGlowingOptions(self, spellID)
+function SAO.GetGlowingOptions(self, spellID)
     return self:GetOptions("glow", spellID);
 end

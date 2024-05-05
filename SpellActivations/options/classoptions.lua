@@ -1,9 +1,9 @@
-local AddonName, OVERLAY = ...
+local AddonName, SAO = ...
 
 local function createOptionFor(classFile, optionType, auraID, id)
     local default = true;
-    if (OVERLAY.defaults.classes[classFile] and OVERLAY.defaults.classes[classFile][optionType] and OVERLAY.defaults.classes[classFile][optionType][auraID]) then
-        default = OVERLAY.defaults.classes[classFile][optionType][auraID][id];
+    if (SAO.defaults.classes[classFile] and SAO.defaults.classes[classFile][optionType] and SAO.defaults.classes[classFile][optionType][auraID]) then
+        default = SAO.defaults.classes[classFile][optionType][auraID][id];
     end
     if (not SpellActivationOverlayDB.classes) then
         SpellActivationOverlayDB.classes = { [classFile] = { [optionType] = { [auraID] = { [id] = default } } } };
@@ -77,7 +77,7 @@ local function createSelectBox(self, cb, classFile, optionType, auraID, id, subV
     -- Compute an appropriate width; it may not be perfect but should help having something neither too wide nor too narrow
     local widestText = 4;
     for _, obj in ipairs(subValues) do
-        if (#obj.text > widestText) then
+        if (obj.width > widestText) then
             widestText = obj.width;
         end
     end
@@ -92,7 +92,7 @@ local function createSelectBox(self, cb, classFile, optionType, auraID, id, subV
     return sb;
 end
 
-function OVERLAY.AddOption(self, optionType, auraID, id, subValues, applyTextFunc, testFunc, firstAnchor)
+function SAO.AddOption(self, optionType, auraID, id, subValues, applyTextFunc, testFunc, firstAnchor)
     local classFile = self.CurrentClass.Intrinsics[2];
     local cb = CreateFrame("CheckButton", nil, SpellActivationOverlayOptionsPanel, "InterfaceOptionsCheckButtonTemplate");
 
@@ -165,7 +165,7 @@ function OVERLAY.AddOption(self, optionType, auraID, id, subValues, applyTextFun
     return cb;
 end
 
-function OVERLAY.AddOptionLink(self, optionType, srcOption, dstOption)
+function SAO.AddOptionLink(self, optionType, srcOption, dstOption)
     if (not self.OptionLinks) then
         self.OptionLinks = { [optionType] = { [dstOption] = srcOption } };
     elseif (not self.OptionLinks[optionType]) then
@@ -175,7 +175,7 @@ function OVERLAY.AddOptionLink(self, optionType, srcOption, dstOption)
     end
 end
 
-function OVERLAY.GetOptions(self, optionType, auraID)
+function SAO.GetOptions(self, optionType, auraID)
     if (self.CurrentClass) then
         local classFile = self.CurrentClass.Intrinsics[2];
         local classOptions = SpellActivationOverlayDB and SpellActivationOverlayDB.classes and SpellActivationOverlayDB.classes[classFile];

@@ -1,12 +1,12 @@
-local AddonName, OVERLAY = ...
+local AddonName, SAO = ...
 
 -- List of currently active overlays
 -- key = spellID, value = aura config
 -- This list will change each time an overlay is triggered or un-triggered
-OVERLAY.ActiveOverlays = {}
+SAO.ActiveOverlays = {}
 
 -- Check if overlay is active
-function OVERLAY.GetActiveOverlay(self, spellID)
+function SAO.GetActiveOverlay(self, spellID)
     return self.ActiveOverlays[spellID] ~= nil;
 end
 
@@ -42,7 +42,7 @@ local function discardedByOverlayOption(self, auraID, stacks)
 end
 
 -- Add or refresh an overlay
-function OVERLAY.ActivateOverlay(self, stacks, spellID, texture, positions, scale, r, g, b, autoPulse, forcePulsePlay)
+function SAO.ActivateOverlay(self, stacks, spellID, texture, positions, scale, r, g, b, autoPulse, forcePulsePlay, endTime, combatOnly)
     if (texture) then
         -- Tell the overlay is active, even though the overlay may be discarded below
         -- This "active state" tells the aura is in place, which is used by e.g. the glowing button system
@@ -63,13 +63,24 @@ function OVERLAY.ActivateOverlay(self, stacks, spellID, texture, positions, scal
             texture = texture(self);
         end
 
+        -- Find when the effect ends, if it will end
+        endTime = self:GetSpellEndTime(spellID, endTime);
+
         -- Actually show the overlay(s)
-        self.ShowAllOverlays(self.Frame, spellID, texture, positions, scale, r, g, b, autoPulse, forcePulsePlay);
+        self.ShowAllOverlays(self.Frame, spellID, texture, positions, scale, r, g, b, autoPulse, forcePulsePlay, endTime, combatOnly);
     end
 end
 
 -- Remove an overlay
-function OVERLAY.DeactivateOverlay(self, spellID)
+function SAO.DeactivateOverlay(self, spellID)
     self.ActiveOverlays[spellID] = nil;
     self.HideOverlays(self.Frame, spellID);
+end
+
+-- Refresh the duration of an overlay
+function SAO.RefreshOverlayTimer(self, spellID, endTime)
+    endTime = self:GetSpellEndTime(spellID, endTime);
+    if (endTime) then
+        self.SetOverlayTimer(self.Frame, spellID, endTime);
+    end
 end

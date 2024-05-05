@@ -7,6 +7,7 @@
 local _G = getfenv(0)
 
 Necrosis = {}
+SAO ={}
 NECROSIS_ID = "Necrosis"
 
 Necrosis.Data = {

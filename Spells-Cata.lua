@@ -230,7 +230,7 @@ Notes:
 	[30146]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "felguard", PetId = 17252,  }, -- Felguard
 
 	[1122]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "inferno", Length = 5, Cooldown = 600,  }, -- 5852 Inferno || https://classicdb.ch/?spell=1122 -- Infernals https://classic.wowhead.com/spell=23426 Needs research
-	[18540] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "rit_of_doom", Length = 0, Cooldown = 600, }, -- 11859 Ritual of Doom || Rituel funeste || https://classicdb.ch/?spell=18540
+	[18540] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "rit_of_doom", Length = 600, Cooldown = 600, }, -- 11859 Ritual of Doom || Rituel funeste || https://classicdb.ch/?spell=18540
 	
 	-- ::: Stones
 	-- Create Soulstone minor || Création pierre d'âme
@@ -843,8 +843,16 @@ end
 function Necrosis.GetSpellMana(usage)
 	if Necrosis.Warlock_Spell_Use[usage] -- 
 	then
+		
+		
+		if Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].Mana == 0 then
 		return 
-			Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].Mana
+		nil
+		else
+		return
+		Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].Mana
+		end	
+	
 	else
 		return ""
 	end

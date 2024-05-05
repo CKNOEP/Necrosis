@@ -1754,7 +1754,10 @@ local function ManaLocalize(mana)
 	if GetLocale() == "ruRU" then
 		GameTooltip:AddLine(L["MANA"]..": "..mana)
 	else
-		GameTooltip:AddLine(mana.." "..L["MANA"])
+	
+	if mana then GameTooltip:AddLine(mana.." "..L["MANA"]) end
+	
+	
 	end
 end
 local function AddCastAndCost(usage)
@@ -1763,9 +1766,9 @@ local function AddCastAndCost(usage)
 end
 local function AddShard()
 	if Local.Soulshard.Count == 0 then
-		GameTooltip:AddLine("|c00FF4444"..Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count.."|r")
+		--GameTooltip:AddLine("|c00FF4444"..Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count.."|r")
 	else
-		GameTooltip:AddLine(Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count)
+		--GameTooltip:AddLine(Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count)
 	end
 end
 
@@ -1773,7 +1776,7 @@ end
 local function AddDominion(start, duration)
 	if not (start > 0 and duration > 0) then
 		GameTooltip:AddLine(Necrosis.TooltipData.DominationCooldown)
-		GameTooltip:AddLine(Necrosis.TooltipData.DominationCooldown2)
+		--GameTooltip:AddLine(Necrosis.TooltipData.DominationCooldown2)
 	end
 end
 local function AddMenuTip(Type)
@@ -1785,16 +1788,16 @@ local function AddMenuTip(Type)
 end
 local function AddInfernalReagent()
 	if Local.Reagent.Infernal == 0 then
-		GameTooltip:AddLine("|c00FF4444"..Necrosis.TooltipData.Main.InfernalStone..Local.Reagent.Infernal.."|r")
+		--GameTooltip:AddLine("|c00FF4444"..Necrosis.TooltipData.Main.InfernalStone..Local.Reagent.Infernal.."|r")
 	else
-		GameTooltip:AddLine(Necrosis.TooltipData.Main.InfernalStone..Local.Reagent.Infernal)
+		--GameTooltip:AddLine(Necrosis.TooltipData.Main.InfernalStone..Local.Reagent.Infernal)
 	end
 end
 local function AddDemoniacReagent()
 	if Local.Reagent.Demoniac == 0 then
-		GameTooltip:AddLine("|c00FF4444"..Necrosis.TooltipData.Main.DemoniacStone..Local.Reagent.Demoniac.."|r")
+		--GameTooltip:AddLine("|c00FF4444"..Necrosis.TooltipData.Main.DemoniacStone..Local.Reagent.Demoniac.."|r")
 	else
-		GameTooltip:AddLine(Necrosis.TooltipData.Main.DemoniacStone..Local.Reagent.Demoniac)
+		--GameTooltip:AddLine(Necrosis.TooltipData.Main.DemoniacStone..Local.Reagent.Demoniac)
 	end
 end
 
@@ -1872,8 +1875,8 @@ function Necrosis:BuildButtonTooltip(button)
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count)
 		GameTooltip:AddLine("|CFF808080"..L["SPHERE_SPELL_RIGHTCLICK"])
 		GameTooltip:AddLine("|CFF808080"..L["SPHERE_SPELL_RIGHTCLICK_L2"])	
-		GameTooltip:AddLine(Necrosis.TooltipData.Main.InfernalStone..Local.Reagent.Infernal)
-		GameTooltip:AddLine(Necrosis.TooltipData.Main.DemoniacStone..Local.Reagent.Demoniac)
+		--GameTooltip:AddLine(Necrosis.TooltipData.Main.InfernalStone..Local.Reagent.Infernal)
+		--GameTooltip:AddLine(Necrosis.TooltipData.Main.DemoniacStone..Local.Reagent.Demoniac)
 		local SoulOnHand = false
 		local HealthOnHand = false
 		local SpellOnHand = false
@@ -1885,8 +1888,8 @@ function Necrosis:BuildButtonTooltip(button)
 		GameTooltip:AddLine("\n")
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Soulstone..Necrosis.TooltipData[Type].Stone[SoulOnHand])
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Healthstone..Necrosis.TooltipData[Type].Stone[HealthOnHand])
-		GameTooltip:AddLine(Necrosis.TooltipData.Main.Spellstone..Necrosis.TooltipData[Type].Stone[SpellOnHand] )
-		GameTooltip:AddLine(Necrosis.TooltipData.Main.Firestone..Necrosis.TooltipData[Type].Stone[FireOnHand])
+		--GameTooltip:AddLine(Necrosis.TooltipData.Main.Spellstone..Necrosis.TooltipData[Type].Stone[SpellOnHand] )
+		--GameTooltip:AddLine(Necrosis.TooltipData.Main.Firestone..Necrosis.TooltipData[Type].Stone[FireOnHand])
 		-- View the name of the daemon, or if it is slave, or "None" if no daemon is present ||Affichage du nom du démon, ou s'il est asservi, ou "Aucun" si aucun démon n'est présent
 		if (Local.Summon.DemonType) then
 			GameTooltip:AddLine(Necrosis.TooltipData.Main.CurrentDemon..Local.Summon.DemonType)
@@ -2108,9 +2111,9 @@ function Necrosis:BuildButtonTooltip(button)
 	elseif (Type == "Succubus")		then AddCastAndCost("succubus"); AddShard(); AddDominion(start, duration)
 	elseif (Type == "Inccubus")		then AddCastAndCost("inccubus"); AddShard(); AddDominion(start, duration)
 	elseif (Type == "Felhunter")	then AddCastAndCost("felhunter"); AddShard(); AddDominion(start, duration)
-	elseif (Type == "felguard")		then AddCastAndCost("felguard"); AddShard(); AddDominion(start, duration)	
+	elseif (Type == "Felguard")		then AddCastAndCost("felguard"); AddShard(); AddDominion(start, duration)	
 	elseif (Type == "Infernal")		then AddCastAndCost("inferno"); AddInfernalReagent()
-	elseif (Type == "Doomguard")	then AddCastAndCost("ritual_doom"); AddDemoniacReagent()
+	elseif (Type == "Doomguard")	then AddCastAndCost("rit_of_doom"); AddDemoniacReagent()
 	elseif (Type == "BuffMenu")		then AddMenuTip(Type)
 	elseif (Type == "CurseMenu")	then AddMenuTip(Type)
 	elseif (Type == "PetMenu")		then AddMenuTip(Type)

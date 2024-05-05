@@ -278,7 +278,7 @@ function Necrosis:SetPetSpellAttribute(button)
                 
 				f:SetAttribute("type2", "macro")
 				local str = "/cast "..Necrosis.GetSpellCastName("soulburn").."\n/stopcasting\n/cast "..Necrosis.GetSpellCastName(f.high_of)
-                		
+				f:SetAttribute("macrotext",str)	
 			end
 				
 		
@@ -287,7 +287,7 @@ function Necrosis:SetPetSpellAttribute(button)
 			f:SetAttribute("spell", Necrosis.GetSpellCastName(f.high_of))
 --			
 		end
-	
+	--print ("/cast "..Necrosis.GetSpellCastName("soulburn").."\n/stopcasting\n/cast "..Necrosis.GetSpellCastName(f.high_of)) 
 	else
 	end
 end
@@ -676,20 +676,7 @@ function Necrosis:NoCombatAttribute(SoulstoneMode, FirestoneMode, SpellstoneMode
 		)
 	end
 
-	-- Si on connait l'emplacement de la pierre de sort,
-	-- Alors cliquer sur le bouton de pierre de sort l'équipe.
-	local f = _G[Necrosis.Warlock_Buttons.spell_stone.f]
-	if NecrosisConfig.ItemSwitchCombat[1] and f then
-		f:SetAttribute("type1", "macro")
-		f:SetAttribute("macrotext*","/cast "..NecrosisConfig.ItemSwitchCombat[1].."\n/use 16")
-	end
-	-- Si on connait l'emplacement de la pierre de feu,
-	-- Alors cliquer sur le bouton de pierre de feu l'équipe.
-	local f = _G[Necrosis.Warlock_Buttons.fire_stone.f]
-	if NecrosisConfig.ItemSwitchCombat[2] and f then
-		f:SetAttribute("type1", "macro")
-		f:SetAttribute("macrotext*", "/cast "..NecrosisConfig.ItemSwitchCombat[2].."\n/use 16")
-	end
+
 end
 
 function Necrosis:InCombatAttribute(Pet, Buff, Curse)
@@ -736,23 +723,7 @@ function Necrosis:InCombatAttribute(Pet, Buff, Curse)
 		)
 	end
 
-	-- Si on connait le nom de la pierre de sort,
-	-- Alors le clic gauche utiliser la pierre
-	local f = Necrosis.Warlock_Buttons.spell_stone.f
-	f = _G[f]
-	if NecrosisConfig.ItemSwitchCombat[1] and f then
-		f:SetAttribute("type1", "macro")
-		f:SetAttribute("macrotext*", "/cast "..NecrosisConfig.ItemSwitchCombat[1].."\n/use 16")
-	end
-
-	-- Si on connait le nom de la pierre de feu,
-	-- Alors le clic sur le bouton équipera la pierre
-	local f = Necrosis.Warlock_Buttons.fire_stone.f
-	f = _G[f]
-	if NecrosisConfig.ItemSwitchCombat[2] and f then
-		f:SetAttribute("type1", "macro")
-		f:SetAttribute("macrotext*", "/cast "..NecrosisConfig.ItemSwitchCombat[2].."\n/use 16")
-	end
+	
 
 	-- Si on connait le nom de la pierre de soin,
 	-- Alors le clic gauche sur le bouton utilisera la pierre
