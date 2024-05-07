@@ -85,6 +85,59 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		NecrosisSphereSizeLow:SetText("50 %")
 		NecrosisSphereSizeHigh:SetText("200 %")
 
+		 ---------------------------------------
+		-- Option  Verrouillage de Necrosis ---
+		---------------------------------------
+		
+		frame = CreateFrame("CheckButton", "NecrosisLock", NecrosisSphereConfig, "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 35, 150)
+
+		frame:SetScript("OnClick", function(self)
+			local ft = _G[Necrosis.Warlock_Buttons.trance.f]
+			local fb = _G[Necrosis.Warlock_Buttons.backlash.f]
+			local fa = _G[Necrosis.Warlock_Buttons.anti_fear.f]
+			local fe = _G[Necrosis.Warlock_Buttons.elemental.f]
+			local fd = _G[Necrosis.Warlock_Buttons.demon.f]	
+			
+			if (self:GetChecked()) then
+				Necrosis:NoDrag()
+				NecrosisButton:RegisterForDrag("")
+				NecrosisSpellTimerButton:RegisterForDrag("")
+				ft:RegisterForDrag("")
+				fb:RegisterForDrag("")
+				fa:RegisterForDrag("")
+				fe:RegisterForDrag("")
+				fd:RegisterForDrag("")			
+				NecrosisConfig.NoDragAll = true
+			else
+				if not NecrosisConfig.NecrosisLockServ then
+					Necrosis:Drag()
+				end
+				NecrosisButton:RegisterForDrag("LeftButton")
+				NecrosisSpellTimerButton:RegisterForDrag("LeftButton")
+				ft:RegisterForDrag("LeftButton")
+				fb:RegisterForDrag("LeftButton")
+				fa:RegisterForDrag("LeftButton")
+				fe:RegisterForDrag("LeftButton")
+				fd:RegisterForDrag("LeftButton")				
+				NecrosisConfig.NoDragAll = false
+			end
+		end)
+
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		frame:SetFontString(FontString)
+
+
+
 		-------------------------------------------------
 		-- Skin de la sphère
 		frame = CreateFrame("Frame", "NecrosisSkinSelection", NecrosisSphereConfig, "UIDropDownMenuTemplate")
@@ -140,7 +193,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 25, 200)
+		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 35, 200)
 		frame:SetChecked(NecrosisConfig.deleteshards)
 		frame:SetScript("OnClick", function(self)
 			NecrosisConfig.deleteshards = self:GetChecked()
@@ -209,6 +262,8 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 
 	NecrosisSphereSize:SetValue(NecrosisConfig.NecrosisButtonScale)
 	NecrosisShowCount:SetChecked(NecrosisConfig.ShowCount)
+	NecrosisLock:SetText(self.Config.Misc["Verrouiller Necrosis sur l'interface"])
+
 
 	local couleur = {"Rose", "Bleu", "Orange", "Turquoise", "Violet1", "Violet2", "666", "X"}
 	for i in ipairs(couleur) do
