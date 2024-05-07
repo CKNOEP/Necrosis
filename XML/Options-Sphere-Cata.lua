@@ -27,7 +27,7 @@ function Necrosis:SetSphereConfig()
 		frame:ClearAllPoints()
 		frame:SetPoint("BOTTOMLEFT")
 
-		---------------------------------------
+		 ---------------------------------------
 		-- Option  Verrouillage de Necrosis ---
 		---------------------------------------
 		
