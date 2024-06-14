@@ -5,16 +5,16 @@ local function createOptionFor(classFile, optionType, auraID, id)
     if (SAO.defaults.classes[classFile] and SAO.defaults.classes[classFile][optionType] and SAO.defaults.classes[classFile][optionType][auraID]) then
         default = SAO.defaults.classes[classFile][optionType][auraID][id];
     end
-    if (not SpellActivationOverlayDB.classes) then
-        SpellActivationOverlayDB.classes = { [classFile] = { [optionType] = { [auraID] = { [id] = default } } } };
-    elseif (not SpellActivationOverlayDB.classes[classFile]) then
-        SpellActivationOverlayDB.classes[classFile] = { [optionType] = { [auraID] = { [id] = default } } };
-    elseif (not SpellActivationOverlayDB.classes[classFile][optionType]) then
-        SpellActivationOverlayDB.classes[classFile][optionType] = { [auraID] = { [id] = default } };
-    elseif (not SpellActivationOverlayDB.classes[classFile][optionType][auraID]) then
-        SpellActivationOverlayDB.classes[classFile][optionType][auraID] = { [id] = default };
-    elseif (type (SpellActivationOverlayDB.classes[classFile][optionType][auraID][id]) == "nil") then
-        SpellActivationOverlayDB.classes[classFile][optionType][auraID][id] = default;
+    if (not NecrosisConfig.classes) then
+        NecrosisConfig.classes = { [classFile] = { [optionType] = { [auraID] = { [id] = default } } } };
+    elseif (not NecrosisConfig.classes[classFile]) then
+        NecrosisConfig.classes[classFile] = { [optionType] = { [auraID] = { [id] = default } } };
+    elseif (not NecrosisConfig.classes[classFile][optionType]) then
+        NecrosisConfig.classes[classFile][optionType] = { [auraID] = { [id] = default } };
+    elseif (not NecrosisConfig.classes[classFile][optionType][auraID]) then
+        NecrosisConfig.classes[classFile][optionType][auraID] = { [id] = default };
+    elseif (type (NecrosisConfig.classes[classFile][optionType][auraID][id]) == "nil") then
+        NecrosisConfig.classes[classFile][optionType][auraID][id] = default;
     end
 end
 
@@ -63,13 +63,13 @@ local function createSelectBox(self, cb, classFile, optionType, auraID, id, subV
         local info = UIDropDownMenu_CreateInfo();
         info.func = function(self, arg1)
             setSelectBoxValue(sb, subValues, arg1);
-            SpellActivationOverlayDB.classes[classFile][optionType][auraID][id] = arg1;
+            NecrosisConfig.classes[classFile][optionType][auraID][id] = arg1;
             CloseDropDownMenus();
         end
         for _, obj in ipairs(subValues) do
             info.text = obj.text;
             info.arg1 = obj.value;
-            info.checked = SpellActivationOverlayDB.classes[classFile][optionType][auraID][id] == obj.value;
+            info.checked = NecrosisConfig.classes[classFile][optionType][auraID][id] == obj.value;
             UIDropDownMenu_AddButton(info);
         end
     end);
@@ -84,7 +84,7 @@ local function createSelectBox(self, cb, classFile, optionType, auraID, id, subV
     UIDropDownMenu_SetWidth(sb, widestText*8+12);
 
     -- Initialize the value and text from config
-    setSelectBoxValue(sb, subValues, SpellActivationOverlayDB.classes[classFile][optionType][auraID][id]);
+    setSelectBoxValue(sb, subValues, NecrosisConfig.classes[classFile][optionType][auraID][id]);
 
     sb:SetPoint("TOP", cb, "TOP", 0, 4);
     sb:SetPoint("LEFT", cb.Text, "RIGHT", -12, 0);
@@ -105,7 +105,7 @@ function SAO.AddOption(self, optionType, auraID, id, subValues, applyTextFunc, t
 
     cb.ApplyParentEnabling = function()
         -- Enable/disable the checkbox if the parent (i.e. main option) is enabled or not
-        if (SpellActivationOverlayDB[optionType].enabled) then
+        if (NecrosisConfig[optionType].enabled) then
             cb:SetEnabled(true);
             cb:ApplyText();
             setSelectBoxEnabled(sb, true);
@@ -118,7 +118,7 @@ function SAO.AddOption(self, optionType, auraID, id, subValues, applyTextFunc, t
 
     cb.ApplyValue = function()
         createOptionFor(classFile, optionType, auraID, id); -- Safety call, in case the value is not defined in defaults
-        local value = SpellActivationOverlayDB.classes[classFile][optionType][auraID][id];
+        local value = NecrosisConfig.classes[classFile][optionType][auraID][id];
         cb:SetChecked(not not value);
         setSelectBoxEnabled(sb, not not value);
         setSelectBoxValue(sb, subValues, value);
@@ -131,10 +131,10 @@ function SAO.AddOption(self, optionType, auraID, id, subValues, applyTextFunc, t
     cb:SetScript("PostClick", function()
         local checked = cb:GetChecked();
         if (sb) then
-            SpellActivationOverlayDB.classes[classFile][optionType][auraID][id] = checked and sb.currentValue;
+            NecrosisConfig.classes[classFile][optionType][auraID][id] = checked and sb.currentValue;
             setSelectBoxEnabled(sb, checked);
         else
-            SpellActivationOverlayDB.classes[classFile][optionType][auraID][id] = checked;
+            NecrosisConfig.classes[classFile][optionType][auraID][id] = checked;
         end
     end);
 
@@ -178,7 +178,7 @@ end
 function SAO.GetOptions(self, optionType, auraID)
     if (self.CurrentClass) then
         local classFile = self.CurrentClass.Intrinsics[2];
-        local classOptions = SpellActivationOverlayDB and SpellActivationOverlayDB.classes and SpellActivationOverlayDB.classes[classFile];
+        local classOptions = NecrosisConfig and NecrosisConfig.classes and NecrosisConfig.classes[classFile];
         if (classOptions and classOptions[optionType]) then
             if (self.OptionLinks and self.OptionLinks[optionType] and self.OptionLinks[optionType][auraID]) then
                 return classOptions[optionType][self.OptionLinks[optionType][auraID]];

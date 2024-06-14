@@ -12,26 +12,26 @@ end
 -- Apply spell alert opacity
 function SAO.ApplySpellAlertOpacity(self)
     -- Change the main frame's visibility and opacity
-    SpellActivationOverlayContainerFrame:SetShown(SpellActivationOverlayDB.alert.enabled);
-    SpellActivationOverlayContainerFrame:SetAlpha(SpellActivationOverlayDB.alert.opacity);
+    SpellActivationOverlayContainerFrame:SetShown(NecrosisConfig.alert.enabled);
+    SpellActivationOverlayContainerFrame:SetAlpha(NecrosisConfig.alert.opacity);
 end
 
 -- Apply spell alert geometry i.e., scale and offset
 function SAO.ApplySpellAlertGeometry(self)
-    SpellActivationOverlayFrame.scale = SpellActivationOverlayDB.alert.scale;
-    SpellActivationOverlayFrame.offset = SpellActivationOverlayDB.alert.offset;
+    SpellActivationOverlayFrame.scale = NecrosisConfig.alert.scale;
+    SpellActivationOverlayFrame.offset = NecrosisConfig.alert.offset;
     SpellActivationOverlay_OnChangeGeometry(SpellActivationOverlayFrame);
 end
 
 -- Apply spell alert progressive timer effect
 function SAO.ApplySpellAlertTimer(self)
-    SpellActivationOverlayFrame.useTimer = SpellActivationOverlayDB.alert.timer ~= 0;
+    SpellActivationOverlayFrame.useTimer = NecrosisConfig.alert.timer ~= 0;
     SpellActivationOverlay_OnChangeTimerVisibility(SpellActivationOverlayFrame);
 end
 
 -- Apply spell alert sound effects toggle
 function SAO.ApplySpellAlertSound(self)
-    SpellActivationOverlayFrame.useSound = SpellActivationOverlayDB.alert.sound ~= 0;
+    SpellActivationOverlayFrame.useSound = NecrosisConfig.alert.sound ~= 0;
     SpellActivationOverlay_OnChangeSoundToggle(SpellActivationOverlayFrame);
 end
 

@@ -148,9 +148,9 @@
         <Scripts>
           <PostClick>
             if (self:GetChecked()) then
-              SpellActivationOverlayDB.debug = true;
+              NecrosisConfig.debug = true;
             else
-              SpellActivationOverlayDB.debug = nil;
+              NecrosisConfig.debug = nil;
             end
           </PostClick>
         </Scripts>
@@ -166,9 +166,9 @@
         <Scripts>
           <PostClick>
             if (self:GetChecked()) then
-              SpellActivationOverlayDB.responsiveMode = true;
+              NecrosisConfig.responsiveMode = true;
             else
-              SpellActivationOverlayDB.responsiveMode = nil;
+              NecrosisConfig.responsiveMode = nil;
             end
           </PostClick>
         </Scripts>

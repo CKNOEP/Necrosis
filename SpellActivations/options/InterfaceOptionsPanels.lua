@@ -6,11 +6,11 @@ function SpellActivationOverlayOptionsPanel_Init(self)
     _G[opacitySlider:GetName().."Low"]:SetText(OFF);
     opacitySlider:SetMinMaxValues(0, 1);
     opacitySlider:SetValueStep(0.05);
-    opacitySlider.initialValue = SpellActivationOverlayDB.alert.opacity;
+    opacitySlider.initialValue = NecrosisConfig.alert.opacity;
     opacitySlider:SetValue(opacitySlider.initialValue);
     opacitySlider.ApplyValueToEngine = function(self, value)
-        SpellActivationOverlayDB.alert.opacity = value;
-        SpellActivationOverlayDB.alert.enabled = value > 0;
+        NecrosisConfig.alert.opacity = value;
+        NecrosisConfig.alert.enabled = value > 0;
         SAO:ApplySpellAlertOpacity();
     end
 
@@ -20,10 +20,10 @@ function SpellActivationOverlayOptionsPanel_Init(self)
     _G[scaleSlider:GetName().."High"]:SetText(LARGE);
     scaleSlider:SetMinMaxValues(0.25, 2.5);
     scaleSlider:SetValueStep(0.05);
-    scaleSlider.initialValue = SpellActivationOverlayDB.alert.scale;
+    scaleSlider.initialValue = NecrosisConfig.alert.scale;
     scaleSlider:SetValue(scaleSlider.initialValue);
     scaleSlider.ApplyValueToEngine = function(self, value)
-        SpellActivationOverlayDB.alert.scale = value;
+        NecrosisConfig.alert.scale = value;
         SAO:ApplySpellAlertGeometry();
     end
 
@@ -33,10 +33,10 @@ function SpellActivationOverlayOptionsPanel_Init(self)
     _G[offsetSlider:GetName().."High"]:SetText(FAR);
     offsetSlider:SetMinMaxValues(-200, 400);
     offsetSlider:SetValueStep(20);
-    offsetSlider.initialValue = SpellActivationOverlayDB.alert.offset;
+    offsetSlider.initialValue = NecrosisConfig.alert.offset;
     offsetSlider:SetValue(offsetSlider.initialValue);
     offsetSlider.ApplyValueToEngine = function(self, value)
-        SpellActivationOverlayDB.alert.offset = value;
+        NecrosisConfig.alert.offset = value;
         SAO:ApplySpellAlertGeometry();
     end
 
@@ -46,10 +46,10 @@ function SpellActivationOverlayOptionsPanel_Init(self)
     _G[timerSlider:GetName().."High"]:SetText(ENABLE);
     timerSlider:SetMinMaxValues(0, 1);
     timerSlider:SetValueStep(1);
-    timerSlider.initialValue = SpellActivationOverlayDB.alert.timer;
+    timerSlider.initialValue = NecrosisConfig.alert.timer;
     timerSlider:SetValue(timerSlider.initialValue);
     timerSlider.ApplyValueToEngine = function(self, value)
-        SpellActivationOverlayDB.alert.timer = value;
+        NecrosisConfig.alert.timer = value;
         SAO:ApplySpellAlertTimer();
     end
 
@@ -59,10 +59,10 @@ function SpellActivationOverlayOptionsPanel_Init(self)
     _G[soundSlider:GetName().."High"]:SetText(ENABLE);
     soundSlider:SetMinMaxValues(0, 1);
     soundSlider:SetValueStep(1);
-    soundSlider.initialValue = SpellActivationOverlayDB.alert.sound;
+    soundSlider.initialValue = NecrosisConfig.alert.sound;
     soundSlider:SetValue(soundSlider.initialValue);
     soundSlider.ApplyValueToEngine = function(self, value)
-        SpellActivationOverlayDB.alert.sound = value;
+        NecrosisConfig.alert.sound = value;
         SAO:ApplySpellAlertSound();
     end
 
@@ -94,21 +94,21 @@ function SpellActivationOverlayOptionsPanel_Init(self)
             SpellActivationOverlayFrame_SetForceAlpha1(false);
         end
     end
-    testButton:SetEnabled(SpellActivationOverlayDB.alert.enabled);
+    testButton:SetEnabled(NecrosisConfig.alert.enabled);
     -- Manually mark textures used for testing
     SAO:MarkTexture(testTextureLeftRight);
     SAO:MarkTexture(testTextureTop);
 
     local debugButton = SpellActivationOverlayOptionsPanelSpellAlertDebugButton;
     debugButton.Text:SetText("Write Debug to Chatbox");
-    debugButton:SetChecked(SpellActivationOverlayDB.debug == true);
+    debugButton:SetChecked(NecrosisConfig.debug == true);
 
     local glowingButtonCheckbox = SpellActivationOverlayOptionsPanelGlowingButtons;
     glowingButtonCheckbox.Text:SetText("Glowing Buttons");
-    glowingButtonCheckbox.initialValue = SpellActivationOverlayDB.glow.enabled;
+    glowingButtonCheckbox.initialValue = NecrosisConfig.glow.enabled;
     glowingButtonCheckbox:SetChecked(glowingButtonCheckbox.initialValue);
     glowingButtonCheckbox.ApplyValueToEngine = function(self, checked)
-        SpellActivationOverlayDB.glow.enabled = checked;
+        NecrosisConfig.glow.enabled = checked;
         for _, checkbox in ipairs(SpellActivationOverlayOptionsPanel.additionalCheckboxes.glow or {}) do
             -- Additional glowing checkboxes are enabled/disabled depending on the main glowing checkbox
             checkbox:ApplyParentEnabling();
@@ -116,7 +116,7 @@ function SpellActivationOverlayOptionsPanel_Init(self)
         SAO:ApplyGlowingButtonsToggle();
     end
 
-    local classOptions = SpellActivationOverlayDB.classes and SAO.CurrentClass and SpellActivationOverlayDB.classes[SAO.CurrentClass.Intrinsics[2]];
+    local classOptions = NecrosisConfig.classes and SAO.CurrentClass and NecrosisConfig.classes[SAO.CurrentClass.Intrinsics[2]];
     if (classOptions) then
         SpellActivationOverlayOptionsPanel.classOptions = { initialValue = CopyTable(classOptions) };
     else
@@ -146,7 +146,7 @@ local function okayFunc(self)
     local glowingButtonCheckbox = SpellActivationOverlayOptionsPanelGlowingButtons;
     glowingButtonCheckbox.initialValue = glowingButtonCheckbox:GetChecked();
 
-    local classOptions = SpellActivationOverlayDB.classes and SAO.CurrentClass and SpellActivationOverlayDB.classes[SAO.CurrentClass.Intrinsics[2]];
+    local classOptions = NecrosisConfig.classes and SAO.CurrentClass and NecrosisConfig.classes[SAO.CurrentClass.Intrinsics[2]];
     if (classOptions) then
         SpellActivationOverlayOptionsPanel.classOptions.initialValue = CopyTable(classOptions);
     end
@@ -190,9 +190,9 @@ end
 local function applyAllFunc(self, opacityValue, scaleValue, offsetValue, timerValue, soundValue, isGlowEnabled, classOptions)
     local opacitySlider = SpellActivationOverlayOptionsPanelSpellAlertOpacitySlider;
     opacitySlider:SetValue(opacityValue);
-    if (SpellActivationOverlayDB.alert.opacity ~= opacityValue) then
-        SpellActivationOverlayDB.alert.opacity = opacityValue;
-        SpellActivationOverlayDB.alert.enabled = opacityValue > 0;
+    if (NecrosisConfig.alert.opacity ~= opacityValue) then
+        NecrosisConfig.alert.opacity = opacityValue;
+        NecrosisConfig.alert.enabled = opacityValue > 0;
         SAO:ApplySpellAlertOpacity();
     end
 
@@ -200,15 +200,15 @@ local function applyAllFunc(self, opacityValue, scaleValue, offsetValue, timerVa
 
     local scaleSlider = SpellActivationOverlayOptionsPanelSpellAlertScaleSlider;
     scaleSlider:SetValue(scaleValue);
-    if (SpellActivationOverlayDB.alert.scale ~= scaleValue) then
-        SpellActivationOverlayDB.alert.scale = scaleValue;
+    if (NecrosisConfig.alert.scale ~= scaleValue) then
+        NecrosisConfig.alert.scale = scaleValue;
         geometryChanged = true;
     end
 
     local offsetSlider = SpellActivationOverlayOptionsPanelSpellAlertOffsetSlider;
     offsetSlider:SetValue(offsetValue);
-    if (SpellActivationOverlayDB.alert.offset ~= offsetValue) then
-        SpellActivationOverlayDB.alert.offset = offsetValue;
+    if (NecrosisConfig.alert.offset ~= offsetValue) then
+        NecrosisConfig.alert.offset = offsetValue;
         geometryChanged = true;
     end
 
@@ -218,31 +218,31 @@ local function applyAllFunc(self, opacityValue, scaleValue, offsetValue, timerVa
 
     local timerSlider = SpellActivationOverlayOptionsPanelSpellAlertTimerSlider;
     timerSlider:SetValue(timerValue);
-    if (SpellActivationOverlayDB.alert.timer ~= timerValue) then
-        SpellActivationOverlayDB.alert.timer = timerValue;
+    if (NecrosisConfig.alert.timer ~= timerValue) then
+        NecrosisConfig.alert.timer = timerValue;
         SAO:ApplySpellAlertTimer();
     end
 
     local soundSlider = SpellActivationOverlayOptionsPanelSpellAlertSoundSlider;
     soundSlider:SetValue(soundValue);
-    if (SpellActivationOverlayDB.alert.sound ~= soundValue) then
-        SpellActivationOverlayDB.alert.sound = soundValue;
+    if (NecrosisConfig.alert.sound ~= soundValue) then
+        NecrosisConfig.alert.sound = soundValue;
         SAO:ApplySpellAlertSound();
     end
 
     local testButton = SpellActivationOverlayOptionsPanelSpellAlertTestButton;
     -- Enable/disable the test button with alert.enabled, which was set/reset a few lines above, alongside opacity
-    testButton:SetEnabled(SpellActivationOverlayDB.alert.enabled);
+    testButton:SetEnabled(NecrosisConfig.alert.enabled);
 
     local glowingButtonCheckbox = SpellActivationOverlayOptionsPanelGlowingButtons;
     glowingButtonCheckbox:SetChecked(isGlowEnabled);
-    if (SpellActivationOverlayDB.glow.enabled ~= isGlowEnabled) then
-        SpellActivationOverlayDB.glow.enabled = isGlowEnabled;
+    if (NecrosisConfig.glow.enabled ~= isGlowEnabled) then
+        NecrosisConfig.glow.enabled = isGlowEnabled;
         glowingButtonCheckbox:ApplyValueToEngine(isGlowEnabled);
     end
 
-    if (SpellActivationOverlayDB.classes and SAO.CurrentClass and SpellActivationOverlayDB.classes[SAO.CurrentClass.Intrinsics[2]] and classOptions) then
-        SpellActivationOverlayDB.classes[SAO.CurrentClass.Intrinsics[2]] = CopyTable(classOptions);
+    if (NecrosisConfig.classes and SAO.CurrentClass and NecrosisConfig.classes[SAO.CurrentClass.Intrinsics[2]] and classOptions) then
+        NecrosisConfig.classes[SAO.CurrentClass.Intrinsics[2]] = CopyTable(classOptions);
         for _, checkbox in ipairs(SpellActivationOverlayOptionsPanel.additionalCheckboxes.alert or {}) do
             checkbox:ApplyValue();
         end

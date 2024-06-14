@@ -72,7 +72,7 @@ end
 -- Load database and use default values if needed
 function SAO.LoadDB(self)
     local currentversion = 131;
-    local db = SpellActivationOverlayDB or {};
+    local db = NecrosisConfig or {};
 
     if not db.alert then
         db.alert = {};
@@ -148,7 +148,7 @@ function SAO.LoadDB(self)
     end
 
     db.version = currentversion;
-    SpellActivationOverlayDB = db;
+    NecrosisConfig = db;
 
     -- At the very end, register the class
     -- This must be done after db init because registering may need options from db
@@ -158,7 +158,7 @@ function SAO.LoadDB(self)
 end
 
 -- Utility frame dedicated to react to variable loading
-local loader = CreateFrame("Frame", "SpellActivationOverlayDBLoader");
+local loader = CreateFrame("Frame", "NecrosisConfigLoader");
 loader:RegisterEvent("VARIABLES_LOADED");
 loader:SetScript("OnEvent", function (event)
     SAO:LoadDB();
