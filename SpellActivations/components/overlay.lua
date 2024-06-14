@@ -14,11 +14,11 @@ end
 -- By default, do *not* discard
 -- This happens e.g., if there is no option for this auraID
 local function discardedByOverlayOption(self, auraID, stacks)
-    if (not SpellActivationOverlayDB) then
+    if (not NecrosisConfig) then
         return false; -- By default, do not discard
     end
 
-    if (SpellActivationOverlayDB.alert and not SpellActivationOverlayDB.alert.enabled) then
+    if (NecrosisConfig.alert and not NecrosisConfig.alert.enabled) then
         return true;
     end
 

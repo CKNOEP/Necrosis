@@ -39,7 +39,7 @@ function Necrosis:SetMiscConfig()
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 220)
+		frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 420)
 
 		frame:SetScript("OnClick", function(self)
 			NecrosisConfig.AFK = self:GetChecked()
@@ -61,11 +61,12 @@ function Necrosis:SetMiscConfig()
 
 	-- Boutons oVERLAY
 	frame = CreateFrame("Button", nil, NecrosisMiscConfig, "OptionsButtonTemplate")
-	frame:SetText("Overlay >>>")
+	frame:SetText("Open Options SpellOverlay")
+	frame:SetSize(200 ,22) -- width, height
 	frame:EnableMouse(true)
 	frame:Show()
 	frame:ClearAllPoints()
-	frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 150)
+	frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 250)
 
 	frame:SetScript("OnClick", function()
 		InterfaceOptionsFrame_OpenToCategory("Necrosis");

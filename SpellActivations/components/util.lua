@@ -29,13 +29,13 @@ function SAO.Info(self, prefix, msg, ...)
 end
 
 function SAO.Debug(self, prefix, msg, ...)
-    if SpellActivationOverlayDB and SpellActivationOverlayDB.debug then
+    if NecrosisConfig and NecrosisConfig.debug then
         print(WrapTextInColorCode("[SAO@"..GetTime().."] -"..prefix.."- "..msg, "FFFFFFAA"), ...);
     end
 end
 
 function SAO.Trace(self, prefix, msg, ...)
-    if SpellActivationOverlayDB and SpellActivationOverlayDB.trace and SpellActivationOverlayDB.trace[prefix] then
+    if NecrosisConfig and NecrosisConfig.trace and NecrosisConfig.trace[prefix] then
         print(WrapTextInColorCode("{SAO@"..GetTime().."} -"..prefix.."- "..msg, "FFAAFFCC"), ...);
     end
 end

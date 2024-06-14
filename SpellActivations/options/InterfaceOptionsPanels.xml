@@ -161,9 +161,9 @@
         <Scripts>
           <PostClick>
             if (self:GetChecked()) then
-              SpellActivationOverlayDB.debug = true;
+              NecrosisConfig.debug = true;
             else
-              SpellActivationOverlayDB.debug = nil;
+              NecrosisConfig.debug = nil;
             end
           </PostClick>
         </Scripts>

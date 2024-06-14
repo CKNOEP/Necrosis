@@ -180,10 +180,10 @@ local availableTextures = {
 -- Global functions, helpful for optimizing package
 
 function SAO_DB_ResetMarkedTextures(output)
-  if not SpellActivationOverlayDB.dev then
-    SpellActivationOverlayDB.dev = { marked = {} };
+  if not NecrosisConfig.dev then
+    NecrosisConfig.dev = { marked = {} };
   else
-    SpellActivationOverlayDB.dev.marked = {};
+    NecrosisConfig.dev.marked = {};
   end
   if type(output) ~= 'boolean' or output then
     print("SAO_DB_ResetMarkedTextures() "..WrapTextInColorCode("OK", "FF00FF00"));
@@ -191,13 +191,13 @@ function SAO_DB_ResetMarkedTextures(output)
 end
 
 function SAO_DB_AddMarkedTextures(output)
-  if not SpellActivationOverlayDB.dev or not SpellActivationOverlayDB.dev.marked then
+  if not NecrosisConfig.dev or not NecrosisConfig.dev.marked then
     SAO_DB_ResetMarkedTextures(false);
   end
 
   for fullTextureName, filename in pairs(SAO.TextureFilenameFromFullname) do
     if SAO.MarkedTextures[fullTextureName] then
-      SpellActivationOverlayDB.dev.marked[filename] = true;
+      NecrosisConfig.dev.marked[filename] = true;
     end
   end
 
@@ -208,14 +208,14 @@ end
 
 function SAO_DB_ComputeUnmarkedTextures(output)
   SAO_DB_AddMarkedTextures(false); -- Not needed in theory, but it avoids confusion
-  SpellActivationOverlayDB.dev.unmarked = {};
+  NecrosisConfig.dev.unmarked = {};
 
   for fullTextureName, filename in pairs(SAO.TextureFilenameFromFullname) do
     if availableTextures[filename] then
       if     not SAO.MarkedTextures[fullTextureName] -- Not marked by current class
-        and (not SpellActivationOverlayDB.dev.marked or not SpellActivationOverlayDB.dev.marked[filename]) -- Mark not stored in database
+        and (not NecrosisConfig.dev.marked or not NecrosisConfig.dev.marked[filename]) -- Mark not stored in database
       then
-        SpellActivationOverlayDB.dev.unmarked[filename] = true;
+        NecrosisConfig.dev.unmarked[filename] = true;
       end
     end
   end
@@ -231,16 +231,16 @@ function SAO_DB_LookForTexture(fileDataID, output, saveToDev)
   tex:SetPoint('CENTER', WorldFrame);
 
   f:SetAllPoints(tex);
-  if saveToDev and SpellActivationOverlayDB.dev then
-    SpellActivationOverlayDB.dev.existing[fileDataID] = nil;
+  if saveToDev and NecrosisConfig.dev then
+    NecrosisConfig.dev.existing[fileDataID] = nil;
   end
   f:SetScript('OnSizeChanged', function(self, width, height)
       local isLoaded = width > 15 and height > 15
-      if saveToDev and SpellActivationOverlayDB.dev then
-        SpellActivationOverlayDB.dev.existing.id[fileDataID] = isLoaded;
+      if saveToDev and NecrosisConfig.dev then
+        NecrosisConfig.dev.existing.id[fileDataID] = isLoaded;
 
-        SpellActivationOverlayDB.dev.existing.remaining = SpellActivationOverlayDB.dev.existing.remaining-1;
-        if SpellActivationOverlayDB.dev.existing.remaining == 0 and (type(output) ~= 'boolean' or output) then
+        NecrosisConfig.dev.existing.remaining = NecrosisConfig.dev.existing.remaining-1;
+        if NecrosisConfig.dev.existing.remaining == 0 and (type(output) ~= 'boolean' or output) then
           print("SAO_DB_DetectExistingMarkedTextures() "..WrapTextInColorCode("Complete", "FF00FF00"));
         end
       end
@@ -261,7 +261,7 @@ end
 
 function SAO_DB_LookForAllTextures(output)
   SAO_DB_AddMarkedTextures(false); -- Not needed in theory, but it avoids confusion
-  SpellActivationOverlayDB.dev.existing = { remaining = 0, id = {} };
+  NecrosisConfig.dev.existing = { remaining = 0, id = {} };
 
   local fileDataIDs = {};
 
@@ -269,7 +269,7 @@ function SAO_DB_LookForAllTextures(output)
     table.insert(fileDataIDs, tonumber(retailTexture, 10));
   end
 
-  SpellActivationOverlayDB.dev.existing.remaining = #fileDataIDs;
+  NecrosisConfig.dev.existing.remaining = #fileDataIDs;
   for _, fileDataID in ipairs(fileDataIDs) do
     SAO_DB_LookForTexture(fileDataID, output, true);
   end

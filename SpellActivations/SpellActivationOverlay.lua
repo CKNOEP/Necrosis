@@ -246,7 +246,7 @@ function SpellActivationOverlay_ShowOverlay(self, spellID, texturePath, position
 	SAO:Trace(Module, "SpellActivationOverlay_ShowOverlay "..tostring(spellID).." "..position);
 	SAO:Debug(Module, "Starting Overlay at location "..position.." for spell ID "..spellID.." "..(GetSpellInfo(spellID) or "")..(endTime and (" for "..math.floor((type(endTime) == 'number' and endTime or endTime.endTime)-GetTime()+0.5).." secs") or ""));
 
-	if (SpellActivationOverlayDB and SpellActivationOverlayDB.alert and not SpellActivationOverlayDB.alert.enabled) then
+	if (NecrosisConfig and NecrosisConfig.alert and not NecrosisConfig.alert.enabled) then
 		-- Last chance to quit displaying the overlay, if the main overlay flag is disabled
 		return;
 	end
