@@ -3,25 +3,12 @@
   <Script file="InterfaceOptionsPanels.lua"/>
 
   <Frame name="SpellActivationOverlayOptionsPanel" hidden="true" parent="InterfaceOptionsFramePanelContainer">
-    <Layers>
-      <Layer level="ARTWORK">
-        <FontString name="$parentTitle" text="DISPLAY_LABEL..OVERLAY" inherits="GameFontNormalLarge" justifyH="LEFT" justifyV="TOP">
-          <Anchors>
-            <Anchor point="TOPLEFT">
-              <Offset>
-                <AbsDimension x="16" y="-16"/>
-              </Offset>
-            </Anchor>
-          </Anchors>
-        </FontString>
-      </Layer>
-    </Layers>
     <Frames>
       <Slider name="$parentSpellAlertOpacitySlider" inherits="OptionsSliderTemplate">
         <Anchors>
-          <Anchor point="TOPLEFT" relativeTo="$parentTitle" relativePoint="BOTTOMLEFT">
+          <Anchor point="TOPLEFT">
             <Offset>
-              <AbsDimension x="24" y="-32"/>
+              <AbsDimension x="40" y="-32"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -142,7 +129,7 @@
         <Anchors>
           <Anchor point="TOPLEFT" relativeTo="$parentSpellAlertSoundSlider" relativePoint="BOTTOMLEFT">
             <Offset>
-              <AbsDimension x="-24" y="-32"/>
+              <AbsDimension x="-24" y="-24"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -161,9 +148,27 @@
         <Scripts>
           <PostClick>
             if (self:GetChecked()) then
-              NecrosisConfig.debug = true;
+              SpellActivationOverlayDB.debug = true;
             else
-              NecrosisConfig.debug = nil;
+              SpellActivationOverlayDB.debug = nil;
+            end
+          </PostClick>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="$parentSpellAlertResponsiveButton" inherits="InterfaceOptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="BOTTOMLEFT" relativeTo="$parentSpellAlertDebugButton" relativePoint="BOTTOMLEFT">
+            <Offset>
+              <AbsDimension x="256" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <PostClick>
+            if (self:GetChecked()) then
+              SpellActivationOverlayDB.responsiveMode = true;
+            else
+              SpellActivationOverlayDB.responsiveMode = nil;
             end
           </PostClick>
         </Scripts>
@@ -176,6 +181,28 @@
             <Anchor point="TOPLEFT" relativeTo="$parentSpellAlertTestButton" relativePoint="TOPRIGHT">
               <Offset>
                 <AbsDimension x="24" y="10"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+      <Layer level="ARTWORK">
+        <FontString name="$parentSpellAlertNone" text="" inherits="GameFontHighlight" justifyH="LEFT" justifyV="TOP" parentKey="alertNone">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parentSpellAlertLabel" relativePoint="BOTTOMLEFT">
+              <Offset>
+                <AbsDimension x="6" y="-6"/> <!-- +2 -2 more pixels than offset for checkboxes, defined at the end of SAO.AddOverlayOption -->
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+      <Layer level="ARTWORK">
+        <FontString name="$parentSpellAlertNone" text="" inherits="GameFontHighlight" justifyH="LEFT" justifyV="TOP" parentKey="glowNone">
+          <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="$parentGlowingButtons" relativePoint="BOTTOMLEFT">
+              <Offset>
+                <AbsDimension x="18" y="0"/> <!-- +2 -2 more pixels than offset for checkboxes, defined at the end of SAO.AddGlowingOption -->
               </Offset>
             </Anchor>
           </Anchors>
