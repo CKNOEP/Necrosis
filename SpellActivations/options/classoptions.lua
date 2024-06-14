@@ -136,14 +136,6 @@ function SAO.AddOption(self, optionType, auraID, id, subValues, applyTextFunc, t
         else
             SpellActivationOverlayDB.classes[classFile][optionType][auraID][id] = checked;
         end
-
-        -- Re-evaluate effect triggers to refresh its visual state
-        -- @todo Find a way to only refresh spell alert when checking spell alert, or glowing button when clicking glowing button
-        local bucket = SAO:GetBucketBySpellID(auraID);
-        if bucket then -- Bucket may not exist with this auraID, especially for fake spell IDs
-            bucket:reset(); -- Reset hash to force re-display if needed
-            bucket.trigger:manualCheckAll();
-        end
     end);
 
     cb:SetSize(20, 20);
@@ -165,17 +157,8 @@ function SAO.AddOption(self, optionType, auraID, id, subValues, applyTextFunc, t
         SpellActivationOverlayOptionsPanel.additionalCheckboxes[optionType] = { cb };
     else
         -- Each subsequent checkbox is anchored to the previous one
-        local nbCheckboxes = #SpellActivationOverlayOptionsPanel.additionalCheckboxes[optionType];
-        local lastCheckBox = SpellActivationOverlayOptionsPanel.additionalCheckboxes[optionType][nbCheckboxes];
-        if optionType ~= "glow" or nbCheckboxes ~= 14 then
-            cb:SetPoint("TOPLEFT", lastCheckBox, "BOTTOMLEFT", 0, 0);
-        else
-            -- Glowing buttons may be too numerous (more than 14)
-            -- When this happens, a second column is used, and the first column is offset to the left
-            local firstCb = SpellActivationOverlayOptionsPanel.additionalCheckboxes[optionType][1];
-            firstCb:SetPoint("TOPLEFT", firstAnchor.frame, "BOTTOMLEFT", (firstAnchor.xOffset or 0) - 32, firstAnchor.yOffset or 0);
-            cb:SetPoint("TOPLEFT", firstAnchor.frame, "BOTTOMLEFT", (firstAnchor.xOffset or 0) + 320, firstAnchor.yOffset or 0);
-        end
+        local lastCheckBox = SpellActivationOverlayOptionsPanel.additionalCheckboxes[optionType][#SpellActivationOverlayOptionsPanel.additionalCheckboxes[optionType]];
+        cb:SetPoint("TOPLEFT", lastCheckBox, "BOTTOMLEFT", 0, 0);
         table.insert(SpellActivationOverlayOptionsPanel.additionalCheckboxes[optionType], cb);
     end
 

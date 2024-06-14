@@ -72,12 +72,11 @@ function SpellActivationOverlayOptionsPanel_Init(self)
     testButton.isTesting = false;
     local testTextureLeftRight = SAO.IsEra() and "echo_of_the_elements" or "imp_empowerment";
     local testTextureTop = SAO.IsEra() and "fury_of_stormrage" or "brain_freeze";
-    local testPositionTop = SAO.IsCata and "Top (CW)" or "Top";
     testButton.StartTest = function(self)
         if (not self.isTesting) then
             self.isTesting = true;
             SAO:ActivateOverlay(0, self.fakeSpellID, SAO.TexName[testTextureLeftRight], "Left + Right (Flipped)", 1, 255, 255, 255, false, nil, GetTime()+5, false);
-            SAO:ActivateOverlay(0, self.fakeSpellID, SAO.TexName[testTextureTop], testPositionTop, 1, 255, 255, 255, false, nil, GetTime()+5, false);
+            SAO:ActivateOverlay(0, self.fakeSpellID, SAO.TexName[testTextureTop], "Top", 1, 255, 255, 255, false, nil, GetTime()+5, false);
             self.testTimerTicker = C_Timer.NewTicker(4.9, -- Ticker must be slightly shorter than overlay duration, to refresh it before losing it
             function()
                 SAO:RefreshOverlayTimer(self.fakeSpellID, GetTime()+5);
@@ -103,10 +102,6 @@ function SpellActivationOverlayOptionsPanel_Init(self)
     local debugButton = SpellActivationOverlayOptionsPanelSpellAlertDebugButton;
     debugButton.Text:SetText("Write Debug to Chatbox");
     debugButton:SetChecked(SpellActivationOverlayDB.debug == true);
-
-    local responsiveButton = SpellActivationOverlayOptionsPanelSpellAlertResponsiveButton;
-    responsiveButton.Text:SetText(SAO:responsiveMode());
-    responsiveButton:SetChecked(SpellActivationOverlayDB.responsiveMode == true);
 
     local glowingButtonCheckbox = SpellActivationOverlayOptionsPanelGlowingButtons;
     glowingButtonCheckbox.Text:SetText("Glowing Buttons");
@@ -312,22 +307,10 @@ function SpellActivationOverlayOptionsPanel_OnShow(self)
         return;
     end
 
-    if SAO.CurrentClass and type(SAO.CurrentClass.LoadOptions) == 'function' then
-        SAO.CurrentClass.LoadOptions(SAO);
-    end
-
     SAO:AddEffectOptions();
 
-    for _, optionType in ipairs({ "alert", "glow" }) do
-        if (type(SpellActivationOverlayOptionsPanel.additionalCheckboxes[optionType]) == "nil") then
-            local className = SAO.CurrentClass.Intrinsics[1];
-            local classFile = SAO.CurrentClass.Intrinsics[2];
-            local dimFactor = 0.7;
-            local dimmedTextColor = CreateColor(dimFactor, dimFactor, dimFactor);
-            local dimmedClassColor = CreateColor(dimFactor*RAID_CLASS_COLORS[classFile].r, dimFactor*RAID_CLASS_COLORS[classFile].g, dimFactor*RAID_CLASS_COLORS[classFile].b);
-            local text = WrapTextInColor(string.format("%s (%s)", NONE, WrapTextInColor(className, dimmedClassColor)), dimmedTextColor);
-            SpellActivationOverlayOptionsPanel[optionType.."None"]:SetText(text);
-        end
+    if SAO.CurrentClass and type(SAO.CurrentClass.LoadOptions) == 'function' then
+        SAO.CurrentClass.LoadOptions(SAO);
     end
 
     optionsLoaded = true;
