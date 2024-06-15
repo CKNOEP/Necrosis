@@ -83,34 +83,4 @@ Necrosis-cata.lua
 XML\XML.lua
 
 
-SpellActivations\components\aura.lua
-SpellActivations\components\counter.lua
-SpellActivations\components\effect.lua
-SpellActivations\components\events.lua
-SpellActivations\components\glow.lua
-SpellActivations\components\item.lua
-SpellActivations\components\overlay.lua
-SpellActivations\components\project.lua
-SpellActivations\components\rune.lua
-SpellActivations\components\sound.lua
-SpellActivations\components\spell.lua
-SpellActivations\components\util.lua
-
-SpellActivations\textures\texname.lua
-
-SpellActivations\classes\common.lua
-SpellActivations\classes\warlock.lua
-
-
-SpellActivations\options\defaults.lua
-SpellActivations\options\db.lua
-SpellActivations\options\variables.lua
-SpellActivations\options\InterfaceOptionsPanels.lua
-SpellActivations\options\InterfaceOptionsPanels.xml
-SpellActivations\options\classoptions.lua
-SpellActivations\options\glowoptions.lua
-SpellActivations\options\overlayoptions.lua
-SpellActivations\options\variants.lua
-
-SpellActivations\SpellActivationOverlay.lua
-SpellActivations\SpellActivationOverlay.xml
+SpellActivationOverlay\SpellActivations.xml
