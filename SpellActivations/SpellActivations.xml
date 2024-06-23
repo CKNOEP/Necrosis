@@ -34,6 +34,6 @@
 	<Script file="options/glowoptions.lua"/>
 	<Script file="options/overlayoptions.lua"/>
 	<Script file="options/variants.lua"/>
-	<Script file="NecrosisSpellActivationOverlay.lua"/>
-	<Include file="NecrosisSpellActivationOverlay.xml"/>
+	<Script file="NecrosisSpellActivation.lua"/>
+	<Include file="NecrosisSpellActivation.xml"/>
 </Ui>

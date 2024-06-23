@@ -83,4 +83,4 @@ Necrosis-cata.lua
 XML\XML.lua
 
 
-SpellActivationOverlay\SpellActivations.xml
+SpellActivations\SpellActivations.xml
