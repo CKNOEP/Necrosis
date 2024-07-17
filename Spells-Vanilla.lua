@@ -285,7 +285,8 @@ Notes:
 	--TBC Fel Armor
 	--[28176]	= {UsageRank = 8, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
 	--[28189]	= {UsageRank = 9, SpellRank = 2, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --  
-	
+	--SOD Fel Armor
+	[403619]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "fel_armor",  Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
 	--[28176]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
 	--[28189]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
 	--[47892]	= {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 	
@@ -610,10 +611,10 @@ Necrosis.Warlock_Buttons = {
 					high = "Interface\\AddOns\\Necrosis\\UI\\Armor-01",
 				  }, --
 	
-	--fel_armor	= {f = "NecrosisBuffMenu02", tip = "FelArmor", anchor = "ANCHOR_RIGHT",
-	--				norm = "Interface\\AddOns\\Necrosis\\UI\\FelArmor-01",
-	--				high = "Interface\\AddOns\\Necrosis\\UI\\FelArmor-01",
-	--		      }, --
+	fel_armor	= {f = "NecrosisBuffMenu02", tip = "FelArmor", anchor = "ANCHOR_RIGHT",
+					norm = "Interface\\AddOns\\Necrosis\\UI\\FelArmor-01",
+					high = "Interface\\AddOns\\Necrosis\\UI\\FelArmor-01",
+			      }, --
 					
 	breath 		= {f = "NecrosisBuffMenu10", tip = "Aqua", anchor = "ANCHOR_RIGHT", can_target = true,
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Aqua-01",
@@ -825,7 +826,7 @@ Necrosis.Warlock_Lists = {
 		[6] = {f_ptr = "link", high_of = "link", },
 		[7] = {f_ptr = "ward", high_of = "ward", },
 		[8] = {f_ptr = "banish", high_of = "banish", },
-		--[9] = {f_ptr = "fel_armor", high_of = "fel_armor", },			
+		[9] = {f_ptr = "fel_armor", high_of = "fel_armor", },			
 	},
 -- 			15, 3, 4, 5, 6, 8, 30, 35, 44, 59
 	["pets"] = { -- 2 types: summon pet and (buff or temporary) pet
