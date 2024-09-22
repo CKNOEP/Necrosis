@@ -1,4 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/ ..\FrameXML\UI.xsd">
+	<Script file="libs/LibStub/LibStub.lua"/>
+	<Script file="libs/LibButtonGlow-1.0/LibButtonGlow-1.0.lua"/>
 	<Script file="components/aura.lua"/>
 	<Script file="components/bucket.lua"/>
 	<Script file="components/counter.lua"/>
@@ -11,6 +13,7 @@
 	<Script file="components/overlay.lua"/>
 	<Script file="components/project.lua"/>
 	<Script file="components/rune.lua"/>
+	<Script file="components/shutdown.lua"/>
 	<Script file="components/sound.lua"/>
 	<Script file="components/spell.lua"/>
 	<Script file="components/trigger.lua"/>

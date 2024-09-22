@@ -164,15 +164,25 @@ function SAO.ADDON_LOADED(self, addOnName, containsBindings)
     local itisNecrosis = strlower(addOnName):sub(0,8) == "necrosis";
 
     if (iamSAO and (itisNecrosis or itisSAO and NecrosisConfig)) or
-       (iamNecrosis and (itisSAO or itisNecrosis and NecrosisConfig)) then
+       (iamNecrosis and (itisSAO or itisNecrosis and _G["Spell".."ActivationOverlayDB"])) then
         local className, classFilename, classId = UnitClass("player");
         if classFilename == "WARLOCK" then
-            self:Info("==", "You have installed Necrosis and NecrosisSpellActivationOverlay at the same time.")
-            self:Info("==", "Because you are playing "..className..", only Necrosis is required.");
+            self:Info("==", "You have installed Necrosis and Spell".."ActivationOverlay at the same time.")
             if iamSAO then
-                self:Warn("==", "NecrosisSpellActivationOverlay will be disabled for this character to avoid double procs with Necrosis.");
-                SAO.GlobalOff = true;
-                SAO.GlobalOffReason = "|CFFFF00FFNe|CFFFF50FFcr|CFFFF99FFos|CFFFFC4FFis|CFFFFFFFF";
+                self.Shutdown:EnableCategory("NECROSIS_INSTALLED");
+                local shutdownCategory = self.Shutdown:GetCategory();
+                if shutdownCategory.Name == "NECROSIS_INSTALLED" and shutdownCategory.DisableCondition.IsDisabled() then
+                    self:Warn("==", "Spell".."ActivationOverlay will be disabled for this character to avoid double procs with Necrosis. "..
+                        "You can go to Options > AddOns to change the preferred addon.");
+                end
+            elseif iamNecrosis then
+                self.Shutdown:EnableCategory("SAO_INSTALLED");
+                local shutdownCategory = self.Shutdown:GetCategory();
+                if shutdownCategory.Name == "SAO_INSTALLED" and shutdownCategory.DisableCondition.IsDisabled() then
+                    self:Warn("==", "Necrosis Spell Activations will be disabled for this character to avoid double procs with Spell".."ActivationOverlay. "..
+                        "You can go to Options > AddOns to change the preferred addon. "..
+                        "This concerns only \"Spell Activations\" of Necrosis; it has no effect on other features of Necrosis.");
+                end
             end
         else
             self:Info("==", "You have installed Necrosis and NecrosisSpellActivationOverlay at the same time.")

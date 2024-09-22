@@ -132,6 +132,9 @@ SAO.defaults = {
         },
         ["HUNTER"] = {
             alert = {
+                [1495] = { -- Mongoose Bite (Era, TBC)
+                    [0] = true, -- Mongoose Bite
+                },
                 [53220] = { -- Improved Steady Shot (Wrath)
                     [0] = true,
                 },
@@ -466,6 +469,9 @@ SAO.defaults = {
                 [14251] = { -- Riposte (Era - Wrath)
                     [0] = "cd:off",
                 },
+                [462707] = { -- Cutthroat (Season of Discovery)
+                    [0] = true,
+                },
             },
             glow = {
                 [14158] = { -- Murderous Intent (not an actual buff) (Cataclysm)
@@ -473,6 +479,9 @@ SAO.defaults = {
                 },
                 [14251] = { -- Riposte (Era - Wrath)
                     [14251] = "cd:off", -- Riposte
+                },
+                [462707] = { -- Cutthroat (Season of Discovery)
+                    [8676] = true, -- Ambush
                 },
             },
         },
@@ -572,6 +581,9 @@ SAO.defaults = {
                 [63167] = { -- Decimation (Wrath+)
                     [0] = true,
                 },
+                [440873] = { -- Decimation (Season of Discovery)
+                    [0] = true,
+                },
                 [47283] = { -- Empowered Imp (Wrath+)
                     [0] = true,
                 },
@@ -580,7 +592,7 @@ SAO.defaults = {
                 },
             },
             glow = {
-                [1120] = { -- Drain Soul (Wrath+)
+                [1120] = { -- Drain Soul (Season of Discovery, Wrath+)
                     [1120] = "spec:1", -- Drain Soul
                 },
                 [17877] = { -- Shadowburn
@@ -588,12 +600,16 @@ SAO.defaults = {
                 },
                 [17941] = { -- Nightfall
                     [686] = true, -- Shadow Bolt
+                    [403841] = true, -- Shadow Cleave (Season of Discovery)
                 },
                 [71165] = { -- Molten Core (Wrath+)
                     [29722] = true, -- Incinerate
                     [6353]  = true, -- Soul Fire (not for Cata)
                 },
                 [63167] = { -- Decimation (Wrath+)
+                    [6353] = true, -- Soul Fire
+                },
+                [440873] = { -- Decimation (Season of Discovery)
                     [6353] = true, -- Soul Fire
                 },
                 [54277] = { -- Backdraft (Cataclysm)
@@ -617,6 +633,9 @@ SAO.defaults = {
             alert = {
                 [52437] = { -- Sudden Death (Wrath+)
                     [0] = true, -- any stacks (up to 2 stacks with tier 10)
+                },
+                [440114] = { -- Sudden Death (Season of Discovery)
+                    [0] = true,
                 },
                 [46924] = { -- Bladestorm (Wrath+)
                     [0] = true,
@@ -663,6 +682,9 @@ SAO.defaults = {
                 [52437] = { -- Sudden Death (Wrath+)
                     [5308] = true, -- Execute (not for Cata)
                     [86346]= true, -- Colossus Smash (Cataclysm)
+                },
+                [440114] = { -- Sudden Death (Season of Discovery)
+                    [5308] = true, -- Execute
                 },
                 [46916] = { -- Bloodsurge (Wrath+)
                     [1464] = true, -- Slam

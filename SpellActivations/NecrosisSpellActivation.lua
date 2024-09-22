@@ -74,7 +74,8 @@ function NecrosisSpellActivationOverlay_OnLoad(self)
 		end
 	else
 		local currentClass = tostring(select(1, UnitClass("player")));
-		SAO:Error(Module, "Class unknown or not converted yet:", currentClass);
+		SAO:Error(Module, SAO:unsupportedClass(), currentClass);
+		SAO.Shutdown:EnableCategory("UNSUPPORTED_CLASS");
 	end
 
 	if ( SAO.IsCata() ) then
@@ -295,7 +296,7 @@ local complexLocationTable = {
 }
 
 function NecrosisSpellActivationOverlay_ShowAllOverlays(self, spellID, texturePath, positions, scale, r, g, b, autoPulse, forcePulsePlay, endTime, combatOnly)
-	if SAO.GlobalOff then
+	if SAO.Shutdown:IsAddonDisabled() then
 		return;
 	end
 	SAO:Trace(Module, "NecrosisSpellActivationOverlay_ShowAllOverlays "..tostring(spellID));

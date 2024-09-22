@@ -164,6 +164,70 @@ function SAO:responsiveMode()
     return tr(responsiveTranslations);
 end
 
+-- Get the "Unsupported class" localized text
+function SAO:unsupportedClass()
+    local unsupportedClassTranslations = {
+        ["en"] = "Unsupported Class",
+        ["de"] = "Nicht unterstützte Klasse",
+        ["fr"] = "Classe non prise en charge",
+        ["es"] = "Clase no compatible",
+        ["ru"] = "Неподдерживаемый класс",
+        ["it"] = "Classe non supportata",
+        ["pt"] = "Classe sem suporte",
+        ["ko"] = "지원되지 않는 클래스",
+        ["zh"] = "不支持的类",
+    };
+    return tr(unsupportedClassTranslations);
+end
+
+-- Get the "because of {reason}" localized text
+function SAO:becauseOf(reason)
+    local becauseOfTranslations = {
+        ["en"] = "because of %s",
+        ["de"] = "wegen %s",
+        ["fr"] = "à cause de %s",
+        ["es"] = "por %s",
+        ["ru"] = "из-за %s",
+        ["it"] = "a causa di %s",
+        ["pt"] = "por causa de %s",
+        ["ko"] = "%s 때문에",
+        ["zh"] = "因为 %s",
+    };
+    return string.format(tr(becauseOfTranslations), reason);
+end
+
+-- Get the "Open {x}" localized text
+function SAO:openIt(x)
+    local openItTranslations = {
+        ["en"] = "Open %s",
+        ["de"] = "Öffnen %s",
+        ["fr"] = "Ouvrir %s",
+        ["es"] = "Abrir %s",
+        ["ru"] = "Открыть %s",
+        ["it"] = "Aprire %s",
+        ["pt"] = "Abrir %s",
+        ["ko"] = "열기 %s",
+        ["zh"] = "打开 %s",
+    };
+    return string.format(tr(openItTranslations), x);
+end
+
+-- Get the "Disabled when {addon} is installed" localized text
+function SAO:disableWhenInstalled(addon)
+    local disableWhenInstalledTranslations = {
+        ["en"] = "Disable when %s is installed",
+        ["de"] = "Deaktivieren, wenn %s installiert ist",
+        ["fr"] = "Désactiver lorsque %s est installé",
+        ["es"] = "Desactivar cuando %s está instalado",
+        ["ru"] = "Отключить при установке %s",
+        ["it"] = "Disattivare quando è installato %s",
+        ["pt"] = "Desativar quando %s estiver instalado",
+        ["ko"] = "%s가 설치되어 있으면 사용 안 함",
+        ["zh"] = "安装 %s 时禁用",
+    };
+    return string.format(tr(disableWhenInstalledTranslations), addon);
+end
+
 --[[
     Addon mode
 ]]
