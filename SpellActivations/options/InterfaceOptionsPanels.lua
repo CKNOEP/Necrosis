@@ -121,7 +121,7 @@ function NecrosisSpellActivationOverlayOptionsPanel_Init(self)
     testButton.isTesting = false;
     local testTextureLeftRight = SAO.IsEra() and "echo_of_the_elements" or "imp_empowerment";
     local testTextureTop = SAO.IsEra() and "fury_of_stormrage" or "brain_freeze";
-    local testPositionTop = SAO.IsCata and "Top (CW)" or "Top";
+    local testPositionTop = SAO.IsCata() and "Top (CW)" or "Top";
     testButton.StartTest = function(self)
         if (not self.isTesting) then
             self.isTesting = true;
@@ -344,7 +344,9 @@ if Settings and Settings.RegisterCanvasLayoutCategory then
 end
 
 function NecrosisSpellActivationOverlayOptionsPanel_OnLoad(self)
-    self.name = AddonName;
+
+	self.name = AddonName;
+
     self.okay = okayFunc;
     self.cancel = cancelFunc;
     self.default = defaultFunc;
@@ -382,7 +384,7 @@ function NecrosisSpellActivationOverlayOptionsPanel_OnShow(self)
     optionsLoaded = true;
 end
 
-if not iamNecrosis then
+if  iamNecrosis then
     SLASH_SAO1 = "/sao"
     SLASH_SAO2 = "/spellactivationoverlay"
     SlashCmdList.SAO = function(msg, editBox)

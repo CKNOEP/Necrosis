@@ -3155,7 +3155,7 @@ function Necrosis:SetOfxy(menu)
 	local fb = _G[Necrosis.Warlock_Buttons.buffs.f]
 	local fp = _G[Necrosis.Warlock_Buttons.pets.f]
 	local fc = _G[Necrosis.Warlock_Buttons.curses.f]
-	if menu == "Buff" and fb then
+	if menu == "Buff" and Local.Menu.Buff[1] and fb then
 		Local.Menu.Buff[1]:ClearAllPoints()
 		Local.Menu.Buff[1]:SetPoint(
 			"CENTER", fb, "CENTER",
@@ -3169,7 +3169,7 @@ function Necrosis:SetOfxy(menu)
 			NecrosisConfig.PetMenuPos.direction * NecrosisConfig.PetMenuPos.x * 32 + NecrosisConfig.PetMenuDecalage.x,
 			NecrosisConfig.PetMenuPos.y * 32 + NecrosisConfig.PetMenuDecalage.y
 		)
-	elseif menu == "Curse" and fc then
+	elseif menu == "Curse" and Local.Menu.Curse[1] and fc then
 		Local.Menu.Curse[1]:ClearAllPoints()
 		Local.Menu.Curse[1]:SetPoint(
 			"CENTER", fc, "CENTER",

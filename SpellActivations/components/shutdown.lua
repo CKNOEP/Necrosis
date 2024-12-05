@@ -23,7 +23,8 @@ local Categories = {
                     end,
                     Text = SAO:openIt("Spell".."ActivationOverlay"),
                     OnClick = function() -- Passed to SetScript
-                        InterfaceOptionsFrame_OpenToCategory(_G["Spell".."ActivationOverlayOptionsPanel"]);
+                        --InterfaceOptionsFrame_OpenToCategory(_G["Spell".."ActivationOverlayOptionsPanel"]);
+						Settings.OpenToCategory(_G["Spell".."ActivationOverlayOptionsPanel"]);
                     end
                 },
                 DisableCondition = {
@@ -49,11 +50,12 @@ local Categories = {
                 Reason = SAO:becauseOf("|CFFFF00FFNe|CFFFF50FFcr|CFFFF99FFos|CFFFFC4FFis|CFFFFFFFF"), -- "Necrosis", with colors
                 Button = {
                     ShowIf = function()
-                        return NecrosisNecrosisSpellActivationOverlayOptionsPanel ~= nil;
+                        return NecrosisSpellActivationOverlayOptionsPanel ~= nil;
                     end,
                     Text = SAO:openIt("Necrosis Spell Activations"),
                     OnClick = function() -- Passed to SetScript
-                        InterfaceOptionsFrame_OpenToCategory(NecrosisNecrosisSpellActivationOverlayOptionsPanel);
+                        --InterfaceOptionsFrame_OpenToCategory(NecrosisSpellActivationOverlayOptionsPanel);
+						Settings.OpenToCategory("Necrosis");
                     end
                 },
                 DisableCondition = {

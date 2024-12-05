@@ -2946,6 +2946,7 @@ function Necrosis:CreateMenu()
 		for index = 1, #Necrosis.Warlock_Lists.buffs, 1 do
 			local v = Necrosis.Warlock_Lists.buffs[index]
 			local f = Necrosis.Warlock_Buttons[v.f_ptr].f
+			--print(v, v.high_of)
 			if Necrosis.IsSpellKnown(v.high_of) -- in spell book
 --			and NecrosisConfig.BuffSpellPosition[index] > 0 -- and requested
 			then
@@ -2973,6 +2974,7 @@ function Necrosis:CreateMenu()
 			)
 			-- Secure the menu || Maintenant on sécurise le menu, et on y associe nos nouveaux boutons
 			for i = 1, #Local.Menu.Buff, 1 do
+				
 				Local.Menu.Buff[i]:SetParent(f)
 				-- Close the menu upon button Click || Si le menu se ferme à l'appui d'un bouton, alors il se ferme à l'appui d'un bouton !
 				f:WrapScript(Local.Menu.Buff[i], "OnClick", [[
@@ -3118,7 +3120,7 @@ function Necrosis:SetOfxy(menu)
 	local fb = _G[Necrosis.Warlock_Buttons.buffs.f]
 	local fp = _G[Necrosis.Warlock_Buttons.pets.f]
 	local fc = _G[Necrosis.Warlock_Buttons.curses.f]
-	if menu == "Buff" and fb then
+	if menu == "Buff" and fb and Local.Menu.Buff[1] then
 		Local.Menu.Buff[1]:ClearAllPoints()
 		Local.Menu.Buff[1]:SetPoint(
 			"CENTER", fb, "CENTER",

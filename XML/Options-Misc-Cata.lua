@@ -60,7 +60,7 @@ function Necrosis:SetMiscConfig()
 
 
 	-- Boutons oVERLAY
-	frame = CreateFrame("Button", nil, NecrosisMiscConfig, "OptionsButtonTemplate")
+	frame = CreateFrame("Button", nil, NecrosisMiscConfig, "UIPanelButtonTemplate")
 	frame:SetText("Open Options SpellOverlay")
 	frame:SetSize(200 ,22) -- width, height
 	frame:EnableMouse(true)
@@ -68,9 +68,15 @@ function Necrosis:SetMiscConfig()
 	frame:ClearAllPoints()
 	frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 250)
 
+	local configpanel = CreateFrame("FRAME", "AddonConfigFrameName");
+	configpanel.name = "Necrosis"
+	
+	local category, layout = Settings.RegisterCanvasLayoutCategory(configpanel, configpanel.name, configpanel.name);
+	category.ID = configpanel.name
+	
 	frame:SetScript("OnClick", function()
-		InterfaceOptionsFrame_OpenToCategory("Necrosis");
-		InterfaceOptionsFrame_OpenToCategory("Necrosis");
+		Settings.OpenToCategory(category.ID);
+		Settings.OpenToCategory(category.ID);
 
 	end)
 

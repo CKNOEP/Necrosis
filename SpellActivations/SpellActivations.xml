@@ -28,6 +28,8 @@
 	<Script file="textures/texname.lua"/>
 	<Script file="classes/common.lua"/>
 	<Script file="classes/warlock.lua"/>
+	<Script file="options/fix/Backdrop.lua"/>
+	<Include file="options/fix/SharedUIPanelTemplates.xml"/>
 	<Script file="options/defaults.lua"/>
 	<Script file="options/db.lua"/>
 	<Script file="options/variables.lua"/>
