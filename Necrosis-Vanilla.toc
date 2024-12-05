@@ -1,6 +1,6 @@
-## Interface: 11503
+## Interface: 11505
 
-## X-Min-Interface-Wrath: 11503
+## X-Min-Interface-Wrath: 11505
 
 ## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Vanilla
 ## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Vanilla (Русский)
