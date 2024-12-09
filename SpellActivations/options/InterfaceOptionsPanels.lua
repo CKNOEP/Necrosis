@@ -116,20 +116,22 @@ function NecrosisSpellActivationOverlayOptionsPanel_Init(self)
     end
 
     local testButton = NecrosisSpellActivationOverlayOptionsPanelSpellAlertTestButton;
-    testButton:SetText("Toggle Test");
+    testButton:SetText("Test Overlay");
     testButton.fakeSpellID = 42;
     testButton.isTesting = false;
-    local testTextureLeftRight = SAO.IsEra() and "echo_of_the_elements" or "imp_empowerment";
-    local testTextureTop = SAO.IsEra() and "fury_of_stormrage" or "brain_freeze";
+    local testTextureLeftRight = SAO.IsEra() and "nightfall";
+    local testTextureTop = SAO.IsEra() and  "backlash";
     local testPositionTop = SAO.IsCata() and "Top (CW)" or "Top";
     testButton.StartTest = function(self)
-        if (not self.isTesting) then
+       
+		if (not self.isTesting) then
             self.isTesting = true;
             SAO:ActivateOverlay(0, self.fakeSpellID, SAO.TexName[testTextureLeftRight], "Left + Right (Flipped)", 1, 255, 255, 255, false, nil, GetTime()+5, false);
             SAO:ActivateOverlay(0, self.fakeSpellID, SAO.TexName[testTextureTop], testPositionTop, 1, 255, 255, 255, false, nil, GetTime()+5, false);
             self.testTimerTicker = C_Timer.NewTicker(4.9, -- Ticker must be slightly shorter than overlay duration, to refresh it before losing it
             function()
-                SAO:RefreshOverlayTimer(self.fakeSpellID, GetTime()+5);
+                print("timer",self.fakeSpellID, GetTime()+5);
+				SAO:RefreshOverlayTimer(self.fakeSpellID, GetTime()+5);
             end);
             -- Hack the frame to force full opacity even when out of combat
             NecrosisSpellActivationOverlayFrame_SetForceAlpha1(true);
@@ -344,9 +346,7 @@ if Settings and Settings.RegisterCanvasLayoutCategory then
 end
 
 function NecrosisSpellActivationOverlayOptionsPanel_OnLoad(self)
-
-	self.name = AddonName;
-
+    self.name = AddonName;
     self.okay = okayFunc;
     self.cancel = cancelFunc;
     self.default = defaultFunc;
@@ -384,7 +384,7 @@ function NecrosisSpellActivationOverlayOptionsPanel_OnShow(self)
     optionsLoaded = true;
 end
 
-if  iamNecrosis then
+if not iamNecrosis then
     SLASH_SAO1 = "/sao"
     SLASH_SAO2 = "/spellactivationoverlay"
     SlashCmdList.SAO = function(msg, editBox)

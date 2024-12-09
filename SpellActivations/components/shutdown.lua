@@ -1,6 +1,20 @@
 local AddonName, SAO = ...
 local Module = "shutdown"
 
+-- Fix of options functions, also seen in options\InterfaceOptionsPanels.lua
+local InterfaceOptionsFrame_OpenToCategory = InterfaceOptionsFrame_OpenToCategory
+if Settings and Settings.RegisterCanvasLayoutCategory then
+    -- Deprecated. Use Settings.OpenToCategory().
+    InterfaceOptionsFrame_OpenToCategory = function(categoryIDOrFrame)
+        if type(categoryIDOrFrame) == "table" then
+            local categoryID = categoryIDOrFrame.name;
+            return Settings.OpenToCategory(categoryID);
+        else
+            return Settings.OpenToCategory(categoryIDOrFrame);
+        end
+    end
+end
+
 local Categories = {
     UNSUPPORTED_CLASS = {
         Priority = 1,
@@ -23,8 +37,7 @@ local Categories = {
                     end,
                     Text = SAO:openIt("Spell".."ActivationOverlay"),
                     OnClick = function() -- Passed to SetScript
-                        --InterfaceOptionsFrame_OpenToCategory(_G["Spell".."ActivationOverlayOptionsPanel"]);
-						Settings.OpenToCategory(_G["Spell".."ActivationOverlayOptionsPanel"]);
+                        InterfaceOptionsFrame_OpenToCategory(_G["Spell".."ActivationOverlayOptionsPanel"]);
                     end
                 },
                 DisableCondition = {
@@ -50,12 +63,11 @@ local Categories = {
                 Reason = SAO:becauseOf("|CFFFF00FFNe|CFFFF50FFcr|CFFFF99FFos|CFFFFC4FFis|CFFFFFFFF"), -- "Necrosis", with colors
                 Button = {
                     ShowIf = function()
-                        return NecrosisSpellActivationOverlayOptionsPanel ~= nil;
+                        return NecrosisNecrosisSpellActivationOverlayOptionsPanel ~= nil;
                     end,
                     Text = SAO:openIt("Necrosis Spell Activations"),
                     OnClick = function() -- Passed to SetScript
-                        --InterfaceOptionsFrame_OpenToCategory(NecrosisSpellActivationOverlayOptionsPanel);
-						Settings.OpenToCategory("Necrosis");
+                        InterfaceOptionsFrame_OpenToCategory(NecrosisNecrosisSpellActivationOverlayOptionsPanel);
                     end
                 },
                 DisableCondition = {
