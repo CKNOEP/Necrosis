@@ -238,7 +238,7 @@ function Necrosis:SetMiscConfig()
 		
 
 		
-	end
+	
 
 	NecrosisMoveShard:SetChecked(NecrosisConfig.SoulshardSort)
 	--NecrosisDestroyShardBag:SetChecked(NecrosisConfig.SoulshardDestroy)
@@ -417,10 +417,7 @@ function Necrosis:SetMiscConfig()
 		NecrosisHiddenSizeHigh:SetText("200 %")
 	
 
-	NecrosisHiddenButtons:SetText(self.Config.Misc["Afficher les boutons caches"])
-	NecrosisHiddenSizeText:SetText(self.Config.Misc["Taille des boutons caches"])
-	NecrosisHiddenSize:SetValue(NecrosisConfig.ShadowTranceScale)
-	
+
 	
 	-- Test Button SAO
 	
@@ -478,7 +475,11 @@ function Necrosis:SetMiscConfig()
  	
 	end)
 	
+	end
 	
+	NecrosisHiddenButtons:SetText(self.Config.Misc["Afficher les boutons caches"])
+	NecrosisHiddenSizeText:SetText(self.Config.Misc["Taille des boutons caches"])
+	NecrosisHiddenSize:SetValue(NecrosisConfig.ShadowTranceScale)
 	
 	
 	frame:Show()
