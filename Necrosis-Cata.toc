@@ -1,10 +1,10 @@
-## Interface: 40401
+## Interface: 40402
 
 ## X-Min-Interface-Wrath: 30403
 
-## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Wotlk
-## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Woltk (Русский)
-## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Woltk (Français)
+## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Cata
+## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Cata (Русский)
+## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Cata (Français)
 
 ## Notes: Warlock UI & Shard Management
 ## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir 
