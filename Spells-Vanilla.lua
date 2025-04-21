@@ -286,7 +286,7 @@ Notes:
 	--[28176]	= {UsageRank = 8, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
 	--[28189]	= {UsageRank = 9, SpellRank = 2, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --  
 	--SOD Fel Armor
-	[403619]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "fel_armor",  Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
+	[403619]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
 	--[28176]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
 	--[28189]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
 	--[47892]	= {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 	
