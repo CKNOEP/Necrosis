@@ -60,7 +60,7 @@ Speech\Speech-ru.lua
 
 Message.lua
 Spells.lua
-SpellActivations\SpellActivations.lua
+SpellActivations\SpellActivations.xml
 
 Timers\Functions.lua
 Timers\GraphicalTimers.lua

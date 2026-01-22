@@ -189,7 +189,12 @@ function HookActionButton_Update(button)
     end
     SAO:UpdateActionButton(button);
 end
-hooksecurefunc("ActionButton_Update", HookActionButton_Update);
+if ActionButton_UpdateUsable then 
+hooksecurefunc("ActionButton_UpdateUsable", HookActionButton_Update) 
+end
+if ActionButton_UpdateState then 
+hooksecurefunc("ActionButton_UpdateState", HookActionButton_Update) 
+end
 
 -- Grab buttons in the stance bar
 function HookStanceBar_UpdateState()
@@ -218,7 +223,9 @@ function HookStanceBar_UpdateState()
         SAO:UpdateActionButton(button);
     end
 end
-hooksecurefunc("StanceBar_UpdateState", HookStanceBar_UpdateState);
+if ActionButton_UpdateState then 
+hooksecurefunc("ActionButton_UpdateState", HookActionButton_Update) 
+end
 
 -- Awake dormant buttons associated to a spellID
 function SAO.AwakeButtonsBySpellID(self, spellID)
