@@ -1,15 +1,18 @@
-## Interface: 30403
-
+## Interface: 11508
+## X-Min-Interface: 110207
+## X-Min-Interface-Classic: 11508
+## X-Min-Interface-BCC: 20505
 ## X-Min-Interface-Wrath: 30403
+## X-Min-Interface-Cata: 40400
 
-## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Wotlk
-## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Woltk (Русский)
-## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Woltk (Français)
+## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8
+## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis (Русский)
+## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis (Français)
 
 ## Notes: Warlock UI & Shard Management
 ## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir 
 ## Notes-ruRU: Менеджер заклинаний, камней и демонов для чернокнижника.
-## Version: 8.0.4
+## Version: 8.0.6
 ## Website: https://github.com/CKNOEP/Necrosis
 ## DefaultState: Enabled
 ## X-Original-Author: Lomig,lädygaga - sulfuron EUR - As lancestre
@@ -59,8 +62,8 @@ Speech\Speech-cn.lua
 Speech\Speech-ru.lua
 
 Message.lua
-Spells.lua
-SpellActivations\SpellActivations.lua
+Spells-Vanilla.lua
+
 
 Timers\Functions.lua
 Timers\GraphicalTimers.lua
@@ -73,11 +76,15 @@ XML\Attributes.lua
 
 XML\Panel.lua
 XML\Options-Messages.lua
-XML\Options-Sphere.lua
-XML\Options-Buttons.lua
+XML\Options-Sphere-Vanilla.lua
+XML\Options-Buttons-Vanilla.lua
 XML\Options-Menus.lua
 XML\Options-Timers.lua
 XML\Options-Misc.lua
 XML\Options-Overlay.lua
 Necrosis.lua
 XML\XML.lua
+
+
+
+SpellActivations\SpellActivations.xml

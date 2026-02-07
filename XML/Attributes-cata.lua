@@ -557,9 +557,12 @@ end
 -- Connection Association to the central button if the spell is available || Association de la Connexion au bouton central si le sort est disponible
 function Necrosis:MainButtonAttribute(self)
 	local f = Necrosis.Warlock_Buttons.main.f
-	
+
 	f = _G[f]
 	if not f then return end
+
+	-- Enable clicks on the button
+	f:RegisterForClicks("AnyUp")
 
 	-- Le clic droit ouvre le Menu des options
 	f:SetAttribute("ctrl-type*", "Open")

@@ -594,47 +594,85 @@ end
 -- Connection Association to the central button if the spell is available || Association de la Connexion au bouton central si le sort est disponible
 function Necrosis:MainButtonAttribute(self)
 	local f = Necrosis.Warlock_Buttons.main.f
-	
-	f = _G[f]
-	if not f then return end
 
-	-- Le clic droit ouvre le Menu des options
-	f:SetAttribute("ctrl-type*", "Open")
-	f.Open = function()
-		if not InCombatLockdown() then
-			Necrosis:OpenConfigPanel()
-		end
+	f = _G[f]
+	if not f then
+		return
 	end
+
+	-- Skip if this is the placeholder frame (not a real button yet)
+	if f:GetObjectType() ~= "Button" then
+		print("MainButtonAttribute: Skipping placeholder, real button not created yet")
+		return
+	end
+
+	-- RegisterForClicks is already done in XML.lua - don't call it again!
+	-- NO PreClick - it interferes with SecureActionButton!
 
 	local main_cast = Necrosis.GetSpellCastName(NecrosisConfig.MainSpell) --Necrosis:GetSpellName(NecrosisConfig.MainSpell)
-	local second_cast = Necrosis.GetSpellCastName(NecrosisConfig.MainSpell2) 
-	
-	if Necrosis.Debug.buttons then
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("MainButtonAttribute"
-		.." '"..tostring(NecrosisConfig.MainSpell or "nyl").."'"
-		.." c'"..tostring(main_cast or "nyl").."'"
-		)
-	end
-	
-		
-	if main_cast ~= "" then 
-		f:SetAttribute("type1", "spell")
-		f:SetAttribute("spell", main_cast)
-	end
-	if second_cast ~= "" then 
-		f:SetAttribute("shift-type1", "spell")
-		f:SetAttribute("shift-spell1", second_cast)
-		f:SetAttribute("shift-type2", "spell")
-		f:SetAttribute("shift-spell2", second_cast)
+	local second_cast = Necrosis.GetSpellCastName(NecrosisConfig.MainSpell2)
+
+	-- Get the spell ID for the main spell
+	local main_spell_id = Necrosis.Warlock_Spell_Use[NecrosisConfig.MainSpell]
+
+	-- DEBUG: Always show this information
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("=== MainButtonAttribute DEBUG ===")
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("Button frame: "..tostring(f and f:GetName() or "NIL"))
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("Is SecureActionButton: "..tostring(f:GetObjectType() == "Button"))
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("Has OnClick script: "..tostring(f:GetScript("OnClick") ~= nil))
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("MainSpell config: "..tostring(NecrosisConfig.MainSpell or "NIL"))
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("main_cast result: '"..tostring(main_cast or "NIL").."'")
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("main_cast type: "..type(main_cast))
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("RegisterForClicks called: AnyUp")
+
+
+	if main_spell_id and main_spell_id > 0 then
+		-- Use spell ID directly - most reliable method!
+		local spellName = GetSpellInfo(main_spell_id)
+
+		-- HEALBOT METHOD - Conditional Attributes System!
+		f:SetAttribute("unit", "player")                      -- Cible: le joueur
+		f:SetAttribute("helpbutton1", "mainspell")            -- Clic gauche → action mainspell
+		f:SetAttribute("type-mainspell", "spell")             -- Type: sort
+		f:SetAttribute("spell-mainspell", spellName)          -- Sort à lancer
+
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("✓ HEALBOT METHOD ACTIVATED!")
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("✓ Using SPELL ID "..main_spell_id.." = "..tostring(spellName))
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("✓ unit="..tostring(f:GetAttribute("unit")))
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("✓ helpbutton1="..tostring(f:GetAttribute("helpbutton1")))
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("✓ type-mainspell="..tostring(f:GetAttribute("type-mainspell")))
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("✓ spell-mainspell="..tostring(f:GetAttribute("spell-mainspell")))
+
+		-- Check if there are interfering attributes
+		if f:GetAttribute("type") or f:GetAttribute("type1") or f:GetAttribute("type2") then
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("⚠ WARNING: Old attributes found!")
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("  type="..tostring(f:GetAttribute("type")))
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("  type1="..tostring(f:GetAttribute("type1")))
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("  type2="..tostring(f:GetAttribute("type2")))
+		end
+
+		-- Clear ANY scripts that might interfere
+		f:SetScript("OnClick", nil)
+		f:SetScript("PreClick", nil)
+		f:SetScript("PostClick", nil)
+	elseif main_cast ~= "" and main_cast ~= nil then
+		-- Fallback to macro if no ID available
+		f:SetAttribute("type1", "macro")
+		f:SetAttribute("macrotext1", "/cast " .. main_cast)
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("✓ Fallback: type1 = macro, macrotext1 = /cast "..tostring(main_cast))
+	else
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("✗ Attributes NOT set (no spell configured)")
 	end
 
-	f:SetAttribute("type2", "Delete")
-	f.Delete = function()
-		if not InCombatLockdown() then
-			Necrosis:DeleteShards()
-			Necrosis:BagExplore()
-		end
+	if second_cast ~= "" and second_cast ~= nil then
+		f:SetAttribute("shift-type1", "macro")
+		f:SetAttribute("shift-macrotext1", "/cast " .. second_cast)
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("✓ shift-type1 = macro, shift-macrotext1 = /cast "..tostring(second_cast))
+	else
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("✗ Shift+click not configured (second_cast empty or nil)")
 	end
+
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("=== END DEBUG ===")
 
 	end
 

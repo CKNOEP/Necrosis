@@ -1103,13 +1103,13 @@ function Necrosis.GetSpellRank(usage)
 end
 
 function Necrosis.GetSpellName(usage)
-	if Necrosis.Warlock_Spell_Use[usage] -- 
-	then
-		return 
-			Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].Name
-	else
-		return ""
+	if Necrosis.Warlock_Spell_Use[usage] then
+		local spell = Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]]
+		if spell and spell.Name then
+			return spell.Name
+		end
 	end
+	return ""
 end
 
 function Necrosis.GetSpell(usage) -- return the Warlock_Spells table (pointer)
@@ -1127,16 +1127,24 @@ function Necrosis.GetSpellById(id) -- return the Warlock_Spells table (pointer)
 end
 
 function Necrosis.GetSpellCastName(usage)
-	
-	if Necrosis.Warlock_Spell_Use[usage] -- 
+
+	if Necrosis.Warlock_Spell_Use[usage] --
 	then
-	
+
 		if usage == "soulstone" then
 		--print("SS",Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].CastName)
 		end
-		
-		return	
-		Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].CastName
+
+		local fullName = Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].CastName
+
+		-- Remove rank from spell name: "Spell Name(Rank X)" -> "Spell Name"
+		-- This is needed for SecureActionButton macros to work
+		if fullName then
+			local nameOnly = fullName:match("^(.-)%(") or fullName
+			return nameOnly
+		end
+
+		return fullName
 	else
 		return ""
 	end

@@ -468,7 +468,9 @@ function Necrosis:SetMiscConfig()
 	
 	testButton:SetScript("OnLeave", function(self)
 			self.isTesting = false;
-            self.testTimerTicker:Cancel();
+            if self.testTimerTicker then
+                self.testTimerTicker:Cancel();
+            end
             SAO:DeactivateOverlay(self.fakeSpellID);
             -- Undo hack
             NecrosisSpellActivationOverlayFrame_SetForceAlpha1(false);

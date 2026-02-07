@@ -10,8 +10,18 @@ Necrosis = {}
 SAO ={}
 NECROSIS_ID = "Necrosis"
 
+-- Compatibility wrapper for GetAddOnMetadata (deprecated in modern WoW)
+local function GetMetadata(addon, field)
+	if C_AddOns and C_AddOns.GetAddOnMetadata then
+		return C_AddOns.GetAddOnMetadata(addon, field)
+	elseif GetAddOnMetadata then
+		return GetAddOnMetadata(addon, field)
+	end
+	return nil
+end
+
 Necrosis.Data = {
-	Version = GetAddOnMetadata("Necrosis", "Version"),
+	Version = GetMetadata("Necrosis", "Version"),
 	AppName = "Necrosis",
 	LastConfig = "8.0.6",
 	Enabled = false,
@@ -42,15 +52,22 @@ Necrosis.Debug = {
 	}
 
 --local ntooltip = CreateFrame("Frame", "NecrosisTooltip", UIParent, BackdropTemplateMixin and "GameTooltipTemplate");
-local nbutton  = CreateFrame("Button", "NecrosisButton", UIParent, "SecureActionButtonTemplate")
+-- CRITICAL FIX: Create NecrosisButton immediately with unique name!
+-- The point in the name was causing click issues!
+local nbutton = CreateFrame("Button", "NecrosisMainSphere", UIParent, "SecureUnitButtonTemplate")
+-- Register it as NecrosisButton for the rest of the code
+_G["NecrosisButton"] = nbutton
 
--- Edit the scripts associated with the button || Edition des scripts associés au bouton
-NecrosisButton:SetScript("OnEvent", function(self,event, ...)
-	 Necrosis:OnEvent(self, event,...) 
-	end)
+-- Create separate frame for event handling (NOT the button itself!)
+-- This is the KEY: Events are handled by eventFrame, clicks by NecrosisButton!
+local eventFrame = CreateFrame("Frame", "NecrosisEventFrame")
+eventFrame:SetScript("OnEvent", function(self, event, ...)
+	-- OnEvent receives events, but we pass NecrosisButton as the frame reference
+	Necrosis:OnEvent(NecrosisButton, event, ...)
+end)
 
-NecrosisButton:RegisterEvent("PLAYER_LOGIN")
-NecrosisButton:RegisterEvent("PLAYER_ENTERING_WORLD")
+eventFrame:RegisterEvent("PLAYER_LOGIN")
+eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 
 
 -- Events utilised by Necrosis || Events utilisés dans Necrosis
@@ -69,7 +86,7 @@ local Events = {
 	"UNIT_MANA",
 	"UNIT_HEALTH",
 	"UNIT_POWER_UPDATE",
-	"LEARNED_SPELL_IN_TAB",
+	-- "LEARNED_SPELL_IN_TAB", -- Removed: deprecated in WoW Classic 2026, use SPELLS_CHANGED instead
 	"PLAYER_TARGET_CHANGED",
 	"TRADE_REQUEST",
 	"TRADE_REQUEST_CANCEL",
@@ -121,17 +138,17 @@ function Necrosis:Initialize(Config)
 	end
 
 	f = _G[f]
-	-- Now ready to activate Necrosis
-	f:SetScript("OnUpdate", 	function(self, arg1) Necrosis:OnUpdate(self, arg1) end)
-	f:SetScript("OnEnter", 		function(self) Necrosis:BuildButtonTooltip(self) end)
-	f:SetScript("OnLeave", 		function() GameTooltip:Hide() end)
-	f:SetScript("OnMouseUp", 	function(self) Necrosis:OnDragStop(self) end)
-	f:SetScript("OnDragStart", 	function(self) Necrosis:OnDragStart(self) end)
-	f:SetScript("OnDragStop", 	function(self) Necrosis:OnDragStop(self) end)
+	-- Configure scripts for the placeholder (will be replaced by real button)
+	-- These will be set on the real button after it's created
+	-- OnUpdate, OnEnter, OnLeave, OnDragStart, OnDragStop will be added to the new button
 
 	-- Register the events used || Enregistrement des events utilisés
-	for i in ipairs(Events) do
-		f:RegisterEvent(Events[i])
+	-- CRITICAL: Register events on eventFrame, NOT on the button!
+	local eventFrame = _G["NecrosisEventFrame"]
+	if eventFrame then
+		for i in ipairs(Events) do
+			eventFrame:RegisterEvent(Events[i])
+		end
 	end
 
 	Necrosis:Initialize_Speech()
@@ -230,7 +247,9 @@ function Necrosis:Initialize(Config)
 		fe:RegisterForDrag("")
 	else
 		self:Drag()
-		f:RegisterForDrag("LeftButton")
+		-- CRITICAL TEST: Disable drag on main sphere to see if clicks work
+		-- RegisterForDrag("LeftButton") blocks SecureActionButton clicks!
+		f:RegisterForDrag("")  -- TEST: No drag at all
 		ftb:RegisterForDrag("LeftButton")
 		ft:RegisterForDrag("LeftButton")
 		fb:RegisterForDrag("LeftButton")
@@ -254,7 +273,119 @@ function Necrosis:Initialize(Config)
 	Necrosis:UpdateHealth()
 	Necrosis:UpdateMana()
 	Necrosis:ButtonSetup()
-	
+
+	-- Configure button click attributes || Configuration des attributs de clics des boutons
+	if not InCombatLockdown() then
+		-- Determine if mount spell is available
+		local SteedAvailable = false
+		if GetSpellInfo(GetSpellInfo(5784)) or GetSpellInfo(GetSpellInfo(23161)) then
+			SteedAvailable = true
+		end
+
+		-- Configure all button attributes
+		-- TEMP: Disable MainButtonAttribute to test if it breaks clicks!
+		-- Necrosis:MainButtonAttribute()
+
+		-- CRITICAL: Re-enable clicks on main sphere AFTER all SetScript calls!
+		-- DISABLED: Old config code - button is now created with delay below
+		-- print("DEBUG: Checking main button...")
+		-- The real button will be created after delay
+
+		Necrosis:BuffSpellAttribute()
+		Necrosis:PetSpellAttribute()
+		Necrosis:CurseSpellAttribute()
+		Necrosis:StoneAttribute(SteedAvailable)
+
+		-- CRITICAL: CREATE BRAND NEW BUTTON with delay (like test 5 that WORKS!)
+		C_Timer.After(1, function()
+			if not InCombatLockdown() then
+				-- DESTROY old button completely
+				local oldBtn = _G["NecrosisButton"]
+				if oldBtn then
+					oldBtn:Hide()
+					oldBtn:SetParent(nil)
+					oldBtn = nil
+				end
+
+				-- Create BRAND NEW button
+				local btn = CreateFrame("Button", "NecrosisMainSphere", UIParent, "SecureUnitButtonTemplate")
+				btn:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\Shard")
+				btn:SetWidth(58)
+				btn:SetHeight(58)
+				btn:SetFrameStrata("MEDIUM")
+				btn:SetFrameLevel(1)
+				btn:SetMovable(true)
+				btn:EnableMouse(true)
+
+				-- Get configured spells
+				local mainSpell = Necrosis.GetSpellCastName(NecrosisConfig.MainSpell)
+				local secondSpell = Necrosis.GetSpellCastName(NecrosisConfig.MainSpell2)
+
+				-- Configure attributes - Left click main spell
+				if mainSpell then
+					btn:SetAttribute("type1", "spell")
+					btn:SetAttribute("spell1", mainSpell)
+				end
+
+				-- Shift+Left click second spell
+				if secondSpell and secondSpell ~= "" then
+					btn:SetAttribute("shift-type1", "spell")
+					btn:SetAttribute("shift-spell1", secondSpell)
+				end
+
+				-- Right click opens config menu
+				btn:SetAttribute("type2", "macro")
+				btn:SetAttribute("macrotext2", "/necrosis")
+
+				btn:RegisterForClicks("AnyUp")
+
+				-- Configure scripts
+				btn:SetScript("OnUpdate", function(self, arg1) Necrosis:OnUpdate(self, arg1) end)
+				btn:SetScript("OnEnter", function(self)
+					GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+					GameTooltip:SetText("Necrosis", 0.5, 0, 0.9)
+					GameTooltip:AddLine(" ")
+					if mainSpell then
+						GameTooltip:AddDoubleLine("Clic gauche:", mainSpell, 1, 1, 1, 1, 1, 1)
+					end
+					if secondSpell and secondSpell ~= "" then
+						GameTooltip:AddDoubleLine("Shift+Clic gauche:", secondSpell, 1, 1, 1, 1, 1, 1)
+					end
+					GameTooltip:AddDoubleLine("Clic droit:", "Configuration", 1, 1, 1, 1, 1, 1)
+					GameTooltip:AddDoubleLine("Drag:", "Déplacer", 1, 1, 1, 1, 1, 1)
+					GameTooltip:Show()
+				end)
+				btn:SetScript("OnLeave", function() GameTooltip:Hide() end)
+				btn:SetScript("OnDragStart", function(self) Necrosis:OnDragStart(self) end)
+				btn:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
+
+				-- Enable drag if not locked
+				if not NecrosisConfig.NoDragAll then
+					btn:RegisterForDrag("LeftButton")
+				end
+
+				-- Position
+				if NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisButton"] then
+					btn:SetPoint(
+						NecrosisConfig.FramePosition["NecrosisButton"][1],
+						NecrosisConfig.FramePosition["NecrosisButton"][2],
+						NecrosisConfig.FramePosition["NecrosisButton"][3],
+						NecrosisConfig.FramePosition["NecrosisButton"][4],
+						NecrosisConfig.FramePosition["NecrosisButton"][5]
+					)
+				else
+					btn:SetPoint("CENTER", UIParent, "CENTER", 0, -200)
+				end
+
+				btn:Show()
+				_G["NecrosisButton"] = btn
+
+				-- Reposition peripheral buttons around the sphere
+				Necrosis:ButtonSetup()
+			end
+		end)
+	end
+
 	-- We check that the fragments are in the bag defined by the Warlock || On vérifie que les fragments sont dans le sac défini par le Démoniste
 	if NecrosisConfig.SoulshardSort then
 		--self:SoulshardSwitch("CHECK")

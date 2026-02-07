@@ -3,6 +3,30 @@
   <Script file="InterfaceOptionsPanels.lua"/>
 
   <Frame name="NecrosisSpellActivationOverlayOptionsPanel" hidden="true" parent="UIParent">
+    <Layers>
+      <Layer level="ARTWORK">
+        <FontString name="$parentBuildInfo" text="" inherits="GameFontNormal" justifyH="CENTER" justifyV="CENTER">
+          <Anchors>
+            <Anchor point="BOTTOMRIGHT">
+              <Offset>
+                <AbsDimension x="-16" y="56"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+      <Layer level="ARTWORK">
+        <FontString name="$parentClassInfo" text="" inherits="GameFontNormalLarge" justifyH="CENTER" justifyV="CENTER">
+          <Anchors>
+            <Anchor point="BOTTOM" relativeTo="$parentBuildInfo" relativePoint="TOP">
+              <Offset>
+                <AbsDimension x="0" y="8"/>
+              </Offset>
+            </Anchor>
+          </Anchors>
+        </FontString>
+      </Layer>
+    </Layers>
     <Frames>
       <Slider name="$parentSpellAlertOpacitySlider" inherits="OptionsSliderTemplate">
         <Anchors>
@@ -156,11 +180,29 @@
           </PostClick>
         </Scripts>
       </CheckButton>
+      <CheckButton name="$parentSpellAlertReportButton" inherits="InterfaceOptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="BOTTOMLEFT" relativeTo="$parentSpellAlertDebugButton" relativePoint="BOTTOMLEFT">
+            <Offset>
+              <AbsDimension x="0" y="20"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <PostClick>
+            if (self:GetChecked()) then
+              NecrosisConfig.report = nil;
+            else
+              NecrosisConfig.report = false;
+            end
+          </PostClick>
+        </Scripts>
+      </CheckButton>
       <CheckButton name="$parentSpellAlertResponsiveButton" inherits="InterfaceOptionsCheckButtonTemplate">
         <Anchors>
           <Anchor point="BOTTOMLEFT" relativeTo="$parentSpellAlertDebugButton" relativePoint="BOTTOMLEFT">
             <Offset>
-              <AbsDimension x="256" y="0"/>
+              <AbsDimension x="300" y="0"/>
             </Offset>
           </Anchor>
         </Anchors>
@@ -170,6 +212,22 @@
               NecrosisConfig.responsiveMode = true;
             else
               NecrosisConfig.responsiveMode = nil;
+            end
+          </PostClick>
+        </Scripts>
+      </CheckButton>
+      <CheckButton name="$parentSpellAlertAskDisableGameAlertButton" inherits="InterfaceOptionsCheckButtonTemplate">
+        <Anchors>
+          <Anchor point="BOTTOMLEFT" relativeTo="$parentSpellAlertResponsiveButton" relativePoint="BOTTOMLEFT">
+            <Offset>
+              <AbsDimension x="0" y="20"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Scripts>
+          <PostClick>
+            if (self.OnValueChanged) then
+              self:OnValueChanged(self:GetChecked());
             end
           </PostClick>
         </Scripts>
@@ -233,6 +291,49 @@
           </Button>
         </Frames>
       </Frame>
+      <Frame name="$parentGlowOffBlockingFrame" parentKey="glowOff" setAllPoints="false" frameLevel="50" enableMouse="true" hidden="true">
+        <Anchors>
+          <Anchor point="TOPLEFT" relativeTo="$parentGlowingButtons" relativePoint="TOPLEFT">
+            <Offset>
+              <AbsDimension x="-16" y="0"/>
+            </Offset>
+          </Anchor>
+          <Anchor point="BOTTOMRIGHT" relativeTo="$parentSpellAlertAskDisableGameAlertButton" relativePoint="TOPRIGHT">
+            <Offset>
+              <AbsDimension x="16" y="0"/>
+            </Offset>
+          </Anchor>
+        </Anchors>
+        <Layers>
+          <Layer level="ARTWORK" textureSubLevel="1">
+            <Texture setAllPoints="true" file="Interface/ContainerFrame/UI-Icon-QuestBang">
+              <Color r="1" g="1" b="1" a="0.5"/>
+            </Texture>
+          </Layer>
+          <Layer level="ARTWORK" textureSubLevel="2">
+            <Texture setAllPoints="true">
+              <Color r="0" g="0" b="0" a="0.75"/>
+            </Texture>
+          </Layer>
+          <Layer level="ARTWORK" textureSubLevel="3">
+            <FontString name="$parentGlowOffLabelReason" parentKey="reason" setAllPoints="true" text="Glowing Buttons are not available in this build and shall be fixed at a later date. Thank you for your understanding." inherits="SystemFont_Shadow_Huge1" justifyH="CENTER" justifyV="CENTER">
+              <Color r="0.8" g="0.8" b="0.8" a="1"/>
+              <Anchors>
+                <Anchor point="TOPLEFT" relativeTo="$parent" relativePoint="TOPLEFT">
+                  <Offset>
+                    <AbsDimension x="64" y="-64"/>
+                  </Offset>
+                </Anchor>
+                <Anchor point="BOTTOMRIGHT" relativeTo="$parent" relativePoint="BOTTOMRIGHT">
+                  <Offset>
+                    <AbsDimension x="-64" y="64"/>
+                  </Offset>
+                </Anchor>
+              </Anchors>
+            </FontString>
+          </Layer>
+        </Layers>
+      </Frame>
     </Frames>
     <Layers>
       <Layer level="ARTWORK">
@@ -258,7 +359,7 @@
         </FontString>
       </Layer>
       <Layer level="ARTWORK">
-        <FontString name="$parentSpellAlertNone" text="" inherits="GameFontHighlight" justifyH="LEFT" justifyV="TOP" parentKey="glowNone">
+        <FontString name="$parentGlowingButtonNone" text="" inherits="GameFontHighlight" justifyH="LEFT" justifyV="TOP" parentKey="glowNone">
           <Anchors>
             <Anchor point="TOPLEFT" relativeTo="$parentGlowingButtons" relativePoint="BOTTOMLEFT">
               <Offset>

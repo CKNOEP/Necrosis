@@ -64,13 +64,13 @@ function Necrosis:CreateWarlockUI()
 	local frame = nil
 	frame = _G[f]
 	if not frame then
-		frame = CreateFrame("Button", f, UIParent, "SecureActionButtonTemplate")
+		frame = CreateFrame("Button", f, UIParent, "SecureUnitButtonTemplate")
 	end
 
 	-- Define its attributes || Définition de ses attributs
 	frame:SetFrameStrata("MEDIUM")
 	frame:SetMovable(true)
-	--frame:EnableMouse(true)
+	frame:EnableMouse(true)
 	frame:SetWidth(34)
 	frame:SetHeight(34)
 	frame:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\SpellTimerButton-Normal")
@@ -81,10 +81,6 @@ function Necrosis:CreateWarlockUI()
 	-- Create the timer anchor || Création des ancres des timers
 	self:CreateTimerAnchor()
 	-- Edit the scripts associated with the button || Edition des scripts associés au bouton
-	frame:SetScript("OnLoad", function(self)
-		self:RegisterForDrag("LeftButton")
-		self:RegisterForClicks("RightButtonUp")
-	end)
 	frame:SetScript("OnEnter", function(self) Necrosis:BuildButtonTooltip(self) end)
 	--frame:SetScript("OnEnter", function(self) Necrosis:BuildTooltip(self, "SpellTimer", "ANCHOR_RIGHT", "Timer") end)
 	frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
@@ -109,33 +105,36 @@ function Necrosis:CreateWarlockUI()
 -- SPHERE NECROSIS
 ------------------------------------------------------------------------------------------------------
 
-	-- Create the main Necrosis button  || Création du bouton principal de Necrosis
-	frame = nil
+	-- Get the button created in Initialize.lua
 	frame = _G["NecrosisButton"]
 	if not frame then
-		frame = CreateFrame("Button", "NecrosisButton", UIParent, "SecureActionButtonTemplate")
-		frame:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\Shard")
+		print("ERROR: NecrosisButton not created yet!")
+		return
 	end
 
-	-- Define its attributes || Définition de ses attributs
-	frame:SetFrameLevel(1)
-	frame:SetMovable(true)
-	frame:EnableMouse(true)
+	-- Configure it
+	frame:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\Shard")
 	frame:SetWidth(58)
 	frame:SetHeight(58)
-	frame:RegisterForDrag("LeftButton")
-	frame:RegisterForClicks("AnyUp")
-	frame:Show()
+	frame:SetMovable(true)
+	frame:EnableMouse(true)
+	frame:SetFrameLevel(1)
 
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
 	frame:ClearAllPoints()
-	frame:SetPoint(
-		NecrosisConfig.FramePosition["NecrosisButton"][1],
-		NecrosisConfig.FramePosition["NecrosisButton"][2],
-		NecrosisConfig.FramePosition["NecrosisButton"][3],
-		NecrosisConfig.FramePosition["NecrosisButton"][4],
-		NecrosisConfig.FramePosition["NecrosisButton"][5]
-	)
+	if NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisButton"] then
+		frame:SetPoint(
+			NecrosisConfig.FramePosition["NecrosisButton"][1],
+			NecrosisConfig.FramePosition["NecrosisButton"][2],
+			NecrosisConfig.FramePosition["NecrosisButton"][3],
+			NecrosisConfig.FramePosition["NecrosisButton"][4],
+			NecrosisConfig.FramePosition["NecrosisButton"][5]
+		)
+	else
+		-- Default position if no saved position
+		print("WARNING: No saved position for NecrosisButton, using default CENTER")
+		frame:SetPoint("CENTER", UIParent, "CENTER", 0, -200)
+	end
 
 	frame:SetScale((NecrosisConfig.NecrosisButtonScale / 100))
 	
@@ -167,7 +166,7 @@ local function CreateStoneButton(stone)
 		)
 	end
 
-	local frame = CreateFrame("Button", b.f, UIParent, "SecureActionButtonTemplate")
+	local frame = CreateFrame("Button", b.f, UIParent, "SecureUnitButtonTemplate")
 
 	-- Define its attributes || Définition de ses attributs
 	frame:SetMovable(true)
@@ -319,7 +318,7 @@ function Necrosis:CreateMenuItem(i)
 	-- Create the button || Creation du bouton
 	local frame = _G[b.f] 
 	if not frame then
-		frame = CreateFrame("Button", b.f, UIParent, "SecureActionButtonTemplate")
+		frame = CreateFrame("Button", b.f, UIParent, "SecureUnitButtonTemplate")
 
 		-- Définition de ses attributs
 		frame:SetMovable(true)
@@ -347,14 +346,14 @@ function Necrosis:CreateMenuItem(i)
 	frame:Hide()
 
 	-- Edit the scripts associated with the button || Edition des scripts associés au bouton 
-	frame:SetScript("OnEnter", function(self) 
+	frame:SetScript("OnEnter", function(self)
 	Necrosis:BuildButtonTooltip(self)
 	--Necrosis:OnDragStart(self)
 	end)
-	frame:SetScript("OnDragStart", frame.StartMoving)
-	frame:SetScript("OnDragStop", frame.StopMovingOrSizing)
+	frame:SetScript("OnDragStart", function(self) Necrosis:OnDragStart(self) end)
+	frame:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
 	frame:SetScript("OnLeave", function(self)
-	GameTooltip:Hide() 
+	GameTooltip:Hide()
 	--Necrosis:OnDragStop(self)
 	end)
 	
@@ -472,7 +471,7 @@ function Necrosis:CreateWarlockPopup()
 	
 	frame = _G["NecrosisCreatureAlertButton_demon"]
 	if not frame then
-		frame = CreateFrame("Button", "NecrosisCreatureAlertButton_demon", UIParent,  "SecureActionButtonTemplate")
+		frame = CreateFrame("Button", "NecrosisCreatureAlertButton_demon", UIParent,  "SecureUnitButtonTemplate")
 	end
 
 	-- Define its attributes || Définition de ses attributs
@@ -537,7 +536,7 @@ function Necrosis:CreateWarlockPopup()
 
 	frame = _G["NecrosisCreatureAlertButton_elemental"]
 	if not frame then
-		frame = CreateFrame("Button", "NecrosisCreatureAlertButton_elemental", UIParent,  "SecureActionButtonTemplate")
+		frame = CreateFrame("Button", "NecrosisCreatureAlertButton_elemental", UIParent,  "SecureUnitButtonTemplate")
 	end
 
 	-- Define its attributes || Définition de ses attributs

@@ -1711,13 +1711,17 @@ end
 
 -- Function to move Necrosis elements on the screen ||Fonction permettant le déplacement d'éléments de Necrosis sur l'écran
 function Necrosis:OnDragStart(button)
-	button:StartMoving()
+	if not InCombatLockdown() then
+		button:StartMoving()
+	end
 end
 
 -- Function stopping the movement of Necrosis elements on the screen ||Fonction arrêtant le déplacement d'éléments de Necrosis sur l'écran
 function Necrosis:OnDragStop(button)
 	-- We stop the movement effectively ||On arrête le déplacement de manière effective
-	button:StopMovingOrSizing()
+	if not InCombatLockdown() then
+		button:StopMovingOrSizing()
+	end
 	-- We save the location of the button ||On sauvegarde l'emplacement du bouton
 	local NomBouton = button:GetName()
 	local AncreBouton, BoutonParent, AncreParent, BoutonX, BoutonY = button:GetPoint()

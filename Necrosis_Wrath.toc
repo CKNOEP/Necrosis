@@ -1,15 +1,18 @@
-## Interface: 40402
-
+## Interface: 30403
+## X-Min-Interface: 110207
+## X-Min-Interface-Classic: 11508
+## X-Min-Interface-BCC: 20505
 ## X-Min-Interface-Wrath: 30403
+## X-Min-Interface-Cata: 40400
 
-## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Cata
-## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Cata (Русский)
-## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Cata (Français)
+## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Wrath
+## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Wrath (Русский)
+## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Wrath (Français)
 
 ## Notes: Warlock UI & Shard Management
 ## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir 
 ## Notes-ruRU: Менеджер заклинаний, камней и демонов для чернокнижника.
-## Version: 8.0.6
+## Version: 8.0.4
 ## Website: https://github.com/CKNOEP/Necrosis
 ## DefaultState: Enabled
 ## X-Original-Author: Lomig,lädygaga - sulfuron EUR - As lancestre
@@ -35,6 +38,7 @@ libs\!LibUIDropDownMenu\LibUIDropDownMenu\LibUIDropDownMenu.xml
 
 libs\LibDataBroker-1.1.lua
 
+TestButton.lua
 Initialize.lua
 Utils.lua
 
@@ -47,7 +51,7 @@ Locales\Localization.RU.lua
 Locales\Localization.TW.lua
 Locales\Localization.MX.lua
 
-Dialog-Cata.lua
+Dialog.lua
 Functions.lua
 AFKS.lua
 Speech\Speech-fr.lua
@@ -59,8 +63,8 @@ Speech\Speech-cn.lua
 Speech\Speech-ru.lua
 
 Message.lua
-Spells-Cata.lua
-
+Spells.lua
+SpellActivations\SpellActivations.xml
 
 Timers\Functions.lua
 Timers\GraphicalTimers.lua
@@ -69,18 +73,15 @@ Timers\OtherTimers.lua
 
 
 
-XML\Attributes-cata.lua
+XML\Attributes.lua
 
 XML\Panel.lua
 XML\Options-Messages.lua
-XML\Options-Sphere-Cata.lua
-XML\Options-Buttons-Cata.lua
+XML\Options-Sphere.lua
+XML\Options-Buttons.lua
 XML\Options-Menus.lua
 XML\Options-Timers.lua
-XML\Options-Misc-Cata.lua
+XML\Options-Misc.lua
 XML\Options-Overlay.lua
-Necrosis-cata.lua
+Necrosis.lua
 XML\XML.lua
-
-
-SpellActivations\SpellActivations.xml
