@@ -5,3 +5,6 @@
 *.vsidx
 .vs/Necrosis/copilot/147479165
 .vs/Necrosis/v17/workspaceFileList.bin
+
+# Claude Code configuration
+.claude/
