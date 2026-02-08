@@ -308,7 +308,8 @@ function Necrosis:Initialize(Config)
 		Necrosis:StoneAttribute(SteedAvailable)
 
 		-- CRITICAL: CREATE BRAND NEW BUTTON with delay (like test 5 that WORKS!)
-		C_Timer.After(1, function()
+		-- Increased delay to 3 seconds to ensure proper initialization on first login
+		C_Timer.After(3, function()
 			if not InCombatLockdown() then
 				-- DESTROY old button completely
 				local oldBtn = _G["NecrosisButton"]
