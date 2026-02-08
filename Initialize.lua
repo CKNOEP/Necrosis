@@ -58,6 +58,17 @@ local nbutton = CreateFrame("Button", "NecrosisMainSphere", UIParent, "SecureUni
 -- Register it as NecrosisButton for the rest of the code
 _G["NecrosisButton"] = nbutton
 
+-- Create text overlay frame IMMEDIATELY with HIGH FrameStrata so it's above the button
+-- This prevents XML.lua from creating it on UIParent (which would be behind the button)
+local textOverlay = CreateFrame("Frame", "NecrosisShardCountFrame", nbutton)  -- PARENT = nbutton!
+textOverlay:SetFrameStrata("HIGH")  -- Above MEDIUM (button strata)
+textOverlay:SetFrameLevel(100)
+textOverlay:SetAllPoints(nbutton)  -- Cover the entire button
+-- Create the FontString on this high-strata frame
+local shardCount = textOverlay:CreateFontString("NecrosisShardCount", "OVERLAY", "GameFontNormal")
+shardCount:SetPoint("CENTER")  -- Center in parent
+shardCount:SetTextColor(1, 1, 1, 1)
+
 -- Create separate frame for event handling (NOT the button itself!)
 -- This is the KEY: Events are handled by eventFrame, clicks by NecrosisButton!
 local eventFrame = CreateFrame("Frame", "NecrosisEventFrame")
@@ -312,8 +323,23 @@ function Necrosis:Initialize(Config)
 				btn:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\Shard")
 				btn:SetWidth(58)
 				btn:SetHeight(58)
+
+				-- Apply configured scale
+				local scale = (NecrosisConfig.NecrosisButtonScale or 100) / 100
+				btn:SetScale(scale)
+
 				btn:SetFrameStrata("MEDIUM")
 				btn:SetFrameLevel(1)
+
+				-- FontString already created at file load time with HIGH FrameStrata
+				-- Reparent the overlay frame to the new button so it follows automatically
+				local textOverlay = _G["NecrosisShardCountFrame"]
+				if textOverlay then
+					textOverlay:SetParent(btn)  -- Make it child of the new button
+					textOverlay:ClearAllPoints()
+					textOverlay:SetAllPoints(btn)  -- Cover the entire button
+				end
+
 				btn:SetMovable(true)
 				btn:EnableMouse(true)
 
@@ -357,7 +383,15 @@ function Necrosis:Initialize(Config)
 				end)
 				btn:SetScript("OnLeave", function() GameTooltip:Hide() end)
 				btn:SetScript("OnDragStart", function(self) Necrosis:OnDragStart(self) end)
-				btn:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
+				btn:SetScript("OnDragStop", function(self)
+					Necrosis:OnDragStop(self)
+					-- Make text overlay cover the button again after drag
+					local overlay = _G["NecrosisShardCountFrame"]
+					if overlay then
+						overlay:ClearAllPoints()
+						overlay:SetAllPoints(self)
+					end
+				end)
 
 				-- Enable drag if not locked
 				if not NecrosisConfig.NoDragAll then
@@ -382,6 +416,9 @@ function Necrosis:Initialize(Config)
 
 				-- Reposition peripheral buttons around the sphere
 				Necrosis:ButtonSetup()
+
+				-- Shard count will be automatically updated by Necrosis:OnUpdate()
+				-- No need to force update here - let the normal system handle it
 			end
 		end)
 	end

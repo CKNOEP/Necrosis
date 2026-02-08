@@ -139,15 +139,17 @@ function Necrosis:CreateWarlockUI()
 	frame:SetScale((NecrosisConfig.NecrosisButtonScale / 100))
 	
 	-- Create the soulshard counter || Création du compteur de fragments d'âme
+	-- Note: If the new button system (Initialize.lua with timer) is active,
+	-- the FontString will be created there on UIParent, so we skip this.
 	local FontString = _G["NecrosisShardCount"]
 	if not FontString then
-		FontString = frame:CreateFontString("NecrosisShardCount", nil, "GameFontNormal")
+		-- Create on UIParent (not on frame) so it's visible above the button texture
+		FontString = UIParent:CreateFontString("NecrosisShardCount", "OVERLAY", "GameFontNormal")
+		FontString:SetPoint("CENTER", frame, "CENTER", 0, 0)
+		FontString:SetText("00")
+		FontString:SetTextColor(1, 1, 1)
 	end
-
-	-- Define its attributes || Définition de ses attributs , le restes des attributs sont dans Attibutes.lua - Necrosis:MainButtonAttribute()
-	FontString:SetText("00")
-	FontString:SetPoint("CENTER")
-	FontString:SetTextColor(1, 1, 1)
+	-- If FontString already exists (created by Initialize.lua timer), don't reconfigure it
 end
 
 ------------------------------------------------------------------------------------------------------
