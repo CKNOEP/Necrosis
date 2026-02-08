@@ -1,0 +1,31 @@
+local AddonName,SAO=...
+function SAO.ApplyAllVariables(self)
+self:ApplySpellAlertOpacity()
+self:ApplySpellAlertGeometry()
+self:ApplySpellAlertTimer()
+self:ApplySpellAlertSound()
+self:ApplyGlowingButtonsToggle()
+end
+function SAO.ApplySpellAlertOpacity(self)
+NecrosisSpellActivationOverlayContainerFrame:SetShown(NecrosisConfig.alert.enabled)
+NecrosisSpellActivationOverlayContainerFrame:SetAlpha(NecrosisConfig.alert.opacity)
+end
+function SAO.ApplySpellAlertGeometry(self)
+NecrosisSpellActivationOverlayAddonFrame.scale=NecrosisConfig.alert.scale
+NecrosisSpellActivationOverlayAddonFrame.offset=NecrosisConfig.alert.offset
+NecrosisSpellActivationOverlay_OnChangeGeometry(NecrosisSpellActivationOverlayAddonFrame)
+end
+function SAO.ApplySpellAlertTimer(self)
+NecrosisSpellActivationOverlayAddonFrame.useTimer=NecrosisConfig.alert.timer~=0
+NecrosisSpellActivationOverlay_OnChangeTimerVisibility(NecrosisSpellActivationOverlayAddonFrame)
+end
+function SAO.ApplySpellAlertSound(self)
+NecrosisSpellActivationOverlayAddonFrame.useSound=NecrosisConfig.alert.sound~=0
+NecrosisSpellActivationOverlay_OnChangeSoundToggle(NecrosisSpellActivationOverlayAddonFrame)
+end
+function SAO.ApplyGlowingButtonsToggle(self)
+self:ForEachBucket(function(bucket)
+bucket:reset()
+bucket.trigger:manualCheckAll()
+end)
+end
