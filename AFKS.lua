@@ -572,14 +572,18 @@ end
 
 
 do
-	AFKS:Init()
+	-- Only initialize AFKS for Warlock class
+	local _, playerClass = UnitClass("player")
+	if playerClass == "WARLOCK" then
+		AFKS:Init()
 
-	if wowVersion == "retail" then
-		hooksecurefunc ("LFGListInviteDialog_Show", function()
-			if not InCombatLockdown() then
-				AFKS:SetAFK(false)
-			end
-		end)
+		if wowVersion == "retail" then
+			hooksecurefunc ("LFGListInviteDialog_Show", function()
+				if not InCombatLockdown() then
+					AFKS:SetAFK(false)
+				end
+			end)
+		end
 	end
 end
 
