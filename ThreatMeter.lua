@@ -85,6 +85,7 @@ function Necrosis:UpdateThreatMeter()
 			segment:SetVertexColor(r, g, b, alpha)
 		end
 	end
+	threatRing:Show()  -- Make the ring visible during combat
 
 	-- Alerte à 90% (future implémentation)
 	if threatpct >= 90 and not threatRing.alertShown then
