@@ -497,12 +497,24 @@ function Necrosis:SetMiscConfig()
 		if NecrosisConfig.NecrosisUIEnabled then
 			-- Try to show NecrosisUI
 			if NUI and type(NUI.Show) == "function" then
+				print("|cFF00FF00[NecrosisUI]|r Showing NecrosisUI")
 				pcall(function() NUI:Show() end)
+				if NecrosisUI then
+					print("|cFF00FF00[NecrosisUI]|r NecrosisUI frame exists, visible: " .. tostring(NecrosisUI:IsVisible()))
+				else
+					print("|cFFFF0000[NecrosisUI]|r ERROR: NecrosisUI frame not found!")
+				end
+			else
+				print("|cFFFF0000[NecrosisUI]|r ERROR: NUI or Show method not available")
+				print("|cFFFF0000[NecrosisUI]|r NUI exists: " .. tostring(NUI ~= nil) .. ", Show is function: " .. tostring(NUI and type(NUI.Show) == "function"))
 			end
 		else
 			-- Try to hide NecrosisUI
 			if NUI and type(NUI.Hide) == "function" then
+				print("|cFF00FF00[NecrosisUI]|r Hiding NecrosisUI")
 				pcall(function() NUI:Hide() end)
+			else
+				print("|cFFFF0000[NecrosisUI]|r ERROR: NUI or Hide method not available")
 			end
 		end
 	end)
