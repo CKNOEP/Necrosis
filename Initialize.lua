@@ -141,6 +141,8 @@ Necrosis.Debug = {
 -- CRITICAL FIX: Create NecrosisButton immediately with unique name!
 -- The point in the name was causing click issues!
 local nbutton = CreateFrame("Button", "NecrosisMainSphere", UIParent, "SecureUnitButtonTemplate")
+-- Keep invisible - will be replaced by final button after 5s delay
+nbutton:Hide()
 -- Register it as NecrosisButton for the rest of the code
 _G["NecrosisButton"] = nbutton
 
