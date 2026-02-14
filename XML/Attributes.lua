@@ -507,7 +507,7 @@ function Necrosis:StoneAttribute(Steed)
 				LeftMountName = GetItemInfo(NecrosisConfig.LeftMount)
 				--print (LeftMountName)
 				f:SetAttribute("type1", "item")
-				f:SetAttribute("item1", NecrosisConfig.LeftMount)
+				f:SetAttribute("item1", LeftMountName)
 			else -- Mount is a spell
 				f:SetAttribute("type1", "spell")
 				f:SetAttribute("spell1", LeftMountName)				
@@ -534,7 +534,7 @@ function Necrosis:StoneAttribute(Steed)
 			then 
 				RightMountName = GetItemInfo(NecrosisConfig.RightMount) 
 				f:SetAttribute("type2", "item")
-				f:SetAttribute("item2", NecrosisConfig.RightMount)
+				f:SetAttribute("item2", RightMountName)
 			else
 				f:SetAttribute("type2", "spell")
 				f:SetAttribute("spell2", RightMountName)
@@ -548,7 +548,7 @@ function Necrosis:StoneAttribute(Steed)
 			then 
 				CtrlRightMountName = GetItemInfo(NecrosisConfig.CtrlRightMount) 
 				f:SetAttribute("ctrl-type2", "item")
-				f:SetAttribute("ctrl-item2", NecrosisConfig.CtrlRightMount)
+				f:SetAttribute("ctrl-item2", CtrlRightMountName)
 			else
 				f:SetAttribute("ctrl-type2", "spell")
 				f:SetAttribute("ctrl-spell2", CtrlRightMountName)
@@ -563,7 +563,7 @@ function Necrosis:StoneAttribute(Steed)
 			then 
 				CtrlLeftMountName = GetItemInfo(NecrosisConfig.CtrlLeftMount)
 				f:SetAttribute("ctrl-type1", "item")
-				f:SetAttribute("ctrl-item1", NecrosisConfig.CtrlLeftMount)
+				f:SetAttribute("ctrl-item1", CtrlLeftMountName)
 			else
 				f:SetAttribute("ctrl-type1", "spell")
 				f:SetAttribute("ctrl-spell1", CtrlLeftMountName)			
