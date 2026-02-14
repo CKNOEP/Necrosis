@@ -393,7 +393,17 @@ function Necrosis:Initialize(Config)
 							soulCount = soulCount + GetItemCount(v.id)
 						end
 						local soulColor = soulCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
-						GameTooltip:AddLine("Pierre d'âme: "..soulColor..soulCount.."|r")
+						local soulText = "Pierre d'âme: "..soulColor..soulCount.."|r"
+
+						-- Check cooldown for soulstone spell
+						local start, duration = GetSpellCooldown(20707) -- Soulstone spell ID
+						if start and duration and duration > 0 then
+							local remaining = math.ceil(start + duration - GetTime())
+							if remaining > 0 then
+								soulText = soulText .. " |cFFFF9999("..remaining.."s)|r"
+							end
+						end
+						GameTooltip:AddLine(soulText)
 					end
 
 					-- Healthstone
