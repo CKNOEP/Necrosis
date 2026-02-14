@@ -84,6 +84,6 @@ XML\Options-Misc-Cata.lua
 XML\Options-Overlay.lua
 Necrosis-cata.lua
 XML\XML.lua
-
+NecrosisUI\Framework.xml
 
 SpellActivations\SpellActivations.xml
