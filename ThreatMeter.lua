@@ -89,15 +89,23 @@ function Necrosis:UpdateThreatMeter()
 	-- Position white threat indicator based on threat percentage
 	-- 0% = top (12 o'clock), 100% = almost full circle
 	if threatRing.threatNeedle then
-		local needleAngle = (threatpct / 100) * 360  -- 0% = 0°, 100% = 360°
-		local needleRad = math.rad(needleAngle)
-		local needleRadius = buttonSize / 2 + (NecrosisConfig.ThreatRingThickness or 4) / 2
-		local needleX = needleRadius * math.cos(needleRad)
-		local needleY = needleRadius * math.sin(needleRad)
+		local mainButton = _G["NecrosisButton"]
+		if mainButton then
+			local buttonWidth = mainButton:GetWidth() or 58
+			local buttonHeight = mainButton:GetHeight() or 58
+			local buttonSize = math.max(buttonWidth, buttonHeight)
+			local thickness = NecrosisConfig.ThreatRingThickness or 4
 
-		threatRing.threatNeedle:ClearAllPoints()
-		threatRing.threatNeedle:SetPoint("CENTER", threatRing, "CENTER", needleX, needleY)
-		threatRing.threatNeedle:SetRotation(needleRad + math.rad(90))
+			local needleAngle = (threatpct / 100) * 360  -- 0% = 0°, 100% = 360°
+			local needleRad = math.rad(needleAngle)
+			local needleRadius = buttonSize / 2 + thickness / 2
+			local needleX = needleRadius * math.cos(needleRad)
+			local needleY = needleRadius * math.sin(needleRad)
+
+			threatRing.threatNeedle:ClearAllPoints()
+			threatRing.threatNeedle:SetPoint("CENTER", threatRing, "CENTER", needleX, needleY)
+			threatRing.threatNeedle:SetRotation(needleRad + math.rad(90))
+		end
 	end
 
 	threatRing:Show()  -- Make the ring visible during combat
