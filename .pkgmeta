@@ -1,3 +1,25 @@
 package-as: Necrosis
 enable-nolib-creation: no
 manual-changelog: CHANGES.txt
+
+# === DEVELOPMENT PROTECTION ===
+# These files should NOT be overwritten by CurseForge client
+# This addon is actively developed - modifications are intentional
+# Maintainer: CKNOEP (https://github.com/CKNOEP/Necrosis)
+
+ignore:
+  - docs/
+  - .git/
+  - .gitignore
+  - .claude/
+  - CLAUDE.md
+  - NODE_MODULES/
+  - SESSION_SUMMARY.md
+  - PROJECT_INIT.md
+  - README_MIGRATION.md
+  - MIGRATION_COMPLETE.md
+  - TECH_REFERENCE.md
+  - TODO_ANNIVERSAIRE.md
+  - BUGFIX_*.md
+  - CHANGELOG_*.md
+  - RELEASE_*.md
