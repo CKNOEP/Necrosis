@@ -1936,6 +1936,9 @@ function Necrosis:BuildButtonTooltip(button)
 		GameTooltip:AddLine("\n")
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Soulstone..Necrosis.TooltipData[Type].Stone[SoulOnHand])
 
+		-- DEBUG: Check if lists exist
+		GameTooltip:AddLine("DEBUG: WL="..tostring(Necrosis.Warlock_Lists ~= nil).." HS="..tostring(Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.health_stones ~= nil))
+
 		-- Count and display health stones (safely check if lists exist)
 		if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.health_stones then
 			local healthCount = 0
