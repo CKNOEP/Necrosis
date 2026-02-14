@@ -540,6 +540,17 @@ function Necrosis:StoneAttribute(Steed)
 				f:SetAttribute("spell2", RightMountName)
 			
 			end
+	else
+		-- Default Steed for right click if no custom mount configured
+		local srank1 = self.Warlock_Spells[5784].InSpellBook
+		local srank2 = self.Warlock_Spells[23161].InSpellBook
+		local Rank1 = srank1 and self.Warlock_Spells[5784].CastName
+		local Rank2 = srank2 and self.Warlock_Spells[23161].CastName
+		if Rank2 then
+			f:SetAttribute("spell2", Rank2)
+		else
+			f:SetAttribute("spell2", Rank1)
+		end
 		end
 		
 		if (NecrosisConfig.CtrlRightMount) then
