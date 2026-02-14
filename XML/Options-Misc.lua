@@ -262,13 +262,13 @@ function Necrosis:SetMiscConfig()
 						print("|cFFFFFF00[NUI]|r Found NecrosisMainSphere, repositioning...")
 						mainSphere:ClearAllPoints()
 						mainSphere:SetPoint("BOTTOM", UIParent, "BOTTOM", -57.357116699219, 61.293731689453)
-						mainSphere:SetScale(1.35)
+						mainSphere:SetScale(1.33)
 						-- Save the position and scale to SavedVariables so it persists across reloads
 						if not NecrosisConfig.FramePosition then
 							NecrosisConfig.FramePosition = {}
 						end
-						NecrosisConfig.FramePosition["NecrosisMainSphere"] = {"BOTTOM", "UIParent", "BOTTOM", -57.357116699219, 61.293731689453, 1.35}
-						print("|cFFFFFF00[NUI]|r Main sphere repositioned and scaled to 135%, position saved")
+						NecrosisConfig.FramePosition["NecrosisMainSphere"] = {"BOTTOM", "UIParent", "BOTTOM", -57.357116699219, 61.293731689453, 1.33}
+						print("|cFFFFFF00[NUI]|r Main sphere repositioned and scaled to 133%, position saved")
 						return true
 					else
 						print("|cFFFF0000[NUI]|r ERROR: NecrosisMainSphere not found! Retrying in 0.5 sec...")
