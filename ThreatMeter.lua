@@ -57,8 +57,9 @@ function Necrosis:UpdateThreatMeter()
 		return
 	end
 
+	-- TEST MODE: Always show ring (comment out line below to require combat)
 	-- Vérifier si en combat et avec une cible
-	if not UnitAffectingCombat("player") or not UnitExists("target") then
+	if not UnitAffectingCombat("player") and not UnitExists("target") then
 		threatRing:Hide()
 		return
 	end
@@ -94,7 +95,7 @@ function Necrosis:UpdateThreatMeter()
 			local buttonWidth = mainButton:GetWidth() or 58
 			local buttonHeight = mainButton:GetHeight() or 58
 			local buttonSize = math.max(buttonWidth, buttonHeight)
-			local thickness = NecrosisConfig.ThreatRingThickness or 4
+			local thickness = NecrosisConfig.ThreatRingThickness or 2
 
 			local needleAngle = (threatpct / 100) * 360  -- 0% = 0°, 100% = 360°
 			local needleRad = math.rad(needleAngle)
@@ -142,7 +143,7 @@ function Necrosis:CreateThreatRing()
 	local buttonSize = math.max(buttonWidth, buttonHeight)
 
 	-- L'anneau doit être légèrement plus grand que la sphère
-	local thickness = NecrosisConfig.ThreatRingThickness or 4
+	local thickness = NecrosisConfig.ThreatRingThickness or 2
 	local ringSize = buttonSize + (thickness * 2)
 
 	ring:SetSize(ringSize, ringSize)
@@ -209,7 +210,7 @@ function Necrosis:UpdateThreatRingThickness()
 	local buttonSize = math.max(buttonWidth, buttonHeight)
 
 	-- Calculer la nouvelle taille de l'anneau
-	local thickness = NecrosisConfig.ThreatRingThickness or 4
+	local thickness = NecrosisConfig.ThreatRingThickness or 2
 	local ringSize = buttonSize + (thickness * 2)
 	local radius = buttonSize / 2 + thickness / 2
 	local segmentHeight = math.max(5, thickness + 1)
