@@ -3,7 +3,6 @@
     Copyright (C) - copyright file included in this release
 --]]
 
-|
 -- On définit _G comme étant le tableau contenant toutes les frames existantes.
 local _G = getfenv(0)
 
@@ -47,8 +46,8 @@ do
 	end
 
 	-- Create Classic theme module
-	|	local themeModule = NUI:NewModule('Style_Classic')
-	|end
+local themeModule = NUI:NewModule('Style_Classic')
+end
 
 -- Load Classic theme after all frames are ready
 C_Timer.After(0.5, function()
@@ -391,10 +390,10 @@ function Necrosis:Initialize(Config)
 
 	-- Apply NecrosisUI state on startup with delay to ensure SavedVariables are loaded
 	C_Timer.After(1, function()
-		|		if NecrosisConfig.NecrosisUIEnabled and NUI then
-			|			pcall(function() NUI:Show() end)
+	if NecrosisConfig.NecrosisUIEnabled and NUI then
+		pcall(function() NUI:Show() end)
 		elseif NUI then
-			|			pcall(function() NUI:Hide() end)
+		pcall(function() NUI:Hide() end)
 		end
 	end)
 
