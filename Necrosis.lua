@@ -1935,9 +1935,30 @@ function Necrosis:BuildButtonTooltip(button)
 		if Local.Stone.Fire.OnHand then FireOnHand = true end
 		GameTooltip:AddLine("\n")
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Soulstone..Necrosis.TooltipData[Type].Stone[SoulOnHand])
-		GameTooltip:AddLine(Necrosis.TooltipData.Main.Healthstone..Necrosis.TooltipData[Type].Stone[HealthOnHand])
-		GameTooltip:AddLine(Necrosis.TooltipData.Main.Spellstone..Necrosis.TooltipData[Type].Stone[SpellOnHand] )
-		GameTooltip:AddLine(Necrosis.TooltipData.Main.Firestone..Necrosis.TooltipData[Type].Stone[FireOnHand])
+
+		-- Count and display health stones
+		local healthCount = 0
+		for i, v in pairs(Necrosis.Warlock_Lists.health_stones) do
+			healthCount = healthCount + GetItemCount(v.id)
+		end
+		local healthColor = healthCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
+		GameTooltip:AddLine(Necrosis.TooltipData.Main.Healthstone..healthColor..healthCount.."|r")
+
+		-- Count and display spell stones
+		local spellCount = 0
+		for i, v in pairs(Necrosis.Warlock_Lists.spell_stones) do
+			spellCount = spellCount + GetItemCount(v.id)
+		end
+		local spellColor = spellCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
+		GameTooltip:AddLine(Necrosis.TooltipData.Main.Spellstone..spellColor..spellCount.."|r")
+
+		-- Count and display fire stones
+		local fireCount = 0
+		for i, v in pairs(Necrosis.Warlock_Lists.fire_stones) do
+			fireCount = fireCount + GetItemCount(v.id)
+		end
+		local fireColor = fireCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
+		GameTooltip:AddLine(Necrosis.TooltipData.Main.Firestone..fireColor..fireCount.."|r")
 		-- View the name of the daemon, or if it is slave, or "None" if no daemon is present ||Affichage du nom du démon, ou s'il est asservi, ou "Aucun" si aucun démon n'est présent
 		if (Local.Summon.DemonType) then
 			GameTooltip:AddLine(Necrosis.TooltipData.Main.CurrentDemon..Local.Summon.DemonType)
