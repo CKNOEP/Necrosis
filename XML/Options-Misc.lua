@@ -69,7 +69,7 @@ function Necrosis:SetMiscConfig()
 		Glow:ClearAllPoints()
 		Glow:SetPoint("LEFT", frame, "TOPLEFT" , 40, 25 )
 		Glow:SetTextColor(1, 0.5, 0)
-		Glow:SetText(L["UNFORTUNATELY_TBC_SHARD_MSG"])
+		Glow:SetText((L and L["UNFORTUNATELY_TBC_SHARD_MSG"]) or "Unfortunately with TBC, Blizzard has decided to remove the ability for addons to automatically delete shards. Auto-sorting after combat is no longer supported. Now use shard button to manage Shards")
 	
 		
 		-- Destruction des fragments quand le sac est plein
@@ -142,7 +142,7 @@ function Necrosis:SetMiscConfig()
 
 		-- Boutons oVERLAY
 			frame = CreateFrame("Button", nil, NecrosisMiscConfig, "UIPanelButtonTemplate")
-			frame:SetText(L["OPEN_OPTIONS_OVERLAY"])
+			frame:SetText((L and L["OPEN_OPTIONS_OVERLAY"]) or "Open Options SpellOverlay")
 			frame:SetSize(200 ,22) -- width, height
 			frame:EnableMouse(true)
 			frame:Show()
@@ -263,7 +263,7 @@ function Necrosis:SetMiscConfig()
 		FontString:ClearAllPoints()
 		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
 		FontString:SetTextColor(1, 1, 1)
-		FontString:SetText(L["THREAT_METER_ENABLED"])
+		FontString:SetText((L and L["THREAT_METER_ENABLED"]) or "Enable Threat Meter (circular indicator)")
 		frame:SetFontString(FontString)
 
 		-- Prevent hovering from affecting threat ring display
@@ -333,7 +333,7 @@ function Necrosis:SetMiscConfig()
 		FontString:ClearAllPoints()
 		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
 		FontString:SetTextColor(1, 1, 1)
-		FontString:SetText(L["NECROSISUI_ENABLED"])
+		FontString:SetText((L and L["NECROSISUI_ENABLED"]) or "Enable NecrosisUI (advanced framework)")
 		frame:SetFontString(FontString)
 
 		-- Prevent hovering from affecting UI display
@@ -382,7 +382,7 @@ function Necrosis:SetMiscConfig()
 	--NecrosisDestroyShardBag:SetText(self.Config.Misc["Detruit les fragments si le sac plein"])--deprecated
 	NecrosisShardBagText:SetText(self.Config.Misc["Choix du sac contenant les fragments"])
 	NecrosisDestroyShard:SetText(self.Config.Misc["Nombre maximum de fragments a conserver"])
-	NecrosisAFK:SetText(L["AFK_SCREEN"])
+	NecrosisAFK:SetText((L and L["AFK_SCREEN"]) or "AFK Screen")
 
 
 	if NecrosisConfig.SoulshardSort then --See Necrosis:SoulshardSwitch("MOVE")
@@ -547,7 +547,7 @@ function Necrosis:SetMiscConfig()
 	
 	-- Boutons test oVERLAY
 	testButton = CreateFrame("Button", nil, NecrosisMiscConfig, "UIPanelButtonTemplate")
-	testButton:SetText(L["TEST_OVERLAY"])
+	testButton:SetText((L and L["TEST_OVERLAY"]) or "Test Overlay")
 	testButton:SetSize(120 ,22) -- width, height
 	testButton:EnableMouse(true)
 	testButton:Show()

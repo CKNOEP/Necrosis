@@ -121,7 +121,7 @@ function Necrosis:SetMessagesConfig()
 		spacer_1:ClearAllPoints()
 		spacer_1:SetPoint("LEFT", NecrosisMessagesConfig, "TOPLEFT", x_offset*2, y)
 		spacer_1:SetTextColor(1, 0.5, 0)
-		spacer_1:SetText(L["SPEECH_API"])
+		spacer_1:SetText((L and L["SPEECH_API"]) or "Speech API")
 --[[
 		-- Activer les messages courts
 		y = y + y_offset
