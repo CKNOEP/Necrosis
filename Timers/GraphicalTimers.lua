@@ -294,10 +294,11 @@ function NecrosisUpdateTimer(tableau, Changement)
 		end
 
 		-- calculate the position of the spark on the timer || Calcul de la position de l'étincelle sur la barre de status
-		
+
 		--local sparkPosition = 150 * (b_end - Now) / tableau[index].Time
-		local sparkPosition = (150 * PercentColor)+1
+		local sparkPosition = (150 * PercentColor)
 		if sparkPosition < 1 then sparkPosition = 1 end
+		if sparkPosition > 150 then sparkPosition = 150 end
 
 		-- set the color and determine the portion to be filled || Définition de la couleur du timer et de la quantitée de jauge remplie
 		statusMin, statusMax = StatusBar:GetMinMaxValues()
