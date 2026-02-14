@@ -46,7 +46,7 @@ do
 	end
 
 	-- Create Classic theme module
-local themeModule = NUI:NewModule('Style_Classic')
+	local themeModule = NUI:NewModule('Style_Classic')
 end
 
 -- Load Classic theme after all frames are ready
