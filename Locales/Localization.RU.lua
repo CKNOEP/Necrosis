@@ -269,6 +269,7 @@ L["ANTI_FEAR_DEBUFF_RECKLESS"]	= "Проклятие безрассудства"
 
 -- NecrosisUI
 L["NECROSISUI_ENABLED"] = "Включить NecrosisUI (расширенный интерфейс)"
+L["THREAT_METER_ENABLED"] = "Включить Threat Meter (круглый индикатор)"
 
 -- Speech
 

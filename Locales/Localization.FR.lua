@@ -134,6 +134,7 @@ L["MSG_RANDOM_DEMON"] = "Activer \195\169galement les messages pour les D\195\16
 L["MSG_RANDOM_STEED"] = "Activer \195\169galement les messages pour les Montures"
 L["MSG_RANDOM_SOULS"] = "Activer \195\169galement les messages pour le Rituel des \195\162mes"
 L["MSG_SOUNDS"] = "Activer les sons"
+L["THREAT_METER_ENABLED"] = "Activer le Threat Meter (indicateur circulaire)"
 L["NECROSISUI_ENABLED"] = "Activer NecrosisUI (interface avancée)"
 L["MSG_WARN_FEAR"] = "Alerter quand la cible est insensible \195\160 la peur"
 L["MSG_WARN_BANISH"] = "Alerter quand la cible peut \195\170tre banie ou asservie"

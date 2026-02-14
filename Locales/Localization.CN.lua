@@ -283,5 +283,6 @@ L["ABOUT_EMAIL"] = "E-mail";
 L["ABOUT_WEB"] = "Website";
 L["ABOUT_LICENSE"] = "License";
 
--- NecrosisUI
+-- Threat Meter & NecrosisUI
+L["THREAT_METER_ENABLED"] = "启用 Threat Meter（圆形指示器）"
 L["NECROSISUI_ENABLED"] = "启用 NecrosisUI（高级框架）"

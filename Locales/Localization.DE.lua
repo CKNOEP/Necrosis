@@ -259,4 +259,5 @@ L["ABOUT_WEB"] = "Website";
 L["ABOUT_LICENSE"] = "License";
 
 -- NecrosisUI
+L["THREAT_METER_ENABLED"] = "Threat Meter aktivieren (kreisformiger Indikator)"
 L["NECROSISUI_ENABLED"] = "NecrosisUI aktivieren (erweiterter Rahmen)"

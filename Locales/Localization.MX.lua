@@ -258,5 +258,6 @@ L["ABOUT_EMAIL"] = "E-mail";
 L["ABOUT_WEB"] = "Website";
 L["ABOUT_LICENSE"] = "License";
 
--- NecrosisUI
+-- Threat Meter & NecrosisUI
+L["THREAT_METER_ENABLED"] = "Activar Threat Meter (indicador circular)"
 L["NECROSISUI_ENABLED"] = "Activar NecrosisUI (marco avanzado)"

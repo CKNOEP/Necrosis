@@ -236,6 +236,38 @@ function Necrosis:SetMiscConfig()
 		FontString:SetTextColor(1, 1, 1)
 		frame:SetFontString(FontString)
 
+		-- Enable/Disable Threat Meter
+		frame = CreateFrame("CheckButton", "ThreatMeterEnabledCheckButton", NecrosisMiscConfig, "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 150)
+
+		frame:SetScript("OnClick", function(self)
+			if (self:GetChecked()) then
+				-- Checkbox is checked - ENABLE Threat Meter
+				NecrosisConfig.ThreatMeterEnabled = true
+			else
+				-- Checkbox is unchecked - DISABLE Threat Meter
+				NecrosisConfig.ThreatMeterEnabled = false
+				-- Hide the threat ring when disabled
+				local threatRing = _G["NecrosisThreatRing"]
+				if threatRing then
+					threatRing:Hide()
+				end
+			end
+		end)
+
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		FontString:SetText(L["THREAT_METER_ENABLED"])
+		frame:SetFontString(FontString)
+
 		-- Enable/Disable NecrosisUI
 		frame = CreateFrame("CheckButton", "NecrosisUIEnabledCheckButton", NecrosisMiscConfig, "UICheckButtonTemplate")
 		frame:EnableMouse(true)
@@ -307,6 +339,12 @@ function Necrosis:SetMiscConfig()
 	NecrosisShardBag:SetValue(4 - NecrosisConfig.SoulshardContainer)
 	NecrosisDestroyShard:SetChecked(NecrosisConfig.DestroyShard)
 	NecrosisAFK:SetChecked(NecrosisConfig.AFK)
+
+	-- Initialize Threat Meter checkbox state
+	if ThreatMeterEnabledCheckButton then
+		local desiredState = NecrosisConfig.ThreatMeterEnabled and 1 or nil
+		ThreatMeterEnabledCheckButton:SetChecked(desiredState)
+	end
 
 	if NecrosisUIEnabledCheckButton then
 		-- Set checkbox state from config (GetChecked returns 1 or nil, convert to match that)
