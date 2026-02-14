@@ -86,10 +86,18 @@ function Necrosis:UpdateThreatMeter()
 		end
 	end
 
-	-- Update threat needle rotation (0% at top, 100% almost full circle)
-	if threatRing.needle then
-		local needleAngle = (threatpct / 100) * 359  -- 0% = 0°, 100% = 359°
-		threatRing.needle:SetRotation(math.rad(needleAngle))
+	-- Position white threat indicator based on threat percentage
+	-- 0% = top (12 o'clock), 100% = almost full circle
+	if threatRing.threatNeedle then
+		local needleAngle = (threatpct / 100) * 360  -- 0% = 0°, 100% = 360°
+		local needleRad = math.rad(needleAngle)
+		local needleRadius = buttonSize / 2 + (NecrosisConfig.ThreatRingThickness or 4) / 2
+		local needleX = needleRadius * math.cos(needleRad)
+		local needleY = needleRadius * math.sin(needleRad)
+
+		threatRing.threatNeedle:ClearAllPoints()
+		threatRing.threatNeedle:SetPoint("CENTER", threatRing, "CENTER", needleX, needleY)
+		threatRing.threatNeedle:SetRotation(needleRad + math.rad(90))
 	end
 
 	threatRing:Show()  -- Make the ring visible during combat
@@ -160,14 +168,13 @@ function Necrosis:CreateThreatRing()
 		table.insert(ring.segments, segment)
 	end
 
-	-- Create threat percentage needle (white indicator)
-	local needle = ring:CreateTexture(nil, "OVERLAY")
-	needle:SetTexture("Interface\\Buttons\\WHITE8X8")
-	needle:SetSize(2, radius + 5)  -- Thin line extending from center to edge
-	needle:SetVertexColor(1, 1, 1, 1)  -- White color
-	needle:SetPoint("CENTER", ring, "CENTER", 0, 0)
-	needle:SetRotation(0)  -- Start at top (0% threat = 12 o'clock)
-	ring.needle = needle
+	-- Create white threat indicator segment (shows current threat percentage)
+	local threatNeedle = ring:CreateTexture(nil, "OVERLAY")
+	threatNeedle:SetTexture("Interface\\Buttons\\WHITE8X8")
+	threatNeedle:SetSize(thickness, segmentHeight)
+	threatNeedle:SetVertexColor(1, 1, 1, 1)  -- White color
+	threatNeedle:SetPoint("CENTER", ring, "CENTER", 0, 0)  -- Will be repositioned based on threat %
+	ring.threatNeedle = threatNeedle
 
 	ring.outerTexture = ring.segments[1]  -- Pour compatibilité avec le code existant
 
@@ -219,9 +226,9 @@ function Necrosis:UpdateThreatRingThickness()
 		end
 	end
 
-	-- Update needle size when ring thickness changes
-	if threatRing.needle then
-		threatRing.needle:SetSize(thickness, radius + 5)
+	-- Update threat indicator size when ring thickness changes
+	if threatRing.threatNeedle then
+		threatRing.threatNeedle:SetSize(thickness, segmentHeight)
 	end
 
 	-- Forcer une mise à jour visuelle
