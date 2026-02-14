@@ -86,5 +86,6 @@ XML\Options-Misc.lua
 XML\Options-Overlay.lua
 Necrosis.lua
 XML\XML.lua
+ThreatMeter.lua
 
 SpellActivations\SpellActivations.xml
