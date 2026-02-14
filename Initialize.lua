@@ -395,12 +395,12 @@ function Necrosis:Initialize(Config)
 						local soulColor = soulCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
 						local soulText = "Pierre d'âme: "..soulColor..soulCount.."|r"
 
-						-- Check cooldown for soulstone spell
-						local start, duration = GetSpellCooldown(20707) -- Soulstone spell ID
-						if start and duration and duration > 0 then
-							local remaining = math.ceil(start + duration - GetTime())
-							if remaining > 0 then
-								soulText = soulText .. " |cFFFF9999("..remaining.."s)|r"
+						-- Check cooldown for soulstone item
+						if Local.Stone.Soul.Location[1] and Local.Stone.Soul.Location[2] then
+							local startTime, duration, isEnabled = C_Container.GetContainerItemCooldown(Local.Stone.Soul.Location[1], Local.Stone.Soul.Location[2])
+							if startTime > 0 and duration > 0 then
+								local timeLeft = Necrosis.Utils.TimeLeft((startTime - GetTime()) + duration)
+								soulText = soulText .. " |cFFFF9999("..timeLeft..")|r"
 							end
 						end
 						GameTooltip:AddLine(soulText)
