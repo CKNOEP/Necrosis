@@ -412,7 +412,7 @@ function Necrosis:SetMenusConfig()
 			Necrosis:SetOfxy("Buff")
 		end)
 
-		NecrosisBuffOxText:SetText(L["OFFSET_X"])
+		NecrosisBuffOxText:SetText((L and L["OFFSET_X"]) or "Offset X")
 		NecrosisBuffOxLow:SetText("")
 		NecrosisBuffOxHigh:SetText("")
 
@@ -446,7 +446,7 @@ function Necrosis:SetMenusConfig()
 			Necrosis:SetOfxy("Buff")
 		end)
 
-		NecrosisBuffOyText:SetText(L["OFFSET_Y"])
+		NecrosisBuffOyText:SetText((L and L["OFFSET_Y"]) or "Offset Y")
 		NecrosisBuffOyLow:SetText("")
 		NecrosisBuffOyHigh:SetText("")
 		
@@ -611,7 +611,7 @@ function Necrosis:SetMenusConfig()
 			Necrosis:SetOfxy("Pet")
 		end)
 
-		NecrosisDemonOxText:SetText(L["OFFSET_X"])
+		NecrosisDemonOxText:SetText((L and L["OFFSET_X"]) or "Offset X")
 		NecrosisDemonOxLow:SetText("")
 		NecrosisDemonOxHigh:SetText("")
 
@@ -645,7 +645,7 @@ function Necrosis:SetMenusConfig()
 			Necrosis:SetOfxy("Pet")
 		end)
 
-		NecrosisDemonOyText:SetText(L["OFFSET_Y"])
+		NecrosisDemonOyText:SetText((L and L["OFFSET_Y"]) or "Offset Y")
 		NecrosisDemonOyLow:SetText("")
 		NecrosisDemonOyHigh:SetText("")
 
@@ -759,7 +759,7 @@ function Necrosis:SetMenusConfig()
 			Necrosis:SetOfxy("Curse")
 		end)
 
-		NecrosisCurseOxText:SetText(L["OFFSET_X"])
+		NecrosisCurseOxText:SetText((L and L["OFFSET_X"]) or "Offset X")
 		NecrosisCurseOxLow:SetText("")
 		NecrosisCurseOxHigh:SetText("")
 
@@ -793,7 +793,7 @@ function Necrosis:SetMenusConfig()
 			Necrosis:SetOfxy("Curse")
 		end)
 
-		NecrosisCurseOyText:SetText(L["OFFSET_Y"])
+		NecrosisCurseOyText:SetText((L and L["OFFSET_Y"]) or "Offset Y")
 		NecrosisCurseOyLow:SetText("")
 		NecrosisCurseOyHigh:SetText("")
 

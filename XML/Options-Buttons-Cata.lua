@@ -437,7 +437,7 @@ function Necrosis:SetButtonsConfig()
 		FontString:SetPoint("BOTTOM", NecrosisMountsSelectionFrame, "TOP", 0, 70)
 		FontString:SetTextColor(1, 1, 1)
 		--TODO: translate this
-		FontString:SetText(L["SELECT_MOUNTS"]);
+		FontString:SetText((L and L["SELECT_MOUNTS"]) or "Select your mounts:");
 
 		local FontString = frame:CreateFontString("NecrosisLeftMountText", "OVERLAY", "GameFontNormalSmall")
 		FontString:Show()
