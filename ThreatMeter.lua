@@ -103,11 +103,6 @@ function Necrosis:UpdateThreatMeter()
 		end
 	end
 
-	threatRing:Show()  -- Make the ring visible during combat
-
-	-- DEBUG: Print threat percentage
-	print("|cFF00FF00Threat:|r " .. threatpct .. "%")
-
 	-- Alerte à 90% (future implémentation)
 	if threatpct >= 90 and not threatRing.alertShown then
 		-- TODO: Ajouter message d'alerte
@@ -116,7 +111,12 @@ function Necrosis:UpdateThreatMeter()
 		threatRing.alertShown = false
 	end
 
-	threatRing:Show()
+	-- Afficher le ring seulement en combat
+	if UnitAffectingCombat("player") then
+		threatRing:Show()
+	else
+		threatRing:Hide()
+	end
 end
 
 ------------------------------------------------------------------------------------------------------
