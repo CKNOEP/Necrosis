@@ -26,6 +26,13 @@ do
 		necrosisUIFrame:SetFrameStrata("BACKGROUND")
 		necrosisUIFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 0)
 		necrosisUIFrame:SetSize(1024, 256)
+
+		-- Add a visible background
+		local bg = necrosisUIFrame:CreateTexture(nil, "BACKGROUND")
+		bg:SetAllPoints(necrosisUIFrame)
+		bg:SetTexture("Interface/Tooltips/UI-Tooltip-Background")
+		bg:SetAlpha(0.6)
+
 		necrosisUIFrame:Hide()
 
 		-- Create bottom anchor for theme artwork positioning
