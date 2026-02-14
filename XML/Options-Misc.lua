@@ -249,6 +249,17 @@ function Necrosis:SetMiscConfig()
 	if NecrosisUIEnabledCheckButton then
 		-- Set checkbox state from config (GetChecked returns 1 or nil, convert to match that)
 		NecrosisUIEnabledCheckButton:SetChecked(NecrosisConfig.NecrosisUIEnabled and 1 or nil)
+
+		-- Apply the saved state to the NecrosisUI frame when opening the Misc panel
+		if NecrosisConfig.NecrosisUIEnabled then
+			if NUI and type(NUI.Show) == "function" then
+				pcall(function() NUI:Show() end)
+			end
+		else
+			if NUI and type(NUI.Hide) == "function" then
+				pcall(function() NUI:Hide() end)
+			end
+		end
 	end
 	
 	if NecrosisConfig.DestroyCount then
