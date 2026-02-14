@@ -27,17 +27,11 @@ do
 		necrosisUIFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 0)
 		necrosisUIFrame:SetSize(800, 200)
 
-		-- Add visible background texture
+		-- Add visible background texture - dark color
 		local bg = necrosisUIFrame:CreateTexture(nil, "BACKGROUND")
 		bg:SetAllPoints(necrosisUIFrame)
-		bg:SetColorTexture(0.1, 0.1, 0.1, 0.8)  -- Dark gray with transparency
-
-		-- Add border texture
-		local border = necrosisUIFrame:CreateTexture(nil, "BORDER")
-		border:SetPoint("TOPLEFT", necrosisUIFrame, "TOPLEFT", 0, 0)
-		border:SetPoint("BOTTOMRIGHT", necrosisUIFrame, "BOTTOMRIGHT", 0, 0)
-		border:SetTexture("Interface/Buttons/White8x8")
-		border:SetGradientAlpha("VERTICAL", 0.5, 0.5, 0.5, 0.3, 0.3, 0.3, 0.3)
+		bg:SetTexture(0, 0, 0)  -- Black texture
+		bg:SetAlpha(0.7)  -- Semi-transparent
 
 		necrosisUIFrame:Hide()
 
