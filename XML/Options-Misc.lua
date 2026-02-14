@@ -488,7 +488,7 @@ function Necrosis:SetMiscConfig()
 	frame:SetHeight(24)
 	frame:Show()
 	frame:ClearAllPoints()
-	frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 90)
+	frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 50)
 
 	frame:SetScript("OnClick", function(self)
 		NecrosisConfig.NecrosisUIEnabled = self:GetChecked()
