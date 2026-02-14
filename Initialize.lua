@@ -33,16 +33,6 @@ do
 		bottomAnchor:SetAllPoints(necrosisUIFrame)
 	end
 
-	-- Load Classic theme after a short delay to ensure NUI is ready
-	C_Timer.After(0.1, function()
-		if NUI and NUI:GetModule then
-			local classicStyle = NUI:GetModule('Style_Classic')
-			if classicStyle and classicStyle.OnInitialize then
-				classicStyle:OnInitialize()
-			end
-		end
-	end)
-
 	-- Implement Show/Hide methods
 	function NUI:Show()
 		if NecrosisUI then
@@ -56,6 +46,16 @@ do
 		end
 	end
 end
+
+-- Load Classic theme after a short delay to ensure NUI is ready
+C_Timer.After(0.1, function()
+	if NUI and NUI:GetModule then
+		local classicStyle = NUI:GetModule('Style_Classic')
+		if classicStyle and classicStyle.OnInitialize then
+			classicStyle:OnInitialize()
+		end
+	end
+end)
 
 -- Compatibility wrapper for GetAddOnMetadata (deprecated in modern WoW)
 local function GetMetadata(addon, field)
