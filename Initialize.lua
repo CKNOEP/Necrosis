@@ -65,10 +65,10 @@ C_Timer.After(0.5, function()
 	-- Setup the Bottom Artwork
 	artFrame:SetFrameStrata('BACKGROUND')
 	artFrame:SetFrameLevel(1)
-	artFrame:SetAlpha(0.5)
-	artFrame:SetSize(2, 2)
-	artFrame:SetScale(0.78)
-	artFrame:SetPoint('BOTTOM', NUI_BottomAnchor)
+	artFrame:SetAlpha(0.7)
+	-- Make it cover entire screen width
+	artFrame:SetSize(GetScreenWidth() * UIParent:GetEffectiveScale(), 256)
+	artFrame:SetPoint('BOTTOMLEFT', UIParent, 'BOTTOMLEFT', 0, 0)
 
 	artFrame.Center = artFrame:CreateTexture('NUI_Art_Classic_Center', 'BACKGROUND')
 	artFrame.Center:SetTexture('Interface\\AddOns\\Necrosis\\NecrosisUI\\Themes\\Classic\\Images\\base-center')
