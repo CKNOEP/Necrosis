@@ -99,7 +99,7 @@ function Necrosis:UpdateThreatMeter()
 
 			threatRing.threatNeedle:ClearAllPoints()
 			threatRing.threatNeedle:SetPoint("CENTER", threatRing, "CENTER", needleX, needleY)
-			threatRing.threatNeedle:SetRotation(needleRad + math.rad(90))
+			threatRing.threatNeedle:SetRotation(needleRad - math.rad(90))
 		end
 	end
 
