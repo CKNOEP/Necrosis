@@ -268,6 +268,10 @@ function Necrosis:SetMiscConfig()
 		FontString:SetText(L["THREAT_METER_ENABLED"])
 		frame:SetFontString(FontString)
 
+		-- Prevent hovering from affecting threat ring display
+		frame:SetScript("OnEnter", function() end)
+		frame:SetScript("OnLeave", function() end)
+
 		-- Enable/Disable NecrosisUI
 		frame = CreateFrame("CheckButton", "NecrosisUIEnabledCheckButton", NecrosisMiscConfig, "UICheckButtonTemplate")
 		frame:EnableMouse(true)
@@ -333,6 +337,10 @@ function Necrosis:SetMiscConfig()
 		FontString:SetTextColor(1, 1, 1)
 		FontString:SetText(L["NECROSISUI_ENABLED"])
 		frame:SetFontString(FontString)
+
+		-- Prevent hovering from affecting UI display
+		frame:SetScript("OnEnter", function() end)
+		frame:SetScript("OnLeave", function() end)
 
 	NecrosisMoveShard:SetChecked(NecrosisConfig.SoulshardSort)
 	--NecrosisDestroyShardBag:SetChecked(NecrosisConfig.SoulshardDestroy)
