@@ -93,7 +93,7 @@ function Necrosis:UpdateThreatMeter()
 
 			local needleAngle = 90 - (threatpct / 100) * 359  -- 0% = 90° (midi), 100% = -269° (clockwise rotation)
 			local needleRad = math.rad(needleAngle)
-			local needleRadius = buttonSize / 2 + thickness / 2
+			local needleRadius = buttonSize / 2 + thickness / 4
 			local needleX = needleRadius * math.cos(needleRad)
 			local needleY = needleRadius * math.sin(needleRad)
 
