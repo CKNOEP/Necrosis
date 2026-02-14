@@ -437,6 +437,9 @@ function Necrosis:Initialize(Config)
 				btn:SetFrameStrata("MEDIUM")
 				btn:SetFrameLevel(1)
 
+				-- Keep invisible until position is restored
+				btn:Hide()
+
 				-- FontString already created at file load time with HIGH FrameStrata
 				-- Reparent the overlay frame to the new button so it follows automatically
 				local textOverlay = _G["NecrosisShardCountFrame"]
