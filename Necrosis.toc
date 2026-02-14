@@ -69,7 +69,6 @@ Timers\Functions.lua
 Timers\GraphicalTimers.lua
 Timers\OtherTimers.lua
 
-Framework-NUI.lua
 NecrosisUI\Framework.xml
 
 XML\Attributes.lua

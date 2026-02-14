@@ -12,6 +12,41 @@ Necrosis = {}
 SAO ={}
 NECROSIS_ID = "Necrosis"
 
+-- Initialize NecrosisUI Framework
+do
+	local NUI = _G.NUI or {}
+	if not NUI.name then
+		NUI = LibStub('AceAddon-3.0'):NewAddon('NecrosisUI', 'AceEvent-3.0', 'AceConsole-3.0', 'AceSerializer-3.0')
+		_G.NUI = NUI
+	end
+
+	-- Create NecrosisUI frame
+	if not _G.NecrosisUI then
+		local necrosisUIFrame = CreateFrame("Frame", "NecrosisUI", UIParent)
+		necrosisUIFrame:SetFrameStrata("BACKGROUND")
+		necrosisUIFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 0)
+		necrosisUIFrame:SetSize(800, 200)
+		necrosisUIFrame:Hide()
+
+		-- Create bottom anchor
+		local bottomAnchor = CreateFrame("Frame", "NUI_BottomAnchor", necrosisUIFrame)
+		bottomAnchor:SetAllPoints(necrosisUIFrame)
+	end
+
+	-- Implement Show/Hide methods
+	function NUI:Show()
+		if NecrosisUI then
+			NecrosisUI:Show()
+		end
+	end
+
+	function NUI:Hide()
+		if NecrosisUI then
+			NecrosisUI:Hide()
+		end
+	end
+end
+
 -- Compatibility wrapper for GetAddOnMetadata (deprecated in modern WoW)
 local function GetMetadata(addon, field)
 	if C_AddOns and C_AddOns.GetAddOnMetadata then
