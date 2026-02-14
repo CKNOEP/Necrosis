@@ -675,6 +675,9 @@ function Necrosis:Initialize(Config)
 				Necrosis:CurseSpellAttribute()
 				Necrosis:StoneAttribute(SteedAvailable)
 
+				-- Create threat meter ring (circular indicator around main sphere)
+				Necrosis:CreateThreatRing()
+
 				-- Scan bags for soul shards
 				Necrosis:BagExplore()
 
