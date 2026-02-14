@@ -625,38 +625,20 @@ function Necrosis:MainButtonAttribute(self)
 		return
 	end
 
-	-- RegisterForClicks is already done in XML.lua - don't call it again!
-	-- NO PreClick - it interferes with SecureActionButton!
+	-- RegisterForClicks is already done in Initialize.lua
+	-- Use simple, standard method (type1/spell1) for compatibility
 
-	local main_cast = Necrosis.GetSpellCastName(NecrosisConfig.MainSpell) --Necrosis:GetSpellName(NecrosisConfig.MainSpell)
+	local main_cast = Necrosis.GetSpellCastName(NecrosisConfig.MainSpell)
 	local second_cast = Necrosis.GetSpellCastName(NecrosisConfig.MainSpell2)
 
-	-- Get the spell ID for the main spell
-	local main_spell_id = Necrosis.Warlock_Spell_Use[NecrosisConfig.MainSpell]
-
-	if main_spell_id and main_spell_id > 0 then
-		-- Use spell ID directly - most reliable method!
-		local spellName = GetSpellInfo(main_spell_id)
-
-		-- HEALBOT METHOD - Conditional Attributes System!
-		f:SetAttribute("unit", "player")                      -- Cible: le joueur
-		f:SetAttribute("helpbutton1", "mainspell")            -- Clic gauche → action mainspell
-		f:SetAttribute("type-mainspell", "spell")             -- Type: sort
-		f:SetAttribute("spell-mainspell", spellName)          -- Sort à lancer
-
-		-- Clear ANY scripts that might interfere
-		f:SetScript("OnClick", nil)
-		f:SetScript("PreClick", nil)
-		f:SetScript("PostClick", nil)
-	elseif main_cast ~= "" and main_cast ~= nil then
-		-- Fallback to macro if no ID available
-		f:SetAttribute("type1", "macro")
-		f:SetAttribute("macrotext1", "/cast " .. main_cast)
+	if main_cast and main_cast ~= "" then
+		f:SetAttribute("type1", "spell")
+		f:SetAttribute("spell1", main_cast)
 	end
 
-	if second_cast ~= "" and second_cast ~= nil then
-		f:SetAttribute("shift-type1", "macro")
-		f:SetAttribute("shift-macrotext1", "/cast " .. second_cast)
+	if second_cast and second_cast ~= "" then
+		f:SetAttribute("shift-type1", "spell")
+		f:SetAttribute("shift-spell1", second_cast)
 	end
 
 	end
