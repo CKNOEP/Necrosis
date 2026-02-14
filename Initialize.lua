@@ -276,6 +276,11 @@ function Necrosis:Initialize(Config)
 		NecrosisConfig.PlayerSSSM = false
 	else
 	end
+
+	-- Initialize NecrosisUI option (default: disabled)
+	if NecrosisConfig.NecrosisUIEnabled == nil then
+		NecrosisConfig.NecrosisUIEnabled = false
+	end
 	
 	-- Request the localized strings - this may need events and time...
 	Necrosis.UpdatePouches()

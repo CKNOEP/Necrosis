@@ -245,6 +245,9 @@ function Necrosis:SetMiscConfig()
 	NecrosisShardBag:SetValue(4 - NecrosisConfig.SoulshardContainer)
 	NecrosisDestroyShard:SetChecked(NecrosisConfig.DestroyShard)
 	NecrosisAFK:SetChecked(NecrosisConfig.AFK)
+	if NecrosisUIEnabledCheckButton then
+		NecrosisUIEnabledCheckButton:SetChecked(NecrosisConfig.NecrosisUIEnabled or false)
+	end
 	
 	if NecrosisConfig.DestroyCount then
 		NecrosisDestroyCount:SetValue(NecrosisConfig.DestroyCount)
@@ -476,9 +479,43 @@ function Necrosis:SetMiscConfig()
             NecrosisSpellActivationOverlayFrame_SetForceAlpha1(false);
  	
 	end)
-	
+
+	-- Enable/Disable NecrosisUI
+	frame = CreateFrame("CheckButton", "NecrosisUIEnabledCheckButton", NecrosisMiscConfig, "UICheckButtonTemplate")
+	frame:EnableMouse(true)
+	frame:SetWidth(24)
+	frame:SetHeight(24)
+	frame:Show()
+	frame:ClearAllPoints()
+	frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 90)
+
+	frame:SetScript("OnClick", function(self)
+		NecrosisConfig.NecrosisUIEnabled = self:GetChecked()
+
+		-- Reload the UI to apply changes
+		if NecrosisConfig.NecrosisUIEnabled then
+			-- Try to load NecrosisUI
+			if NecrosisUI and NecrosisUI:Show then
+				pcall(function() NecrosisUI:Show() end)
+			end
+		else
+			-- Try to hide NecrosisUI
+			if NecrosisUI and NecrosisUI:Hide then
+				pcall(function() NecrosisUI:Hide() end)
+			end
+		end
+	end)
+
+	FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+	FontString:Show()
+	FontString:ClearAllPoints()
+	FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+	FontString:SetTextColor(1, 1, 1)
+	FontString:SetText(L["NECROSISUI_ENABLED"])
+	frame:SetFontString(FontString)
+
 	end
-	
+
 	NecrosisHiddenButtons:SetText(self.Config.Misc["Afficher les boutons caches"])
 	NecrosisHiddenSizeText:SetText(self.Config.Misc["Taille des boutons caches"])
 	NecrosisHiddenSize:SetValue(NecrosisConfig.ShadowTranceScale)
