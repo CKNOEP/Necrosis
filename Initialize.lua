@@ -329,10 +329,13 @@ function Necrosis:Initialize(Config)
 	end
 
 	-- Apply NecrosisUI state on startup with delay to ensure SavedVariables are loaded
-	C_Timer.After(0.5, function()
+	C_Timer.After(1, function()
+		print("|cFF00FF00[NecrosisUI]|r Startup check: NecrosisConfig.NecrosisUIEnabled = " .. tostring(NecrosisConfig.NecrosisUIEnabled))
 		if NecrosisConfig.NecrosisUIEnabled and NUI then
+			print("|cFF00FF00[NecrosisUI]|r Showing on startup")
 			pcall(function() NUI:Show() end)
 		elseif NUI then
+			print("|cFF00FF00[NecrosisUI]|r Hiding on startup")
 			pcall(function() NUI:Hide() end)
 		end
 	end)
