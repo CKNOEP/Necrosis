@@ -70,8 +70,6 @@ Timers\GraphicalTimers.lua
 Timers\OtherTimers.lua
 
 NecrosisUI\Framework.xml
-NecrosisUI\Themes\Classic\Global-Framework.lua
-NecrosisUI\Themes\Classic\Style.lua
 
 XML\Attributes.lua
 

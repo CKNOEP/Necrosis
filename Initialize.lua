@@ -45,9 +45,55 @@ do
 			NecrosisUI:Hide()
 		end
 	end
+
+	-- Create Classic theme module
+	print("|cFFFFFF00[INIT]|r Creating Style_Classic module...")
+	local themeModule = NUI:NewModule('Style_Classic')
+	print("|cFFFFFF00[INIT]|r Theme module created!")
 end
 
--- TODO: Load Classic theme after NUI is fully initialized
+-- Load Classic theme after all frames are ready
+C_Timer.After(0.5, function()
+	if not (NUI and NecrosisUI and NUI_BottomAnchor) then
+		print("|cFFFF0000[THEME]|r Cannot load theme - frames missing!")
+		return
+	end
+
+	print("|cFFFFFF00[THEME]|r Creating Classic artwork...")
+	local artFrame = CreateFrame('Frame', 'NUI_Art_Classic', NecrosisUI)
+
+	-- Setup the Bottom Artwork
+	artFrame:SetFrameStrata('BACKGROUND')
+	artFrame:SetFrameLevel(1)
+	artFrame:SetAlpha(0.5)
+	artFrame:SetSize(2, 2)
+	artFrame:SetScale(0.78)
+	artFrame:SetPoint('BOTTOM', NUI_BottomAnchor)
+
+	artFrame.Center = artFrame:CreateTexture('NUI_Art_Classic_Center', 'BACKGROUND')
+	artFrame.Center:SetTexture('Interface\\AddOns\\Necrosis\\NecrosisUI\\Themes\\Classic\\Images\\base-center')
+	artFrame.Center:SetPoint('BOTTOM', artFrame, 'BOTTOM')
+
+	artFrame.Left = artFrame:CreateTexture('NUI_Art_Classic_Left', 'BACKGROUND')
+	artFrame.Left:SetTexture('Interface\\AddOns\\Necrosis\\NecrosisUI\\Themes\\Classic\\Images\\base-left1')
+	artFrame.Left:SetPoint('BOTTOMRIGHT', artFrame.Center, 'BOTTOMLEFT', 0, 0)
+
+	artFrame.FarLeft = artFrame:CreateTexture('NUI_Art_Classic_FarLeft', 'BACKGROUND')
+	artFrame.FarLeft:SetTexture('Interface\\AddOns\\Necrosis\\NecrosisUI\\Themes\\Classic\\Images\\base-left2')
+	artFrame.FarLeft:SetPoint('BOTTOMRIGHT', artFrame.Left, 'BOTTOMLEFT', 0, 0)
+	artFrame.FarLeft:SetPoint('BOTTOMLEFT', NecrosisUI, 'BOTTOMLEFT', 0, 0)
+
+	artFrame.Right = artFrame:CreateTexture('NUI_Art_Classic_Right', 'BACKGROUND')
+	artFrame.Right:SetTexture('Interface\\AddOns\\Necrosis\\NecrosisUI\\Themes\\Classic\\Images\\base-right1')
+	artFrame.Right:SetPoint('BOTTOMLEFT', artFrame.Center, 'BOTTOMRIGHT')
+
+	artFrame.FarRight = artFrame:CreateTexture('NUI_Art_Classic_FarRight', 'BACKGROUND')
+	artFrame.FarRight:SetTexture('Interface\\AddOns\\Necrosis\\NecrosisUI\\Themes\\Classic\\Images\\base-right2')
+	artFrame.FarRight:SetPoint('BOTTOMLEFT', artFrame.Right, 'BOTTOMRIGHT')
+	artFrame.FarRight:SetPoint('BOTTOMRIGHT', NecrosisUI, 'BOTTOMRIGHT')
+
+	print("|cFFFFFF00[THEME]|r Classic artwork created successfully!")
+end)
 
 -- Compatibility wrapper for GetAddOnMetadata (deprecated in modern WoW)
 local function GetMetadata(addon, field)
