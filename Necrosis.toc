@@ -69,8 +69,7 @@ Timers\Functions.lua
 Timers\GraphicalTimers.lua
 Timers\OtherTimers.lua
 
-
-
+NecrosisUI\Framework.xml
 
 XML\Attributes.lua
 
@@ -84,6 +83,5 @@ XML\Options-Misc.lua
 XML\Options-Overlay.lua
 Necrosis.lua
 XML\XML.lua
-NecrosisUI\Framework.xml
 
 SpellActivations\SpellActivations.xml
