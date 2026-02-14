@@ -123,7 +123,6 @@ function Necrosis:SetMiscConfig()
 			
 			NecrosisConfig.SoulshardContainer = 4 - math.floor(self:GetValue())
 			
-			-- print(NecrosisConfig.SoulshardContainer)
 			--Count the Shard to move a loop 
 			
 			for i=1, GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id) do
@@ -259,7 +258,6 @@ function Necrosis:SetMiscConfig()
 				local function RepositionSphere()
 					local mainSphere = _G["NecrosisMainSphere"]
 					if mainSphere then
-						print("|cFFFFFF00[NUI]|r Found NecrosisMainSphere, repositioning...")
 						mainSphere:ClearAllPoints()
 						mainSphere:SetPoint("BOTTOM", UIParent, "BOTTOM", -57.357116699219, 61.293731689453)
 						mainSphere:SetScale(1.33)
@@ -268,10 +266,8 @@ function Necrosis:SetMiscConfig()
 							NecrosisConfig.FramePosition = {}
 						end
 						NecrosisConfig.FramePosition["NecrosisMainSphere"] = {"BOTTOM", "UIParent", "BOTTOM", -57.357116699219, 61.293731689453, 1.33}
-						print("|cFFFFFF00[NUI]|r Main sphere repositioned and scaled to 133%, position saved")
 						return true
 					else
-						print("|cFFFF0000[NUI]|r ERROR: NecrosisMainSphere not found! Retrying in 0.5 sec...")
 						return false
 					end
 				end

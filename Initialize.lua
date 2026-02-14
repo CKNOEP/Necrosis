@@ -3,8 +3,7 @@
     Copyright (C) - copyright file included in this release
 --]]
 
-print("|cFFFF00FF[INIT_TEST]|r Initialize.lua is loading...")
-
+|
 -- On définit _G comme étant le tableau contenant toutes les frames existantes.
 local _G = getfenv(0)
 
@@ -48,19 +47,15 @@ do
 	end
 
 	-- Create Classic theme module
-	print("|cFFFFFF00[INIT]|r Creating Style_Classic module...")
-	local themeModule = NUI:NewModule('Style_Classic')
-	print("|cFFFFFF00[INIT]|r Theme module created!")
-end
+	|	local themeModule = NUI:NewModule('Style_Classic')
+	|end
 
 -- Load Classic theme after all frames are ready
 C_Timer.After(0.5, function()
 	if not (NUI and NecrosisUI and NUI_BottomAnchor) then
-		print("|cFFFF0000[THEME]|r Cannot load theme - frames missing!")
 		return
 	end
 
-	print("|cFFFFFF00[THEME]|r Creating Classic artwork...")
 	local artFrame = CreateFrame('Frame', 'NUI_Art_Classic', NecrosisUI)
 
 	-- Setup the Bottom Artwork
@@ -93,7 +88,6 @@ C_Timer.After(0.5, function()
 	artFrame.FarRight:SetPoint('BOTTOMLEFT', artFrame.Right, 'BOTTOMRIGHT')
 	artFrame.FarRight:SetPoint('BOTTOMRIGHT', NecrosisUI, 'BOTTOMRIGHT')
 
-	print("|cFFFFFF00[THEME]|r Classic artwork created successfully!")
 end)
 
 -- Compatibility wrapper for GetAddOnMetadata (deprecated in modern WoW)
@@ -181,7 +175,6 @@ C_Timer.After(1, function()
 		local btn = _G[name]
 		if btn then
 			btn:Hide()
-			print("|cFFFFFF00[STARTUP]|r Hiding " .. name)
 		end
 	end
 end)
@@ -281,17 +274,14 @@ function Necrosis:Initialize(Config)
 
 	Necrosis:Initialize_Speech()
 	-- On charge (ou on crée la configuration pour le joueur et on l'affiche sur la console
-	if not Necrosis.Data.LastConfig or  Necrosis.Data.LastConfig > Necrosis.Data.Version or NecrosisConfig.Version == nil then
-		
-		print(Necrosis.Data.LastConfig,Necrosis.Data.Version, NecrosisConfig.Version,NecrosisConfig.Language)
-		
+	if not Necrosis.Data.LastConfig or  Necrosis.Data.LastConfig > Necrosis.Data.Version or NecrosisConfig.Version == nil then		
 		NecrosisConfig = {}
 		NecrosisConfig = Config
 		NecrosisConfig.Version = Necrosis.Data.LastConfig
 		self:Msg(self.ChatMessage.Interface.DefaultConfig, "USER")
 	else
 		self:Msg(self.ChatMessage.Interface.UserConfig, "USER")
-		print("Necrosis", Necrosis.Data.LastConfig,Necrosis.Data.Version, NecrosisConfig.Version,NecrosisConfig.Language)
+		Necrosis", Necrosis.Data.LastConfig,Necrosis.Data.Version, NecrosisConfig.Version,NecrosisConfig.Language)
 	end
 	
 	if NecrosisConfig.PetInfo then -- just in case... pet config info was redone for speech
@@ -401,13 +391,10 @@ function Necrosis:Initialize(Config)
 
 	-- Apply NecrosisUI state on startup with delay to ensure SavedVariables are loaded
 	C_Timer.After(1, function()
-		print("|cFF00FF00[NecrosisUI]|r Startup check: NecrosisConfig.NecrosisUIEnabled = " .. tostring(NecrosisConfig.NecrosisUIEnabled))
-		if NecrosisConfig.NecrosisUIEnabled and NUI then
-			print("|cFF00FF00[NecrosisUI]|r Showing on startup")
-			pcall(function() NUI:Show() end)
+		|		if NecrosisConfig.NecrosisUIEnabled and NUI then
+			|			pcall(function() NUI:Show() end)
 		elseif NUI then
-			print("|cFF00FF00[NecrosisUI]|r Hiding on startup")
-			pcall(function() NUI:Hide() end)
+			|			pcall(function() NUI:Hide() end)
 		end
 	end)
 
@@ -433,7 +420,7 @@ function Necrosis:Initialize(Config)
 
 		-- CRITICAL: Re-enable clicks on main sphere AFTER all SetScript calls!
 		-- DISABLED: Old config code - button is now created with delay below
-		-- print("DEBUG: Checking main button...")
+		-- DEBUG: Checking main button...")
 		-- The real button will be created after delay
 
 		Necrosis:BuffSpellAttribute()
@@ -607,7 +594,6 @@ function Necrosis:Initialize(Config)
 				btn:SetScript("OnDragStart", function(self) Necrosis:OnDragStart(self) end)
 				btn:SetScript("OnDragStop", function(self)
 					Necrosis:OnDragStop(self)
-					print("|cFFFFFF00[POSITION]|r Position saved for " .. self:GetName())
 					-- Make text overlay cover the button again after drag
 					local overlay = _G["NecrosisShardCountFrame"]
 					if overlay then
@@ -624,17 +610,13 @@ function Necrosis:Initialize(Config)
 				-- Position
 				-- Try to restore from NecrosisMainSphere (current name) first, then NecrosisButton (legacy)
 				if NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisMainSphere"] then
-					print("|cFFFFFF00[POSITION]|r Restoring position for NecrosisMainSphere")
 					local pos = NecrosisConfig.FramePosition["NecrosisMainSphere"]
-					print("|cFFFFFF00[POSITION]|r Restored: " .. pos[1] .. ", " .. pos[2] .. ", " .. pos[3] .. ", " .. pos[4] .. ", " .. pos[5])
 					btn:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
 					-- Restore scale if it exists (6th element), otherwise use default 1
 					if pos[6] then
 						btn:SetScale(pos[6])
-						print("|cFFFFFF00[POSITION]|r Restored scale: " .. pos[6])
 					end
 				elseif NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisButton"] then
-					print("|cFFFFFF00[POSITION]|r Restoring position from legacy NecrosisButton")
 					local pos = NecrosisConfig.FramePosition["NecrosisButton"]
 					btn:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
 					-- Restore scale if it exists (6th element)
@@ -642,7 +624,6 @@ function Necrosis:Initialize(Config)
 						btn:SetScale(pos[6])
 					end
 				else
-					print("|cFFFFFF00[POSITION]|r No saved position, using default")
 					btn:SetPoint("CENTER", UIParent, "CENTER", 0, -200)
 				end
 
