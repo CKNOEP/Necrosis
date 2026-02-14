@@ -417,6 +417,9 @@ function Necrosis:Initialize(Config)
 				btn:Show()
 				_G["NecrosisButton"] = btn
 
+				-- Set tooltip type for the main button
+				btn.tip = "Main"
+
 				-- Reposition peripheral buttons around the sphere
 				Necrosis:ButtonSetup()
 
