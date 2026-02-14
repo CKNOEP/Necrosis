@@ -3333,3 +3333,12 @@ function Necrosis:DeleteShards()
         end
     end
 end
+
+-- Function to get Soulstone item cooldown info || Fonction pour obtenir les infos de cooldown de la pierre d'âme
+function Necrosis:GetSoulstoneItemCooldown()
+	if Local.Stone.Soul.Location[1] and Local.Stone.Soul.Location[2] then
+		local startTime, duration, isEnabled = C_Container.GetContainerItemCooldown(Local.Stone.Soul.Location[1], Local.Stone.Soul.Location[2])
+		return startTime, duration, isEnabled
+	end
+	return 0, 0, false
+end
