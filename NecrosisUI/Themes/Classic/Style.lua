@@ -74,9 +74,10 @@ end
 
 
 function module:OnInitialize()
-	
 	CreateArtwork()
-	
 end
+
+-- Execute immediately on load instead of waiting for OnInitialize
+CreateArtwork()
 
 
