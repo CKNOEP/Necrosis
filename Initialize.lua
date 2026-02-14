@@ -485,8 +485,7 @@ function Necrosis:Initialize(Config)
 					textOverlay:SetParent(btn)  -- Make it child of the new button
 					textOverlay:ClearAllPoints()
 					textOverlay:SetAllPoints(btn)  -- Cover the entire button
-					-- Rename it to the permanent name for future references
-					textOverlay:SetName("NecrosisShardCountFrame")
+					-- Register in _G for future references
 					_G["NecrosisShardCountFrame"] = textOverlay
 				end
 
