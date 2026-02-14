@@ -247,11 +247,8 @@ function Necrosis:SetMiscConfig()
 	NecrosisDestroyShard:SetChecked(NecrosisConfig.DestroyShard)
 	NecrosisAFK:SetChecked(NecrosisConfig.AFK)
 	if NecrosisUIEnabledCheckButton then
-		-- Only update checkbox if state actually changed to avoid triggering OnClick recursion
-		local desiredState = NecrosisConfig.NecrosisUIEnabled or false
-		if NecrosisUIEnabledCheckButton:GetChecked() ~= (desiredState and 1 or nil) then
-			NecrosisUIEnabledCheckButton:SetChecked(desiredState)
-		end
+		-- Set checkbox state from config (GetChecked returns 1 or nil, convert to match that)
+		NecrosisUIEnabledCheckButton:SetChecked(NecrosisConfig.NecrosisUIEnabled and 1 or nil)
 	end
 	
 	if NecrosisConfig.DestroyCount then
@@ -501,7 +498,9 @@ function Necrosis:SetMiscConfig()
 		end
 		self._NecrosisUIUpdating = true
 
-		NecrosisConfig.NecrosisUIEnabled = (self:GetChecked() == 1)
+		-- In WoW Classic/Anniversary, GetChecked() returns the OLD state (before click)
+		-- So we need to invert it to get the NEW state after click
+		NecrosisConfig.NecrosisUIEnabled = not self:GetChecked()
 
 		-- Apply changes immediately
 		if NecrosisConfig.NecrosisUIEnabled then
