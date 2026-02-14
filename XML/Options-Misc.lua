@@ -491,7 +491,7 @@ function Necrosis:SetMiscConfig()
 	frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 120)
 
 	frame:SetScript("OnClick", function(self)
-		NecrosisConfig.NecrosisUIEnabled = self:GetChecked()
+		NecrosisConfig.NecrosisUIEnabled = (self:GetChecked() == 1)
 
 		-- Apply changes immediately
 		if NecrosisConfig.NecrosisUIEnabled then
