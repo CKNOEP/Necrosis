@@ -493,9 +493,9 @@ function Necrosis:SetMiscConfig()
 	frame:SetScript("OnClick", function(self)
 		NecrosisConfig.NecrosisUIEnabled = self:GetChecked()
 
-		-- Reload the UI to apply changes
+		-- Apply changes immediately
 		if NecrosisConfig.NecrosisUIEnabled then
-			-- Try to load NecrosisUI
+			-- Try to show NecrosisUI
 			if NUI and type(NUI.Show) == "function" then
 				pcall(function() NUI:Show() end)
 			end
