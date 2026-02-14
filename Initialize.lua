@@ -297,7 +297,15 @@ function Necrosis:Initialize(Config)
 	else
 	NecrosisConfig.NecrosisAlphaBar = 85 -- just in case... was added in 7.6
 	end
-	
+
+	-- Initialize threat meter settings
+	if NecrosisConfig.ThreatMeterEnabled == nil then
+		NecrosisConfig.ThreatMeterEnabled = true -- Enable threat meter by default
+	end
+	if NecrosisConfig.ThreatRingThickness == nil then
+		NecrosisConfig.ThreatRingThickness = 7 -- Default ring thickness
+	end
+
 	Necrosis.UpdateSpellTimers(NecrosisConfig.Timers)-- init timers
 	
 	-- Création de la liste des sorts disponibles

@@ -65,7 +65,6 @@ Speech\Speech-cn.lua
 Speech\Speech-ru.lua
 
 Message.lua
-ThreatMeter.lua
 Spells-TBC.lua
 
 
@@ -88,6 +87,7 @@ XML\Options-Misc.lua
 XML\Options-Overlay.lua
 Necrosis.lua
 XML\XML.lua
+ThreatMeter.lua
 
 
 
