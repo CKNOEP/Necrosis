@@ -303,7 +303,7 @@ function Necrosis:Initialize(Config)
 		NecrosisConfig.ThreatMeterEnabled = true -- Enable threat meter by default
 	end
 	if NecrosisConfig.ThreatRingThickness == nil then
-		NecrosisConfig.ThreatRingThickness = 2 -- Thin ring thickness (2px)
+		NecrosisConfig.ThreatRingThickness = 1 -- Very thin ring thickness (1px)
 	end
 
 	Necrosis.UpdateSpellTimers(NecrosisConfig.Timers)-- init timers
