@@ -152,7 +152,7 @@ function Necrosis:CreateThreatRing()
 	-- Approche simple : créer plusieurs barres disposées en cercle pour former un anneau
 	local numSegments = 120  -- Nombre de segments pour former le cercle (plus = plus lisse)
 	local segmentWidth = thickness
-	local segmentHeight = math.max(2, thickness + 1)  -- Proportional to thickness (min 2px)
+	local segmentHeight = thickness  -- Match thickness for proportional segments
 	local radius = buttonSize / 2 + thickness / 2 - 5  -- Rayon du cercle (rapproché du bouton)
 
 	ring.segments = {}
@@ -212,7 +212,7 @@ function Necrosis:UpdateThreatRingThickness()
 	local thickness = NecrosisConfig.ThreatRingThickness or 1
 	local ringSize = buttonSize + (thickness * 2) - 10
 	local radius = buttonSize / 2 + thickness / 2 - 5
-	local segmentHeight = math.max(4, thickness + 1)
+	local segmentHeight = thickness  -- Match thickness for proportional segments
 
 	-- Redimensionner le frame principal
 	threatRing:SetSize(ringSize, ringSize)
