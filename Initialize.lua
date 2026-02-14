@@ -385,6 +385,18 @@ function Necrosis:Initialize(Config)
 
 					-- Add stone counts
 					GameTooltip:AddLine(" ")
+
+					-- Soulstone
+					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.soul_stones then
+						local soulCount = 0
+						for i, v in pairs(Necrosis.Warlock_Lists.soul_stones) do
+							soulCount = soulCount + GetItemCount(v.id)
+						end
+						local soulColor = soulCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
+						GameTooltip:AddLine("Pierre d'âme: "..soulColor..soulCount.."|r")
+					end
+
+					-- Healthstone
 					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.health_stones then
 						local healthCount = 0
 						for i, v in pairs(Necrosis.Warlock_Lists.health_stones) do
@@ -410,6 +422,13 @@ function Necrosis:Initialize(Config)
 						end
 						local fireColor = fireCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
 						GameTooltip:AddLine("Pierre de feu: "..fireColor..fireCount.."|r")
+					end
+
+					-- Infernal Stone (reagent)
+					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.reagents and Necrosis.Warlock_Lists.reagents.infernal_stone then
+						local infernalCount = GetItemCount(Necrosis.Warlock_Lists.reagents.infernal_stone.id)
+						local infernalColor = infernalCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
+						GameTooltip:AddLine("Pierre infernale: "..infernalColor..infernalCount.."|r")
 					end
 
 					GameTooltip:Show()
