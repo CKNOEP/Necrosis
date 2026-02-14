@@ -564,6 +564,7 @@ function Necrosis:Initialize(Config)
 				btn:SetScript("OnDragStart", function(self) Necrosis:OnDragStart(self) end)
 				btn:SetScript("OnDragStop", function(self)
 					Necrosis:OnDragStop(self)
+					print("|cFFFFFF00[POSITION]|r Position saved for " .. self:GetName())
 					-- Make text overlay cover the button again after drag
 					local overlay = _G["NecrosisShardCountFrame"]
 					if overlay then
@@ -578,20 +579,24 @@ function Necrosis:Initialize(Config)
 				end
 
 				-- Position
-				if NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisButton"] then
-					btn:SetPoint(
-						NecrosisConfig.FramePosition["NecrosisButton"][1],
-						NecrosisConfig.FramePosition["NecrosisButton"][2],
-						NecrosisConfig.FramePosition["NecrosisButton"][3],
-						NecrosisConfig.FramePosition["NecrosisButton"][4],
-						NecrosisConfig.FramePosition["NecrosisButton"][5]
-					)
+				-- Try to restore from NecrosisMainSphere (current name) first, then NecrosisButton (legacy)
+				if NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisMainSphere"] then
+					print("|cFFFFFF00[POSITION]|r Restoring position for NecrosisMainSphere")
+					local pos = NecrosisConfig.FramePosition["NecrosisMainSphere"]
+					print("|cFFFFFF00[POSITION]|r Restored: " .. pos[1] .. ", " .. pos[2] .. ", " .. pos[3] .. ", " .. pos[4] .. ", " .. pos[5])
+					btn:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+				elseif NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisButton"] then
+					print("|cFFFFFF00[POSITION]|r Restoring position from legacy NecrosisButton")
+					local pos = NecrosisConfig.FramePosition["NecrosisButton"]
+					btn:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
 				else
+					print("|cFFFFFF00[POSITION]|r No saved position, using default")
 					btn:SetPoint("CENTER", UIParent, "CENTER", 0, -200)
 				end
 
 				btn:Show()
 				_G["NecrosisButton"] = btn
+				_G["NecrosisMainSphere"] = btn
 
 				-- Set tooltip type for the main button
 				btn.tip = "Main"
