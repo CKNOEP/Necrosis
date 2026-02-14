@@ -57,19 +57,13 @@ function Necrosis:UpdateThreatMeter()
 		return
 	end
 
-	-- TEST MODE: Always show ring (comment out line below to require combat)
-	-- Vérifier si en combat et avec une cible
-	if not UnitAffectingCombat("player") and not UnitExists("target") then
-		threatRing:Hide()
-		return
-	end
-
-	-- Récupérer le pourcentage de menace détaillé
-	local isTanking, status, threatpct, rawthreatpct, threatvalue = UnitDetailedThreatSituation("player", "target")
-
-	if not threatpct then
-		threatRing:Hide()
-		return
+	-- Récupérer le pourcentage de menace détaillé (0% si pas de cible)
+	local threatpct = 0
+	if UnitAffectingCombat("player") and UnitExists("target") then
+		local isTanking, status, tp, rawthreatpct, threatvalue = UnitDetailedThreatSituation("player", "target")
+		if tp then
+			threatpct = tp
+		end
 	end
 
 	-- Calculer la couleur avec dégradé
