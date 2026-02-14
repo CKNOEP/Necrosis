@@ -119,7 +119,7 @@ function Necrosis:CreateThreatRing()
 	local buttonSize = math.max(buttonWidth, buttonHeight)
 
 	-- L'anneau doit être légèrement plus grand que la sphère
-	local thickness = NecrosisConfig.ThreatRingThickness or 7
+	local thickness = NecrosisConfig.ThreatRingThickness or 4
 	local ringSize = buttonSize + (thickness * 2)
 
 	ring:SetSize(ringSize, ringSize)
@@ -131,7 +131,7 @@ function Necrosis:CreateThreatRing()
 	-- Approche simple : créer plusieurs barres disposées en cercle pour former un anneau
 	local numSegments = 120  -- Nombre de segments pour former le cercle (plus = plus lisse)
 	local segmentWidth = thickness
-	local segmentHeight = 8  -- Hauteur augmentée pour un cercle plus continu
+	local segmentHeight = math.max(5, thickness + 1)  -- Proportional to thickness (min 5px)
 	local radius = buttonSize / 2 + thickness / 2  -- Rayon du cercle
 
 	ring.segments = {}
@@ -139,7 +139,7 @@ function Necrosis:CreateThreatRing()
 		local angle = (i / numSegments) * 360
 		local segment = ring:CreateTexture(nil, "OVERLAY")
 		segment:SetTexture("Interface\\Buttons\\WHITE8X8")
-		segment:SetSize(segmentWidth, segmentHeight)
+		segment:SetSize(thickness, segmentHeight)
 		segment:SetVertexColor(0, 1, 0, 0)  -- Vert, invisible au départ
 
 		-- Calculer la position en coordonnées polaires
@@ -178,9 +178,10 @@ function Necrosis:UpdateThreatRingThickness()
 	local buttonSize = math.max(buttonWidth, buttonHeight)
 
 	-- Calculer la nouvelle taille de l'anneau
-	local thickness = NecrosisConfig.ThreatRingThickness or 7
+	local thickness = NecrosisConfig.ThreatRingThickness or 4
 	local ringSize = buttonSize + (thickness * 2)
 	local radius = buttonSize / 2 + thickness / 2
+	local segmentHeight = math.max(5, thickness + 1)
 
 	-- Redimensionner le frame principal
 	threatRing:SetSize(ringSize, ringSize)
@@ -189,7 +190,7 @@ function Necrosis:UpdateThreatRingThickness()
 	if threatRing.segments then
 		local numSegments = #threatRing.segments
 		for i, segment in ipairs(threatRing.segments) do
-			segment:SetSize(thickness, 8)
+			segment:SetSize(thickness, segmentHeight)
 
 			-- Recalculer la position
 			local angle = (i / numSegments) * 360
