@@ -26,6 +26,19 @@ do
 		necrosisUIFrame:SetFrameStrata("BACKGROUND")
 		necrosisUIFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 0)
 		necrosisUIFrame:SetSize(800, 200)
+
+		-- Add visible background so frame is not transparent
+		necrosisUIFrame:SetBackdrop({
+			bgFile = "Interface/Tooltips/UI-Tooltip-Background",
+			edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+			tile = true,
+			tileSize = 16,
+			edgeSize = 16,
+			insets = { left = 5, right = 5, top = 5, bottom = 5 }
+		})
+		necrosisUIFrame:SetBackdropColor(0.1, 0.1, 0.1, 0.8)
+		necrosisUIFrame:SetBackdropBorderColor(0.5, 0.5, 0.5, 0.8)
+
 		necrosisUIFrame:Hide()
 
 		-- Create bottom anchor
