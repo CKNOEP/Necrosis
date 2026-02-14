@@ -328,12 +328,14 @@ function Necrosis:Initialize(Config)
 		NecrosisConfig.NecrosisUIEnabled = false
 	end
 
-	-- Apply NecrosisUI state on startup
-	if NecrosisConfig.NecrosisUIEnabled and NUI then
-		pcall(function() NUI:Show() end)
-	elseif NUI then
-		pcall(function() NUI:Hide() end)
-	end
+	-- Apply NecrosisUI state on startup with delay to ensure SavedVariables are loaded
+	C_Timer.After(0.5, function()
+		if NecrosisConfig.NecrosisUIEnabled and NUI then
+			pcall(function() NUI:Show() end)
+		elseif NUI then
+			pcall(function() NUI:Hide() end)
+		end
+	end)
 
 	-- Request the localized strings - this may need events and time...
 	Necrosis.UpdatePouches()
