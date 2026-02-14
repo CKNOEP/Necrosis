@@ -400,7 +400,9 @@ function Necrosis:Initialize(Config)
 						if startTime and startTime > 0 and duration and duration > 0 then
 							local timeLeft = math.ceil((startTime + duration) - GetTime())
 							if timeLeft > 0 then
-								soulText = soulText .. " |cFFFF9999("..timeLeft.."s)|r"
+								local minutes = math.floor(timeLeft / 60)
+								local seconds = timeLeft % 60
+								soulText = soulText .. " |cFFFF9999("..minutes..":"..string.format("%02d", seconds)..")|r"
 							end
 						end
 						GameTooltip:AddLine(soulText)
@@ -420,7 +422,9 @@ function Necrosis:Initialize(Config)
 						if startTime and startTime > 0 and duration and duration > 0 then
 							local timeLeft = math.ceil((startTime + duration) - GetTime())
 							if timeLeft > 0 then
-								healthText = healthText .. " |cFFFF9999("..timeLeft.."s)|r"
+								local minutes = math.floor(timeLeft / 60)
+								local seconds = timeLeft % 60
+								healthText = healthText .. " |cFFFF9999("..minutes..":"..string.format("%02d", seconds)..")|r"
 							end
 						end
 						GameTooltip:AddLine(healthText)
