@@ -20,25 +20,28 @@ do
 		_G.NUI = NUI
 	end
 
-	-- Create NecrosisUI frame
+	-- Create NecrosisUI frame - this will be populated by themes
 	if not _G.NecrosisUI then
 		local necrosisUIFrame = CreateFrame("Frame", "NecrosisUI", UIParent)
 		necrosisUIFrame:SetFrameStrata("BACKGROUND")
-		necrosisUIFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 50)
-		necrosisUIFrame:SetSize(800, 150)
-
-		-- Add background texture using standard WoW texture
-		local bg = necrosisUIFrame:CreateTexture(nil, "BACKGROUND")
-		bg:SetAllPoints(necrosisUIFrame)
-		bg:SetTexture("Interface/Tooltips/UI-Tooltip-Background")
-		bg:SetAlpha(0.8)
-
+		necrosisUIFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 0)
+		necrosisUIFrame:SetSize(1024, 256)
 		necrosisUIFrame:Hide()
 
-		-- Create bottom anchor
+		-- Create bottom anchor for theme artwork positioning
 		local bottomAnchor = CreateFrame("Frame", "NUI_BottomAnchor", necrosisUIFrame)
 		bottomAnchor:SetAllPoints(necrosisUIFrame)
 	end
+
+	-- Load Classic theme after a short delay to ensure NUI is ready
+	C_Timer.After(0.1, function()
+		if NUI and NUI:GetModule then
+			local classicStyle = NUI:GetModule('Style_Classic')
+			if classicStyle and classicStyle.OnInitialize then
+				classicStyle:OnInitialize()
+			end
+		end
+	end)
 
 	-- Implement Show/Hide methods
 	function NUI:Show()
