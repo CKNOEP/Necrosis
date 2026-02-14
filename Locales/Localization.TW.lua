@@ -261,3 +261,19 @@ L["ABOUT_LICENSE"] = "License";
 -- Threat Meter & NecrosisUI
 L["THREAT_METER_ENABLED"] = "啟用 Threat Meter（圓形指示器）"
 L["NECROSISUI_ENABLED"] = "啟用 NecrosisUI（進階框架）"
+
+-- Missing translations (added automatically)
+L["SPHERE_SPELL2"] = "球體施放的法術（Shift+點擊）"
+L["SPHERE_SPELL_RIGHTCLICK"] = "右鍵點擊球體以刪除超額庫存"
+L["SPHERE_SPELL_RIGHTCLICK_L2"] = "Ctrl+左鍵點擊以開啟配置菜單"
+L["SPHERE_SPELL+CTRL"] = "打開選項菜單"
+L["BUTTONS_CTRL-LEFT"] = "坐騎 Ctrl+左鍵點擊"
+L["BUTTONS_CTRL-RIGHT"] = "坐騎 Ctrl+右鍵點擊"
+L["BUTTONS_L"] = "坐騎左鍵點擊"
+L["BUTTONS_R"] = "坐騎右鍵點擊"
+L["CATA"] = "大地之裂"
+L["PURPLE2"] = "紫色2"
+L["MENU_QUICK_SACRIFICE"] = "快速犧牲"
+L["TIMER_ALPHA"] = "計時器透明度"
+L["SPEECH_API"] = "語音合成API"
+L["SHOW_DESTROY_SHARDS"] = "顯示摧毀碎片按鈕"

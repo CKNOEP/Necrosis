@@ -289,3 +289,12 @@ AFKS_CAMPOFF = "\124cFFFFEA00ОТДЫХ ВыКЛ\124r"
 AFKS_NOGUILD = "Нет Гильдии"
 AFKS_DATEFORMAT = "%d-%d-%d\n%s\n\n%s"
 
+
+-- Missing translations (added automatically)
+L["SPHERE_SPELL2"] = "Заклинание, накладываемое Сферой (Shift+клик)"
+L["SPHERE_SPELL_RIGHTCLICK"] = "Правый клик на Сфере для удаления излишков"
+L["SPHERE_SPELL_RIGHTCLICK_L2"] = "Ctrl+Левый клик для открытия меню конфигурации"
+L["SPHERE_SPELL+CTRL"] = "Открыть меню опций"
+L["CATA"] = "Катаклизм"
+L["PURPLE2"] = "Фиолетовый2"
+L["SPEECH_API"] = "API синтеза речи"

@@ -144,6 +144,10 @@ L["SPHERE_SIZE"] = "Taille de la sph\195\168re"
 L["SPHERE_SKIN"] = "Skin de la sph\195\168re"
 L["SPHERE_EVENT"] = "Ev\195\168nement montr\195\169 par la sph\195\168re"
 L["SPHERE_SPELL"] = "Sort cast\195\169 par la sph\195\168re"
+L["SPHERE_SPELL2"] = "Sort castépar la sphère (Maj+clic)"
+L["SPHERE_SPELL_RIGHTCLICK"] = "Clic droit sur la sphère pour supprimer l'excédent"
+L["SPHERE_SPELL_RIGHTCLICK_L2"] = "Ctrl+Clic gauche pour ouvrir le menu config"
+L["SPHERE_SPELL+CTRL"] = "Ouvrir le menu des options"
 L["SPHERE_COUNTER"] = "Afficher le compteur num\195\169rique"
 L["SPHERE_STONE"] = "Type de compteur num\195\169rique"
 --	Colour
@@ -302,3 +306,14 @@ L["ABOUT_CATEGORY"] = "Category";
 L["ABOUT_EMAIL"] = "E-mail";
 L["ABOUT_WEB"] = "Website";
 L["ABOUT_LICENSE"] = "License";
+
+-- Missing translations (added automatically)
+L["BUTTONS_CTRL-LEFT"] = "Montage Ctrl+Clic gauche"
+L["BUTTONS_CTRL-RIGHT"] = "Monture Ctrl+Clic droit"
+L["BUTTONS_L"] = "Monture Clic gauche"
+L["BUTTONS_R"] = "Monture Clic droit"
+L["CATA"] = "Cataclysme"
+L["PURPLE2"] = "Purple2"
+L["MENU_QUICK_SACRIFICE"] = "Sacrifice rapide"
+L["TIMER_ALPHA"] = "Transparence du timer"
+L["SPEECH_API"] = "API de synthèse vocale"

@@ -261,3 +261,19 @@ L["ABOUT_LICENSE"] = "License";
 -- NecrosisUI
 L["THREAT_METER_ENABLED"] = "Threat Meter aktivieren (kreisformiger Indikator)"
 L["NECROSISUI_ENABLED"] = "NecrosisUI aktivieren (erweiterter Rahmen)"
+
+-- Missing translations (added automatically)
+L["SPHERE_SPELL2"] = "Von der Sphäre ausgelöster Zauber (Umschalt+Klick)"
+L["SPHERE_SPELL_RIGHTCLICK"] = "Rechtsklick auf Sphäre zum Löschen des Überbestands"
+L["SPHERE_SPELL_RIGHTCLICK_L2"] = "Strg+Linksklick zum Öffnen des Konfigurationsmenüs"
+L["SPHERE_SPELL+CTRL"] = "Optionsmenü öffnen"
+L["BUTTONS_CTRL-LEFT"] = "Begleiter Strg+Linksklick"
+L["BUTTONS_CTRL-RIGHT"] = "Begleiter Strg+Rechtsklick"
+L["BUTTONS_L"] = "Begleiter Linksklick"
+L["BUTTONS_R"] = "Begleiter Rechtsklick"
+L["CATA"] = "Kataklysmus"
+L["PURPLE2"] = "Purple2"
+L["MENU_QUICK_SACRIFICE"] = "Schnelles Opfer"
+L["TIMER_ALPHA"] = "Timer-Transparenz"
+L["SPEECH_API"] = "Sprachsyntheseapi"
+L["SHOW_DESTROY_SHARDS"] = "Zerstöre Shards-Button anzeigen"

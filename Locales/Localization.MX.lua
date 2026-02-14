@@ -261,3 +261,19 @@ L["ABOUT_LICENSE"] = "License";
 -- Threat Meter & NecrosisUI
 L["THREAT_METER_ENABLED"] = "Activar Threat Meter (indicador circular)"
 L["NECROSISUI_ENABLED"] = "Activar NecrosisUI (marco avanzado)"
+
+-- Missing translations (added automatically)
+L["SPHERE_SPELL2"] = "Hechizo lanzado por la Esfera (Mayús+clic)"
+L["SPHERE_SPELL_RIGHTCLICK"] = "Clic derecho en la Esfera para eliminar el exceso"
+L["SPHERE_SPELL_RIGHTCLICK_L2"] = "Ctrl+Clic izquierdo para abrir el menú de configuración"
+L["SPHERE_SPELL+CTRL"] = "Abrir menú de opciones"
+L["BUTTONS_CTRL-LEFT"] = "Montura Ctrl+Clic izquierdo"
+L["BUTTONS_CTRL-RIGHT"] = "Montura Ctrl+Clic derecho"
+L["BUTTONS_L"] = "Montura Clic izquierdo"
+L["BUTTONS_R"] = "Montura Clic derecho"
+L["CATA"] = "Catacismo"
+L["PURPLE2"] = "Purple2"
+L["MENU_QUICK_SACRIFICE"] = "Sacrificio rápido"
+L["TIMER_ALPHA"] = "Transparencia del temporizador"
+L["SPEECH_API"] = "API de síntesis de voz"
+L["SHOW_DESTROY_SHARDS"] = "Mostrar botón destruir fragmentos"
