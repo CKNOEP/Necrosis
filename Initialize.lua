@@ -24,14 +24,14 @@ do
 	if not _G.NecrosisUI then
 		local necrosisUIFrame = CreateFrame("Frame", "NecrosisUI", UIParent)
 		necrosisUIFrame:SetFrameStrata("BACKGROUND")
-		necrosisUIFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 0)
-		necrosisUIFrame:SetSize(800, 200)
+		necrosisUIFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 50)
+		necrosisUIFrame:SetSize(800, 150)
 
-		-- Add visible background texture - dark color
+		-- Add background texture using standard WoW texture
 		local bg = necrosisUIFrame:CreateTexture(nil, "BACKGROUND")
 		bg:SetAllPoints(necrosisUIFrame)
-		bg:SetTexture(0, 0, 0)  -- Black texture
-		bg:SetAlpha(0.7)  -- Semi-transparent
+		bg:SetTexture("Interface/Tooltips/UI-Tooltip-Background")
+		bg:SetAlpha(0.8)
 
 		necrosisUIFrame:Hide()
 
