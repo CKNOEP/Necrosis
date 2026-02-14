@@ -4,9 +4,7 @@
 	<!-- frameStrata Parameters:  BACKGROUND, LOW, MEDIUM, HIGH, DIALOG, FULLSCREEN, FULLSCREEN_DIALOG, TOOLTIP  -->
 	<!-- Layer level Parameters:  BACKGROUND, BORDER, ARTWORK, OVERLAY, HIGHLIGHT -->
 
-	<!-- Load NecrosisUI Framework -->
-	<Script file="Framework.lua"/>
-
+	<!-- Framework.lua is loaded via TOC file, not here -->
 	<!-- SUI_PartyMemberTemplate -->
 
 
