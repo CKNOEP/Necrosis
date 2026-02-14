@@ -3342,3 +3342,12 @@ function Necrosis:GetSoulstoneItemCooldown()
 	end
 	return 0, 0, false
 end
+
+-- Function to get Healthstone item cooldown info || Fonction pour obtenir les infos de cooldown de la pierre de soin
+function Necrosis:GetHealthstoneItemCooldown()
+	if Local.Stone.Health.Location[1] and Local.Stone.Health.Location[2] then
+		local startTime, duration, isEnabled = C_Container.GetContainerItemCooldown(Local.Stone.Health.Location[1], Local.Stone.Health.Location[2])
+		return startTime, duration, isEnabled
+	end
+	return 0, 0, false
+end

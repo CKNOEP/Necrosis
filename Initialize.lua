@@ -413,7 +413,17 @@ function Necrosis:Initialize(Config)
 							healthCount = healthCount + GetItemCount(v.id)
 						end
 						local healthColor = healthCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
-						GameTooltip:AddLine("Pierre de soin: "..healthColor..healthCount.."|r")
+						local healthText = "Pierre de soin: "..healthColor..healthCount.."|r"
+
+						-- Check cooldown for healthstone item
+						local startTime, duration, isEnabled = Necrosis:GetHealthstoneItemCooldown()
+						if startTime and startTime > 0 and duration and duration > 0 then
+							local timeLeft = math.ceil((startTime + duration) - GetTime())
+							if timeLeft > 0 then
+								healthText = healthText .. " |cFFFF9999("..timeLeft.."s)|r"
+							end
+						end
+						GameTooltip:AddLine(healthText)
 					end
 
 					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.spell_stones then
