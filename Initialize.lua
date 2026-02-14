@@ -1,7 +1,9 @@
 --[[
-    Necrosis 
+    Necrosis
     Copyright (C) - copyright file included in this release
 --]]
+
+print("|cFFFF00FF[INIT_TEST]|r Initialize.lua is loading...")
 
 -- On définit _G comme étant le tableau contenant toutes les frames existantes.
 local _G = getfenv(0)
