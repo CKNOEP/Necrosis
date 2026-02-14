@@ -2108,9 +2108,19 @@ function Necrosis:BuildButtonTooltip(button)
 			end
 			end		
 							
-		else
-			
-		end			
+	else
+		-- Display default Steed when no custom right mount configured
+		local srank1 = Necrosis.Warlock_Spells[5784].InSpellBook
+		local srank2 = Necrosis.Warlock_Spells[23161].InSpellBook
+		local Rank1 = srank1 and Necrosis.Warlock_Spells[5784].CastName
+		local Rank2 = srank2 and Necrosis.Warlock_Spells[23161].CastName
+		local DefaultSteed = Rank2 or Rank1
+		if DefaultSteed then
+			local spellID = Rank2 and 23161 or 5784
+			local icon_texture = GetSpellTexture(spellID)
+			GameTooltip:AddDoubleLine(L["BUTTONS_RIGHT"]," |T"..icon_texture..":0:0:0:0|t".." "..DefaultSteed);
+		end
+	end
 
 	
 	--End ToolTip Mount	
