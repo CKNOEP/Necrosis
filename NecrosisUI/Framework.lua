@@ -1,6 +1,9 @@
+print("|cFF00FF00[NecrosisUI Framework]|r Framework.lua is loading...")
+
 -- Initialize NUI as embedded addon (not separate TOC)
 local NUI = _G.NUI
 if not NUI then
+	print("|cFF00FF00[NecrosisUI Framework]|r Creating new NUI addon...")
 	NUI = LibStub('AceAddon-3.0'):NewAddon('NecrosisUI', 'AceEvent-3.0', 'AceConsole-3.0', 'AceSerializer-3.0')
 	_G.NUI = NUI
 	print("|cFF00FF00[NecrosisUI Framework]|r Initialized NUI addon")
