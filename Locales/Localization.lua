@@ -299,3 +299,15 @@ AFKS_CAMPOFF = "\124cFFFFEA00CAMPING OFF\124r"
 AFKS_NOGUILD = "No Guild"
 AFKS_DATEFORMAT = "%d-%d-%d\n%s\n\n%s"
 
+
+-- Missing UI Labels (from config pages)
+L["UNFORTUNATELY_TBC_SHARD_MSG"] = "Unfortunately with TBC, Blizzard has decided to remove the ability for addons to automatically delete shards. Auto-sorting after combat is no longer supported. Now use shard button to manage Shards"
+L["OPEN_OPTIONS_OVERLAY"] = "Open Options SpellOverlay"
+L["AFK_SCREEN"] = "AFK Screen"
+L["MOUNT_DRAG_DROP_INSTRUCTIONS"] = "Select your mounts: drag and drop the Mount into the frame to bind it"
+L["OFFSET_X"] = "Offset X"
+L["OFFSET_Y"] = "Offset Y"
+L["SELECT_MOUNTS"] = "Select your mounts:"
+L["PAGE_OF_N"] = "Page %d of %d"
+L["RESET"] = "Reset"
+L["TEST_OVERLAY"] = "Test Overlay"

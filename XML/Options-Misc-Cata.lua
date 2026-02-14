@@ -56,12 +56,12 @@ function Necrosis:SetMiscConfig()
 		
 	
 	
-    	NecrosisAFK:SetText("AFK Screen")
+    	NecrosisAFK:SetText(L["AFK_SCREEN"])
 
 
 	-- Boutons oVERLAY
 	frame = CreateFrame("Button", nil, NecrosisMiscConfig, "UIPanelButtonTemplate")
-	frame:SetText("Open Options SpellOverlay")
+	frame:SetText(L["OPEN_OPTIONS_OVERLAY"])
 	frame:SetSize(200 ,22) -- width, height
 	frame:EnableMouse(true)
 	frame:Show()

@@ -69,9 +69,7 @@ function Necrosis:SetMiscConfig()
 		Glow:ClearAllPoints()
 		Glow:SetPoint("LEFT", frame, "TOPLEFT" , 40, 25 )
 		Glow:SetTextColor(1, 0.5, 0)
-		Glow:SetText("Unfortunately with TBC, Blizzard has decided to remove    the ability for addons to automatically delete shards.    "..
-		"auto-sorting after combat is no longer supported.  "..
-		"Now use shard button to manage Shards")
+		Glow:SetText(L["UNFORTUNATELY_TBC_SHARD_MSG"])
 	
 		
 		-- Destruction des fragments quand le sac est plein
@@ -144,7 +142,7 @@ function Necrosis:SetMiscConfig()
 
 		-- Boutons oVERLAY
 			frame = CreateFrame("Button", nil, NecrosisMiscConfig, "UIPanelButtonTemplate")
-			frame:SetText("Open Options SpellOverlay")
+			frame:SetText(L["OPEN_OPTIONS_OVERLAY"])
 			frame:SetSize(200 ,22) -- width, height
 			frame:EnableMouse(true)
 			frame:Show()
@@ -384,7 +382,7 @@ function Necrosis:SetMiscConfig()
 	--NecrosisDestroyShardBag:SetText(self.Config.Misc["Detruit les fragments si le sac plein"])--deprecated
 	NecrosisShardBagText:SetText(self.Config.Misc["Choix du sac contenant les fragments"])
 	NecrosisDestroyShard:SetText(self.Config.Misc["Nombre maximum de fragments a conserver"])
-	NecrosisAFK:SetText("AFK Screen")
+	NecrosisAFK:SetText(L["AFK_SCREEN"])
 
 
 	if NecrosisConfig.SoulshardSort then --See Necrosis:SoulshardSwitch("MOVE")
@@ -549,7 +547,7 @@ function Necrosis:SetMiscConfig()
 	
 	-- Boutons test oVERLAY
 	testButton = CreateFrame("Button", nil, NecrosisMiscConfig, "UIPanelButtonTemplate")
-	testButton:SetText("Test Overlay")
+	testButton:SetText(L["TEST_OVERLAY"])
 	testButton:SetSize(120 ,22) -- width, height
 	testButton:EnableMouse(true)
 	testButton:Show()

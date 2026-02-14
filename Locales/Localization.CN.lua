@@ -286,3 +286,15 @@ L["ABOUT_LICENSE"] = "License";
 -- Threat Meter & NecrosisUI
 L["THREAT_METER_ENABLED"] = "启用 Threat Meter（圆形指示器）"
 L["NECROSISUI_ENABLED"] = "启用 NecrosisUI（高级框架）"
+
+-- Missing UI Labels (from config pages)
+L["UNFORTUNATELY_TBC_SHARD_MSG"] = "不幸的是，在 TBC 中，暴雪决定移除插件自动删除碎片的能力。战斗后的自动分类不再受支持。现在使用碎片按钮来管理碎片"
+L["OPEN_OPTIONS_OVERLAY"] = "打开选项法术叠加层"
+L["AFK_SCREEN"] = "AFK 屏幕"
+L["MOUNT_DRAG_DROP_INSTRUCTIONS"] = "选择您的坐骑：将坐骑拖放到框架中以绑定它"
+L["OFFSET_X"] = "偏移 X"
+L["OFFSET_Y"] = "偏移 Y"
+L["SELECT_MOUNTS"] = "选择您的坐骑："
+L["PAGE_OF_N"] = "第 %d 页，共 %d 页"
+L["RESET"] = "重置"
+L["TEST_OVERLAY"] = "测试叠加层"
