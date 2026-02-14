@@ -496,13 +496,13 @@ function Necrosis:SetMiscConfig()
 		-- Reload the UI to apply changes
 		if NecrosisConfig.NecrosisUIEnabled then
 			-- Try to load NecrosisUI
-			if NecrosisUI then
-				pcall(function() NecrosisUI:Show() end)
+			if NUI and type(NUI.Show) == "function" then
+				pcall(function() NUI:Show() end)
 			end
 		else
 			-- Try to hide NecrosisUI
-			if NecrosisUI then
-				pcall(function() NecrosisUI:Hide() end)
+			if NUI and type(NUI.Hide) == "function" then
+				pcall(function() NUI:Hide() end)
 			end
 		end
 	end)

@@ -257,3 +257,6 @@ L["ABOUT_CATEGORY"] = "Category";
 L["ABOUT_EMAIL"] = "E-mail";
 L["ABOUT_WEB"] = "Website";
 L["ABOUT_LICENSE"] = "License";
+
+-- NecrosisUI
+L["NECROSISUI_ENABLED"] = "啟用 NecrosisUI（進階框架）"

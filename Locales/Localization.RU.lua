@@ -267,6 +267,9 @@ L["ANTI_FEAR_BUFF_TREMOR"]		= "Тотем трепета"
 L["ANTI_FEAR_BUFF_ABOLISH"]		= "Рассеяние чар"
 L["ANTI_FEAR_DEBUFF_RECKLESS"]	= "Проклятие безрассудства"
 
+-- NecrosisUI
+L["NECROSISUI_ENABLED"] = "Включить NecrosisUI (расширенный интерфейс)"
+
 -- Speech
 
 --
