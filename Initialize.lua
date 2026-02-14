@@ -158,7 +158,8 @@ shardCount:SetPoint("CENTER")  -- Center in parent
 shardCount:SetTextColor(1, 1, 1, 1)
 
 -- Hide all peripheral buttons at startup - will be shown after position restoration
-C_Timer.After(0.1, function()
+-- Wait 1 second to ensure all buttons are created by XML.lua first
+C_Timer.After(1, function()
 	local buttonNames = {
 		"NecrosisFirestoneButton",
 		"NecrosisSpellstoneButton",
@@ -179,6 +180,7 @@ C_Timer.After(0.1, function()
 		local btn = _G[name]
 		if btn then
 			btn:Hide()
+			print("|cFFFFFF00[STARTUP]|r Hiding " .. name)
 		end
 	end
 end)
