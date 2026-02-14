@@ -152,7 +152,7 @@ function Necrosis:CreateThreatRing()
 	-- Approche simple : créer plusieurs barres disposées en cercle pour former un anneau
 	local numSegments = 120  -- Nombre de segments pour former le cercle (plus = plus lisse)
 	local segmentWidth = thickness
-	local segmentHeight = math.max(5, thickness + 1)  -- Proportional to thickness (min 5px)
+	local segmentHeight = math.max(3, thickness + 1)  -- Proportional to thickness (min 3px)
 	local radius = buttonSize / 2 + thickness / 2  -- Rayon du cercle
 
 	ring.segments = {}
