@@ -382,6 +382,36 @@ function Necrosis:Initialize(Config)
 					end
 					GameTooltip:AddDoubleLine("Clic droit:", "Configuration", 1, 1, 1, 1, 1, 1)
 					GameTooltip:AddDoubleLine("Drag:", "Déplacer", 1, 1, 1, 1, 1, 1)
+
+					-- Add stone counts
+					GameTooltip:AddLine(" ")
+					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.health_stones then
+						local healthCount = 0
+						for i, v in pairs(Necrosis.Warlock_Lists.health_stones) do
+							healthCount = healthCount + GetItemCount(v.id)
+						end
+						local healthColor = healthCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
+						GameTooltip:AddLine("Pierre de soin: "..healthColor..healthCount.."|r")
+					end
+
+					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.spell_stones then
+						local spellCount = 0
+						for i, v in pairs(Necrosis.Warlock_Lists.spell_stones) do
+							spellCount = spellCount + GetItemCount(v.id)
+						end
+						local spellColor = spellCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
+						GameTooltip:AddLine("Pierre de sort: "..spellColor..spellCount.."|r")
+					end
+
+					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.fire_stones then
+						local fireCount = 0
+						for i, v in pairs(Necrosis.Warlock_Lists.fire_stones) do
+							fireCount = fireCount + GetItemCount(v.id)
+						end
+						local fireColor = fireCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
+						GameTooltip:AddLine("Pierre de feu: "..fireColor..fireCount.."|r")
+					end
+
 					GameTooltip:Show()
 				end)
 				btn:SetScript("OnLeave", function() GameTooltip:Hide() end)
