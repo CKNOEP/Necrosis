@@ -91,7 +91,7 @@ function Necrosis:UpdateThreatMeter()
 			local buttonSize = math.max(buttonWidth, buttonHeight)
 			local thickness = NecrosisConfig.ThreatRingThickness or 1
 
-			local needleAngle = (threatpct / 100) * 360  -- 0% = 0°, 100% = 360°
+			local needleAngle = 90 + (threatpct / 100) * 359  -- 0% = 90° (midi), 100% = 449°
 			local needleRad = math.rad(needleAngle)
 			local needleRadius = buttonSize / 2 + thickness / 2
 			local needleX = needleRadius * math.cos(needleRad)
@@ -99,7 +99,7 @@ function Necrosis:UpdateThreatMeter()
 
 			threatRing.threatNeedle:ClearAllPoints()
 			threatRing.threatNeedle:SetPoint("CENTER", threatRing, "CENTER", needleX, needleY)
-			threatRing.threatNeedle:SetRotation(needleRad - math.rad(90))
+			threatRing.threatNeedle:SetRotation(needleRad)
 		end
 	end
 
