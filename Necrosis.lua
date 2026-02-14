@@ -951,7 +951,7 @@ local function SetupSpells(reason)
 	Necrosis:SpellSetup(reason)
 
 	-- associate the mounts to the sphere button || Association du sort de monture correct au bouton
-	if GetSpellInfo(GetSpellInfo(5784)) or GetSpellInfo(GetSpellInfo(23161)) then
+	if GetSpellInfo(5784) or GetSpellInfo(23161) then
 		Local.Summon.SteedAvailable = true
 	else
 		Local.Summon.SteedAvailable = false

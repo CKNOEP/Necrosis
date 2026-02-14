@@ -289,7 +289,7 @@ function Necrosis:Initialize(Config)
 	if not InCombatLockdown() then
 		-- Determine if mount spell is available
 		local SteedAvailable = false
-		if GetSpellInfo(GetSpellInfo(5784)) or GetSpellInfo(GetSpellInfo(23161)) then
+		if GetSpellInfo(5784) or GetSpellInfo(23161) then
 			SteedAvailable = true
 		end
 
@@ -417,6 +417,27 @@ function Necrosis:Initialize(Config)
 
 				-- Reposition peripheral buttons around the sphere
 				Necrosis:ButtonSetup()
+
+				-- Re-scan spells after 3 seconds to get current data from WoW
+				Necrosis:SpellSetup("TimerCallback")
+
+				-- Create menu buttons BEFORE configuring their attributes
+				Necrosis:CreateMenu()
+
+				-- Configure button click attributes
+				local SteedAvailable = false
+				if GetSpellInfo(5784) or GetSpellInfo(23161) then
+					SteedAvailable = true
+				end
+
+				Necrosis:MainButtonAttribute()
+				Necrosis:BuffSpellAttribute()
+				Necrosis:PetSpellAttribute()
+				Necrosis:CurseSpellAttribute()
+				Necrosis:StoneAttribute(SteedAvailable)
+
+				-- Scan bags for soul shards
+				Necrosis:BagExplore()
 
 				-- Shard count will be automatically updated by Necrosis:OnUpdate()
 				-- No need to force update here - let the normal system handle it

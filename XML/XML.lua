@@ -227,13 +227,8 @@ local function CreateStoneButton(stone)
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
 	if not NecrosisConfig.NecrosisLockServ then
 		frame:ClearAllPoints()
-		frame:SetPoint(
-			NecrosisConfig.FramePosition[frame:GetName()][1],
-			NecrosisConfig.FramePosition[frame:GetName()][2],
-			NecrosisConfig.FramePosition[frame:GetName()][3],
-			NecrosisConfig.FramePosition[frame:GetName()][4],
-			NecrosisConfig.FramePosition[frame:GetName()][5]
-		)
+		local pos = NecrosisConfig.FramePosition[frame:GetName()] or {"CENTER", "UIParent", "CENTER", 0, 0}
+		frame:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
 	end
 
 	return frame
@@ -284,13 +279,8 @@ local function CreateMenuButton(button)
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
 	if not NecrosisConfig.NecrosisLockServ then
 		frame:ClearAllPoints()
-		frame:SetPoint(
-			NecrosisConfig.FramePosition[frame:GetName()][1],
-			NecrosisConfig.FramePosition[frame:GetName()][2],
-			NecrosisConfig.FramePosition[frame:GetName()][3],
-			NecrosisConfig.FramePosition[frame:GetName()][4],
-			NecrosisConfig.FramePosition[frame:GetName()][5]
-		)
+		local pos = NecrosisConfig.FramePosition[frame:GetName()] or {"CENTER", "UIParent", "CENTER", 0, 0}
+		frame:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
 	end
 
 	return frame
