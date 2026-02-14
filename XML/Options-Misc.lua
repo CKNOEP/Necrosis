@@ -7,6 +7,7 @@
 local _G = getfenv(0)
 local AddonName, SAO = ...
 local iamNecrosis = strlower(AddonName):sub(0,8) == "necrosis"
+local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
 
 ------------------------------------------------------------------------------------------------------
 -- CREATION DE LA FRAME DES OPTIONS
