@@ -72,16 +72,24 @@ end
 
 ----------- Create Required Frames -----------
 
+print("|cFF00FF00[NecrosisUI Framework]|r Creating frames...")
+
 -- Create main NecrosisUI container frame
 local necrosisUIFrame = CreateFrame("Frame", "NecrosisUI", UIParent)
-necrosisUIFrame:SetFrameStrata("BACKGROUND")
-necrosisUIFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 0)
-necrosisUIFrame:SetSize(800, 200)
-necrosisUIFrame:Hide()  -- Hidden by default
+if necrosisUIFrame then
+	print("|cFF00FF00[NecrosisUI Framework]|r NecrosisUI frame created")
+	necrosisUIFrame:SetFrameStrata("BACKGROUND")
+	necrosisUIFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 0)
+	necrosisUIFrame:SetSize(800, 200)
+	necrosisUIFrame:Hide()  -- Hidden by default
+else
+	print("|cFFFF0000[NecrosisUI Framework]|r ERROR: Failed to create NecrosisUI frame!")
+end
 
 -- Create bottom anchor for artwork positioning
 local bottomAnchor = CreateFrame("Frame", "NUI_BottomAnchor", necrosisUIFrame)
 bottomAnchor:SetAllPoints(necrosisUIFrame)
+print("|cFF00FF00[NecrosisUI Framework]|r Anchor frame created")
 
 ----------- Implement Show/Hide Methods -----------
 
