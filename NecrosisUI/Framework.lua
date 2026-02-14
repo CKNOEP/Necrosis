@@ -1,6 +1,13 @@
-local _, NUI = ...
-NUI = LibStub('AceAddon-3.0'):NewAddon(NUI, 'NecrosisUI', 'AceEvent-3.0', 'AceConsole-3.0', 'AceSerializer-3.0')
-_G.NUI = NUI
+-- Initialize NUI as embedded addon (not separate TOC)
+local NUI = _G.NUI
+if not NUI then
+	NUI = LibStub('AceAddon-3.0'):NewAddon('NecrosisUI', 'AceEvent-3.0', 'AceConsole-3.0', 'AceSerializer-3.0')
+	_G.NUI = NUI
+	print("|cFF00FF00[NecrosisUI Framework]|r Initialized NUI addon")
+else
+	print("|cFF00FF00[NecrosisUI Framework]|r NUI already exists")
+end
+
 -- NecrosisUI uses Necrosis main addon locale
 local L = LibStub('AceLocale-3.0'):GetLocale(NECROSIS_ID, true)
 local _G = _G
