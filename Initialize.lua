@@ -24,8 +24,9 @@ do
 	if not _G.NecrosisUI then
 		local necrosisUIFrame = CreateFrame("Frame", "NecrosisUI", UIParent)
 		necrosisUIFrame:SetFrameStrata("BACKGROUND")
-		necrosisUIFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 0)
-		necrosisUIFrame:SetSize(1024, 256)
+		necrosisUIFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 0, 0)
+		necrosisUIFrame:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", 0, 0)
+		necrosisUIFrame:SetHeight(256)
 		necrosisUIFrame:Hide()
 
 		-- Create bottom anchor for theme artwork positioning
