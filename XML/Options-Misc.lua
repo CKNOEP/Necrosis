@@ -492,45 +492,19 @@ function Necrosis:SetMiscConfig()
 	frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 120)
 
 	frame:SetScript("OnClick", function(self)
-		-- Guard flag to prevent recursive/cascade calls during Hide/Show
-		if self._NecrosisUIUpdating then
-			return
-		end
-		self._NecrosisUIUpdating = true
-
-		-- In WoW Classic/Anniversary, GetChecked() returns the OLD state (before click)
-		-- So we need to invert it to get the NEW state after click
-		NecrosisConfig.NecrosisUIEnabled = not self:GetChecked()
-
-		-- Apply changes immediately
-		if NecrosisConfig.NecrosisUIEnabled then
-			-- Try to show NecrosisUI
+		if (self:GetChecked()) then
+			-- Checkbox is checked - SHOW NecrosisUI
+			NecrosisConfig.NecrosisUIEnabled = true
 			if NUI and type(NUI.Show) == "function" then
-				print("|cFF00FF00[NecrosisUI]|r Showing NecrosisUI")
 				pcall(function() NUI:Show() end)
-				if NecrosisUI then
-					print("|cFF00FF00[NecrosisUI]|r NecrosisUI frame exists, visible: " .. tostring(NecrosisUI:IsVisible()))
-				else
-					print("|cFFFF0000[NecrosisUI]|r ERROR: NecrosisUI frame not found!")
-				end
-			else
-				print("|cFFFF0000[NecrosisUI]|r ERROR: NUI or Show method not available")
-				print("|cFFFF0000[NecrosisUI]|r NUI exists: " .. tostring(NUI ~= nil) .. ", Show is function: " .. tostring(NUI and type(NUI.Show) == "function"))
 			end
 		else
-			-- Try to hide NecrosisUI
+			-- Checkbox is unchecked - HIDE NecrosisUI
+			NecrosisConfig.NecrosisUIEnabled = false
 			if NUI and type(NUI.Hide) == "function" then
-				print("|cFF00FF00[NecrosisUI]|r Hiding NecrosisUI")
 				pcall(function() NUI:Hide() end)
-			else
-				print("|cFFFF0000[NecrosisUI]|r ERROR: NUI or Hide method not available")
 			end
 		end
-
-		-- Clear the guard flag after a small delay to allow other systems to update
-		C_Timer.After(0.5, function()
-			self._NecrosisUIUpdating = false
-		end)
 	end)
 
 	FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
