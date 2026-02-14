@@ -470,6 +470,7 @@ function Necrosis:Initialize(Config)
 					textOverlay:SetParent(btn)  -- Make it child of the new button
 					textOverlay:ClearAllPoints()
 					textOverlay:SetAllPoints(btn)  -- Cover the entire button
+					textOverlay:Show()  -- Make the overlay visible
 					-- Register in _G for future references
 					_G["NecrosisShardCountFrame"] = textOverlay
 				end
