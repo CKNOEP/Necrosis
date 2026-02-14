@@ -157,6 +157,32 @@ local shardCount = textOverlay:CreateFontString("NecrosisShardCount", "OVERLAY",
 shardCount:SetPoint("CENTER")  -- Center in parent
 shardCount:SetTextColor(1, 1, 1, 1)
 
+-- Hide all peripheral buttons at startup - will be shown after position restoration
+C_Timer.After(0.1, function()
+	local buttonNames = {
+		"NecrosisFirestoneButton",
+		"NecrosisSpellstoneButton",
+		"NecrosisHealthstoneButton",
+		"NecrosisSoulstoneButton",
+		"NecrosisBuffMenuButton",
+		"NecrosisMountButton",
+		"NecrosisPetMenuButton",
+		"NecrosisCurseMenuButton",
+		"NecrosisDestroyShardsButton",
+		"NecrosisShadowTranceButton",
+		"NecrosisBacklashButton",
+		"NecrosisAntiFearButton",
+		"NecrosisCreatureAlertButton_demon",
+		"NecrosisCreatureAlertButton_elemental",
+	}
+	for _, name in ipairs(buttonNames) do
+		local btn = _G[name]
+		if btn then
+			btn:Hide()
+		end
+	end
+end)
+
 -- Create separate frame for event handling (NOT the button itself!)
 -- This is the KEY: Events are handled by eventFrame, clicks by NecrosisButton!
 local eventFrame = CreateFrame("Frame", "NecrosisEventFrame")
@@ -602,6 +628,30 @@ function Necrosis:Initialize(Config)
 				btn:Show()
 				_G["NecrosisButton"] = btn
 				_G["NecrosisMainSphere"] = btn
+
+				-- Show all peripheral buttons now that main button is positioned
+				local buttonNames = {
+					"NecrosisFirestoneButton",
+					"NecrosisSpellstoneButton",
+					"NecrosisHealthstoneButton",
+					"NecrosisSoulstoneButton",
+					"NecrosisBuffMenuButton",
+					"NecrosisMountButton",
+					"NecrosisPetMenuButton",
+					"NecrosisCurseMenuButton",
+					"NecrosisDestroyShardsButton",
+					"NecrosisShadowTranceButton",
+					"NecrosisBacklashButton",
+					"NecrosisAntiFearButton",
+					"NecrosisCreatureAlertButton_demon",
+					"NecrosisCreatureAlertButton_elemental",
+				}
+				for _, name in ipairs(buttonNames) do
+					local b = _G[name]
+					if b then
+						b:Show()
+					end
+				end
 
 				-- Set tooltip type for the main button
 				btn.tip = "Main"
