@@ -1260,6 +1260,12 @@ function Necrosis:OnEvent(self, event,...)
 					StartInit(fm)
 				else -- safe to start up
 					-- need to wait for server - GET_ITEM_INFO_RECEIVED
+					-- Force initialization after 1.5 seconds even if server doesn't respond
+					C_Timer.After(1.5, function()
+						if Necrosis.Data.Enabled == false then
+							StartInit(fm)
+						end
+					end)
 				end
 			end
 
