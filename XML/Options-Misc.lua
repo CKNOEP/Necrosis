@@ -269,7 +269,6 @@ function Necrosis:SetMiscConfig()
 		FontString:SetTextColor(1, 1, 1)
 		FontString:SetText(L["NECROSISUI_ENABLED"])
 		frame:SetFontString(FontString)
-	end
 
 	NecrosisMoveShard:SetChecked(NecrosisConfig.SoulshardSort)
 	--NecrosisDestroyShardBag:SetChecked(NecrosisConfig.SoulshardDestroy)
