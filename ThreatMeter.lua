@@ -141,7 +141,8 @@ function Necrosis:CreateThreatRing()
 
 	-- L'anneau doit être légèrement plus grand que la sphère
 	local thickness = NecrosisConfig.ThreatRingThickness or 2
-	local ringSize = buttonSize + (thickness * 2)
+	local ringOffset = 8  -- Offset to avoid overlapping peripheral buttons
+	local ringSize = buttonSize + (thickness * 2) + (ringOffset * 2)
 
 	ring:SetSize(ringSize, ringSize)
 
@@ -153,7 +154,7 @@ function Necrosis:CreateThreatRing()
 	local numSegments = 120  -- Nombre de segments pour former le cercle (plus = plus lisse)
 	local segmentWidth = thickness
 	local segmentHeight = math.max(4, thickness + 1)  -- Proportional to thickness (min 4px)
-	local radius = buttonSize / 2 + thickness / 2  -- Rayon du cercle
+	local radius = buttonSize / 2 + thickness / 2 + 8  -- Rayon du cercle (+8 offset pour éviter les boutons)
 
 	ring.segments = {}
 	for i = 1, numSegments do
@@ -210,9 +211,10 @@ function Necrosis:UpdateThreatRingThickness()
 
 	-- Calculer la nouvelle taille de l'anneau
 	local thickness = NecrosisConfig.ThreatRingThickness or 2
-	local ringSize = buttonSize + (thickness * 2)
-	local radius = buttonSize / 2 + thickness / 2
-	local segmentHeight = math.max(5, thickness + 1)
+	local ringOffset = 8  -- Offset to avoid overlapping peripheral buttons
+	local ringSize = buttonSize + (thickness * 2) + (ringOffset * 2)
+	local radius = buttonSize / 2 + thickness / 2 + ringOffset
+	local segmentHeight = math.max(4, thickness + 1)
 
 	-- Redimensionner le frame principal
 	threatRing:SetSize(ringSize, ringSize)
