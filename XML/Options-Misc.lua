@@ -247,7 +247,11 @@ function Necrosis:SetMiscConfig()
 	NecrosisDestroyShard:SetChecked(NecrosisConfig.DestroyShard)
 	NecrosisAFK:SetChecked(NecrosisConfig.AFK)
 	if NecrosisUIEnabledCheckButton then
-		NecrosisUIEnabledCheckButton:SetChecked(NecrosisConfig.NecrosisUIEnabled or false)
+		-- Only update checkbox if state actually changed to avoid triggering OnClick recursion
+		local desiredState = NecrosisConfig.NecrosisUIEnabled or false
+		if NecrosisUIEnabledCheckButton:GetChecked() ~= (desiredState and 1 or nil) then
+			NecrosisUIEnabledCheckButton:SetChecked(desiredState)
+		end
 	end
 	
 	if NecrosisConfig.DestroyCount then
@@ -491,6 +495,12 @@ function Necrosis:SetMiscConfig()
 	frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 120)
 
 	frame:SetScript("OnClick", function(self)
+		-- Guard flag to prevent recursive/cascade calls during Hide/Show
+		if self._NecrosisUIUpdating then
+			return
+		end
+		self._NecrosisUIUpdating = true
+
 		NecrosisConfig.NecrosisUIEnabled = (self:GetChecked() == 1)
 
 		-- Apply changes immediately
@@ -517,6 +527,11 @@ function Necrosis:SetMiscConfig()
 				print("|cFFFF0000[NecrosisUI]|r ERROR: NUI or Hide method not available")
 			end
 		end
+
+		-- Clear the guard flag after a small delay to allow other systems to update
+		C_Timer.After(0.5, function()
+			self._NecrosisUIUpdating = false
+		end)
 	end)
 
 	FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
