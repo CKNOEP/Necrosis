@@ -280,7 +280,6 @@ function Necrosis:Initialize(Config)
 		self:Msg(self.ChatMessage.Interface.DefaultConfig, "USER")
 	else
 		self:Msg(self.ChatMessage.Interface.UserConfig, "USER")
-		Necrosis", Necrosis.Data.LastConfig,Necrosis.Data.Version, NecrosisConfig.Version,NecrosisConfig.Language)
 	end
 	
 	if NecrosisConfig.PetInfo then -- just in case... pet config info was redone for speech
