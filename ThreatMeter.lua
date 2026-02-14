@@ -153,7 +153,7 @@ function Necrosis:CreateThreatRing()
 	local numSegments = 120  -- Nombre de segments pour former le cercle (plus = plus lisse)
 	local segmentWidth = thickness
 	local segmentHeight = math.max(0.5, thickness / 2)  -- Half thickness for finer appearance
-	local radius = buttonSize / 2 + thickness / 2  -- Rayon du cercle (au plus proche)
+	local radius = buttonSize / 2 + 2  -- Rayon du cercle (2px d'espacement avec la sphère)
 
 	ring.segments = {}
 	for i = 1, numSegments do
@@ -211,7 +211,7 @@ function Necrosis:UpdateThreatRingThickness()
 	-- Calculer la nouvelle taille de l'anneau
 	local thickness = NecrosisConfig.ThreatRingThickness or 1
 	local ringSize = buttonSize + (thickness * 2) - 10
-	local radius = buttonSize / 2 + thickness / 2
+	local radius = buttonSize / 2 + 2
 	local segmentHeight = math.max(0.5, thickness / 2)  -- Half thickness for finer appearance
 
 	-- Redimensionner le frame principal
