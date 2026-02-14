@@ -630,6 +630,8 @@ function Necrosis:Initialize(Config)
 				_G["NecrosisMainSphere"] = btn
 
 				-- Show all peripheral buttons now that main button is positioned
+				-- NOTE: ShadowTrance, Backlash, AntiFear, CreatureAlert buttons stay hidden
+				-- They only show in specific conditions (combat, rare mobs, etc.)
 				local buttonNames = {
 					"NecrosisFirestoneButton",
 					"NecrosisSpellstoneButton",
@@ -640,11 +642,6 @@ function Necrosis:Initialize(Config)
 					"NecrosisPetMenuButton",
 					"NecrosisCurseMenuButton",
 					"NecrosisDestroyShardsButton",
-					"NecrosisShadowTranceButton",
-					"NecrosisBacklashButton",
-					"NecrosisAntiFearButton",
-					"NecrosisCreatureAlertButton_demon",
-					"NecrosisCreatureAlertButton_elemental",
 				}
 				for _, name in ipairs(buttonNames) do
 					local b = _G[name]
