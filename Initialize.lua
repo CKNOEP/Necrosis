@@ -140,15 +140,16 @@ Necrosis.Debug = {
 --local ntooltip = CreateFrame("Frame", "NecrosisTooltip", UIParent, BackdropTemplateMixin and "GameTooltipTemplate");
 -- CRITICAL FIX: Create NecrosisButton immediately with unique name!
 -- The point in the name was causing click issues!
-local nbutton = CreateFrame("Button", "NecrosisMainSphere", UIParent, "SecureUnitButtonTemplate")
+local nbutton = CreateFrame("Button", "NecrosisMainSphere_Placeholder", UIParent, "SecureUnitButtonTemplate")
 -- Keep invisible - will be replaced by final button after 5s delay
 nbutton:Hide()
 -- Register it as NecrosisButton for the rest of the code
 _G["NecrosisButton"] = nbutton
+	_G["NecrosisMainSphere"] = nbutton  -- Placeholder, will be replaced later
 
 -- Create text overlay frame IMMEDIATELY with HIGH FrameStrata so it's above the button
 -- This prevents XML.lua from creating it on UIParent (which would be behind the button)
-local textOverlay = CreateFrame("Frame", "NecrosisShardCountFrame", nbutton)  -- PARENT = nbutton!
+local textOverlay = CreateFrame("Frame", "NecrosisShardCountFrame_Placeholder", nbutton)  -- PARENT = nbutton!
 textOverlay:SetFrameStrata("HIGH")  -- Above MEDIUM (button strata)
 textOverlay:SetFrameLevel(100)
 textOverlay:SetAllPoints(nbutton)  -- Cover the entire button
@@ -444,13 +445,20 @@ function Necrosis:Initialize(Config)
 		-- Increased delay to 5 seconds to ensure proper initialization on first login
 		C_Timer.After(5, function()
 			if not InCombatLockdown() then
-				-- DESTROY old button completely
-				local oldBtn = _G["NecrosisButton"]
-				if oldBtn then
-					oldBtn:Hide()
-					oldBtn:SetParent(nil)
-					oldBtn = nil
-				end
+				-- DESTROY old button completely (including placeholder)
+			local oldBtn = _G["NecrosisButton"]
+			if oldBtn then
+				oldBtn:Hide()
+				oldBtn:SetParent(nil)
+				oldBtn = nil
+			end
+			-- Also destroy the placeholder overlay frame
+			local oldOverlay = _G["NecrosisShardCountFrame_Placeholder"]
+			if oldOverlay then
+				oldOverlay:Hide()
+				oldOverlay:SetParent(nil)
+				oldOverlay = nil
+			end
 
 				-- Create BRAND NEW button
 				local btn = CreateFrame("Button", "NecrosisMainSphere", UIParent, "SecureUnitButtonTemplate")
@@ -472,11 +480,14 @@ function Necrosis:Initialize(Config)
 
 				-- FontString already created at file load time with HIGH FrameStrata
 				-- Reparent the overlay frame to the new button so it follows automatically
-				local textOverlay = _G["NecrosisShardCountFrame"]
+				local textOverlay = _G["NecrosisShardCountFrame_Placeholder"] or _G["NecrosisShardCountFrame"]
 				if textOverlay then
 					textOverlay:SetParent(btn)  -- Make it child of the new button
 					textOverlay:ClearAllPoints()
 					textOverlay:SetAllPoints(btn)  -- Cover the entire button
+					-- Rename it to the permanent name for future references
+					textOverlay:SetName("NecrosisShardCountFrame")
+					_G["NecrosisShardCountFrame"] = textOverlay
 				end
 
 				btn:SetMovable(true)
@@ -618,10 +629,19 @@ function Necrosis:Initialize(Config)
 					local pos = NecrosisConfig.FramePosition["NecrosisMainSphere"]
 					print("|cFFFFFF00[POSITION]|r Restored: " .. pos[1] .. ", " .. pos[2] .. ", " .. pos[3] .. ", " .. pos[4] .. ", " .. pos[5])
 					btn:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+					-- Restore scale if it exists (6th element), otherwise use default 1
+					if pos[6] then
+						btn:SetScale(pos[6])
+						print("|cFFFFFF00[POSITION]|r Restored scale: " .. pos[6])
+					end
 				elseif NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisButton"] then
 					print("|cFFFFFF00[POSITION]|r Restoring position from legacy NecrosisButton")
 					local pos = NecrosisConfig.FramePosition["NecrosisButton"]
 					btn:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+					-- Restore scale if it exists (6th element)
+					if pos[6] then
+						btn:SetScale(pos[6])
+					end
 				else
 					print("|cFFFFFF00[POSITION]|r No saved position, using default")
 					btn:SetPoint("CENTER", UIParent, "CENTER", 0, -200)

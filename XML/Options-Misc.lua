@@ -253,12 +253,47 @@ function Necrosis:SetMiscConfig()
 				if NUI and type(NUI.Show) == "function" then
 					pcall(function() NUI:Show() end)
 				end
+
+				-- Position and scale the main sphere when NUI is activated
+				-- Use a timer to ensure the frame exists before repositioning
+				local function RepositionSphere()
+					local mainSphere = _G["NecrosisMainSphere"]
+					if mainSphere then
+						print("|cFFFFFF00[NUI]|r Found NecrosisMainSphere, repositioning...")
+						mainSphere:SetPoint("BOTTOM", UIParent, "BOTTOM", -55.601463317871, 63.634902954102)
+						mainSphere:SetScale(1.35)
+						-- Save the position and scale to SavedVariables so it persists across reloads
+						if not NecrosisConfig.FramePosition then
+							NecrosisConfig.FramePosition = {}
+						end
+						NecrosisConfig.FramePosition["NecrosisMainSphere"] = {"BOTTOM", "UIParent", "BOTTOM", -55.601463317871, 63.634902954102, 1.35}
+						print("|cFFFFFF00[NUI]|r Main sphere repositioned and scaled to 135%, position saved")
+						return true
+					else
+						print("|cFFFF0000[NUI]|r ERROR: NecrosisMainSphere not found! Retrying in 0.5 sec...")
+						return false
+					end
+				end
+				
+				-- Try immediately first
+				if not RepositionSphere() then
+					-- If frame doesn't exist, try again after 0.5 second
+					C_Timer.After(0.5, function()
+						if not RepositionSphere() then
+							-- Last attempt after 1 second
+							C_Timer.After(1, function()
+								RepositionSphere()
+							end)
+						end
+					end)
+				end
 			else
 				-- Checkbox is unchecked - HIDE NecrosisUI
 				NecrosisConfig.NecrosisUIEnabled = false
 				if NUI and type(NUI.Hide) == "function" then
 					pcall(function() NUI:Hide() end)
 				end
+				-- NOTE: Sphere position and scale remain unchanged when NUI is disabled
 			end
 		end)
 

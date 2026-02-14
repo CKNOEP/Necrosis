@@ -1769,7 +1769,9 @@ function Necrosis:OnDragStop(button)
 	else
 		BoutonParent = BoutonParent:GetName()
 	end
-	NecrosisConfig.FramePosition[NomBouton] = {AncreBouton, BoutonParent, AncreParent, BoutonX, BoutonY}
+	-- Save position with scale (scale is 6th element in array, 1.35 if NUI is enabled and active, 1 otherwise)
+	local scale = button:GetScale()
+	NecrosisConfig.FramePosition[NomBouton] = {AncreBouton, BoutonParent, AncreParent, BoutonX, BoutonY, scale}
 end
 
 -- For some users, GetSpellCooldown returns nil so ensure there are no 'nil errors', may cause odd quirks elsewhere...
