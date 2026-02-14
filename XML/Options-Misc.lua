@@ -236,19 +236,51 @@ function Necrosis:SetMiscConfig()
 		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
 		FontString:SetTextColor(1, 1, 1)
 		frame:SetFontString(FontString)
-		
 
-		
-	
+		-- Enable/Disable NecrosisUI
+		frame = CreateFrame("CheckButton", "NecrosisUIEnabledCheckButton", NecrosisMiscConfig, "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 120)
+
+		frame:SetScript("OnClick", function(self)
+			if (self:GetChecked()) then
+				-- Checkbox is checked - SHOW NecrosisUI
+				NecrosisConfig.NecrosisUIEnabled = true
+				if NUI and type(NUI.Show) == "function" then
+					pcall(function() NUI:Show() end)
+				end
+			else
+				-- Checkbox is unchecked - HIDE NecrosisUI
+				NecrosisConfig.NecrosisUIEnabled = false
+				if NUI and type(NUI.Hide) == "function" then
+					pcall(function() NUI:Hide() end)
+				end
+			end
+		end)
+
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		FontString:SetText(L["NECROSISUI_ENABLED"])
+		frame:SetFontString(FontString)
+	end
 
 	NecrosisMoveShard:SetChecked(NecrosisConfig.SoulshardSort)
 	--NecrosisDestroyShardBag:SetChecked(NecrosisConfig.SoulshardDestroy)
 	NecrosisShardBag:SetValue(4 - NecrosisConfig.SoulshardContainer)
 	NecrosisDestroyShard:SetChecked(NecrosisConfig.DestroyShard)
 	NecrosisAFK:SetChecked(NecrosisConfig.AFK)
+
 	if NecrosisUIEnabledCheckButton then
 		-- Set checkbox state from config (GetChecked returns 1 or nil, convert to match that)
-		NecrosisUIEnabledCheckButton:SetChecked(NecrosisConfig.NecrosisUIEnabled and 1 or nil)
+		local desiredState = NecrosisConfig.NecrosisUIEnabled and 1 or nil
+		NecrosisUIEnabledCheckButton:SetChecked(desiredState)
 
 		-- Apply the saved state to the NecrosisUI frame when opening the Misc panel
 		if NecrosisConfig.NecrosisUIEnabled then
@@ -492,39 +524,6 @@ function Necrosis:SetMiscConfig()
             NecrosisSpellActivationOverlayFrame_SetForceAlpha1(false);
  	
 	end)
-
-	-- Enable/Disable NecrosisUI
-	frame = CreateFrame("CheckButton", "NecrosisUIEnabledCheckButton", NecrosisMiscConfig, "UICheckButtonTemplate")
-	frame:EnableMouse(true)
-	frame:SetWidth(24)
-	frame:SetHeight(24)
-	frame:Show()
-	frame:ClearAllPoints()
-	frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 120)
-
-	frame:SetScript("OnClick", function(self)
-		if (self:GetChecked()) then
-			-- Checkbox is checked - SHOW NecrosisUI
-			NecrosisConfig.NecrosisUIEnabled = true
-			if NUI and type(NUI.Show) == "function" then
-				pcall(function() NUI:Show() end)
-			end
-		else
-			-- Checkbox is unchecked - HIDE NecrosisUI
-			NecrosisConfig.NecrosisUIEnabled = false
-			if NUI and type(NUI.Hide) == "function" then
-				pcall(function() NUI:Hide() end)
-			end
-		end
-	end)
-
-	FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
-	FontString:Show()
-	FontString:ClearAllPoints()
-	FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
-	FontString:SetTextColor(1, 1, 1)
-	FontString:SetText(L["NECROSISUI_ENABLED"])
-	frame:SetFontString(FontString)
 
 	end
 
