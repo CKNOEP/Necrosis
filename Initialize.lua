@@ -27,17 +27,17 @@ do
 		necrosisUIFrame:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 0)
 		necrosisUIFrame:SetSize(800, 200)
 
-		-- Add visible background so frame is not transparent
-		necrosisUIFrame:SetBackdrop({
-			bgFile = "Interface/Tooltips/UI-Tooltip-Background",
-			edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
-			tile = true,
-			tileSize = 16,
-			edgeSize = 16,
-			insets = { left = 5, right = 5, top = 5, bottom = 5 }
-		})
-		necrosisUIFrame:SetBackdropColor(0.1, 0.1, 0.1, 0.8)
-		necrosisUIFrame:SetBackdropBorderColor(0.5, 0.5, 0.5, 0.8)
+		-- Add visible background texture
+		local bg = necrosisUIFrame:CreateTexture(nil, "BACKGROUND")
+		bg:SetAllPoints(necrosisUIFrame)
+		bg:SetColorTexture(0.1, 0.1, 0.1, 0.8)  -- Dark gray with transparency
+
+		-- Add border texture
+		local border = necrosisUIFrame:CreateTexture(nil, "BORDER")
+		border:SetPoint("TOPLEFT", necrosisUIFrame, "TOPLEFT", 0, 0)
+		border:SetPoint("BOTTOMRIGHT", necrosisUIFrame, "BOTTOMRIGHT", 0, 0)
+		border:SetTexture("Interface/Buttons/White8x8")
+		border:SetGradientAlpha("VERTICAL", 0.5, 0.5, 0.5, 0.3, 0.3, 0.3, 0.3)
 
 		necrosisUIFrame:Hide()
 
