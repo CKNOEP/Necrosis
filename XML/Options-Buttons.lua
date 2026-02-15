@@ -139,7 +139,7 @@ function Necrosis:SetButtonsConfig()
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 193, 400)
+		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 198, 400)
 
 		frame:SetScript("OnClick", function(self)
 			if (self:GetChecked()) then
@@ -192,24 +192,122 @@ function Necrosis:SetButtonsConfig()
 		FontString:SetTextColor(1, 1, 1)
 		frame:SetFontString(FontString)
 
-		-- Affiche ou cache les boutons autour de Necrosis
-		local boutons = {"Firestone", "Spellstone", "HealthStone", "Soulstone", "BuffMenu", "Mount", "PetMenu", "CurseMenu","DestroyShards"}
-		local initY = 380
-		for i in ipairs(boutons) do
-			frame = CreateFrame("CheckButton", "NecrosisShow"..boutons[i], NecrosisButtonsConfig1, "UICheckButtonTemplate")
-			frame:EnableMouse(true)
-			frame:SetWidth(24)
-			frame:SetHeight(24)
-			frame:Show()
-			frame:ClearAllPoints()
-			frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 193, initY - (25 * i))
+	-- Affiche ou cache les boutons autour de Necrosis
 
-			frame:SetScript("OnClick", function(self)
-				if (self:GetChecked()) then
-					NecrosisConfig.StonePosition[i] = math.abs(NecrosisConfig.StonePosition[i])
-				else
-					NecrosisConfig.StonePosition[i] = - math.abs(NecrosisConfig.StonePosition[i])
-				end
+	-- Header "Boutons Pierres"
+	FontString = NecrosisButtonsConfig1:CreateFontString(nil, nil, "GameFontNormalSmall")
+	FontString:Show()
+	FontString:ClearAllPoints()
+	FontString:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 198, 365)
+	FontString:SetTextColor(1, 0.82, 0)
+	FontString:SetText(L["BOUTONS_PIERRES"])
+
+	-- Groupe 1: Boutons Pierres
+	local boutons_pierres = {"Firestone", "Spellstone", "HealthStone", "Soulstone"}
+	local initY_pierres = 340
+	for i in ipairs(boutons_pierres) do
+		frame = CreateFrame("CheckButton", "NecrosisShow"..boutons_pierres[i], NecrosisButtonsConfig1, "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 198, initY_pierres - (25 * (i - 1)))
+
+		local globalIndex = i
+		frame:SetScript("OnClick", function(self)
+			if (self:GetChecked()) then
+				NecrosisConfig.StonePosition[globalIndex] = math.abs(NecrosisConfig.StonePosition[globalIndex])
+			else
+				NecrosisConfig.StonePosition[globalIndex] = - math.abs(NecrosisConfig.StonePosition[globalIndex])
+			end
+			Necrosis:ButtonSetup()
+		end)
+
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		frame:SetFontString(FontString)
+	end
+
+	-- Header "Boutons d'Action"
+	FontString = NecrosisButtonsConfig1:CreateFontString(nil, nil, "GameFontNormalSmall")
+	FontString:Show()
+	FontString:ClearAllPoints()
+	FontString:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 198, 230)
+	FontString:SetTextColor(1, 0.82, 0)
+	FontString:SetText(L["BOUTONS_ACTION"])
+
+	-- Groupe 2: Boutons d'Action
+	local boutons_action = {"BuffMenu", "Mount", "PetMenu", "CurseMenu", "DestroyShards"}
+	local initY_action = 205
+	for i in ipairs(boutons_action) do
+		frame = CreateFrame("CheckButton", "NecrosisShow"..boutons_action[i], NecrosisButtonsConfig1, "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 198, initY_action - (25 * (i - 1)))
+
+		local globalIndex = i + 4
+		frame:SetScript("OnClick", function(self)
+			if (self:GetChecked()) then
+				NecrosisConfig.StonePosition[globalIndex] = math.abs(NecrosisConfig.StonePosition[globalIndex])
+			else
+				NecrosisConfig.StonePosition[globalIndex] = - math.abs(NecrosisConfig.StonePosition[globalIndex])
+			end
+			Necrosis:ButtonSetup()
+		end)
+
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		frame:SetFontString(FontString)
+	end
+
+	-- Header "Boutons d'Action"
+	FontString = NecrosisButtonsConfig1:CreateFontString(nil, nil, "GameFontNormalSmall")
+	FontString:Show()
+	FontString:ClearAllPoints()
+	FontString:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 198, 230)
+	FontString:SetTextColor(1, 0.82, 0)
+	FontString:SetText(L["BOUTONS_ACTION"])
+
+	-- Groupe 2: Boutons d'Action
+	local boutons_action = {"BuffMenu", "Mount", "PetMenu", "CurseMenu", "DestroyShards"}
+	local initY_action = 205
+	for i in ipairs(boutons_action) do
+		frame = CreateFrame("CheckButton", "NecrosisShow"..boutons_action[i], NecrosisButtonsConfig1, "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 198, initY_action - (25 * (i - 1)))
+
+		local globalIndex = i + 4
+		frame:SetScript("OnClick", function(self)
+			if (self:GetChecked()) then
+				NecrosisConfig.StonePosition[globalIndex] = math.abs(NecrosisConfig.StonePosition[globalIndex])
+			else
+				NecrosisConfig.StonePosition[globalIndex] = - math.abs(NecrosisConfig.StonePosition[globalIndex])
+			end
+			Necrosis:ButtonSetup()
+		end)
+
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		frame:SetFontString(FontString)
+	end
+
 				--print (boutons[i])
 				Necrosis:ButtonSetup()
 			end)

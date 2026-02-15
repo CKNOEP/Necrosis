@@ -69,7 +69,7 @@ function Necrosis:SetButtonsConfig()
 		frame:EnableMouse(true)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 193, 135)
+		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 40, 135)
 
 		frame:SetScript("OnClick", function()
 			NecrosisButtonsConfig2:Show()
@@ -186,74 +186,24 @@ function Necrosis:SetButtonsConfig()
 		FontString:SetTextColor(1, 1, 1)
 		frame:SetFontString(FontString)
 
-	-- Affiche ou cache les boutons autour de Necrosis
+		-- Affiche ou cache les boutons autour de Necrosis
+		local boutons = {"Firestone", "Spellstone", "HealthStone", "Soulstone", "BuffMenu", "Mount", "PetMenu", "CurseMenu","DestroyShards"}
+		local initY = 380
+		for i in ipairs(boutons) do
+			frame = CreateFrame("CheckButton", "NecrosisShow"..boutons[i], NecrosisButtonsConfig1, "UICheckButtonTemplate")
+			frame:EnableMouse(true)
+			frame:SetWidth(24)
+			frame:SetHeight(24)
+			frame:Show()
+			frame:ClearAllPoints()
+			frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 25, initY - (25 * i))
 
-	-- Header "Boutons Pierres"
-	FontString = NecrosisButtonsConfig1:CreateFontString(nil, nil, "GameFontNormalSmall")
-	FontString:Show()
-	FontString:ClearAllPoints()
-	FontString:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 198, 365)
-	FontString:SetTextColor(1, 0.82, 0)
-	FontString:SetText(L["BOUTONS_PIERRES"])
-
-	-- Groupe 1: Boutons Pierres
-	local boutons_pierres = {"Firestone", "Spellstone", "HealthStone", "Soulstone"}
-	local initY_pierres = 340
-	for i in ipairs(boutons_pierres) do
-		frame = CreateFrame("CheckButton", "NecrosisShow"..boutons_pierres[i], NecrosisButtonsConfig1, "UICheckButtonTemplate")
-		frame:EnableMouse(true)
-		frame:SetWidth(24)
-		frame:SetHeight(24)
-		frame:Show()
-		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 198, initY_pierres - (25 * (i - 1)))
-
-		local globalIndex = i
-		frame:SetScript("OnClick", function(self)
-			if (self:GetChecked()) then
-				NecrosisConfig.StonePosition[globalIndex] = math.abs(NecrosisConfig.StonePosition[globalIndex])
-			else
-				NecrosisConfig.StonePosition[globalIndex] = - math.abs(NecrosisConfig.StonePosition[globalIndex])
-			end
-			Necrosis:ButtonSetup()
-		end)
-
-		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
-		FontString:Show()
-		FontString:ClearAllPoints()
-		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
-		FontString:SetTextColor(1, 1, 1)
-		frame:SetFontString(FontString)
-	end
-
-	-- Header "Boutons d'Action"
-	FontString = NecrosisButtonsConfig1:CreateFontString(nil, nil, "GameFontNormalSmall")
-	FontString:Show()
-	FontString:ClearAllPoints()
-	FontString:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 198, 230)
-	FontString:SetTextColor(1, 0.82, 0)
-	FontString:SetText(L["BOUTONS_ACTION"])
-
-	-- Groupe 2: Boutons d'Action
-	local boutons_action = {"BuffMenu", "Mount", "PetMenu", "CurseMenu", "DestroyShards"}
-	local initY_action = 205
-	for i in ipairs(boutons_action) do
-		frame = CreateFrame("CheckButton", "NecrosisShow"..boutons_action[i], NecrosisButtonsConfig1, "UICheckButtonTemplate")
-		frame:EnableMouse(true)
-		frame:SetWidth(24)
-		frame:SetHeight(24)
-		frame:Show()
-		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 198, initY_action - (25 * (i - 1)))
-
-		local globalIndex = i + 4
-		frame:SetScript("OnClick", function(self)
-			if (self:GetChecked()) then
-				NecrosisConfig.StonePosition[globalIndex] = math.abs(NecrosisConfig.StonePosition[globalIndex])
-			else
-				NecrosisConfig.StonePosition[globalIndex] = - math.abs(NecrosisConfig.StonePosition[globalIndex])
-			end
-
+			frame:SetScript("OnClick", function(self)
+				if (self:GetChecked()) then
+					NecrosisConfig.StonePosition[i] = math.abs(NecrosisConfig.StonePosition[i])
+				else
+					NecrosisConfig.StonePosition[i] = - math.abs(NecrosisConfig.StonePosition[i])
+				end
 				Necrosis:ButtonSetup()
 			end)
 
@@ -275,20 +225,6 @@ function Necrosis:SetButtonsConfig()
 		frame:SetObeyStepOnDrag(true)
 		frame:SetWidth(150)
 		frame:SetHeight(15)
-
-		-- Create slider visual elements with circular dot cursor
-		local track = frame:CreateTexture(nil, "BACKGROUND")
-		track:SetWidth(150)
-		track:SetHeight(4)
-		track:SetColorTexture(0.2, 0.2, 0.2, 1)
-		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
-
-		local thumb = frame:GetThumbTexture()
-		if thumb then
-			thumb:SetTexture("Interface\Common\Indicator-Yellow")
-			thumb:SetColorTexture(1, 0.8, 0, 1)
-			thumb:SetSize(6, 6)
-		end
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("CENTER", NecrosisButtonsConfig2, "BOTTOMLEFT", 225, 380)

@@ -165,6 +165,8 @@ L["BUTTONS_ROTATION"] = "Rotaci\195\179n de los botones"
 L["BUTTONS_STICK"] = "Fijar los botones alrededor de la Esfera"
 L["BUTTONS_MOUNT"] = "Use my own mounts"
 L["BUTTONS_SELECTION"] = "Selection of buttons to be shown"
+L["BOUTONS_PIERRES"] = "Botones de Piedra"
+L["BOUTONS_ACTION"] = "Botones de Accion"
 L["BUTTONS_LEFT"] = "Left click"
 L["BUTTONS_RIGHT"] = "Right click"
 --

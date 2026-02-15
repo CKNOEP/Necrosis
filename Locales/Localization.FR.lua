@@ -169,6 +169,8 @@ L["BUTTONS_ROTATION"] = "Rotation des boutons"
 L["BUTTONS_STICK"] = "Fixer les boutons autour de la sph\195\168re"
 L["BUTTONS_MOUNT"] = "Utiliser mes propres montures"
 L["BUTTONS_SELECTION"] = "Choix des boutons \195\160 afficher"
+L["BOUTONS_PIERRES"] = "Boutons Pierres"
+L["BOUTONS_ACTION"] = "Boutons d'Action"
 L["BUTTONS_LEFT"] = "Monture Clic gauche"
 L["BUTTONS_RIGHT"] = "Monture Clic droit"
 --

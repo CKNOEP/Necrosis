@@ -165,6 +165,8 @@ L["BUTTONS_ROTATION"] = "旋轉按鈕"
 L["BUTTONS_STICK"] = "將按鈕固定於球體週圍"
 L["BUTTONS_MOUNT"] = "使用自己的坐騎"
 L["BUTTONS_SELECTION"] = "顯示選擇的按鈕"
+L["BOUTONS_PIERRES"] = "石頭按鈕"
+L["BOUTONS_ACTION"] = "動作按鈕"
 L["BUTTONS_LEFT"] = "坐騎 - 左鍵"
 L["BUTTONS_RIGHT"] = "坐騎 - 右鍵"
 --
