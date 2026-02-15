@@ -35,7 +35,7 @@ function Necrosis:SetButtonsConfig()
 		frame:ClearAllPoints()
 		frame:SetPoint("BOTTOMLEFT")
 
-		-- Création de la sous-fenêtre 1
+		-- Création de la sous-fenêtre page 1
 		frame = CreateFrame("Frame", "NecrosisButtonsConfig1", NecrosisButtonsConfig)
 		frame:SetFrameStrata("DIALOG")
 		frame:SetMovable(false)
@@ -58,31 +58,31 @@ function Necrosis:SetButtonsConfig()
 		FontString:SetPoint("TOP", frame, "TOP", 85, -25)
 
 		-- Boutons
-		frame = CreateFrame("Button", nil, NecrosisButtonsConfig1, "UIPanelButtonTemplate")
+		frame = CreateFrame("Button", nil, NecrosisButtonsConfig, "UIPanelButtonTemplate")
 		frame:SetText(">>>")
 		frame:EnableMouse(true)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisButtonsConfig1, "BOTTOMRIGHT", 120, 100)
+		frame:SetPoint("RIGHT", NecrosisButtonsConfig, "BOTTOMRIGHT", 120, 80)
 
 		frame:SetScript("OnClick", function()
 			NecrosisButtonsConfig2:Show()
 			NecrosisButtonsConfig1:Hide()
 		end)
 
-		frame = CreateFrame("Button", nil, NecrosisButtonsConfig1, "UIPanelButtonTemplate")
+		frame = CreateFrame("Button", nil, NecrosisButtonsConfig, "UIPanelButtonTemplate")
 		frame:SetText("<<<")
 		frame:EnableMouse(true)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 40, 100)
+		frame:SetPoint("LEFT", NecrosisButtonsConfig, "BOTTOMLEFT", 40, 80)
 
 		frame:SetScript("OnClick", function()
 			NecrosisButtonsConfig2:Show()
 			NecrosisButtonsConfig1:Hide()
 		end)
 
-		-- Création de la sous-fenêtre 2
+		-- Création de la sous-fenêtre page 2
 		frame = CreateFrame("Frame", "NecrosisButtonsConfig2", NecrosisButtonsConfig)
 		frame:SetFrameStrata("DIALOG")
 		frame:SetMovable(false)
@@ -110,7 +110,7 @@ function Necrosis:SetButtonsConfig()
 		frame:EnableMouse(true)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisButtonsConfig2, "BOTTOMRIGHT", 120, 100)
+		frame:SetPoint("RIGHT", NecrosisButtonsConfig, "BOTTOMRIGHT", 120, 80)
 
 		frame:SetScript("OnClick", function()
 			NecrosisButtonsConfig1:Show()
@@ -122,7 +122,7 @@ function Necrosis:SetButtonsConfig()
 		frame:EnableMouse(true)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisButtonsConfig2, "BOTTOMLEFT", 40, 100)
+		frame:SetPoint("LEFT", NecrosisButtonsConfig, "BOTTOMLEFT", 40, 80)
 
 		frame:SetScript("OnClick", function()
 			NecrosisButtonsConfig1:Show()
@@ -139,7 +139,7 @@ function Necrosis:SetButtonsConfig()
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 20, 390)
+		frame:SetPoint("LEFT", NecrosisButtonsConfig, "BOTTOMLEFT", 20, 390)
 
 		frame:SetScript("OnClick", function(self)
 			if (self:GetChecked()) then
@@ -205,7 +205,7 @@ function Necrosis:SetButtonsConfig()
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 20, initY_pierres - (25 * (i - 1)))
+		frame:SetPoint("LEFT", NecrosisButtonsConfig, "BOTTOMLEFT", 20, initY_pierres - (25 * (i - 1)))
 		if i == 1 then
 			firstCheckboxPierres = frame
 		end
@@ -247,7 +247,7 @@ function Necrosis:SetButtonsConfig()
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 20, initY_action - (25 * (i - 1)))
+		frame:SetPoint("LEFT", NecrosisButtonsConfig, "BOTTOMLEFT", 20, initY_action - (25 * (i - 1)))
 		if i == 1 then
 			firstCheckboxAction = frame
 		end
