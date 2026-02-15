@@ -139,7 +139,7 @@ function Necrosis:SetButtonsConfig()
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", -20, 390)
+		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 20, 390)
 
 		frame:SetScript("OnClick", function(self)
 			if (self:GetChecked()) then
@@ -205,7 +205,7 @@ function Necrosis:SetButtonsConfig()
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", -20, initY_pierres - (25 * (i - 1)))
+		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 20, initY_pierres - (25 * (i - 1)))
 		if i == 1 then
 			firstCheckboxPierres = frame
 		end
@@ -232,7 +232,7 @@ function Necrosis:SetButtonsConfig()
 		local headerPierres = NecrosisButtonsConfig1:CreateFontString(nil, nil, "GameFontNormalSmall")
 		headerPierres:Show()
 		headerPierres:ClearAllPoints()
-		headerPierres:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 9, 365)
+		headerPierres:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 49, 365)
 		headerPierres:SetTextColor(1, 0.82, 0)
 		headerPierres:SetText(self.Config.Buttons["Boutons Pierres"] or "Stone Buttons")
 
@@ -247,7 +247,7 @@ function Necrosis:SetButtonsConfig()
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", -20, initY_action - (25 * (i - 1)))
+		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 20, initY_action - (25 * (i - 1)))
 		if i == 1 then
 			firstCheckboxAction = frame
 		end
@@ -274,7 +274,7 @@ function Necrosis:SetButtonsConfig()
 		local headerAction = NecrosisButtonsConfig1:CreateFontString(nil, nil, "GameFontNormalSmall")
 		headerAction:Show()
 		headerAction:ClearAllPoints()
-		headerAction:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 9, 230)
+		headerAction:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 49, 230)
 		headerAction:SetTextColor(1, 0.82, 0)
 		headerAction:SetText(self.Config.Buttons["Boutons d'Action"] or "Action Buttons")
 
