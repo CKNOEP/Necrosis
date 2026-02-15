@@ -229,7 +229,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", -175, 240)
+		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 35, 240)
 		frame:SetChecked(NecrosisConfig.DestroyShardwithsphere)
 		frame:SetScript("OnClick", function(self)
 			

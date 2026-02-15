@@ -189,7 +189,7 @@ function Necrosis:CreateThreatRing()
 
 	threatRing = ring
 
-	print("|cFF00FF00Necrosis:|r Threat ring created! Size: " .. ringSize .. "px, Thickness: " .. thickness .. "px, Segments: " .. numSegments)
+	-- print("|cFF00FF00Necrosis:|r Threat ring created! Size: " .. ringSize .. "px, Thickness: " .. thickness .. "px, Segments: " .. numSegments)
 
 	return ring
 end
