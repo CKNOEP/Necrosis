@@ -5,7 +5,6 @@
 
 -- On définit G comme étant le tableau contenant toutes les frames existantes.
 local _G = getfenv(0)
-local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
 
 local NECROSIS_COMPANIONS_PER_PAGE = 12;
 local NECROSIS_PAGE_NUMBER = "Page %s of %s";
@@ -201,7 +200,7 @@ function Necrosis:SetButtonsConfig()
 	FontString:ClearAllPoints()
 	FontString:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 198, 365)
 	FontString:SetTextColor(1, 0.82, 0)
-	FontString:SetText(L["BOUTONS_PIERRES"])
+	FontString:SetText(self.Config.Buttons["Boutons Pierres"] or "Stone Buttons")
 
 	-- Groupe 1: Boutons Pierres
 	local boutons_pierres = {"Firestone", "Spellstone", "HealthStone", "Soulstone"}
@@ -239,7 +238,7 @@ function Necrosis:SetButtonsConfig()
 	FontString:ClearAllPoints()
 	FontString:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 198, 230)
 	FontString:SetTextColor(1, 0.82, 0)
-	FontString:SetText(L["BOUTONS_ACTION"])
+	FontString:SetText(self.Config.Buttons["Boutons d'Action"] or "Action Buttons")
 
 	-- Groupe 2: Boutons d'Action
 	local boutons_action = {"BuffMenu", "Mount", "PetMenu", "CurseMenu", "DestroyShards"}
@@ -277,7 +276,7 @@ function Necrosis:SetButtonsConfig()
 	FontString:ClearAllPoints()
 	FontString:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 198, 230)
 	FontString:SetTextColor(1, 0.82, 0)
-	FontString:SetText(L["BOUTONS_ACTION"])
+	FontString:SetText(self.Config.Buttons["Boutons d'Action"] or "Action Buttons")
 
 	-- Groupe 2: Boutons d'Action
 	local boutons_action = {"BuffMenu", "Mount", "PetMenu", "CurseMenu", "DestroyShards"}
