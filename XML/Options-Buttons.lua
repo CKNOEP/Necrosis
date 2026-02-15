@@ -139,7 +139,7 @@ function Necrosis:SetButtonsConfig()
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 5, 390)
+		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", -5, 390)
 
 		frame:SetScript("OnClick", function(self)
 			if (self:GetChecked()) then
@@ -205,7 +205,7 @@ function Necrosis:SetButtonsConfig()
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 5, initY_pierres - (25 * (i - 1)))
+		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", -5, initY_pierres - (25 * (i - 1)))
 		if i == 1 then
 			firstCheckboxPierres = frame
 		end
@@ -228,15 +228,13 @@ function Necrosis:SetButtonsConfig()
 		frame:SetFontString(FontString)
 	end
 
-	-- Position header "Boutons Pierres" relative to first checkbox
-	if firstCheckboxPierres then
+	-- Position header "Boutons Pierres" relative to first checkbox text
 		local headerPierres = NecrosisButtonsConfig1:CreateFontString(nil, nil, "GameFontNormalSmall")
 		headerPierres:Show()
 		headerPierres:ClearAllPoints()
-		headerPierres:SetPoint("LEFT", firstCheckboxPierres, "TOP", 0, 25)
+		headerPierres:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 24, 365)
 		headerPierres:SetTextColor(1, 0.82, 0)
 		headerPierres:SetText(self.Config.Buttons["Boutons Pierres"] or "Stone Buttons")
-	end
 
 
 	-- Groupe 2: Boutons d'Action
@@ -249,7 +247,7 @@ function Necrosis:SetButtonsConfig()
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 5, initY_action - (25 * (i - 1)))
+		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", -5, initY_action - (25 * (i - 1)))
 		if i == 1 then
 			firstCheckboxAction = frame
 		end
@@ -272,15 +270,13 @@ function Necrosis:SetButtonsConfig()
 		frame:SetFontString(FontString)
 	end
 
-	-- Position header "Boutons d\'Action" relative to first checkbox
-	if firstCheckboxAction then
+	-- Position header "Boutons d'Action" relative to first checkbox text
 		local headerAction = NecrosisButtonsConfig1:CreateFontString(nil, nil, "GameFontNormalSmall")
 		headerAction:Show()
 		headerAction:ClearAllPoints()
-		headerAction:SetPoint("LEFT", firstCheckboxAction, "TOP", 0, 25)
+		headerAction:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 24, 230)
 		headerAction:SetTextColor(1, 0.82, 0)
-		headerAction:SetText(self.Config.Buttons["Boutons d\'Action"] or "Action Buttons")
-	end
+		headerAction:SetText(self.Config.Buttons["Boutons d'Action"] or "Action Buttons")
 
 	-- Sub Menu 2
 		-- lets create a hidden frame container for the mount selection buttons
