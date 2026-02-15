@@ -190,12 +190,13 @@ function Necrosis:SetButtonsConfig()
 
 	-- Header "Boutons Pierres"
 	local headerFrame1 = CreateFrame("Frame", nil, NecrosisButtonsConfig1)
-	headerFrame1:SetSize(1, 1)
+	headerFrame1:SetSize(24, 24)
+	headerFrame1:Hide()
 	headerFrame1:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 5, 365)
 	local headerFS1 = headerFrame1:CreateFontString(nil, nil, "GameFontNormalSmall")
 	headerFS1:Show()
 	headerFS1:ClearAllPoints()
-	headerFS1:SetPoint("LEFT", headerFrame1, "RIGHT", 5, 0)
+	headerFS1:SetPoint("LEFT", headerFrame1, "RIGHT", 5, 1)
 	headerFS1:SetTextColor(1, 0.82, 0)
 	headerFS1:SetText(self.Config.Buttons["Boutons Pierres"] or "Stone Buttons")
 
@@ -231,12 +232,13 @@ function Necrosis:SetButtonsConfig()
 
 	-- Header "Boutons d'Action"
 	local headerFrame2 = CreateFrame("Frame", nil, NecrosisButtonsConfig1)
-	headerFrame2:SetSize(1, 1)
+	headerFrame2:SetSize(24, 24)
+	headerFrame2:Hide()
 	headerFrame2:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 5, 230)
 	local headerFS2 = headerFrame2:CreateFontString(nil, nil, "GameFontNormalSmall")
 	headerFS2:Show()
 	headerFS2:ClearAllPoints()
-	headerFS2:SetPoint("LEFT", headerFrame2, "RIGHT", 5, 0)
+	headerFS2:SetPoint("LEFT", headerFrame2, "RIGHT", 5, 1)
 	headerFS2:SetTextColor(1, 0.82, 0)
 	headerFS2:SetText(self.Config.Buttons["Boutons d'Action"] or "Action Buttons")
 
