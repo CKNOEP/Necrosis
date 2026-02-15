@@ -193,12 +193,15 @@ function Necrosis:SetButtonsConfig()
 	-- Affiche ou cache les boutons autour de Necrosis
 
 	-- Header "Boutons Pierres"
-	FontString = NecrosisButtonsConfig1:CreateFontString(nil, nil, "GameFontNormalSmall")
-	FontString:Show()
-	FontString:ClearAllPoints()
-	FontString:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 34, 365)
-	FontString:SetTextColor(1, 0.82, 0)
-	FontString:SetText(self.Config.Buttons["Boutons Pierres"] or "Stone Buttons")
+	local headerFrame1 = CreateFrame("Frame", nil, NecrosisButtonsConfig1)
+	headerFrame1:SetSize(1, 1)
+	headerFrame1:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 5, 365)
+	local headerFS1 = headerFrame1:CreateFontString(nil, nil, "GameFontNormalSmall")
+	headerFS1:Show()
+	headerFS1:ClearAllPoints()
+	headerFS1:SetPoint("LEFT", headerFrame1, "RIGHT", 5, 0)
+	headerFS1:SetTextColor(1, 0.82, 0)
+	headerFS1:SetText(self.Config.Buttons["Boutons Pierres"] or "Stone Buttons")
 
 	-- Groupe 1: Boutons Pierres
 	local boutons_pierres = {"Firestone", "Spellstone", "HealthStone", "Soulstone"}
@@ -231,12 +234,15 @@ function Necrosis:SetButtonsConfig()
 	end
 
 	-- Header "Boutons d'Action"
-	FontString = NecrosisButtonsConfig1:CreateFontString(nil, nil, "GameFontNormalSmall")
-	FontString:Show()
-	FontString:ClearAllPoints()
-	FontString:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 34, 230)
-	FontString:SetTextColor(1, 0.82, 0)
-	FontString:SetText(self.Config.Buttons["Boutons d'Action"] or "Action Buttons")
+	local headerFrame2 = CreateFrame("Frame", nil, NecrosisButtonsConfig1)
+	headerFrame2:SetSize(1, 1)
+	headerFrame2:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 5, 230)
+	local headerFS2 = headerFrame2:CreateFontString(nil, nil, "GameFontNormalSmall")
+	headerFS2:Show()
+	headerFS2:ClearAllPoints()
+	headerFS2:SetPoint("LEFT", headerFrame2, "RIGHT", 5, 0)
+	headerFS2:SetTextColor(1, 0.82, 0)
+	headerFS2:SetText(self.Config.Buttons["Boutons d'Action"] or "Action Buttons")
 
 	-- Groupe 2: Boutons d'Action
 	local boutons_action = {"BuffMenu", "Mount", "PetMenu", "CurseMenu", "DestroyShards"}
