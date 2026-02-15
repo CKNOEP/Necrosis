@@ -101,6 +101,20 @@ function Necrosis:SetMiscConfig()
 		frame:SetStepsPerPage(1)
 		frame:SetWidth(150)
 		frame:SetHeight(15)
+
+		-- Create slider visual elements with circular dot cursor
+		local track = frame:CreateTexture(nil, "BACKGROUND")
+		track:SetWidth(150)
+		track:SetHeight(4)
+		track:SetColorTexture(0.2, 0.2, 0.2, 1)
+		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
+
+		local thumb = frame:GetThumbTexture()
+		if thumb then
+			thumb:SetTexture("Interface\Common\Indicator-Yellow")
+			thumb:SetColorTexture(1, 0.8, 0, 1)
+			thumb:SetSize(6, 6)
+		end
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("CENTER", NecrosisMiscConfig, "BOTTOMLEFT", 225, 320)
@@ -188,6 +202,20 @@ function Necrosis:SetMiscConfig()
 		frame:SetStepsPerPage(1)
 		frame:SetWidth(150)
 		frame:SetHeight(15)
+
+		-- Create slider visual elements with circular dot cursor
+		local track = frame:CreateTexture(nil, "BACKGROUND")
+		track:SetWidth(150)
+		track:SetHeight(4)
+		track:SetColorTexture(0.2, 0.2, 0.2, 1)
+		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
+
+		local thumb = frame:GetThumbTexture()
+		if thumb then
+			thumb:SetTexture("Interface\Common\Indicator-Yellow")
+			thumb:SetColorTexture(1, 0.8, 0, 1)
+			thumb:SetSize(6, 6)
+		end
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("CENTER", NecrosisMiscConfig, "BOTTOMLEFT", 225, 255)
@@ -459,6 +487,20 @@ function Necrosis:SetMiscConfig()
 		frame:SetObeyStepOnDrag(true)
 		frame:SetWidth(150)
 		frame:SetHeight(15)
+
+		-- Create slider visual elements with circular dot cursor
+		local track = frame:CreateTexture(nil, "BACKGROUND")
+		track:SetWidth(150)
+		track:SetHeight(4)
+		track:SetColorTexture(0.2, 0.2, 0.2, 1)
+		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
+
+		local thumb = frame:GetThumbTexture()
+		if thumb then
+			thumb:SetTexture("Interface\Common\Indicator-Yellow")
+			thumb:SetColorTexture(1, 0.8, 0, 1)
+			thumb:SetSize(6, 6)
+		end
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("CENTER", NecrosisMiscConfig, "BOTTOMLEFT", 225, 60)
