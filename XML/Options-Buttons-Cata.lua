@@ -102,7 +102,7 @@ function Necrosis:SetButtonsConfig()
 		FontString = frame:CreateFontString("NecrosisButtonsConfig2Text", nil, "GameFontNormalSmall")
 		FontString:Show()
 		FontString:ClearAllPoints()
-		FontString:SetPoint("TOP", frame, "TOP", 90, -60)
+		FontString:SetPoint("TOP", frame, "TOP", 85, -25)
 
 		-- Boutons de navigation
 		frame = CreateFrame("Button", nil, NecrosisButtonsConfig2, "UIPanelButtonTemplate")
