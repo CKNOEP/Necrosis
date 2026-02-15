@@ -5,6 +5,7 @@
 
 -- On définit G comme étant le tableau contenant toutes les frames existantes.
 local _G = getfenv(0)
+local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
 
 local NECROSIS_COMPANIONS_PER_PAGE = 12;
 local NECROSIS_PAGE_NUMBER = "Page %s of %s";
