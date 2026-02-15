@@ -291,3 +291,63 @@ L["SELECT_MOUNTS"] = "Wählen Sie Ihre Begleiter:"
 L["PAGE_OF_N"] = "Seite %d von %d"
 L["RESET"] = "Zurücksetzen"
 L["TEST_OVERLAY"] = "Overlay testen"
+
+-- Summon Queue Module
+L["SUMMON_QUEUE_LABEL"] = "|c00FFFFFF".."Beschwörungs-Warteschlange".."|r"
+L["SUMMON_QUEUE_ENABLED"] = "Beschwörungs-Warteschlange aktivieren"
+L["SUMMON_QUEUE_TRIGGER"] = "Auslösecodes"
+L["SUMMON_QUEUE_TRIGGER_DESC"] = "Chatnachricht(en) zum Beitreten. Mehrere Codes durch Kommas trennen: 123, summon, inv"
+L["SUMMON_QUEUE_AUTO_REMOVE"] = "Automatisch entfernen in Reichweite"
+L["SUMMON_QUEUE_AUDIO"] = "Audio-Benachrichtigungen"
+L["SUMMON_QUEUE_SYNC"] = "Mit anderen Hexenmeistern synchronisieren"
+L["SUMMON_QUEUE_WINDOW"] = "Warteschlangen-Fenster anzeigen"
+L["SUMMON_QUEUE_ADDED"] = "<player> zur Beschwörungs-Warteschlange hinzugefügt"
+L["SUMMON_QUEUE_REMOVED"] = "<player> aus der Warteschlange entfernt"
+L["SUMMON_QUEUE_YOUR_TURN"] = "Sie sind an der Reihe, beschworen zu werden!"
+L["SUMMON_QUEUE_POSITION"] = "Position in Warteschlange: <pos>/<total>"
+L["SUMMON_QUEUE_CLEAR"] = "Warteschlange leeren"
+L["SUMMON_QUEUE_MANUAL_ADD"] = "Ziel hinzufügen"
+L["SUMMON_QUEUE_EMPTY"] = "Warteschlange ist leer"
+
+-- Version Check Module
+L["VERSION_UPDATE_AVAILABLE"] = "Update verfügbar"
+L["CURRENT_VERSION"] = "Aktuelle Version"
+L["DOWNLOAD"] = "Herunterladen"
+L["GITHUB"] = "GitHub"
+L["TYPE"] = "Eingeben"
+L["VERSION_CHECK_MANUAL"] = "Überprüfen Sie manuell auf Updates"
+L["CURSEFORGE"] = "CurseForge"
+L["UPDATE_AVAILABLE"] = "Update verfügbar"
+L["UP_TO_DATE"] = "Sie haben die aktuelle Version!"
+L["VERSION"] = "Version"
+L["UPDATE"] = "Aktualisieren"
+
+-- About Panel
+L["ABOUT_SUBTITLE"] = "Hexer-UI und Seelensplitter-Verwaltung"
+L["ABOUT_DESCRIPTION"] = [[
+Necrosis ist das ultimative Hexer-Addon mit umfassender UI-Verwaltung für Seelensplitter, Zauber, Dämonenbefehle, Buffs, Flüche und Timer. Über 20 Jahre kontinuierliche Entwicklung und Community-Unterstützung.
+
+Dieses Addon bietet eine radiale Schaltflächenoberfläche, grafische Seelensplitter-Anzeige, umfangreiche Anpassungsmöglichkeiten und erweiterte Funktionen wie Beschwörungswarteschlangen-Management mit Raid-Synchronisation.
+
+Mit Leidenschaft für die Hexer-Community entwickelt.
+]]
+L["DOWNLOAD_SUPPORT"] = "Download und Support"
+L["CREDITS"] = "Entwicklungsteam und Credits"
+L["ABOUT_CREDITS"] = [[
+|c00FFD700Originalautor:|r Lomig, lädygaga (Sulfuron EUR)
+
+|c00FFD700Mitwirkende (20+ Jahre):|r
+• Tarcalion - Kernentwicklung und Features
+• Hexer-Community - Feedback und Tests
+• Übersetzer - Lokalisierung in 8 Sprachen
+• Bug-Reporter - Qualitätssicherung
+
+|c00FFD700Besonderer Dank An:|r
+• WoW API Dokumentationsteam
+• Ace3 Framework-Entwickler
+• LibStub und Library-Beiträger
+• Globale Hexer-Community
+
+|c00FFD700Lizenz:|r GPL v2
+|c00FFD700Datenbank:|r github.com/CKNOEP/Necrosis
+]]

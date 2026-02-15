@@ -56,6 +56,8 @@ Locales\Localization.MX.lua
 Dialog.lua
 Functions.lua
 AFKS.lua
+SummonQueue.lua
+VersionCheck.lua
 Speech\Speech-fr.lua
 Speech\Speech-en.lua
 Speech\Speech-de.lua
@@ -78,7 +80,9 @@ Timers\OtherTimers.lua
 XML\Attributes.lua
 
 XML\Panel.lua
+XML\AboutPanel.lua
 XML\Options-Messages.lua
+XML\Options-SummonQueue.lua
 XML\Options-Sphere.lua
 XML\Options-Buttons.lua
 XML\Options-Menus.lua

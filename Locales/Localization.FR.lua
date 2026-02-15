@@ -331,3 +331,63 @@ L["SELECT_MOUNTS"] = "Sélectionnez vos montures :"
 L["PAGE_OF_N"] = "Page %d sur %d"
 L["RESET"] = "Réinitialiser"
 L["TEST_OVERLAY"] = "Tester Overlay"
+
+-- Summon Queue Module
+L["SUMMON_QUEUE_LABEL"] = "|c00FFFFFF".."File d'invocation".."|r"
+L["SUMMON_QUEUE_ENABLED"] = "Activer la file d'invocation"
+L["SUMMON_QUEUE_TRIGGER"] = "Code(s) de déclenchement"
+L["SUMMON_QUEUE_TRIGGER_DESC"] = "Message(s) chat pour rejoindre la file. Séparez plusieurs codes par des virgules: 123, summon, inv"
+L["SUMMON_QUEUE_AUTO_REMOVE"] = "Retrait auto à portée"
+L["SUMMON_QUEUE_AUDIO"] = "Alertes audio"
+L["SUMMON_QUEUE_SYNC"] = "Sync avec autres démonistes"
+L["SUMMON_QUEUE_WINDOW"] = "Afficher la fenêtre"
+L["SUMMON_QUEUE_ADDED"] = "<player> ajouté à la file d'invocation"
+L["SUMMON_QUEUE_REMOVED"] = "<player> retiré de la file"
+L["SUMMON_QUEUE_YOUR_TURN"] = "C'est votre tour d'être invoqué !"
+L["SUMMON_QUEUE_POSITION"] = "Position: <pos>/<total>"
+L["SUMMON_QUEUE_CLEAR"] = "Vider la file"
+L["SUMMON_QUEUE_MANUAL_ADD"] = "Ajouter la cible"
+L["SUMMON_QUEUE_EMPTY"] = "File vide"
+
+-- Version Check Module
+L["VERSION_UPDATE_AVAILABLE"] = "Mise à jour disponible"
+L["CURRENT_VERSION"] = "Version actuelle"
+L["DOWNLOAD"] = "Télécharger"
+L["GITHUB"] = "GitHub"
+L["TYPE"] = "Tapez"
+L["VERSION_CHECK_MANUAL"] = "Vérifiez les mises à jour manuellement"
+L["CURSEFORGE"] = "CurseForge"
+L["UPDATE_AVAILABLE"] = "Mise à jour disponible"
+L["UP_TO_DATE"] = "Vous avez la version à jour !"
+L["VERSION"] = "Version"
+L["UPDATE"] = "Mettre à jour"
+
+-- About Panel
+L["ABOUT_SUBTITLE"] = "Gestion de l'interface Démoniste et des fragments d'âme"
+L["ABOUT_DESCRIPTION"] = [[
+Necrosis est l'addon ultime pour Démoniste, offrant une gestion complète de l'interface pour les fragments d'âme, les sorts, l'invocation de démons, les buffs, les malédictions et les timeurs. Plus de 20 ans de développement continu et de soutien communautaire.
+
+Cet addon propose une interface de boutons radiaux, un affichage graphique des fragments d'âme, de nombreuses options de personnalisation, et des fonctionnalités avancées comme la gestion de la file d'invocation avec synchronisation de raid.
+
+Développé avec passion pour la communauté des Démonistes.
+]]
+L["DOWNLOAD_SUPPORT"] = "Télécharger et Support"
+L["CREDITS"] = "Équipe de Développement et Crédits"
+L["ABOUT_CREDITS"] = [[
+|c00FFD700Auteur Original:|r Lomig, lädygaga (Sulfuron EUR)
+
+|c00FFD700Contributeurs (20+ ans):|r
+• Tarcalion - Développement et fonctionnalités
+• Communauté Démonistes - Retours et tests
+• Traducteurs - Localisation 8 langues
+• Rapporteurs de bugs - Assurance qualité
+
+|c00FFD700Remerciements Spéciaux:|r
+• Équipe API WoW
+• Développeurs Ace3
+• Contributeurs LibStub
+• Communauté Mondiale Démoniste
+
+|c00FFD700Licence:|r GPL v2
+|c00FFD700Dépôt:|r github.com/CKNOEP/Necrosis
+]]

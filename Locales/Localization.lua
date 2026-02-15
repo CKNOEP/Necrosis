@@ -313,3 +313,77 @@ L["SELECT_MOUNTS"] = "Select your mounts:"
 L["PAGE_OF_N"] = "Page %d of %d"
 L["RESET"] = "Reset"
 L["TEST_OVERLAY"] = "Test Overlay"
+
+-- Summon Queue Module
+L["SUMMON_QUEUE_LABEL"] = "|c00FFFFFF".."Summon Queue".."|r"
+L["SUMMON_QUEUE_ENABLED"] = "Enable Summon Queue"
+L["SUMMON_QUEUE_TRIGGER"] = "Trigger Code(s)"
+L["SUMMON_QUEUE_TRIGGER_DESC"] = "Chat message(s) to join queue. Separate multiple codes with commas: 123, summon, inv"
+L["SUMMON_QUEUE_AUTO_REMOVE"] = "Auto-remove when in range"
+L["SUMMON_QUEUE_AUDIO"] = "Audio alerts"
+L["SUMMON_QUEUE_SYNC"] = "Sync with other warlocks"
+L["SUMMON_QUEUE_WINDOW"] = "Show queue window"
+L["SUMMON_QUEUE_ADDED"] = "<player> added to summon queue"
+L["SUMMON_QUEUE_REMOVED"] = "<player> removed from queue"
+L["SUMMON_QUEUE_YOUR_TURN"] = "Your turn to be summoned!"
+L["SUMMON_QUEUE_POSITION"] = "Queue position: <pos>/<total>"
+L["SUMMON_QUEUE_CLEAR"] = "Clear queue"
+L["SUMMON_QUEUE_MANUAL_ADD"] = "Add target to queue"
+L["SUMMON_QUEUE_EMPTY"] = "Queue is empty"
+
+-- Version Check Module
+L["VERSION_UPDATE_AVAILABLE"] = "Update available"
+L["CURRENT_VERSION"] = "Current Version"
+L["DOWNLOAD"] = "Download"
+L["GITHUB"] = "GitHub"
+L["TYPE"] = "Type"
+L["VERSION_CHECK_MANUAL"] = "Check for updates manually"
+L["CURSEFORGE"] = "CurseForge"
+L["UPDATE_AVAILABLE"] = "Update Available"
+L["UP_TO_DATE"] = "You are up to date!"
+L["VERSION"] = "Version"
+L["UPDATE"] = "Update"
+
+-- About Panel
+L["ABOUT_SUBTITLE"] = "Warlock UI & Shard Management for World of Warcraft"
+L["ABOUT_DESCRIPTION"] = [[
+A Word About Necrosis Warlock
+
+Necrosis is much more than just an addon: it's a true gem of the Warlock community, kept alive for years thanks to you, Demonology players. Whether you use it to optimize your spells, manage your demons, or simply make your gameplay smoother, Necrosis has been there for every incantation, every contract… and every victory.
+
+What you see today didn't appear out of thin air: behind every bugfix and every update there are hours of work, passion, and listening. Developers, testers, and contributors who tweak the code, read your feedback, and keep coming back. Without them, Necrosis would just be a memory.
+
+A Big Thank You to the Warlock Community
+
+Thank you to all the Warlocks who play, experiment, test, give feedback, and share your ideas.
+Thank you to everyone who opens tickets, reports bugs, suggests new features, or who simply takes the time to say "Thanks, it works!"
+And thank you to those who have contributed in the past, even if they're no longer here: your work laid the foundation for what you're using today.
+
+None of this would be possible without you—your presence, your feedback, and your support. You are the real strength of the Warlock community, and it's thanks to you that Necrosis keeps evolving.
+
+Join the Maintenance Effort
+
+If you use Necrosis and enjoy it, feel free to share your feedback, report bugs, suggest improvements, and recommend the addon to new Warlocks.
+
+Together—players, Warlocks, developers, and contributors—we can keep making Necrosis a reliable, efficient, and modern addon for WoW Classic.
+]]
+L["DOWNLOAD_SUPPORT"] = "Download & Support"
+L["CREDITS"] = "Development Team & Credits"
+L["ABOUT_CREDITS"] = [[
+|c00FFD700Original Author:|r Lomig, lädygaga (Sulfuron EUR)
+
+|c00FFD700Contributors (20+ years):|r
+• Tarcalion - Core development & features
+• Community Warlocks - Feedback & testing
+• Translators - Localization in 8 languages
+• Bug Reporters - Quality assurance
+
+|c00FFD700Special Thanks To:|r
+• WoW API Documentation Team
+• Ace3 Framework Developers
+• LibStub & Library Contributors
+• The Global Warlock Community
+
+|c00FFD700License:|r GPL v2
+|c00FFD700Repository:|r github.com/CKNOEP/Necrosis
+]]

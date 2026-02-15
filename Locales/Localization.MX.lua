@@ -291,3 +291,45 @@ L["SELECT_MOUNTS"] = "Seleccione sus monturas:"
 L["PAGE_OF_N"] = "Página %d de %d"
 L["RESET"] = "Restablecer"
 L["TEST_OVERLAY"] = "Probar Overlay"
+
+-- Summon Queue Module
+L["SUMMON_QUEUE_LABEL"] = "|c00FFFFFF".."Cola de Invocación".."|r"
+L["SUMMON_QUEUE_ENABLED"] = "Habilitar cola de invocación"
+L["SUMMON_QUEUE_TRIGGER"] = "Código(s) de activación"
+L["SUMMON_QUEUE_TRIGGER_DESC"] = "Mensaje(s) de chat para unirse. Separe múltiples códigos con comas: 123, summon, inv"
+L["SUMMON_QUEUE_AUTO_REMOVE"] = "Eliminar automáticamente en rango"
+L["SUMMON_QUEUE_AUDIO"] = "Alertas de audio"
+L["SUMMON_QUEUE_SYNC"] = "Sincronizar con otros brujos"
+L["SUMMON_QUEUE_WINDOW"] = "Mostrar ventana de cola"
+L["SUMMON_QUEUE_ADDED"] = "<player> agregado a la cola de invocación"
+L["SUMMON_QUEUE_REMOVED"] = "<player> eliminado de la cola"
+L["SUMMON_QUEUE_YOUR_TURN"] = "¡Es tu turno para ser invocado!"
+L["SUMMON_QUEUE_POSITION"] = "Posición en cola: <pos>/<total>"
+L["SUMMON_QUEUE_CLEAR"] = "Limpiar cola"
+L["SUMMON_QUEUE_MANUAL_ADD"] = "Agregar objetivo"
+L["SUMMON_QUEUE_EMPTY"] = "Cola vacía"
+
+-- Version Check Module
+L["VERSION_UPDATE_AVAILABLE"] = "Actualización disponible"
+L["CURRENT_VERSION"] = "Versión actual"
+L["DOWNLOAD"] = "Descargar"
+L["GITHUB"] = "GitHub"
+L["TYPE"] = "Escribe"
+L["VERSION_CHECK_MANUAL"] = "Comprueba actualizaciones manualmente"
+L["CURSEFORGE"] = "CurseForge"
+L["UPDATE_AVAILABLE"] = "Actualización disponible"
+L["UP_TO_DATE"] = "¡Tienes la versión actualizada!"
+L["VERSION"] = "Versión"
+L["UPDATE"] = "Actualizar"
+
+-- About Panel
+L["ABOUT_SUBTITLE"] = "Interfaz de Brujo y Gestión de Fragmentos de Alma"
+L["ABOUT_DESCRIPTION"] = [[
+Necrosis es el addon definitivo para Brujos, proporcionando gestión completa de la interfaz para fragmentos de alma, hechizos, invocación de demonios, buffs, maldiciones y cronómetros. Más de 20 años de desarrollo continuo y apoyo comunitario.
+
+Este addon ofrece una interfaz de botones radiales, visualización gráfica de fragmentos de alma, amplias opciones de personalización, y funciones avanzadas como la gestión de cola de invocación con sincronización de banda.
+
+Desarrollado con pasión por la comunidad de Brujos.
+]]
+L["DOWNLOAD_SUPPORT"] = "Descargar y Soporte"
+L["CREDITS"] = "Equipo de Desarrollo y Créditos"

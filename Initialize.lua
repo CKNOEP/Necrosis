@@ -306,6 +306,17 @@ function Necrosis:Initialize(Config)
 		NecrosisConfig.ThreatRingThickness = 1 -- Very thin ring thickness (1px)
 	end
 
+	-- Initialize Version Check settings
+	if NecrosisConfig.VersionCheck == nil then
+		NecrosisConfig.VersionCheck = {
+			Enabled = true,
+			CheckOnLoad = true,
+			NotifyOnUpdate = true,
+			CheckInterval = 86400, -- 24 hours
+			LastCheck = 0,
+		}
+	end
+
 	Necrosis.UpdateSpellTimers(NecrosisConfig.Timers)-- init timers
 	
 	-- Création de la liste des sorts disponibles

@@ -291,3 +291,45 @@ L["SELECT_MOUNTS"] = "選擇您的坐騎："
 L["PAGE_OF_N"] = "第 %d 頁，共 %d 頁"
 L["RESET"] = "重置"
 L["TEST_OVERLAY"] = "測試疊加層"
+
+-- Summon Queue Module
+L["SUMMON_QUEUE_LABEL"] = "|c00FFFFFF".."召喚隊列".."|r"
+L["SUMMON_QUEUE_ENABLED"] = "啟用召喚隊列"
+L["SUMMON_QUEUE_TRIGGER"] = "觸發代碼"
+L["SUMMON_QUEUE_TRIGGER_DESC"] = "加入隊列的聊天訊息。用逗號分隔多個代碼：123, summon, inv"
+L["SUMMON_QUEUE_AUTO_REMOVE"] = "在範圍內自動移除"
+L["SUMMON_QUEUE_AUDIO"] = "音頻警報"
+L["SUMMON_QUEUE_SYNC"] = "與其他術士同步"
+L["SUMMON_QUEUE_WINDOW"] = "顯示隊列視窗"
+L["SUMMON_QUEUE_ADDED"] = "<player> 已新增至召喚隊列"
+L["SUMMON_QUEUE_REMOVED"] = "<player> 已從隊列移除"
+L["SUMMON_QUEUE_YOUR_TURN"] = "輪到你被召喚了！"
+L["SUMMON_QUEUE_POSITION"] = "隊列位置：<pos>/<total>"
+L["SUMMON_QUEUE_CLEAR"] = "清空隊列"
+L["SUMMON_QUEUE_MANUAL_ADD"] = "新增目標"
+L["SUMMON_QUEUE_EMPTY"] = "隊列為空"
+
+-- Version Check Module
+L["VERSION_UPDATE_AVAILABLE"] = "有可用更新"
+L["CURRENT_VERSION"] = "當前版本"
+L["DOWNLOAD"] = "下載"
+L["GITHUB"] = "GitHub"
+L["TYPE"] = "輸入"
+L["VERSION_CHECK_MANUAL"] = "手動檢查更新"
+L["CURSEFORGE"] = "CurseForge"
+L["UPDATE_AVAILABLE"] = "有可用更新"
+L["UP_TO_DATE"] = "您已是最新版本！"
+L["VERSION"] = "版本"
+L["UPDATE"] = "更新"
+
+-- About Panel
+L["ABOUT_SUBTITLE"] = "術士介面和靈魂碎片管理"
+L["ABOUT_DESCRIPTION"] = [[
+Necrosis是終極術士插件,為靈魂碎片、法術、惡魔召喚、增益、詛咒和計時器提供全面的介面管理。20多年持續開發和社區支持。
+
+該插件提供徑向按鈕介面、靈魂碎片圖形顯示、廣泛的自訂選項,以及包括召喚隊列管理和團隊同步等進階功能。
+
+為術士社區而精心開發。
+]]
+L["DOWNLOAD_SUPPORT"] = "下載和支持"
+L["CREDITS"] = "開發團隊和致謝"
