@@ -139,7 +139,7 @@ function Necrosis:SetButtonsConfig()
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 193, 400)
+		frame:SetPoint("LEFT", NecrosisButtonsConfig1, "BOTTOMLEFT", 213, 400)
 
 		frame:SetScript("OnClick", function(self)
 			if (self:GetChecked()) then
