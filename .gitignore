@@ -9,3 +9,5 @@
 # Claude Code configuration
 .claude/
 CLAUDE.md
+UI/generated-image.png
+.gitignore
