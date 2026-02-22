@@ -1,24 +1,26 @@
---[[
-    Necrosis
-    Copyright (C) - copyright file included in this release
---]]
-
 local _G = getfenv(0)
+local AddonName, SAO = ...
 local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
 
-------------------------------------------------------------------------------------------------------
--- CREATION DE LA FRAME DES OPTIONS SUMMON QUEUE
-------------------------------------------------------------------------------------------------------
-
 function Necrosis:SetSummonQueueConfig()
+	-- Ensure SummonQueue config exists
+	if not NecrosisConfig.SummonQueue then
+		NecrosisConfig.SummonQueue = {
+			Enabled = true,
+			TriggerCode = "123, summon, inv, +1",
+			AutoRemoveInRange = true,
+			AudioAlert = true,
+			ShowGUI = false,
+			MaxQueueSize = 50,
+			SyncEnabled = true,
+			RangeCheckInterval = 2,
+			Position = {"CENTER", "UIParent", "CENTER", 0, 100},
+		}
+	end
 
 	local frame = _G["NecrosisSummonQueueConfig"]
 	if not frame then
-		local y = -35
-		local y_offset = -23
-		local x_offset = 30
-
-		-- Create the main frame
+		-- Création de la fenêtre
 		frame = CreateFrame("Frame", "NecrosisSummonQueueConfig", NecrosisGeneralFrame)
 		frame:SetFrameStrata("DIALOG")
 		frame:SetMovable(false)
@@ -29,17 +31,19 @@ function Necrosis:SetSummonQueueConfig()
 		frame:ClearAllPoints()
 		frame:SetPoint("BOTTOMLEFT")
 
-		-- Enable/Disable Summon Queue
-		frame = CreateFrame("CheckButton", "NecrosisSummonQueueEnable", NecrosisSummonQueueConfig, "UICheckButtonTemplate")
-		frame:EnableMouse(true)
-		frame:SetWidth(24)
-		frame:SetHeight(24)
-		frame:Show()
-		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisSummonQueueConfig, "TOPLEFT", x_offset, y)
-		frame:SetChecked(NecrosisConfig.SummonQueue.Enabled or true)
+		-- Titre
+		local title = frame:CreateFontString(nil, nil, "GameFontNormalLarge")
+		title:SetPoint("TOP", frame, "TOP", 50, -25)
+		title:SetText(L["SUMMON_QUEUE_LABEL"] or "Summon Queue")
+		title:SetTextColor(1, 0.8, 0)
 
-		frame:SetScript("OnClick", function(self)
+		-- Enabled checkbox
+		local enableBtn = CreateFrame("CheckButton", "NecrosisSQEnabled", frame, "UICheckButtonTemplate")
+		enableBtn:SetWidth(24)
+		enableBtn:SetHeight(24)
+		enableBtn:SetPoint("TOPLEFT", frame, "TOPLEFT", 40, -50)
+		enableBtn:SetChecked(NecrosisConfig.SummonQueue.Enabled)
+		enableBtn:SetScript("OnClick", function(self)
 			NecrosisConfig.SummonQueue.Enabled = self:GetChecked()
 			if self:GetChecked() then
 				SummonQueue.Enabled = true
@@ -48,147 +52,199 @@ function Necrosis:SetSummonQueueConfig()
 			end
 		end)
 
-		local FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
-		FontString:Show()
-		FontString:ClearAllPoints()
-		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
-		FontString:SetTextColor(1, 1, 1)
-		FontString:SetText(L["SUMMON_QUEUE_ENABLED"] or "Enable Summon Queue")
-		frame:SetFontString(FontString)
+		local enableLabel = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		enableLabel:SetPoint("LEFT", enableBtn, "RIGHT", 5, 1)
+		enableLabel:SetText(L["ENABLED"] or "Enabled")
+		enableLabel:SetTextColor(1, 1, 1)
 
-		-- Trigger Code
-		y = y + y_offset
-		local triggerLabel = NecrosisSummonQueueConfig:CreateFontString(nil, nil, "GameFontNormalSmall")
-		triggerLabel:Show()
-		triggerLabel:ClearAllPoints()
-		triggerLabel:SetPoint("LEFT", NecrosisSummonQueueConfig, "TOPLEFT", x_offset, y)
+		-- Trigger Code input
+		local triggerLabel = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		triggerLabel:SetPoint("TOPLEFT", frame, "TOPLEFT", 40, -80)
+		triggerLabel:SetText(L["SUMMON_QUEUE_TRIGGER"] or "Trigger Code (comma separated):")
 		triggerLabel:SetTextColor(1, 1, 1)
-		triggerLabel:SetText(L["SUMMON_QUEUE_TRIGGER"] or "Trigger Code")
 
-		y = y - 20
-		local triggerEdit = CreateFrame("EditBox", "NecrosisSummonQueueTrigger", NecrosisSummonQueueConfig, "InputBoxTemplate")
-		triggerEdit:SetWidth(200)
-		triggerEdit:SetHeight(20)
-		triggerEdit:Show()
-		triggerEdit:ClearAllPoints()
-		triggerEdit:SetPoint("LEFT", NecrosisSummonQueueConfig, "TOPLEFT", x_offset, y)
-		triggerEdit:SetText(NecrosisConfig.SummonQueue.TriggerCode or "123")
-		triggerEdit:SetMaxLetters(100)
+		-- Backdrop for input box
+		local triggerBg = CreateFrame("Frame", "NecrosisSQTriggerBg", frame, "BackdropTemplate")
+		triggerBg:SetSize(250, 24)
+		triggerBg:SetPoint("TOPLEFT", frame, "TOPLEFT", 40, -105)
+		triggerBg:SetBackdrop({
+			bgFile = "Interface/Tooltips/UI-Tooltip-Background",
+			edgeFile = "Interface/Tooltips/UI-Tooltip-Border",
+			tile = true,
+			tileSize = 16,
+			edgeSize = 16,
+			insets = { left = 2, right = 2, top = 2, bottom = 2 }
+		})
+		triggerBg:SetBackdropColor(0.15, 0.15, 0.15, 0.9)
+		triggerBg:SetBackdropBorderColor(0.3, 0.3, 0.3, 0.8)
 
-		triggerEdit:SetScript("OnTextChanged", function(self)
+		local triggerInput = CreateFrame("EditBox", "NecrosisSQTrigger", triggerBg)
+		triggerInput:SetAutoFocus(false)
+		triggerInput:SetPoint("TOPLEFT", triggerBg, "TOPLEFT", 4, -4)
+		triggerInput:SetPoint("BOTTOMRIGHT", triggerBg, "BOTTOMRIGHT", -4, 4)
+		triggerInput:SetFont("Fonts/FRIZQT__.TTF", 11, "")
+		triggerInput:SetTextColor(1, 1, 1)
+		triggerInput:SetText(NecrosisConfig.SummonQueue.TriggerCode or "123, summon, inv, +1")
+		triggerInput:SetScript("OnEnterPressed", function(self)
 			NecrosisConfig.SummonQueue.TriggerCode = self:GetText()
+			self:ClearFocus()
+		end)
+		triggerInput:SetScript("OnEscapePressed", function(self)
+			self:SetText(NecrosisConfig.SummonQueue.TriggerCode or "123, summon, inv, +1")
+			self:ClearFocus()
 		end)
 
-		-- Trigger Code Description
-		y = y - 20
-		local triggerDesc = NecrosisSummonQueueConfig:CreateFontString(nil, nil, "GameFontNormalSmall")
-		triggerDesc:Show()
-		triggerDesc:ClearAllPoints()
-		triggerDesc:SetPoint("LEFT", NecrosisSummonQueueConfig, "TOPLEFT", x_offset*2, y)
-		triggerDesc:SetTextColor(0.7, 0.7, 0.7)
-		triggerDesc:SetText(L["SUMMON_QUEUE_TRIGGER_DESC"] or "Chat message to join queue")
+		-- Info text for trigger codes
+		local triggerInfo = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		triggerInfo:SetPoint("TOPLEFT", frame, "TOPLEFT", 40, -130)
+		triggerInfo:SetWidth(280)
+		triggerInfo:SetJustifyH("LEFT")
+		triggerInfo:SetWordWrap(true)
+		triggerInfo:SetText(L["SUMMON_QUEUE_TRIGGER_DESC"] or "Separate codes with commas:\n123, inv, summon")
+		triggerInfo:SetTextColor(0.8, 0.8, 0.8)
 
-		-- Audio Alerts
-		y = y - 25
-		frame = CreateFrame("CheckButton", "NecrosisSummonQueueAudio", NecrosisSummonQueueConfig, "UICheckButtonTemplate")
-		frame:EnableMouse(true)
-		frame:SetWidth(24)
-		frame:SetHeight(24)
-		frame:Show()
-		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisSummonQueueConfig, "TOPLEFT", x_offset, y)
-		frame:SetChecked(NecrosisConfig.SummonQueue.AudioAlert)
-
-		frame:SetScript("OnClick", function(self)
-			NecrosisConfig.SummonQueue.AudioAlert = self:GetChecked()
-		end)
-
-		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
-		FontString:Show()
-		FontString:ClearAllPoints()
-		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
-		FontString:SetTextColor(1, 1, 1)
-		FontString:SetText(L["SUMMON_QUEUE_AUDIO"] or "Audio alerts")
-		frame:SetFontString(FontString)
-
-		-- Auto-Remove in Range
-		y = y + y_offset
-		frame = CreateFrame("CheckButton", "NecrosisSummonQueueAutoRemove", NecrosisSummonQueueConfig, "UICheckButtonTemplate")
-		frame:EnableMouse(true)
-		frame:SetWidth(24)
-		frame:SetHeight(24)
-		frame:Show()
-		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisSummonQueueConfig, "TOPLEFT", x_offset, y)
-		frame:SetChecked(NecrosisConfig.SummonQueue.AutoRemoveInRange)
-
-		frame:SetScript("OnClick", function(self)
+		-- Auto Remove In Range checkbox
+		local autoRemoveBtn = CreateFrame("CheckButton", "NecrosisSQAutoRemove", frame, "UICheckButtonTemplate")
+		autoRemoveBtn:SetWidth(24)
+		autoRemoveBtn:SetHeight(24)
+		autoRemoveBtn:SetPoint("TOPLEFT", frame, "TOPLEFT", 40, -170)
+		autoRemoveBtn:SetChecked(NecrosisConfig.SummonQueue.AutoRemoveInRange)
+		autoRemoveBtn:SetScript("OnClick", function(self)
 			NecrosisConfig.SummonQueue.AutoRemoveInRange = self:GetChecked()
 		end)
 
-		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
-		FontString:Show()
-		FontString:ClearAllPoints()
-		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
-		FontString:SetTextColor(1, 1, 1)
-		FontString:SetText(L["SUMMON_QUEUE_AUTO_REMOVE"] or "Auto-remove when in range")
-		frame:SetFontString(FontString)
+		local autoRemoveLabel = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		autoRemoveLabel:SetPoint("LEFT", autoRemoveBtn, "RIGHT", 5, 1)
+		autoRemoveLabel:SetText(L["SUMMON_QUEUE_AUTO_REMOVE"] or "Auto-remove in range")
+		autoRemoveLabel:SetTextColor(1, 1, 1)
 
-		-- Sync with Other Warlocks
-		y = y + y_offset
-		frame = CreateFrame("CheckButton", "NecrosisSummonQueueSync", NecrosisSummonQueueConfig, "UICheckButtonTemplate")
-		frame:EnableMouse(true)
-		frame:SetWidth(24)
-		frame:SetHeight(24)
-		frame:Show()
-		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisSummonQueueConfig, "TOPLEFT", x_offset, y)
-		frame:SetChecked(NecrosisConfig.SummonQueue.SyncEnabled)
+		-- Audio Alert checkbox
+		local audioBtn = CreateFrame("CheckButton", "NecrosisSQAudio", frame, "UICheckButtonTemplate")
+		audioBtn:SetWidth(24)
+		audioBtn:SetHeight(24)
+		audioBtn:SetPoint("TOPLEFT", frame, "TOPLEFT", 40, -200)
+		audioBtn:SetChecked(NecrosisConfig.SummonQueue.AudioAlert)
+		audioBtn:SetScript("OnClick", function(self)
+			NecrosisConfig.SummonQueue.AudioAlert = self:GetChecked()
+		end)
 
-		frame:SetScript("OnClick", function(self)
+		local audioLabel = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		audioLabel:SetPoint("LEFT", audioBtn, "RIGHT", 5, 1)
+		audioLabel:SetText(L["SUMMON_QUEUE_AUDIO"] or "Audio alert on new summon")
+		audioLabel:SetTextColor(1, 1, 1)
+
+		-- Sync Enabled checkbox
+		local syncBtn = CreateFrame("CheckButton", "NecrosisSQSync", frame, "UICheckButtonTemplate")
+		syncBtn:SetWidth(24)
+		syncBtn:SetHeight(24)
+		syncBtn:SetPoint("TOPLEFT", frame, "TOPLEFT", 40, -230)
+		syncBtn:SetChecked(NecrosisConfig.SummonQueue.SyncEnabled)
+		syncBtn:SetScript("OnClick", function(self)
 			NecrosisConfig.SummonQueue.SyncEnabled = self:GetChecked()
 		end)
 
-		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
-		FontString:Show()
-		FontString:ClearAllPoints()
-		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
-		FontString:SetTextColor(1, 1, 1)
-		FontString:SetText(L["SUMMON_QUEUE_SYNC"] or "Sync with other warlocks")
-		frame:SetFontString(FontString)
+		local syncLabel = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		syncLabel:SetPoint("LEFT", syncBtn, "RIGHT", 5, 1)
+		syncLabel:SetText(L["SUMMON_QUEUE_SYNC"] or "Sync with raid")
+		syncLabel:SetTextColor(1, 1, 1)
 
-		-- Show GUI Window
-		y = y + y_offset
-		frame = CreateFrame("CheckButton", "NecrosisSummonQueueShowGUI", NecrosisSummonQueueConfig, "UICheckButtonTemplate")
-		frame:EnableMouse(true)
-		frame:SetWidth(24)
-		frame:SetHeight(24)
-		frame:Show()
-		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisSummonQueueConfig, "TOPLEFT", x_offset, y)
-		frame:SetChecked(NecrosisConfig.SummonQueue.ShowGUI)
+		-- Max Queue Size slider
+		local maxSizeLabel = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		maxSizeLabel:SetPoint("TOPLEFT", frame, "TOPLEFT", 40, -270)
+		maxSizeLabel:SetText(L["SUMMON_QUEUE_MAX_SIZE"] or "Max queue size:")
+		maxSizeLabel:SetTextColor(1, 1, 1)
 
-		frame:SetScript("OnClick", function(self)
-			NecrosisConfig.SummonQueue.ShowGUI = self:GetChecked()
-			if self:GetChecked() then
-				if not SummonQueue.Window then
-					SummonQueue:CreateQueueWindow()
-				end
+		local maxSizeSlider = CreateFrame("Slider", "NecrosisSQMaxSize", frame, "OptionsSliderTemplate")
+		maxSizeSlider:SetMinMaxValues(5, 50)
+		maxSizeSlider:SetValueStep(1)
+		maxSizeSlider:SetObeyStepOnDrag(true)
+		maxSizeSlider:SetStepsPerPage(1)
+		maxSizeSlider:SetWidth(150)
+		maxSizeSlider:SetHeight(15)
+		maxSizeSlider:SetValue(NecrosisConfig.SummonQueue.MaxQueueSize or 20)
+		maxSizeSlider:SetPoint("TOPLEFT", frame, "TOPLEFT", 40, -295)
+
+		-- Create slider visual elements for MaxSize
+		local maxTrack = maxSizeSlider:CreateTexture(nil, "BACKGROUND")
+		maxTrack:SetWidth(150)
+		maxTrack:SetHeight(4)
+		maxTrack:SetColorTexture(0.2, 0.2, 0.2, 1)
+		maxTrack:SetPoint("CENTER", maxSizeSlider, "CENTER", 0, 0)
+
+		-- Style the thumb/cursor
+		local maxThumb = maxSizeSlider:GetThumbTexture()
+		if maxThumb then
+			maxThumb:SetTexture("Interface\\Common\\Indicator-Yellow")
+			maxThumb:SetColorTexture(1, 0.8, 0, 1)
+			maxThumb:SetSize(6, 6)
+		end
+
+		maxSizeSlider:SetScript("OnValueChanged", function(self, value)
+			NecrosisConfig.SummonQueue.MaxQueueSize = value
+		end)
+
+		-- Range Check Interval slider
+		local rangeLabel = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		rangeLabel:SetPoint("TOPLEFT", frame, "TOPLEFT", 40, -340)
+		rangeLabel:SetText(L["SUMMON_QUEUE_RANGE_CHECK"] or "Range check interval (seconds):")
+		rangeLabel:SetTextColor(1, 1, 1)
+
+		local rangeSlider = CreateFrame("Slider", "NecrosisSQRange", frame, "OptionsSliderTemplate")
+		rangeSlider:SetMinMaxValues(1, 10)
+		rangeSlider:SetValueStep(1)
+		rangeSlider:SetObeyStepOnDrag(true)
+		rangeSlider:SetStepsPerPage(1)
+		rangeSlider:SetWidth(150)
+		rangeSlider:SetHeight(15)
+		rangeSlider:SetValue(NecrosisConfig.SummonQueue.RangeCheckInterval or 2)
+		rangeSlider:SetPoint("TOPLEFT", frame, "TOPLEFT", 40, -365)
+
+		-- Create slider visual elements for Range
+		local rangeTrack = rangeSlider:CreateTexture(nil, "BACKGROUND")
+		rangeTrack:SetWidth(150)
+		rangeTrack:SetHeight(4)
+		rangeTrack:SetColorTexture(0.2, 0.2, 0.2, 1)
+		rangeTrack:SetPoint("CENTER", rangeSlider, "CENTER", 0, 0)
+
+		-- Style the thumb/cursor
+		local rangeThumb = rangeSlider:GetThumbTexture()
+		if rangeThumb then
+			rangeThumb:SetTexture("Interface\\Common\\Indicator-Yellow")
+			rangeThumb:SetColorTexture(1, 0.8, 0, 1)
+			rangeThumb:SetSize(6, 6)
+		end
+
+		rangeSlider:SetScript("OnValueChanged", function(self, value)
+			NecrosisConfig.SummonQueue.RangeCheckInterval = value
+		end)
+
+		-- Show Queue Window button (toggle)
+		local showBtn = CreateFrame("Button", "NecrosisSQShow", frame, "UIPanelButtonTemplate")
+		showBtn:SetWidth(100)
+		showBtn:SetHeight(22)
+		showBtn:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 40, 20)
+		showBtn:SetText(L["SUMMON_QUEUE_SHOW"] or "Show Window")
+		showBtn:SetScript("OnClick", function()
+			if not SummonQueue.Window then
+				SummonQueue:CreateQueueWindow()
 				SummonQueue.Window:Show()
+			elseif SummonQueue.Window:IsVisible() then
+				SummonQueue.Window:Hide()
 			else
-				if SummonQueue.Window then
-					SummonQueue.Window:Hide()
-				end
+				SummonQueue.Window:Show()
 			end
 		end)
 
-		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
-		FontString:Show()
-		FontString:ClearAllPoints()
-		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
-		FontString:SetTextColor(1, 1, 1)
-		FontString:SetText(L["SUMMON_QUEUE_WINDOW"] or "Show queue window")
-		frame:SetFontString(FontString)
-
+		-- Clear Queue button
+		local clearBtn = CreateFrame("Button", "NecrosisSQClear", frame, "UIPanelButtonTemplate")
+		clearBtn:SetWidth(100)
+		clearBtn:SetHeight(22)
+		clearBtn:SetPoint("BOTTOMLEFT", frame, "BOTTOMLEFT", 150, 20)
+		clearBtn:SetText(L["SUMMON_QUEUE_CLEAR"] or "Clear")
+		clearBtn:SetScript("OnClick", function()
+			SummonQueue:ClearQueue()
+			print("|cFF00FF00" .. L["SQ_QUEUE_CLEARED"] .. "|r")
+		end)
 	end
+	NecrosisSummonQueueConfig:Show()
 end

@@ -139,7 +139,7 @@ L["CONFIG_BUTTON"] = "Button Settings"
 L["CONFIG_MENU"] = "Menu Settings"
 L["CONFIG_TIMER"] = "Timer Settings"
 L["CONFIG_MISC"] = "Miscellaneous"
-L["CONFIG_OVERLAY"] = "Overlay On Proc (Under Construction) "
+L["CONFIG_SUMMONQUEUE"] = "Summon Queue"
 --
 L["MSG_POSITION"] = "<- Necrosis system messages will appear here ->"
 L["MSG_SHOW_TIPS"] = "Show tooltips"
@@ -330,6 +330,10 @@ L["SUMMON_QUEUE_POSITION"] = "Queue position: <pos>/<total>"
 L["SUMMON_QUEUE_CLEAR"] = "Clear queue"
 L["SUMMON_QUEUE_MANUAL_ADD"] = "Add target to queue"
 L["SUMMON_QUEUE_EMPTY"] = "Queue is empty"
+L["SUMMON_QUEUE_MAX_SIZE"] = "Max queue size"
+L["SUMMON_QUEUE_RANGE_CHECK"] = "Range check interval (seconds)"
+L["SUMMON_QUEUE_SHOW"] = "Show Queue Window"
+L["ENABLED"] = "Enabled"
 
 -- Version Check Module
 L["VERSION_UPDATE_AVAILABLE"] = "Update available"
@@ -387,3 +391,22 @@ L["ABOUT_CREDITS"] = [[
 |c00FFD700License:|r GPL v2
 |c00FFD700Repository:|r github.com/CKNOEP/Necrosis
 ]]
+
+-- Summon Queue Messages
+L["SQ_MODULE_DISABLED"] = "[SummonQueue] Module disabled"
+L["SQ_CHAT_RECEIVED"] = "[SummonQueue] Chat message received:"
+L["SQ_QUEUE_FULL"] = "[SummonQueue] Queue is full!"
+L["SQ_ADDED_TO_QUEUE"] = "[SummonQueue] Added %s to queue"
+L["SQ_INVOKING"] = "[SummonQueue] Invoking: %s"
+L["SQ_SPELL_NOT_FOUND"] = "[SummonQueue] Ritual of Summoning (spell 698) not found"
+L["SQ_MACRO_CREATED"] = "[SummonQueue] Created macro: %s"
+L["SQ_MACRO_INFO"] = "Macro: /target %s + /cast %s"
+L["SQ_MACRO_CLICK"] = "Click the macro to invoke, or use: /click %s"
+L["SQ_MACRO_FULL"] = "[SummonQueue] Could not create macro - you may have too many macros"
+L["SQ_TEST_FILLED"] = "[SummonQueue] Test queue filled with 30 players"
+L["SQ_QUEUE_CLEARED"] = "[SummonQueue] Queue cleared"
+L["SQ_COMMANDS_HEADER"] = "[SummonQueue] Commands:"
+L["SQ_COMMAND_FILL"] = "/sqtest fill - Fill queue with test players"
+L["SQ_COMMAND_CLEAR"] = "/sqtest clear - Clear the queue"
+L["SQ_LEFT_CLICK"] = "Left Click: /target %s"
+L["SQ_RIGHT_CLICK"] = "Right Click: Invoke with %s"

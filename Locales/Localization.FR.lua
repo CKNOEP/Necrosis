@@ -391,3 +391,22 @@ L["ABOUT_CREDITS"] = [[
 |c00FFD700Licence:|r GPL v2
 |c00FFD700Dépôt:|r github.com/CKNOEP/Necrosis
 ]]
+
+-- Messages Summon Queue
+L["SQ_MODULE_DISABLED"] = "[File d'invocation] Module désactivé"
+L["SQ_CHAT_RECEIVED"] = "[File d'invocation] Message reçu :"
+L["SQ_QUEUE_FULL"] = "[File d'invocation] File pleine !"
+L["SQ_ADDED_TO_QUEUE"] = "[File d'invocation] %s ajouté à la file"
+L["SQ_INVOKING"] = "[File d'invocation] Invocation : %s"
+L["SQ_SPELL_NOT_FOUND"] = "[File d'invocation] Rituel d'invocation (sort 698) non trouvé"
+L["SQ_MACRO_CREATED"] = "[File d'invocation] Macro créée : %s"
+L["SQ_MACRO_INFO"] = "Macro : /target %s + /cast %s"
+L["SQ_MACRO_CLICK"] = "Cliquez sur la macro pour invoquer, ou utilisez : /click %s"
+L["SQ_MACRO_FULL"] = "[File d'invocation] Impossible de créer la macro - vous avez trop de macros"
+L["SQ_TEST_FILLED"] = "[File d'invocation] File remplie avec 30 joueurs de test"
+L["SQ_QUEUE_CLEARED"] = "[File d'invocation] File vidée"
+L["SQ_COMMANDS_HEADER"] = "[File d'invocation] Commandes :"
+L["SQ_COMMAND_FILL"] = "/sqtest fill - Remplir la file avec des joueurs de test"
+L["SQ_COMMAND_CLEAR"] = "/sqtest clear - Vider la file"
+L["SQ_LEFT_CLICK"] = "Clic gauche : /target %s"
+L["SQ_RIGHT_CLICK"] = "Clic droit : Invoquer avec %s"

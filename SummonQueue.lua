@@ -3,7 +3,8 @@
 -- Warlock summoning queue management with cross-addon synchronization
 ----------------------------------------------
 
-local SummonQueue = CreateFrame("Frame")
+SummonQueue = CreateFrame("Frame")
+_G.SummonQueue = SummonQueue
 local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
 
 -- Cache global variables
@@ -30,6 +31,7 @@ SummonQueue.Enabled = true
 SummonQueue.Window = nil
 SummonQueue.LastBroadcastTime = 0
 SummonQueue.LastRangeCheckTime = 0
+SummonQueue.ActionButtonCounter = 0
 
 ----------------------------------------------
 -- Initialization
@@ -45,11 +47,11 @@ function SummonQueue:Init()
 	if not NecrosisConfig.SummonQueue then
 		NecrosisConfig.SummonQueue = {
 			Enabled = true,
-			TriggerCode = "123",
+			TriggerCode = "123, summon, inv, +1",
 			AutoRemoveInRange = true,
 			AudioAlert = true,
-			ShowGUI = true,
-			MaxQueueSize = 20,
+			ShowGUI = false,
+			MaxQueueSize = 50,
 			SyncEnabled = true,
 			RangeCheckInterval = 2,
 			Position = {"CENTER", "UIParent", "CENTER", 0, 100},
@@ -87,16 +89,20 @@ end
 ----------------------------------------------
 
 function SummonQueue:OnEvent(event, ...)
-	if not self.Enabled then return end
+	if not self.Enabled then
+		print("|cFFFF0000" .. L["SQ_MODULE_DISABLED"] .. "|r")
+		return
+	end
 
 	if event:match("^CHAT_MSG_") then
 		local message, sender = ...
+		print("|cFF00FF00" .. L["SQ_CHAT_RECEIVED"] .. "|r " .. message .. " from " .. sender)
 		self:ProcessChatMessage(message, sender)
 	end
 end
 
 function SummonQueue:OnUpdate(elapsed)
-	if not self.Enabled or not NecrosisConfig.SummonQueue.AutoRemoveInRange then
+	if not self.Enabled or not NecrosisConfig or not NecrosisConfig.SummonQueue or not NecrosisConfig.SummonQueue.AutoRemoveInRange then
 		return
 	end
 
@@ -139,10 +145,12 @@ function SummonQueue:AddToQueue(player)
 	if not self:IsInQueue(player) then
 		-- Check max queue size
 		if #self.Queue >= (NecrosisConfig.SummonQueue.MaxQueueSize or 20) then
+			print("|cFFFF0000" .. L["SQ_QUEUE_FULL"] .. "|r")
 			return
 		end
 
 		table.insert(self.Queue, player)
+		print("|cFF00FF00" .. format(L["SQ_ADDED_TO_QUEUE"], player) .. "|r")
 
 		-- Play audio alert
 		if NecrosisConfig.SummonQueue.AudioAlert then
@@ -152,6 +160,14 @@ function SummonQueue:AddToQueue(player)
 		-- Broadcast sync message
 		if NecrosisConfig.SummonQueue.SyncEnabled then
 			self:BroadcastQueue("add", player)
+		end
+
+		-- Open queue window if not already open
+		if not self.Window then
+			self:CreateQueueWindow()
+		end
+		if self.Window and not self.Window:IsVisible() then
+			self.Window:Show()
 		end
 
 		-- Update display
@@ -208,24 +224,25 @@ function SummonQueue:BroadcastQueue(action, player)
 	end
 	self.LastBroadcastTime = currentTime
 
-	local data = {
-		action = action,
-		player = player,
-		timestamp = currentTime,
-	}
-
-	AceComm:SendCommMessage("NecSummon", data, "RAID")
+	local message = format("%s|%s", action, player)
+	AceComm:SendCommMessage("NecSummon", message, "RAID")
 end
 
 function SummonQueue:ReceiveSyncMessage(message, sender)
-	if not message or not message.action then
+	if not message or message == "" then
 		return
 	end
 
-	if message.action == "add" then
-		self:AddToQueue(message.player)
-	elseif message.action == "remove" then
-		self:RemoveFromQueue(message.player)
+	-- Parse message format: "action|player"
+	local action, player = message:match("^([^|]+)|(.+)$")
+	if not action or not player then
+		return
+	end
+
+	if action == "add" then
+		self:AddToQueue(player)
+	elseif action == "remove" then
+		self:RemoveFromQueue(player)
 	end
 end
 
@@ -248,9 +265,11 @@ function SummonQueue:CreateQueueWindow()
 	frame:SetScript("OnDragStop", function(self)
 		self:StopMovingOrSizing()
 		-- Save position
-		NecrosisConfig.SummonQueue.Position = {
-			self:GetPoint(1)
-		}
+		if NecrosisConfig and NecrosisConfig.SummonQueue then
+			NecrosisConfig.SummonQueue.Position = {
+				self:GetPoint(1)
+			}
+		end
 	end)
 
 	-- Set initial position
@@ -312,13 +331,19 @@ end
 function SummonQueue:UpdateQueueDisplay()
 	if not self.Window then return end
 
-	local content = self.Window.content
 	local scrollArea = self.Window.scrollArea
 
-	-- Clear previous children
-	for i = content:GetNumChildren(), 1, -1 do
-		content:GetChild(i):Hide()
+	-- Destroy old content frame
+	if self.Window.content then
+		self.Window.content:Hide()
+		self.Window.content = nil
 	end
+
+	-- Create new content frame
+	local content = CreateFrame("Frame", nil, scrollArea)
+	scrollArea:SetScrollChild(content)
+	content:SetSize(scrollArea:GetWidth(), 1)
+	self.Window.content = content
 
 	-- Display empty message
 	if #self.Queue == 0 then
@@ -332,15 +357,61 @@ function SummonQueue:UpdateQueueDisplay()
 	-- Display queue items
 	local yOffset = -4
 	for i, player in ipairs(self.Queue) do
+		-- Extract character name (without server name after hyphen)
+		local charName = player:match("^([^-]+)")
+		if not charName then
+			charName = player
+		end
+
 		local itemHeight = 20
 		local item = CreateFrame("Frame", nil, content)
 		item:SetSize(content:GetWidth() - 8, itemHeight)
 		item:SetPoint("TOPLEFT", content, "TOPLEFT", 4, yOffset)
 
 		local text = item:CreateFontString(nil, "OVERLAY", "GameFontNormal")
-		text:SetPoint("LEFT", item, "LEFT", 0, 0)
+		text:SetPoint("LEFT", item, "LEFT", 5, 0)
 		text:SetText(format("%d. %s", i, player))
 		text:SetTextColor(1, 1, 1)
+
+		-- Summon button on the right (small icon button)
+		local summonBtn = CreateFrame("Button", nil, item, "SecureUnitButtonTemplate")
+		summonBtn:SetSize(16, 16)
+		summonBtn:SetPoint("RIGHT", item, "RIGHT", -5, 0)
+		summonBtn:EnableMouse(true)
+		summonBtn:RegisterForClicks("AnyUp")
+
+		-- Add custom SummonQueue icon (fill entire button)
+		local iconTexture = summonBtn:CreateTexture(nil, "BORDER")
+		iconTexture:SetTexture("Interface\\AddOns\\Necrosis\\UI\\SummonQueue-Icon.png")
+		iconTexture:SetAllPoints(summonBtn)
+
+		-- Get the spell name for Ritual of Summoning
+		local spellName = GetSpellInfo(698) -- Ritual of Summoning (localized)
+
+		-- Configure LEFT CLICK = target only
+		summonBtn:SetAttribute("type1", "macro")
+		summonBtn:SetAttribute("macrotext1", "/target " .. charName)
+
+		-- Configure RIGHT CLICK = target + cast ritual
+		if spellName then
+			summonBtn:SetAttribute("type2", "macro")
+			summonBtn:SetAttribute("macrotext2", "/target " .. charName .. "\n/cast " .. spellName)
+		end
+
+		-- Tooltip
+		summonBtn:SetScript("OnEnter", function(self)
+			GameTooltip:SetOwner(self, "ANCHOR_TOP")
+			GameTooltip:SetText(charName, 1, 1, 1)
+			GameTooltip:AddLine(" ")
+			GameTooltip:AddLine("|cFFFFFF00" .. format(L["SQ_LEFT_CLICK"], charName) .. "|r", 1, 1, 1)
+			if spellName then
+				GameTooltip:AddLine("|cFFFFFF00" .. format(L["SQ_RIGHT_CLICK"], spellName) .. "|r", 1, 1, 1)
+			end
+			GameTooltip:Show()
+		end)
+		summonBtn:SetScript("OnLeave", function()
+			GameTooltip:Hide()
+		end)
 
 		yOffset = yOffset - itemHeight
 
@@ -374,6 +445,92 @@ end
 ----------------------------------------------
 -- Class Gate - Only load for Warlocks
 ----------------------------------------------
+
+-- Helper function to invoke a player with Ritual of Summoning
+function SummonQueue:InvokeSummon(playerName)
+	if not playerName or playerName == "" then
+		return
+	end
+
+	-- Extract just the character name (before the server name separated by -)
+	local charName = playerName:match("^([^-]+)")
+	if not charName then
+		charName = playerName
+	end
+
+	print("|cFF00FF00" .. format(L["SQ_INVOKING"], playerName) .. "|r")
+
+	-- Get the localized spell name using spell ID 698 (Ritual of Summoning / Rituel d'invocation)
+	local spellName = GetSpellInfo(698)
+
+	if not spellName then
+		print("|cFFFF0000" .. L["SQ_SPELL_NOT_FOUND"] .. "|r")
+		return
+	end
+
+	-- Create a macro in the spellbook to target and cast
+	local macroName = "_SQ_" .. charName:upper()
+	local macroBody = "/target " .. charName .. "\n/cast " .. spellName
+
+	-- Delete old macro if it exists
+	for i = 1, GetNumMacros() do
+		local name = GetMacroInfo(i)
+		if name == macroName then
+			DeleteMacro(i)
+			break
+		end
+	end
+
+	-- Create new macro
+	local macroIndex = CreateMacro(macroName, 1, macroBody, false)
+	if macroIndex then
+		print("|cFF00FF00" .. format(L["SQ_MACRO_CREATED"], macroName) .. "|r")
+		print("|cFFFFFF00" .. format(L["SQ_MACRO_INFO"], charName, spellName) .. "|r")
+		-- The user needs to click the macro or we can try to trigger it via a button
+		-- For now, just inform the user
+		print("|cFFFFFF00" .. format(L["SQ_MACRO_CLICK"], macroName) .. "|r")
+	else
+		print("|cFFFF0000" .. L["SQ_MACRO_FULL"] .. "|r")
+	end
+end
+
+----------------------------------------------
+-- Test Function - Fill queue with 10 test players
+----------------------------------------------
+
+function SummonQueue:FillTestQueue()
+	self:ClearQueue()
+
+	local testPlayers = {
+		"Player1", "Player2", "Player3", "Player4", "Player5",
+		"Player6", "Player7", "Player8", "Player9", "Player10",
+		"Player11", "Player12", "Player13", "Player14", "Player15",
+		"Player16", "Player17", "Player18", "Player19", "Player20",
+		"Player21", "Player22", "Player23", "Player24", "Player25",
+		"Player26", "Player27", "Player28", "Player29", "Player30",
+	}
+
+	for _, playerName in ipairs(testPlayers) do
+		self:AddToQueue(playerName)
+	end
+
+	print("|cFF00FF00" .. L["SQ_TEST_FILLED"] .. "|r")
+end
+
+-- Slash command for testing
+SLASH_SUMMONQUEUETEST1 = "/sqtest"
+SlashCmdList["SUMMONQUEUETEST"] = function(msg)
+	if msg == "fill" then
+		SummonQueue:FillTestQueue()
+	elseif msg == "clear" then
+		SummonQueue:ClearQueue()
+		print("|cFF00FF00" .. L["SQ_QUEUE_CLEARED"] .. "|r")
+	else
+		print("|cFFFFFF00" .. L["SQ_COMMANDS_HEADER"] .. "|r")
+		print("|cFF00FF00  /sqtest fill|r - " .. L["SQ_COMMAND_FILL"])
+		print("|cFF00FF00  /sqtest clear|r - " .. L["SQ_COMMAND_CLEAR"])
+	end
+end
 
 do
 	local _, playerClass = UnitClass("player")
