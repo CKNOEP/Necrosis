@@ -72,7 +72,7 @@ function Necrosis:UpdateThreatMeter()
 	-- Calculer l'alpha (transparence) selon la menace
 	-- 0% menace = presque invisible (0.2)
 	-- 100% menace = opaque (1.0)
-	local alpha = 0.2 + (threatpct / 100) * 0.8
+	local alpha = math.min(1, 0.2 + (threatpct / 100) * 0.8)
 
 	-- Appliquer la couleur sur tous les segments de l'anneau
 	if threatRing.segments then

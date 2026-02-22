@@ -79,8 +79,6 @@ Timers\OtherTimers.lua
 
 XML\Attributes.lua
 
-XML\Panel.lua
-XML\AboutPanel.lua
 XML\Options-Messages.lua
 XML\Options-SummonQueue.lua
 XML\Options-Sphere-Vanilla.lua
@@ -89,6 +87,9 @@ XML\Options-Menus.lua
 XML\Options-Timers.lua
 XML\Options-Misc.lua
 XML\Options-Overlay.lua
+
+XML\Panel.lua
+XML\AboutPanel.lua
 Necrosis.lua
 XML\XML.lua
 ThreatMeter.lua

@@ -380,7 +380,7 @@ Necrosis.Config.Panel = {
 	L["CONFIG_MENU"],
 	L["CONFIG_TIMER"],
 	L["CONFIG_MISC"],
-	L["CONFIG_OVERLAY"],	
+	L["CONFIG_SUMMONQUEUE"],
 }
 
 Necrosis.Config.Messages = {

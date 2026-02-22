@@ -20,7 +20,6 @@
 ## X-Category: Warlock
 ## LoadOnDemand: 0
 ## SavedVariablesPerCharacter: NecrosisConfig
-
 Necrosis.xml
 
 libs\LibStub\LibStub.lua
@@ -56,6 +55,8 @@ Locales\Localization.MX.lua
 Dialog.lua
 Functions.lua
 AFKS.lua
+SummonQueue.lua
+VersionCheck.lua
 Speech\Speech-fr.lua
 Speech\Speech-en.lua
 Speech\Speech-de.lua
@@ -65,7 +66,7 @@ Speech\Speech-cn.lua
 Speech\Speech-ru.lua
 
 Message.lua
-Spells-TBC.lua
+Spells-Vanilla.lua
 
 
 Timers\Functions.lua
@@ -77,18 +78,20 @@ Timers\OtherTimers.lua
 
 XML\Attributes.lua
 
-XML\Panel.lua
 XML\Options-Messages.lua
+XML\Options-SummonQueue.lua
 XML\Options-Sphere-Vanilla.lua
 XML\Options-Buttons-Vanilla.lua
 XML\Options-Menus.lua
 XML\Options-Timers.lua
 XML\Options-Misc.lua
 XML\Options-Overlay.lua
+
+XML\Panel.lua
+XML\AboutPanel.lua
 Necrosis.lua
 XML\XML.lua
 ThreatMeter.lua
-
-
+NecrosisUI\Framework.xml
 
 SpellActivations\SpellActivations.xml
