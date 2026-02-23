@@ -10,8 +10,24 @@ Necrosis = {}
 SAO ={}
 NECROSIS_ID = "Necrosis"
 
--- Load localization
+-- Load localization with fallback
 local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
+if not L then
+	-- Fallback to English strings if localization not loaded yet
+	L = {
+		TOOLTIP_LEFT_CLICK = "Left Click",
+		TOOLTIP_SHIFT_LEFT_CLICK = "Shift+Left Click",
+		TOOLTIP_RIGHT_CLICK = "Right Click",
+		TOOLTIP_CONFIGURATION = "Configuration",
+		TOOLTIP_DRAG = "Drag",
+		TOOLTIP_MOVE = "Move",
+		STONE_SOULSTONE_LABEL = "Soulstone: ",
+		STONE_HEALTHSTONE_LABEL = "Healthstone: ",
+		STONE_SPELLSTONE_LABEL = "Spellstone: ",
+		STONE_FIRESTONE_LABEL = "Firestone: ",
+		STONE_INFERNAL_LABEL = "Infernal Stone: ",
+	}
+end
 
 -- Initialize NecrosisUI Framework
 do
