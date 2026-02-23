@@ -10,6 +10,9 @@ Necrosis = {}
 SAO ={}
 NECROSIS_ID = "Necrosis"
 
+-- Load localization
+local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
+
 -- Initialize NecrosisUI Framework
 do
 	local NUI = _G.NUI or {}
