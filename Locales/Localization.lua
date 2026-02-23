@@ -410,3 +410,18 @@ L["SQ_COMMAND_FILL"] = "/sqtest fill - Fill queue with test players"
 L["SQ_COMMAND_CLEAR"] = "/sqtest clear - Clear the queue"
 L["SQ_LEFT_CLICK"] = "Left Click: /target %s"
 L["SQ_RIGHT_CLICK"] = "Right Click: Invoke with %s"
+
+-- Tooltip Labels (for main sphere)
+L["TOOLTIP_LEFT_CLICK"] = "Left Click"
+L["TOOLTIP_SHIFT_LEFT_CLICK"] = "Shift+Left Click"
+L["TOOLTIP_RIGHT_CLICK"] = "Right Click"
+L["TOOLTIP_CONFIGURATION"] = "Configuration"
+L["TOOLTIP_DRAG"] = "Drag"
+L["TOOLTIP_MOVE"] = "Move"
+
+-- Stone Labels (for tooltip display)
+L["STONE_SOULSTONE_LABEL"] = "Soulstone: "
+L["STONE_HEALTHSTONE_LABEL"] = "Healthstone: "
+L["STONE_SPELLSTONE_LABEL"] = "Spellstone: "
+L["STONE_FIRESTONE_LABEL"] = "Firestone: "
+L["STONE_INFERNAL_LABEL"] = "Infernal Stone: "

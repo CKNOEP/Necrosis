@@ -351,3 +351,18 @@ L["ABOUT_CREDITS"] = [[
 |c00FFD700Licencia:|r GPL v2
 |c00FFD700Repositorio:|r github.com/CKNOEP/Necrosis
 ]]
+
+-- Tooltip Labels (for main sphere)
+L["TOOLTIP_LEFT_CLICK"] = "Clic Izquierdo"
+L["TOOLTIP_SHIFT_LEFT_CLICK"] = "Shift+Clic Izquierdo"
+L["TOOLTIP_RIGHT_CLICK"] = "Clic Derecho"
+L["TOOLTIP_CONFIGURATION"] = "Configuración"
+L["TOOLTIP_DRAG"] = "Drag"
+L["TOOLTIP_MOVE"] = "Mover"
+
+-- Stone Labels (for tooltip display)
+L["STONE_SOULSTONE_LABEL"] = "Piedra de Alma: "
+L["STONE_HEALTHSTONE_LABEL"] = "Piedra de Salud: "
+L["STONE_SPELLSTONE_LABEL"] = "Piedra de Hechizo: "
+L["STONE_FIRESTONE_LABEL"] = "Piedra de Fuego: "
+L["STONE_INFERNAL_LABEL"] = "Piedra Infernal: "

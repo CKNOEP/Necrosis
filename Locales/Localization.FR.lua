@@ -410,3 +410,18 @@ L["SQ_COMMAND_FILL"] = "/sqtest fill - Remplir la file avec des joueurs de test"
 L["SQ_COMMAND_CLEAR"] = "/sqtest clear - Vider la file"
 L["SQ_LEFT_CLICK"] = "Clic gauche : /target %s"
 L["SQ_RIGHT_CLICK"] = "Clic droit : Invoquer avec %s"
+
+-- Tooltip Labels (for main sphere)
+L["TOOLTIP_LEFT_CLICK"] = "Clic gauche"
+L["TOOLTIP_SHIFT_LEFT_CLICK"] = "Shift+Clic gauche"
+L["TOOLTIP_RIGHT_CLICK"] = "Clic droit"
+L["TOOLTIP_CONFIGURATION"] = "Configuration"
+L["TOOLTIP_DRAG"] = "Drag"
+L["TOOLTIP_MOVE"] = "Déplacer"
+
+-- Stone Labels (for tooltip display)
+L["STONE_SOULSTONE_LABEL"] = "Pierre d'âme : "
+L["STONE_HEALTHSTONE_LABEL"] = "Pierre de soin : "
+L["STONE_SPELLSTONE_LABEL"] = "Pierre de sort : "
+L["STONE_FIRESTONE_LABEL"] = "Pierre de feu : "
+L["STONE_INFERNAL_LABEL"] = "Pierre infernale : "
