@@ -214,9 +214,8 @@ local testButton=NecrosisSpellActivationOverlayOptionsPanelSpellAlertTestButton
 testButton:SetText("Toggle Test")
 testButton.fakeSpellID=42
 testButton.isTesting=false
--- Use available textures for testing (avoid missing texture errors)
-local testTextureLeftRight="imp_empowerment"  -- Common texture that exists
-local testTextureTop="brain_freeze"  -- Common texture that exists
+local testTextureLeftRight=SAO.IsEra() and "echo_of_the_elements" or "imp_empowerment"
+local testTextureTop=SAO.IsEra() and "fury_of_stormrage" or "brain_freeze"
 local testPositionTop=SAO.IsCata() and "Top (CW)" or "Top"
 testButton.StartTest=function(self)
 if (not self.isTesting)then
