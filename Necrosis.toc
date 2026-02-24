@@ -41,6 +41,8 @@ libs\!LibUIDropDownMenu\LibUIDropDownMenu\LibUIDropDownMenu.xml
 
 libs\LibDataBroker-1.1.lua
 
+Core-Init.lua
+
 Locales\Localization.lua
 Locales\Localization.CN.lua
 Locales\Localization.DE.lua

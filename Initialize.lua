@@ -8,7 +8,7 @@ local _G = getfenv(0)
 
 Necrosis = {}
 SAO ={}
-NECROSIS_ID = "Necrosis"
+-- NECROSIS_ID is now defined in Core-Init.lua before locales load
 
 -- Load localization with fallback
 local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
