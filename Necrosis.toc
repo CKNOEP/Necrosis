@@ -33,6 +33,9 @@ libs\AceHook-3.0\AceHook-3.0.xml
 libs\AceTimer-3.0\AceTimer-3.0.xml
 libs\AceGUI-3.0\AceGUI-3.0.xml
 libs\AceConfig-3.0\AceConfig-3.0.xml
+
+Core-Init.lua
+
 libs\AceLocale-3.0\AceLocale-3.0.xml
 libs\LibSharedMedia-3.0\lib.xml
 libs\AceGUI-3.0-SharedMediaWidgets\widget.xml
@@ -40,8 +43,6 @@ libs\LibQTip-1.0\lib.xml
 libs\!LibUIDropDownMenu\LibUIDropDownMenu\LibUIDropDownMenu.xml
 
 libs\LibDataBroker-1.1.lua
-
-Core-Init.lua
 
 Locales\Localization.lua
 Locales\Localization.CN.lua
