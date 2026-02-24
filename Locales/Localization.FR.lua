@@ -425,3 +425,13 @@ L["STONE_HEALTHSTONE_LABEL"] = "Pierre de soin : "
 L["STONE_SPELLSTONE_LABEL"] = "Pierre de sort : "
 L["STONE_FIRESTONE_LABEL"] = "Pierre de feu : "
 L["STONE_INFERNAL_LABEL"] = "Pierre infernale : "
+
+-- Soul Shard Management Tooltip
+L["SHARD_MOUSEWHEEL_HELP"] = "Utilisez la molette pour augmenter ou diminuer la limite"
+L["SHARD_LEFTCLICK_HELP"] = "Utilisez le clic gauche pour déplacer l'éclat vers le sac spécifique"
+
+-- Spellstone Charges
+L["SPELLSTONE_CHARGES"] = "Charges"
+
+-- Demon Cooldown Display
+L["DEMON_COOLDOWN"] = "Délai : "

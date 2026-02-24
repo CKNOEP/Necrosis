@@ -366,3 +366,13 @@ L["STONE_HEALTHSTONE_LABEL"] = "Gesundheitsstein: "
 L["STONE_SPELLSTONE_LABEL"] = "Zauberstein: "
 L["STONE_FIRESTONE_LABEL"] = "Feuerstein: "
 L["STONE_INFERNAL_LABEL"] = "Höllenstein: "
+
+-- Soul Shard Management Tooltip
+L["SHARD_MOUSEWHEEL_HELP"] = "Verwenden Sie das Mausrad, um die Grenze zu erhöhen oder zu verringern"
+L["SHARD_LEFTCLICK_HELP"] = "Verwenden Sie Linksklick, um den Seelenschafts in den bestimmten Beutel zu verschieben"
+
+-- Spellstone Charges
+L["SPELLSTONE_CHARGES"] = "Ladungen"
+
+-- Demon Cooldown Display
+L["DEMON_COOLDOWN"] = "Abklingzeit : "

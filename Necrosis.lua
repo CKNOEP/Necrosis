@@ -1818,8 +1818,8 @@ local function AddDestroyCount()
 
 	if NecrosisConfig.DestroyCount then
 		GameTooltip:AddLine("|c00FF4444"..Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count.."|r".."/".."|c00FF4444"..NecrosisConfig.DestroyCount.."|r")
-		GameTooltip:AddLine("|c00FFFFFF".."Use MouseWheel to increase or decrease the limit ..")
-		GameTooltip:AddLine("|c00FFFFFF".."Use LeftClick to move shard to the specific bag ..")
+		GameTooltip:AddLine("|c00FFFFFF"..L["SHARD_MOUSEWHEEL_HELP"])
+		GameTooltip:AddLine("|c00FFFFFF"..L["SHARD_LEFTCLICK_HELP"])
 	end
 end
 
@@ -1937,9 +1937,6 @@ function Necrosis:BuildButtonTooltip(button)
 		if Local.Stone.Fire.OnHand then FireOnHand = true end
 		GameTooltip:AddLine("\n")
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Soulstone..Necrosis.TooltipData[Type].Stone[SoulOnHand])
-
-		-- DEBUG: Check if lists exist
-		GameTooltip:AddLine("DEBUG: WL="..tostring(Necrosis.Warlock_Lists ~= nil).." HS="..tostring(Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.health_stones ~= nil))
 
 		-- Count and display health stones (safely check if lists exist)
 		if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.health_stones then
@@ -2068,7 +2065,7 @@ function Necrosis:BuildButtonTooltip(button)
 				AddCastAndCost("spellstone")
 			end
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Text[Local.Stone.Spell.Mode])
-			GameTooltip:AddLine(GetItemCount(41196, nil, true).." Charges")
+			GameTooltip:AddLine(GetItemCount(41196, nil, true).." "..L["SPELLSTONE_CHARGES"])
 		-- Fire stone ||Pierre de feu
 		elseif (Type == "Firestone") then
 			-- Idem ||Idem
@@ -2189,7 +2186,7 @@ function Necrosis:BuildButtonTooltip(button)
 			local seconde = duration2 - ( GetTime() - start2)
 			local affiche
 			affiche = tostring(floor(seconde)).." sec"
-			GameTooltip:AddLine("Cooldown : "..affiche)
+			GameTooltip:AddLine(L["DEMON_COOLDOWN"]..affiche)
 		end
 	elseif (Type == "Domination") then
 		if start > 0 and duration > 0 then
@@ -2207,7 +2204,7 @@ function Necrosis:BuildButtonTooltip(button)
 				end
 				affiche = minute..":"..time
 			end
-			GameTooltip:AddLine("Cooldown : "..affiche)
+			GameTooltip:AddLine(L["DEMON_COOLDOWN"]..affiche)
 		end
 	elseif (Type == "Imp")			then AddCastAndCost("imp"); AddDominion(start, duration)
 	elseif (Type == "Voidwalker")	then AddCastAndCost("voidwalker"); AddShard(); AddDominion(start, duration)

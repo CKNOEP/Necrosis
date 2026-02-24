@@ -348,3 +348,13 @@ L["STONE_HEALTHSTONE_LABEL"] = "生命石: "
 L["STONE_SPELLSTONE_LABEL"] = "法術石: "
 L["STONE_FIRESTONE_LABEL"] = "火焰石: "
 L["STONE_INFERNAL_LABEL"] = "地獄石: "
+
+-- Soul Shard Management Tooltip
+L["SHARD_MOUSEWHEEL_HELP"] = "使用滑鼠滾輪增加或減少限制"
+L["SHARD_LEFTCLICK_HELP"] = "使用左鍵點擊將靈魂碎片移動到特定的袋子"
+
+-- Spellstone Charges
+L["SPELLSTONE_CHARGES"] = "充能"
+
+-- Demon Cooldown Display
+L["DEMON_COOLDOWN"] = "冷卻 : "

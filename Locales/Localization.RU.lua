@@ -369,3 +369,13 @@ L["STONE_HEALTHSTONE_LABEL"] = "Камень здоровья: "
 L["STONE_SPELLSTONE_LABEL"] = "Камень заклинаний: "
 L["STONE_FIRESTONE_LABEL"] = "Огненный камень: "
 L["STONE_INFERNAL_LABEL"] = "Адский камень: "
+
+-- Soul Shard Management Tooltip
+L["SHARD_MOUSEWHEEL_HELP"] = "Используйте колесо мыши, чтобы увеличить или уменьшить лимит"
+L["SHARD_LEFTCLICK_HELP"] = "Используйте левый клик, чтобы переместить осколок в конкретный мешок"
+
+-- Spellstone Charges
+L["SPELLSTONE_CHARGES"] = "Заряды"
+
+-- Demon Cooldown Display
+L["DEMON_COOLDOWN"] = "Перезарядка : "

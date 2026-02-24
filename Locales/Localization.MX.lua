@@ -348,3 +348,13 @@ L["STONE_HEALTHSTONE_LABEL"] = "Piedra de Salud: "
 L["STONE_SPELLSTONE_LABEL"] = "Piedra de Hechizo: "
 L["STONE_FIRESTONE_LABEL"] = "Piedra de Fuego: "
 L["STONE_INFERNAL_LABEL"] = "Piedra Infernal: "
+
+-- Soul Shard Management Tooltip
+L["SHARD_MOUSEWHEEL_HELP"] = "Use la rueda del ratón para aumentar o disminuir el límite"
+L["SHARD_LEFTCLICK_HELP"] = "Use clic izquierdo para mover el fragmento de alma al bolso específico"
+
+-- Spellstone Charges
+L["SPELLSTONE_CHARGES"] = "Cargas"
+
+-- Demon Cooldown Display
+L["DEMON_COOLDOWN"] = "Recarga : "
