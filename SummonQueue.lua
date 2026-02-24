@@ -90,13 +90,11 @@ end
 
 function SummonQueue:OnEvent(event, ...)
 	if not self.Enabled then
-		print("|cFFFF0000" .. L["SQ_MODULE_DISABLED"] .. "|r")
 		return
 	end
 
 	if event:match("^CHAT_MSG_") then
 		local message, sender = ...
-		print("|cFF00FF00" .. L["SQ_CHAT_RECEIVED"] .. "|r " .. message .. " from " .. sender)
 		self:ProcessChatMessage(message, sender)
 	end
 end
