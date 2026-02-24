@@ -12,22 +12,31 @@ NECROSIS_ID = "Necrosis"
 
 -- Load localization with fallback
 local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
-if not L then
-	-- Fallback to English strings if localization not loaded yet
-	L = {
-		TOOLTIP_LEFT_CLICK = "Left Click",
-		TOOLTIP_SHIFT_LEFT_CLICK = "Shift+Left Click",
-		TOOLTIP_RIGHT_CLICK = "Right Click",
-		TOOLTIP_CONFIGURATION = "Configuration",
-		TOOLTIP_DRAG = "Drag",
-		TOOLTIP_MOVE = "Move",
-		STONE_SOULSTONE_LABEL = "Soulstone: ",
-		STONE_HEALTHSTONE_LABEL = "Healthstone: ",
-		STONE_SPELLSTONE_LABEL = "Spellstone: ",
-		STONE_FIRESTONE_LABEL = "Firestone: ",
-		STONE_INFERNAL_LABEL = "Infernal Stone: ",
-	}
+-- Fallback function for localization keys if they're not available yet
+local function GetLocalizedString(key, default)
+	if L and L[key] then
+		return L[key]
+	end
+	return default
 end
+
+if not L then
+	-- Create empty table if localization not loaded yet
+	L = {}
+end
+
+-- Ensure fallback values are available if localization keys are missing
+L["TOOLTIP_LEFT_CLICK"] = L["TOOLTIP_LEFT_CLICK"] or "Left Click"
+L["TOOLTIP_SHIFT_LEFT_CLICK"] = L["TOOLTIP_SHIFT_LEFT_CLICK"] or "Shift+Left Click"
+L["TOOLTIP_RIGHT_CLICK"] = L["TOOLTIP_RIGHT_CLICK"] or "Right Click"
+L["TOOLTIP_CONFIGURATION"] = L["TOOLTIP_CONFIGURATION"] or "Configuration"
+L["TOOLTIP_DRAG"] = L["TOOLTIP_DRAG"] or "Drag"
+L["TOOLTIP_MOVE"] = L["TOOLTIP_MOVE"] or "Move"
+L["STONE_SOULSTONE_LABEL"] = L["STONE_SOULSTONE_LABEL"] or "Soulstone: "
+L["STONE_HEALTHSTONE_LABEL"] = L["STONE_HEALTHSTONE_LABEL"] or "Healthstone: "
+L["STONE_SPELLSTONE_LABEL"] = L["STONE_SPELLSTONE_LABEL"] or "Spellstone: "
+L["STONE_FIRESTONE_LABEL"] = L["STONE_FIRESTONE_LABEL"] or "Firestone: "
+L["STONE_INFERNAL_LABEL"] = L["STONE_INFERNAL_LABEL"] or "Infernal Stone: "
 
 -- Initialize NecrosisUI Framework
 do
