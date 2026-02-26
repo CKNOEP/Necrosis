@@ -310,51 +310,25 @@ end
 
 -- Function to check the presence of a buff on the unit.
 -- Strictly identical to UnitHasEffect, but as WoW distinguishes Buff and DeBuff, so we have to.
-local function UnitHasBuff(unit, effect)
---		print(("%d=%s, %s, %.2f minutes left."):format(i,name,icon,(etime-GetTime())/60))
-	local res = false
-	for i=1,40 do
-	  local name, icon, count, debuffType, duration, 
-		expirationTime, source, isStealable, nameplateShowPersonal, spellId, 
-		canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod 
-		= UnitBuff(unit,i)
-		if name then
-			if name == effect then
-				res = true
-				break
-			else
-				-- continue
-			end
-		else
-			break -- no more
-		end
+-- Check for buff or debuff on unit || Vérifier un buff ou un debuff
+-- F(string, string, bool)->bool
+local function UnitHasAura(unit, name, isDebuff)
+	local func = isDebuff and UnitDebuff or UnitBuff
+	for i = 1, 40 do
+		local auraName = func(unit, i)
+		if not auraName then return false end
+		if auraName == name then return true end
 	end
-	
-	return res
+	return false
 end
 
--- Function to check the presence of a debuff on the unit || Fonction pour savoir si une unité subit un effet
--- F(string, string)->bool
+-- Wrapper functions for backward compatibility
+local function UnitHasBuff(unit, effect)
+	return UnitHasAura(unit, effect, false)
+end
+
 local function UnitHasEffect(unit, effect)
-	local res = false
-	for i=1,40 do
-		local name, icon, count, debuffType, duration, 
-			expirationTime, source, isStealable, nameplateShowPersonal, spellId, 
-			canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod 
-			= UnitDebuff(unit,i)
-		if name then
-			if name == effect then
-				res = true
-				break
-			else
-				-- continue
-			end
-		else
-			break -- no more
-		end
-	end
-	
-	return res
+	return UnitHasAura(unit, effect, true)
 end
 
 -- Display the antifear button / warning || Affiche ou cache le bouton de détection de la peur suivant la cible.
