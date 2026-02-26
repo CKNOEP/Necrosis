@@ -1347,7 +1347,7 @@ function Necrosis:OnEvent(self, event,...)
 
 			SpellManagement(Local.SpellCasted[cast_guid])
 			CheckCorruptionRefresh(target, cast_guid, spell_id)
-			Local.SpellCasted[cast_guid] = {} -- processed so clear
+			Local.SpellCasted[cast_guid] = nil -- processed so clear
 		end
 		target, cast_guid, spell_id = nil, nil, nil
 		
@@ -1370,7 +1370,7 @@ function Necrosis:OnEvent(self, event,...)
 		
 		
 		
-		Local.SpellCasted[cast_guid] = {} -- start an entry
+		Local.SpellCasted[cast_guid] = nil -- clear any previous entry
 		if spell_id and Necrosis.GetSpellById(spell_id) then -- it is a spell to process
 			local spell = Necrosis.GetSpellById(spell_id)
 	
@@ -1424,7 +1424,7 @@ function Necrosis:OnEvent(self, event,...)
 			-- Send to delete any timer that exist...
 			Local.TimerManagement = Necrosis:RetraitTimerParCast(arg2, Local.TimerManagement, "UNIT_SPELLCAST_FAILED")
 		end
-		Local.SpellCasted[arg2] = {}
+		Local.SpellCasted[arg2] = nil
 	-- Flag if a Trade window is open, so you can automatically trade the healing stones || Flag si une fenetre de Trade est ouverte, afin de pouvoir trader automatiquement les pierres de soin
 	elseif event == "TRADE_REQUEST" or event == "TRADE_SHOW" then
 		Local.Trade.Request = true
@@ -1526,11 +1526,16 @@ function Necrosis:OnEvent(self, event,...)
 		local spellId = a12 
 		local Effect = a13 
 		local spellSchool = a14
-		ev={CombatLogGetCurrentEventInfo()}
+
+		-- Cache UnitName to avoid repeated lookups
+		local playerName = UnitName("player")
+		if Necrosis.Debug and Necrosis.Debug.events then
+			ev={CombatLogGetCurrentEventInfo()}
+		end
 
 		-- this will output a lot of spells not processed but it can be informative
-		if (UnitName("player") == sourceName) 
-		or (UnitName("player") == destName) 
+		if (playerName == sourceName)
+		or (playerName == destName) 
 		then
 			msg = " e'"..tostring(Effect or "nyl").."'"
 					.." se'"..tostring(subevent or "nyl").."'"
