@@ -217,7 +217,6 @@ Local.TimerManagement = {
 	LastSpell = {}
 }
 
-Necrosis.TimerManagement = Local.TimerManagement -- debug
 
 -- Variables of the invocation messages || Variables des messages d'invocation
 Local.SpeechManagement = {
@@ -235,7 +234,6 @@ Local.SpeechManagement = {
 		Sacrifice = setmetatable({}, metatable)
 	},
 }
-Necrosis.XXYYZZ = Local.SpeechManagement -- debug
 
 -- Variables used for managing summoning and stone buttons || Variables utilisées pour la gestion des boutons d'invocation et d'utilisation des pierres
 Local.Stone = {
@@ -292,7 +290,6 @@ Local.LastUpdate = {0, 0}
 Local.buff_needed = false
 Local.buff_attempts = 0
 
-LocalZZYY = Local
 ------------------------------------------------------------------------------------------------------
 -- NECROSIS helper routines
 ------------------------------------------------------------------------------------------------------
@@ -1144,47 +1141,6 @@ local function ev_out(event, msg, init, events, spells)
 			..tostring(msg)
 		)
 	end
-end
-
-local function SetSpellCast(spell_id, cast_guid, unit, event)
-	local spell = Necrosis.GetSpellById(spell_id)
-
-	if (target == nil or target == "")
-	and spell.SelfOnly
-	then
-		-- Not all UNIT_SPELLCAST_SENT events specify the target (player for Demon Armor)...
-		Local.SpellCasted[cast_guid].TargetName = UnitName("player")
-		Local.SpellCasted[cast_guid].TargetGUID = UnitGUID("player")
-		Local.SpellCasted[cast_guid].TargetLevel = UnitLevel("player")
-	elseif target == nil or target == "" then
-		if Necrosis.IsSpellDemon(Spell.Name) then
-			local id, usage, timer = Necrosis.GetSpellByName(Spell.Name)
-			Local.SpellCasted[cast_guid].TargetName = (NecrosisConfig.PetInfo[usage] or "")
-			Local.SpellCasted[cast_guid].TargetGUID = ""
-			Local.SpellCasted[cast_guid].TargetLevel = UnitLevel("player")
-		else
-			Local.SpellCasted[cast_guid].TargetName = UnitName("target")
-			Local.SpellCasted[cast_guid].TargetGUID = UnitGUID("target")
-			Local.SpellCasted[cast_guid].TargetLevel = UnitLevel("target")
-		end
-	else
-		Local.SpellCasted[cast_guid].TargetName = target
-		Local.SpellCasted[cast_guid].TargetGUID = UnitGUID("target")
-		Local.SpellCasted[cast_guid].TargetLevel = UnitLevel("target")
-	end
-	Local.SpellCasted[cast_guid].Name = spell.Name
-	Local.SpellCasted[cast_guid].Id = spell_id
-	Local.SpellCasted[cast_guid].Guid = cast_guid
-	Local.SpellCasted[cast_guid].Unit = unit
-	
-	local sc = Local.SpellCasted[cast_guid]
-	msg = " '"..tostring(cast_guid or "nyl").."'"
-		.." '"..tostring(sc.Name or "nyl").."'"
-		.." '"..tostring(sc.TargetName or "nyl").."'"
-	ev_out(event, msg, false, false, true)
-	sc = nil
-
-	Local.SpeechManagement = Necrosis:Speech_It(Local.SpellCasted[cast_guid], Local.SpeechManagement, metatable)
 end
 --[[ Function started according to the intercepted event || Fonction lancée selon l'événement intercepté
 NOTE: At entering world AND a warlock, this attempts to get localized strings from WoW.

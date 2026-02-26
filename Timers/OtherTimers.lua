@@ -33,7 +33,7 @@ function Necrosis:RezStoneUpdate(SpellTimer)
 		Secondes = mod(Secondes, 60)
 
 		if (Minutes > 0) then
-			if f then f.font_string:SetText("|CFFFFC4FF"..string.format("%02d",tostring(Minutes)).."|r") end -- white
+			if f then f.font_string:SetText("|CFFFFC4FF"..string.format("%02d", Minutes).."|r") end -- white
 		else
 			if f then f.font_string:SetText("|CFFFF00FF"..tostring(Secondes).."|r") end -- purple
 		end

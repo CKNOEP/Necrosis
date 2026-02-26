@@ -13,52 +13,6 @@ local NU = Necrosis.Utils -- save typing
 -- LOCAL FUNCTIONS || FONCTIONS LOCALES
 ------------------------------------------------------------------------------------------------------
 
--- Creating two functions, new and del || Création de deux fonctions, new et del
--- New creates a temporary array, del destroys it || new crée un tableau temporaire, del le détruit
--- These temporary tables are stored for reuse without having to recreate them. || Ces tableaux temporaires sont stockés pour être réutilisés sans être obligés de les recréer.
-local new, del
-do
-	local cache = setmetatable({}, {__mode='k'})
-	function new(populate, ...)
-		local tbl
-		local t = next(cache)
-		if ( t ) then
-			cache[t] = nil
-			tbl = t
-		else
-			tbl = {}
-		end
-		if ( populate ) then
-			local num = select("#", ...)
-			if ( populate == "hash" ) then
-				assert(math.fmod(num, 2) == 0)
-				local key
-				for i = 1, num do
-					local v = select(i, ...)
-					if not ( math.fmod(i, 2) == 0 ) then
-						key = v
-					else
-						tbl[key] = v
-						key = nil
-					end
-				end
-			elseif ( populate == "array" ) then
-				for i = 1, num do
-					local v = select(i, ...)
-					table.insert(tbl, i, v)
-				end
-			end
-		end
-		return tbl
-	end
-	function del(t)
-		for k in next, t do
-			t[k] = nil
-		end
-		cache[t] = true
-	end
-end
-
 -- Define a metatable which will be applied to any table object that uses it. || Métatable permettant d'utiliser les tableaux qui l'utilisent comme des objets
 -- Common functions = :insert, :remove & :sort || Je définis les opérations :insert, :remove et :sort
 -- Any table declared as follows "a = setmetatable({}, metatable)" will be able to use the common functions. || Tout tableau qui aura pour déclaration a = setmetatable({}, metatable) pourra utiliser ces opérateurs
@@ -219,7 +173,6 @@ Local.TimerManagement = {
 	LastSpell = {}
 }
 
-Necrosis.TimerManagement = Local.TimerManagement -- debug
 
 -- Variables of the invocation messages || Variables des messages d'invocation
 Local.SpeechManagement = {
@@ -237,7 +190,6 @@ Local.SpeechManagement = {
 		Sacrifice = setmetatable({}, metatable)
 	},
 }
-Necrosis.XXYYZZ = Local.SpeechManagement -- debug
 
 -- Variables used for managing summoning and stone buttons || Variables utilisées pour la gestion des boutons d'invocation et d'utilisation des pierres
 Local.Stone = {
@@ -294,7 +246,6 @@ Local.LastUpdate = {0, 0}
 Local.buff_needed = false
 Local.buff_attempts = 0
 
-LocalZZYY = Local
 ------------------------------------------------------------------------------------------------------
 -- NECROSIS helper routines
 ------------------------------------------------------------------------------------------------------
@@ -1189,46 +1140,6 @@ local function ev_out(event, msg, init, events, spells)
 	end
 end
 
-local function SetSpellCast(spell_id, cast_guid, unit, event)
-	local spell = Necrosis.GetSpellById(spell_id)
-
-	if (target == nil or target == "")
-	and spell.SelfOnly
-	then
-		-- Not all UNIT_SPELLCAST_SENT events specify the target (player for Demon Armor)...
-		Local.SpellCasted[cast_guid].TargetName = UnitName("player")
-		Local.SpellCasted[cast_guid].TargetGUID = UnitGUID("player")
-		Local.SpellCasted[cast_guid].TargetLevel = UnitLevel("player")
-	elseif target == nil or target == "" then
-		if Necrosis.IsSpellDemon(Spell.Name) then
-			local id, usage, timer = Necrosis.GetSpellByName(Spell.Name)
-			Local.SpellCasted[cast_guid].TargetName = (NecrosisConfig.PetInfo[usage] or "")
-			Local.SpellCasted[cast_guid].TargetGUID = ""
-			Local.SpellCasted[cast_guid].TargetLevel = UnitLevel("player")
-		else
-			Local.SpellCasted[cast_guid].TargetName = UnitName("target")
-			Local.SpellCasted[cast_guid].TargetGUID = UnitGUID("target")
-			Local.SpellCasted[cast_guid].TargetLevel = UnitLevel("target")
-		end
-	else
-		Local.SpellCasted[cast_guid].TargetName = target
-		Local.SpellCasted[cast_guid].TargetGUID = UnitGUID("target")
-		Local.SpellCasted[cast_guid].TargetLevel = UnitLevel("target")
-	end
-	Local.SpellCasted[cast_guid].Name = spell.Name
-	Local.SpellCasted[cast_guid].Id = spell_id
-	Local.SpellCasted[cast_guid].Guid = cast_guid
-	Local.SpellCasted[cast_guid].Unit = unit
-	
-	local sc = Local.SpellCasted[cast_guid]
-	msg = " '"..tostring(cast_guid or "nyl").."'"
-		.." '"..tostring(sc.Name or "nyl").."'"
-		.." '"..tostring(sc.TargetName or "nyl").."'"
-	ev_out(event, msg, false, false, true)
-	sc = nil
-
-	Local.SpeechManagement = Necrosis:Speech_It(Local.SpellCasted[cast_guid], Local.SpeechManagement, metatable)
-end
 --[[ Function started according to the intercepted event || Fonction lancée selon l'événement intercepté
 NOTE: At entering world AND a warlock, this attempts to get localized strings from WoW.
 This may take calls to the server on first session login of a warlock. The init of Necrosis is delayed until those strings are done. 
