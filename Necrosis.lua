@@ -1082,33 +1082,37 @@ function Necrosis:OnUpdate(something, elapsed)
 			--Necrosis:SoulshardSwitch("MOVE")
 		end
 
+		-- Cache spell names to avoid repeated lookups
+		local rezSpellName = Necrosis.GetSpellName("ss_rez")
+		local banishSpellName = Necrosis.GetSpellName("banish")
+		local enslaveSpellName = Necrosis.GetSpellName("enslave")
+
 		-- Timers Table Course || Parcours du tableau des Timers
 		if Local.TimerManagement.SpellTimer[1] then
 			for index = 1, #Local.TimerManagement.SpellTimer, 1 do
-				
+
 				if Local.TimerManagement.SpellTimer[index] then
-				
-					
+
+
 					-- We remove the completed timers || On enlève les timers terminés
 					local TimeLocal = GetTime()
-					
+
 					if TimeLocal >= (Local.TimerManagement.SpellTimer[index].TimeMax - 0.5) then
 						local StoneFade = false
 						-- If the timer was that of Soul Stone, warn the Warlock || Si le timer était celui de la Pierre d'âme, on prévient le Démoniste
-						local rez = Necrosis.GetSpellName("ss_rez") 
-						if Local.TimerManagement.SpellTimer[index].Name == rez then
+						if Local.TimerManagement.SpellTimer[index].Name == rezSpellName then
 							Necrosis:Msg(Necrosis.ChatMessage.Information.SoulstoneEn, "USER")
 							if NecrosisConfig.Sound then PlaySoundFile(Necrosis.Sound.SoulstoneEnd) end
 							StoneFade = true
-						elseif Local.TimerManagement.SpellTimer[index].Name == Necrosis.GetSpellName("banish") then --Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use["banish"]].Name then -- 9
+						elseif Local.TimerManagement.SpellTimer[index].Name == banishSpellName then --Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use["banish"]].Name then -- 9
 							Local.TimerManagement.Banish = false
 						end
 						-- Otherwise we remove the timer silently (but not in case of enslave) || Sinon on enlève le timer silencieusement (mais pas en cas d'enslave)
 						local enslave = -- get name if known
-							Necrosis.GetSpellName("enslave") -- 10
+							-- Using cached enslaveSpellName
 						--print (enslave,Local.TimerManagement.SpellTimer[index].Name)
 												
-						if not (Local.TimerManagement.SpellTimer[index].Name == enslave) then
+						if not (Local.TimerManagement.SpellTimer[index].Name == enslaveSpellName) then
 							
 							Local.TimerManagement = Necrosis:RetraitTimerParIndex(index, Local.TimerManagement, "spell expired")
 							index = 0

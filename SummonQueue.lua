@@ -76,12 +76,12 @@ function SummonQueue:Init()
 		frame:OnEvent(event, ...)
 	end)
 
-	-- Set up OnUpdate for range checking
-	self:SetScript("OnUpdate", function(frame, elapsed)
-		frame:OnUpdate(elapsed)
-	end)
-
 	self.Enabled = NecrosisConfig.SummonQueue.Enabled or true
+
+	-- Set up range check ticker (replaces OnUpdate polling)
+	if self.Enabled then
+		self:StartRangeCheckTicker()
+	end
 end
 
 ----------------------------------------------
@@ -99,18 +99,27 @@ function SummonQueue:OnEvent(event, ...)
 	end
 end
 
-function SummonQueue:OnUpdate(elapsed)
-	if not self.Enabled or not NecrosisConfig or not NecrosisConfig.SummonQueue or not NecrosisConfig.SummonQueue.AutoRemoveInRange then
-		return
+----------------------------------------------
+-- Range Check Ticker
+----------------------------------------------
+
+function SummonQueue:StartRangeCheckTicker()
+	if self.RangeTicker then
+		self.RangeTicker:Cancel()
 	end
 
-	-- Check range every N seconds
-	self.LastRangeCheckTime = self.LastRangeCheckTime + elapsed
-	local checkInterval = NecrosisConfig.SummonQueue.RangeCheckInterval or 2
+	local interval = NecrosisConfig.SummonQueue.RangeCheckInterval or 2
+	self.RangeTicker = C_Timer.NewTicker(interval, function()
+		if self.Enabled and NecrosisConfig and NecrosisConfig.SummonQueue and NecrosisConfig.SummonQueue.AutoRemoveInRange then
+			self:CheckQueuedPlayersInRange()
+		end
+	end)
+end
 
-	if self.LastRangeCheckTime >= checkInterval then
-		self.LastRangeCheckTime = 0
-		self:CheckQueuedPlayersInRange()
+function SummonQueue:StopRangeCheckTicker()
+	if self.RangeTicker then
+		self.RangeTicker:Cancel()
+		self.RangeTicker = nil
 	end
 end
 
@@ -427,6 +436,11 @@ function SummonQueue:IsInSummonRange(unit)
 end
 
 function SummonQueue:CheckQueuedPlayersInRange()
+	-- Early return if queue is empty to avoid table allocation
+	if not self.Queue or #self.Queue == 0 then
+		return
+	end
+
 	local toRemove = {}
 
 	for i, player in ipairs(self.Queue) do

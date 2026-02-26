@@ -252,14 +252,23 @@ threatFrame:RegisterEvent("PLAYER_REGEN_DISABLED")  -- Enter combat
 threatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")   -- Leave combat
 threatFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 
+local lastThreatUpdate = 0
+
 threatFrame:SetScript("OnEvent", function(self, event, ...)
 	if event == "PLAYER_REGEN_ENABLED" then
 		-- Sortie de combat : masquer l'anneau
 		if threatRing then
 			threatRing:Hide()
 		end
+	elseif event == "UNIT_THREAT_SITUATION_UPDATE" then
+		-- Immediate threat update with debounce
+		local now = GetTime()
+		if now - lastThreatUpdate >= 0.05 then  -- Allow updates max every 50ms
+			lastThreatUpdate = now
+			Necrosis:UpdateThreatMeter()
+		end
 	else
-		-- Mise à jour de la menace
+		-- Other events: trigger immediate update
 		Necrosis:UpdateThreatMeter()
 	end
 end)
@@ -270,6 +279,7 @@ threatFrame:SetScript("OnUpdate", function(self, elapsed)
 	if self.elapsed >= 0.2 then
 		self.elapsed = 0
 		if UnitAffectingCombat("player") and NecrosisConfig.ThreatMeterEnabled then
+			lastThreatUpdate = GetTime()
 			Necrosis:UpdateThreatMeter()
 		end
 	end

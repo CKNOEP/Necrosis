@@ -567,6 +567,8 @@ function AFKS:Init()
 			self:SetAnimation(0)
 			self.isIdle = true
 			AFKS.animTimer = C_TimerNewTimer(self.idleDuration, LoopAnimations)
+			-- Disable this OnUpdate handler once idle to avoid polling unnecessarily
+			self:SetScript("OnUpdate", nil)
 		end
 	end)
 
