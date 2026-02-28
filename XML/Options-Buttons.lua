@@ -600,6 +600,7 @@ function Necrosis:UpdateMountButtons()
 
 	for i = 1, NECROSIS_COMPANIONS_PER_PAGE do
 		button = _G["NecrosisCompanionButton"..i];
+		if not button then return end  -- Buttons not created (invalid template)
 		id = i + (offset or 0);
 		--creatureID, creatureName, spellID, icon, active = GetCompanionInfo("MOUNT", id);
 		--creatureName, spellID, icon, active, isUsable, sourceType, isFavorite, isFactionSpecific, faction, hideOnChar, isCollected = C_MountJournal.GetMountInfo(id)
