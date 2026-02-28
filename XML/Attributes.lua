@@ -25,11 +25,16 @@ local function SetSSAttribs(nostone, reason)
 		str = Necrosis.GetSpellCastName("soulstone")
 		f:SetAttribute("spell", str)
 
-		-- Left click: Cast spell (will display cooldown)
-		f:SetAttribute("type1", "spell")
-		f:SetAttribute("spell1", str)
+		-- Left click: Use item if exists, otherwise cast spell to create
+		if NecrosisConfig.ItemSwitchCombat[4] then
+			f:SetAttribute("type1", "item")
+			f:SetAttribute("item1", NecrosisConfig.ItemSwitchCombat[4])
+		else
+			f:SetAttribute("type1", "spell")
+			f:SetAttribute("spell1", str)
+		end
 
-		-- Right click to create (will cause an error if one is in bags)
+		-- Right click to create new soulstone
 		f:SetAttribute("type2", "spell") -- 51
 		f:SetAttribute("spell2", str)
 
@@ -37,7 +42,6 @@ local function SetSSAttribs(nostone, reason)
 		f:SetAttribute("type3", "macro")
 		if NecrosisConfig.ItemSwitchCombat[4] then
 			f:SetAttribute("macrotext3", "/stopcasting \n/use "..NecrosisConfig.ItemSwitchCombat[4])
-			f:SetAttribute("item1", NecrosisConfig.ItemSwitchCombat[4])
 			f:SetAttribute("item3", NecrosisConfig.ItemSwitchCombat[4])
 		else
 			f:SetAttribute("macrotext3", "/stopcasting \n/cast "..str)
