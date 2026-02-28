@@ -89,7 +89,7 @@ end
 cb.ApplyText=applyTextFunc
 cb.ApplyParentEnabling=function()
 local retryApplyText
-if (NecrosisConfig[optionType].enabled)then
+if (NecrosisConfig[optionType] and NecrosisConfig[optionType].enabled)then
 cb:SetEnabled(true)
 retryApplyText=cb:ApplyText()
 setSelectBoxEnabled(sb,true)
