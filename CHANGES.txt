@@ -1,12 +1,33 @@
-lightweight tag 1105d843f72a0a4645aa48ea8e798c937437bed0 8.1.12
-Author:	LANCESTRE <lancetre@intenebris.org>
-Date:	Wed Jun 21 21:38:12 2023 +0200
+Necrosis v8.4.1 - Critical Bugfix Release
+February 28, 2026
 
-commit 1105d843f72a0a4645aa48ea8e798c937437bed0
-Author: LANCESTRE <lancetre@intenebris.org>
-Date:   Wed Jun 21 21:38:12 2023 +0200
+CRITICAL FIXES
+==============
+- FIXED: Missing Initialize.lua in Vanilla/Wrath/Cata/MOP TOC files caused addon to fail loading
+  Classic/Vanilla crash resolved - sphere now displays, /necrosis command works
 
-    Update Necrosis.toc
-    
-    30402
+- FIXED: Soulstone left-click now uses existing item instead of creating new one
+  Improved usability - uses item from inventory if available, only creates if needed
 
+COMPATIBILITY FIXES
+===================
+- ADDED: Compatibility wrappers for C_Container and C_Timer APIs (TBC support)
+- FIXED: GetContainerItemCooldown fallback for versions that don't have this API
+  Shard management, item cooldown tracking, and timers now work on all supported versions
+
+SUPPORTED VERSIONS
+==================
+- Classic / Vanilla (11508)
+- TBC (20505)
+- Wrath of the Lich King (30403)
+- Cataclysm (40400)
+- Mists of Pandaria (50503)
+
+INSTALLATION
+============
+Download and extract to World of Warcraft/Interface/AddOns/Necrosis/
+Restart WoW.
+
+FEEDBACK
+========
+Report issues at: https://github.com/CKNOEP/Necrosis/issues
