@@ -383,7 +383,7 @@ function UpdateIcons()
 	--]]
 	if Local.Stone.Soul.OnHand and (not SoulstoneInUse) then
 		-- If the stone in inventory contains a timer, and we leave a RL -> Mode 4 || Si la pierre en inventaire contient un timer, et qu'on sort d'un RL --> Mode 4
-		local start, duration = C_Container.GetContainerItemCooldown(Local.Stone.Soul.Location[1],Local.Stone.Soul.Location[2])
+		local start, duration = GetContainerItemCooldown(Local.Stone.Soul.Location[1],Local.Stone.Soul.Location[2])
 		if Necrosis.Debug.timers then
 			_G["DEFAULT_CHAT_FRAME"]:AddMessage("UpdateIcons - soul stone found"
 			.." s'"..tostring(start or "nyl").."'"
@@ -1926,7 +1926,7 @@ function Necrosis:BuildButtonTooltip(button)
 				)
 			end
 			if Local.Stone.Health.Location[1] and Local.Stone.Health.Location[2] then
-				local startTime, duration, isEnabled = C_Container.GetContainerItemCooldown(Local.Stone.Health.Location[1], Local.Stone.Health.Location[2])
+				local startTime, duration, isEnabled = GetContainerItemCooldown(Local.Stone.Health.Location[1], Local.Stone.Health.Location[2])
 				if startTime == 0 then
 					-- not on cool down
 				else
@@ -1970,7 +1970,7 @@ function Necrosis:BuildButtonTooltip(button)
 		local str = Necrosis.TooltipData[Type].Right..GetBindLocation()
 		local str2 = Necrosis.TooltipData[Type].Left
 		if Local.Stone.Hearth.Location[1] and Local.Stone.Hearth.Location[2] then
-			local startTime, duration, isEnabled = C_Container.GetContainerItemCooldown(Local.Stone.Hearth.Location[1], Local.Stone.Hearth.Location[2])
+			local startTime, duration, isEnabled = GetContainerItemCooldown(Local.Stone.Hearth.Location[1], Local.Stone.Hearth.Location[2])
 			if startTime == 0 then
 				color = "|CFFFFFFFF"
 			else
@@ -2306,7 +2306,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis:UpdateMana"
 	-- Timers button || Bouton des Timers
 	-----------------------------------------------
 	if Local.Stone.Hearth.Location[1] then
-		local start, duration, enable = C_Container.GetContainerItemCooldown(Local.Stone.Hearth.Location[1], Local.Stone.Hearth.Location[2])
+		local start, duration, enable = GetContainerItemCooldown(Local.Stone.Hearth.Location[1], Local.Stone.Hearth.Location[2])
 		local ft = _G[Necrosis.Warlock_Buttons.timer.f]
 		if duration > 20 and start > 0 then
 			if not Local.Stone.Hearth.Cooldown then
@@ -3260,7 +3260,7 @@ end
 -- Function to get Soulstone item cooldown info || Fonction pour obtenir les infos de cooldown de la pierre d'âme
 function Necrosis:GetSoulstoneItemCooldown()
 	if Local.Stone.Soul.Location[1] and Local.Stone.Soul.Location[2] then
-		local startTime, duration, isEnabled = C_Container.GetContainerItemCooldown(Local.Stone.Soul.Location[1], Local.Stone.Soul.Location[2])
+		local startTime, duration, isEnabled = GetContainerItemCooldown(Local.Stone.Soul.Location[1], Local.Stone.Soul.Location[2])
 		return startTime, duration, isEnabled
 	end
 	return 0, 0, false
@@ -3269,7 +3269,7 @@ end
 -- Function to get Healthstone item cooldown info || Fonction pour obtenir les infos de cooldown de la pierre de soin
 function Necrosis:GetHealthstoneItemCooldown()
 	if Local.Stone.Health.Location[1] and Local.Stone.Health.Location[2] then
-		local startTime, duration, isEnabled = C_Container.GetContainerItemCooldown(Local.Stone.Health.Location[1], Local.Stone.Health.Location[2])
+		local startTime, duration, isEnabled = GetContainerItemCooldown(Local.Stone.Health.Location[1], Local.Stone.Health.Location[2])
 		return startTime, duration, isEnabled
 	end
 	return 0, 0, false
