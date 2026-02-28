@@ -82,7 +82,7 @@ XML\Attributes.lua
 XML\Options-Messages.lua
 XML\Options-SummonQueue.lua
 XML\Options-Sphere-Vanilla.lua
-XML\Options-Buttons-Vanilla.lua
+XML\Options-Buttons.lua
 XML\Options-Menus.lua
 XML\Options-Timers.lua
 XML\Options-Misc.lua
