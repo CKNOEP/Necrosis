@@ -342,3 +342,28 @@ Necrosis是终极术士插件,为灵魂碎片、法术、恶魔召唤、增益�
 ]]
 L["DOWNLOAD_SUPPORT"] = "下载和支持"
 L["CREDITS"] = "开发团队和致谢"
+
+-- Tooltip Labels (for main sphere)
+L["TOOLTIP_LEFT_CLICK"] = "左键点击"
+L["TOOLTIP_SHIFT_LEFT_CLICK"] = "Shift+左键点击"
+L["TOOLTIP_RIGHT_CLICK"] = "右键点击"
+L["TOOLTIP_CONFIGURATION"] = "配置"
+L["TOOLTIP_DRAG"] = "拖动"
+L["TOOLTIP_MOVE"] = "移动"
+
+-- Stone Labels (for tooltip display)
+L["STONE_SOULSTONE_LABEL"] = "灵魂石: "
+L["STONE_HEALTHSTONE_LABEL"] = "生命石: "
+L["STONE_SPELLSTONE_LABEL"] = "法术石: "
+L["STONE_FIRESTONE_LABEL"] = "火焰石: "
+L["STONE_INFERNAL_LABEL"] = "地狱石: "
+
+-- Soul Shard Management Tooltip
+L["SHARD_MOUSEWHEEL_HELP"] = "使用鼠标滚轮增加或减少限制"
+L["SHARD_LEFTCLICK_HELP"] = "使用左键单击将灵魂碎片移动到特定的袋子"
+
+-- Spellstone Charges
+L["SPELLSTONE_CHARGES"] = "充能"
+
+-- Demon Cooldown Display
+L["DEMON_COOLDOWN"] = "冷却 : "

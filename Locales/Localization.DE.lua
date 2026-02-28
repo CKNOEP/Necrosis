@@ -351,3 +351,28 @@ L["ABOUT_CREDITS"] = [[
 |c00FFD700Lizenz:|r GPL v2
 |c00FFD700Datenbank:|r github.com/CKNOEP/Necrosis
 ]]
+
+-- Tooltip Labels (for main sphere)
+L["TOOLTIP_LEFT_CLICK"] = "Linksklick"
+L["TOOLTIP_SHIFT_LEFT_CLICK"] = "Shift+Linksklick"
+L["TOOLTIP_RIGHT_CLICK"] = "Rechtsklick"
+L["TOOLTIP_CONFIGURATION"] = "Konfiguration"
+L["TOOLTIP_DRAG"] = "Drag"
+L["TOOLTIP_MOVE"] = "Verschieben"
+
+-- Stone Labels (for tooltip display)
+L["STONE_SOULSTONE_LABEL"] = "Seelenstart: "
+L["STONE_HEALTHSTONE_LABEL"] = "Gesundheitsstein: "
+L["STONE_SPELLSTONE_LABEL"] = "Zauberstein: "
+L["STONE_FIRESTONE_LABEL"] = "Feuerstein: "
+L["STONE_INFERNAL_LABEL"] = "Höllenstein: "
+
+-- Soul Shard Management Tooltip
+L["SHARD_MOUSEWHEEL_HELP"] = "Verwenden Sie das Mausrad, um die Grenze zu erhöhen oder zu verringern"
+L["SHARD_LEFTCLICK_HELP"] = "Verwenden Sie Linksklick, um den Seelenschafts in den bestimmten Beutel zu verschieben"
+
+-- Spellstone Charges
+L["SPELLSTONE_CHARGES"] = "Ladungen"
+
+-- Demon Cooldown Display
+L["DEMON_COOLDOWN"] = "Abklingzeit : "

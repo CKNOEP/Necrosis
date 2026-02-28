@@ -354,3 +354,28 @@ Necrosis - это лучший аддон для Чернокнижников, �
 ]]
 L["DOWNLOAD_SUPPORT"] = "Загрузить и поддержка"
 L["CREDITS"] = "Команда разработчиков и благодарности"
+
+-- Tooltip Labels (for main sphere)
+L["TOOLTIP_LEFT_CLICK"] = "Левый клик"
+L["TOOLTIP_SHIFT_LEFT_CLICK"] = "Shift+Левый клик"
+L["TOOLTIP_RIGHT_CLICK"] = "Правый клик"
+L["TOOLTIP_CONFIGURATION"] = "Конфигурация"
+L["TOOLTIP_DRAG"] = "Drag"
+L["TOOLTIP_MOVE"] = "Переместить"
+
+-- Stone Labels (for tooltip display)
+L["STONE_SOULSTONE_LABEL"] = "Камень душ: "
+L["STONE_HEALTHSTONE_LABEL"] = "Камень здоровья: "
+L["STONE_SPELLSTONE_LABEL"] = "Камень заклинаний: "
+L["STONE_FIRESTONE_LABEL"] = "Огненный камень: "
+L["STONE_INFERNAL_LABEL"] = "Адский камень: "
+
+-- Soul Shard Management Tooltip
+L["SHARD_MOUSEWHEEL_HELP"] = "Используйте колесо мыши, чтобы увеличить или уменьшить лимит"
+L["SHARD_LEFTCLICK_HELP"] = "Используйте левый клик, чтобы переместить осколок в конкретный мешок"
+
+-- Spellstone Charges
+L["SPELLSTONE_CHARGES"] = "Заряды"
+
+-- Demon Cooldown Display
+L["DEMON_COOLDOWN"] = "Перезарядка : "

@@ -8,7 +8,35 @@ local _G = getfenv(0)
 
 Necrosis = {}
 SAO ={}
-NECROSIS_ID = "Necrosis"
+-- NECROSIS_ID is now defined in Core-Init.lua before locales load
+
+-- Load localization with fallback
+local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
+-- Fallback function for localization keys if they're not available yet
+local function GetLocalizedString(key, default)
+	if L and L[key] then
+		return L[key]
+	end
+	return default
+end
+
+if not L then
+	-- Create empty table if localization not loaded yet
+	L = {}
+end
+
+-- Ensure fallback values are available if localization keys are missing
+L["TOOLTIP_LEFT_CLICK"] = L["TOOLTIP_LEFT_CLICK"] or "Left Click"
+L["TOOLTIP_SHIFT_LEFT_CLICK"] = L["TOOLTIP_SHIFT_LEFT_CLICK"] or "Shift+Left Click"
+L["TOOLTIP_RIGHT_CLICK"] = L["TOOLTIP_RIGHT_CLICK"] or "Right Click"
+L["TOOLTIP_CONFIGURATION"] = L["TOOLTIP_CONFIGURATION"] or "Configuration"
+L["TOOLTIP_DRAG"] = L["TOOLTIP_DRAG"] or "Drag"
+L["TOOLTIP_MOVE"] = L["TOOLTIP_MOVE"] or "Move"
+L["STONE_SOULSTONE_LABEL"] = L["STONE_SOULSTONE_LABEL"] or "Soulstone: "
+L["STONE_HEALTHSTONE_LABEL"] = L["STONE_HEALTHSTONE_LABEL"] or "Healthstone: "
+L["STONE_SPELLSTONE_LABEL"] = L["STONE_SPELLSTONE_LABEL"] or "Spellstone: "
+L["STONE_FIRESTONE_LABEL"] = L["STONE_FIRESTONE_LABEL"] or "Firestone: "
+L["STONE_INFERNAL_LABEL"] = L["STONE_INFERNAL_LABEL"] or "Infernal Stone: "
 
 -- Initialize NecrosisUI Framework
 do
@@ -526,13 +554,13 @@ function Necrosis:Initialize(Config)
 					GameTooltip:SetText("Necrosis", 0.5, 0, 0.9)
 					GameTooltip:AddLine(" ")
 					if mainSpell then
-						GameTooltip:AddDoubleLine("Clic gauche:", mainSpell, 1, 1, 1, 1, 1, 1)
+						GameTooltip:AddDoubleLine(L["TOOLTIP_LEFT_CLICK"]..":", mainSpell, 1, 1, 1, 1, 1, 1)
 					end
 					if secondSpell and secondSpell ~= "" then
-						GameTooltip:AddDoubleLine("Shift+Clic gauche:", secondSpell, 1, 1, 1, 1, 1, 1)
+						GameTooltip:AddDoubleLine(L["TOOLTIP_SHIFT_LEFT_CLICK"]..":", secondSpell, 1, 1, 1, 1, 1, 1)
 					end
-					GameTooltip:AddDoubleLine("Clic droit:", "Configuration", 1, 1, 1, 1, 1, 1)
-					GameTooltip:AddDoubleLine("Drag:", "Déplacer", 1, 1, 1, 1, 1, 1)
+					GameTooltip:AddDoubleLine(L["TOOLTIP_RIGHT_CLICK"]..":", L["TOOLTIP_CONFIGURATION"], 1, 1, 1, 1, 1, 1)
+					GameTooltip:AddDoubleLine(L["TOOLTIP_DRAG"]..":", L["TOOLTIP_MOVE"], 1, 1, 1, 1, 1, 1)
 
 					-- Add stone counts
 					GameTooltip:AddLine(" ")
@@ -544,7 +572,7 @@ function Necrosis:Initialize(Config)
 							soulCount = soulCount + GetItemCount(v.id)
 						end
 						local soulColor = soulCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
-						local soulText = "Pierre d'âme: "..soulColor..soulCount.."|r"
+						local soulText = L["STONE_SOULSTONE_LABEL"]..soulColor..soulCount.."|r"
 
 						-- Check cooldown for soulstone item (not the spell)
 						local startTime, duration, isEnabled = Necrosis:GetSoulstoneItemCooldown()
@@ -566,7 +594,7 @@ function Necrosis:Initialize(Config)
 							healthCount = healthCount + GetItemCount(v.id)
 						end
 						local healthColor = healthCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
-						local healthText = "Pierre de soin: "..healthColor..healthCount.."|r"
+						local healthText = L["STONE_HEALTHSTONE_LABEL"]..healthColor..healthCount.."|r"
 
 						-- Check cooldown for healthstone item
 						local startTime, duration, isEnabled = Necrosis:GetHealthstoneItemCooldown()
@@ -587,7 +615,7 @@ function Necrosis:Initialize(Config)
 							spellCount = spellCount + GetItemCount(v.id)
 						end
 						local spellColor = spellCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
-						GameTooltip:AddLine("Pierre de sort: "..spellColor..spellCount.."|r")
+						GameTooltip:AddLine(L["STONE_SPELLSTONE_LABEL"]..spellColor..spellCount.."|r")
 					end
 
 					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.fire_stones then
@@ -596,14 +624,14 @@ function Necrosis:Initialize(Config)
 							fireCount = fireCount + GetItemCount(v.id)
 						end
 						local fireColor = fireCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
-						GameTooltip:AddLine("Pierre de feu: "..fireColor..fireCount.."|r")
+						GameTooltip:AddLine(L["STONE_FIRESTONE_LABEL"]..fireColor..fireCount.."|r")
 					end
 
 					-- Infernal Stone (reagent)
 					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.reagents and Necrosis.Warlock_Lists.reagents.infernal_stone then
 						local infernalCount = GetItemCount(Necrosis.Warlock_Lists.reagents.infernal_stone.id)
 						local infernalColor = infernalCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
-						GameTooltip:AddLine("Pierre infernale: "..infernalColor..infernalCount.."|r")
+						GameTooltip:AddLine(L["STONE_INFERNAL_LABEL"]..infernalColor..infernalCount.."|r")
 					end
 
 					GameTooltip:Show()

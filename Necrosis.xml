@@ -1,3 +1,6 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<!-- Load Core-Init first to define NECROSIS_ID before AceLocale loads -->
+	<Script file="Core-Init.lua"/>
+
 	<GameTooltip name="NecrosisTooltip" inherits="GameTooltipTemplate" mixin="BackdropTemplateMixin" parent="UIParent" toplevel="true" movable="true" frameStrata="LOW" />
 </Ui>

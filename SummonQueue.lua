@@ -90,13 +90,11 @@ end
 
 function SummonQueue:OnEvent(event, ...)
 	if not self.Enabled then
-		print("|cFFFF0000" .. L["SQ_MODULE_DISABLED"] .. "|r")
 		return
 	end
 
 	if event:match("^CHAT_MSG_") then
 		local message, sender = ...
-		print("|cFF00FF00" .. L["SQ_CHAT_RECEIVED"] .. "|r " .. message .. " from " .. sender)
 		self:ProcessChatMessage(message, sender)
 	end
 end
@@ -532,9 +530,13 @@ SlashCmdList["SUMMONQUEUETEST"] = function(msg)
 	end
 end
 
-do
+-- Delay initialization until player data is available
+local initFrame = CreateFrame("Frame")
+initFrame:RegisterEvent("PLAYER_LOGIN")
+initFrame:SetScript("OnEvent", function()
+	initFrame:UnregisterEvent("PLAYER_LOGIN")
 	local _, playerClass = UnitClass("player")
 	if playerClass == "WARLOCK" then
 		SummonQueue:Init()
 	end
-end
+end)

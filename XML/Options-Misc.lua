@@ -599,8 +599,8 @@ function Necrosis:SetMiscConfig()
 	
     testButton.fakeSpellID = 42;
     testButton.isTesting = false;
-    local testTextureLeftRight = SAO.IsEra() and "nightfall";
-    local testTextureTop = SAO.IsEra() and  "backlash";
+    local testTextureLeftRight = SAO.IsEra() and "echo_of_the_elements" or "imp_empowerment";
+    local testTextureTop = SAO.IsEra() and "fury_of_stormrage" or "brain_freeze";
     local testPositionTop = SAO.IsCata() and "Top (CW)" or "Top";
 	local testButtonStatus = NecrosisSpellActivationOverlayOptionsPanelSpellAlertTestButton;
 	

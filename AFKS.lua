@@ -43,7 +43,11 @@ local UnitIsAFK = UnitIsAFK
 local GetLocale = GetLocale
 local UnitClass = UnitClass
 local UnitRace = UnitRace
-local GetColoredName = GetColoredName
+-- GetColoredName only exists in Retail, create fallback for Classic/Wrath
+local GetColoredName = GetColoredName or function(event, arg1, arg2, arg3, arg4, arg5, ...)
+	-- Fallback: return the player name (arg5 in chat events)
+	return arg5 or arg2 or ""
+end
 local GetScreenHeight = GetScreenHeight
 local GetScreenWidth = GetScreenWidth
 local GetPhysicalScreenSize = GetPhysicalScreenSize
