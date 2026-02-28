@@ -20,22 +20,28 @@ local function SetSSAttribs(nostone, reason)
 
 	if Necrosis.IsSpellKnown("soulstone") then
 		local str = ""
-		-- R click to create; will cause an error if one is in bags
---		f:SetAttribute("type2", "macro")
---		str = "/cast Create "..L["SOUL_STONE"] -- 
-		f:SetAttribute("type2", "spell") -- 51
+		-- Configure button as spell type to display cooldown
+		f:SetAttribute("type", "spell")
 		str = Necrosis.GetSpellCastName("soulstone")
-		--print(Necrosis.GetSpellCastName("soulstone"))
-		--print("Spell dans le bouton",str)
-		--print(NecrosisConfig.ItemSwitchCombat[4])
-		f:SetAttribute("spell2", str) 
-		-- L click or Middle click to use; will not cause error if a stone not in bag
-		f:SetAttribute("type1", "item")
-		f:SetAttribute("type3", "item")
---		f:SetAttribute("unit", "target") -- forces player to target self first
-		--NecrosisConfig.ItemSwitchCombat[4] = "Pierre d'âme magistrale"
-		f:SetAttribute("item1", NecrosisConfig.ItemSwitchCombat[4])
-		f:SetAttribute("item3", NecrosisConfig.ItemSwitchCombat[4])
+		f:SetAttribute("spell", str)
+
+		-- Left click: Cast spell (will display cooldown)
+		f:SetAttribute("type1", "spell")
+		f:SetAttribute("spell1", str)
+
+		-- Right click to create (will cause an error if one is in bags)
+		f:SetAttribute("type2", "spell") -- 51
+		f:SetAttribute("spell2", str)
+
+		-- Middle click to use
+		f:SetAttribute("type3", "macro")
+		if NecrosisConfig.ItemSwitchCombat[4] then
+			f:SetAttribute("macrotext3", "/stopcasting \n/use "..NecrosisConfig.ItemSwitchCombat[4])
+			f:SetAttribute("item1", NecrosisConfig.ItemSwitchCombat[4])
+			f:SetAttribute("item3", NecrosisConfig.ItemSwitchCombat[4])
+		else
+			f:SetAttribute("macrotext3", "/stopcasting \n/cast "..str)
+		end
 
 --		if nostone then 
 --		else	

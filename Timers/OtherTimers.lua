@@ -55,7 +55,7 @@ end
 function Necrosis:RezTimerUpdate(SpellTimer, LastUpdate)
 	local Time, TimeMax, Minutes, Secondes
 	for index, valeur in ipairs(SpellTimer) do
-		if Necrosis.IsSpellRez(valeur) then 
+		if Necrosis.IsSpellRez(Necrosis.GetSpellName(valeur.Usage)) then
 			Time = valeur.Time
 			TimeMax = valeur.TimeMax
 			break
@@ -73,12 +73,27 @@ function Necrosis:RezTimerUpdate(SpellTimer, LastUpdate)
 	Minutes = floor(Secondes/60)
 	Secondes = mod(Secondes, 60)
 
+	-- Get spell cooldown for Soulstone (spell ID 20707)
+	local spellStart, spellDuration, spellEnabled = GetSpellCooldown(20707)
+	local cdText = ""
+	if spellStart == 0 then
+		-- No cooldown
+		cdText = ""
+	else
+		local cdTimeRemaining = ((spellStart - GetTime()) + spellDuration)
+		if cdTimeRemaining > 0 then
+			local cdMin = floor(cdTimeRemaining / 60)
+			local cdSec = mod(cdTimeRemaining, 60)
+			cdText = string.format("\n|cFFFFFFFFcd: %d:%02d|r", cdMin, cdSec)
+		end
+	end
+
 	-- Le timer numérique
 	if NecrosisConfig.CountType == 3 then
 		if (Minutes > 0) then
-			NecrosisShardCount:SetText(Minutes.." m")
+			NecrosisShardCount:SetText(Minutes.." m"..cdText)
 		else
-			NecrosisShardCount:SetText(Secondes)
+			NecrosisShardCount:SetText(Secondes..cdText)
 		end
 	end
 	-- Le timer graphique

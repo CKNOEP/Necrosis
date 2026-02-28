@@ -1,4 +1,4 @@
-## Interface: 11508
+## Interface: 11508,20505,30403,40400,50503
 ## X-Min-Interface: 110207
 ## X-Min-Interface-Classic: 11508
 ## X-Min-Interface-BCC: 20505
@@ -12,7 +12,7 @@
 ## Notes: Warlock UI & Shard Management
 ## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir 
 ## Notes-ruRU: Менеджер заклинаний, камней и демонов для чернокнижника.
-## Version: 8.3.2
+## Version: 8.3.3
 ## Website: https://github.com/CKNOEP/Necrosis
 ## DefaultState: Enabled
 ## X-Original-Author: Lomig,lädygaga - sulfuron EUR - As lancestre
@@ -67,7 +67,7 @@ Speech\Speech-cn.lua
 Speech\Speech-ru.lua
 
 Message.lua
-Spells-Vanilla.lua
+Spells-MOP.lua
 
 
 Timers\Functions.lua

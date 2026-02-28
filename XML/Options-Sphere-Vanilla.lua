@@ -50,7 +50,7 @@ function Necrosis:SetSphereConfig()
 		end
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("CENTER", NecrosisSphereConfig, "BOTTOMLEFT", 225, 400)
+		frame:SetPoint("LEFT", NecrosisSphereConfig, "TOP", 120, -80)
 
 		local f = _G[Necrosis.Warlock_Buttons.main.f]
 --		local NBx, NBy = f:GetCenter()
@@ -98,6 +98,51 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 
 		NecrosisSphereSizeLow:SetText("50 %")
 		NecrosisSphereSizeHigh:SetText("200 %")
+
+		NecrosisSphereSize:SetValue(NecrosisConfig.NecrosisButtonScale)
+
+		---------------------------------------------
+		-- Slider de rotation de Necrosis
+		---------------------------------------------
+
+		frame = CreateFrame("Slider", "NecrosisRotation", NecrosisSphereConfig, "OptionsSliderTemplate")
+		frame:SetMinMaxValues(0, 360)
+		frame:SetValueStep(9)
+		frame:SetWidth(150)
+		frame:SetHeight(15)
+
+		-- Create slider visual elements with circular dot cursor
+		local track = frame:CreateTexture(nil, "BACKGROUND")
+		track:SetWidth(150)
+		track:SetHeight(4)
+		track:SetColorTexture(0.2, 0.2, 0.2, 1)
+		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
+
+		local thumb = frame:GetThumbTexture()
+		if thumb then
+			thumb:SetTexture("Interface\\Common\\Indicator-Yellow")
+			thumb:SetColorTexture(1, 0.8, 0, 1)
+			thumb:SetSize(6, 6)
+		end
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("RIGHT", NecrosisSphereConfig, "TOP", 80, -80)
+
+		frame:SetScript("OnEnter", function(self)
+			GameTooltip:SetOwner(frame, "ANCHOR_RIGHT")
+			GameTooltip:SetText(self:GetValue())
+		end)
+		frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
+		frame:SetScript("OnValueChanged", function(self)
+			NecrosisConfig.NecrosisAngle = self:GetValue()
+			GameTooltip:SetText(self:GetValue())
+			Necrosis:ButtonSetup()
+		end)
+
+		NecrosisRotationLow:SetText("0")
+		NecrosisRotationHigh:SetText("360")
+
+		NecrosisRotation:SetValue(NecrosisConfig.NecrosisAngle)
 
 		 ---------------------------------------
 		-- Option  Verrouillage de Necrosis ---
@@ -267,6 +312,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 	UIDropDownMenu_Initialize(NecrosisCountSelection, Necrosis.Count_Init)
 
 	NecrosisSphereSizeText:SetText(self.Config.Sphere["Taille de la sphere"])
+	NecrosisRotationText:SetText(self.Config.Buttons["Rotation des boutons"])
 	NecrosisSkinSelectionT:SetText(self.Config.Sphere["Skin de la pierre Necrosis"])
 	NecrosisEventSelectionT:SetText(self.Config.Sphere["Evenement montre par la sphere"])
 	NecrosisSpellSelectionT:SetText(self.Config.Sphere["Sort caste par la sphere"])

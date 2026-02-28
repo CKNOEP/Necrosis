@@ -184,16 +184,14 @@ Local.DefaultConfig = {
 	CurseShow = {true,true,true,true,true,true,true,true,},
 
 	Timers = { -- Order is for options screen; overrides Warlock_Spells Timer
-		[1] = {usage = "armor", show = true},
+		-- MOP version: Removed Demon Armor, Fel Armor, Demonic Sacrifice (became passive or don't exist)
+		[1] = {usage = "soulstone", show = true},
 		[2] = {usage = "breath", show = true},
-		[3] = {usage = "invisible", show = true},
-		[4] = {usage = "eye", show = false},
-		[5] = {usage = "summoning", show = true},
-		[6] = {usage = "ward", show = true},
-		[7] = {usage = "banish", show = true},
-		[8] = {usage = "fel_armor", show = true},
-		[9] = {usage = "sacrifice", show = true},
-	   [10] = {usage = "enslave", show = true},	
+		[3] = {usage = "eye", show = false},
+		[4] = {usage = "summoning", show = true},
+		[5] = {usage = "ward", show = true},
+		[6] = {usage = "banish", show = true},
+		[7] = {usage = "enslave", show = true},
 	},
 }
 
@@ -1979,33 +1977,36 @@ function Necrosis:BuildButtonTooltip(button)
 	elseif Type:find("stone") then
 		-- Soul Stone ||Pierre d'âme
 		if (Type == "Soulstone") then
+			-- Calculate cooldown FIRST to include it in the title
+			local color = "|CFF808080"
+			local coolText = ""
+			local coolTextShort = ""
+			-- Get spell cooldown (spell ID 20707 for Soulstone in MOP)
+			local startTime, duration, isEnabled = GetSpellCooldown(20707)
+			if startTime == 0 then
+				-- not on cool down
+			else
+				local timeRemaining = ((startTime - GetTime()) + duration)
+				coolTextShort = Necrosis.Utils.TimeLeft(timeRemaining)
+				coolText = " (CD: "..coolTextShort..")"
+			end
+
+			-- Update tooltip title with cooldown if it exists
+			local titleWithCooldown = Necrosis.TooltipData[Type].Label..coolText
+			GameTooltip:SetText(titleWithCooldown)
+
 			AddCastAndCost("soulstone")
 			-- We display the name of the stone and the action that will produce the click on the button ||On affiche le nom de la pierre et l'action que produira le clic sur le bouton
 			-- And also the cooldown ||Et aussi le Temps de recharge
 
-			-- cool down or not
-			local color = "|CFF808080"
-			local str = ""
-			local cool = ""
-			if Local.Stone.Soul.Location[1] and Local.Stone.Soul.Location[2] then
-				local startTime, duration, isEnabled = C_Container.GetContainerItemCooldown(Local.Stone.Soul.Location[1], Local.Stone.Soul.Location[2])
-				if startTime == 0 then
-					-- not on cool down
-				else
-					str = Necrosis.Translation.Misc.Cooldown
-					cool = " - "..Necrosis.Utils.TimeLeft(((startTime - GetTime()) + duration))
-					cool = str..cool
-				end
-			end
-			
 			-- L click - use
-			str = Necrosis.TooltipData[Type].Text[2]
-			if cool == "" then
+			local str = Necrosis.TooltipData[Type].Text[2]
+			if coolText == "" then
 			else
 				str = color..str.."|r" -- must wait for cool down
 			end
 			GameTooltip:AddLine(str)
-			
+
 			-- R click - create
 			str = Necrosis.TooltipData[Type].Text[1]
 			if Local.Stone.Soul.OnHand then
@@ -2013,11 +2014,8 @@ function Necrosis:BuildButtonTooltip(button)
 			else
 			end
 			GameTooltip:AddLine(str)
-			
+
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Ritual)
-			
-			-- show cool down
-			GameTooltip:AddLine(cool)
 		-- Healthstone | Stone of life ||Healthstone | Pierre de vie
 		elseif (Type == "Healthstone") then
 			-- Idem ||Idem
@@ -2157,7 +2155,43 @@ function Necrosis:BuildButtonTooltip(button)
 		end
 	end
 
-	
+	-- TTip CTRL+LEFT MOUNT
+	if NecrosisConfig.CtrlLeftMount then
+		local CtrlLeftMountName = Necrosis.Utils.GetSpellName(NecrosisConfig.CtrlLeftMount)
+
+		if CtrlLeftMountName then
+				local icon_texture = GetSpellTexture(NecrosisConfig.CtrlLeftMount)
+				GameTooltip:AddDoubleLine(L["BUTTONS_CTRL-LEFT"]," |T"..icon_texture..":0:0:0:0|t".." "..CtrlLeftMountName);
+		else
+
+		local CtrlLeftMountName = Necrosis.Utils.GetItemInfo(NecrosisConfig.CtrlLeftMount);
+		local icon_texture = GetItemIcon(NecrosisConfig.CtrlLeftMount)
+		if CtrlLeftMountName then
+				local wrapText = CtrlLeftMountName
+				GameTooltip:AddDoubleLine(L["BUTTONS_CTRL-LEFT"]," |T"..icon_texture..":0:0:0:0|t".." "..CtrlLeftMountName);
+		end
+		end
+	end
+
+	-- TTip CTRL+RIGHT MOUNT
+	if NecrosisConfig.CtrlRightMount then
+		local CtrlRightMountName = Necrosis.Utils.GetSpellName(NecrosisConfig.CtrlRightMount)
+
+		if CtrlRightMountName then
+				local icon_texture = GetSpellTexture(NecrosisConfig.CtrlRightMount)
+				GameTooltip:AddDoubleLine(L["BUTTONS_CTRL-RIGHT"]," |T"..icon_texture..":0:0:0:0|t".." "..CtrlRightMountName);
+		else
+
+		local CtrlRightMountName = Necrosis.Utils.GetItemInfo(NecrosisConfig.CtrlRightMount);
+		local icon_texture = GetItemIcon(NecrosisConfig.CtrlRightMount)
+		if CtrlRightMountName then
+				local wrapText = CtrlRightMountName
+				GameTooltip:AddDoubleLine(L["BUTTONS_CTRL-RIGHT"]," |T"..icon_texture..":0:0:0:0|t".." "..CtrlRightMountName);
+		end
+		end
+	end
+
+
 	--End ToolTip Mount	
 	
 		

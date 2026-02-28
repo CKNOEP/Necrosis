@@ -1,16 +1,17 @@
-## Interface: 30403
+## Interface: 50503,50502,50501,50500,50401,50400,50300
 ## X-Min-Interface: 110207
 ## X-Min-Interface-Classic: 11508
 ## X-Min-Interface-BCC: 20505
 ## X-Min-Interface-Wrath: 30403
 ## X-Min-Interface-Cata: 40400
+## X-Min-Interface-MOP: 50503
 
-## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Wrath
-## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Wrath (Русский)
-## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Wrath (Français)
+## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 MOP
+## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis MOP (Русский)
+## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis MOP (Français)
 
 ## Notes: Warlock UI & Shard Management
-## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir 
+## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir
 ## Notes-ruRU: Менеджер заклинаний, камней и демонов для чернокнижника.
 ## Version: 8.3.3
 ## Website: https://github.com/CKNOEP/Necrosis
@@ -20,7 +21,6 @@
 ## X-Category: Warlock
 ## LoadOnDemand: 0
 ## SavedVariablesPerCharacter: NecrosisConfig
-
 Necrosis.xml
 
 libs\LibStub\LibStub.lua
@@ -56,7 +56,7 @@ Dialog.lua
 Functions.lua
 AFKS.lua
 SummonQueue.lua
-VersionCheck.lua
+ VersionCheck.lua
 Speech\Speech-fr.lua
 Speech\Speech-en.lua
 Speech\Speech-de.lua
@@ -66,8 +66,8 @@ Speech\Speech-cn.lua
 Speech\Speech-ru.lua
 
 Message.lua
-Spells.lua
-SpellActivations\SpellActivations.xml
+Spells-MOP.lua
+
 
 Timers\Functions.lua
 Timers\GraphicalTimers.lua
@@ -80,8 +80,8 @@ XML\Attributes.lua
 
 XML\Options-Messages.lua
 XML\Options-SummonQueue.lua
-XML\Options-Sphere.lua
-XML\Options-Buttons.lua
+XML\Options-Sphere-Vanilla.lua
+XML\Options-Buttons-Vanilla.lua
 XML\Options-Menus.lua
 XML\Options-Timers.lua
 XML\Options-Misc.lua
@@ -93,3 +93,5 @@ Necrosis.lua
 XML\XML.lua
 ThreatMeter.lua
 NecrosisUI\Framework.xml
+
+SpellActivations\SpellActivations.xml

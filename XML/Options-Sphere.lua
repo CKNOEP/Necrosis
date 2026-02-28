@@ -108,7 +108,7 @@ function Necrosis:SetSphereConfig()
 		end
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("CENTER", NecrosisSphereConfig, "BOTTOMLEFT", 133, 120)
+		frame:SetPoint("CENTER", NecrosisSphereConfig, "CENTER", -90, -20)
 
 		local f = _G[Necrosis.Warlock_Buttons.main.f]
 --		local NBx, NBy = f:GetCenter()
@@ -158,7 +158,9 @@ function Necrosis:SetSphereConfig()
 
 		NecrosisSphereSizeLow:SetText("50 %")
 		NecrosisSphereSizeHigh:SetText("200 %")
-		
+
+		NecrosisSphereSize:SetValue(NecrosisConfig.NecrosisButtonScale)
+
 --------------------------------------------------------------------------------------------------------------------------------
 ------- Create a slider control for rotating the buttons around the sphere || Création du slider de rotation de Necrosis  ------
 --------------------------------------------------------------------------------------------------------------------------------
@@ -185,7 +187,7 @@ function Necrosis:SetSphereConfig()
 		frame:Show()
 		frame:ClearAllPoints()
 
-		frame:SetPoint("CENTER", NecrosisSphereConfig, "BOTTOMRIGHT", 18, 120)
+		frame:SetPoint("CENTER", NecrosisSphereConfig, "CENTER", 90, -20)
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(frame, "ANCHOR_RIGHT")
