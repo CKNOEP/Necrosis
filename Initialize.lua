@@ -43,7 +43,21 @@ end
 
 if not C_Container.GetContainerItemCooldown then
     function C_Container.GetContainerItemCooldown(container, slot)
-        return GetContainerItemCooldown(container, slot)
+        -- GetContainerItemCooldown doesn't exist in TBC, return default (no cooldown)
+        if GetContainerItemCooldown then
+            return GetContainerItemCooldown(container, slot)
+        else
+            -- TBC doesn't have this API, return no cooldown (0, 0, true)
+            return 0, 0, true
+        end
+    end
+end
+
+-- Also create a global wrapper for direct calls
+if not GetContainerItemCooldown then
+    function GetContainerItemCooldown(container, slot)
+        -- TBC/Vanilla don't have this API, return no cooldown
+        return 0, 0, true
     end
 end
 
