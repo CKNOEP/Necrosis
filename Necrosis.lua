@@ -1033,10 +1033,6 @@ function Necrosis:OnUpdate(something, elapsed)
 							Local.TimerManagement.Banish = false
 						end
 						-- Otherwise we remove the timer silently (but not in case of enslave) || Sinon on enlève le timer silencieusement (mais pas en cas d'enslave)
-						local enslave = -- get name if known
-							-- Using cached enslaveSpellName
-						--print (enslave,Local.TimerManagement.SpellTimer[index].Name)
-												
 						if not (Local.TimerManagement.SpellTimer[index].Name == enslaveSpellName) then
 							
 							Local.TimerManagement = Necrosis:RetraitTimerParIndex(index, Local.TimerManagement, "spell expired")
@@ -1292,7 +1288,7 @@ function Necrosis:OnEvent(self, event,...)
 
 
 
-		Local.SpellCasted[cast_guid] = nil -- clear any previous entry
+		Local.SpellCasted[cast_guid] = {} -- clear any previous entry
 		if spell_id and Necrosis.GetSpellById(spell_id) then -- it is a spell to process
 			local spell = Necrosis.GetSpellById(spell_id)
 	
