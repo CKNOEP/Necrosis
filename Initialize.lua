@@ -10,6 +10,76 @@ Necrosis = {}
 SAO ={}
 -- NECROSIS_ID is now defined in Core-Init.lua before locales load
 
+-- ============================================================================
+-- WoW Version Compatibility Wrappers (Support TBC, Wrath, Cata, MOP+)
+-- ============================================================================
+
+-- Detect WoW version
+local _, _, _, tocVersion = GetBuildInfo()
+local IsModernWoW = tocVersion and tocVersion >= 90000 -- WoW 9.0+ has C_Container
+
+-- Create compatibility wrappers for C_Container (WoW 9.0+)
+if not C_Container then
+    C_Container = {}
+end
+
+if not C_Container.GetContainerNumSlots then
+    function C_Container.GetContainerNumSlots(container)
+        return GetContainerNumSlots(container)
+    end
+end
+
+if not C_Container.GetContainerItemInfo then
+    function C_Container.GetContainerItemInfo(container, slot)
+        return GetContainerItemInfo(container, slot)
+    end
+end
+
+if not C_Container.GetContainerItemLink then
+    function C_Container.GetContainerItemLink(container, slot)
+        return GetContainerItemLink(container, slot)
+    end
+end
+
+if not C_Container.GetContainerItemCooldown then
+    function C_Container.GetContainerItemCooldown(container, slot)
+        return GetContainerItemCooldown(container, slot)
+    end
+end
+
+if not C_Container.PickupContainerItem then
+    function C_Container.PickupContainerItem(container, slot)
+        return PickupContainerItem(container, slot)
+    end
+end
+
+-- Create compatibility wrapper for C_Timer (WoW 9.0+)
+if not C_Timer then
+    C_Timer = {}
+end
+
+if not C_Timer.After then
+    -- Create a fallback using AceTimer or frame-based timer
+    function C_Timer.After(delay, callback)
+        if Necrosis and Necrosis.TimerCount == nil then
+            Necrosis.TimerCount = 0
+        end
+        Necrosis.TimerCount = Necrosis.TimerCount + 1
+        local timerId = Necrosis.TimerCount
+
+        -- Use frame-based OnUpdate as fallback
+        local frame = CreateFrame("Frame")
+        local elapsed = 0
+        frame:SetScript("OnUpdate", function(self, delta)
+            elapsed = elapsed + delta
+            if elapsed >= delay then
+                callback()
+                frame:SetScript("OnUpdate", nil)
+            end
+        end)
+    end
+end
+
 -- Load localization with fallback
 local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
 -- Fallback function for localization keys if they're not available yet
