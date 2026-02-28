@@ -217,7 +217,6 @@ Local.TimerManagement = {
 	LastSpell = {}
 }
 
-Necrosis.TimerManagement = Local.TimerManagement -- debug
 
 -- Variables of the invocation messages || Variables des messages d'invocation
 Local.SpeechManagement = {
@@ -235,7 +234,6 @@ Local.SpeechManagement = {
 		Sacrifice = setmetatable({}, metatable)
 	},
 }
-Necrosis.XXYYZZ = Local.SpeechManagement -- debug
 
 -- Variables used for managing summoning and stone buttons || Variables utilisées pour la gestion des boutons d'invocation et d'utilisation des pierres
 Local.Stone = {
@@ -292,7 +290,6 @@ Local.LastUpdate = {0, 0}
 Local.buff_needed = false
 Local.buff_attempts = 0
 
-LocalZZYY = Local
 ------------------------------------------------------------------------------------------------------
 -- NECROSIS helper routines
 ------------------------------------------------------------------------------------------------------
@@ -313,51 +310,25 @@ end
 
 -- Function to check the presence of a buff on the unit.
 -- Strictly identical to UnitHasEffect, but as WoW distinguishes Buff and DeBuff, so we have to.
-local function UnitHasBuff(unit, effect)
---		print(("%d=%s, %s, %.2f minutes left."):format(i,name,icon,(etime-GetTime())/60))
-	local res = false
-	for i=1,40 do
-	  local name, icon, count, debuffType, duration, 
-		expirationTime, source, isStealable, nameplateShowPersonal, spellId, 
-		canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod 
-		= UnitBuff(unit,i)
-		if name then
-			if name == effect then
-				res = true
-				break
-			else
-				-- continue
-			end
-		else
-			break -- no more
-		end
+-- Check for buff or debuff on unit || Vérifier un buff ou un debuff
+-- F(string, string, bool)->bool
+local function UnitHasAura(unit, name, isDebuff)
+	local func = isDebuff and UnitDebuff or UnitBuff
+	for i = 1, 40 do
+		local auraName = func(unit, i)
+		if not auraName then return false end
+		if auraName == name then return true end
 	end
-	
-	return res
+	return false
 end
 
--- Function to check the presence of a debuff on the unit || Fonction pour savoir si une unité subit un effet
--- F(string, string)->bool
+-- Wrapper functions for backward compatibility
+local function UnitHasBuff(unit, effect)
+	return UnitHasAura(unit, effect, false)
+end
+
 local function UnitHasEffect(unit, effect)
-	local res = false
-	for i=1,40 do
-		local name, icon, count, debuffType, duration, 
-			expirationTime, source, isStealable, nameplateShowPersonal, spellId, 
-			canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod 
-			= UnitDebuff(unit,i)
-		if name then
-			if name == effect then
-				res = true
-				break
-			else
-				-- continue
-			end
-		else
-			break -- no more
-		end
-	end
-	
-	return res
+	return UnitHasAura(unit, effect, true)
 end
 
 -- Display the antifear button / warning || Affiche ou cache le bouton de détection de la peur suivant la cible.
@@ -1145,47 +1116,6 @@ local function ev_out(event, msg, init, events, spells)
 		)
 	end
 end
-
-local function SetSpellCast(spell_id, cast_guid, unit, event)
-	local spell = Necrosis.GetSpellById(spell_id)
-
-	if (target == nil or target == "")
-	and spell.SelfOnly
-	then
-		-- Not all UNIT_SPELLCAST_SENT events specify the target (player for Demon Armor)...
-		Local.SpellCasted[cast_guid].TargetName = UnitName("player")
-		Local.SpellCasted[cast_guid].TargetGUID = UnitGUID("player")
-		Local.SpellCasted[cast_guid].TargetLevel = UnitLevel("player")
-	elseif target == nil or target == "" then
-		if Necrosis.IsSpellDemon(Spell.Name) then
-			local id, usage, timer = Necrosis.GetSpellByName(Spell.Name)
-			Local.SpellCasted[cast_guid].TargetName = (NecrosisConfig.PetInfo[usage] or "")
-			Local.SpellCasted[cast_guid].TargetGUID = ""
-			Local.SpellCasted[cast_guid].TargetLevel = UnitLevel("player")
-		else
-			Local.SpellCasted[cast_guid].TargetName = UnitName("target")
-			Local.SpellCasted[cast_guid].TargetGUID = UnitGUID("target")
-			Local.SpellCasted[cast_guid].TargetLevel = UnitLevel("target")
-		end
-	else
-		Local.SpellCasted[cast_guid].TargetName = target
-		Local.SpellCasted[cast_guid].TargetGUID = UnitGUID("target")
-		Local.SpellCasted[cast_guid].TargetLevel = UnitLevel("target")
-	end
-	Local.SpellCasted[cast_guid].Name = spell.Name
-	Local.SpellCasted[cast_guid].Id = spell_id
-	Local.SpellCasted[cast_guid].Guid = cast_guid
-	Local.SpellCasted[cast_guid].Unit = unit
-	
-	local sc = Local.SpellCasted[cast_guid]
-	msg = " '"..tostring(cast_guid or "nyl").."'"
-		.." '"..tostring(sc.Name or "nyl").."'"
-		.." '"..tostring(sc.TargetName or "nyl").."'"
-	ev_out(event, msg, false, false, true)
-	sc = nil
-
-	Local.SpeechManagement = Necrosis:Speech_It(Local.SpellCasted[cast_guid], Local.SpeechManagement, metatable)
-end
 --[[ Function started according to the intercepted event || Fonction lancée selon l'événement intercepté
 NOTE: At entering world AND a warlock, this attempts to get localized strings from WoW.
 This may take calls to the server on first session login of a warlock. The init of Necrosis is delayed until those strings are done. 
@@ -1347,7 +1277,7 @@ function Necrosis:OnEvent(self, event,...)
 
 			SpellManagement(Local.SpellCasted[cast_guid])
 			CheckCorruptionRefresh(target, cast_guid, spell_id)
-			Local.SpellCasted[cast_guid] = {} -- processed so clear
+			Local.SpellCasted[cast_guid] = nil -- processed so clear
 		end
 		target, cast_guid, spell_id = nil, nil, nil
 		
@@ -1370,7 +1300,7 @@ function Necrosis:OnEvent(self, event,...)
 		
 		
 		
-		Local.SpellCasted[cast_guid] = {} -- start an entry
+		Local.SpellCasted[cast_guid] = nil -- clear any previous entry
 		if spell_id and Necrosis.GetSpellById(spell_id) then -- it is a spell to process
 			local spell = Necrosis.GetSpellById(spell_id)
 	
@@ -1424,7 +1354,7 @@ function Necrosis:OnEvent(self, event,...)
 			-- Send to delete any timer that exist...
 			Local.TimerManagement = Necrosis:RetraitTimerParCast(arg2, Local.TimerManagement, "UNIT_SPELLCAST_FAILED")
 		end
-		Local.SpellCasted[arg2] = {}
+		Local.SpellCasted[arg2] = nil
 	-- Flag if a Trade window is open, so you can automatically trade the healing stones || Flag si une fenetre de Trade est ouverte, afin de pouvoir trader automatiquement les pierres de soin
 	elseif event == "TRADE_REQUEST" or event == "TRADE_SHOW" then
 		Local.Trade.Request = true
@@ -1526,11 +1456,16 @@ function Necrosis:OnEvent(self, event,...)
 		local spellId = a12 
 		local Effect = a13 
 		local spellSchool = a14
-		ev={CombatLogGetCurrentEventInfo()}
+
+		-- Cache UnitName to avoid repeated lookups
+		local playerName = UnitName("player")
+		if Necrosis.Debug and Necrosis.Debug.events then
+			ev={CombatLogGetCurrentEventInfo()}
+		end
 
 		-- this will output a lot of spells not processed but it can be informative
-		if (UnitName("player") == sourceName) 
-		or (UnitName("player") == destName) 
+		if (playerName == sourceName)
+		or (playerName == destName) 
 		then
 			msg = " e'"..tostring(Effect or "nyl").."'"
 					.." se'"..tostring(subevent or "nyl").."'"

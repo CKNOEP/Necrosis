@@ -6,6 +6,9 @@
 -- Get a reference to the global env variable containing all the frames || On définit G comme étant le tableau contenant toutes les frames existantes.
 local _G = getfenv(0)
 
+-- Pre-allocate table for timer positioning to avoid repeated allocations
+local _lastPoint = {}
+
 local function OutputGroup(SpellGroup, index, msg)
 	if Necrosis.Debug.timers then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("OGroup::"
@@ -233,11 +236,10 @@ function NecrosisUpdateTimer(tableau, Changement)
 	
 	end
 
-	local LastPoint = {}
-	LastPoint[1], LastPoint[2], LastPoint[3], LastPoint[4], LastPoint[5] = NecrosisTimerFrame0:GetPoint()
+	_lastPoint[1], _lastPoint[2], _lastPoint[3], _lastPoint[4], _lastPoint[5] = NecrosisTimerFrame0:GetPoint()
 	local LastGroup = 0
 
-	local yPosition = - NecrosisConfig.SensListe * 17 --le facteur correspond à l'interligne 
+	local yPosition = - NecrosisConfig.SensListe * 17 --le facteur correspond à l'interligne
 
 	-- smooth timers (if selected) || *Lisse* l'écoulement des timers si option sélectionnée
 	local Now
@@ -256,26 +258,26 @@ function NecrosisUpdateTimer(tableau, Changement)
 		local StatusBar = _G["NecrosisTimerFrame"..tableau[index].Gtimer.."Bar"]
 		local Spark = _G["NecrosisTimerFrame"..tableau[index].Gtimer.."Spark"]
 		local Text = _G["NecrosisTimerFrame"..tableau[index].Gtimer.."OutText"]
-		
+
 		--print(tableau[index].Name,tableau[index].Time)
 		--	todo for index =  1, #tableau, 1 do
 
-		
+
 		-- move frames to ensure they dont overlap || Déplacement des Frames si besoin pour qu'elles ne se chevauchent pas
 		if Changement then
 			-- if the frame belongs to a mob group, then move the whole group || Si les Frames appartiennent à un groupe de mob, et qu'on doit changer de groupe
 			if not (tableau[index].Group == LastGroup) and tableau[index].Group > 3 then
 				local f = CreateGroup(Changement, tableau[index].Group)
-				LastPoint[5] = LastPoint[5] + 1.2 * yPosition
+				_lastPoint[5] = _lastPoint[5] + 1.2 * yPosition
 				f:ClearAllPoints()
-				f:SetPoint(LastPoint[1], LastPoint[2], LastPoint[3], LastPoint[4], LastPoint[5])
-				LastPoint[5] = LastPoint[5] + 0.2 * yPosition--0.2
+				f:SetPoint(_lastPoint[1], _lastPoint[2], _lastPoint[3], _lastPoint[4], _lastPoint[5])
+				_lastPoint[5] = _lastPoint[5] + 0.2 * yPosition--0.2
 				LastGroup = tableau[index].Group
 
 			end
 			Frame:ClearAllPoints()
-			LastPoint[5] = LastPoint[5] + yPosition
-			Frame:SetPoint(LastPoint[1], LastPoint[2], LastPoint[3], LastPoint[4], LastPoint[5])
+			_lastPoint[5] = _lastPoint[5] + yPosition
+			Frame:SetPoint(_lastPoint[1], _lastPoint[2], _lastPoint[3], _lastPoint[4], _lastPoint[5])
 		
 		end
 
