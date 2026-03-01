@@ -76,7 +76,7 @@ XML\Attributes_retail.lua
 
 XML\Options-Messages.lua
 XML\Options-SummonQueue.lua
-XML\Options-Sphere-Vanilla.lua
+XML\Options-Sphere_retail.lua
 XML\Options-Buttons_retail.lua
 XML\Options-Menus_retail.lua
 XML\Options-Timers.lua
