@@ -1,0 +1,94 @@
+## Interface: 120001,120000
+## X-Min-Interface: 110207
+## X-Min-Interface-Midnight: 120001
+
+## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Retail
+## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Retail (Русский)
+## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Retail (Français)
+
+## Notes: Warlock UI & Shard Management - Retail Midnight
+## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir
+## Notes-ruRU: Менеджер заклинаний, камней и демонов для чернокнижника.
+## Version: 8.4.1
+## Website: https://github.com/CKNOEP/Necrosis
+## DefaultState: Enabled
+## X-Original-Author: Lomig,lädygaga - sulfuron EUR - As lancestre
+## X-Localizations: enUS, enGB, deDE, frFR, koKR, zhCN, zhTW, esES, ruRU
+## X-Category: Warlock
+## LoadOnDemand: 0
+## SavedVariablesPerCharacter: NecrosisConfig
+Necrosis.xml
+
+libs\LibStub\LibStub.lua
+libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+libs\AceAddon-3.0\AceAddon-3.0.xml
+libs\AceEvent-3.0\AceEvent-3.0.xml
+libs\AceConsole-3.0\AceConsole-3.0.xml
+libs\AceSerializer-3.0\AceSerializer-3.0.xml
+libs\AceComm-3.0\AceComm-3.0.xml
+libs\AceHook-3.0\AceHook-3.0.xml
+libs\AceTimer-3.0\AceTimer-3.0.xml
+libs\AceGUI-3.0\AceGUI-3.0.xml
+libs\AceConfig-3.0\AceConfig-3.0.xml
+libs\AceLocale-3.0\AceLocale-3.0.xml
+libs\LibSharedMedia-3.0\lib.xml
+libs\AceGUI-3.0-SharedMediaWidgets\widget.xml
+libs\!LibUIDropDownMenu\LibUIDropDownMenu\LibUIDropDownMenu.xml
+
+libs\LibDataBroker-1.1.lua
+
+Locales\Localization.lua
+Locales\Localization.CN.lua
+Locales\Localization.DE.lua
+Locales\Localization.ES.lua
+Locales\Localization.FR.lua
+Locales\Localization.RU.lua
+Locales\Localization.TW.lua
+Locales\Localization.MX.lua
+
+Initialize.lua
+Utils.lua
+
+Dialog.lua
+AFKS.lua
+SummonQueue.lua
+VersionCheck.lua
+Speech\Speech-fr.lua
+Speech\Speech-en.lua
+Speech\Speech-de.lua
+Speech\Speech-es.lua
+Speech\Speech-tw.lua
+Speech\Speech-cn.lua
+Speech\Speech-ru.lua
+
+Message.lua
+Spells-Midnight.lua
+
+
+Timers\Functions.lua
+Timers\GraphicalTimers.lua
+Timers\OtherTimers.lua
+
+
+
+
+XML\Attributes.lua
+
+XML\Options-Messages.lua
+XML\Options-SummonQueue.lua
+XML\Options-Sphere-Vanilla.lua
+XML\Options-Buttons_retail.lua
+XML\Options-Menus_retail.lua
+XML\Options-Timers.lua
+XML\Options-Misc.lua
+XML\Options-Overlay.lua
+
+XML\Panel_retail.lua
+XML\AboutPanel.lua
+Necrosis_retail.lua
+XML\XML_retail.lua
+ThreatMeter.lua
+NecrosisUI\Framework.xml
+
+SpellActivations\SpellActivations.xml
+
