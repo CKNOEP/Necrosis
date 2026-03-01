@@ -46,7 +46,7 @@ Locales\Localization.RU.lua
 Locales\Localization.TW.lua
 Locales\Localization.MX.lua
 
-Initialize.lua
+Initialize_retail.lua
 Utils.lua
 
 Dialog.lua
