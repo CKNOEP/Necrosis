@@ -49,7 +49,7 @@ Locales\Localization.MX.lua
 Initialize_retail.lua
 Utils.lua
 
-Dialog.lua
+Dialog_retail.lua
 AFKS.lua
 SummonQueue.lua
 VersionCheck.lua
