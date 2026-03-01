@@ -296,12 +296,18 @@ Notes:
 	[19028] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "link", Buff = true, SelfOnly = true, }, -- Soul Link || Lien spirituel
 	]]
 
-	[6229]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- Shadow Ward || Gardien de l'ombre
-	[11739] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- 
-	[11740] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- 
-	[28610] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- 
+	-- Shadow Ward changed ID in Midnight (was 6229 in MOP, now 153415)
+	[153415]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- Shadow Ward || Gardien de l'ombre (Midnight 12.0)
+
+	-- Old Shadow Ward ranks (removed in Midnight)
+	--[[ Old Shadow Ward ranks (no longer exist)
+	[6229]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- Shadow Ward (Old ID)
+	[11739] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "ward", Length = 30, Buff = true, }, --
+	[11740] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "ward", Length = 30, Buff = true, }, --
+	[28610] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "ward", Length = 30, Buff = true, }, --
 	[47890] = {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- WOLTK
-	[47891] = {UsageRank = 6, SpellRank = 6, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- 
+	[47891] = {UsageRank = 6, SpellRank = 6, Timer = true, Usage = "ward", Length = 30, Buff = true, }, --
+	]] 
 		
 	[1098] 	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "enslave", Length = 300, Buff = false, }, -- Enslave Demon
 	[11725] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "enslave", Length = 300, Buff = false, }, -- 
@@ -311,9 +317,12 @@ Notes:
 	[710]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "banish", Length = 20, Buff = false, }, -- Banish 
 	[18647] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "banish", Length = 30, Buff = false, }, --  
 
-	[132]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "invisible", Length = 600, Buff = true, }, -- 26 || Detect Invisibility || https://classicdb.ch/?spell=132
-	[2970]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "invisible", Length = 600, Buff = true, }, -- 38 || https://classicdb.ch/?spell=2970
-	[11743]	= {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "invisible", Length = 600, Buff = true, }, -- 50 || https://classicdb.ch/?spell=11743
+	-- Detect Invisibility does NOT exist in Midnight (removed in patch 4.0.1)
+	--[[ Detect Invisibility (Removed in Patch 4.0.1, no longer exists in Midnight)
+	[132]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "invisible", Length = 600, Buff = true, }, -- 26 || Detect Invisibility
+	[2970]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "invisible", Length = 600, Buff = true, }, -- 38
+	[11743]	= {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "invisible", Length = 600, Buff = true, }, -- 50
+	]]
 	
 	-- ::: Curses
 	[702]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "weakness", Length = 120, }, -- Curse of Weakness || Malédiction Faiblesse 
@@ -385,7 +394,13 @@ Notes:
 	[47841]	= {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "unstable_affliction", Length = 18, }, --  
 	[47843]	= {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "unstable_affliction", Length = 18, }, --  	
 	
-	[59161]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "haunt", Length = 12, }, -- Haunt
+	-- Haunt changed ID in Midnight (was 59161 in MOP, now 48181)
+	[48181] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "haunt", Length = 18, }, -- Haunt (Midnight 12.0 - Affliction)
+
+	-- Old Haunt ID (removed in Midnight)
+	--[[ Old Haunt ID (no longer exists)
+	[59161] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "haunt", Length = 12, }, -- Haunt (Old ID)
+	]]
 	
 	-- ::: Spells
 	[348]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "immolate", Length = 15, }, -- Immolate 
@@ -438,12 +453,18 @@ Notes:
 	[18932] = {UsageRank = 4, SpellRank = 4, Timer = false, Usage = "conflagration"}, -- 
 	[27266] = {UsageRank = 5, SpellRank = 5, Timer = false, Usage = "conflagration"}, -- TBC
 	
-	[18265] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "siphon_life", Length = 30, }, -- Siphon Life || Syphon de vie 
-	[18879] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "siphon_life", Length = 30, }, --  
-	[18880] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "siphon_life", Length = 30, }, --  
+	-- Siphon Life changed ID in Midnight (was 18265 in MOP, now 63106)
+	[63106] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "siphon_life", Length = 15, }, -- Siphon Life || Syphon de vie (Midnight 12.0 - Affliction talent)
+
+	-- Old Siphon Life ranks (removed in Midnight)
+	--[[ Old Siphon Life ranks (no longer exist)
+	[18265] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "siphon_life", Length = 30, }, -- Siphon Life (Old ID)
+	[18879] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "siphon_life", Length = 30, }, --
+	[18880] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "siphon_life", Length = 30, }, --
 	[18881] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "siphon_life", Length = 30, }, --
 	[27264] = {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "siphon_life", Length = 30, }, --
-	[30911] = {UsageRank = 6, SpellRank = 6, Timer = true, Usage = "siphon_life", Length = 30, }, --	
+	[30911] = {UsageRank = 6, SpellRank = 6, Timer = true, Usage = "siphon_life", Length = 30, }, --
+	]]	
 
 	
 	[5484]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "howl", Length = 10, Cooldown = 40}, -- Howl of Terror || Hurlement de terreur 
@@ -458,13 +479,16 @@ Notes:
 	[27222] = {UsageRank = 7, SpellRank = 7, Timer = false, Usage = "life_tap"}, --
 	[57946] = {UsageRank = 8, SpellRank = 8, Timer = false, Usage = "life_tap"}, --		
 	
+	-- Sacrifice Voidwalker does NOT exist in Midnight (removed in Patch 5.0.4)
+	--[[ Sacrifice Voidwalker (Removed in Patch 5.0.4, no longer exists in Midnight)
 	[7812]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R1- Sacrifice Voidwalker
-	[19438] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R2 
-	[19440] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R3 
+	[19438] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R2
+	[19440] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R3
 	[19441] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R4
-	[19442] = {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R5 
+	[19442] = {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R5
 	[19443] = {UsageRank = 6, SpellRank = 6, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R6
-	[27273] = {UsageRank = 7, SpellRank = 7, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R7	
+	[27273] = {UsageRank = 7, SpellRank = 7, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R7
+	]]	
 	
 	
 	-- Demonic Sacrifice does NOT work in MOP (broken or removed)
