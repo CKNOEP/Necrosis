@@ -88,7 +88,6 @@ XML\AboutPanel.lua
 Necrosis_retail.lua
 XML\XML_retail.lua
 ThreatMeter.lua
-NecrosisUI\Framework.xml
 
 SpellActivations\SpellActivations.xml
 
