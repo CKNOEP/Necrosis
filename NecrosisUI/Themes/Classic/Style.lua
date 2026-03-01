@@ -13,8 +13,6 @@ if not NecrosisUI then
 end
 
 local NUI, L = NUI, NUI.L
-local Artwork_Core = NUI:GetModule('Component_Artwork')
-local module = NUI:GetModule('Style_Classic')
 local artFrame = CreateFrame('Frame', 'NUI_Art_Classic', NecrosisUI)
 print("|cFFFFFF00[STYLE.LUA]|r artFrame created successfully!")
 
@@ -67,9 +65,5 @@ local function CreateArtwork()
 	artFrame.FarRight:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
 end
 
-function module:OnInitialize()
-	CreateArtwork()
-end
-
--- Execute immediately on load instead of waiting for OnInitialize
+-- Execute immediately on load
 CreateArtwork()
