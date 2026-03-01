@@ -90,5 +90,7 @@ Necrosis.lua
 XML\XML.lua
 ThreatMeter.lua
 NecrosisUI\Framework.xml
+NecrosisUI\Framework.lua
+NecrosisUI\Themes\Classic\Style.lua
 
 SpellActivations\SpellActivations.xml
