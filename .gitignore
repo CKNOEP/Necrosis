@@ -11,3 +11,7 @@
 CLAUDE.md
 UI/generated-image.png
 .gitignore
+
+# Source files (Photoshop)
+*.psd
+NecrosisUI/Themes/Classic/Images/*.psd
