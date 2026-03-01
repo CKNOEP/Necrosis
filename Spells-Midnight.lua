@@ -291,7 +291,10 @@ Notes:
 	[58887]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "Ritual_of_Souls", Length = 600, Buff = true, }, -- Ritual of Souls || 25 Stones --https://www.wowhead.com/wotlk/spell=58887/ritual-of-souls
 	]]
 	
+	-- Soul Link does NOT exist in Midnight (removed)
+	--[[ Soul Link (Removed in Midnight 12.0)
 	[19028] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "link", Buff = true, SelfOnly = true, }, -- Soul Link || Lien spirituel
+	]]
 
 	[6229]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- Shadow Ward || Gardien de l'ombre
 	[11739] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- 
@@ -339,11 +342,17 @@ Notes:
 
 	[18223] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "exhaustion", Length = 12, }, -- Curse of Exhaustion || Malédiction de fatigue || improved via talent points
 
-	[1490]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "elements", Length = 300, }, -- Curse of the Elements || Malédiction Eléments 
-	[11721] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "elements", Length = 300, }, --  
-	[11722] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "elements", Length = 300, }, --  
+	-- Curse of the Elements changed ID in Midnight (was 1490 in MOP, now 44332)
+	[44332]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "elements", Length = 300, }, -- Curse of the Elements || Malédiction Eléments (Midnight 12.0)
+
+	-- Old Curse of the Elements ranks (removed in Midnight)
+	--[[ Old Curse of the Elements ranks (no longer exist)
+	[1490]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "elements", Length = 300, }, -- Curse of the Elements (Old ID - removed)
+	[11721] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "elements", Length = 300, }, --
+	[11722] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "elements", Length = 300, }, --
 	[27228] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "elements", Length = 300, }, --
-	[47865] = {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "elements", Length = 300, }, -- 	
+	[47865] = {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "elements", Length = 300, }, --
+	]] 	
 	
 	--[17862]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "shadow", Length = 300, }, -- Curse of Shadow 
 	--[17937] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "shadow", Length = 300, }, --  
@@ -491,11 +500,17 @@ Notes:
 
 	[109773] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "dark_intent"}, -- Dark Intent || Sombre intention
 
-	[1120] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "drain_soul", Length = 15,}, -- Ignore Improved Drain Soul (Affliction talent points)
-	[8288] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "drain_soul", Length = 15,}, 
+	-- Drain Soul changed ID in Midnight (was 1120 in MOP, now 198590)
+	[198590] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "drain_soul", Length = 5,}, -- Drain Soul (Midnight 12.0 - Affliction)
+
+	-- Old Drain Soul ranks (removed/replaced in Midnight)
+	--[[ Old Drain Soul ranks (no longer exist)
+	[1120] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "drain_soul", Length = 15,}, -- Ignore Improved Drain Soul (Affliction talent points) - OLD
+	[8288] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "drain_soul", Length = 15,},
 	[8289] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "drain_soul", Length = 15,},
 	[11675] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "drain_soul", Length = 15,},
-	[27217] = {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "drain_soul", Length = 15,},	
+	[27217] = {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "drain_soul", Length = 15,},
+	]]	
 	
 	-- ::: Spells from using objects: These are spells we look for to create timers. They are not assigned to buttons.
 	-- Blizzard has several ids in the DB for each, not sure which are used for Classic...
