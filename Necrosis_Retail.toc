@@ -72,7 +72,7 @@ Timers\OtherTimers.lua
 
 
 
-XML\Attributes.lua
+XML\Attributes_retail.lua
 
 XML\Options-Messages.lua
 XML\Options-SummonQueue.lua
