@@ -1366,6 +1366,7 @@ function Necrosis:OnEvent(self, event,...)
 			-- This handles creatures that are multiple types (e.g., Void Walker = Demon + Elemental)
 			local enslaveUsable, _ = IsUsableSpell(Necrosis.GetSpellName("enslave"))
 			local banishUsable, _ = IsUsableSpell(Necrosis.GetSpellName("banish"))
+			print("[DEBUG] enslaveUsable="..tostring(enslaveUsable).." banishUsable="..tostring(banishUsable).." target="..tostring(UnitName("target")).." creatureType="..tostring(UnitCreatureType("target")))
 
 			-- Show enslave button if enslaveable
 			if enslaveUsable then
