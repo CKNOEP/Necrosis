@@ -93,6 +93,6 @@ XML\XML.lua
 ThreatMeter.lua
 NecrosisUI\Framework.xml
 NecrosisUI\Framework.lua
-NecrosisUI\Themes\Classic\Style.lua
+UI\BottomBanner\Style.lua
 
 SpellActivations\SpellActivations.xml
