@@ -1371,14 +1371,15 @@ function Necrosis:OnEvent(self, event,...)
 			-- Show enslave button if enslaveable
 			if enslaveUsable then
 				if NecrosisCreatureAlertButton_demon then
+					NecrosisCreatureAlertButton_demon:Show()
 					NecrosisCreatureAlertButton_demon:SetAlpha(1)
 					NecrosisCreatureAlertButton_demon:SetMovable(true)
-					print("[DEBUG] Enslave button shown")
 				else
 					print("[DEBUG] ERROR: NecrosisCreatureAlertButton_demon is NIL!")
 				end
 			else
 				if NecrosisCreatureAlertButton_demon then
+					NecrosisCreatureAlertButton_demon:Hide()
 					NecrosisCreatureAlertButton_demon:SetAlpha(0)
 				end
 			end
@@ -1386,14 +1387,15 @@ function Necrosis:OnEvent(self, event,...)
 			-- Show banish button if banishable
 			if banishUsable then
 				if NecrosisCreatureAlertButton_elemental then
+					NecrosisCreatureAlertButton_elemental:Show()
 					NecrosisCreatureAlertButton_elemental:SetAlpha(1)
 					NecrosisCreatureAlertButton_elemental:SetMovable(true)
-					print("[DEBUG] Banish button shown")
 				else
 					print("[DEBUG] ERROR: NecrosisCreatureAlertButton_elemental is NIL!")
 				end
 			else
 				if NecrosisCreatureAlertButton_elemental then
+					NecrosisCreatureAlertButton_elemental:Hide()
 					NecrosisCreatureAlertButton_elemental:SetAlpha(0)
 				end
 			end

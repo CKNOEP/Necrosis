@@ -1382,17 +1382,21 @@ function Necrosis:OnEvent(self, event,...)
 
 			-- Show enslave button if enslaveable
 			if enslaveUsable then
+				NecrosisCreatureAlertButton_demon:Show()
 				NecrosisCreatureAlertButton_demon:SetAlpha(1)
 				NecrosisCreatureAlertButton_demon:SetMovable(true)
 			else
+				NecrosisCreatureAlertButton_demon:Hide()
 				NecrosisCreatureAlertButton_demon:SetAlpha(0)
 			end
 
 			-- Show banish button if banishable
 			if banishUsable then
+				NecrosisCreatureAlertButton_elemental:Show()
 				NecrosisCreatureAlertButton_elemental:SetAlpha(1)
 				NecrosisCreatureAlertButton_elemental:SetMovable(true)
 			else
+				NecrosisCreatureAlertButton_elemental:Hide()
 				NecrosisCreatureAlertButton_elemental:SetAlpha(0)
 			end
 		else
