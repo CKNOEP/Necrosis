@@ -374,8 +374,24 @@ function Necrosis:SetMiscConfig()
 		frame = CreateFrame("Slider", "BottomBannerScaleSlider", NecrosisMiscConfig, "OptionsSliderTemplate")
 		frame:SetMinMaxValues(1.0, 1.2)
 		frame:SetValueStep(0.05)
+		frame:SetObeyStepOnDrag(true)
+		frame:SetStepsPerPage(0.05)
 		frame:SetWidth(120)
 		frame:SetHeight(15)
+
+		-- Create slider visual elements with circular dot cursor
+		local track = frame:CreateTexture(nil, "BACKGROUND")
+		track:SetWidth(120)
+		track:SetHeight(4)
+		track:SetColorTexture(0.2, 0.2, 0.2, 1)
+		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
+
+		local thumb = frame:GetThumbTexture()
+		if thumb then
+			thumb:SetTexture("Interface\\Common\\Indicator-Yellow")
+			thumb:SetColorTexture(1, 0.8, 0, 1)
+			thumb:SetSize(6, 6)
+		end
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("LEFT", FontString, "RIGHT", 20, 0)
@@ -386,8 +402,10 @@ function Necrosis:SetMiscConfig()
 		end)
 		frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
 		frame:SetScript("OnValueChanged", function(self)
-			NecrosisConfig.BottomBannerScale = self:GetValue()
 			GameTooltip:SetText(string.format("Taille bandeau: %.2fx", self:GetValue()))
+		end)
+		frame:SetScript("OnMouseUp", function(self)
+			NecrosisConfig.BottomBannerScale = self:GetValue()
 			-- Mettre à jour le scale du bandeau
 			if NUI and NUI.UpdateBottomBannerScale then
 				NUI:UpdateBottomBannerScale()
