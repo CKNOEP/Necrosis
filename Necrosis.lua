@@ -1365,13 +1365,13 @@ function Necrosis:OnEvent(self, event,...)
 		usable, nomana = IsUsableSpell(Necrosis.GetSpellName("enslave"));
 		--print(usable,nomana,Necrosis.Unit.Demon,Necrosis.Unit.Elemental)
 		
-			if UnitCreatureType("target") == Necrosis.Unit.Demon  then 	-- Button Alerte Demon	
-			NecrosisCreatureAlertButton_demon:SetAlpha(1)		
+			if UnitCreatureType("target") == Necrosis.Unit.Demon  then 	-- Button Alerte Demon
+			NecrosisCreatureAlertButton_demon:SetAlpha(1)
 			--NecrosisCreatureAlertButton_demon:EnableMouse(true)
-			
-			NecrosisCreatureAlertButton_elemental:SetAlpha(1) 
+
+			NecrosisCreatureAlertButton_elemental:SetAlpha(0)
 			--NecrosisCreatureAlertButton_elemental:EnableMouse(true)
-			NecrosisCreatureAlertButton_elemental:SetMovable(true)
+			NecrosisCreatureAlertButton_demon:SetMovable(true)
 			
 			elseif UnitCreatureType("target") == Necrosis.Unit.Elemental then-- Button Alerte Elemental
 			NecrosisCreatureAlertButton_elemental:SetAlpha(1)

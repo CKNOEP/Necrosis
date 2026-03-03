@@ -222,7 +222,11 @@ Necrosis.Data = {
 Necrosis.Data.Label = Necrosis.Data.AppName.." "..Necrosis.Data.Version
 
 Necrosis.Speech = {}
-Necrosis.Unit = {}
+-- Initialize creature types for alert buttons
+Necrosis.Unit = {
+	Demon = "Demon",
+	Elemental = "Elemental",
+}
 Necrosis.Translation = {}
 
 Necrosis.Config = {}

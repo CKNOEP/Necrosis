@@ -540,7 +540,7 @@ function Necrosis:CreateWarlockPopup()
 	frame:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\ElemAlert")
 	frame:RegisterForDrag("LeftButton")
 	frame:RegisterForClicks("AnyUp")
-	frame:SetAlpha(0/100)
+	frame:SetAlpha(0)  -- Hidden by default, shown when elemental target is detected
 	local hight_rank = Necrosis.GetSpellCastName("banish")
 	
 	local derank = ""
