@@ -215,7 +215,7 @@ end
 Necrosis.Data = {
 	Version = GetMetadata("Necrosis", "Version"),
 	AppName = "Necrosis",
-	LastConfig = "8.0.6",
+	LastConfig = GetMetadata("Necrosis", "Version"),  -- Always match current version
 	Enabled = false,
 }
 

@@ -7,10 +7,16 @@
 local VersionCheck = CreateFrame("Frame")
 local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
 
+-- Get version from addon metadata (TOC file)
+local function GetAddonVersion()
+    local version = GetAddOnMetadata("Necrosis", "Version")
+    return version or "unknown"
+end
+
 -- Configuration
 local CONFIG = {
     ADDON_NAME = "Necrosis",
-    CURRENT_VERSION = "8.3.0",
+    CURRENT_VERSION = GetAddonVersion(),
     GITHUB_REPO = "CKNOEP/Necrosis",
     GITHUB_API_URL = "https://api.github.com/repos/CKNOEP/Necrosis/releases/latest",
     CURSEFORGE_URL = "https://www.curseforge.com/wow/addons/necrosis",
