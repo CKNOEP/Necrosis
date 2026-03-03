@@ -1363,6 +1363,7 @@ function Necrosis:OnEvent(self, event,...)
 		if NecrosisConfig.CreatureAlert	and UnitCanAttack("player", "target") and not UnitIsDead("target") then
 		
 		usable, nomana = IsUsableSpell(Necrosis.GetSpellName("enslave"));
+		print("[DEBUG] Demon='"..tostring(Necrosis.Unit.Demon).."' Elemental='"..tostring(Necrosis.Unit.Elemental).."' TargetType='"..tostring(UnitCreatureType("target")).."'")
 		
 			if UnitCreatureType("target") == Necrosis.Unit.Demon  then 	-- Button Alerte Demon
 			NecrosisCreatureAlertButton_demon:SetAlpha(1)
