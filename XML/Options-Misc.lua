@@ -394,8 +394,8 @@ function Necrosis:SetMiscConfig()
 			end
 		end)
 
-		BottomBannerScaleLow:SetText("1.0")
-		BottomBannerScaleHigh:SetText("1.2")
+		BottomBannerScaleSliderLow:SetText("1.0")
+		BottomBannerScaleSliderHigh:SetText("1.2")
 
 	NecrosisMoveShard:SetChecked(NecrosisConfig.SoulshardSort)
 	--NecrosisDestroyShardBag:SetChecked(NecrosisConfig.SoulshardDestroy)
