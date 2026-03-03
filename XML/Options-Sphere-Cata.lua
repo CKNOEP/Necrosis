@@ -327,6 +327,7 @@ function Necrosis:SetSphereConfig()
 	NecrosisLock:SetChecked(NecrosisConfig.NoDragAll)
 
 	NecrosisSphereSize:SetValue(NecrosisConfig.NecrosisButtonScale)
+	NecrosisRotation:SetValue(NecrosisConfig.NecrosisAngle)
 	NecrosisShowCount:SetChecked(NecrosisConfig.ShowCount)
 
 	local couleur = {"Cata"}

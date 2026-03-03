@@ -321,6 +321,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 	NecrosisDeleteShardsOutCount:SetText(self.Config.Sphere["Shift+Clic on Sphere to del. Shards"].."Shards > "..tostring(NecrosisConfig.DestroyCount))
 
 	NecrosisSphereSize:SetValue(NecrosisConfig.NecrosisButtonScale)
+	NecrosisRotation:SetValue(NecrosisConfig.NecrosisAngle)
 	NecrosisShowCount:SetChecked(NecrosisConfig.ShowCount)
 	NecrosisLock:SetText(self.Config.Misc["Verrouiller Necrosis sur l'interface"])
 
