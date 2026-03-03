@@ -1374,32 +1374,26 @@ function Necrosis:OnEvent(self, event,...)
 			Local.Warning.Antifear.Immune = false
 		end
 		if NecrosisConfig.CreatureAlert	and UnitCanAttack("player", "target") and not UnitIsDead("target") then
-		
-		usable, nomana = IsUsableSpell(Necrosis.GetSpellName("enslave"));
-		--print(usable,nomana,Necrosis.Unit.Demon,Necrosis.Unit.Elemental)
-		
-			if UnitCreatureType("target") == Necrosis.Unit.Demon  then 	-- Button Alerte Demon
-			NecrosisCreatureAlertButton_demon:SetAlpha(1)
-			--NecrosisCreatureAlertButton_demon:EnableMouse(true)
 
-			NecrosisCreatureAlertButton_elemental:SetAlpha(0)
-			--NecrosisCreatureAlertButton_elemental:EnableMouse(true)
-			NecrosisCreatureAlertButton_demon:SetMovable(true)
-			
-			elseif UnitCreatureType("target") == Necrosis.Unit.Elemental then-- Button Alerte Elemental
-			NecrosisCreatureAlertButton_elemental:SetAlpha(1)
-			--NecrosisCreatureAlertButton_elemental:EnableMouse(true)
-			NecrosisCreatureAlertButton_demon:SetAlpha(0)
-			--NecrosisCreatureAlertButton_demon:EnableMouse(true)
-			NecrosisCreatureAlertButton_elemental:SetMovable(true)
-	
+			-- Check if spells are usable instead of relying on creature type
+			-- This handles creatures that are multiple types (e.g., Void Walker = Demon + Elemental)
+			local enslaveUsable, _ = IsUsableSpell(Necrosis.GetSpellName("enslave"))
+			local banishUsable, _ = IsUsableSpell(Necrosis.GetSpellName("banish"))
+
+			-- Show enslave button if enslaveable
+			if enslaveUsable then
+				NecrosisCreatureAlertButton_demon:SetAlpha(1)
+				NecrosisCreatureAlertButton_demon:SetMovable(true)
 			else
-			NecrosisCreatureAlertButton_demon:SetAlpha(0)
-			--NecrosisCreatureAlertButton_demon:EnableMouse(true)
-			
-			NecrosisCreatureAlertButton_elemental:SetAlpha(0) 
-			--NecrosisCreatureAlertButton_elemental:EnableMouse(true)
-	
+				NecrosisCreatureAlertButton_demon:SetAlpha(0)
+			end
+
+			-- Show banish button if banishable
+			if banishUsable then
+				NecrosisCreatureAlertButton_elemental:SetAlpha(1)
+				NecrosisCreatureAlertButton_elemental:SetMovable(true)
+			else
+				NecrosisCreatureAlertButton_elemental:SetAlpha(0)
 			end
 		else
 		NecrosisCreatureAlertButton_demon:SetAlpha(0) 
