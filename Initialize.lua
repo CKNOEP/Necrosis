@@ -222,11 +222,35 @@ Necrosis.Data = {
 Necrosis.Data.Label = Necrosis.Data.AppName.." "..Necrosis.Data.Version
 
 Necrosis.Speech = {}
--- Initialize creature types for alert buttons
-Necrosis.Unit = {
-	Demon = "Demon",
-	Elemental = "Elemental",
-}
+-- Initialize creature types for alert buttons (localized)
+local locale = GetLocale()
+Necrosis.Unit = {}
+
+if locale == "frFR" then
+	Necrosis.Unit.Demon = "Démon"
+	Necrosis.Unit.Elemental = "Élémentaire"
+elseif locale == "deDE" then
+	Necrosis.Unit.Demon = "Dämon"
+	Necrosis.Unit.Elemental = "Elementar"
+elseif locale == "esES" or locale == "esMX" then
+	Necrosis.Unit.Demon = "Demonio"
+	Necrosis.Unit.Elemental = "Elemental"
+elseif locale == "ruRU" then
+	Necrosis.Unit.Demon = "Демон"
+	Necrosis.Unit.Elemental = "Элементаль"
+elseif locale == "zhCN" then
+	Necrosis.Unit.Demon = "恶魔"
+	Necrosis.Unit.Elemental = "元素"
+elseif locale == "zhTW" then
+	Necrosis.Unit.Demon = "惡魔"
+	Necrosis.Unit.Elemental = "元素"
+elseif locale == "koKR" then
+	Necrosis.Unit.Demon = "악마"
+	Necrosis.Unit.Elemental = "원소"
+else -- enUS, enGB, etc.
+	Necrosis.Unit.Demon = "Demon"
+	Necrosis.Unit.Elemental = "Elemental"
+end
 Necrosis.Translation = {}
 
 Necrosis.Config = {}
