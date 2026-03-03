@@ -27,7 +27,8 @@ local function CreateArtwork()
 	artFrame:SetFrameLevel(1)
 	artFrame:SetAlpha(1.0)  -- 100% opaque pour bien voir la teinte violette
 	artFrame:SetSize(2, 2)
-	artFrame:SetScale(0.78);
+	local scale = 0.78 * (NecrosisConfig.BottomBannerScale or 1.0)
+	artFrame:SetScale(scale)
 	artFrame:SetPoint('BOTTOM', NUI_BottomAnchor)
 
 	artFrame.Center = artFrame:CreateTexture('NUI_Art_Classic_Center', 'BACKGROUND')

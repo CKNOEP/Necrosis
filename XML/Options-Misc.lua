@@ -368,6 +368,35 @@ function Necrosis:SetMiscConfig()
 		frame:SetScript("OnEnter", function() end)
 		frame:SetScript("OnLeave", function() end)
 
+		---------------------------------------------
+		-- Slider pour scaler le bandeau en bas
+		---------------------------------------------
+		frame = CreateFrame("Slider", "BottomBannerScaleSlider", NecrosisMiscConfig, "OptionsSliderTemplate")
+		frame:SetMinMaxValues(1.0, 1.2)
+		frame:SetValueStep(0.05)
+		frame:SetWidth(120)
+		frame:SetHeight(15)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("LEFT", FontString, "RIGHT", 20, 0)
+
+		frame:SetScript("OnEnter", function(self)
+			GameTooltip:SetOwner(frame, "ANCHOR_RIGHT")
+			GameTooltip:SetText(string.format("Taille bandeau: %.2fx", self:GetValue()))
+		end)
+		frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
+		frame:SetScript("OnValueChanged", function(self)
+			NecrosisConfig.BottomBannerScale = self:GetValue()
+			GameTooltip:SetText(string.format("Taille bandeau: %.2fx", self:GetValue()))
+			-- Mettre à jour le scale du bandeau
+			if NUI and NUI.UpdateBottomBannerScale then
+				NUI:UpdateBottomBannerScale()
+			end
+		end)
+
+		BottomBannerScaleLow:SetText("1.0")
+		BottomBannerScaleHigh:SetText("1.2")
+
 	NecrosisMoveShard:SetChecked(NecrosisConfig.SoulshardSort)
 	--NecrosisDestroyShardBag:SetChecked(NecrosisConfig.SoulshardDestroy)
 	NecrosisShardBag:SetValue(4 - NecrosisConfig.SoulshardContainer)
@@ -396,7 +425,12 @@ function Necrosis:SetMiscConfig()
 			end
 		end
 	end
-	
+
+	-- Initialize BottomBanner scale slider
+	if BottomBannerScaleSlider then
+		BottomBannerScaleSlider:SetValue(NecrosisConfig.BottomBannerScale or 1.0)
+	end
+
 	if NecrosisConfig.DestroyCount then
 		NecrosisDestroyCount:SetValue(NecrosisConfig.DestroyCount)
 		

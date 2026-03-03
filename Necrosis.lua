@@ -47,6 +47,7 @@ Local.DefaultConfig = {
 	NecrosisAlphaBar = 85,
 	NecrosisLockServ = true,
 	NecrosisAngle = 180,
+	BottomBannerScale = 1.0,  -- Scale des images du bandeau (1.0 à 1.2)
 	StonePosition = {1, 2, 3, 4, 5, 6, 7, 8, 9}, -- options to show or hide
 		-- 1 = Firestone
 		-- 2 = Spellstone
