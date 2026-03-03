@@ -419,6 +419,11 @@ function Necrosis:Initialize(Config)
 		NecrosisConfig.ThreatRingThickness = 1 -- Very thin ring thickness (1px)
 	end
 
+	-- Initialize Bottom Banner Scale
+	if NecrosisConfig.BottomBannerScale == nil then
+		NecrosisConfig.BottomBannerScale = 1.0 -- Default scale for bottom banner images
+	end
+
 	-- Initialize Version Check settings
 	if NecrosisConfig.VersionCheck == nil then
 		NecrosisConfig.VersionCheck = {
