@@ -643,8 +643,8 @@ function CheckCorruptionRefresh(target, cast_guid, spell_id)
 							
 									-- On recherche dans la table des Timer la corruption correspondante à la cible
 									--if Local.TimerManagement.SpellTimer[index] then
-									--print(Necrosis.TimerManagement.SpellTimer[index].Name,NameDebuff,Necrosis.TimerManagement.SpellTimer[index].TargetGUID,UnitGUID("target"))
-										if Necrosis.TimerManagement.SpellTimer[index].Name == NameDebuff and  Necrosis.TimerManagement.SpellTimer[index].TargetGUID == UnitGUID("target") then
+									--print(Local.TimerManagement.SpellTimer[index].Name,NameDebuff,Local.TimerManagement.SpellTimer[index].TargetGUID,UnitGUID("target"))
+										if Local.TimerManagement.SpellTimer[index].Name == NameDebuff and  Local.TimerManagement.SpellTimer[index].TargetGUID == UnitGUID("target") then
 										
 									-- On delete le timer actuel pour le remplacer
 										Necrosis:RetraitTimerParIndex(index, Local.TimerManagement, "spell expired")
@@ -1372,8 +1372,6 @@ function Necrosis:OnEvent(self, event,...)
 			local canEnslave = enslaveUsable and targetType == Necrosis.Unit.Demon
 			-- Only show banish if spell is usable AND target is an elemental
 			local canBanish = banishUsable and targetType == Necrosis.Unit.Elemental
-
-			print("[DEBUG] canEnslave="..tostring(canEnslave).." canBanish="..tostring(canBanish).." targetType='"..tostring(targetType).."'")
 
 			-- Show enslave button if can be enslaved
 			if canEnslave then
