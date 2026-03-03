@@ -1,29 +1,20 @@
-print("|cFFFFFF00[STYLE.LUA]|r Style.lua is loading!")
-
-print("|cFFFFFF00[STYLE.LUA]|r NUI exists: " .. tostring(NUI ~= nil))
 if not NUI then
-	print("|cFFFF0000[STYLE.LUA]|r ERROR: NUI is nil!")
+	error("ERROR: NUI is nil!")
 	return
 end
 
-print("|cFFFFFF00[STYLE.LUA]|r NecrosisUI exists: " .. tostring(NecrosisUI ~= nil))
 if not NecrosisUI then
-	print("|cFFFF0000[STYLE.LUA]|r ERROR: NecrosisUI is nil!")
+	error("ERROR: NecrosisUI is nil!")
 	return
 end
 
 local NUI, L = NUI, NUI.L
 local artFrame = CreateFrame('Frame', 'NUI_Art_Classic', NecrosisUI)
-print("|cFFFFFF00[STYLE.LUA]|r artFrame created successfully!")
 
 ----------------------------------------------------------------------------------------------------
 local SkinnedFrames = {}
 
 local function CreateArtwork()
-	print("|cFFFFFF00[ARTWORK]|r CreateArtwork() called!")
-	print("|cFFFFFF00[ARTWORK]|r artFrame exists: " .. tostring(artFrame ~= nil))
-	print("|cFFFFFF00[ARTWORK]|r NUI_BottomAnchor exists: " .. tostring(NUI_BottomAnchor ~= nil))
-	print("|cFFFFFF00[ARTWORK]|r NecrosisUI exists: " .. tostring(NecrosisUI ~= nil))
 
 	local plate = CreateFrame('Frame', 'Classic_ActionBarPlate', artFrame)
 	plate:SetSize(1002, 139)
