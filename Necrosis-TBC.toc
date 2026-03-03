@@ -55,7 +55,6 @@ Locales\Localization.MX.lua
 Dialog.lua
 AFKS.lua
 SummonQueue.lua
-VersionCheck.lua
 Speech\Speech-fr.lua
 Speech\Speech-en.lua
 Speech\Speech-de.lua

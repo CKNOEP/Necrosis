@@ -203,23 +203,12 @@ C_Timer.After(0.5, function()
 end)
 
 -- Compatibility wrapper for GetAddOnMetadata (deprecated in modern WoW)
-local function GetMetadata(addon, field)
-	if C_AddOns and C_AddOns.GetAddOnMetadata then
-		return C_AddOns.GetAddOnMetadata(addon, field)
-	elseif GetAddOnMetadata then
-		return GetAddOnMetadata(addon, field)
-	end
-	return nil
-end
-
+-- Simple version storage (from TOC file)
 Necrosis.Data = {
-	Version = GetMetadata("Necrosis", "Version"),
 	AppName = "Necrosis",
-	LastConfig = GetMetadata("Necrosis", "Version"),  -- Always match current version
+	Version = "8.4.1",  -- Update manually when releasing
 	Enabled = false,
 }
-
-Necrosis.Data.Label = Necrosis.Data.AppName.." "..Necrosis.Data.Version
 
 Necrosis.Speech = {}
 -- Initialize creature types for alert buttons (localized)
@@ -413,11 +402,11 @@ function Necrosis:Initialize(Config)
 	end
 
 	Necrosis:Initialize_Speech()
-	-- On charge (ou on crée la configuration pour le joueur et on l'affiche sur la console
-	if not Necrosis.Data.LastConfig or  Necrosis.Data.LastConfig > Necrosis.Data.Version or NecrosisConfig.Version == nil then		
+	-- Initialize configuration with defaults
+	if not NecrosisConfig or NecrosisConfig.Version ~= Necrosis.Data.Version then
 		NecrosisConfig = {}
 		NecrosisConfig = Config
-		NecrosisConfig.Version = Necrosis.Data.LastConfig
+		NecrosisConfig.Version = Necrosis.Data.Version
 		self:Msg(self.ChatMessage.Interface.DefaultConfig, "USER")
 	else
 		self:Msg(self.ChatMessage.Interface.UserConfig, "USER")
@@ -457,16 +446,6 @@ function Necrosis:Initialize(Config)
 	end
 
 	-- Initialize Version Check settings
-	if NecrosisConfig.VersionCheck == nil then
-		NecrosisConfig.VersionCheck = {
-			Enabled = true,
-			CheckOnLoad = true,
-			NotifyOnUpdate = true,
-			CheckInterval = 86400, -- 24 hours
-			LastCheck = 0,
-		}
-	end
-
 	Necrosis.UpdateSpellTimers(NecrosisConfig.Timers)-- init timers
 	
 	-- Création de la liste des sorts disponibles
