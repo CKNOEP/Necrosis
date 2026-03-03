@@ -1,18 +1,25 @@
-## Necrosis Changelog
-
-### Version 8.4.3 (03/03/2026)
-
-**Bug Fixes:**
-- Fixed TimerManagement reference error in Necrosis-cata.lua (line 657-658)
-- Removed debug print messages from creature alert system
-- Fixed nil reference in spell timer lookup for corruption refresh
-
-**Technical:**
-- Standardized TimerManagement references across all addon versions
-- Improved code consistency between Necrosis.lua and Necrosis-cata.lua
+## Necrosis - Changelog
 
 ---
 
-### Version 8.4.1 (Previous)
+## Version 8.4.3 - March 3, 2026
 
-[Earlier versions documented elsewhere]
+### Bug Fixes
+- **Fixed critical error in Necrosis-cata.lua**: Corrected TimerManagement reference that was causing "attempt to index field 'TimerManagement' (a nil value)" error at lines 657-658
+- **Removed debug messages**: Eliminated debug print statements from creature alert system that were cluttering chat output
+- **Fixed corruption refresh timer lookup**: Corrected nil reference in spell timer lookup when refreshing corruption debuffs on targets
+
+### Improvements
+- **Code consistency**: Standardized TimerManagement references across Necrosis.lua and Necrosis-cata.lua for better maintainability
+- **Better error handling**: Improved stability of the creature alert button system (Enslave Demon/Banish Elemental)
+
+### Technical Details
+- Updated: Necrosis.lua (line 647)
+- Updated: Necrosis-cata.lua (lines 657-658)
+- All TOC files updated to v8.4.3
+
+---
+
+## Version 8.4.1 - Previous Release
+
+[Earlier versions documented in git history]
