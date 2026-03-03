@@ -1362,14 +1362,21 @@ function Necrosis:OnEvent(self, event,...)
 		end
 		if NecrosisConfig.CreatureAlert	and UnitCanAttack("player", "target") and not UnitIsDead("target") then
 
-			-- Check if spells are usable instead of relying on creature type
-			-- This handles creatures that are multiple types (e.g., Void Walker = Demon + Elemental)
+			-- Check both spell usability AND creature type
+			-- This ensures we don't show buttons for invalid targets (like humanoids)
 			local enslaveUsable, _ = IsUsableSpell(Necrosis.GetSpellName("enslave"))
 			local banishUsable, _ = IsUsableSpell(Necrosis.GetSpellName("banish"))
-			print("[DEBUG] enslaveUsable="..tostring(enslaveUsable).." banishUsable="..tostring(banishUsable).." target="..tostring(UnitName("target")).." creatureType="..tostring(UnitCreatureType("target")))
+			local targetType = UnitCreatureType("target")
 
-			-- Show enslave button if enslaveable
-			if enslaveUsable then
+			-- Only show enslave if spell is usable AND target is a demon
+			local canEnslave = enslaveUsable and targetType == Necrosis.Unit.Demon
+			-- Only show banish if spell is usable AND target is an elemental
+			local canBanish = banishUsable and targetType == Necrosis.Unit.Elemental
+
+			print("[DEBUG] canEnslave="..tostring(canEnslave).." canBanish="..tostring(canBanish).." targetType='"..tostring(targetType).."'")
+
+			-- Show enslave button if can be enslaved
+			if canEnslave then
 				if NecrosisCreatureAlertButton_demon then
 					NecrosisCreatureAlertButton_demon:Show()
 					NecrosisCreatureAlertButton_demon:SetAlpha(1)
@@ -1384,8 +1391,8 @@ function Necrosis:OnEvent(self, event,...)
 				end
 			end
 
-			-- Show banish button if banishable
-			if banishUsable then
+			-- Show banish button if can be banished
+			if canBanish then
 				if NecrosisCreatureAlertButton_elemental then
 					NecrosisCreatureAlertButton_elemental:Show()
 					NecrosisCreatureAlertButton_elemental:SetAlpha(1)
