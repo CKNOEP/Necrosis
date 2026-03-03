@@ -8,7 +8,8 @@ local _G = getfenv(0)
 
 Necrosis = {}
 SAO ={}
--- NECROSIS_ID is now defined in Core-Init.lua before locales load
+-- Define NECROSIS_ID globally for Ace3 Localization
+NECROSIS_ID = "Necrosis"
 
 -- ============================================================================
 -- WoW Version Compatibility Wrappers (Support TBC, Wrath, Cata, MOP+)
