@@ -423,6 +423,10 @@ function Necrosis:Initialize(Config)
 	if NecrosisConfig.BottomBannerScale == nil then
 		NecrosisConfig.BottomBannerScale = 1.0 -- Default scale for bottom banner images
 	end
+	-- Apply the scale to the banner (in case it was created before config was initialized)
+	if NUI and NUI.UpdateBottomBannerScale then
+		NUI:UpdateBottomBannerScale()
+	end
 
 	-- Initialize Version Check settings
 	if NecrosisConfig.VersionCheck == nil then
