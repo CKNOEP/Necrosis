@@ -402,11 +402,11 @@ function Necrosis:SetMiscConfig()
 		end)
 		frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
 		frame:SetScript("OnValueChanged", function(self)
-			GameTooltip:SetText(string.format("Taille bandeau: %.2fx", self:GetValue()))
-		end)
-		frame:SetScript("OnMouseUp", function(self)
+			-- Sauvegarder immédiatement la valeur
 			NecrosisConfig.BottomBannerScale = self:GetValue()
-			-- Mettre à jour le scale du bandeau
+			-- Mettre à jour le tooltip
+			GameTooltip:SetText(string.format("Taille bandeau: %.2fx", self:GetValue()))
+			-- Mettre à jour le scale du bandeau en temps réel
 			if NUI and NUI.UpdateBottomBannerScale then
 				NUI:UpdateBottomBannerScale()
 			end
