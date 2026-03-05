@@ -273,7 +273,7 @@ Notes:
 	-- ::: Buffs
 	[687]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Demon Skin || Peau de démon 
 	[696]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --  
-	[706]	= {UsageRank = 3, SpellRank = 1, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Demon Armor || Armure démoniaque
+	[706]	= {UsageRank = 3, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Demon Armor || Armure démoniaque
 	[1086]	= {UsageRank = 4, SpellRank = 2, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
 	[11733] = {UsageRank = 5, SpellRank = 3, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
 	[11734] = {UsageRank = 6, SpellRank = 4, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 

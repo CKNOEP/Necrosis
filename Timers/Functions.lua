@@ -191,8 +191,8 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 
 	-- attach a graphical timer if enabled || Association d'un timer graphique au timer
 	-- associate it to the frame (if present) || Si il y a une frame timer de libérée, on l'associe au timer
-	if NecrosisConfig.TimerType == 1 then -- si timer graphics
-		
+	if NecrosisConfig.TimerType == 1 and #Timer.SpellTimer > 0 then -- si timer graphics AND there's a timer
+
 	    local TimerLibre = nil
 		for index, valeur in ipairs(Timer.TimerTable) do
 			if not valeur then
@@ -201,7 +201,7 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 				break
 			end
 		end
-		-- Si il n'y a pas de frame de libérée, on rajoute une frame || if there is no frame, add one 
+		-- Si il n'y a pas de frame de libérée, on rajoute une frame || if there is no frame, add one
 		if not TimerLibre then
 			Timer.TimerTable:insert(true)
 			TimerLibre = #Timer.TimerTable

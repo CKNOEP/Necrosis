@@ -41,6 +41,8 @@ libs\!LibUIDropDownMenu\LibUIDropDownMenu\LibUIDropDownMenu.xml
 
 libs\LibDataBroker-1.1.lua
 
+Constants.lua
+
 Locales\Localization.lua
 Locales\Localization.CN.lua
 Locales\Localization.DE.lua
@@ -50,10 +52,9 @@ Locales\Localization.RU.lua
 Locales\Localization.TW.lua
 Locales\Localization.MX.lua
 
+Dialog-Cata.lua
 Initialize.lua
 Utils.lua
-
-Dialog-Cata.lua
 AFKS.lua
 SummonQueue.lua
 Speech\Speech-fr.lua

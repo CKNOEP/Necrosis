@@ -7,6 +7,12 @@
 -- ENGLISH  VERSION TEXTS --
 ------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
+-- Ensure L is always a table to prevent nil errors
+if not L then
+	L = {}
+	-- Set default English strings as fallback
+	L["NECROSIS_LABEL"] = "Necrosis"
+end
 
 function Necrosis:Localization_Dialog()
 end
@@ -140,7 +146,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("WarlockItemsDone"
 	return res
 end
 
-Necrosis.HealthstoneCooldown = L["NECROSIS_LABEL"]
+Necrosis.HealthstoneCooldown = (L and L["NECROSIS_LABEL"]) or "Necrosis"
 --[[
 -- Resource: https://wow.tools/dbc/?dbc=globalstrings
 Necrosis.Localize = {
@@ -150,7 +156,7 @@ Necrosis.Localize = {
 --]]
 Necrosis.TooltipData = {
 	["Main"] = {
-		Label = L["NECROSIS_LABEL"],
+		Label = (L and L["NECROSIS_LABEL"]) or "Necrosis",
 		Stone = {
 			[true] = YES, --L["YES"], global strings
 			[false] = NO, --L["NO"],
