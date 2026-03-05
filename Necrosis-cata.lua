@@ -1392,7 +1392,7 @@ function Necrosis:OnEvent(self, event,...)
 				NecrosisCreatureAlertButton_demon:SetAlpha(1)
 				NecrosisCreatureAlertButton_demon:SetMovable(true)
 			else
-				NecrosisCreatureAlertButton_demon:Hide()
+				-- Use SetAlpha(0) instead of Hide() for secure frames (cannot be hidden in combat)
 				NecrosisCreatureAlertButton_demon:SetAlpha(0)
 			end
 
@@ -1402,7 +1402,7 @@ function Necrosis:OnEvent(self, event,...)
 				NecrosisCreatureAlertButton_elemental:SetAlpha(1)
 				NecrosisCreatureAlertButton_elemental:SetMovable(true)
 			else
-				NecrosisCreatureAlertButton_elemental:Hide()
+				-- Use SetAlpha(0) instead of Hide() for secure frames (cannot be hidden in combat)
 				NecrosisCreatureAlertButton_elemental:SetAlpha(0)
 			end
 		else

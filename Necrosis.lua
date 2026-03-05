@@ -1385,7 +1385,7 @@ function Necrosis:OnEvent(self, event,...)
 				end
 			else
 				if NecrosisCreatureAlertButton_demon then
-					NecrosisCreatureAlertButton_demon:Hide()
+					-- Use SetAlpha(0) instead of Hide() for secure frames (cannot be hidden in combat)
 					NecrosisCreatureAlertButton_demon:SetAlpha(0)
 				end
 			end
@@ -1401,7 +1401,7 @@ function Necrosis:OnEvent(self, event,...)
 				end
 			else
 				if NecrosisCreatureAlertButton_elemental then
-					NecrosisCreatureAlertButton_elemental:Hide()
+					-- Use SetAlpha(0) instead of Hide() for secure frames (cannot be hidden in combat)
 					NecrosisCreatureAlertButton_elemental:SetAlpha(0)
 				end
 			end
