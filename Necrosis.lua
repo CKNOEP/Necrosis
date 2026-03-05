@@ -1885,12 +1885,12 @@ function Necrosis:BuildButtonTooltip(button)
 	elseif Type:find("stone") then
 		-- Soul Stone ||Pierre d'âme
 		if (Type == "Soulstone") then
-			-- Calculate cooldown FIRST to include it in the title
+			-- Calculate item cooldown FIRST to include it in the title
 			local color = "|CFF808080"
 			local coolText = ""
 			local coolTextShort = ""
-			-- Get spell cooldown (spell ID 20707 for Soulstone in MOP)
-			local startTime, duration, isEnabled = GetSpellCooldown(20707)
+			-- Get item cooldown (use GetContainerItemCooldown to show item CD, not spell CD)
+			local startTime, duration, isEnabled = Necrosis:GetSoulstoneItemCooldown()
 			if startTime == 0 then
 				-- not on cool down
 			else
@@ -1922,6 +1922,20 @@ function Necrosis:BuildButtonTooltip(button)
 			else
 			end
 			GameTooltip:AddLine(str)
+
+			-- Display item cooldown if soulstone is in inventory
+			if Local.Stone.Soul.Location[1] and Local.Stone.Soul.Location[2] then
+				local startTime, duration, isEnabled = GetContainerItemCooldown(Local.Stone.Soul.Location[1], Local.Stone.Soul.Location[2])
+				if startTime == 0 then
+					-- not on cool down
+				else
+					local cool = ""
+					local cdColor = "|CFF808080"
+					local str = Necrosis.Translation.Misc.Cooldown
+					cool = " - "..Necrosis.Utils.TimeLeft(((startTime - GetTime()) + duration))
+					GameTooltip:AddLine(cdColor..str..cool.."|r")
+				end
+			end
 
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Ritual)
 		-- Healthstone | Stone of life ||Healthstone | Pierre de vie
