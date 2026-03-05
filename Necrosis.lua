@@ -1930,14 +1930,13 @@ function Necrosis:BuildButtonTooltip(button)
 			end
 			GameTooltip:AddLine(str)
 
-			-- Display item cooldown if soulstone is in inventory
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS CD] OnHand="..tostring(Local.Stone.Soul.OnHand).." L1="..tostring(Local.Stone.Soul.Location[1]).." L2="..tostring(Local.Stone.Soul.Location[2]))
-			if Local.Stone.Soul.Location[1] and Local.Stone.Soul.Location[2] then
-				local startTime, duration = GetContainerItemCooldown(Local.Stone.Soul.Location[1], Local.Stone.Soul.Location[2])
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS CD] startTime="..tostring(startTime).." duration="..tostring(duration).." current="..tostring(GetTime()))
+			-- Display cooldown of soulstone resurrection spell
+			-- The cooldown is on the resurrection spell, not the item itself
+			-- All soulstone rezzes share the same cooldown, so we check the major one (20765)
+			if Local.Stone.Soul.OnHand then
+				local startTime, duration = GetSpellCooldown(20765) -- major_ss_used
 				if startTime and startTime > 0 then
 					local timeLeft = (startTime + duration) - GetTime()
-					_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS CD] timeLeft="..tostring(timeLeft))
 					if timeLeft > 0 then
 						local cool = ""
 						local cdColor = "|CFF808080"
@@ -1946,8 +1945,6 @@ function Necrosis:BuildButtonTooltip(button)
 						GameTooltip:AddLine(cdColor..str..cool.."|r")
 					end
 				end
-			else
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS CD] Location missing!")
 			end
 
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Ritual)
