@@ -1761,16 +1761,13 @@ end
 function Necrosis:BuildButtonTooltip(button)
 	-- If the display of help bubbles is disabled, Bye bye! ||Si l'affichage des bulles d'aide est désactivé, Bye bye !
 	if not NecrosisConfig.NecrosisToolTip then
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip: Tooltips disabled in config")
 		return
 	end
 
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip called, processing button...")
 
 	if button == "ElementalToolTip" then button = NecrosisBuffMenu09 end -- lorsque button provient du bouton spécial elem/demon
 	if button == "EnslaveToolTip" then button = NecrosisPetMenu08 end
 
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip: button name is "..(button and button:GetName() or "NIL"))
 	local f = button:GetName()	
 		
 	local Type = ""
@@ -1787,18 +1784,14 @@ function Necrosis:BuildButtonTooltip(button)
 		end
 	end
 
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip: After loop b="..tostring(b).." Type="..tostring(Type))
 
 	if b == nil or b.tip == nil then
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip: RETURNING - b==nil or no tip")
 		return -- a button we are not interested in was given
 	else
 
 		Type = b.tip
 
 	end
-
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip: CONTINUING - Type="..tostring(Type))
 
 	if Necrosis.Debug.tool_tips then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip"
@@ -1892,7 +1885,6 @@ function Necrosis:BuildButtonTooltip(button)
 	elseif Type:find("stone") then
 		-- Soul Stone ||Pierre d'âme
 		if (Type == "Soulstone") then
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage(">>> SOULSTONE SECTION REACHED <<<")
 			-- DEBUG
 			if Necrosis.Debug.tool_tips then
 				_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip SOULSTONE called"
@@ -1939,24 +1931,17 @@ function Necrosis:BuildButtonTooltip(button)
 			GameTooltip:AddLine(str)
 
 			-- Display item cooldown if soulstone is in inventory
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("Soulstone CD check: l1="..tostring(Local.Stone.Soul.Location[1]).." l2="..tostring(Local.Stone.Soul.Location[2]))
 			if Local.Stone.Soul.Location[1] and Local.Stone.Soul.Location[2] then
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage("Soulstone: Location found, checking CD...")
 				local startTime, duration, isEnabled = GetContainerItemCooldown(Local.Stone.Soul.Location[1], Local.Stone.Soul.Location[2])
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage("Soulstone CD: startTime="..tostring(startTime).." duration="..tostring(duration))
 				if startTime == 0 then
 					-- not on cool down
-					_G["DEFAULT_CHAT_FRAME"]:AddMessage("Soulstone: Not on cooldown")
 				else
-					_G["DEFAULT_CHAT_FRAME"]:AddMessage("Soulstone: ON COOLDOWN - adding to tooltip")
 					local cool = ""
 					local cdColor = "|CFF808080"
 					local str = Necrosis.Translation.Misc.Cooldown
 					cool = " - "..Necrosis.Utils.TimeLeft(((startTime - GetTime()) + duration))
 					GameTooltip:AddLine(cdColor..str..cool.."|r")
 				end
-			else
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage("Soulstone: Location NOT set - l1="..tostring(Local.Stone.Soul.Location[1]).." l2="..tostring(Local.Stone.Soul.Location[2]))
 			end
 
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Ritual)
