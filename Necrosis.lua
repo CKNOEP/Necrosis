@@ -1786,14 +1786,19 @@ function Necrosis:BuildButtonTooltip(button)
 		else
 		end
 	end
-	
+
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip: After loop b="..tostring(b).." Type="..tostring(Type))
+
 	if b == nil or b.tip == nil then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip: RETURNING - b==nil or no tip")
 		return -- a button we are not interested in was given
 	else
-	
+
 		Type = b.tip
-		
+
 	end
+
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip: CONTINUING - Type="..tostring(Type))
 
 	if Necrosis.Debug.tool_tips then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip"
