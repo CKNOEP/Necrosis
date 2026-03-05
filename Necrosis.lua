@@ -1937,16 +1937,19 @@ function Necrosis:BuildButtonTooltip(button)
 				for i = 1, 40 do
 					local name, rank, texture, count, debuffType, duration = UnitAura("player", i, "HELPFUL")
 					if name and (name == "Résurrection de Pierre d'âme" or name == "Soulstone Resurrection") then
-						-- duration is already the time remaining in seconds
+						-- duration is the expiration timestamp, calculate time remaining
 						if duration and duration > 0 then
-							-- Format duration as MM:SS
-							local minutes = math.floor(duration / 60)
-							local seconds = math.floor(duration % 60)
-							local timeStr = string.format("%d:%02d", minutes, seconds)
+							local timeLeft = duration - GetTime()
+							if timeLeft > 0 then
+								-- Format time remaining as MM:SS
+								local minutes = math.floor(timeLeft / 60)
+								local seconds = math.floor(timeLeft % 60)
+								local timeStr = string.format("%d:%02d", minutes, seconds)
 
-							local cdColor = "|CFF808080"
-							local str = "Soulstone: "..timeStr
-							GameTooltip:AddLine(cdColor..str.."|r")
+								local cdColor = "|CFF808080"
+								local str = "Soulstone: "..timeStr
+								GameTooltip:AddLine(cdColor..str.."|r")
+							end
 						end
 						break
 					elseif not name then
