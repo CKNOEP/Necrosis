@@ -188,7 +188,10 @@ local function CreateStoneButton(stone)
 
 
 	-- Edit the scripts associated with the buttons || Edition des scripts associés au bouton
-	frame:SetScript("OnEnter", function(self) Necrosis:BuildButtonTooltip(self) end)
+	frame:SetScript("OnEnter", function(self)
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("OnEnter triggered for: "..self:GetName())
+		Necrosis:BuildButtonTooltip(self)
+	end)
 --	frame:SetScript("OnEnter", function(self) Necrosis:BuildTooltip(self, stone, "ANCHOR_LEFT") end)
 	frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
 	frame:SetScript("OnMouseUp", function(self) Necrosis:OnDragStop(self) end)
