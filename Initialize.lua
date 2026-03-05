@@ -6,11 +6,6 @@
 -- On définit _G comme étant le tableau contenant toutes les frames existantes.
 local _G = getfenv(0)
 
-Necrosis = {}
-SAO ={}
--- Define NECROSIS_ID globally for Ace3 Localization
-NECROSIS_ID = "Necrosis"
-
 -- ============================================================================
 -- WoW Version Compatibility Wrappers (Support TBC, Wrath, Cata, MOP+)
 -- ============================================================================
@@ -240,9 +235,11 @@ else -- enUS, enGB, etc.
 	Necrosis.Unit.Demon = "Demon"
 	Necrosis.Unit.Elemental = "Elemental"
 end
-Necrosis.Translation = {}
+-- Don't overwrite Translation - it's already initialized in Constants.lua
+-- Necrosis.Translation = {} -- REMOVED: Preserves Constants.lua initialization
 
-Necrosis.Config = {}
+-- Don't overwrite Config - it's already initialized in Constants.lua
+-- Necrosis.Config = {} -- REMOVED: Preserves Constants.lua initialization
 
 NecrosisConfig = {}
 
@@ -418,10 +415,18 @@ function Necrosis:Initialize(Config)
 	end
 	
 	if NecrosisConfig.Timers then -- just in case... was added in 7.2
-	else	
+	else
 		NecrosisConfig.Timers = Config.Timers
-		
+
 	end
+
+	-- Add missing timer types from new versions (migration)
+	for i = 1, #Config.Timers do
+		if not NecrosisConfig.Timers[i] then
+			NecrosisConfig.Timers[i] = Config.Timers[i]
+		end
+	end
+
 	--  Add new parameter between 2 version
 	if NecrosisConfig.NecrosisAlphaBar then
 	else
