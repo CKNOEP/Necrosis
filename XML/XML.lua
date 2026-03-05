@@ -159,6 +159,11 @@ end
 local function CreateStoneButton(stone)
 	-- Create the stone button || Création du bouton de la pierre
 	local b = stone
+	-- ALWAYS debug this
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("Create-StoneButton called"
+	.." i'"..tostring(stone).."'"
+	.." b'"..tostring(b and b.f).."'"
+	)
 	if Necrosis.Debug.buttons then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("Create-StoneButton"
 		.." i'"..tostring(stone).."'"
