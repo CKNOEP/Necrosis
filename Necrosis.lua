@@ -1939,8 +1939,13 @@ function Necrosis:BuildButtonTooltip(button)
 				for i = 1, 40 do
 					local name, rank, texture, count, debuffType, duration, expirationTime = UnitAura("player", i, "HELPFUL")
 					if name then
-						local timeLeft = expirationTime - GetTime()
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Buff "..i.."] "..name.." - timeLeft="..tostring(timeLeft).."s")
+						local timeLeft = "unknown"
+						if expirationTime and type(expirationTime) == "number" then
+							timeLeft = tostring(expirationTime - GetTime())
+						elseif duration then
+							timeLeft = tostring(duration)
+						end
+						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Buff "..i.."] "..name.." - duration="..tostring(duration).." timeLeft="..timeLeft)
 					else
 						break
 					end
@@ -1950,8 +1955,13 @@ function Necrosis:BuildButtonTooltip(button)
 				for i = 1, 40 do
 					local name, rank, texture, count, debuffType, duration, expirationTime = UnitAura("player", i, "HARMFUL")
 					if name then
-						local timeLeft = expirationTime - GetTime()
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Debuff "..i.."] "..name.." - timeLeft="..tostring(timeLeft).."s")
+						local timeLeft = "unknown"
+						if expirationTime and type(expirationTime) == "number" then
+							timeLeft = tostring(expirationTime - GetTime())
+						elseif duration then
+							timeLeft = tostring(duration)
+						end
+						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Debuff "..i.."] "..name.." - duration="..tostring(duration).." timeLeft="..timeLeft)
 					else
 						break
 					end
