@@ -1885,6 +1885,13 @@ function Necrosis:BuildButtonTooltip(button)
 	elseif Type:find("stone") then
 		-- Soul Stone ||Pierre d'âme
 		if (Type == "Soulstone") then
+			-- DEBUG
+			if Necrosis.Debug.tool_tips then
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip SOULSTONE called"
+				.." l1:"..(Local.Stone.Soul.Location[1] or "nil")
+				.." l2:"..(Local.Stone.Soul.Location[2] or "nil"))
+			end
+
 			-- Calculate item cooldown FIRST to include it in the title
 			local color = "|CFF808080"
 			local coolText = ""
@@ -1934,6 +1941,12 @@ function Necrosis:BuildButtonTooltip(button)
 					local str = Necrosis.Translation.Misc.Cooldown
 					cool = " - "..Necrosis.Utils.TimeLeft(((startTime - GetTime()) + duration))
 					GameTooltip:AddLine(cdColor..str..cool.."|r")
+				end
+			else
+				if Necrosis.Debug.tool_tips then
+					_G["DEFAULT_CHAT_FRAME"]:AddMessage("Soulstone tooltip: Location not set - "
+					.." l1:"..(Local.Stone.Soul.Location[1] or "nil")
+					.." l2:"..(Local.Stone.Soul.Location[2] or "nil"))
 				end
 			end
 
