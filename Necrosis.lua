@@ -1939,11 +1939,16 @@ function Necrosis:BuildButtonTooltip(button)
 			GameTooltip:AddLine(str)
 
 			-- Display item cooldown if soulstone is in inventory
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("Soulstone CD check: l1="..tostring(Local.Stone.Soul.Location[1]).." l2="..tostring(Local.Stone.Soul.Location[2]))
 			if Local.Stone.Soul.Location[1] and Local.Stone.Soul.Location[2] then
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("Soulstone: Location found, checking CD...")
 				local startTime, duration, isEnabled = GetContainerItemCooldown(Local.Stone.Soul.Location[1], Local.Stone.Soul.Location[2])
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("Soulstone CD: startTime="..tostring(startTime).." duration="..tostring(duration))
 				if startTime == 0 then
 					-- not on cool down
+					_G["DEFAULT_CHAT_FRAME"]:AddMessage("Soulstone: Not on cooldown")
 				else
+					_G["DEFAULT_CHAT_FRAME"]:AddMessage("Soulstone: ON COOLDOWN - adding to tooltip")
 					local cool = ""
 					local cdColor = "|CFF808080"
 					local str = Necrosis.Translation.Misc.Cooldown
@@ -1951,11 +1956,7 @@ function Necrosis:BuildButtonTooltip(button)
 					GameTooltip:AddLine(cdColor..str..cool.."|r")
 				end
 			else
-				if Necrosis.Debug.tool_tips then
-					_G["DEFAULT_CHAT_FRAME"]:AddMessage("Soulstone tooltip: Location not set - "
-					.." l1:"..(Local.Stone.Soul.Location[1] or "nil")
-					.." l2:"..(Local.Stone.Soul.Location[2] or "nil"))
-				end
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("Soulstone: Location NOT set - l1="..tostring(Local.Stone.Soul.Location[1]).." l2="..tostring(Local.Stone.Soul.Location[2]))
 			end
 
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Ritual)
