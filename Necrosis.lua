@@ -1892,6 +1892,7 @@ function Necrosis:BuildButtonTooltip(button)
 	elseif Type:find("stone") then
 		-- Soul Stone ||Pierre d'âme
 		if (Type == "Soulstone") then
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage(">>> SOULSTONE SECTION REACHED <<<")
 			-- DEBUG
 			if Necrosis.Debug.tool_tips then
 				_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip SOULSTONE called"
