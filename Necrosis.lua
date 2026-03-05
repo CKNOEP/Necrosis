@@ -1931,38 +1931,28 @@ function Necrosis:BuildButtonTooltip(button)
 			GameTooltip:AddLine(str)
 
 			-- Display cooldown of soulstone resurrection spell
-			-- The cooldown appears as an Aura/Buff on the player
-			-- Check player auras to find the soulstone cooldown
+			-- The cooldown is an Aura/Buff called "Résurrection de Pierre d'âme" (Soulstone Resurrection)
 			if Local.Stone.Soul.Location[2] then
-				-- Debug: List ALL auras (both buffs and debuffs)
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Auras] All BUFFS:")
+				-- Search for the soulstone resurrection aura
+				local found = false
 				for i = 1, 40 do
 					local name, rank, texture, count, debuffType, duration, expirationTime = UnitAura("player", i, "HELPFUL")
-					if name then
-						local timeLeft = "unknown"
+					if name and (name == "Résurrection de Pierre d'âme" or name == "Soulstone Resurrection") then
+						found = true
+						-- expirationTime is when the buff expires (server time)
+						-- Calculate time remaining
 						if expirationTime and type(expirationTime) == "number" then
-							timeLeft = tostring(expirationTime - GetTime())
-						elseif duration then
-							timeLeft = tostring(duration)
+							local timeLeft = expirationTime - GetTime()
+							if timeLeft > 0 then
+								local cool = ""
+								local cdColor = "|CFF808080"
+								local str = Necrosis.Translation.Misc.Cooldown
+								cool = " - "..Necrosis.Utils.TimeLeft(timeLeft)
+								GameTooltip:AddLine(cdColor..str..cool.."|r")
+							end
 						end
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Buff "..i.."] "..name.." - duration="..tostring(duration).." timeLeft="..timeLeft)
-					else
 						break
-					end
-				end
-
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Auras] All DEBUFFS:")
-				for i = 1, 40 do
-					local name, rank, texture, count, debuffType, duration, expirationTime = UnitAura("player", i, "HARMFUL")
-					if name then
-						local timeLeft = "unknown"
-						if expirationTime and type(expirationTime) == "number" then
-							timeLeft = tostring(expirationTime - GetTime())
-						elseif duration then
-							timeLeft = tostring(duration)
-						end
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Debuff "..i.."] "..name.." - duration="..tostring(duration).." timeLeft="..timeLeft)
-					else
+					elseif not name then
 						break
 					end
 				end
