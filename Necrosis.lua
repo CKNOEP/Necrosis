@@ -1946,7 +1946,7 @@ function Necrosis:BuildButtonTooltip(button)
 								local seconds = math.floor(timeLeft % 60)
 								local timeStr = string.format("%d:%02d", minutes, seconds)
 
-								local cdColor = "|CFF808080"
+								local cdColor = "|CFFFF0000" -- Red color
 								local str = "Soulstone: "..timeStr
 								GameTooltip:AddLine(cdColor..str.."|r")
 							end
