@@ -1932,10 +1932,10 @@ function Necrosis:BuildButtonTooltip(button)
 
 			-- Display cooldown of soulstone resurrection spell
 			-- The cooldown is on the resurrection spell, not the item itself
-			-- All soulstone rezzes share the same cooldown, so we check the major one (20765)
-			if Local.Stone.Soul.OnHand then
+			-- Check if soulstone is in inventory (Location[1] might be 0 which is bag 0, so check for Location[2] which is the slot)
+			if Local.Stone.Soul.Location[2] then
 				local startTime, duration = GetSpellCooldown(20765) -- major_ss_used
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Rez CD] OnHand="..tostring(Local.Stone.Soul.OnHand).." startTime="..tostring(startTime).." duration="..tostring(duration).." now="..tostring(GetTime()))
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Rez CD] Has Location! startTime="..tostring(startTime).." duration="..tostring(duration))
 				if startTime and startTime > 0 then
 					local timeLeft = (startTime + duration) - GetTime()
 					_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Rez CD] timeLeft="..tostring(timeLeft))
@@ -1951,7 +1951,7 @@ function Necrosis:BuildButtonTooltip(button)
 					_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Rez CD] No cooldown (startTime="..tostring(startTime)..")")
 				end
 			else
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Rez CD] OnHand is FALSE!")
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Rez CD] Location[2] is NIL!")
 			end
 
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Ritual)
