@@ -1934,13 +1934,24 @@ function Necrosis:BuildButtonTooltip(button)
 			-- The cooldown appears as an Aura/Buff on the player
 			-- Check player auras to find the soulstone cooldown
 			if Local.Stone.Soul.Location[2] then
-				-- Debug: List all auras
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Auras] Checking player auras:")
+				-- Debug: List ALL auras (both buffs and debuffs)
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Auras] All BUFFS:")
+				for i = 1, 40 do
+					local name, rank, texture, count, debuffType, duration, expirationTime = UnitAura("player", i, "HELPFUL")
+					if name then
+						local timeLeft = expirationTime - GetTime()
+						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Buff "..i.."] "..name.." - timeLeft="..tostring(timeLeft).."s")
+					else
+						break
+					end
+				end
+
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Auras] All DEBUFFS:")
 				for i = 1, 40 do
 					local name, rank, texture, count, debuffType, duration, expirationTime = UnitAura("player", i, "HARMFUL")
 					if name then
 						local timeLeft = expirationTime - GetTime()
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Aura "..i.."] "..name.." - "..tostring(timeLeft).."s")
+						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Debuff "..i.."] "..name.." - timeLeft="..tostring(timeLeft).."s")
 					else
 						break
 					end
