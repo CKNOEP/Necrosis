@@ -1759,6 +1759,11 @@ end
 
 -- Function managing the help bubbles ||Fonction gérant les bulles d'aide
 function Necrosis:BuildButtonTooltip(button)
+	-- DEBUG: Check if function is called
+	if Necrosis.Debug.tool_tips then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip called with button: "..(button and button:GetName() or "nil"))
+	end
+
 	-- If the display of help bubbles is disabled, Bye bye! ||Si l'affichage des bulles d'aide est désactivé, Bye bye !
 	if not NecrosisConfig.NecrosisToolTip then
 		return
