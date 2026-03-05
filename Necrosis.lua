@@ -1934,38 +1934,21 @@ function Necrosis:BuildButtonTooltip(button)
 			-- The cooldown is an Aura/Buff called "Résurrection de Pierre d'âme" (Soulstone Resurrection)
 			if Local.Stone.Soul.Location[2] then
 				-- Search for the soulstone resurrection aura
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Find] Searching for aura...")
-				local found = false
 				for i = 1, 40 do
-					local name, rank, texture, count, debuffType, duration, expirationTime = UnitAura("player", i, "HELPFUL")
-					if name then
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Find] Buff "..i..": "..name)
-						if (name == "Résurrection de Pierre d'âme" or name == "Soulstone Resurrection") then
-							found = true
-							_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Find] FOUND! expirationTime="..tostring(expirationTime))
-							-- expirationTime is when the buff expires (server time)
-							-- Calculate time remaining
-							if expirationTime and type(expirationTime) == "number" then
-								local timeLeft = expirationTime - GetTime()
-								_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Find] timeLeft="..tostring(timeLeft))
-								if timeLeft > 0 then
-									local cool = ""
-									local cdColor = "|CFF808080"
-									local str = Necrosis.Translation.Misc.Cooldown
-									cool = " - "..Necrosis.Utils.TimeLeft(timeLeft)
-									GameTooltip:AddLine(cdColor..str..cool.."|r")
-									_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Find] ADDED TO TOOLTIP!")
-								end
-							end
-							break
+					local name, rank, texture, count, debuffType, duration = UnitAura("player", i, "HELPFUL")
+					if name and (name == "Résurrection de Pierre d'âme" or name == "Soulstone Resurrection") then
+						-- duration is already the time remaining in seconds
+						if duration and duration > 0 then
+							local cool = ""
+							local cdColor = "|CFF808080"
+							local str = Necrosis.Translation.Misc.Cooldown
+							cool = " - "..Necrosis.Utils.TimeLeft(duration)
+							GameTooltip:AddLine(cdColor..str..cool.."|r")
 						end
-					else
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Find] End of auras at index "..i)
+						break
+					elseif not name then
 						break
 					end
-				end
-				if not found then
-					_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Find] Aura NOT FOUND!")
 				end
 			end
 
