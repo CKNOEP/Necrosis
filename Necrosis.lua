@@ -1935,16 +1935,23 @@ function Necrosis:BuildButtonTooltip(button)
 			-- All soulstone rezzes share the same cooldown, so we check the major one (20765)
 			if Local.Stone.Soul.OnHand then
 				local startTime, duration = GetSpellCooldown(20765) -- major_ss_used
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Rez CD] OnHand="..tostring(Local.Stone.Soul.OnHand).." startTime="..tostring(startTime).." duration="..tostring(duration).." now="..tostring(GetTime()))
 				if startTime and startTime > 0 then
 					local timeLeft = (startTime + duration) - GetTime()
+					_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Rez CD] timeLeft="..tostring(timeLeft))
 					if timeLeft > 0 then
 						local cool = ""
 						local cdColor = "|CFF808080"
 						local str = Necrosis.Translation.Misc.Cooldown
 						cool = " - "..Necrosis.Utils.TimeLeft(timeLeft)
 						GameTooltip:AddLine(cdColor..str..cool.."|r")
+						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Rez CD] ADDED TO TOOLTIP!")
 					end
+				else
+					_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Rez CD] No cooldown (startTime="..tostring(startTime)..")")
 				end
+			else
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Rez CD] OnHand is FALSE!")
 			end
 
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Ritual)
