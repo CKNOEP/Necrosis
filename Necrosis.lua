@@ -1931,27 +1931,20 @@ function Necrosis:BuildButtonTooltip(button)
 			GameTooltip:AddLine(str)
 
 			-- Display cooldown of soulstone resurrection spell
-			-- The cooldown is on the resurrection spell, not the item itself
-			-- Check if soulstone is in inventory (Location[1] might be 0 which is bag 0, so check for Location[2] which is the slot)
+			-- The cooldown appears as an Aura/Buff on the player
+			-- Check player auras to find the soulstone cooldown
 			if Local.Stone.Soul.Location[2] then
-				local startTime, duration = GetSpellCooldown(20765) -- major_ss_used
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Rez CD] Has Location! startTime="..tostring(startTime).." duration="..tostring(duration))
-				if startTime and startTime > 0 then
-					local timeLeft = (startTime + duration) - GetTime()
-					_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Rez CD] timeLeft="..tostring(timeLeft))
-					if timeLeft > 0 then
-						local cool = ""
-						local cdColor = "|CFF808080"
-						local str = Necrosis.Translation.Misc.Cooldown
-						cool = " - "..Necrosis.Utils.TimeLeft(timeLeft)
-						GameTooltip:AddLine(cdColor..str..cool.."|r")
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Rez CD] ADDED TO TOOLTIP!")
+				-- Debug: List all auras
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Auras] Checking player auras:")
+				for i = 1, 40 do
+					local name, rank, texture, count, debuffType, duration, expirationTime = UnitAura("player", i, "HARMFUL")
+					if name then
+						local timeLeft = expirationTime - GetTime()
+						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Aura "..i.."] "..name.." - "..tostring(timeLeft).."s")
+					else
+						break
 					end
-				else
-					_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Rez CD] No cooldown (startTime="..tostring(startTime)..")")
 				end
-			else
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS Rez CD] Location[2] is NIL!")
 			end
 
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Ritual)
