@@ -1939,11 +1939,14 @@ function Necrosis:BuildButtonTooltip(button)
 					if name and (name == "Résurrection de Pierre d'âme" or name == "Soulstone Resurrection") then
 						-- duration is already the time remaining in seconds
 						if duration and duration > 0 then
-							local cool = ""
+							-- Format duration as MM:SS
+							local minutes = math.floor(duration / 60)
+							local seconds = math.floor(duration % 60)
+							local timeStr = string.format("%d:%02d", minutes, seconds)
+
 							local cdColor = "|CFF808080"
-							local str = Necrosis.Translation.Misc.Cooldown
-							cool = " - "..Necrosis.Utils.TimeLeft(duration)
-							GameTooltip:AddLine(cdColor..str..cool.."|r")
+							local str = "Soulstone: "..timeStr
+							GameTooltip:AddLine(cdColor..str.."|r")
 						end
 						break
 					elseif not name then
