@@ -102,7 +102,7 @@ Local.DefaultConfig = {
 	DestroyShardwithsphere = true,
 	ShadowTranceScale = 100,
 	NecrosisButtonScale = 90,
-	NecroisButtonRadius = 1,
+	NecrosisButtonRadius = 1,
 	NecrosisColor = "Rose",
 	Sound = true,
 	SpellTimerPos = 1,
@@ -147,6 +147,7 @@ Local.DefaultConfig = {
 		[5] = {usage = "ward", show = true},
 		[6] = {usage = "banish", show = true},
 		[7] = {usage = "enslave", show = true},
+		[8] = {usage = "armor", show = true},
 	},
 }
 
