@@ -1931,22 +1931,23 @@ function Necrosis:BuildButtonTooltip(button)
 			GameTooltip:AddLine(str)
 
 			-- Display item cooldown if soulstone is in inventory
-			-- Use GetItemCooldown with the soulstone item ID to check if we can use it
-			if Local.Stone.Soul.OnHand then
-				-- Get the item ID from the soulstone list (use the main rank)
-				local soulstone_id = Necrosis.Warlock_Lists.soul_stones.ss.id -- Standard Soulstone ID
-				if soulstone_id then
-					local startTime, duration, isEnabled = GetItemCooldown(soulstone_id)
-					if startTime == 0 then
-						-- not on cool down
-					else
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS CD] OnHand="..tostring(Local.Stone.Soul.OnHand).." L1="..tostring(Local.Stone.Soul.Location[1]).." L2="..tostring(Local.Stone.Soul.Location[2]))
+			if Local.Stone.Soul.Location[1] and Local.Stone.Soul.Location[2] then
+				local startTime, duration = GetContainerItemCooldown(Local.Stone.Soul.Location[1], Local.Stone.Soul.Location[2])
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS CD] startTime="..tostring(startTime).." duration="..tostring(duration).." current="..tostring(GetTime()))
+				if startTime and startTime > 0 then
+					local timeLeft = (startTime + duration) - GetTime()
+					_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS CD] timeLeft="..tostring(timeLeft))
+					if timeLeft > 0 then
 						local cool = ""
 						local cdColor = "|CFF808080"
 						local str = Necrosis.Translation.Misc.Cooldown
-						cool = " - "..Necrosis.Utils.TimeLeft(((startTime - GetTime()) + duration))
+						cool = " - "..Necrosis.Utils.TimeLeft(timeLeft)
 						GameTooltip:AddLine(cdColor..str..cool.."|r")
 					end
 				end
+			else
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SS CD] Location missing!")
 			end
 
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Ritual)
