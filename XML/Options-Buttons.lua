@@ -535,7 +535,7 @@ function Necrosis:SetButtonsConfig()
 		NecrosisInitSelectedMountButton(NecrosisSelectedMountRight, 23161);
 	end
 
-	
+
 	NecrosisLockButtons:SetChecked(NecrosisConfig.NecrosisLockServ)
 
 	local boutons = {"Firestone", "Spellstone", "HealthStone", "Soulstone", "BuffMenu", "Mount", "PetMenu", "CurseMenu","DestroyShards"}
@@ -771,3 +771,5 @@ function NecrosisInitSelectedMountButton(button, id)
 		end
 	end
 end
+
+------------------------------------------------------------------------------------------------------

@@ -168,6 +168,7 @@ function Necrosis:SetSphereConfig()
 		frame:SetValueStep(9)
 		frame:SetWidth(150)
 		frame:SetHeight(15)
+		frame:SetObeyStepOnDrag(true)
 
 		-- Create slider visual elements with circular dot cursor
 		local track = frame:CreateTexture(nil, "BACKGROUND")
@@ -181,6 +182,7 @@ function Necrosis:SetSphereConfig()
 			thumb:SetTexture("Interface\Common\Indicator-Yellow")
 			thumb:SetColorTexture(1, 0.8, 0, 1)
 			thumb:SetSize(6, 6)
+		thumb:Show()
 		end
 		frame:Show()
 		frame:ClearAllPoints()

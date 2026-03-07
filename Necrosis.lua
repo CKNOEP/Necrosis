@@ -2135,9 +2135,8 @@ function Necrosis:BuildButtonTooltip(button)
 	end
 
 
-	--End ToolTip Mount	
-	
-		
+	--End ToolTip Mount
+
 	elseif (Type == "Armor") 		then AddCastAndCost("armor")
 	elseif (Type == "FelArmor") 	then AddCastAndCost("fel_armor")
 	elseif (Type == "Invisible")	then AddCastAndCost("invisible")

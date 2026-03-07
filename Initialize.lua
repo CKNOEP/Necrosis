@@ -201,7 +201,7 @@ end)
 -- Simple version storage (from TOC file)
 Necrosis.Data = {
 	AppName = "Necrosis",
-	Version = "8.4.3",  -- Update manually when releasing
+	Version = "8.4.4",  -- Update manually when releasing
 	Enabled = false,
 }
 
@@ -462,6 +462,7 @@ function Necrosis:Initialize(Config)
 	-- Exécution des fonctions de démarrage
 	-----------------------------------------------------------
 	-- Affichage d'un message sur la console
+	self:Msg("Configuration chargée. Version: |cffffffff" .. Necrosis.Data.Version .. "|r", "USER")
 	self:Msg(self.ChatMessage.Interface.Welcome, "USER")
 
     -- Enregistrement de la commande console

@@ -329,13 +329,13 @@ end
 -- Class Gate - Initialize for Warlocks
 ----------------------------------------------
 
--- Version check disabled - HTTP not available in WoW Classic/TBC
--- do
---     local _, playerClass = UnitClass("player")
---     if playerClass == "WARLOCK" then
---         -- Initialize with slight delay to ensure NecrosisConfig is loaded
---         C_Timer.After(1, function()
---             VersionCheck:Init()
---         end)
---     end
--- end
+-- Initialize version check and slash command for Warlocks
+do
+    local _, playerClass = UnitClass("player")
+    if playerClass == "WARLOCK" then
+        -- Initialize with slight delay to ensure NecrosisConfig is loaded
+        C_Timer.After(1, function()
+            VersionCheck:Init()
+        end)
+    end
+end

@@ -14,6 +14,17 @@ local _G = getfenv(0)
 -- On crée ou on affiche le panneau de configuration de la sphere
 function Necrosis:SetSphereConfig()
 
+	-- Debug: Display main spell list
+	local main_spell_list = Necrosis:GetMainSpellList()
+	local spell_text = "Main spells available: "
+	for i, spell_key in ipairs(main_spell_list) do
+		spell_text = spell_text .. spell_key
+		if i < #main_spell_list then
+			spell_text = spell_text .. ", "
+		end
+	end
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage(spell_text)
+
 	local frame = _G["NecrosisSphereConfig"]
 	if not frame then
 		-- Création de la fenêtre
@@ -108,6 +119,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		frame = CreateFrame("Slider", "NecrosisRotation", NecrosisSphereConfig, "OptionsSliderTemplate")
 		frame:SetMinMaxValues(0, 360)
 		frame:SetValueStep(9)
+		frame:SetObeyStepOnDrag(true)
 		frame:SetWidth(150)
 		frame:SetHeight(15)
 
@@ -123,6 +135,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 			thumb:SetTexture("Interface\\Common\\Indicator-Yellow")
 			thumb:SetColorTexture(1, 0.8, 0, 1)
 			thumb:SetSize(6, 6)
+		thumb:Show()
 		end
 		frame:Show()
 		frame:ClearAllPoints()
