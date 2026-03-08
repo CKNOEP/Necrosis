@@ -2,6 +2,38 @@
 
 ---
 
+## Version 8.4.7 - March 8, 2026
+
+### Improvements
+- **Enhanced Threat Ring visibility**: Increased default ring thickness from 1px to 8px for better visibility and visibility in combat
+- **Improved threat ring rendering**: Adjusted segment sizing (12px width, 4px height) and layer rendering for better threat indicator visibility
+- **Better timer group spacing**: Enhanced spacing between general timers (1-3) and target-specific timers (4+) for improved clarity
+- **Optimized timer group headers**: Added proper group header creation with improved layout management for target-specific timer groups
+
+### Technical Details
+- Updated: ThreatMeter.lua (default thickness, segment rendering)
+- Updated: Initialize.lua (default ThreatRingThickness = 8)
+- Updated: Timers/GraphicalTimers.lua (improved group spacing logic)
+- All TOC files updated to v8.4.7
+
+---
+
+## Version 8.4.6 - March 7, 2026
+
+### Bug Fixes
+- **Fixed Fel Armor spell IDs for TBC Anniversary**: Corrected spell IDs from invalid SOD ID (403619) to proper TBC Classic IDs (28176 for Rank 1, 28189 for Rank 2)
+- **Restored Fel Armor timer display**: Re-enabled timer = true for proper cooldown tracking in chat
+
+### Features
+- **Added debug message for GetMainSpellList()**: Display available main spells in chat when opening options panel (Vanilla Anniversary version)
+
+### Technical Details
+- Updated: Spells-Vanilla.lua (lines 288-290)
+- Updated: XML/Options-Sphere-Vanilla.lua (added debug output)
+- All TOC files updated to v8.4.6
+
+---
+
 ## Version 8.4.3 - March 3, 2026
 
 ### Bug Fixes

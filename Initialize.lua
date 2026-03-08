@@ -201,7 +201,7 @@ end)
 -- Simple version storage (from TOC file)
 Necrosis.Data = {
 	AppName = "Necrosis",
-	Version = "8.4.6",  -- Update manually when releasing
+	Version = "8.4.7",  -- Update manually when releasing
 	Enabled = false,
 }
 
@@ -438,7 +438,7 @@ function Necrosis:Initialize(Config)
 		NecrosisConfig.ThreatMeterEnabled = true -- Enable threat meter by default
 	end
 	if NecrosisConfig.ThreatRingThickness == nil then
-		NecrosisConfig.ThreatRingThickness = 1 -- Very thin ring thickness (1px)
+		NecrosisConfig.ThreatRingThickness = 8 -- Ring thickness (8px)
 	end
 
 	-- Initialize Bottom Banner Scale
