@@ -266,12 +266,21 @@ function NecrosisUpdateTimer(tableau, Changement)
 		-- move frames to ensure they dont overlap || Déplacement des Frames si besoin pour qu'elles ne se chevauchent pas
 		if Changement then
 			-- if the frame belongs to a mob group, then move the whole group || Si les Frames appartiennent à un groupe de mob, et qu'on doit changer de groupe
-			if not (tableau[index].Group == LastGroup) and tableau[index].Group > 3 then
-				local f = CreateGroup(Changement, tableau[index].Group)
-				_lastPoint[5] = _lastPoint[5] + 1.2 * yPosition
-				f:ClearAllPoints()
-				f:SetPoint(_lastPoint[1], _lastPoint[2], _lastPoint[3], _lastPoint[4], _lastPoint[5])
-				_lastPoint[5] = _lastPoint[5] + 0.2 * yPosition--0.2
+			if not (tableau[index].Group == LastGroup) then
+				-- Add extra spacing between general timers (1-3) and target timers (4+)
+				if (LastGroup <= 3 and tableau[index].Group >= 4) or (LastGroup >= 4 and tableau[index].Group > LastGroup) then
+					_lastPoint[5] = _lastPoint[5] + 1.5 * yPosition
+				end
+
+				-- Add group header for target groups
+				if tableau[index].Group > 3 then
+					local f = CreateGroup(Changement, tableau[index].Group)
+					_lastPoint[5] = _lastPoint[5] + 0.8 * yPosition
+					f:ClearAllPoints()
+					f:SetPoint(_lastPoint[1], _lastPoint[2], _lastPoint[3], _lastPoint[4], _lastPoint[5])
+					_lastPoint[5] = _lastPoint[5] + 0.2 * yPosition
+				end
+
 				LastGroup = tableau[index].Group
 
 			end
