@@ -399,21 +399,55 @@ function Necrosis:Initialize(Config)
 	end
 
 	Necrosis:Initialize_Speech()
-	-- Initialize configuration with defaults
-	if not NecrosisConfig or NecrosisConfig.Version ~= Necrosis.Data.Version then
+	-- Initialize configuration with defaults (merge existing settings with new defaults)
+	-- Only reset if NecrosisConfig doesn't exist at all
+	if not NecrosisConfig then
 		NecrosisConfig = {}
-		NecrosisConfig = Config
-		NecrosisConfig.Version = Necrosis.Data.Version
+		-- Copy all defaults
+		for k, v in pairs(Config) do
+			if type(v) == "table" then
+				NecrosisConfig[k] = {}
+				for k2, v2 in pairs(v) do
+					NecrosisConfig[k][k2] = v2
+				end
+			else
+				NecrosisConfig[k] = v
+			end
+		end
 		self:Msg(self.ChatMessage.Interface.DefaultConfig, "USER")
 	else
+		-- Existing config found - preserve user settings and add missing defaults
+		for k, v in pairs(Config) do
+			if NecrosisConfig[k] == nil then
+				-- Add missing config keys from defaults
+				if type(v) == "table" then
+					NecrosisConfig[k] = {}
+					for k2, v2 in pairs(v) do
+						NecrosisConfig[k][k2] = v2
+					end
+				else
+					NecrosisConfig[k] = v
+				end
+			elseif type(v) == "table" and type(NecrosisConfig[k]) == "table" then
+				-- For table values, add missing keys but preserve existing ones
+				for k2, v2 in pairs(v) do
+					if NecrosisConfig[k][k2] == nil then
+						NecrosisConfig[k][k2] = v2
+					end
+				end
+			end
+		end
 		self:Msg(self.ChatMessage.Interface.UserConfig, "USER")
 	end
-	
+
+	-- Set version to current (tracks last successful load)
+	NecrosisConfig.Version = Necrosis.Data.Version
+
 	if NecrosisConfig.PetInfo then -- just in case... pet config info was redone for speech
-	else	
+	else
 		NecrosisConfig.PetInfo = {}
 	end
-	
+
 	if NecrosisConfig.Timers then -- just in case... was added in 7.2
 	else
 		NecrosisConfig.Timers = Config.Timers
