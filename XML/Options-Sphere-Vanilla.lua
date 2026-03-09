@@ -14,17 +14,6 @@ local _G = getfenv(0)
 -- On crée ou on affiche le panneau de configuration de la sphere
 function Necrosis:SetSphereConfig()
 
-	-- Debug: Display main spell list
-	local main_spell_list = Necrosis:GetMainSpellList()
-	local spell_text = "Main spells available: "
-	for i, spell_key in ipairs(main_spell_list) do
-		spell_text = spell_text .. spell_key
-		if i < #main_spell_list then
-			spell_text = spell_text .. ", "
-		end
-	end
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage(spell_text)
-
 	local frame = _G["NecrosisSphereConfig"]
 	if not frame then
 		-- Création de la fenêtre
