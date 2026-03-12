@@ -338,7 +338,8 @@ local function ShowAntiFearWarning()
 	-- Checking if we have a target. Any fear need a target to be casted on
 	if UnitExists("target") and UnitCanAttack("player", "target") and not UnitIsDead("target") then
 		-- Checking if the target has natural immunity (only NPC target)
-		if not UnitIsPlayer("target") and ( UnitCreatureType("target") == Necrosis.Unit.Undead or UnitCreatureType("target") == "Mechanical" ) then
+		local targetType = UnitCreatureType("target")
+		if not UnitIsPlayer("target") and ( Necrosis.Unit:IsCreatureType(targetType, Necrosis.Unit.UndeadVariants) or Necrosis.Unit:IsCreatureType(targetType, Necrosis.Unit.MechanicalVariants) ) then
 			Actif = 2 -- Immun
 		end
 		-- We'll start to parse the target buffs, as his class doesn't give him natural permanent immunity
@@ -1381,10 +1382,10 @@ function Necrosis:OnEvent(self, event,...)
 			local banishUsable, _ = IsUsableSpell(Necrosis.GetSpellName("banish"))
 			local targetType = UnitCreatureType("target")
 
-			-- Only show enslave if spell is usable AND target is a demon
-			local canEnslave = enslaveUsable and targetType == Necrosis.Unit.Demon
-			-- Only show banish if spell is usable AND target is an elemental
-			local canBanish = banishUsable and targetType == Necrosis.Unit.Elemental
+			-- Only show enslave if spell is usable AND target is a demon (handles all variants/locales)
+			local canEnslave = enslaveUsable and Necrosis.Unit:IsCreatureType(targetType, Necrosis.Unit.DemonVariants)
+			-- Only show banish if spell is usable AND target is an elemental (handles all variants/locales)
+			local canBanish = banishUsable and Necrosis.Unit:IsCreatureType(targetType, Necrosis.Unit.ElementalVariants)
 
 			-- Show enslave button if can be enslaved
 			if canEnslave then
