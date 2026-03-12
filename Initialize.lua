@@ -212,7 +212,7 @@ Necrosis.Unit = {}
 
 if locale == "frFR" then
 	Necrosis.Unit.Demon = "Démon"
-	Necrosis.Unit.Elemental = "Élémentaire"
+	Necrosis.Unit.Elemental = "Elémentaire"  -- Note: WoW returns without accent on first E
 elseif locale == "deDE" then
 	Necrosis.Unit.Demon = "Dämon"
 	Necrosis.Unit.Elemental = "Elementar"
