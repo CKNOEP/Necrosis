@@ -1389,7 +1389,7 @@ function Necrosis:OnEvent(self, event,...)
 
 			-- Show enslave button if can be enslaved
 			if canEnslave then
-				NecrosisCreatureAlertButton_demon:Show()
+				-- Use SetAlpha instead of Show() for secure frames (cannot call protected functions in combat)
 				NecrosisCreatureAlertButton_demon:SetAlpha(1)
 				NecrosisCreatureAlertButton_demon:SetMovable(true)
 			else
@@ -1399,7 +1399,7 @@ function Necrosis:OnEvent(self, event,...)
 
 			-- Show banish button if can be banished
 			if canBanish then
-				NecrosisCreatureAlertButton_elemental:Show()
+				-- Use SetAlpha instead of Show() for secure frames (cannot call protected functions in combat)
 				NecrosisCreatureAlertButton_elemental:SetAlpha(1)
 				NecrosisCreatureAlertButton_elemental:SetMovable(true)
 			else
