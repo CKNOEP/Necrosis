@@ -207,33 +207,100 @@ Necrosis.Data = {
 
 Necrosis.Speech = {}
 -- Initialize creature types for alert buttons (localized)
+-- Note: UnitCreatureType() returns localized strings that may vary by client locale
 local locale = GetLocale()
 Necrosis.Unit = {}
 
+-- Define all possible creature type variants for each language
+-- This handles slight variations like accents that may differ between game versions
+Necrosis.Unit.DemonVariants = {}
+Necrosis.Unit.ElementalVariants = {}
+Necrosis.Unit.UndeadVariants = {}
+Necrosis.Unit.MechanicalVariants = {}
+
 if locale == "frFR" then
 	Necrosis.Unit.Demon = "Démon"
-	Necrosis.Unit.Elemental = "Elémentaire"  -- Note: WoW returns without accent on first E
+	Necrosis.Unit.DemonVariants = {"Démon", "Demon"}
+	Necrosis.Unit.Elemental = "Elémentaire"
+	Necrosis.Unit.ElementalVariants = {"Elémentaire", "Élémentaire"}  -- With/without accent on first E
+	Necrosis.Unit.Undead = "Mort-vivant"
+	Necrosis.Unit.UndeadVariants = {"Mort-vivant", "Undead"}
+	Necrosis.Unit.Mechanical = "Mécanique"
+	Necrosis.Unit.MechanicalVariants = {"Mécanique", "Mechanical"}
 elseif locale == "deDE" then
 	Necrosis.Unit.Demon = "Dämon"
+	Necrosis.Unit.DemonVariants = {"Dämon", "Demon"}
 	Necrosis.Unit.Elemental = "Elementar"
+	Necrosis.Unit.ElementalVariants = {"Elementar", "Elemental"}
+	Necrosis.Unit.Undead = "Untoter"
+	Necrosis.Unit.UndeadVariants = {"Untoter", "Undead"}
+	Necrosis.Unit.Mechanical = "Mechanisch"
+	Necrosis.Unit.MechanicalVariants = {"Mechanisch", "Mechanical"}
 elseif locale == "esES" or locale == "esMX" then
 	Necrosis.Unit.Demon = "Demonio"
+	Necrosis.Unit.DemonVariants = {"Demonio", "Demon"}
 	Necrosis.Unit.Elemental = "Elemental"
+	Necrosis.Unit.ElementalVariants = {"Elemental"}
+	Necrosis.Unit.Undead = "Muerto viviente"
+	Necrosis.Unit.UndeadVariants = {"Muerto viviente", "Undead"}
+	Necrosis.Unit.Mechanical = "Mecánico"
+	Necrosis.Unit.MechanicalVariants = {"Mecánico", "Mechanical"}
 elseif locale == "ruRU" then
 	Necrosis.Unit.Demon = "Демон"
+	Necrosis.Unit.DemonVariants = {"Демон", "Demon"}
 	Necrosis.Unit.Elemental = "Элементаль"
+	Necrosis.Unit.ElementalVariants = {"Элементаль", "Элементал"}
+	Necrosis.Unit.Undead = "Нежить"
+	Necrosis.Unit.UndeadVariants = {"Нежить", "Undead"}
+	Necrosis.Unit.Mechanical = "Механизм"
+	Necrosis.Unit.MechanicalVariants = {"Механизм", "Mechanical"}
 elseif locale == "zhCN" then
 	Necrosis.Unit.Demon = "恶魔"
+	Necrosis.Unit.DemonVariants = {"恶魔"}
 	Necrosis.Unit.Elemental = "元素"
+	Necrosis.Unit.ElementalVariants = {"元素"}
+	Necrosis.Unit.Undead = "亡灵"
+	Necrosis.Unit.UndeadVariants = {"亡灵"}
+	Necrosis.Unit.Mechanical = "机械"
+	Necrosis.Unit.MechanicalVariants = {"机械"}
 elseif locale == "zhTW" then
 	Necrosis.Unit.Demon = "惡魔"
+	Necrosis.Unit.DemonVariants = {"惡魔"}
 	Necrosis.Unit.Elemental = "元素"
+	Necrosis.Unit.ElementalVariants = {"元素"}
+	Necrosis.Unit.Undead = "亡靈"
+	Necrosis.Unit.UndeadVariants = {"亡靈"}
+	Necrosis.Unit.Mechanical = "機械"
+	Necrosis.Unit.MechanicalVariants = {"機械"}
 elseif locale == "koKR" then
 	Necrosis.Unit.Demon = "악마"
+	Necrosis.Unit.DemonVariants = {"악마"}
 	Necrosis.Unit.Elemental = "원소"
+	Necrosis.Unit.ElementalVariants = {"원소"}
+	Necrosis.Unit.Undead = "언데드"
+	Necrosis.Unit.UndeadVariants = {"언데드"}
+	Necrosis.Unit.Mechanical = "기계"
+	Necrosis.Unit.MechanicalVariants = {"기계"}
 else -- enUS, enGB, etc.
 	Necrosis.Unit.Demon = "Demon"
+	Necrosis.Unit.DemonVariants = {"Demon"}
 	Necrosis.Unit.Elemental = "Elemental"
+	Necrosis.Unit.ElementalVariants = {"Elemental"}
+	Necrosis.Unit.Undead = "Undead"
+	Necrosis.Unit.UndeadVariants = {"Undead"}
+	Necrosis.Unit.Mechanical = "Mechanical"
+	Necrosis.Unit.MechanicalVariants = {"Mechanical"}
+end
+
+-- Helper function to check if a creature type matches (handles variants)
+function Necrosis.Unit:IsCreatureType(creatureType, variants)
+	if not creatureType or not variants then return false end
+	for _, variant in ipairs(variants) do
+		if creatureType == variant then
+			return true
+		end
+	end
+	return false
 end
 -- Don't overwrite Translation - it's already initialized in Constants.lua
 -- Necrosis.Translation = {} -- REMOVED: Preserves Constants.lua initialization
