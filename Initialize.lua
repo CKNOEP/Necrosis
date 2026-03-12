@@ -307,7 +307,11 @@ end
 -- Don't overwrite Config - it's already initialized in Constants.lua
 -- Necrosis.Config = {} -- REMOVED: Preserves Constants.lua initialization
 
-NecrosisConfig = {}
+-- IMPORTANT: Only initialize NecrosisConfig if it doesn't exist (WoW loads SavedVariables before this)
+-- If we always reset it here, we lose the loaded SavedVariables!
+if not NecrosisConfig then
+	NecrosisConfig = {}
+end
 
 
 -- Any of these could generate a lot of output
@@ -466,7 +470,7 @@ function Necrosis:Initialize(Config)
 
 	Necrosis:Initialize_Speech()
 	-- Initialize configuration with defaults (merge existing settings with new defaults)
-	-- Only reset if NecrosisConfig doesn't exist at all
+	-- Preserve user settings across version updates - ONLY reset if version is significantly older
 	if not NecrosisConfig then
 		NecrosisConfig = {}
 		-- Copy all defaults
@@ -483,6 +487,7 @@ function Necrosis:Initialize(Config)
 		self:Msg(self.ChatMessage.Interface.DefaultConfig, "USER")
 	else
 		-- Existing config found - preserve user settings and add missing defaults
+		-- NOTE: User settings are ALWAYS preserved during version updates (no reset on minor version changes)
 		for k, v in pairs(Config) do
 			if NecrosisConfig[k] == nil then
 				-- Add missing config keys from defaults
