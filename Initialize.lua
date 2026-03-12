@@ -211,8 +211,8 @@ Necrosis.Speech = {}
 local locale = GetLocale()
 Necrosis.Unit = {}
 
--- Define all possible creature type variants for each language
--- This handles slight variations like accents that may differ between game versions
+-- Official WoW creature type translations (from LibBabble-CreatureType-3.0)
+-- Includes variants to handle accent variations that may occur across game versions
 Necrosis.Unit.DemonVariants = {}
 Necrosis.Unit.ElementalVariants = {}
 Necrosis.Unit.UndeadVariants = {}
@@ -220,67 +220,68 @@ Necrosis.Unit.MechanicalVariants = {}
 
 if locale == "frFR" then
 	Necrosis.Unit.Demon = "Démon"
-	Necrosis.Unit.DemonVariants = {"Démon", "Demon"}
-	Necrosis.Unit.Elemental = "Elémentaire"
-	Necrosis.Unit.ElementalVariants = {"Elémentaire", "Élémentaire"}  -- With/without accent on first E
+	Necrosis.Unit.DemonVariants = {"Démon"}
+	Necrosis.Unit.Elemental = "Élémentaire"
+	-- Include variant without accent on first E (observed in some client versions)
+	Necrosis.Unit.ElementalVariants = {"Élémentaire", "Elémentaire"}
 	Necrosis.Unit.Undead = "Mort-vivant"
-	Necrosis.Unit.UndeadVariants = {"Mort-vivant", "Undead"}
-	Necrosis.Unit.Mechanical = "Mécanique"
-	Necrosis.Unit.MechanicalVariants = {"Mécanique", "Mechanical"}
+	Necrosis.Unit.UndeadVariants = {"Mort-vivant"}
 elseif locale == "deDE" then
 	Necrosis.Unit.Demon = "Dämon"
-	Necrosis.Unit.DemonVariants = {"Dämon", "Demon"}
+	Necrosis.Unit.DemonVariants = {"Dämon"}
 	Necrosis.Unit.Elemental = "Elementar"
-	Necrosis.Unit.ElementalVariants = {"Elementar", "Elemental"}
+	Necrosis.Unit.ElementalVariants = {"Elementar"}
 	Necrosis.Unit.Undead = "Untoter"
-	Necrosis.Unit.UndeadVariants = {"Untoter", "Undead"}
-	Necrosis.Unit.Mechanical = "Mechanisch"
-	Necrosis.Unit.MechanicalVariants = {"Mechanisch", "Mechanical"}
+	Necrosis.Unit.UndeadVariants = {"Untoter"}
 elseif locale == "esES" or locale == "esMX" then
 	Necrosis.Unit.Demon = "Demonio"
-	Necrosis.Unit.DemonVariants = {"Demonio", "Demon"}
+	Necrosis.Unit.DemonVariants = {"Demonio"}
 	Necrosis.Unit.Elemental = "Elemental"
 	Necrosis.Unit.ElementalVariants = {"Elemental"}
-	Necrosis.Unit.Undead = "Muerto viviente"
-	Necrosis.Unit.UndeadVariants = {"Muerto viviente", "Undead"}
-	Necrosis.Unit.Mechanical = "Mecánico"
-	Necrosis.Unit.MechanicalVariants = {"Mecánico", "Mechanical"}
+	Necrosis.Unit.Undead = "No-muerto"
+	Necrosis.Unit.UndeadVariants = {"No-muerto"}
+elseif locale == "itIT" then
+	Necrosis.Unit.Demon = "Demone"
+	Necrosis.Unit.DemonVariants = {"Demone"}
+	Necrosis.Unit.Elemental = "Elementale"
+	Necrosis.Unit.ElementalVariants = {"Elementale"}
+	Necrosis.Unit.Undead = "Non Morto"
+	Necrosis.Unit.UndeadVariants = {"Non Morto"}
+elseif locale == "ptBR" then
+	Necrosis.Unit.Demon = "Demônio"
+	Necrosis.Unit.DemonVariants = {"Demônio"}
+	Necrosis.Unit.Elemental = "Elemental"
+	Necrosis.Unit.ElementalVariants = {"Elemental"}
+	Necrosis.Unit.Undead = "Renegado"
+	Necrosis.Unit.UndeadVariants = {"Renegado"}
 elseif locale == "ruRU" then
 	Necrosis.Unit.Demon = "Демон"
-	Necrosis.Unit.DemonVariants = {"Демон", "Demon"}
+	Necrosis.Unit.DemonVariants = {"Демон"}
 	Necrosis.Unit.Elemental = "Элементаль"
-	Necrosis.Unit.ElementalVariants = {"Элементаль", "Элементал"}
+	Necrosis.Unit.ElementalVariants = {"Элементаль"}
 	Necrosis.Unit.Undead = "Нежить"
-	Necrosis.Unit.UndeadVariants = {"Нежить", "Undead"}
-	Necrosis.Unit.Mechanical = "Механизм"
-	Necrosis.Unit.MechanicalVariants = {"Механизм", "Mechanical"}
-elseif locale == "zhCN" then
-	Necrosis.Unit.Demon = "恶魔"
-	Necrosis.Unit.DemonVariants = {"恶魔"}
-	Necrosis.Unit.Elemental = "元素"
-	Necrosis.Unit.ElementalVariants = {"元素"}
-	Necrosis.Unit.Undead = "亡灵"
-	Necrosis.Unit.UndeadVariants = {"亡灵"}
-	Necrosis.Unit.Mechanical = "机械"
-	Necrosis.Unit.MechanicalVariants = {"机械"}
-elseif locale == "zhTW" then
-	Necrosis.Unit.Demon = "惡魔"
-	Necrosis.Unit.DemonVariants = {"惡魔"}
-	Necrosis.Unit.Elemental = "元素"
-	Necrosis.Unit.ElementalVariants = {"元素"}
-	Necrosis.Unit.Undead = "亡靈"
-	Necrosis.Unit.UndeadVariants = {"亡靈"}
-	Necrosis.Unit.Mechanical = "機械"
-	Necrosis.Unit.MechanicalVariants = {"機械"}
+	Necrosis.Unit.UndeadVariants = {"Нежить"}
 elseif locale == "koKR" then
 	Necrosis.Unit.Demon = "악마"
 	Necrosis.Unit.DemonVariants = {"악마"}
-	Necrosis.Unit.Elemental = "원소"
-	Necrosis.Unit.ElementalVariants = {"원소"}
+	Necrosis.Unit.Elemental = "정령"
+	Necrosis.Unit.ElementalVariants = {"정령"}
 	Necrosis.Unit.Undead = "언데드"
 	Necrosis.Unit.UndeadVariants = {"언데드"}
-	Necrosis.Unit.Mechanical = "기계"
-	Necrosis.Unit.MechanicalVariants = {"기계"}
+elseif locale == "zhCN" then
+	Necrosis.Unit.Demon = "恶魔"
+	Necrosis.Unit.DemonVariants = {"恶魔"}
+	Necrosis.Unit.Elemental = "元素生物"
+	Necrosis.Unit.ElementalVariants = {"元素生物"}
+	Necrosis.Unit.Undead = "亡灵"
+	Necrosis.Unit.UndeadVariants = {"亡灵"}
+elseif locale == "zhTW" then
+	Necrosis.Unit.Demon = "惡魔"
+	Necrosis.Unit.DemonVariants = {"惡魔"}
+	Necrosis.Unit.Elemental = "元素生物"
+	Necrosis.Unit.ElementalVariants = {"元素生物"}
+	Necrosis.Unit.Undead = "不死族"
+	Necrosis.Unit.UndeadVariants = {"不死族"}
 else -- enUS, enGB, etc.
 	Necrosis.Unit.Demon = "Demon"
 	Necrosis.Unit.DemonVariants = {"Demon"}
@@ -288,8 +289,6 @@ else -- enUS, enGB, etc.
 	Necrosis.Unit.ElementalVariants = {"Elemental"}
 	Necrosis.Unit.Undead = "Undead"
 	Necrosis.Unit.UndeadVariants = {"Undead"}
-	Necrosis.Unit.Mechanical = "Mechanical"
-	Necrosis.Unit.MechanicalVariants = {"Mechanical"}
 end
 
 -- Helper function to check if a creature type matches (handles variants)

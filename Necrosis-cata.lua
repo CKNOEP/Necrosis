@@ -339,7 +339,7 @@ local function ShowAntiFearWarning()
 	if UnitExists("target") and UnitCanAttack("player", "target") and not UnitIsDead("target") then
 		-- Checking if the target has natural immunity (only NPC target)
 		local targetType = UnitCreatureType("target")
-		if not UnitIsPlayer("target") and ( Necrosis.Unit:IsCreatureType(targetType, Necrosis.Unit.UndeadVariants) or Necrosis.Unit:IsCreatureType(targetType, Necrosis.Unit.MechanicalVariants) ) then
+		if not UnitIsPlayer("target") and Necrosis.Unit:IsCreatureType(targetType, Necrosis.Unit.UndeadVariants) then
 			Actif = 2 -- Immun
 		end
 		-- We'll start to parse the target buffs, as his class doesn't give him natural permanent immunity
