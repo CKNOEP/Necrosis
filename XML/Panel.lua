@@ -1,9 +1,7 @@
 --[[
-    Necrosis 
+    Necrosis
     Copyright (C) - copyright file included in this release
 --]]
-
-print("|cFFFFFF00[LOADED] Panel.lua is loading|r")
 
 -- On définit G comme étant le tableau contenant toutes les frames existantes.
 local _G = getfenv(0)
