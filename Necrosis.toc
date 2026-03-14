@@ -85,7 +85,7 @@ XML\Options-SummonQueue.lua
 XML\Options-Sphere_retail.lua
 XML\Options-Buttons_retail.lua
 XML\Options-Menus_retail.lua
-XML\Options-Timers.lua
+XML\Options-Timers_retail.lua
 XML\Options-Misc_retail.lua
 XML\Options-Overlay.lua
 
