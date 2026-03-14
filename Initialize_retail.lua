@@ -379,13 +379,24 @@ function Necrosis:Initialize(Config)
 
 	-- Register the events used || Enregistrement des events utilisés
 	-- CRITICAL: Register events on eventFrame, NOT on the button!
-	local eventFrame = _G["NecrosisEventFrame"]
-	if eventFrame then
-		for i in ipairs(Events) do
-			if eventFrame.RegisterEvent then
-				eventFrame:RegisterEvent(Events[i])
+	-- In WOW 12.0.1, RegisterEvent must be called after addon loading is complete
+	-- Use a timer to defer event registration
+	local function RegisterEvents()
+		local eventFrame = _G["NecrosisEventFrame"]
+		if eventFrame then
+			for i in ipairs(Events) do
+				local success, err = pcall(function()
+					eventFrame:RegisterEvent(Events[i])
+				end)
 			end
 		end
+	end
+
+	-- Try to register immediately, but if it fails, schedule for later
+	local success, err = pcall(RegisterEvents)
+	if not success then
+		-- Schedule event registration for later using a timer
+		C_Timer.After(0.1, RegisterEvents)
 	end
 
 	Necrosis:Initialize_Speech()

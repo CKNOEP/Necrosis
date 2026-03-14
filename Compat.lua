@@ -105,6 +105,27 @@ if not _G.UnitAuraOriginal then
 end
 
 -- ============================================================================
+-- GetSpellPowerCost Compatibility Wrapper (12.0+)
+-- ============================================================================
+if not _G.GetSpellPowerCost then
+    function _G.GetSpellPowerCost(spellID)
+        if not spellID then return nil end
+        spellID = tonumber(spellID)
+        if not spellID or spellID <= 0 then return nil end
+
+        -- In WOW 12.0.1, use C_Spell.GetSpellInfo to get power cost
+        if C_Spell and C_Spell.GetSpellInfo then
+            local spellInfo = C_Spell.GetSpellInfo(spellID)
+            if spellInfo and spellInfo.powerCost then
+                -- Return as a table similar to old format
+                return { { powerType = "MANA", cost = spellInfo.powerCost } }
+            end
+        end
+        return nil
+    end
+end
+
+-- ============================================================================
 -- C_Spell.GetSpellName (returns just the name, not the old GetSpellInfo format)
 -- ============================================================================
 if C_Spell and not C_Spell.GetSpellNameOriginal then
