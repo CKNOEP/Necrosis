@@ -162,6 +162,17 @@ if not _G.GetSpellPowerCost then
 end
 
 -- ============================================================================
+-- GetSpellSubtext Compatibility Wrapper (12.0+)
+-- Spell ranks were removed in WOW 12.0.1
+-- ============================================================================
+if not _G.GetSpellSubtext then
+    function _G.GetSpellSubtext(spellID)
+        -- Spell ranks no longer exist in WOW 12.0.1
+        return nil
+    end
+end
+
+-- ============================================================================
 -- Spell Book API Compatibility Wrappers (12.0+)
 -- ============================================================================
 if not _G.MAX_SKILLLINE_TABS then
