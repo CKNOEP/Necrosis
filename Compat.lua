@@ -105,6 +105,42 @@ if not _G.UnitAuraOriginal then
 end
 
 -- ============================================================================
+-- UnitBuff Compatibility Wrapper (12.0+)
+-- ============================================================================
+if not _G.UnitBuff then
+    function _G.UnitBuff(unit, index)
+        if C_UnitAuras and C_UnitAuras.GetAuraDataByUnit then
+            local auras = C_UnitAuras.GetAuraDataByUnit(unit, "HELPFUL")
+            if not auras or not auras[index] then return nil end
+
+            local aura = auras[index]
+            return aura.name, aura.icon, aura.applications, aura.dispelName, aura.duration,
+                   aura.expirationTime, aura.sourceUnit, aura.canStealOrPurge, aura.nameplateShowPersonal,
+                   aura.spellId, aura.canApplyCustom, aura.isBossAura, aura.isCastByPlayer, aura.nameplateShowAll, aura.timeMod
+        end
+        return nil
+    end
+end
+
+-- ============================================================================
+-- UnitDebuff Compatibility Wrapper (12.0+)
+-- ============================================================================
+if not _G.UnitDebuff then
+    function _G.UnitDebuff(unit, index)
+        if C_UnitAuras and C_UnitAuras.GetAuraDataByUnit then
+            local auras = C_UnitAuras.GetAuraDataByUnit(unit, "HARMFUL")
+            if not auras or not auras[index] then return nil end
+
+            local aura = auras[index]
+            return aura.name, aura.icon, aura.applications, aura.dispelName, aura.duration,
+                   aura.expirationTime, aura.sourceUnit, aura.canStealOrPurge, aura.nameplateShowPersonal,
+                   aura.spellId, aura.canApplyCustom, aura.isBossAura, aura.isCastByPlayer, aura.nameplateShowAll, aura.timeMod
+        end
+        return nil
+    end
+end
+
+-- ============================================================================
 -- GetSpellPowerCost Compatibility Wrapper (12.0+)
 -- ============================================================================
 if not _G.GetSpellPowerCost then
