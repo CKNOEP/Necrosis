@@ -384,11 +384,15 @@ end
 
 function Necrosis.Skin_Click(self)
 	local ID = self:GetID()
-	local couleur = {"Cata"}
+	local couleur = {"Cata", "Purple"}
 	UIDropDownMenu_SetSelectedID(NecrosisSkinSelection, ID)
-	NecrosisConfig.NecrosisColor = couleur[ID]
-	local f = _G[Necrosis.Warlock_Buttons.main.f]
-	f:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..couleur[ID].."\\Shard0-2")
+	if couleur[ID] then
+		NecrosisConfig.NecrosisColor = couleur[ID]
+		local f = _G[Necrosis.Warlock_Buttons.main.f]
+		if f then
+			pcall(function() f:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..couleur[ID].."\\Shard0-2") end)
+		end
+	end
 end
 
 -- Fonctions du Dropdown des Events de la sphère
