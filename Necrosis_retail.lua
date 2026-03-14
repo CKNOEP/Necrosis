@@ -134,86 +134,61 @@ Local.DefaultConfig = {
 	
 	CurseShow = {true,true,true,true,true,true,true,true,},
 
-	Timers = { -- Order is for options screen; 40+ timer spells for Midnight 12.0.1
-		-- ========================================
-		-- CURSES (7 total)
-		-- ========================================
+	Timers = { -- Order is for options screen; Active timer spells for Midnight 12.0.1
+		-- CURSES (7 total with Timer=true)
 		[1] = {usage = "agony", show = true},              -- Curse of Agony (24s)
 		[2] = {usage = "weakness", show = true},          -- Curse of Weakness (120s)
 		[3] = {usage = "elements", show = true},          -- Curse of Elements (300s)
-		[4] = {usage = "doom", show = true},              -- Curse of Doom
+		[4] = {usage = "doom", show = true},              -- Curse of Doom (60s)
 		[5] = {usage = "tongues", show = false},          -- Curse of Tongues (30s)
 		[6] = {usage = "exhaustion", show = false},       -- Curse of Exhaustion (12s)
 		[7] = {usage = "recklessness", show = false},     -- Curse of Recklessness (120s)
 
-		-- ========================================
-		-- AFFLICTION DoTs (5 total)
-		-- ========================================
+		-- AFFLICTION DoTs (5 total with Timer=true)
 		[8] = {usage = "corruption", show = true},        -- Corruption (12-18s)
 		[9] = {usage = "unstable_affliction", show = true}, -- Unstable Affliction (15-18s)
 		[10] = {usage = "haunt", show = true},            -- Haunt (18s)
 		[11] = {usage = "siphon_life", show = true},      -- Siphon Life (15s)
 		[12] = {usage = "drain_soul", show = true},       -- Drain Soul (5s)
 
-		-- ========================================
-		-- DESTRUCTION DoTs & Abilities (8 total)
-		-- ========================================
+		-- DESTRUCTION DoTs & Abilities (7 total with Timer=true)
 		[13] = {usage = "immolate", show = true},         -- Immolate (15s)
 		[14] = {usage = "fear", show = true},             -- Fear (10-20s)
 		[15] = {usage = "howl", show = false},            -- Howl of Terror (10-15s)
 		[16] = {usage = "soul_fire", show = true},        -- Soul Fire (60s cooldown)
-		[17] = {usage = "death_coil", show = true},       -- Death Coil (3s)
+		[17] = {usage = "death_coil", show = true},       -- Death Coil (3s + 180s CD)
 		[18] = {usage = "shadowburn", show = true},       -- Shadowburn (15s cooldown)
 		[19] = {usage = "domination", show = false},      -- Fel Domination (15s)
-		[20] = {usage = "conflagration", show = false},   -- Conflagration
 
-		-- ========================================
 		-- CONTROL & DEBUFFS (2 total)
-		-- ========================================
-		[21] = {usage = "banish", show = true},           -- Banish (20-30s)
-		[22] = {usage = "enslave", show = true},          -- Enslave Demon (300s)
+		[20] = {usage = "banish", show = true},           -- Banish (20-30s)
+		[21] = {usage = "enslave", show = true},          -- Enslave Demon (300s)
 
-		-- ========================================
-		-- UTILITY BUFFS (3 total)
-		-- ========================================
-		[23] = {usage = "ward", show = true},             -- Shadow Ward (30s)
-		[24] = {usage = "armor", show = false},           -- Demon Armor (1800s)
-		[25] = {usage = "fel_armor", show = false},       -- Fel Armor
+		-- UTILITY BUFFS (2 total with Timer=true)
+		[22] = {usage = "ward", show = true},             -- Shadow Ward (30s)
+		[23] = {usage = "armor", show = false},           -- Demon Armor (buff)
 
-		-- ========================================
-		-- SUMMONING & RITUALS (3 total)
-		-- ========================================
-		[26] = {usage = "soulstone", show = true},        -- Soulstone (15 min)
-		[27] = {usage = "summoning", show = true},        -- Ritual of Summoning (600s)
-		[28] = {usage = "rit_of_doom", show = false},     -- Ritual of Doom
+		-- SUMMONING & RITUALS (3 total with Timer=true)
+		[24] = {usage = "soulstone", show = true},        -- Soulstone (900s = 15min)
+		[25] = {usage = "summoning", show = true},        -- Ritual of Summoning (600s)
+		[26] = {usage = "rit_of_doom", show = false},     -- Ritual of Doom (600s)
 
-		-- ========================================
-		-- DETECTION & MOVEMENT (3 total)
-		-- ========================================
+		-- DETECTION & MOVEMENT (2 total with Timer=true)
+		[27] = {usage = "invisible", show = false},       -- Detect Invisibility (600s)
+		[28] = {usage = "breath", show = false},          -- Unending Breath (600s)
+
+		-- UTILITY (eye is also here)
 		[29] = {usage = "eye", show = false},             -- Eye of Kilrogg (45s)
-		[30] = {usage = "invisible", show = false},       -- Detect Invisibility (600s)
-		[31] = {usage = "breath", show = false},          -- Unending Breath (600s)
 
-		-- ========================================
-		-- INFERNAL & RITUAL (1 total)
-		-- ========================================
-		[32] = {usage = "inferno", show = false},         -- Inferno (5s)
+		-- SACRIFICE SPELLS (2 actual castable)
+		[30] = {usage = "sacrifice", show = false},       -- Demonic Sacrifice (30s) - pet buff
+		[31] = {usage = "sacrifice_Void", show = false},  -- Sacrifice Voidwalker (30s protection)
 
-		-- ========================================
-		-- DEMONIC SACRIFICE (7 total)
-		-- ========================================
-		[33] = {usage = "sacrifice", show = false},       -- Demonic Sacrifice (30s)
-		[34] = {usage = "sacrifice_Void", show = false},  -- Sacrifice Voidwalker
-		[35] = {usage = "sacrifice_demonic_Imp", show = false},       -- Sacrifice Imp
-		[36] = {usage = "sacrifice_demonic_Voidwalker", show = false}, -- Sacrifice Void
-		[37] = {usage = "sacrifice_demonic_Succubus", show = false},   -- Sacrifice Succubus
-		[38] = {usage = "sacrifice_demonic_Felhunter", show = false},  -- Sacrifice Felhunter
-		[39] = {usage = "sacrifice_demonic_Felguard", show = false},   -- Sacrifice Felguard
+		-- RITUALS
+		[32] = {usage = "Ritual_of_Souls", show = false}, -- Ritual of Souls (600s)
 
-		-- ========================================
-		-- RITUAL OF SOULS (1 total)
-		-- ========================================
-		[40] = {usage = "Ritual_of_Souls", show = false}, -- Ritual of Souls (600s)
+		-- INFERNAL
+		[33] = {usage = "inferno", show = false},         -- Inferno (5s summon)
 	},
 }
 
