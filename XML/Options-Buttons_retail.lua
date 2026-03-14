@@ -737,7 +737,7 @@ end
 
 function NecrosisInitSelectedMountButton(button, id)
 	--print (button, id)
-	if ( id ) then
+	if ( id ) and button then
 		--local mounts = GetNumCompanions("MOUNT");
 		local mounts = C_MountJournal.GetNumDisplayedMounts()
 
