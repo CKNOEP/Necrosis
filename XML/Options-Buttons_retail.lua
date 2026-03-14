@@ -496,10 +496,10 @@ function Necrosis:SetButtonsConfig()
 --		--TODO: translate this
 --		FontString:SetText("Select your mounts:");
 
---		local FontString = frame:CreateFontString("NecrosisLeftMountText", "OVERLAY", "GameFontNormalSmall")
---		FontString:Show()
---		FontString:ClearAllPoints()
-		FontString:SetPoint("RIGHT", NecrosisSelectedMountLeft, "LEFT", -10, 0)
+		local FontString = frame:CreateFontString("NecrosisLeftMountText", "OVERLAY", "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		pcall(function() FontString:SetPoint("RIGHT", NecrosisSelectedMountLeft, "LEFT", -10, 0) end)
 		FontString:SetTextColor(1, 1, 1)
 		FontString:SetText(self.Config.Buttons["Monture - Clic gauche"])
 
