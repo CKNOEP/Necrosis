@@ -3,7 +3,6 @@
     Copyright (C) - copyright file included in this release
 
     Retail-specific timers options panel (Midnight 12.0+)
-    UPDATED: 3-page layout for 40+ timer spells
 ]]--
 
 -- On définit G comme étant le tableau contenant toutes les frames existantes.
@@ -13,7 +12,7 @@ local iamNecrosis = strlower(AddonName):sub(0,8) == "necrosis"
 local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
 
 ------------------------------------------------------------------------------------------------------
--- CREATION DE LA FRAME DES OPTIONS TIMERS RETAIL (3-PAGE VERSION)
+-- CREATION DE LA FRAME DES OPTIONS TIMERS RETAIL
 ------------------------------------------------------------------------------------------------------
 
 function Necrosis:SetTimersConfig()
@@ -49,7 +48,7 @@ function Necrosis:SetTimersConfig()
 		FontString:Show()
 		FontString:ClearAllPoints()
 		FontString:SetPoint("BOTTOM", frame, "BOTTOM", 90, 90)
-		FontString:SetText("1 / 3")
+		FontString:SetText("1 / 2")
 
 		FontString = frame:CreateFontString("NecrosisTimersConfig1Text", nil, "GameFontNormalSmall")
 		FontString:Show()
@@ -76,7 +75,7 @@ function Necrosis:SetTimersConfig()
 		frame:ClearAllPoints()
 		frame:SetPoint("LEFT", NecrosisTimersConfig1, "BOTTOMLEFT", 40, 100)
 		frame:SetScript("OnClick", function()
-			NecrosisTimersConfig3:Show()
+			NecrosisTimersConfig2:Show()
 			NecrosisTimersConfig1:Hide()
 		end)
 
@@ -237,7 +236,7 @@ function Necrosis:SetTimersConfig()
 		NecrosisAlphaBarHigh:SetText("100")
 
 		-- ========================================
-		-- PAGE 2: TIMER SPELLS (ITEMS 1-20)
+		-- PAGE 2: INDIVIDUAL TIMER TOGGLES
 		-- ========================================
 		frame = CreateFrame("Frame", "NecrosisTimersConfig2", NecrosisTimersConfig)
 		frame:SetFrameStrata("DIALOG")
@@ -254,13 +253,13 @@ function Necrosis:SetTimersConfig()
 		FontString:Show()
 		FontString:ClearAllPoints()
 		FontString:SetPoint("BOTTOM", frame, "BOTTOM", 90, 95)
-		FontString:SetText("2 / 3")
+		FontString:SetText("2 / 2")
 
 		FontString = frame:CreateFontString("NecrosisTimersConfig2Text", nil, "GameFontNormalSmall")
 		FontString:Show()
 		FontString:ClearAllPoints()
 		FontString:SetPoint("BOTTOM", frame, "BOTTOM", 50, 400)
-		FontString:SetText((L and L["SELECT_TIMERS"]) or "Select Spell Timers (1-20)")
+		FontString:SetText((L and L["SELECT_TIMERS"]) or "Select Spell Timers")
 
 		-- Navigation buttons
 		frame = CreateFrame("Button", nil, NecrosisTimersConfig2, "UIPanelButtonTemplate")
@@ -270,7 +269,7 @@ function Necrosis:SetTimersConfig()
 		frame:ClearAllPoints()
 		frame:SetPoint("RIGHT", NecrosisTimersConfig2, "BOTTOMRIGHT", 120, 100)
 		frame:SetScript("OnClick", function()
-			NecrosisTimersConfig3:Show()
+			NecrosisTimersConfig1:Show()
 			NecrosisTimersConfig2:Hide()
 		end)
 
@@ -286,14 +285,13 @@ function Necrosis:SetTimersConfig()
 		end)
 
 		-- ========================================
-		-- TIMER CHECKBOXES PAGE 2 (2 COLUMNS x 10 ROWS)
+		-- TIMER CHECKBOXES (2 COLUMNS)
 		-- ========================================
 		local initY = 395
-		local leftX = 40
-		local rightX = 190
+		local initX = 40
 
 		if NecrosisConfig.Timers then
-			for i = 1, math.min(20, #NecrosisConfig.Timers), 1 do
+			for i = 1, #NecrosisConfig.Timers, 1 do
 				frame = CreateFrame("CheckButton", "NecrosisTimerShow"..i, NecrosisTimersConfig2, "UICheckButtonTemplate")
 				frame:EnableMouse(true)
 				frame:SetWidth(24)
@@ -301,13 +299,11 @@ function Necrosis:SetTimersConfig()
 				frame:Show()
 				frame:ClearAllPoints()
 
-				-- Layout: 2 columns x 10 rows
-				if i <= 10 then
-					-- Left column (items 1-10)
-					frame:SetPoint("LEFT", NecrosisTimersConfig2, "BOTTOMLEFT", leftX, initY - (25 * i))
+				-- Layout: 2 columns (7 rows each)
+				if i < 8 then
+					frame:SetPoint("LEFT", NecrosisTimersConfig2, "BOTTOMLEFT", initX , initY - (25 * i))
 				else
-					-- Right column (items 11-20)
-					frame:SetPoint("LEFT", NecrosisTimersConfig2, "BOTTOMLEFT", rightX, initY - (25 * (i-10)))
+					frame:SetPoint("LEFT", NecrosisTimersConfig2, "BOTTOMLEFT", initX + 180, initY - (25 * (i-7)))
 				end
 
 				frame:SetScript("OnClick", function(self)
@@ -329,97 +325,6 @@ function Necrosis:SetTimersConfig()
 		end
 
 		NecrosisTimersConfig2:Hide()
-
-		-- ========================================
-		-- PAGE 3: TIMER SPELLS (ITEMS 21-40)
-		-- ========================================
-		frame = CreateFrame("Frame", "NecrosisTimersConfig3", NecrosisTimersConfig)
-		frame:SetFrameStrata("DIALOG")
-		frame:SetMovable(false)
-		frame:EnableMouse(true)
-		frame:SetWidth(350)
-		frame:SetHeight(452)
-		frame:Show()
-		frame:ClearAllPoints()
-		frame:SetPoint("BOTTOMLEFT")
-
-		-- Navigation indicator
-		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
-		FontString:Show()
-		FontString:ClearAllPoints()
-		FontString:SetPoint("BOTTOM", frame, "BOTTOM", 90, 95)
-		FontString:SetText("3 / 3")
-
-		FontString = frame:CreateFontString("NecrosisTimersConfig3Text", nil, "GameFontNormalSmall")
-		FontString:Show()
-		FontString:ClearAllPoints()
-		FontString:SetPoint("BOTTOM", frame, "BOTTOM", 50, 400)
-		FontString:SetText((L and L["SELECT_TIMERS"]) or "Select Spell Timers (21-40)")
-
-		-- Navigation buttons
-		frame = CreateFrame("Button", nil, NecrosisTimersConfig3, "UIPanelButtonTemplate")
-		frame:SetText(">>>")
-		frame:EnableMouse(true)
-		frame:Show()
-		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisTimersConfig3, "BOTTOMRIGHT", 120, 100)
-		frame:SetScript("OnClick", function()
-			NecrosisTimersConfig1:Show()
-			NecrosisTimersConfig3:Hide()
-		end)
-
-		frame = CreateFrame("Button", nil, NecrosisTimersConfig3, "UIPanelButtonTemplate")
-		frame:SetText("<<<")
-		frame:EnableMouse(true)
-		frame:Show()
-		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisTimersConfig3, "BOTTOMLEFT", 40, 100)
-		frame:SetScript("OnClick", function()
-			NecrosisTimersConfig2:Show()
-			NecrosisTimersConfig3:Hide()
-		end)
-
-		-- ========================================
-		-- TIMER CHECKBOXES PAGE 3 (2 COLUMNS x 10 ROWS)
-		-- ========================================
-		if NecrosisConfig.Timers then
-			for i = 21, #NecrosisConfig.Timers, 1 do
-				frame = CreateFrame("CheckButton", "NecrosisTimerShow"..i, NecrosisTimersConfig3, "UICheckButtonTemplate")
-				frame:EnableMouse(true)
-				frame:SetWidth(24)
-				frame:SetHeight(24)
-				frame:Show()
-				frame:ClearAllPoints()
-
-				-- Layout: 2 columns x 10 rows (relative to start of page 3)
-				local pageIndex = i - 20  -- Convert to 1-based for this page
-				if pageIndex <= 10 then
-					-- Left column (items 21-30)
-					frame:SetPoint("LEFT", NecrosisTimersConfig3, "BOTTOMLEFT", leftX, initY - (25 * pageIndex))
-				else
-					-- Right column (items 31-40)
-					frame:SetPoint("LEFT", NecrosisTimersConfig3, "BOTTOMLEFT", rightX, initY - (25 * (pageIndex-10)))
-				end
-
-				frame:SetScript("OnClick", function(self)
-					if Necrosis.UpdateSpellTimer then
-						Necrosis.UpdateSpellTimer(i, self:GetChecked())
-					end
-				end)
-
-				FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
-				FontString:Show()
-				FontString:ClearAllPoints()
-				FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
-				FontString:SetTextColor(1, 1, 1)
-				frame:SetFontString(FontString)
-
-				frame:SetChecked(NecrosisConfig.Timers[i].show)
-				frame:SetText(Necrosis.GetSpellName(NecrosisConfig.Timers[i].usage))
-			end
-		end
-
-		NecrosisTimersConfig3:Hide()
 	end
 
 	-- ========================================
