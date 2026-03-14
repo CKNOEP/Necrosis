@@ -78,6 +78,13 @@ if wowVersion ~= "classic" then
 	-- Initialize C_Club functions (Discord communities)
 	C_Club_GetStreamInfo = C_Club.GetStreamInfo
 	C_Club_GetClubInfo = C_Club.GetClubInfo
+	-- Initialize C_TradeSkillUI functions (may not exist in all versions)
+	if C_TradeSkillUI then
+		C_TradeSkillUI_IsRecipeRepeating = C_TradeSkillUI.IsRecipeRepeating
+	else
+		-- Fallback for versions where TradeSkillUI doesn't exist
+		C_TradeSkillUI_IsRecipeRepeating = function() return false end
+	end
 end
 
 -- Initialize C_PetBattles_IsInBattle with safe fallback (Midnight 12.0.1 compatibility)
