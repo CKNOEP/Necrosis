@@ -1,7 +1,7 @@
 # Necrosis Retail (WOW 12.0.1) - Résumé des Correctifs
 
 ## Résumé Général
-L'addon Necrosis a été adapté pour WOW 12.0.1 (Midnight PTR Retail) avec des corrections majeures pour la compatibilité API et l'interface utilisateur.
+L'addon Necrosis a été adapté pour WOW 12.0.1 Retail (Midnight) avec des corrections majeures pour la compatibilité API et l'interface utilisateur.
 
 ## ✅ Corrections Appliquées
 
@@ -134,5 +134,6 @@ Tous les problèmes connus ont été corrigés. Le prochain test doit être effe
 3. Vérification de la configuration
 4. Test des fonctionnalités principales
 
-**Branche**: `retail`
-**Commits**: 36 en attente de push
+**Branche**: `retail` (WOW 12.0.1 Retail réel)
+**Commits**: 36+ en attente de push
+**Cible**: Version Retail réelle (pas PTR)

@@ -1,7 +1,7 @@
 # 🎮 Checklist de Test - Necrosis Retail 12.0.1
 
 ## Avant de Commencer
-- [ ] Assurez-vous d'être sur la PTR Retail 12.0.1
+- [ ] Assurez-vous d'être sur la version Retail réelle (WOW 12.0.1)
 - [ ] Vérifiez que Necrosis_Retail est activé (pas Necrosis_Classic)
 - [ ] Fermez et relancez WoW complètement
 
@@ -184,7 +184,7 @@ Ces erreurs ne doivent **PAS** apparaître:
 ## 🎯 Résumé - À Remplir Après Test
 
 **Date du test**: _________
-**Serveur**: PTR Retail 12.0.1
+**Serveur**: Retail 12.0.1 (réel)
 **Classe**: Warlock
 
 ### Résultat Global
