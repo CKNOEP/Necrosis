@@ -18,6 +18,40 @@ local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
 
 function Necrosis:SetTimersConfig()
 
+	-- ========================================
+	-- CLEAN UP OLD FRAMES (force recreation for new layout)
+	-- ========================================
+	local oldFrame = _G["NecrosisTimersConfig"]
+	if oldFrame then
+		-- Check if it has the old 2-page layout (missing Page 3)
+		if _G["NecrosisTimersConfig2"] and not _G["NecrosisTimersConfig3"] then
+			-- Old layout detected - destroy all old frames and recreate
+			pcall(function()
+				oldFrame:Hide()
+				oldFrame = nil
+				_G["NecrosisTimersConfig"] = nil
+				if _G["NecrosisTimersConfig1"] then
+					_G["NecrosisTimersConfig1"]:Hide()
+					_G["NecrosisTimersConfig1"] = nil
+				end
+				if _G["NecrosisTimersConfig2"] then
+					_G["NecrosisTimersConfig2"]:Hide()
+					_G["NecrosisTimersConfig2"] = nil
+				end
+				-- Clean up all timer checkboxes
+				for i = 1, 50 do
+					if _G["NecrosisTimerShow"..i] then
+						_G["NecrosisTimerShow"..i]:Hide()
+						_G["NecrosisTimerShow"..i] = nil
+					end
+				end
+			end)
+		elseif _G["NecrosisTimersConfig3"] then
+			-- New layout already exists, just return
+			return
+		end
+	end
+
 	local frame = _G["NecrosisTimersConfig"]
 	if not frame then
 		-- Création de la fenêtre principale
