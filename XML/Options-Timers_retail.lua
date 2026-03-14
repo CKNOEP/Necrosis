@@ -324,7 +324,7 @@ function Necrosis:SetTimersConfig()
 		-- ========================================
 		local initY = 395
 		local leftX = 40
-		local rightX = 205
+		local rightX = 220
 
 		if NecrosisConfig.Timers then
 			for i = 1, math.min(20, #NecrosisConfig.Timers), 1 do
