@@ -347,9 +347,10 @@ Notes:
 	[47864] = {UsageRank = 9, SpellRank = 9, Timer = true, Usage = "agony", Length = 24, }, -- 	
 	
 	[1714]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "tongues", Length = 30, }, -- Curse of Tongues || Malédiction Langage 
-	[11719] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "tongues", Length = 30, }, --  
+	[11719] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "tongues", Length = 30, }, --
 
-	[18223] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "exhaustion", Length = 12, }, -- Curse of Exhaustion || Malédiction de fatigue || improved via talent points
+	[334725] = {UsageRank = 2, SpellRank = 1, Timer = true, Usage = "exhaustion", Length = 12, }, -- Curse of Exhaustion (Midnight 12.0.1 new ID)
+	[18223] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "exhaustion", Length = 12, }, -- Curse of Exhaustion (Old ID)
 
 	-- Curse of the Elements changed ID in Midnight (was 1490 in MOP, now 44332)
 	[44332]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "elements", Length = 300, }, -- Curse of the Elements || Malédiction Eléments (Midnight 12.0)
