@@ -169,11 +169,11 @@ function Necrosis:SetMiscConfig()
 			configpanel.name = "Necrosis"
 
 			local category, layout = Settings.RegisterCanvasLayoutCategory(configpanel, configpanel.name, configpanel.name);
-			category.ID = configpanel.name
 
 			frame:SetScript("OnClick", function()
-				Settings.OpenToCategory(category.ID);
-				Settings.OpenToCategory(category.ID);
+				if category then
+					Settings.OpenToCategory(category);
+				end
 			end)
 
 		-- Set the number of shards to keep || Destruction des fragments après X
