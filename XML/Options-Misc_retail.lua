@@ -172,7 +172,7 @@ function Necrosis:SetMiscConfig()
 
 			frame:SetScript("OnClick", function()
 				if category then
-					Settings.OpenToCategory(category);
+					pcall(function() Settings.OpenToCategory(category) end)
 				end
 			end)
 
