@@ -1455,7 +1455,7 @@ function Necrosis:SpellSetup(reason)
 	--]=]
 --	Necrosis:CreateSpellList()
 	for id, v in pairs(Necrosis.Warlock_Spells) do
-		local spell_name = GetSpellInfo(id) -- localized, rank is BROKEN (always nil)
+		local spell_name = C_Spell.GetSpellName(id) -- localized name in WOW 12.0.1
 		local usage = Necrosis.Warlock_Spells[id].Usage
 		
 		if Necrosis.Debug.spells_init then

@@ -382,7 +382,9 @@ function Necrosis:Initialize(Config)
 	local eventFrame = _G["NecrosisEventFrame"]
 	if eventFrame then
 		for i in ipairs(Events) do
-			eventFrame:RegisterEvent(Events[i])
+			if eventFrame.RegisterEvent then
+				eventFrame:RegisterEvent(Events[i])
+			end
 		end
 	end
 

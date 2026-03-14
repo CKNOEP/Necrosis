@@ -1,0 +1,79 @@
+## Interface: 120001
+## Title: Necrosis 8 Midnight PTR
+## Notes: Warlock UI & Shard Management for PTR
+## Version: 8.3.3-xptr
+## DefaultState: Enabled
+## SavedVariablesPerCharacter: NecrosisConfig
+
+# Compatibility layer MUST be loaded first
+Compat.lua
+
+Necrosis.xml
+
+libs\LibStub\LibStub.lua
+libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
+libs\AceAddon-3.0\AceAddon-3.0.xml
+libs\AceEvent-3.0\AceEvent-3.0.xml
+libs\AceConsole-3.0\AceConsole-3.0.xml
+libs\AceSerializer-3.0\AceSerializer-3.0.xml
+libs\AceComm-3.0\AceComm-3.0.xml
+libs\AceHook-3.0\AceHook-3.0.xml
+libs\AceTimer-3.0\AceTimer-3.0.xml
+libs\AceGUI-3.0\AceGUI-3.0.xml
+libs\AceConfig-3.0\AceConfig-3.0.xml
+libs\AceLocale-3.0\AceLocale-3.0.xml
+libs\LibSharedMedia-3.0\lib.xml
+libs\AceGUI-3.0-SharedMediaWidgets\widget.xml
+libs\LibQTip-1.0\lib.xml
+libs\!LibUIDropDownMenu\LibUIDropDownMenu\LibUIDropDownMenu.xml
+
+libs\LibDataBroker-1.1.lua
+
+Locales\Localization.lua
+Locales\Localization.CN.lua
+Locales\Localization.DE.lua
+Locales\Localization.ES.lua
+Locales\Localization.FR.lua
+Locales\Localization.RU.lua
+Locales\Localization.TW.lua
+Locales\Localization.MX.lua
+
+Dialog-Cata.lua
+Functions.lua
+AFKS.lua
+SummonQueue.lua
+VersionCheck.lua
+Speech\Speech-fr.lua
+Speech\Speech-en.lua
+Speech\Speech-de.lua
+Speech\Speech-es.lua
+Speech\Speech-tw.lua
+Speech\Speech-cn.lua
+Speech\Speech-ru.lua
+
+Message.lua
+Spells-Midnight.lua
+
+Timers\Functions.lua
+Timers\GraphicalTimers.lua
+Timers\OtherTimers.lua
+
+XML\Attributes-cata.lua
+
+XML\Options-Messages.lua
+XML\Options-SummonQueue.lua
+XML\Options-Sphere-Cata.lua
+XML\Options-Buttons-Cata.lua
+XML\Options-Menus.lua
+XML\Options-Timers.lua
+XML\Options-Misc-Cata.lua
+XML\Options-Overlay.lua
+
+XML\Panel.lua
+XML\AboutPanel.lua
+Necrosis-midnight.lua
+XML\XML.lua
+ThreatMeter.lua
+NecrosisUI\Framework.xml
+
+SpellActivations\SpellActivations.xml
