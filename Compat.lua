@@ -8,6 +8,8 @@
 -- ============================================================================
 if not _G.GetSpellInfo then
     function _G.GetSpellInfo(spellID)
+        if not spellID then return nil end
+        spellID = tonumber(spellID)
         if not spellID or spellID <= 0 then return nil end
 
         local spellInfo = C_Spell.GetSpellInfo(spellID)
@@ -24,6 +26,8 @@ end
 if not _G.GetSpellCooldownOriginal then
     _G.GetSpellCooldownOriginal = _G.GetSpellCooldown
     function _G.GetSpellCooldown(spellID)
+        if not spellID then return 0, 0, 1 end
+        spellID = tonumber(spellID)
         if not spellID or spellID <= 0 then return 0, 0, 1 end
 
         local cooldownInfo = C_Spell.GetSpellCooldown(spellID)
@@ -40,6 +44,8 @@ end
 if not _G.GetItemInfoOriginal then
     _G.GetItemInfoOriginal = _G.GetItemInfo
     function _G.GetItemInfo(itemID)
+        if not itemID then return nil end
+        itemID = tonumber(itemID)
         if not itemID or itemID <= 0 then return nil end
 
         local itemInfo = C_Item.GetItemInfo(itemID)
