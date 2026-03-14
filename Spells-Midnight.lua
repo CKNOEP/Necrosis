@@ -1071,9 +1071,9 @@ function Necrosis.IsSpellKnown(usage)
 	
 	if Necrosis.Warlock_Spell_Use[usage] -- get spell id
 	then
-		if GetSpellInfo(GetSpellInfo(Necrosis.Warlock_Spell_Use[usage])) then --- test if spell is know
+		if GetSpellInfo(Necrosis.Warlock_Spell_Use[usage]) then --- test if spell is known
 		return true
-		
+
 		--return Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].InSpellBook
 		end
 	else
