@@ -49,10 +49,10 @@ Locales\Localization.RU.lua
 Locales\Localization.TW.lua
 Locales\Localization.MX.lua
 
-Initialize.lua
+Initialize_retail.lua
 Utils.lua
 
-Dialog.lua
+Dialog_retail.lua
 AFKS.lua
 SummonQueue.lua
 VersionCheck.lua
@@ -65,7 +65,7 @@ Speech\Speech-cn.lua
 Speech\Speech-ru.lua
 
 Message.lua
-Spells-MOP.lua
+Spells-Midnight.lua
 
 
 Timers\Functions.lua
@@ -75,21 +75,21 @@ Timers\OtherTimers.lua
 
 
 
-XML\Attributes.lua
+XML\Attributes_retail.lua
 
 XML\Options-Messages.lua
 XML\Options-SummonQueue.lua
-XML\Options-Sphere-Vanilla.lua
-XML\Options-Buttons-Vanilla.lua
-XML\Options-Menus.lua
+XML\Options-Sphere_retail.lua
+XML\Options-Buttons_retail.lua
+XML\Options-Menus_retail.lua
 XML\Options-Timers.lua
-XML\Options-Misc.lua
+XML\Options-Misc_retail.lua
 XML\Options-Overlay.lua
 
-XML\Panel.lua
+XML\Panel_retail.lua
 XML\AboutPanel.lua
-Necrosis.lua
-XML\XML.lua
+Necrosis_retail.lua
+XML\XML_retail.lua
 ThreatMeter.lua
 
 SpellActivations\SpellActivations.xml
