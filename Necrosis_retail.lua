@@ -2910,7 +2910,7 @@ function Necrosis:CreateMenu()
 		end
 		end
 		-- Display the pets menu button || Maintenant que tous les boutons de pet sont placés les uns à côté des autres, on affiche les disponibles
-		if Local.Menu.Pet[1] then
+		if Local.Menu.Pet and Local.Menu.Pet[1] then
 			local f = _G[Necrosis.Warlock_Buttons.pets.f]
 			local fs = Necrosis.Warlock_Buttons.pets.f
 			Local.Menu.Pet[1]:ClearAllPoints()
@@ -2975,7 +2975,7 @@ function Necrosis:CreateMenu()
 		end
 
 		-- Display the buffs menu button on the sphere || Maintenant que tous les boutons de buff sont placés les uns à côté des autres, on affiche les disponibles
-		if Local.Menu.Buff[1] then
+		if Local.Menu.Buff and Local.Menu.Buff[1] then
 			local fs = Necrosis.Warlock_Buttons.buffs.f
 			local f = _G[fs]
 			Local.Menu.Buff[1]:ClearAllPoints()
@@ -3053,7 +3053,7 @@ function Necrosis:CreateMenu()
 			end
 		end
 		-- Display the curse menu button on the sphere || Maintenant que tous les boutons de curse sont placés les uns à côté des autres, on affiche les disponibles
-		if Local.Menu.Curse[1] then
+		if Local.Menu.Curse and Local.Menu.Curse[1] then
 			local f = _G[Necrosis.Warlock_Buttons.curses.f]
 			local fs = Necrosis.Warlock_Buttons.curses.f
 			Local.Menu.Curse[1]:ClearAllPoints()
@@ -3131,21 +3131,21 @@ function Necrosis:SetOfxy(menu)
 	local fb = _G[Necrosis.Warlock_Buttons.buffs.f]
 	local fp = _G[Necrosis.Warlock_Buttons.pets.f]
 	local fc = _G[Necrosis.Warlock_Buttons.curses.f]
-	if menu == "Buff" and Local.Menu.Buff[1] and fb then
+	if menu == "Buff" and Local.Menu.Buff and Local.Menu.Buff[1] and fb then
 		Local.Menu.Buff[1]:ClearAllPoints()
 		Local.Menu.Buff[1]:SetPoint(
 			"CENTER", fb, "CENTER",
 			NecrosisConfig.BuffMenuPos.direction * NecrosisConfig.BuffMenuPos.x * 32 + NecrosisConfig.BuffMenuDecalage.x,
 			NecrosisConfig.BuffMenuPos.y * 32 + NecrosisConfig.BuffMenuDecalage.y
 		)
-	elseif menu == "Pet" and fp then
+	elseif menu == "Pet" and fp and Local.Menu.Pet and Local.Menu.Pet[1] then
 		Local.Menu.Pet[1]:ClearAllPoints()
 		Local.Menu.Pet[1]:SetPoint(
 			"CENTER", fp, "CENTER",
 			NecrosisConfig.PetMenuPos.direction * NecrosisConfig.PetMenuPos.x * 32 + NecrosisConfig.PetMenuDecalage.x,
 			NecrosisConfig.PetMenuPos.y * 32 + NecrosisConfig.PetMenuDecalage.y
 		)
-	elseif menu == "Curse" and Local.Menu.Curse[1] and fc then
+	elseif menu == "Curse" and Local.Menu.Curse and Local.Menu.Curse[1] and fc then
 		Local.Menu.Curse[1]:ClearAllPoints()
 		Local.Menu.Curse[1]:SetPoint(
 			"CENTER", fc, "CENTER",
