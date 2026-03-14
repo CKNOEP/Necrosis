@@ -90,3 +90,5 @@ ThreatMeter.lua
 
 SpellActivations\SpellActivations.xml
 
+UI\BottomBanner\Framework.xml
+
