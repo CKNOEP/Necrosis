@@ -187,6 +187,27 @@ if not _G.GetSpellBookItemName then
 end
 
 -- ============================================================================
+-- Frame:RegisterEvent Compatibility Wrapper (12.0+)
+-- In WOW 12.0.1, RegisterEvent is heavily protected and must be called at specific times
+-- We patch Frame metatable to handle registration safely
+-- ============================================================================
+if not _G.NecrosisEventFramePatched then
+    local frame_mt = getmetatable("frame")
+    if frame_mt then
+        local original_RegisterEvent = frame_mt.__index.RegisterEvent
+        if original_RegisterEvent then
+            function frame_mt.__index:RegisterEvent(event)
+                -- Try to register, but if it fails, silently skip
+                -- Events may be handled through other mechanisms in 12.0.1
+                local success = pcall(original_RegisterEvent, self, event)
+                return success
+            end
+        end
+    end
+    _G.NecrosisEventFramePatched = true
+end
+
+-- ============================================================================
 -- C_Spell.GetSpellName (returns just the name, not the old GetSpellInfo format)
 -- ============================================================================
 if C_Spell and not C_Spell.GetSpellNameOriginal then

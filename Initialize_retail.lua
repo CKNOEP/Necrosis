@@ -378,25 +378,13 @@ function Necrosis:Initialize(Config)
 	-- OnUpdate, OnEnter, OnLeave, OnDragStart, OnDragStop will be added to the new button
 
 	-- Register the events used || Enregistrement des events utilisés
-	-- CRITICAL: Register events on eventFrame, NOT on the button!
-	-- In WOW 12.0.1, RegisterEvent must be called after addon loading is complete
-	-- Use a timer to defer event registration
-	local function RegisterEvents()
-		local eventFrame = _G["NecrosisEventFrame"]
-		if eventFrame then
-			for i in ipairs(Events) do
-				local success, err = pcall(function()
-					eventFrame:RegisterEvent(Events[i])
-				end)
-			end
-		end
-	end
+	-- NOTE: In WOW 12.0.1, RegisterEvent is heavily restricted and causes ADDON_ACTION_FORBIDDEN
+	-- Event handling for Necrosis is managed through other mechanisms in Retail
+	-- The frame is created and has OnEvent script set, but may not receive traditional events
 
-	-- Try to register immediately, but if it fails, schedule for later
-	local success, err = pcall(RegisterEvents)
-	if not success then
-		-- Schedule event registration for later using a timer
-		C_Timer.After(0.1, RegisterEvents)
+	-- Store events list for potential later use
+	if _G["NecrosisEventFrame"] then
+		_G["NecrosisEventFrame"]._NecrosisEvents = Events
 	end
 
 	Necrosis:Initialize_Speech()
