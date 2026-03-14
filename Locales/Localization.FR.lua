@@ -385,6 +385,19 @@ L["ABOUT_CREDITS"] = [[
 |c00FFD700Remerciements Spéciaux:|r
 • Équipe API WoW
 • Développeurs Ace3
+
+-- Timers Options
+L["TIMER_SETTINGS"] = "Paramètres des Timers"
+L["TIMER_TYPE"] = "Type de Timer"
+L["SHOW_SPELL_TIMER"] = "Afficher le bouton des Timers"
+L["TIMER_ON_LEFT"] = "Afficher les Timers sur la gauche"
+L["TIMER_UPWARD"] = "Afficher les Timers de bas en haut"
+L["TIMER_ALPHA"] = "Transparence des Timers"
+L["SELECT_TIMERS"] = "Sélectionner les Timers"
+L["AFK_SCREEN"] = "Écran AFK"
+L["THREAT_METER_ENABLED"] = "Activer le Compteur de Menace (indicateur circulaire)"
+L["NECROSISUI_ENABLED"] = "Activer NecrosisUI (framework avancé)"
+L["OPEN_OPTIONS_OVERLAY"] = "Ouvrir les Options de l'Overlay de Sort"
 • Contributeurs LibStub
 • Communauté Mondiale Démoniste
 

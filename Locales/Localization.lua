@@ -435,3 +435,16 @@ L["SPELLSTONE_CHARGES"] = "Charges"
 
 -- Demon Cooldown Display
 L["DEMON_COOLDOWN"] = "Cooldown : "
+
+-- Timers Options
+L["TIMER_SETTINGS"] = "Timer Settings"
+L["TIMER_TYPE"] = "Timer Type"
+L["SHOW_SPELL_TIMER"] = "Show Timer Button"
+L["TIMER_ON_LEFT"] = "Show Timers on Left"
+L["TIMER_UPWARD"] = "Show Timers Upward"
+L["TIMER_ALPHA"] = "Timer Transparency"
+L["SELECT_TIMERS"] = "Select Spell Timers"
+L["AFK_SCREEN"] = "AFK Screen"
+L["THREAT_METER_ENABLED"] = "Enable Threat Meter (circular indicator)"
+L["NECROSISUI_ENABLED"] = "Enable NecrosisUI (advanced framework)"
+L["OPEN_OPTIONS_OVERLAY"] = "Open Spell Overlay Options"
