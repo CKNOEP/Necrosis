@@ -204,3 +204,70 @@ if C_Spell and not C_Spell.GetSpellNameOriginal then
     C_Spell.GetSpellNameOriginal = C_Spell.GetSpellName
     -- The new API already exists, just ensure it works
 end
+
+-- ============================================================================
+-- C_PetBattles.IsInBattle Compatibility Wrapper (12.0+)
+-- ============================================================================
+-- In Midnight 12.0.1, pet battles system was removed or changed
+-- This provides a safe wrapper that returns false when the API is unavailable
+if not C_PetBattles then
+    C_PetBattles = {}
+end
+
+if not C_PetBattles.IsInBattle then
+    function C_PetBattles.IsInBattle()
+        -- Pet battles don't exist or are disabled in this version
+        return false
+    end
+end
+
+-- Legacy function name compatibility
+if not _G.C_PetBattles_IsInBattle then
+    function _G.C_PetBattles_IsInBattle()
+        -- Wrapper for old-style function call syntax
+        return C_PetBattles.IsInBattle()
+    end
+end
+
+-- ============================================================================
+-- C_Club API Compatibility Wrappers (12.0+)
+-- ============================================================================
+-- Discord communities/clubs may not exist or have changed in Midnight
+if not C_Club then
+    C_Club = {}
+end
+
+if not C_Club.GetStreamInfo then
+    function C_Club.GetStreamInfo(clubId, streamId)
+        -- Communities not available or streamInfo structure changed
+        return nil
+    end
+end
+
+if not C_Club.GetClubInfo then
+    function C_Club.GetClubInfo(clubId)
+        -- Communities not available
+        return nil
+    end
+end
+
+-- ============================================================================
+-- C_Calendar API Compatibility Wrappers (12.0+)
+-- ============================================================================
+if not C_Calendar then
+    C_Calendar = {}
+end
+
+if not C_Calendar.GetNumDayEvents then
+    function C_Calendar.GetNumDayEvents(monthOffset, day)
+        -- Calendar API changed or not available
+        return 0
+    end
+end
+
+if not C_Calendar.GetDayEvent then
+    function C_Calendar.GetDayEvent(monthOffset, day, eventIndex)
+        -- Calendar API changed or not available
+        return nil
+    end
+end

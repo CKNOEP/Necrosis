@@ -72,8 +72,23 @@ local UnitCastingInfo
 
 if wowVersion ~= "classic" then
 	C_DateAndTime_GetCurrentCalendarTime = C_DateAndTime.GetCurrentCalendarTime
+	-- Initialize C_Calendar functions (may be nil in some versions)
+	C_Calendar_GetNumDayEvents = C_Calendar.GetNumDayEvents
+	C_Calendar_GetDayEvent = C_Calendar.GetDayEvent
+	-- Initialize C_Club functions (Discord communities)
+	C_Club_GetStreamInfo = C_Club.GetStreamInfo
+	C_Club_GetClubInfo = C_Club.GetClubInfo
 end
 
+-- Initialize C_PetBattles_IsInBattle with safe fallback (Midnight 12.0.1 compatibility)
+if C_PetBattles and C_PetBattles.IsInBattle then
+	C_PetBattles_IsInBattle = C_PetBattles.IsInBattle
+elseif _G.C_PetBattles_IsInBattle then
+	C_PetBattles_IsInBattle = _G.C_PetBattles_IsInBattle
+else
+	-- Fallback for Midnight 12.0+ where pet battles don't exist
+	C_PetBattles_IsInBattle = function() return false end
+end
 
 	UnitCastingInfo = _G.UnitCastingInfo
 
