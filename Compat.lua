@@ -126,6 +126,31 @@ if not _G.GetSpellPowerCost then
 end
 
 -- ============================================================================
+-- Spell Book API Compatibility Wrappers (12.0+)
+-- ============================================================================
+if not _G.MAX_SKILLLINE_TABS then
+    _G.MAX_SKILLLINE_TABS = 1  -- WOW 12.0.1 uses different spell system
+end
+
+if not _G.BOOKTYPE_SPELL then
+    _G.BOOKTYPE_SPELL = 1
+end
+
+if not _G.GetSpellTabInfo then
+    function _G.GetSpellTabInfo(tabIndex)
+        -- Return empty for spell book tabs (not used in 12.0.1)
+        return nil, nil, nil, nil
+    end
+end
+
+if not _G.GetSpellBookItemName then
+    function _G.GetSpellBookItemName(spellBookSlot, bookType)
+        -- Return nil for spell book queries (not used in 12.0.1)
+        return nil, nil, nil
+    end
+end
+
+-- ============================================================================
 -- C_Spell.GetSpellName (returns just the name, not the old GetSpellInfo format)
 -- ============================================================================
 if C_Spell and not C_Spell.GetSpellNameOriginal then
