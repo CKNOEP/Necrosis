@@ -20,6 +20,9 @@
 ## X-Category: Warlock
 ## LoadOnDemand: 0
 ## SavedVariablesPerCharacter: NecrosisConfig
+
+Compat.lua
+
 Necrosis.xml
 
 libs\LibStub\LibStub.lua
