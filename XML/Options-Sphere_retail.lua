@@ -415,7 +415,9 @@ function Necrosis.Event_Click(self)
 	Necrosis:UpdateHealth()
 	Necrosis:UpdateMana()
 	Necrosis:BagExplore()
-    Necrosis:UpdatePower()
+	if Necrosis.UpdatePower then
+		Necrosis:UpdatePower()
+	end
 end
 
 -- Fonctions du Dropdown des sorts de la sphère
