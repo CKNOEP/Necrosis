@@ -868,22 +868,23 @@ Necrosis.Warlock_Lists = {
 	},
 -- 			15, 3, 4, 5, 6, 8, 30, 35, 44, 59
 	["pets"] = { -- 2 types: summon pet and (buff or temporary) pet
+		-- Must match NameDemon/DemonName order in Dialog_retail.lua
 
 		[1]  = {f_ptr = "imp", high_of = "imp", s_type = "summon", },
 		[2]  = {f_ptr = "voidwalker", high_of = "voidwalker", },
-		[3]  = {f_ptr = "succubus", high_of = "sayaad", },
+		[3]  = {f_ptr = "sayaad", high_of = "sayaad", },
 		[4]  = {f_ptr = "felhunter", high_of = "felhunter", },
-		[5]  = {f_ptr = "felguard", high_of = "felguard", },--TBC
-		[6]  = {f_ptr = "inferno", high_of = "inferno",  s_type = "summon",},--TBC
-		[7]  = {f_ptr = "rit_of_doom", high_of = "rit_of_doom", },--TBC	----spell for pet--
-		[8]  = {f_ptr = "domination", high_of = "domination", },
-		[9]  = {f_ptr = "enslave", high_of = "enslave", },
-		[10] = {f_ptr = "darkglare", high_of = "darkglare", },
-		[11] = {f_ptr = "vilefiend", high_of = "vilefiend", },
-		[12] = {f_ptr = "tyrant", high_of = "tyrant", },
-		[13] = {f_ptr = "doomguard", high_of = "doomguard", },
+		[5]  = {f_ptr = "felguard", high_of = "felguard", },
+		[6]  = {f_ptr = "darkglare", high_of = "darkglare", },
+		[7]  = {f_ptr = "vilefiend", high_of = "vilefiend", },
+		[8]  = {f_ptr = "tyrant", high_of = "tyrant", },
+		[9]  = {f_ptr = "inferno", high_of = "inferno", s_type = "summon", },
+		[10] = {f_ptr = "doomguard", high_of = "doomguard", },
+		-- Legacy/utility spells (not in menu options)
+		[11] = {f_ptr = "rit_of_doom", high_of = "rit_of_doom", },
+		[12] = {f_ptr = "domination", high_of = "domination", },
+		[13] = {f_ptr = "enslave", high_of = "enslave", },
 		--[14] = {f_ptr = "sacrifice", high_of = "sacrifice", },--WOTLK disuse
-		--
 
 	},
 -- 23, -- Curse of weakness 22, -- Curse of agony 25, -- Curse of tongues 40, -- Curse of exhaustion 26, -- Curse of the elements 16, -- Curse of doom 14 -- Corruption
