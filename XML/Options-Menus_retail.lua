@@ -561,10 +561,10 @@ function Necrosis:SetMenusConfig()
 
 			frame:SetChecked(NecrosisConfig.PetShow[i])
 
-			-- Check if spell is known (use CastName as it's more reliable than InSpellBook)
+			-- Check if spell is known (InSpellBook is now correctly set based on actual spell book)
 			local spellKey = Necrosis.NameDemon[i]
 			local spellID = Necrosis.Warlock_Spell_Use[spellKey]
-			local spellKnown = spellID and Necrosis.Warlock_Spells[spellID] and Necrosis.Warlock_Spells[spellID].CastName and Necrosis.Warlock_Spells[spellID].CastName ~= ""
+			local spellKnown = spellID and Necrosis.Warlock_Spells[spellID] and Necrosis.Warlock_Spells[spellID].InSpellBook
 
 			-- Disable and grey out if spell not known
 			if not spellKnown then

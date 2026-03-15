@@ -1635,10 +1635,13 @@ function Necrosis:SpellSetup(reason)
 			local spellInfo = C_Spell.GetSpellInfo(spell_id)
 			local spell_name = spellInfo and spellInfo.name or nil
 
+			-- Check if spell is actually in player's spell book
+			local isInSpellBook = C_SpellBook.IsSpellInSpellBook(spell_id)
+
 			if spell_name and not self.Warlock_Spells[spell_id].CastName then
 				self.Warlock_Spells[spell_id].Name = spell_name
 				self.Warlock_Spells[spell_id].CastName = spell_name
-				self.Warlock_Spells[spell_id].InSpellBook = true
+				self.Warlock_Spells[spell_id].InSpellBook = isInSpellBook
 				self.Warlock_Spells[spell_id].Rank = ""
 
 				if Necrosis.Debug.spells_init then
