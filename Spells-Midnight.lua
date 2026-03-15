@@ -1635,11 +1635,11 @@ function Necrosis:SpellSetup(reason)
 			local spellInfo = C_Spell.GetSpellInfo(spell_id)
 			local spell_name = spellInfo and spellInfo.name or nil
 
-			-- Check if spell is usable (learned by player)
-			local isUsable = C_Spell.IsSpellUsable(spell_id)
+			-- Check if spell is actually in player's spell book (more reliable than IsUsable)
+			local isInSpellBook = C_SpellBook.IsSpellInSpellBook(spell_id)
 
-			-- Always set InSpellBook based on IsUsable
-			self.Warlock_Spells[spell_id].InSpellBook = isUsable
+			-- Always set InSpellBook based on actual spell book presence
+			self.Warlock_Spells[spell_id].InSpellBook = isInSpellBook
 
 			if spell_name and not self.Warlock_Spells[spell_id].CastName then
 				self.Warlock_Spells[spell_id].Name = spell_name
