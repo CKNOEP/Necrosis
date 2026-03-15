@@ -228,6 +228,7 @@ Notes:
 	[713]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "inccubus", PetId = 185313, reagent = "soul_shard", }, -- Inccubus || Inccube
 	[691]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "felhunter", PetId = 417, reagent = "soul_shard", }, -- Felhunter
 	[30146]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "felguard", PetId = 17252, reagent = "soul_shard", }, -- Felguard
+	[366222] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "sayaad", PetId = 203481, reagent = "soul_shard", }, -- Summon Sayaad || Invocation de sayaad
 
 	[1122]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "inferno", Length = 5, Cooldown = 3600, }, -- 5852 Inferno || https://classicdb.ch/?spell=1122 -- Infernals https://classic.wowhead.com/spell=23426 Needs research
 	[342601] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "rit_of_doom", Length = 0, Cooldown = 3600, }, -- Ritual of Doom (12.0.1 Midnight ID)
@@ -727,6 +728,12 @@ Necrosis.Warlock_Buttons = {
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Inccubus-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\Inccubus-02",
 					}, --
+
+	sayaad 		= {f = "NecrosisPetMenu12", tip = "Sayaad", anchor = "ANCHOR_RIGHT", pet = true,
+					norm = "Interface\\AddOns\\Necrosis\\UI\\Succubus-01",
+					high = "Interface\\AddOns\\Necrosis\\UI\\Succubus-02",
+					}, --
+
 	felhunter 	= {f = "NecrosisPetMenu05", tip = "Felhunter", anchor = "ANCHOR_RIGHT", pet = true,
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Felhunter-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\Felhunter-02",
@@ -859,7 +866,8 @@ Necrosis.Warlock_Lists = {
 		[8]  = {f_ptr = "rit_of_doom", high_of = "rit_of_doom", },--TBC	----spell for pet--
 		[9]  = {f_ptr = "domination", high_of = "domination", },
 		[10] = {f_ptr = "enslave", high_of = "enslave", },
-		--[11] = {f_ptr = "sacrifice", high_of = "sacrifice", },--WOTLK disuse
+		[11] = {f_ptr = "sayaad", high_of = "sayaad", },
+		--[12] = {f_ptr = "sacrifice", high_of = "sacrifice", },--WOTLK disuse
 		--
 
 	},
@@ -1594,6 +1602,7 @@ function Necrosis:SpellSetup(reason)
 		1122,    -- Inferno (Ritual of Infernal)
 		342601,  -- Ritual of Doom
 		30283,   -- Summon Enslave Demon
+		366222,  -- Random demon summon (Succubus/Incubus)
 	}
 
 	for _, spell_id in ipairs(fallback_spells) do
