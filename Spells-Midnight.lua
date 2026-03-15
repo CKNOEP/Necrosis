@@ -727,8 +727,8 @@ Necrosis.Warlock_Buttons = {
 					high = "Interface\\AddOns\\Necrosis\\UI\\Voidwalker-02",
 					}, --
 	succubus 	= {f = "NecrosisPetMenu04", tip = "Succubus", anchor = "ANCHOR_RIGHT", pet = true,
-					norm = "Interface\\AddOns\\Necrosis\\UI\\Succubus-01",
-					high = "Interface\\AddOns\\Necrosis\\UI\\Succubus-02",
+					norm = "Interface\\AddOns\\Necrosis\\UI\\Sayyad-01",
+					high = "Interface\\AddOns\\Necrosis\\UI\\Sayyad-01",
 					}, --
 					
 	felhunter 	= {f = "NecrosisPetMenu05", tip = "Felhunter", anchor = "ANCHOR_RIGHT", pet = true,
@@ -758,20 +758,20 @@ Necrosis.Warlock_Buttons = {
 					high = "Interface\\AddOns\\Necrosis\\UI\\Sacrifice-02",
 					}, --
 	darkglare 	= {f = "NecrosisPetMenu13", tip = "Darkglare", anchor = "ANCHOR_RIGHT", pet = true,
-					norm = "Interface\\AddOns\\Necrosis\\UI\\Infernal-01",
-					high = "Interface\\AddOns\\Necrosis\\UI\\Infernal-02",
+					norm = "Interface\\AddOns\\Necrosis\\UI\\regard_noir_button",
+					high = "Interface\\AddOns\\Necrosis\\UI\\regard_noir_button",
 					}, --
 	vilefiend 	= {f = "NecrosisPetMenu14", tip = "Vilefiend", anchor = "ANCHOR_RIGHT", pet = true,
-					norm = "Interface\\AddOns\\Necrosis\\UI\\Imp-01",
-					high = "Interface\\AddOns\\Necrosis\\UI\\Imp-02",
+					norm = "Interface\\AddOns\\Necrosis\\UI\\demon_abject_button",
+					high = "Interface\\AddOns\\Necrosis\\UI\\demon_abject_button",
 					}, --
 	tyrant 		= {f = "NecrosisPetMenu15", tip = "Tyrant", anchor = "ANCHOR_RIGHT", pet = true,
-					norm = "Interface\\AddOns\\Necrosis\\UI\\Felguard-01",
-					high = "Interface\\AddOns\\Necrosis\\UI\\Felguard-02",
+					norm = "Interface\\AddOns\\Necrosis\\UI\\demon_tyran_button",
+					high = "Interface\\AddOns\\Necrosis\\UI\\demon_tyran_button",
 					}, --
 	doomguard 	= {f = "NecrosisPetMenu16", tip = "Doomguard", anchor = "ANCHOR_RIGHT", pet = true,
-					norm = "Interface\\AddOns\\Necrosis\\UI\\Doomguard-01",
-					high = "Interface\\AddOns\\Necrosis\\UI\\Doomguard-02",
+					norm = "Interface\\AddOns\\Necrosis\\UI\\doomguard_button",
+					high = "Interface\\AddOns\\Necrosis\\UI\\doomguard_button",
 					}, --
 -- CURSE
 
