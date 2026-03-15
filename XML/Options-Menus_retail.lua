@@ -560,10 +560,30 @@ function Necrosis:SetMenusConfig()
 
 
 			frame:SetChecked(NecrosisConfig.PetShow[i])
-			
+
+			-- Check if spell is known
+			local spellKey = Necrosis.NameDemon[i]
+			local spellID = Necrosis:GetSpellIDFromKey(spellKey)
+			local spellKnown = spellID and Necrosis.Warlock_Spells[spellID] and Necrosis.Warlock_Spells[spellID].InSpellBook
+
+			-- Grey out and disable if spell not known
+			if not spellKnown then
+				frame:SetDesaturated(true)
+				frame:EnableMouse(false)
+				frame.text:SetTextColor(0.5, 0.5, 0.5)
+			else
+				frame:SetDesaturated(false)
+				frame:EnableMouse(true)
+				frame.text:SetTextColor(1, 1, 1)
+			end
+
 			--print (NecrosisConfig.PetShow[i].show)
-		
+
 			frame:SetScript("OnClick", function(self)
+				-- Only allow click if spell is known
+				if not spellKnown then
+					return
+				end
 				if self:GetChecked() then
 					NecrosisConfig.PetShow[i] = true
 
