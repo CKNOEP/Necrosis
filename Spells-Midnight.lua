@@ -1540,9 +1540,9 @@ function Necrosis:SpellSetup(reason)
 	-- Some spells (Unending Breath, etc.) don't appear in C_SpellBook enumeration
 	-- Use GetSpellInfo to get their localized names (language-independent approach)
 	local fallback_spells = {
-		[5697],    -- Unending Breath (Respiration interminable)
-		[20707],   -- Soulstone
-		[23517],   -- Healthstone
+		5697,    -- Unending Breath (Respiration interminable)
+		20707,   -- Soulstone
+		23517,   -- Healthstone
 	}
 
 	for _, spell_id in ipairs(fallback_spells) do
