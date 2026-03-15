@@ -958,9 +958,19 @@ local function SetupSpells(reason)
 	Necrosis:CreateMenu()
 	Necrosis:ButtonSetup()
 
-	-- Update configuration page 3 if it's currently shown
-	if Necrosis.SetMenusConfig then
-		Necrosis:SetMenusConfig()
+	-- Update demon configuration for newly learned spells (auto-enable them)
+	for i = 1, #Necrosis.Warlock_Lists.pets do
+		local spellKey = Necrosis.NameDemon[i]
+		local spellID = Necrosis.Warlock_Spell_Use[spellKey]
+		local spellKnown = spellID and Necrosis.Warlock_Spells[spellID] and Necrosis.Warlock_Spells[spellID].InSpellBook
+
+		if spellKnown and NecrosisConfig.PetShow[i] == nil then
+			-- Auto-enable newly learned demons
+			NecrosisConfig.PetShow[i] = true
+		elseif not spellKnown then
+			-- Disable learned demons that are no longer known
+			NecrosisConfig.PetShow[i] = false
+		end
 	end
 
 	-- Check for stones - the buttons can be updated as needed
