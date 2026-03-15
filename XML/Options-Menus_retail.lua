@@ -566,14 +566,12 @@ function Necrosis:SetMenusConfig()
 			local spellID = Necrosis:GetSpellIDFromKey(spellKey)
 			local spellKnown = spellID and Necrosis.Warlock_Spells[spellID] and Necrosis.Warlock_Spells[spellID].InSpellBook
 
-			-- Grey out and disable if spell not known
+			-- Disable and grey out if spell not known
 			if not spellKnown then
-				frame:SetDesaturated(true)
-				frame:EnableMouse(false)
+				frame:Disable()
 				frame.text:SetTextColor(0.5, 0.5, 0.5)
 			else
-				frame:SetDesaturated(false)
-				frame:EnableMouse(true)
+				frame:Enable()
 				frame.text:SetTextColor(1, 1, 1)
 			end
 
