@@ -387,7 +387,6 @@ SlashCmdList["NECTIMER"] = function()
 		}
 		for _, evt in ipairs(initEvents) do
 			pcall(function()
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage(">> Registering event: "..evt)
 				eventFrame:RegisterEvent(evt)
 			end)
 		end

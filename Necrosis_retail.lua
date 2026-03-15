@@ -917,12 +917,8 @@ function Necrosis:ChangeDemon()
 			end
 		end
 	end
-	-- Defer UpdateMana to avoid tainted context errors when called from restricted events
-	C_Timer.After(0, function()
-		if Necrosis then
-			Necrosis:UpdateMana()
-		end
-	end)
+	-- UpdateMana() is called from UNIT_MANA event, no need to call it here
+	-- which would cause tainted value errors when called from restricted events
 
 --[[
 _G["DEFAULT_CHAT_FRAME"]:AddMessage("ChangeDemon"
@@ -1234,13 +1230,10 @@ function Necrosis:OnEvent(event,...)
 	end
 
 	if (event == "SPELLS_CHANGED") then
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage(">> SPELLS_CHANGED event triggered")
 		if InCombatLockdown() then
 			-- should not get these in combat but ...
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage(">> In combat, skipping spell setup")
 		else
 			-- safe to process new spells and rebuild buttons
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage(">> Calling SetupSpells")
 			SetupSpells("SPELLS_CHANGED")
 		end
 	end
