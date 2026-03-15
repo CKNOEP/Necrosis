@@ -290,12 +290,10 @@ function Necrosis:SetPetSpellAttribute(button)
 
 		if f.pet then
 	--print (Necrosis.NameDemon[NecrosisConfig.NecrosisDemonSacrifice],f.high_of )
-			-- Retail 12.0: Pets use macro for casting
-			f:SetAttribute("type1", "macro")
-			local spellName = Necrosis.GetSpellCastName(f.high_of)
-			if spellName then
-				f:SetAttribute("macrotext1", "/cast "..spellName)
-			end 
+			-- Retail 12.0: Use numbered attributes (helpbutton1, type1, spell1)
+			f:SetAttribute("helpbutton1", "spell1")
+			f:SetAttribute("type1", "spell")
+			f:SetAttribute("spell1", Necrosis.GetSpellCastName(f.high_of)) 
 						
 			--Dominiation sur clic droit
 			if Necrosis.IsSpellKnown("domination") then 
@@ -335,24 +333,23 @@ function Necrosis:PetSpellAttribute()
 		return
 	end
 
-	
+
 	for index = 1, #Necrosis.Warlock_Lists.pets, 1 do
 		local v = Necrosis.Warlock_Lists.pets[index]
 		local f = Necrosis.Warlock_Buttons[v.f_ptr].f
-		
+
 		if v.high_of == 'sacrifice'	then
-						
+
 			Necrosis:SetPetSpellAttribute(f)
 		end
-		
-		
-		
-		if Necrosis.IsSpellKnown(v.high_of) -- in spell book
---		and NecrosisConfig.DemonSpellPosition[index] > 0 -- and requested
-		then
-		
+
+		local isKnown = Necrosis.IsSpellKnown(v.high_of)
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG Pet] f_ptr="..tostring(v.f_ptr).." high_of="..tostring(v.high_of).." isKnown="..tostring(isKnown))
+
+		if isKnown then
+
 			Necrosis:SetPetSpellAttribute(f)
-			
+
 		end
 	end
 end
