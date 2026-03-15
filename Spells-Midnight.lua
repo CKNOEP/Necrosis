@@ -1487,94 +1487,58 @@ function Necrosis:SpellSetup(reason)
 	end
 
 	--[=[ Step 2
-	Go through the spell book for spells we are interested: 
+	Go through the spell book for spells we are interested (using Retail 12.0 API):
 	- add to temp array; set 'in spell book'
 	--]=]
 	local str = ""
-	-- Search through the spell book (abilities)
-	for i = 1, MAX_SKILLLINE_TABS do
-	   
-	   local name, texture, offset, numSpells = GetSpellTabInfo(i);
+	-- Search through the spell book using C_SpellBook API (Retail 12.0+)
+	-- This API returns spell IDs directly, independent of game language
+	for i = 1, C_SpellBook.GetNumSpellBookSkillLines() do
+	    local skillLineInfo = C_SpellBook.GetSpellBookSkillLineInfo(i)
 
-		if name then -- tab exists
-			for s = offset + 1, offset + numSpells do
-				local spell, sub_name, id = GetSpellBookItemName(s, BOOKTYPE_SPELL)
-				-- spell and sub_name / rank are localized
+	    if skillLineInfo then
+	        local skillName = skillLineInfo.name
+	        local offset = skillLineInfo.itemIndexOffset
+	        local numSlots = skillLineInfo.numSpellBookItems
 
-				if self.Warlock_Spells[id] then -- a warlock spell we care about
-					local n, c  = CreateNames(spell, sub_name)
-					self.Warlock_Spells[id].CastName = c
-					spell = n
-					if Necrosis.Debug.spells_init then
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage(tostring(name)..":"
-						.." id "..tostring(id)..""
-						.." s'"..(spell or "nyl").."'"
-						.." r'"..(sub_name or "nyl").."'"
-						.." m'"..tostring(self.Warlock_Spells[id].Mana).."'"
-						--.." off'"..tostring(s).."'"
-						.."' c'"..tostring(self.Warlock_Spells[id].CastName)
-						.."' n'"..tostring(self.Warlock_Spells[id].Name)
-						--.."' u'"..tostring(self.Warlock_Spells[id].Usage)
-						)
-					end
+	        for j = offset + 1, offset + numSlots do
+	            -- Get spell name and type (which includes spell ID)
+	            local spellName, spellSubtext = C_SpellBook.GetSpellBookItemName(j, Enum.SpellBookSpellBank.Player)
+	            local spellType, spellID = C_SpellBook.GetSpellBookItemType(j, Enum.SpellBookSpellBank.Player)
 
-					if sub_name == nil then
-						sub_name = "" -- ensure not nil for later checks
-					end
+	            if spellID and self.Warlock_Spells[spellID] then -- a warlock spell we care about
+	                local n, c = CreateNames(spellName, spellSubtext)
+	                self.Warlock_Spells[spellID].CastName = c
+	                spellName = n
 
-					self.Warlock_Spells[id].Name = spell -- localized name without rank
-					self.Warlock_Spells[id].InSpellBook = true
-					self.Warlock_Spells[id].Rank = sub_name -- localized
-					
-					Update(id, sub_name, spell)
-					
-				end
+	                if Necrosis.Debug.spells_init then
+	                    _G["DEFAULT_CHAT_FRAME"]:AddMessage(tostring(skillName)..":"
+	                    .." id "..tostring(spellID)..""
+	                    .." s'"..(spellName or "nyl").."'"
+	                    .." r'"..(spellSubtext or "nyl").."'"
+	                    .." m'"..tostring(self.Warlock_Spells[spellID].Mana).."'"
+	                    .."' c'"..tostring(self.Warlock_Spells[spellID].CastName)
+	                    .."' n'"..tostring(self.Warlock_Spells[spellID].Name)
+	                    )
+	                end
 
-			end
-		else
-			-- No tab found
-		end
+	                if spellSubtext == nil then
+	                    spellSubtext = "" -- ensure not nil for later checks
+	                end
+
+	                self.Warlock_Spells[spellID].Name = spellName -- localized name without rank
+	                self.Warlock_Spells[spellID].InSpellBook = true
+	                self.Warlock_Spells[spellID].Rank = spellSubtext -- localized
+
+	                Update(spellID, spellSubtext, spellName)
+	            end
+	        end
+	    end
 	end
 
-	-- MOP Workaround: Add spells manually if not found in spell book
-	-- In MOP, some spells don't appear in GetSpellBookItemName results but GetSpellInfo can find them
-	local mop_spells = {
-		[20707] = "Soulstone",                         -- Soulstone (may not be in spell book)
-		[23517] = "Healthstone",                       -- Healthstone (may not be in spell book)
-		[688]   = "Invocation : diablotin",           -- Imp
-		[697]   = "Invocation : marcheur du Vide",    -- Voidwalker
-		[712]   = "Invocation : succube",              -- Succubus
-		[713]   = "Invocation d'incube",               -- Incubus
-		[691]   = "Invocation : chasseur corrompu",   -- Felhunter
-		[30146] = "Invocation : garde-démon",         -- Felguard (TBC/Wrath+)
-		[108416] = "Sombre pacte",                    -- Shadow Pact (Midnight 12.0)
-	}
-
-	for spell_id, spell_name_fr in pairs(mop_spells) do
-		if self.Warlock_Spells[spell_id] and not self.Warlock_Spells[spell_id].CastName then
-			-- Try to get the spell name for current locale
-			local spell_name = GetSpellInfo(spell_id)
-			if spell_name then
-				local usage = self.Warlock_Spells[spell_id].Usage
-				-- Set the spell information manually
-				self.Warlock_Spells[spell_id].Name = spell_name
-				self.Warlock_Spells[spell_id].CastName = spell_name
-				self.Warlock_Spells[spell_id].InSpellBook = true
-				self.Warlock_Spells[spell_id].Rank = ""
-
-				if Necrosis.Debug.spells_init then
-					_G["DEFAULT_CHAT_FRAME"]:AddMessage("MOP Workaround:"
-					.." id"..tostring(spell_id).."'"
-					.." s'"..(spell_name or "nyl").."'"
-					.." u'"..(usage or "nyl").."'"
-					)
-				end
-
-				-- Register in Warlock_Spell_Use with the highest rank
-				Update(spell_id, "", spell_name)
-			end
-		end
-	end
+	-- Retail 12.0: No longer need MOP Workaround
+	-- The C_SpellBook API above now enumerates all spells correctly
+	-- and returns spell IDs directly (independent of game language)
 
 	if Necrosis.Debug.spells_init then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage(">> Other localized strings")
