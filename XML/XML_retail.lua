@@ -294,8 +294,9 @@ local function CreateMenuButton(button)
 end
 
 function Necrosis:CreateMenuItem(i)
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("XML CreateMenuItem called: i.f_ptr="..tostring(i.f_ptr).." i.high_of="..tostring(i.high_of))
 	local b = nil
-	
+
 	-- look up the button info
 	for idx, v in pairs (Necrosis.Warlock_Buttons) do
 		if idx == i.f_ptr then
@@ -347,15 +348,8 @@ function Necrosis:CreateMenuItem(i)
 	end
 
 	frame:SetNormalTexture(b.norm)
-	-- Set spell attribute for casting
-	if i.high_of then
-		local spellID = Necrosis:GetSpellIDFromKey(i.high_of)
-		if spellID then
-			-- For Retail, use spellID directly, not the spell name
-			frame:SetAttribute("type", "spell")
-			frame:SetAttribute("spell", spellID)
-		end
-	end
+	-- Store spell info on the frame for SetBuffSpellAttribute to use later
+	frame.high_of = i.high_of
 	frame:Hide()
 
 	-- Edit the scripts associated with the button || Edition des scripts associés au bouton

@@ -210,6 +210,7 @@ function Necrosis:SetBuffSpellAttribute(button)
 	end
 
 	local f = _G[button]
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("SetBuffSpellAttribute: button="..tostring(button).." f="..tostring(f).." f.high_of="..tostring(f and f.high_of or "nil"))
 	if f then
 		if Necrosis.Debug.buttons then
 			_G["DEFAULT_CHAT_FRAME"]:AddMessage("SetBuffSpellAttribute"
@@ -252,9 +253,25 @@ function Necrosis:SetBuffSpellAttribute(button)
 				f:SetAttribute("ctrl-spell*", Rank1) 
 			end
 		else
-			f:SetAttribute("type", "spell")
-			f:SetAttribute("spell", Necrosis.GetSpellCastName(f.high_of))
-			
+			-- Use type1="macro" + macrotext1 for left-click, following HealBot pattern
+			f:SetAttribute("type1", "macro")
+			local spellName = Necrosis.GetSpellCastName(f.high_of)
+			if not spellName or spellName == "" then
+				local spellID = Necrosis:GetSpellIDFromKey(f.high_of)
+				if spellID then
+					spellName = GetSpellInfo(spellID)
+				end
+			end
+			if spellName then
+				f:SetAttribute("macrotext1", "/cast "..spellName)
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("SetBuffSpellAttribute: setting macrotext1=/cast "..tostring(spellName).." for "..tostring(f.high_of))
+				-- Verify attribute was set
+				local verify = f:GetAttribute("macrotext1")
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("  -> Verify: macrotext1="..tostring(verify).." type1="..tostring(f:GetAttribute("type1")))
+			else
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("SetBuffSpellAttribute: NO SPELL NAME for "..tostring(f.high_of))
+			end
+
 			if f.can_target then
 				f:SetAttribute("unit", "target")
 			else

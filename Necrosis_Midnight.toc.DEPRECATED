@@ -1,11 +1,17 @@
 ## Interface: 120001,120000
 ## X-Min-Interface: 110207
+## X-Min-Interface-Classic: 11508
+## X-Min-Interface-BCC: 20505
+## X-Min-Interface-Wrath: 30403
+## X-Min-Interface-Cata: 40400
+## X-Min-Interface-MOP: 50503
+## X-Min-Interface-Midnight: 120001
 
-## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Retail
-## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Retail (Русский)
-## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Retail (Français)
+## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Midnight
+## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Midnight (Русский)
+## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Midnight (Français)
 
-## Notes: Warlock UI & Shard Management - Retail Midnight
+## Notes: Warlock UI & Shard Management
 ## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir
 ## Notes-ruRU: Менеджер заклинаний, камней и демонов для чернокнижника.
 ## Version: 8.4.1
@@ -16,9 +22,7 @@
 ## X-Category: Warlock
 ## LoadOnDemand: 0
 ## SavedVariablesPerCharacter: NecrosisConfig
-Necrosis.xml [AllowLoadGameType mainline]
-
-Compat.lua
+Necrosis.xml
 
 libs\LibStub\LibStub.lua
 libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
@@ -47,10 +51,10 @@ Locales\Localization.RU.lua
 Locales\Localization.TW.lua
 Locales\Localization.MX.lua
 
-Initialize_retail.lua
+Initialize.lua
 Utils.lua
 
-Dialog_retail.lua
+Dialog.lua
 AFKS.lua
 SummonQueue.lua
 VersionCheck.lua
@@ -73,25 +77,22 @@ Timers\OtherTimers.lua
 
 
 
-XML\Attributes_retail.lua
+XML\Attributes.lua
 
 XML\Options-Messages.lua
 XML\Options-SummonQueue.lua
-XML\Options-Sphere_retail.lua
-XML\Options-Buttons_retail.lua
-XML\Options-Menus_retail.lua
+XML\Options-Sphere-Vanilla.lua
+XML\Options-Buttons.lua
+XML\Options-Menus.lua
 XML\Options-Timers_retail.lua
-XML\Options-Misc_retail.lua
+XML\Options-Misc.lua
 XML\Options-Overlay.lua
 
-XML\Panel_retail.lua
+XML\Panel.lua
 XML\AboutPanel.lua
-Necrosis_retail.lua
-XML\XML_retail.lua
-test_kilrogg.lua
+Necrosis.lua
+XML\XML.lua
 ThreatMeter.lua
 
 SpellActivations\SpellActivations.xml
-
-UI\BottomBanner\Framework.xml
 
