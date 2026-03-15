@@ -843,7 +843,7 @@ Necrosis.Warlock_Lists = {
 		[4] = {f_ptr = "eye", high_of = "eye", },
 		[5] = {f_ptr = "summoning", high_of = "summoning", },
 		[6] = {f_ptr = "link", high_of = "link", },
-		[7] = {f_ptr = "dark_pact", high_of = "dark_pact", },
+		[7] = {f_ptr = "ward", high_of = "dark_pact", },
 		[8] = {f_ptr = "banish", high_of = "banish", },
 		[9] = {f_ptr = "fel_armor", high_of = "fel_armor", },
 	},
