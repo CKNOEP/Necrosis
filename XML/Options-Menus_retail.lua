@@ -533,24 +533,6 @@ function Necrosis:SetMenusConfig()
 		end
 
 		-- option Pet visisble dans le menus
-		-- Unit test: Compare IsSpellUsable vs IsSpellInSpellBook
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("=== DEMON SPELL AVAILABILITY TEST ===")
-		for testIdx = 1, 10 do
-			local testKey = Necrosis.NameDemon[testIdx]
-			local testID = Necrosis.Warlock_Spell_Use[testKey]
-			if testID then
-				local isUsable = C_Spell.IsSpellUsable(testID)
-				local isInBook = C_SpellBook.IsSpellInSpellBook(testID)
-				local demonName = Necrosis.Translation.DemonName[testIdx]
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage(
-					string.format("[TEST] %s (ID:%d) | IsUsable=%s | IsInSpellBook=%s %s",
-						demonName, testID, tostring(isUsable), tostring(isInBook),
-						isUsable ~= isInBook and "⚠️ MISMATCH" or "✓")
-				)
-			end
-		end
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("=== END TEST ===")
-
 		for i in ipairs(Necrosis.Translation.DemonName) do
 
 
