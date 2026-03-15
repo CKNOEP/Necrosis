@@ -571,6 +571,10 @@ function Necrosis:SetMenusConfig()
 				frame:Disable()
 				frame.text:SetTextColor(0.5, 0.5, 0.5)
 			else
+				-- If configuration doesn't have this option yet, enable it by default
+				if NecrosisConfig.PetShow[i] == nil then
+					NecrosisConfig.PetShow[i] = true
+				end
 				frame:SetChecked(NecrosisConfig.PetShow[i])
 				frame:Enable()
 				frame.text:SetTextColor(1, 1, 1)
