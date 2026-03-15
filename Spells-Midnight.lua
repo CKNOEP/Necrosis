@@ -318,8 +318,7 @@ Notes:
 	[11726] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "enslave", Length = 300, Buff = false, }, --  
 	[61191] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "enslave", Length = 300, Buff = false, }, --  
 	
-	[710]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "banish", Length = 20, Buff = false, }, -- Banish 
-	[18647] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "banish", Length = 30, Buff = false, }, --  
+	[710]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "banish", Length = 30, Buff = false, }, -- Banish (Retail 12.0: now a single talent)  
 
 	-- Detect Invisibility does NOT exist in Midnight (removed in patch 4.0.1)
 	--[[ Detect Invisibility (Removed in Patch 4.0.1, no longer exists in Midnight)
