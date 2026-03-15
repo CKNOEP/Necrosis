@@ -232,20 +232,16 @@ function Necrosis:SetBuffSpellAttribute(button)
 			f:SetAttribute("helpbutton1", "spell1")
 			f:SetAttribute("type1", "spell")
 
-			-- Try to get spell ID first (more reliable than spell names with spaces in Retail)
-			local spellID = Necrosis:GetSpellIDFromKey(f.high_of)
-			if spellID then
-				-- Use spell ID for SetAttribute (avoids issues with multi-word spell names)
-				f:SetAttribute("spell1", spellID)
-			else
-				-- Fallback to spell name if ID not found
-				local spellName = Necrosis.GetSpellCastName(f.high_of)
-				if not spellName or spellName == "" then
+			-- Always use spell name (even with spaces) - SetAttribute supports this in Retail
+			local spellName = Necrosis.GetSpellCastName(f.high_of)
+			if not spellName or spellName == "" then
+				local spellID = Necrosis:GetSpellIDFromKey(f.high_of)
+				if spellID then
 					spellName = GetSpellInfo(spellID)
 				end
-				if spellName then
-					f:SetAttribute("spell1", spellName)
-				end
+			end
+			if spellName then
+				f:SetAttribute("spell1", spellName)
 			end
 
 			if f.can_target then

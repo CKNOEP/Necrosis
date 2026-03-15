@@ -1538,7 +1538,7 @@ function Necrosis:SpellSetup(reason)
 
 	-- Retail 12.0: Fallback for spells not found in spell book
 	-- Some spells (Unending Breath, etc.) don't appear in C_SpellBook enumeration
-	-- Use GetSpellInfo to get their localized names (language-independent approach)
+	-- Use C_Spell.GetSpellName to get their localized names (language-independent approach)
 	local fallback_spells = {
 		5697,    -- Unending Breath (Respiration interminable)
 		20707,   -- Soulstone
@@ -1547,8 +1547,8 @@ function Necrosis:SpellSetup(reason)
 
 	for _, spell_id in ipairs(fallback_spells) do
 		if self.Warlock_Spells[spell_id] then
-			-- Get localized spell name using GetSpellInfo (language-independent)
-			local spell_name = GetSpellInfo(spell_id)
+			-- Get localized spell name using C_Spell.GetSpellName (language-independent)
+			local spell_name = C_Spell.GetSpellName(spell_id)
 			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG Fallback] id="..tostring(spell_id).." name="..tostring(spell_name).." CastName="..tostring(self.Warlock_Spells[spell_id].CastName))
 
 			if spell_name and not self.Warlock_Spells[spell_id].CastName then
