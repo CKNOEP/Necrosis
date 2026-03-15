@@ -2273,7 +2273,7 @@ function Necrosis:UpdateHealth()
 end
 
 local function SetTexPerMana(f, spell, mana) -- frame and warlock spell
-	if f and spell and (spell.Mana and spell.Mana > 0) then
+	if f and spell and (spell.Mana and spell.Mana > 0) and mana then
 		if spell.Mana > mana then
 			if not f:GetNormalTexture():IsDesaturated() then
 				f:GetNormalTexture():SetDesaturated(1)
