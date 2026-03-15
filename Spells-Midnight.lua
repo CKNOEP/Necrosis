@@ -737,7 +737,7 @@ Necrosis.Warlock_Buttons = {
 					high = "Interface\\AddOns\\Necrosis\\UI\\Felguard-02",
 					}, --	
 					
-	inferno 	= {f = "NecrosisPetMenu06", tip = "Infernal", anchor = "ANCHOR_RIGHT", pet = true,
+	inferno 	= {f = "NecrosisPetMenu06", tip = "Infernal", anchor = "ANCHOR_RIGHT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Infernal-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\Infernal-02",
 					}, --
