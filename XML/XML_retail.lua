@@ -372,13 +372,20 @@ function Necrosis:CreateMenuItem(i)
 	GameTooltip:Hide()
 	--Necrosis:OnDragStop(self)
 	end)
-	
 
+	-- Add OnClick handler to execute spell casting
+	frame:SetScript("OnClick", function(self, button)
+		if button == "MiddleButton" then
+			return -- Middle click is for dragging
+		end
+		-- The SecureActionButtonTemplate will handle spell execution based on attributes
+		-- This script just ensures the action is triggered
+	end)
 
 	--============= Special settings per button
 	--
 	-- Special attributes for casting certain buffs || Attributs spéciaux pour les buffs castables sur les autres joueurs
-	if i == "breath" or i == "invis" then
+	if i.high_of == "breath" or i.high_of == "invis" then
 		frame:SetScript("PreClick", function(self)
 			if not (InCombatLockdown() or UnitIsFriend("player","target")) then
 				self:SetAttribute("unit", "player")
@@ -392,7 +399,7 @@ function Necrosis:CreateMenuItem(i)
 	end
 
 	-- Special attribute for the Banish button || Attributes spéciaux pour notre ami le sort de Bannissement
-	if i == "banish" then
+	if i.high_of == "banish" then
 		frame:SetScale(NecrosisConfig.BanishScale/100)
 	end
 
