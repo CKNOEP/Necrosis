@@ -958,6 +958,11 @@ local function SetupSpells(reason)
 	Necrosis:CreateMenu()
 	Necrosis:ButtonSetup()
 
+	-- Update configuration page 3 if it's currently shown
+	if Necrosis.SetMenusConfig then
+		Necrosis:SetMenusConfig()
+	end
+
 	-- Check for stones - the buttons can be updated as needed
 	Necrosis:BagExplore()
 
@@ -966,7 +971,7 @@ local function SetupSpells(reason)
 		on a reload / crash / other reason.
 		The event UNIT_PET is triggered at init / reload IF a pet is out
 	--]]
-	Necrosis:ChangeDemon() 
+	Necrosis:ChangeDemon()
 end
 
 --[[ SetupBuffTimers
