@@ -601,8 +601,8 @@ This allows a more flexible scheme and should reduce maintenance and impact if W
 --]]
 -- Spell ID mapping for button casting
 Necrosis.SpellIDMap = {
-	breath = 48663,		-- Unending Breath
-	invis = 6213,		-- Invisibility
+	breath = 5697,		-- Unending Breath (Retail 12.0)
+	invis = 66,			-- Invisibility (Retail 12.0)
 	eye = 126,			-- Eye of Kilrogg
 	summoning = 698,	-- Ritual of Summoning
 	link = 110307,		-- Soul Link
