@@ -1548,6 +1548,7 @@ function Necrosis:SpellSetup(reason)
 		[713]   = "Invocation d'incube",               -- Incubus
 		[691]   = "Invocation : chasseur corrompu",   -- Felhunter
 		[30146] = "Invocation : garde-démon",         -- Felguard (TBC/Wrath+)
+		[108416] = "Sombre pacte",                    -- Shadow Pact (Midnight 12.0)
 	}
 
 	for spell_id, spell_name_fr in pairs(mop_spells) do
