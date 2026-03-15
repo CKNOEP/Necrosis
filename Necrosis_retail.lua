@@ -954,10 +954,6 @@ local function SetupSpells(reason)
 		Necrosis:StoneAttribute(Local.Summon.SteedAvailable)
 	end
 
-	-- (re)create the icons around the main sphere
-	Necrosis:CreateMenu()
-	Necrosis:ButtonSetup()
-
 	-- Update demon configuration for newly learned spells (auto-enable them)
 	for i = 1, #Necrosis.Warlock_Lists.pets do
 		local spellKey = Necrosis.NameDemon[i]
@@ -972,6 +968,10 @@ local function SetupSpells(reason)
 			NecrosisConfig.PetShow[i] = false
 		end
 	end
+
+	-- (re)create the icons around the main sphere after config is updated
+	Necrosis:CreateMenu()
+	Necrosis:ButtonSetup()
 
 	-- Check for stones - the buttons can be updated as needed
 	Necrosis:BagExplore()
