@@ -290,8 +290,10 @@ function Necrosis:SetPetSpellAttribute(button)
 
 		if f.pet then
 	--print (Necrosis.NameDemon[NecrosisConfig.NecrosisDemonSacrifice],f.high_of )
+			-- Retail 12.0: Use numbered attributes (helpbutton1, type1, spell1)
+			f:SetAttribute("helpbutton1", "spell1")
 			f:SetAttribute("type1", "spell")
-			f:SetAttribute("spell", Necrosis.GetSpellCastName(f.high_of)) 
+			f:SetAttribute("spell1", Necrosis.GetSpellCastName(f.high_of)) 
 						
 			--Dominiation sur clic droit
 			if Necrosis.IsSpellKnown("domination") then 
@@ -315,9 +317,11 @@ function Necrosis:SetPetSpellAttribute(button)
 				
 		
 		else
-			f:SetAttribute("type", "spell")
-			f:SetAttribute("spell", Necrosis.GetSpellCastName(f.high_of))
---			
+			-- Retail 12.0: Use numbered attributes (helpbutton1, type1, spell1)
+			f:SetAttribute("helpbutton1", "spell1")
+			f:SetAttribute("type1", "spell")
+			f:SetAttribute("spell1", Necrosis.GetSpellCastName(f.high_of))
+--
 		end
 	
 	else
