@@ -1551,7 +1551,6 @@ function Necrosis:SpellSetup(reason)
 			-- Get localized spell name using C_Spell.GetSpellInfo (language-independent)
 			local spellInfo = C_Spell.GetSpellInfo(spell_id)
 			local spell_name = spellInfo and spellInfo.name or nil
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG Fallback] id="..tostring(spell_id).." name="..tostring(spell_name).." CastName="..tostring(self.Warlock_Spells[spell_id].CastName))
 
 			if spell_name and not self.Warlock_Spells[spell_id].CastName then
 				self.Warlock_Spells[spell_id].Name = spell_name

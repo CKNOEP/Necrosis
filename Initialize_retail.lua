@@ -390,7 +390,7 @@ SlashCmdList["NECTIMER"] = function()
 			end)
 		end
 
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Spell cast events registered. Timers are now active.")
+		--_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Spell cast events registered. Timers are now active.")
 
 		-- Also initialize the UI if not done yet
 		C_Timer.After(0.1, function()
