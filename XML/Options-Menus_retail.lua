@@ -548,10 +548,10 @@ function Necrosis:SetMenusConfig()
 			-- Row 2: indices 6-10 (left column)
 			if i <= 5 then
 				-- First row (right column): y decreases from top to bottom
-				frame:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 250, (330 - (i-1)*20))
+				frame:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 250, (325 - (i-1)*20))
 			else
 				-- Second row (left column): y decreases from top to bottom
-				frame:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 50, (330 - (i-6)*20))
+				frame:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 50, (325 - (i-6)*20))
 			end
 			frame.text = _G["NecrosisDemonShow"..i.."Text"]
 			frame.text:SetText(Necrosis.Translation.DemonName[i])
