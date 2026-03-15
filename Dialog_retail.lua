@@ -543,7 +543,7 @@ Necrosis.NameDemon = {
 	[6] = "darkglare",
 	[7] = "vilefiend",
 	[8] = "tyrant",
-	[9] = "infernal",
+	[9] = "inferno",
 	[10] = "doomguard",
 }
 
