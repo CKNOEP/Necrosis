@@ -724,16 +724,6 @@ Necrosis.Warlock_Buttons = {
 					high = "Interface\\AddOns\\Necrosis\\UI\\Succubus-02",
 					}, --
 					
-	inccubus 	= {f = "NecrosisPetMenu11", tip = "Inccubus", anchor = "ANCHOR_RIGHT", pet = true,
-					norm = "Interface\\AddOns\\Necrosis\\UI\\Inccubus-01",
-					high = "Interface\\AddOns\\Necrosis\\UI\\Inccubus-02",
-					}, --
-
-	sayaad 		= {f = "NecrosisPetMenu12", tip = "Sayaad", anchor = "ANCHOR_RIGHT", pet = true,
-					norm = "Interface\\AddOns\\Necrosis\\UI\\Succubus-01",
-					high = "Interface\\AddOns\\Necrosis\\UI\\Succubus-02",
-					}, --
-
 	felhunter 	= {f = "NecrosisPetMenu05", tip = "Felhunter", anchor = "ANCHOR_RIGHT", pet = true,
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Felhunter-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\Felhunter-02",
@@ -858,16 +848,14 @@ Necrosis.Warlock_Lists = {
 
 		[1]  = {f_ptr = "imp", high_of = "imp", s_type = "summon", },
 		[2]  = {f_ptr = "voidwalker", high_of = "voidwalker", },
-		[3]  = {f_ptr = "succubus", high_of = "succubus", },
-		[4]  = {f_ptr = "inccubus", high_of = "inccubus", },
-		[5]  = {f_ptr = "felhunter", high_of = "felhunter", },
-		[6]  = {f_ptr = "felguard", high_of = "felguard", },--TBC
-		[7]  = {f_ptr = "inferno", high_of = "inferno",  s_type = "summon",},--TBC
-		[8]  = {f_ptr = "rit_of_doom", high_of = "rit_of_doom", },--TBC	----spell for pet--
-		[9]  = {f_ptr = "domination", high_of = "domination", },
-		[10] = {f_ptr = "enslave", high_of = "enslave", },
-		[11] = {f_ptr = "sayaad", high_of = "sayaad", },
-		--[12] = {f_ptr = "sacrifice", high_of = "sacrifice", },--WOTLK disuse
+		[3]  = {f_ptr = "succubus", high_of = "sayaad", },
+		[4]  = {f_ptr = "felhunter", high_of = "felhunter", },
+		[5]  = {f_ptr = "felguard", high_of = "felguard", },--TBC
+		[6]  = {f_ptr = "inferno", high_of = "inferno",  s_type = "summon",},--TBC
+		[7]  = {f_ptr = "rit_of_doom", high_of = "rit_of_doom", },--TBC	----spell for pet--
+		[8]  = {f_ptr = "domination", high_of = "domination", },
+		[9]  = {f_ptr = "enslave", high_of = "enslave", },
+		--[10] = {f_ptr = "sacrifice", high_of = "sacrifice", },--WOTLK disuse
 		--
 
 	},
