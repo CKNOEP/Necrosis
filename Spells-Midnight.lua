@@ -869,10 +869,11 @@ Necrosis.Warlock_Lists = {
 -- 			15, 3, 4, 5, 6, 8, 30, 35, 44, 59
 	["pets"] = { -- 2 types: summon pet and (buff or temporary) pet
 		-- Must match NameDemon/DemonName order in Dialog_retail.lua
+		-- f_ptr = button name in Warlock_Buttons, high_of = spell usage key
 
 		[1]  = {f_ptr = "imp", high_of = "imp", s_type = "summon", },
 		[2]  = {f_ptr = "voidwalker", high_of = "voidwalker", },
-		[3]  = {f_ptr = "sayaad", high_of = "sayaad", },
+		[3]  = {f_ptr = "succubus", high_of = "sayaad", },
 		[4]  = {f_ptr = "felhunter", high_of = "felhunter", },
 		[5]  = {f_ptr = "felguard", high_of = "felguard", },
 		[6]  = {f_ptr = "darkglare", high_of = "darkglare", },
