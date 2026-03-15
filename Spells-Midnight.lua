@@ -1618,6 +1618,13 @@ function Necrosis:SpellSetup(reason)
 		342601,  -- Ritual of Doom
 		30283,   -- Summon Enslave Demon
 		366222,  -- Random demon summon (Succubus/Incubus)
+		334183,  -- Darkglare
+		205180,  -- Darkglare variant
+		264119,  -- Vilefiend
+		1251778, -- Vilefiend variant
+		265187,  -- Tyrant
+		111898,  -- Felguard variant
+		1276672, -- Doomguard variant
 	}
 
 	for _, spell_id in ipairs(fallback_spells) do
