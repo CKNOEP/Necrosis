@@ -566,6 +566,17 @@ function Necrosis:SetMenusConfig()
 			local spellID = Necrosis.Warlock_Spell_Use[spellKey]
 			local spellKnown = spellID and Necrosis.Warlock_Spells[spellID] and Necrosis.Warlock_Spells[spellID].InSpellBook
 
+			-- Debug: Show each demon and its status
+			local demonName = Necrosis.Translation.DemonName[i] or "Unknown"
+			local isUsable = spellID and C_Spell.IsSpellUsable(spellID) or false
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage(
+				"[Demon Config] " .. demonName
+				.. " | ID=" .. tostring(spellID)
+				.. " | Key=" .. tostring(spellKey)
+				.. " | IsUsable=" .. tostring(isUsable)
+				.. " | InSpellBook=" .. tostring(spellKnown)
+			)
+
 			-- Disable and grey out if spell not known
 			if not spellKnown then
 				frame:Disable()
