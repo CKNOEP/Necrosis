@@ -1229,10 +1229,13 @@ function Necrosis:OnEvent(event,...)
 	end
 
 	if (event == "SPELLS_CHANGED") then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage(">> SPELLS_CHANGED event triggered")
 		if InCombatLockdown() then
 			-- should not get these in combat but ...
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage(">> In combat, skipping spell setup")
 		else
 			-- safe to process new spells and rebuild buttons
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage(">> Calling SetupSpells")
 			SetupSpells("SPELLS_CHANGED")
 		end
 	end

@@ -348,6 +348,7 @@ pcall(function()
 	eventFrame:RegisterEvent("PLAYER_LOGIN")
 	eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	eventFrame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
+	eventFrame:RegisterEvent("SPELLS_CHANGED")
 end)
 
 -- Slash command to register remaining events from player context
@@ -383,10 +384,10 @@ SlashCmdList["NECTIMER"] = function()
 		local initEvents = {
 			"PLAYER_ENTERING_WORLD",
 			"GET_ITEM_INFO_RECEIVED",
-			"SPELLS_CHANGED",
 		}
 		for _, evt in ipairs(initEvents) do
 			pcall(function()
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage(">> Registering event: "..evt)
 				eventFrame:RegisterEvent(evt)
 			end)
 		end
