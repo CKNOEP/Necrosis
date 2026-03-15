@@ -300,8 +300,8 @@ Notes:
 	[19028] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "link", Buff = true, SelfOnly = true, }, -- Soul Link || Lien spirituel
 	]]
 
-	-- Shadow Ward changed ID in Midnight (was 6229 in MOP, now 153415)
-	[153415]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- Shadow Ward || Gardien de l'ombre (Midnight 12.0)
+	-- Shadow Pact (replaced Shadow Ward in Midnight)
+	[108416]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- Shadow Pact || Sombre Pact
 
 	-- Old Shadow Ward ranks (removed in Midnight)
 	--[[ Old Shadow Ward ranks (no longer exist)
