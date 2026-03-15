@@ -559,18 +559,19 @@ function Necrosis:SetMenusConfig()
 			frame:SetText(Necrosis.Translation.DemonName[i])
 
 
-			frame:SetChecked(NecrosisConfig.PetShow[i])
-
 			-- Check if spell is known (InSpellBook is now correctly set based on actual spell book)
 			local spellKey = Necrosis.NameDemon[i]
 			local spellID = Necrosis.Warlock_Spell_Use[spellKey]
 			local spellKnown = spellID and Necrosis.Warlock_Spells[spellID] and Necrosis.Warlock_Spells[spellID].InSpellBook
 
-			-- Disable and grey out if spell not known
+			-- If spell not known: uncheck and disable the checkbox
 			if not spellKnown then
+				frame:SetChecked(false)
+				NecrosisConfig.PetShow[i] = false
 				frame:Disable()
 				frame.text:SetTextColor(0.5, 0.5, 0.5)
 			else
+				frame:SetChecked(NecrosisConfig.PetShow[i])
 				frame:Enable()
 				frame.text:SetTextColor(1, 1, 1)
 			end

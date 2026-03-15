@@ -383,6 +383,7 @@ SlashCmdList["NECTIMER"] = function()
 		local initEvents = {
 			"PLAYER_ENTERING_WORLD",
 			"GET_ITEM_INFO_RECEIVED",
+			"SPELLS_CHANGED",
 		}
 		for _, evt in ipairs(initEvents) do
 			pcall(function()

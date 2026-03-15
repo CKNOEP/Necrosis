@@ -1029,19 +1029,16 @@ function Necrosis.IsSpellKnown(usage)
 	if usage and usage =="mounts" then
 	--print ("usage "..usage)
 	end
-	
+
 	if usage and usage =="destroy_shards" then
 	return true
 	end
-	
-	
+
+
 	if Necrosis.Warlock_Spell_Use[usage] -- get spell id
 	then
-		if GetSpellInfo(GetSpellInfo(Necrosis.Warlock_Spell_Use[usage])) then --- test if spell is know
-		return true
-		
-		--return Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].InSpellBook
-		end
+		-- Check if spell is actually in player's spell book using InSpellBook flag
+		return Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].InSpellBook or false
 	else
 		return false -- safety
 	end
