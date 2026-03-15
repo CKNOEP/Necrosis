@@ -535,24 +535,29 @@ function Necrosis:SetMenusConfig()
 		-- option Pet visisble dans le menus
 		for i in ipairs(Necrosis.Translation.DemonName) do
 
-				
+
 			frame = CreateFrame("CheckButton", "NecrosisDemonShow"..i, NecrosisMenusConfig3, "UICheckButtonTemplate")
 			frame:EnableMouse(true)
 			frame:SetWidth(24)
 			frame:SetHeight(24)
 			frame:Show()
 			frame:ClearAllPoints()
-			
-			if i > 4 then
-			frame:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 50, (140 + i*18) )
+
+			-- Layout: 2 rows, 5 demons per row
+			-- Row 1: indices 1-5 (right column)
+			-- Row 2: indices 6-10 (left column)
+			if i <= 5 then
+				-- First row (right column): y decreases from top to bottom
+				frame:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 250, (330 - (i-1)*20))
 			else
-			frame:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 250, (140 + i*18)+72 )
+				-- Second row (left column): y decreases from top to bottom
+				frame:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 50, (330 - (i-6)*20))
 			end
 			frame.text = _G["NecrosisDemonShow"..i.."Text"]
 			frame.text:SetText(Necrosis.Translation.DemonName[i])
-			
+
 			frame:SetText(Necrosis.Translation.DemonName[i])
-			
+
 
 			frame:SetChecked(NecrosisConfig.PetShow[i])
 			
@@ -569,33 +574,7 @@ function Necrosis:SetMenusConfig()
 			end)
 	
 		end
-		-- Show Hide Subjugation 
-			frame = CreateFrame("CheckButton", "NecrosisDemonShowSubjugation", NecrosisMenusConfig3, "UICheckButtonTemplate")
-			frame:EnableMouse(true)
-			frame:SetWidth(24)
-			frame:SetHeight(24)
-			frame:Show()
-			frame:ClearAllPoints()
-			
-			frame:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 50, (140 + 4*18) )
-			frame.text = _G["NecrosisDemonShowSubjugation".."Text"]
-			frame.text:SetText(Necrosis.GetSpellCastName("enslave"))
-			frame:SetText(Necrosis.GetSpellCastName("enslave"))
-			frame:SetChecked(NecrosisConfig.PetShow[10])
-			frame:SetScript("OnClick", function(self)
-				if self:GetChecked() then
-					NecrosisConfig.PetShow[10] = true
 
-				else
-					NecrosisConfig.PetShow[10] = false
-				end
-				Necrosis:CreateMenu()
-			end)
-
-
-	
-	
-		
 		-- Choix du sens du menu symétrie
 		frame = CreateFrame("CheckButton", "NecrosisDemonSens", NecrosisMenusConfig3, "UICheckButtonTemplate")
 		frame:EnableMouse(true)
