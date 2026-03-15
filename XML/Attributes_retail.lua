@@ -294,7 +294,6 @@ function Necrosis:SetPetSpellAttribute(button)
 			f:SetAttribute("helpbutton1", "spell1")
 			f:SetAttribute("type1", "spell")
 			local spellName = Necrosis.GetSpellCastName(f.high_of)
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG SetPetSpell] f.high_of="..tostring(f.high_of).." spellName="..tostring(spellName))
 			f:SetAttribute("spell1", spellName) 
 						
 			--Dominiation sur clic droit
@@ -345,10 +344,7 @@ function Necrosis:PetSpellAttribute()
 			Necrosis:SetPetSpellAttribute(f)
 		end
 
-		local isKnown = Necrosis.IsSpellKnown(v.high_of)
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG Pet] f_ptr="..tostring(v.f_ptr).." high_of="..tostring(v.high_of).." isKnown="..tostring(isKnown))
-
-		if isKnown then
+		if Necrosis.IsSpellKnown(v.high_of) then
 
 			Necrosis:SetPetSpellAttribute(f)
 
