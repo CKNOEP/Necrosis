@@ -518,18 +518,24 @@ Necrosis.Translation.DemonName = {
 	[3] = L["SAYAAD"],
 	[4] = L["FELHUNTER"],
 	[5] = L["FELGUARD"],
-	[6] = L["INFERNAL"],
-	[7] = L["DOOMGUARD"],
+	[6] = L["DARKGLARE"],
+	[7] = L["VILEFIEND"],
+	[8] = L["TYRANT"],
+	[9] = L["INFERNAL"],
+	[10] = L["DOOMGUARD"],
 }
 
 Necrosis.NameDemon = {
 	[1] = "imp",
-	[2] = "Voidwalker",
+	[2] = "voidwalker",
 	[3] = "sayaad",
-	[4] = "Felhunter",
-	[5] = "Felguard",
-	[6] = "Infernal",
-	[7] = "Doomguard",
+	[4] = "felhunter",
+	[5] = "felguard",
+	[6] = "darkglare",
+	[7] = "vilefiend",
+	[8] = "tyrant",
+	[9] = "infernal",
+	[10] = "doomguard",
 }
 
 -- Traduction du nom des objets utilisés par Necrosis

@@ -229,6 +229,13 @@ Notes:
 	[691]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "felhunter", PetId = 417, reagent = "soul_shard", }, -- Felhunter
 	[30146]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "felguard", PetId = 17252, reagent = "soul_shard", }, -- Felguard
 	[366222] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "sayaad", PetId = 203481, reagent = "soul_shard", }, -- Summon Sayaad || Invocation de sayaad
+	[334183] = {UsageRank = 2, SpellRank = 1, Timer = false, Usage = "darkglare", PetId = 184031, reagent = "soul_shard", }, -- Summon Darkglare
+	[205180] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "darkglare", PetId = 184031, reagent = "soul_shard", }, -- Summon Darkglare (old)
+	[264119] = {UsageRank = 2, SpellRank = 1, Timer = false, Usage = "vilefiend", PetId = 135816, reagent = "soul_shard", }, -- Summon Vilefiend
+	[1251778] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "vilefiend", PetId = 135816, reagent = "soul_shard", }, -- Summon Vilefiend (old)
+	[265187] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "tyrant", PetId = 135002, reagent = "soul_shard", }, -- Summon Demonic Tyrant
+	[111898] = {UsageRank = 2, SpellRank = 1, Timer = false, Usage = "felguard", PetId = 17252, reagent = "soul_shard", }, -- Summon Felguard (Grimoire)
+	[1276672] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "doomguard", PetId = 11859, reagent = "soul_shard", }, -- Summon Doomguard (new)
 
 	[1122]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "inferno", Length = 5, Cooldown = 3600, }, -- 5852 Inferno || https://classicdb.ch/?spell=1122 -- Infernals https://classic.wowhead.com/spell=23426 Needs research
 	[342601] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "rit_of_doom", Length = 0, Cooldown = 3600, }, -- Ritual of Doom (12.0.1 Midnight ID)
@@ -750,6 +757,22 @@ Necrosis.Warlock_Buttons = {
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Sacrifice-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\Sacrifice-02",
 					}, --
+	darkglare 	= {f = "NecrosisPetMenu13", tip = "Darkglare", anchor = "ANCHOR_RIGHT", pet = true,
+					norm = "Interface\\AddOns\\Necrosis\\UI\\Infernal-01",
+					high = "Interface\\AddOns\\Necrosis\\UI\\Infernal-02",
+					}, --
+	vilefiend 	= {f = "NecrosisPetMenu14", tip = "Vilefiend", anchor = "ANCHOR_RIGHT", pet = true,
+					norm = "Interface\\AddOns\\Necrosis\\UI\\Imp-01",
+					high = "Interface\\AddOns\\Necrosis\\UI\\Imp-02",
+					}, --
+	tyrant 		= {f = "NecrosisPetMenu15", tip = "Tyrant", anchor = "ANCHOR_RIGHT", pet = true,
+					norm = "Interface\\AddOns\\Necrosis\\UI\\Felguard-01",
+					high = "Interface\\AddOns\\Necrosis\\UI\\Felguard-02",
+					}, --
+	doomguard 	= {f = "NecrosisPetMenu16", tip = "Doomguard", anchor = "ANCHOR_RIGHT", pet = true,
+					norm = "Interface\\AddOns\\Necrosis\\UI\\Doomguard-01",
+					high = "Interface\\AddOns\\Necrosis\\UI\\Doomguard-02",
+					}, --
 -- CURSE
 
 	weakness 	= {f = "NecrosisCurseMenu01", tip = "Weakness", anchor = "ANCHOR_RIGHT",
@@ -855,7 +878,11 @@ Necrosis.Warlock_Lists = {
 		[7]  = {f_ptr = "rit_of_doom", high_of = "rit_of_doom", },--TBC	----spell for pet--
 		[8]  = {f_ptr = "domination", high_of = "domination", },
 		[9]  = {f_ptr = "enslave", high_of = "enslave", },
-		--[10] = {f_ptr = "sacrifice", high_of = "sacrifice", },--WOTLK disuse
+		[10] = {f_ptr = "darkglare", high_of = "darkglare", },
+		[11] = {f_ptr = "vilefiend", high_of = "vilefiend", },
+		[12] = {f_ptr = "tyrant", high_of = "tyrant", },
+		[13] = {f_ptr = "doomguard", high_of = "doomguard", },
+		--[14] = {f_ptr = "sacrifice", high_of = "sacrifice", },--WOTLK disuse
 		--
 
 	},
