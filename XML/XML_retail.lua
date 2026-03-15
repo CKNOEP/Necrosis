@@ -348,21 +348,21 @@ function Necrosis:CreateMenuItem(i)
 
 	frame:SetNormalTexture(b.norm)
 	-- Set spell attribute for casting
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("CreateMenuItem XML: tip="..tostring(b.tip).." i.high_of="..tostring(i.high_of))
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("CreateMenuItem XML: tip="..tostring(b.tip).." i.high_of="..tostring(i.high_of).." frame="..tostring(b.f))
 	if i.high_of then
 		local spellID = Necrosis:GetSpellIDFromKey(i.high_of)
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("  -> GetSpellIDFromKey returned: "..tostring(spellID))
 		if spellID then
 			frame:SetAttribute("type", "spell")
 			frame:SetAttribute("spell", spellID)
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("  -> Set spell attribute to: "..tostring(spellID))
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("  -> Set spell attribute to: "..tostring(spellID).." (verify: "..tostring(frame:GetAttribute("spell"))..")")
 		end
 	end
 	frame:Hide()
 
 	-- Edit the scripts associated with the button || Edition des scripts associés au bouton
 	frame:SetScript("OnEnter", function(self)
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("Button: "..tostring(b.tip).." key="..tostring(i.high_of).." spell_attr="..tostring(self:GetAttribute("spell")))
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("Button OnEnter: "..tostring(b.tip).." key="..tostring(i.high_of).." frameName="..tostring(self:GetName()).." spell_attr="..tostring(self:GetAttribute("spell")).." type_attr="..tostring(self:GetAttribute("type")))
 	Necrosis:BuildButtonTooltip(self)
 	--Necrosis:OnDragStart(self)
 	end)
