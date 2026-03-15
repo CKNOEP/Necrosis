@@ -1644,10 +1644,12 @@ function Necrosis:SpellSetup(reason)
 				.." | CastName="..(tostring(self.Warlock_Spells[spell_id].CastName) or "nil")
 				)
 
+			-- Always set InSpellBook based on IsUsable
+			self.Warlock_Spells[spell_id].InSpellBook = isUsable
+
 			if spell_name and not self.Warlock_Spells[spell_id].CastName then
 				self.Warlock_Spells[spell_id].Name = spell_name
 				self.Warlock_Spells[spell_id].CastName = spell_name
-				self.Warlock_Spells[spell_id].InSpellBook = isUsable
 				self.Warlock_Spells[spell_id].Rank = ""
 
 				if Necrosis.Debug.spells_init then
