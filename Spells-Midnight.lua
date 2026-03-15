@@ -1536,9 +1536,38 @@ function Necrosis:SpellSetup(reason)
 	    end
 	end
 
-	-- Retail 12.0: No longer need MOP Workaround
-	-- The C_SpellBook API above now enumerates all spells correctly
-	-- and returns spell IDs directly (independent of game language)
+	-- Retail 12.0: Fallback for spells not found in spell book
+	-- Some spells (Unending Breath, etc.) don't appear in C_SpellBook enumeration
+	-- Use GetSpellInfo to get their localized names (language-independent approach)
+	local fallback_spells = {
+		[5697],    -- Unending Breath (Respiration interminable)
+		[20707],   -- Soulstone
+		[23517],   -- Healthstone
+	}
+
+	for _, spell_id in ipairs(fallback_spells) do
+		if self.Warlock_Spells[spell_id] and not self.Warlock_Spells[spell_id].CastName then
+			-- Get localized spell name using GetSpellInfo (language-independent)
+			local spell_name = GetSpellInfo(spell_id)
+			if spell_name then
+				self.Warlock_Spells[spell_id].Name = spell_name
+				self.Warlock_Spells[spell_id].CastName = spell_name
+				self.Warlock_Spells[spell_id].InSpellBook = true
+				self.Warlock_Spells[spell_id].Rank = ""
+
+				if Necrosis.Debug.spells_init then
+					_G["DEFAULT_CHAT_FRAME"]:AddMessage("Fallback (not in spell book):"
+					.." id"..tostring(spell_id).."'"
+					.." s'"..(spell_name or "nyl").."'"
+					.." u'"..(self.Warlock_Spells[spell_id].Usage or "nyl").."'"
+					)
+				end
+
+				-- Register in Warlock_Spell_Use
+				Update(spell_id, "", spell_name)
+			end
+		end
+	end
 
 	if Necrosis.Debug.spells_init then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage(">> Other localized strings")
