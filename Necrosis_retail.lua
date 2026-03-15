@@ -917,7 +917,12 @@ function Necrosis:ChangeDemon()
 			end
 		end
 	end
-	Necrosis:UpdateMana()
+	-- Defer UpdateMana to avoid tainted context errors when called from restricted events
+	C_Timer.After(0, function()
+		if Necrosis then
+			Necrosis:UpdateMana()
+		end
+	end)
 
 --[[
 _G["DEFAULT_CHAT_FRAME"]:AddMessage("ChangeDemon"
