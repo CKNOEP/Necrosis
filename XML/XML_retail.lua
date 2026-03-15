@@ -353,9 +353,14 @@ function Necrosis:CreateMenuItem(i)
 		local spellID = Necrosis:GetSpellIDFromKey(i.high_of)
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("  -> GetSpellIDFromKey returned: "..tostring(spellID))
 		if spellID then
-			frame:SetAttribute("type", "spell")
-			frame:SetAttribute("spell", spellID)
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("  -> Set spell attribute to: "..tostring(spellID).." (verify: "..tostring(frame:GetAttribute("spell"))..")")
+			-- For SecureActionButtonTemplate with type="spell", need spell NAME not ID
+			local spellName = GetSpellInfo(spellID)
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("  -> GetSpellInfo("..tostring(spellID)..") = "..tostring(spellName))
+			if spellName then
+				frame:SetAttribute("type", "spell")
+				frame:SetAttribute("spell", spellName)
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("  -> Set spell attribute to: "..tostring(spellName).." (verify: "..tostring(frame:GetAttribute("spell"))..")")
+			end
 		end
 	end
 	frame:Hide()
