@@ -1537,13 +1537,63 @@ function Necrosis:SpellSetup(reason)
 	    end
 	end
 
+	-- Search Pet spell book for demon spells
+	-- Demons (imp, voidwalker, etc.) are in Pet spell book, not Player
+	for i = 1, C_SpellBook.GetNumSpellBookSkillLines(Enum.SpellBookSpellBank.Pet) do
+	    local skillLineInfo = C_SpellBook.GetSpellBookSkillLineInfo(i, Enum.SpellBookSpellBank.Pet)
+
+	    if skillLineInfo then
+	        local skillName = skillLineInfo.name
+	        local offset = skillLineInfo.itemIndexOffset
+	        local numSlots = skillLineInfo.numSpellBookItems
+
+	        for j = offset + 1, offset + numSlots do
+	            -- Get spell name and type from Pet spell book
+	            local spellName, spellSubtext = C_SpellBook.GetSpellBookItemName(j, Enum.SpellBookSpellBank.Pet)
+	            local spellType, spellID = C_SpellBook.GetSpellBookItemType(j, Enum.SpellBookSpellBank.Pet)
+
+	            if spellID and self.Warlock_Spells[spellID] then -- a warlock pet spell we care about
+	                local n, c = CreateNames(spellName, spellSubtext)
+	                self.Warlock_Spells[spellID].CastName = c
+	                spellName = n
+
+	                if Necrosis.Debug.spells_init then
+	                    _G["DEFAULT_CHAT_FRAME"]:AddMessage("[Pet Book] "..tostring(skillName)..":"
+	                    .." id "..tostring(spellID)..""
+	                    .." s'"..(spellName or "nyl").."'"
+	                    )
+	                end
+
+	                if spellSubtext == nil then
+	                    spellSubtext = "" -- ensure not nil for later checks
+	                end
+
+	                self.Warlock_Spells[spellID].Name = spellName -- localized name without rank
+	                self.Warlock_Spells[spellID].InSpellBook = true
+	                self.Warlock_Spells[spellID].Rank = spellSubtext -- localized
+
+	                Update(spellID, spellSubtext, spellName)
+	            end
+	        end
+	    end
+	end
+
 	-- Retail 12.0: Fallback for spells not found in spell book
-	-- Some spells (Unending Breath, etc.) don't appear in C_SpellBook enumeration
+	-- Some spells (pets, utility) don't appear in C_SpellBook enumeration
 	-- Use C_Spell.GetSpellInfo to get their localized names (language-independent approach)
 	local fallback_spells = {
 		5697,    -- Unending Breath (Respiration interminable)
 		20707,   -- Soulstone
 		23517,   -- Healthstone
+		688,     -- Imp (Diablotin)
+		697,     -- Voidwalker (Marcheur du Vide)
+		712,     -- Succubus (Succube)
+		713,     -- Incubus (Incube)
+		691,     -- Felhunter
+		30146,   -- Felguard
+		1122,    -- Inferno (Ritual of Infernal)
+		342601,  -- Ritual of Doom
+		30283,   -- Summon Enslave Demon
 	}
 
 	for _, spell_id in ipairs(fallback_spells) do
