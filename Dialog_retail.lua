@@ -237,6 +237,15 @@ Necrosis.TooltipData = {
 	["Doomguard"] = {
 		Label = "" --L["DOOMGUARD_LABEL"]
 	},
+	["Darkglare"] = {
+		Label = "" --L["DARKGLARE_LABEL"]
+	},
+	["Vilefiend"] = {
+		Label = "" --L["VILEFIEND_LABEL"]
+	},
+	["Tyrant"] = {
+		Label = "" --L["TYRANT_LABEL"]
+	},
 	["Mount"] = {
 		Label = L["MOUNTS_LABEL"],
 		Text = L["MOUNT_TEXT"],
