@@ -864,7 +864,8 @@ Necrosis.Warlock_Lists = {
 		[6] = {f_ptr = "link", high_of = "link", },
 		[7] = {f_ptr = "ward", high_of = "dark_pact", },
 		[8] = {f_ptr = "banish", high_of = "banish", },
-		[9] = {f_ptr = "fel_armor", high_of = "fel_armor", },
+		[9] = {f_ptr = "enslave", high_of = "enslave", },
+		[10] = {f_ptr = "fel_armor", high_of = "fel_armor", },
 	},
 -- 			15, 3, 4, 5, 6, 8, 30, 35, 44, 59
 	["pets"] = { -- 2 types: summon pet and (buff or temporary) pet
@@ -884,8 +885,7 @@ Necrosis.Warlock_Lists = {
 		-- Legacy/utility spells (not in menu options)
 		[11] = {f_ptr = "rit_of_doom", high_of = "rit_of_doom", },
 		[12] = {f_ptr = "domination", high_of = "domination", },
-		[13] = {f_ptr = "enslave", high_of = "enslave", },
-		--[14] = {f_ptr = "sacrifice", high_of = "sacrifice", },--WOTLK disuse
+		--[13] = {f_ptr = "enslave", high_of = "enslave", }, -- MIGRATED to buffs menu
 
 	},
 -- 23, -- Curse of weakness 22, -- Curse of agony 25, -- Curse of tongues 40, -- Curse of exhaustion 26, -- Curse of the elements 16, -- Curse of doom 14 -- Corruption
