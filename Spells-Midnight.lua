@@ -301,7 +301,7 @@ Notes:
 	]]
 
 	-- Shadow Pact (replaced Shadow Ward in Midnight)
-	[108416]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- Shadow Pact || Sombre Pact
+	[108416]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "dark_pact", Length = 30, Buff = true, }, -- Shadow Pact || Sombre Pact
 
 	-- Old Shadow Ward ranks (removed in Midnight)
 	--[[ Old Shadow Ward ranks (no longer exist)
