@@ -318,7 +318,8 @@ function Necrosis:CreateMenuItem(i)
 	-- Create the button || Creation du bouton
 	local frame = _G[b.f]
 	if not frame then
-		frame = CreateFrame("Button", b.f, UIParent, "SecureActionButtonTemplate")
+		-- Retail 12.0: Use SecureUnitButtonTemplate instead of SecureActionButtonTemplate
+		frame = CreateFrame("Button", b.f, UIParent, "SecureUnitButtonTemplate")
 
 		-- Définition de ses attributs
 		frame:SetMovable(true)
@@ -350,6 +351,8 @@ function Necrosis:CreateMenuItem(i)
 	frame:SetNormalTexture(b.norm)
 	-- Store spell info on the frame for SetBuffSpellAttribute to use later
 	frame.high_of = i.high_of
+
+
 	frame:Hide()
 
 	-- Edit the scripts associated with the button || Edition des scripts associés au bouton
