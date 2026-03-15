@@ -231,16 +231,21 @@ function Necrosis:SetBuffSpellAttribute(button)
 			-- Retail 12.0 fix: Use numbered attributes (helpbutton1, type1, spell1)
 			f:SetAttribute("helpbutton1", "spell1")
 			f:SetAttribute("type1", "spell")
-			local spellName = Necrosis.GetSpellCastName(f.high_of)
-			-- Fallback to GetSpellInfo if GetSpellCastName returns nil
-			if not spellName or spellName == "" then
-				local spellID = Necrosis:GetSpellIDFromKey(f.high_of)
-				if spellID then
+
+			-- Try to get spell ID first (more reliable than spell names with spaces in Retail)
+			local spellID = Necrosis:GetSpellIDFromKey(f.high_of)
+			if spellID then
+				-- Use spell ID for SetAttribute (avoids issues with multi-word spell names)
+				f:SetAttribute("spell1", spellID)
+			else
+				-- Fallback to spell name if ID not found
+				local spellName = Necrosis.GetSpellCastName(f.high_of)
+				if not spellName or spellName == "" then
 					spellName = GetSpellInfo(spellID)
 				end
-			end
-			if spellName then
-				f:SetAttribute("spell1", spellName)
+				if spellName then
+					f:SetAttribute("spell1", spellName)
+				end
 			end
 
 			if f.can_target then

@@ -1546,10 +1546,12 @@ function Necrosis:SpellSetup(reason)
 	}
 
 	for _, spell_id in ipairs(fallback_spells) do
-		if self.Warlock_Spells[spell_id] and not self.Warlock_Spells[spell_id].CastName then
+		if self.Warlock_Spells[spell_id] then
 			-- Get localized spell name using GetSpellInfo (language-independent)
 			local spell_name = GetSpellInfo(spell_id)
-			if spell_name then
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG Fallback] id="..tostring(spell_id).." name="..tostring(spell_name).." CastName="..tostring(self.Warlock_Spells[spell_id].CastName))
+
+			if spell_name and not self.Warlock_Spells[spell_id].CastName then
 				self.Warlock_Spells[spell_id].Name = spell_name
 				self.Warlock_Spells[spell_id].CastName = spell_name
 				self.Warlock_Spells[spell_id].InSpellBook = true
