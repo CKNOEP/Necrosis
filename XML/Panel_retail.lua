@@ -227,7 +227,7 @@ end
 -- Function to display different pages of the control panel || Fonction permettant l'affichage des différentes pages du panneau de configuration
 function Necrosis:SetPanel(PanelID)
 	local TabName
-	for index=1, 7, 1 do -- index a ajuster en focntion 
+	for index=1, 7, 1 do -- index a ajuster en focntion
 		TabName = _G["NecrosisGeneralTab"..index]
 		if index == PanelID then
 			TabName:SetChecked(1)
@@ -298,6 +298,7 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisMenusConfig)
 		HideUIPanel(NecrosisTimersConfig)
 		HideUIPanel(NecrosisMiscConfig)
+		--HideUIPanel(NecrosisOverlayConfig)
 		if self.SetSummonQueueConfig then
 			self:SetSummonQueueConfig()
 		else

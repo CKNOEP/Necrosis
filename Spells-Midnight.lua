@@ -229,12 +229,13 @@ Notes:
 	[691]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "felhunter", PetId = 417, reagent = "soul_shard", }, -- Felhunter
 	[30146]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "felguard", PetId = 17252, reagent = "soul_shard", }, -- Felguard
 
-	[1122]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "inferno", Length = 5, Cooldown = 3600, reagent = "infernal_stone", }, -- 5852 Inferno || https://classicdb.ch/?spell=1122 -- Infernals https://classic.wowhead.com/spell=23426 Needs research
-	[18540] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "rit_of_doom", Length = 0, Cooldown = 3600, reagent = "demonic_figurine", }, -- 11859 Ritual of Doom || Rituel funeste || https://classicdb.ch/?spell=18540
+	[1122]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "inferno", Length = 5, Cooldown = 3600, }, -- 5852 Inferno || https://classicdb.ch/?spell=1122 -- Infernals https://classic.wowhead.com/spell=23426 Needs research
+	[342601] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "rit_of_doom", Length = 0, Cooldown = 3600, }, -- Ritual of Doom (12.0.1 Midnight ID)
+	[18540]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "rit_of_doom", Length = 0, Cooldown = 3600, }, -- 11859 Ritual of Doom (Legacy)
 	
 	-- ::: Stones
 	-- Create Soulstone || Création pierre d'âme (MOP version)
-	[20707] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "soulstone", Length = 900, Cooldown = 0, Buff = true}, -- MOP Soulstone (15 min duration)	
+	[20707] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "soulstone", Length = 900, Cooldown = 0, Buff = false}, -- MOP Soulstone (15 min duration)	
 
 
 	-- Create Healthstone || Création pierre de soin (MOP version)
@@ -281,16 +282,19 @@ Notes:
 	[403619]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
 	]]
 	--
-	[5697]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "breath", Length = 600, Buff = true, }, -- Unending Breath || Respiration interminable
+	[5697]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "breath", Length = 600, Buff = false, }, -- Unending Breath || Respiration interminable
 	[126]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "eye", Length = 45, Buff = true, SelfOnly = true, }, -- Eye of Kilrogg
 	[698]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "summoning", Length = 600, Buff = true, }, -- Ritual of Summoning || Rituel d'invocation
 
-	-- Ritual of Souls does NOT exist in MOP (removed before Cataclysm)
-	--[[ Ritual of Souls (supprimé en MOP)
-	[29893]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "Ritual_of_Souls", Length = 600, Buff = true, }, -- Ritual of Souls || Rituel des âmes
-	[58887]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "Ritual_of_Souls", Length = 600, Buff = true, }, -- Ritual of Souls || 25 Stones --https://www.wowhead.com/wotlk/spell=58887/ritual-of-souls
-	]]
-	
+	-- Create Soulwell in 12.0.1 Midnight (was Ritual of Souls in older versions)
+	[29893]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "Ritual_of_Souls", Length = 600, Buff = true, }, -- Create Soulwell (12.0.1 name) || Rituel des âmes
+
+	-- Fel Domination in 12.0.1 (Domination gangrenée)
+	[333889] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "fel_domination", Length = 15, Cooldown = 900, }, -- Domination gangrenée (12.0.1)
+
+	-- Dark Pact (Sombre pacte) - 20 sec buff, 60 sec cooldown
+	[108416] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "dark_pact", Length = 20, Cooldown = 60, Buff = false, }, -- Sombre pacte
+
 	-- Soul Link does NOT exist in Midnight (removed)
 	--[[ Soul Link (Removed in Midnight 12.0)
 	[19028] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "link", Buff = true, SelfOnly = true, }, -- Soul Link || Lien spirituel
@@ -349,11 +353,11 @@ Notes:
 	[1714]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "tongues", Length = 30, }, -- Curse of Tongues || Malédiction Langage 
 	[11719] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "tongues", Length = 30, }, --
 
-	[334725] = {UsageRank = 2, SpellRank = 1, Timer = true, Usage = "exhaustion", Length = 12, }, -- Curse of Exhaustion (Midnight 12.0.1 new ID)
-	[18223] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "exhaustion", Length = 12, }, -- Curse of Exhaustion (Old ID)
+	[334275] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "exhaustion", Length = 12, }, -- Curse of Exhaustion (Midnight 12.0.1 new ID)
+	[18223] = {UsageRank = 2, SpellRank = 1, Timer = true, Usage = "exhaustion", Length = 12, }, -- Curse of Exhaustion (Old ID)
 
-	-- Curse of the Elements changed ID in Midnight (was 1490 in MOP, now 44332)
-	[44332]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "elements", Length = 300, }, -- Curse of the Elements || Malédiction Eléments (Midnight 12.0)
+	-- Curse of the Elements removed in Midnight 12.0.1 (was 44332, now does not exist)
+	--[[ [44332]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "elements", Length = 300, }, -- Curse of the Elements || Malédiction Eléments (removed in 12.0.1) ]]
 
 	-- Old Curse of the Elements ranks (removed in Midnight)
 	--[[ Old Curse of the Elements ranks (no longer exist)
@@ -420,9 +424,9 @@ Notes:
 	[6213]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "fear", Length = 15, }, --  
 	[6215]	= {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "fear", Length = 20, }, --
 	
-	-- Fel Domination does NOT exist in MOP (removed before Cataclysm)
-	--[[ Fel Domination (Supprimé de MOP)
-	[18708] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "domination", Length = 15, Cooldown = 900,}, -- Fel Domination || Domination corrompue
+	-- Fel Domination does NOT exist in 12.0.1 (replaced by Domination gangrenée which is usage "dark_pact")
+	--[[ Fel Domination (Legacy - does not exist in 12.0.1)
+	[18708] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "domination", Length = 15, Cooldown = 900,}, -- Fel Domination || Domination corrompue (Legacy)
 	]] 
 	
 	[6353]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "soul_fire", Cooldown = 60,}, -- Soul Fire || Feu de l'âme 
@@ -433,8 +437,8 @@ Notes:
 	[47825] = {UsageRank = 6, SpellRank = 6, Timer = true, Usage = "soul_fire", Cooldown = 60,}, --
 	
 	
-	[108396] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "death_coil", Length = 3, Cooldown = 180,}, -- Death Coil || Voile mortel
-	[6789]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "death_coil", Length = 3, Cooldown = 180,}, -- Death Coil (alt)
+	[6789]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "death_coil", Length = 3, Cooldown = 45,}, -- Death Coil (12.0.1)
+	[108396] = {UsageRank = 3, SpellRank = 2, Timer = true, Usage = "death_coil", Length = 3, Cooldown = 180,}, -- Death Coil (alt/legacy)
 	
 	[17877] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "shadowburn", Cooldown = 15,}, -- Shadowburn || Brûlure de l'ombre 
 	[18867] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "shadowburn", Cooldown = 15,}, --  
@@ -595,6 +599,23 @@ Note: Button name - as a string - are in:
 The intention is to use the index to reference the frames rather than coding indexes into the names.
 This allows a more flexible scheme and should reduce maintenance and impact if WoW Classic changes over time.
 --]]
+-- Spell ID mapping for button casting
+Necrosis.SpellIDMap = {
+	breath = 48663,		-- Unending Breath
+	invis = 6213,		-- Invisibility
+	eye = 126,			-- Eye of Kilrogg
+	summoning = 698,	-- Ritual of Summoning
+	link = 110307,		-- Soul Link
+	ward = 47891,		-- Shadow Ward
+	banish = 710,		-- Banish
+	agony = 980,		-- Curse of Agony
+	weakness = 702,		-- Curse of Weakness
+	tongues = 1108,		-- Curse of Tongues
+	corruption = 172,	-- Corruption
+	exhaustion = 4511,	-- Curse of Exhaustion
+	doom = 603,			-- Curse of Doom
+}
+
 Necrosis.Warlock_Buttons = {
 	timer 		= {f = "NecrosisSpellTimerButton", tip = "SpellTimer", menu = "Timer", anchor = "ANCHOR_RIGHT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\SpellTimerButton-Normal",
@@ -666,8 +687,8 @@ Necrosis.Warlock_Buttons = {
 					high = "Interface\\AddOns\\Necrosis\\UI\\Kilrogg-02",
 					}, --
 	summoning 	= {f = "NecrosisBuffMenu05", tip = "TP", anchor = "ANCHOR_RIGHT", can_target = true,
-					norm = "Interface\\AddOns\\Necrosis\\UI\\TP-01",
-					high = "Interface\\AddOns\\Necrosis\\UI\\TP-02",
+					norm = "Interface\\AddOns\\Necrosis\\UI\\TP-RitualOfSummon",
+					high = "Interface\\AddOns\\Necrosis\\UI\\TP-RitualOfSummon",
 					}, --
 	link 		= {f = "NecrosisBuffMenu06", tip = "SoulLink", anchor = "ANCHOR_RIGHT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\SoulLink-01",
@@ -733,44 +754,6 @@ Necrosis.Warlock_Buttons = {
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Sacrifice-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\Sacrifice-02",
 					}, --
-				
-	
-	destroy_shards = {f = "NecrosisDestroyShardsButton", tip = "DestroyShards", anchor = "ANCHOR_RIGHT",
-					norm = "Interface\\AddOns\\Necrosis\\UI\\ShardDestroy-01",
-					high = "Interface\\AddOns\\Necrosis\\UI\\ShardDestroy-02",
-					func = function(self,arg1) 
-					
-						if arg1 == "RightButton" then
-						Necrosis:DeleteShards()
-						Necrosis:BuildButtonTooltip(self)
-						elseif arg1 == "LeftButton" then
-						--Move shard to the specific bag
-						--Necrosis:SoulshardSwitch("CHECK")
-						for i=1, GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id) do
-						--print ("Move Shard ",i," to ", GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id))
-						Necrosis:SoulshardSwitch(i)
-						end
-						
-						elseif arg1 == 1 then
-						
-							if NecrosisConfig.DestroyCount < 32 then 
-							NecrosisConfig.DestroyCount = NecrosisConfig.DestroyCount + 1 
-							Necrosis:BuildButtonTooltip(self)
-							Necrosis:BagExplore()
-							end
-						elseif arg1 == -1 then
-							if NecrosisConfig.DestroyCount >0 then 
-							NecrosisConfig.DestroyCount = NecrosisConfig.DestroyCount - 1 
-							Necrosis:BuildButtonTooltip(self)
-							Necrosis:BagExplore()
-							end
-						
-						
-						
-						else
-						end
-					end
-					}, --				
 -- CURSE
 
 	weakness 	= {f = "NecrosisCurseMenu01", tip = "Weakness", anchor = "ANCHOR_RIGHT",
@@ -848,7 +831,6 @@ Necrosis.Warlock_Lists = {
 		[6] = {f_ptr = "mounts", high_of = "mounts",},
 		[7] = {f_ptr = "pets", menu = "pets", },
 		[8] = {f_ptr = "curses", menu = "curses", },
-		[9] = {f_ptr = "destroy_shards", high_of = "destroy_shards", },
 		
 --		[9] = {f_ptr = "hearth_stone", item = "Hearthstone",},
 	},
@@ -888,7 +870,7 @@ Necrosis.Warlock_Lists = {
 		[2] = {f_ptr = "agony", high_of = "agony", },
 		[3] = {f_ptr = "tongues", high_of = "tongues", },
 		[4] = {f_ptr = "corruption", high_of = "corruption", },
-		[5] = {f_ptr = "elements", high_of = "elements", },
+		[5] = {f_ptr = "exhaustion", high_of = "exhaustion", },
 		[6] = {f_ptr = "doom", high_of = "doom", },
 	  --[7] = {f_ptr = "exhaustion", high_of = "exhaustion", },
 	  --[8] = {f_ptr = "recklessness", high_of = "recklessness", },
@@ -1065,9 +1047,6 @@ function Necrosis.IsSpellKnown(usage)
 	--print ("usage "..usage)
 	end
 	
-	if usage and usage =="destroy_shards" then
-	return true
-	end
 	
 	
 	if Necrosis.Warlock_Spell_Use[usage] -- get spell id
@@ -1386,18 +1365,21 @@ local function CreateNames(spell, rank)
 end
 
 local function getManaCost(spellID) -- assume only the first mana cost found is needed for now
-    if not spellID then return end
-	local cost = 0
-	local costTable = GetSpellPowerCost(spellID);
-	if costTable == nil then
-		return false
-	end
-	return table.foreach(costTable, function(k,v)  
-		if v.name  == "MANA" then
-			return v.cost;
-		end 
-	end )
+    if not spellID then return 0 end
 
+	-- Use C_Spell.GetSpellPowerCost (Midnight 12.0.1 API)
+	if C_Spell and C_Spell.GetSpellPowerCost then
+		local costTable = C_Spell.GetSpellPowerCost(spellID)
+		if costTable then
+			for k, v in ipairs(costTable) do
+				if v.name == "MANA" then
+					return v.cost
+				end
+			end
+		end
+	end
+
+	return 0
 end
 
 -- My favourite feature! Create a list of spells known by the warlock sorted by name & rank || Ma fonction préférée ! Elle fait la liste des sorts connus par le démo, et les classe par rang.

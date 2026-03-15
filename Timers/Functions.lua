@@ -110,9 +110,11 @@ and crosses login / reload does NOT have both a duration AND a cool down in Spel
 	-- Type 6 = Timer de combat || combat timer
 --]]
 local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, duration, note)
-	-- 
-	-- print ("insert the timer ",spell, cast_guid, Target, Timer, start_time, duration, note)
-	 
+	-- Debug
+	if Necrosis and Necrosis.Debug and Necrosis.Debug.timers then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("InsertThisTimer: spell="..tostring(spell.Name).." Length="..tostring(spell.Length).." Timer="..tostring(spell.Timer))
+	end
+
 	local target = Target
 	local ttype = 0
 	if target == nil or target == {} then
@@ -208,7 +210,7 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 		end
 		-- update the timer display || Association effective au timer
 		Timer.SpellTimer[#Timer.SpellTimer].Gtimer = TimerLibre
-		local spellTexture = GetSpellTexture(spell.ID)		
+		local spellTexture = C_Spell.GetSpellTexture(spell.ID)		
 		--print (spellTexture,"spell",spell.ID,spell.Name)
 		local FontString, StatusBar , Icon_Spell = Necrosis:AddFrame("NecrosisTimerFrame"..TimerLibre,spellTexture)
 		--print("update:",spellTexture)

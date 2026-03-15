@@ -22,12 +22,17 @@ function Necrosis:CreateTimerAnchor()
 		-- Create the graphical timer frame || Création de l'ancre invisible des timers graphiques
 		local f = _G["NecrosisTimerFrame0"]
 		if not f then
+			-- Ensure the timer button exists
+			if not ft then
+				return
+			end
+
 			f = CreateFrame("Frame", "NecrosisTimerFrame0", UIParent)
 			f:SetWidth(150)
 			f:SetHeight(150)
 			f:SetMovable(true)
 			--f:EnableMouse(true)
-			
+
 			f:Show()
 			f:ClearAllPoints()
 			f:SetPoint("LEFT", ft, "CENTER", 50, 0)
@@ -78,8 +83,6 @@ function Necrosis:CreateWarlockUI()
 	frame:SetHighlightTexture("Interface\\AddOns\\Necrosis\\UI\\SpellTimerButton-Highlight")
 	frame:RegisterForClicks("AnyUp")
 
-	-- Create the timer anchor || Création des ancres des timers
-	self:CreateTimerAnchor()
 	-- Edit the scripts associated with the button || Edition des scripts associés au bouton
 	frame:SetScript("OnEnter", function(self) Necrosis:BuildButtonTooltip(self) end)
 	--frame:SetScript("OnEnter", function(self) Necrosis:BuildTooltip(self, "SpellTimer", "ANCHOR_RIGHT", "Timer") end)
@@ -99,6 +102,9 @@ function Necrosis:CreateWarlockUI()
 	)
 
 	frame:Show()
+
+	-- Create the timer anchor AFTER positioning the button || Création des ancres des timers APRÈS le positionnement du bouton
+	self:CreateTimerAnchor()
 
 
 ------------------------------------------------------------------------------------------------------
@@ -137,7 +143,8 @@ function Necrosis:CreateWarlockUI()
 	end
 
 	frame:SetScale((NecrosisConfig.NecrosisButtonScale / 100))
-	
+	frame:Show()
+
 	-- Create the soulshard counter || Création du compteur de fragments d'âme
 	-- Note: If the new button system (Initialize.lua with timer) is active,
 	-- the FontString will be created there on UIParent, so we skip this.
@@ -308,9 +315,9 @@ function Necrosis:CreateMenuItem(i)
 	end
 
 	-- Create the button || Creation du bouton
-	local frame = _G[b.f] 
+	local frame = _G[b.f]
 	if not frame then
-		frame = CreateFrame("Button", b.f, UIParent, "SecureUnitButtonTemplate")
+		frame = CreateFrame("Button", b.f, UIParent, "SecureActionButtonTemplate")
 
 		-- Définition de ses attributs
 		frame:SetMovable(true)
@@ -327,18 +334,35 @@ function Necrosis:CreateMenuItem(i)
 		-- Add valuable data to the frame for retrieval later
 		frame.high_of = i.high_of
 		frame.pet = b.pet
-		
+
 		-- Set the tooltip label to the localized name if not given one already
-		
-		Necrosis.TooltipData[b.tip].Label = White(Necrosis.GetSpellName(i.high_of)) 
-		
+
+		Necrosis.TooltipData[b.tip].Label = White(Necrosis.GetSpellName(i.high_of))
+
+		-- Create FontString for mana cost display
+		local fs = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+		fs:SetPoint("BOTTOM", frame, "BOTTOM", 0, -8)
+		fs:SetText("")
+		frame.manaText = fs
 	end
 
 	frame:SetNormalTexture(b.norm)
+	-- Set spell attribute for casting
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("CreateMenuItem XML: tip="..tostring(b.tip).." i.high_of="..tostring(i.high_of))
+	if i.high_of then
+		local spellID = Necrosis:GetSpellIDFromKey(i.high_of)
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("  -> GetSpellIDFromKey returned: "..tostring(spellID))
+		if spellID then
+			frame:SetAttribute("type", "spell")
+			frame:SetAttribute("spell", spellID)
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("  -> Set spell attribute to: "..tostring(spellID))
+		end
+	end
 	frame:Hide()
 
-	-- Edit the scripts associated with the button || Edition des scripts associés au bouton 
+	-- Edit the scripts associated with the button || Edition des scripts associés au bouton
 	frame:SetScript("OnEnter", function(self)
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("Button: "..tostring(b.tip).." key="..tostring(i.high_of).." spell_attr="..tostring(self:GetAttribute("spell")))
 	Necrosis:BuildButtonTooltip(self)
 	--Necrosis:OnDragStart(self)
 	end)

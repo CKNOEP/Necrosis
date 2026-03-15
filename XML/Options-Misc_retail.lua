@@ -30,25 +30,6 @@ function Necrosis:SetMiscConfig()
 		frame:ClearAllPoints()
 		frame:SetPoint("BOTTOMLEFT")
 
-		-- Boutons oVERLAY
-			frame = CreateFrame("Button", nil, NecrosisMiscConfig, "UIPanelButtonTemplate")
-			frame:SetText((L and L["OPEN_OPTIONS_OVERLAY"]) or "Open Options SpellOverlay")
-			frame:SetSize(200 ,22) -- width, height
-			frame:EnableMouse(true)
-			frame:Show()
-			frame:ClearAllPoints()
-			frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 200)
---
-			local configpanel = CreateFrame("FRAME", "AddonConfigFrameName");
-			configpanel.name = "Necrosis"
-
-			local category, layout = Settings.RegisterCanvasLayoutCategory(configpanel, configpanel.name, configpanel.name);
-
-			frame:SetScript("OnClick", function()
-				if category then
-					pcall(function() Settings.OpenToCategory(category) end)
-				end
-			end)
 
 		-- Set AFK Module
 		frame = CreateFrame("CheckButton", "NecrosisAFK", NecrosisMiscConfig, "UICheckButtonTemplate")
@@ -370,7 +351,8 @@ function Necrosis:SetMiscConfig()
 	-- Test Button SAO
 
 
-	-- Boutons test oVERLAY
+	-- Boutons test oVERLAY - Disabled: SpellActivations not loaded in retail
+	--[[ Disabled for retail 12.0.1
 	testButton = CreateFrame("Button", nil, NecrosisMiscConfig, "UIPanelButtonTemplate")
 	testButton:SetText((L and L["TEST_OVERLAY"]) or "Test Overlay")
 	testButton:SetSize(120 ,22) -- width, height
@@ -424,6 +406,7 @@ function Necrosis:SetMiscConfig()
             NecrosisSpellActivationOverlayFrame_SetForceAlpha1(false);
 
 	end)
+	]]
 
 	end
 

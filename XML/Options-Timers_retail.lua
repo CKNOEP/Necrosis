@@ -47,7 +47,11 @@ function Necrosis:SetTimersConfig()
 				end
 			end)
 		elseif _G["NecrosisTimersConfig3"] then
-			-- New layout already exists, just return
+			-- New layout already exists, just show the frames
+			_G["NecrosisTimersConfig"]:Show()
+			_G["NecrosisTimersConfig1"]:Show()
+			_G["NecrosisTimersConfig2"]:Show()
+			_G["NecrosisTimersConfig3"]:Show()
 			return
 		end
 	end

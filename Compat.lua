@@ -87,20 +87,20 @@ end
 -- UnitAura Compatibility Wrapper (12.0+)
 -- ============================================================================
 if not _G.UnitAuraOriginal then
-    _G.UnitAuraOriginal = _G.UnitAura
+    _G.UnitAuraOriginal = _G.UnitAura or function() return nil end
     function _G.UnitAura(unit, index, filter)
-        if not C_UnitAuras or not C_UnitAuras.GetAuraDataByUnit then
+        if C_UnitAuras and C_UnitAuras.GetAuraDataByUnit then
+            local auras = C_UnitAuras.GetAuraDataByUnit(unit, filter)
+            if not auras or not auras[index] then return nil end
+
+            local aura = auras[index]
+            -- Return in old format: name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, nameplateShowPersonal, spellId, canApplyCustom, isBossAura, isCastByPlayer, nameplateShowAll, timeMod, ...
+            return aura.name, aura.icon, aura.applications, aura.dispelName, aura.duration,
+                   aura.expirationTime, aura.sourceUnit, aura.canStealOrPurge, aura.nameplateShowPersonal,
+                   aura.spellId, aura.canApplyCustom, aura.isBossAura, aura.isCastByPlayer, aura.nameplateShowAll, aura.timeMod
+        else
             return _G.UnitAuraOriginal(unit, index, filter)
         end
-
-        local auras = C_UnitAuras.GetAuraDataByUnit(unit, filter)
-        if not auras or not auras[index] then return nil end
-
-        local aura = auras[index]
-        -- Return in old format: name, icon, count, debuffType, duration, expirationTime, unitCaster, canStealOrPurge, nameplateShowPersonal, spellId, canApplyCustom, isBossAura, isCastByPlayer, nameplateShowAll, timeMod, ...
-        return aura.name, aura.icon, aura.applications, aura.dispelName, aura.duration,
-               aura.expirationTime, aura.sourceUnit, aura.canStealOrPurge, aura.nameplateShowPersonal,
-               aura.spellId, aura.canApplyCustom, aura.isBossAura, aura.isCastByPlayer, aura.nameplateShowAll, aura.timeMod
     end
 end
 

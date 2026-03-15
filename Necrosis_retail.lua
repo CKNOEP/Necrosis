@@ -27,6 +27,21 @@ local metatable = {
 -- Create the spell metatable. || Création de la métatable contenant les sorts de nécrosis
 Necrosis.Spell = setmetatable({}, metatable)
 
+-- Helper function to get spell ID from spell key/usage
+function Necrosis:GetSpellIDFromKey(spellKey)
+	if type(spellKey) == "number" then
+		return spellKey -- Already a spell ID
+	end
+	-- Use the SpellIDMap table if available
+	if Necrosis.SpellIDMap and Necrosis.SpellIDMap[spellKey] then
+		local spellID = Necrosis.SpellIDMap[spellKey]
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("GetSpellIDFromKey: key="..tostring(spellKey).." -> spellID="..tostring(spellID))
+		return spellID
+	end
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("GetSpellIDFromKey: key="..tostring(spellKey).." NOT FOUND in SpellIDMap")
+	return nil
+end
+
 ------------------------------------------------------------------------------------------------------
 -- DECLARATION OF VARIABLES || DÉCLARATION DES VARIABLES
 ------------------------------------------------------------------------------------------------------
@@ -127,7 +142,6 @@ Local.DefaultConfig = {
 		["NecrosisMountButton"] = {"CENTER", "UIParent", "CENTER", 53,-100},
 		["NecrosisPetMenuButton"] = {"CENTER", "UIParent", "CENTER", 87,-100},
 		["NecrosisCurseMenuButton"] = {"CENTER", "UIParent", "CENTER", 121,-100},
-		["NecrosisDestroyShardsButton"] = {"CENTER", "UIParent", "CENTER", 154,-100},
 	},
 	
 	PetShow = {true,true,true,true,true,true,true,true,true,},
@@ -157,37 +171,35 @@ Local.DefaultConfig = {
 		[15] = {usage = "soul_fire", show = true},        -- Soul Fire (60s cooldown)
 		[16] = {usage = "death_coil", show = true},       -- Death Coil (3s + 180s CD)
 		[17] = {usage = "shadowburn", show = true},       -- Shadowburn (15s cooldown)
-		[18] = {usage = "domination", show = false},      -- Fel Domination (15s)
+		[18] = {usage = "fel_domination", show = false},  -- Fel Domination / Domination gangrenée (15s)
 
 		-- CONTROL & DEBUFFS (2 total)
 		[19] = {usage = "banish", show = true},           -- Banish (20-30s)
 		[20] = {usage = "enslave", show = true},          -- Enslave Demon (300s)
 
-		-- UTILITY BUFFS (2 total with Timer=true)
+		-- UTILITY BUFFS (1 with Timer=true)
 		[21] = {usage = "ward", show = true},             -- Shadow Ward (30s)
-		[22] = {usage = "armor", show = false},           -- Demon Armor (buff)
 
 		-- SUMMONING & RITUALS (3 total with Timer=true)
-		[23] = {usage = "soulstone", show = true},        -- Soulstone (900s = 15min)
-		[24] = {usage = "summoning", show = true},        -- Ritual of Summoning (600s)
-		[25] = {usage = "rit_of_doom", show = false},     -- Ritual of Doom (600s)
+		[22] = {usage = "soulstone", show = true},        -- Soulstone (900s = 15min)
+		[23] = {usage = "summoning", show = true},        -- Ritual of Summoning (600s)
+		[24] = {usage = "rit_of_doom", show = false},     -- Ritual of Doom (600s)
 
-		-- DETECTION & MOVEMENT (2 total with Timer=true)
-		[26] = {usage = "invisible", show = false},       -- Detect Invisibility (600s)
-		[27] = {usage = "breath", show = false},          -- Unending Breath (600s)
+		-- DETECTION & MOVEMENT
+		[25] = {usage = "breath", show = false},          -- Unending Breath (600s)
 
 		-- UTILITY (eye is also here)
-		[28] = {usage = "eye", show = false},             -- Eye of Kilrogg (45s)
+		[26] = {usage = "eye", show = false},             -- Eye of Kilrogg (45s)
 
-		-- SACRIFICE SPELLS (2 actual castable)
-		[29] = {usage = "sacrifice", show = false},       -- Demonic Sacrifice (30s) - pet buff
-		[30] = {usage = "sacrifice_Void", show = false},  -- Sacrifice Voidwalker (30s protection)
-
+		
 		-- RITUALS
-		[31] = {usage = "Ritual_of_Souls", show = false}, -- Ritual of Souls (600s)
+		[27] = {usage = "Ritual_of_Souls", show = false}, -- Ritual of Souls (600s)
+
+		-- DARK PACT
+		[28] = {usage = "dark_pact", show = false},       -- Dark Pact / Sombre pacte (20s buff)
 
 		-- INFERNAL
-		[32] = {usage = "inferno", show = false},         -- Inferno (5s summon)
+		[29] = {usage = "inferno", show = false},         -- Inferno (5s summon)
 	},
 }
 
@@ -592,6 +604,9 @@ end
 -- Event : UNIT_SPELLCAST_SUCCEEDED
 -- Manages everything related to successful spell casts || Permet de gérer tout ce qui touche aux sorts une fois leur incantation réussie
 function SpellManagement(SpellCasted)
+	if Necrosis.Debug.timers then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("SpellManagement called: spell="..tostring((SpellCasted and SpellCasted.Name) or "nil"))
+	end
 	
 	
 	local SortActif = false
@@ -1036,7 +1051,7 @@ function Necrosis:OnUpdate(something, elapsed)
 
 	-- If smooth scroll timers, we update them as soon as possible || Si défilement lisse des timers, on les met à jours le plus vite possible
 	if NecrosisConfig.Smooth then
-		NecrosisUpdateTimer(Local.TimerManagement.SpellTimer)
+		NecrosisUpdateTimer(Local.TimerManagement.SpellTimer, Local.TimerManagement.SpellGroup)
 	end
 
 	-- If timers texts, we update them very quickly also || Si timers textes, on les met à jour très vite également
@@ -1101,7 +1116,7 @@ function Necrosis:OnUpdate(something, elapsed)
 	elseif Local.LastUpdate[2] > 0.5 then
 		-- If normal graphical timers scroll, then we update every 0.5 seconds || Si défilement normal des timers graphiques, alors on met à jour toutes les 0.5 secondes
 		if not NecrosisConfig.Smooth then
-			NecrosisUpdateTimer(Local.TimerManagement.SpellTimer)
+			NecrosisUpdateTimer(Local.TimerManagement.SpellTimer, Local.TimerManagement.SpellGroup)
 		end
 		
 		
@@ -1159,7 +1174,7 @@ NOTE: At entering world AND a warlock, this attempts to get localized strings fr
 This may take calls to the server on first session login of a warlock. The init of Necrosis is delayed until those strings are done. 
 This *should* happen quickly. Waiting avoids issues by ensuring localized strings are known before used.
 --]]
-function Necrosis:OnEvent(self, event,...)
+function Necrosis:OnEvent(event,...)
 	local arg1,arg2,arg3,arg4,arg5,arg6 = ...
 
 	local fm = _G[Necrosis.Warlock_Buttons.main.f]
@@ -1181,21 +1196,16 @@ function Necrosis:OnEvent(self, event,...)
 			if Local.InWorld then
 			else
 				ev_out(event, done, true, false, false)
-				-- get localized names for warlock items, this may require calls to WoW server
-				fm:RegisterEvent("GET_ITEM_INFO_RECEIVED")
-				BagNamesKnown() -- need the localized names...
-				Necrosis.InitWarlockItems()
-				if Necrosis.WarlockItemsDone() then --and BagNamesKnown() then
-					StartInit(fm)
-				else -- safe to start up
-					-- need to wait for server - GET_ITEM_INFO_RECEIVED
-					-- Force initialization after 1.5 seconds even if server doesn't respond
-					C_Timer.After(1.5, function()
-						if Necrosis.Data.Enabled == false then
-							StartInit(fm)
-						end
-					end)
-				end
+				-- Initialize immediately instead of waiting for items
+				Necrosis:Initialize(Local.DefaultConfig)
+				Local.InWorld = true
+
+				-- Auto-register spell events from player context
+				C_Timer.After(0.5, function()
+					if SlashCmdList["NECTIMER"] then
+						SlashCmdList["NECTIMER"]()
+					end
+				end)
 			end
 
 			-- Detecting the type of demon present at the connection || Détection du Type de démon présent à la connexion
@@ -1272,6 +1282,11 @@ function Necrosis:OnEvent(self, event,...)
 	elseif (event == "UNIT_SPELLCAST_SUCCEEDED") and arg1 == "player" then
 		-- UNIT_SPELLCAST_SUCCEEDED: "unitTarget", "castGUID", spellID || https://wow.gamepedia.com/UNIT_SPELLCAST_SUCCEEDED
 		-- This can get chatty as other 'casts' are sent such as enchanting / skinning / ...
+
+		if Necrosis.Debug.timers then
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SUCCEEDED: spellID="..tostring(arg3).." spellName="..tostring(GetSpellInfo(arg3)).." registered="..tostring(Local.SpellCasted[arg2] ~= nil))
+		end
+
 		local target, cast_guid, spell_id = arg1, arg2, arg3
 		
 		
@@ -1316,9 +1331,13 @@ function Necrosis:OnEvent(self, event,...)
 	-- When the warlock begins to cast a spell, we get the spell name and id
 	elseif (event == "UNIT_SPELLCAST_SENT") then
 		-- UNIT_SPELLCAST_SENT: "unit", "target", "castGUID", spellID || https://wow.gamepedia.com/UNIT_SPELLCAST_SENT
-		-- Example:   player Starving Dire Wolf Cast-3-4379-0-140-6223-0005C729D2 6223 
+		-- Example:   player Starving Dire Wolf Cast-3-4379-0-140-6223-0005C729D2 6223
 		-- Expect a SUCCESS or FAILED or INTERRUPTED after this
 		-- Rely on castGUID to be unique. This allows the exact timer, if any, to added or removed as needed
+
+		if Necrosis.Debug.timers then
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SENT: spellID="..tostring(arg4).." spellName="..tostring(GetSpellInfo(arg4)))
+		end
 
 		local unit, target, cast_guid, spell_id = arg1, arg2, arg3, arg4
 			
@@ -1407,7 +1426,10 @@ function Necrosis:OnEvent(self, event,...)
 		end
 		if NecrosisConfig.CreatureAlert	and UnitCanAttack("player", "target") and not UnitIsDead("target") then
 		
-		usable, nomana = IsUsableSpell(Necrosis.GetSpellName("enslave"));
+		-- IsUsableSpell was removed in WoW 12.0.1, use alternative check
+		local spellName = Necrosis.GetSpellName("enslave")
+		local usable = spellName and true or false
+		local nomana = false
 		--print(usable,nomana,Necrosis.Unit.Demon,Necrosis.Unit.Elemental)
 		
 			if UnitCreatureType("target") == Necrosis.Unit.Demon  then 	-- Button Alerte Demon	
@@ -1737,8 +1759,36 @@ local function ManaLocalize(mana)
 	end
 end
 local function AddCastAndCost(usage)
-	GameTooltip:AddLine(Necrosis.GetSpellCastName(usage)) 
-	ManaLocalize(Necrosis.GetSpellMana(usage)) 
+	GameTooltip:AddLine(Necrosis.GetSpellCastName(usage))
+
+	-- Get spell ID for the usage
+	local spellID = Necrosis.Warlock_Spell_Use[usage]
+
+	if spellID then
+		local manaCost = 0
+
+		-- Get mana cost dynamically using C_Spell API
+		local costs = C_Spell.GetSpellPowerCost(spellID)
+
+		if costs and #costs > 0 then
+			for _, cost in ipairs(costs) do
+				-- Check by name first (more reliable)
+				if cost.name == "MANA" and cost.cost > 0 then
+					manaCost = cost.cost
+					break
+				-- Fallback: check by type
+				elseif (cost.type == Enum.PowerType.Mana or cost.type == 1) and cost.cost > 0 then
+					manaCost = cost.cost
+					break
+				end
+			end
+		end
+
+		-- Display the mana cost if found
+		if manaCost and manaCost > 0 then
+			ManaLocalize(manaCost)
+		end
+	end
 end
 local function AddShard()
 	if Local.Soulshard.Count == 0 then
@@ -2039,7 +2089,7 @@ function Necrosis:BuildButtonTooltip(button)
 			local LeftMountName = Necrosis.Utils.GetSpellName(NecrosisConfig.LeftMount)
 			
 			if LeftMountName then
-					local icon_texture = GetSpellTexture(NecrosisConfig.LeftMount)
+					local icon_texture = C_Spell.GetSpellTexture(NecrosisConfig.LeftMount)
 					GameTooltip:AddDoubleLine(L["BUTTONS_LEFT"]," |T"..icon_texture..":0:0:0:0|t".." "..LeftMountName);
 			else
 			
@@ -2062,7 +2112,7 @@ function Necrosis:BuildButtonTooltip(button)
 			
 			--if mount is spell
 			if RightMountName then 
-					local icon_texture = GetSpellTexture(NecrosisConfig.RightMount)
+					local icon_texture = C_Spell.GetSpellTexture(NecrosisConfig.RightMount)
 					GameTooltip:AddDoubleLine(L["BUTTONS_RIGHT"]," |T"..icon_texture..":0:0:0:0|t".." "..RightMountName);
 			else
 			
@@ -2086,7 +2136,7 @@ function Necrosis:BuildButtonTooltip(button)
 		local DefaultSteed = Rank2 or Rank1
 		if DefaultSteed then
 			local spellID = Rank2 and 23161 or 5784
-			local icon_texture = GetSpellTexture(spellID)
+			local icon_texture = C_Spell.GetSpellTexture(spellID)
 			GameTooltip:AddDoubleLine(L["BUTTONS_RIGHT"]," |T"..icon_texture..":0:0:0:0|t".." "..DefaultSteed);
 		end
 	end
@@ -2096,7 +2146,7 @@ function Necrosis:BuildButtonTooltip(button)
 		local CtrlLeftMountName = Necrosis.Utils.GetSpellName(NecrosisConfig.CtrlLeftMount)
 
 		if CtrlLeftMountName then
-				local icon_texture = GetSpellTexture(NecrosisConfig.CtrlLeftMount)
+				local icon_texture = C_Spell.GetSpellTexture(NecrosisConfig.CtrlLeftMount)
 				GameTooltip:AddDoubleLine(L["BUTTONS_CTRL-LEFT"]," |T"..icon_texture..":0:0:0:0|t".." "..CtrlLeftMountName);
 		else
 
@@ -2114,7 +2164,7 @@ function Necrosis:BuildButtonTooltip(button)
 		local CtrlRightMountName = Necrosis.Utils.GetSpellName(NecrosisConfig.CtrlRightMount)
 
 		if CtrlRightMountName then
-				local icon_texture = GetSpellTexture(NecrosisConfig.CtrlRightMount)
+				local icon_texture = C_Spell.GetSpellTexture(NecrosisConfig.CtrlRightMount)
 				GameTooltip:AddDoubleLine(L["BUTTONS_CTRL-RIGHT"]," |T"..icon_texture..":0:0:0:0|t".." "..CtrlRightMountName);
 		else
 
@@ -2189,7 +2239,6 @@ function Necrosis:BuildButtonTooltip(button)
 	elseif (Type == "BuffMenu")		then AddMenuTip(Type)
 	elseif (Type == "CurseMenu")	then AddMenuTip(Type)
 	elseif (Type == "PetMenu")		then AddMenuTip(Type)
-	elseif (Type == "DestroyShards")then AddMenuTip(Type);AddDestroyCount()
 	end
 	-- And hop, posting! || Et hop, affichage !
 	GameTooltip:Show()
@@ -2285,12 +2334,20 @@ function Necrosis:UpdateMana()
 			local f = _G[Necrosis.Warlock_Buttons[v.f_ptr].f]
 			local spell = Necrosis.GetSpell(v.high_of)
 			SetTexPerMana(f, spell, mana)
+			-- Update mana text display
+			if f and f.manaText and spell and spell.Mana then
+				f.manaText:SetText(spell.Mana .. " Mana")
+			end
 		end
 		-- buffs
 		for i, v in ipairs(Necrosis.Warlock_Lists.buffs) do
 			local f = _G[Necrosis.Warlock_Buttons[v.f_ptr].f]
 			local spell = Necrosis.GetSpell(v.high_of)
 			SetTexPerMana(f, spell, mana)
+			-- Update mana text display
+			if f and f.manaText and spell and spell.Mana then
+				f.manaText:SetText(spell.Mana .. " Mana")
+			end
 		end
 		-- pets
 		for i, v in ipairs(Necrosis.Warlock_Lists.pets) do
@@ -2889,6 +2946,41 @@ local function HideList(list, parent)
 	end
 end
 -- Rebuild the menus at mod startup or when the spellbook changes || A chaque changement du livre des sorts, au démarrage du mod, ainsi qu'au changement de sens du menu on reconstruit les menus des sorts
+------------------------------------------------------------------------------------------------------
+-- CREATE MENU ITEM BUTTON || CRÉER UN BOUTON DE MENU
+------------------------------------------------------------------------------------------------------
+function Necrosis:CreateMenuItem(spellListItem)
+	-- The buttons are pre-created with names from Warlock_Buttons config
+	-- e.g., spellListItem.f_ptr = "agony" -> button name is "NecrosisCurseMenu02"
+	-- Just return the existing button from the Warlock_Buttons config
+
+	if spellListItem and Necrosis.Warlock_Buttons[spellListItem.f_ptr] then
+		local buttonName = Necrosis.Warlock_Buttons[spellListItem.f_ptr].f
+		local btn = _G[buttonName]
+
+		-- If button doesn't exist yet, create it
+		if not btn then
+			btn = CreateFrame("Button", buttonName, UIParent, "SecureActionButtonTemplate")
+			btn:SetSize(60, 60)
+			btn:EnableMouse(true)
+		end
+
+		-- Update button attributes
+		local spellID = Necrosis:GetSpellIDFromKey(spellListItem.high_of)
+		if spellID then
+			btn:SetAttribute("type", "spell")
+			btn:SetAttribute("spell", spellID)
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("CreateMenuItem: "..tostring(spellListItem.f_ptr).." key="..tostring(spellListItem.high_of).." spellID="..tostring(spellID).." set on button")
+		else
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("CreateMenuItem: "..tostring(spellListItem.f_ptr).." key="..tostring(spellListItem.high_of).." NO SPELL ID FOUND")
+		end
+
+		return btn
+	end
+
+	return nil
+end
+
 function Necrosis:CreateMenu()
 	Local.Menu.Pet = setmetatable({}, metatable)
 	Local.Menu.Curse = setmetatable({}, metatable)

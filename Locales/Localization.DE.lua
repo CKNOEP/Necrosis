@@ -167,6 +167,7 @@ L["BUTTONS_MOUNT"] = "Use my own mounts"
 L["BUTTONS_SELECTION"] = "Selection of buttons to be shown"
 L["BOUTONS_PIERRES"] = "Stein-Schaltflaechen"
 L["BOUTONS_ACTION"] = "Aktions-Schaltflaechen"
+L["MOUNTS_TITLE"] = "Reittiere"
 L["BUTTONS_LEFT"] = "Left click"
 L["BUTTONS_RIGHT"] = "Right click"
 --

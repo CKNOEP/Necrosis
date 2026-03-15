@@ -95,4 +95,3 @@ Necrosis_retail.lua
 XML\XML_retail.lua
 ThreatMeter.lua
 
-SpellActivations\SpellActivations.xml

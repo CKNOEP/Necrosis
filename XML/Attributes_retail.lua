@@ -404,7 +404,7 @@ function Necrosis:CurseSpellAttribute()
 end
 
 -- Associating the frames to buttons, and creating stones on right-click.
--- Association de la monture au bouton, et de la création des pierres sur un clic droit + bouton destroy shards over limit
+-- Association de la monture au bouton, et de la création des pierres sur un clic droit
 function Necrosis:StoneAttribute(Steed)
 	
 	if InCombatLockdown() then
@@ -443,162 +443,20 @@ function Necrosis:StoneAttribute(Steed)
 		end
 	end
 	
-	-- Destroy Shards button is a new type, with function attached
-	local destroy_shards_button = _G[Necrosis.Warlock_Buttons.destroy_shards.f]
-	if (destroy_shards_button) then
-		destroy_shards_button:SetScript(
-			"OnClick",
-			Necrosis.Warlock_Buttons.destroy_shards.func
-			
-		)
-		destroy_shards_button:SetScript(
-			"OnMouseWheel",
-			Necrosis.Warlock_Buttons.destroy_shards.func
-			
-		)
-	end
-	
 	
 	SetSSAttribs(nil, "Icon update")
 
 	-- mounts || Pour la monture
 	local f = Necrosis.Warlock_Buttons.mounts.f
 	f = _G[f]
-	
-	--print ("Monture "..tostring(Steed))
-	if Steed and f then
-	
-	
-		f:SetAttribute("type1", "spell")
-		f:SetAttribute("type2", "spell")
-		f:SetAttribute("ctrl-type1", "spell")
-		f:SetAttribute("ctrl-type2", "spell")
-	
-		
-		if  (NecrosisConfig.LeftMount)  == true then
-				f:SetAttribute("type1", "spell")
-		
-		else
-				f:SetAttribute("type1", "spell")
-	
-		end
-				
-		if  (NecrosisConfig.RightMount)  == true then
-				f:SetAttribute("type2", "spell")
-	
-		else
-				f:SetAttribute("type2", "spell")
 
-		end
-		
-		if  (NecrosisConfig.CtrlLeftMount)  == true then
-				f:SetAttribute("ctrl-type1", "spell")
-
-		else
-				f:SetAttribute("ctrl-type1", "spell")
-
-		end
-		
-		if  (NecrosisConfig.CtrlRightMount)  == true then
-				f:SetAttribute("ctrl-type2", "spell")
-				--print("ismount True")
-		else
-				f:SetAttribute("ctrl-type2", "spell")
-				--print("ismount False")
-		end
-		
-----Set Attributes	Spell or item	
-		
-		if (NecrosisConfig.LeftMount) then
-			local LeftMountName = GetSpellInfo(NecrosisConfig.LeftMount)
-			--print (LeftMountName)
-			if LeftMountName == nil -- then mount is not a spell, is item
-			then -- Mount is a item
-			
-				LeftMountName = GetItemInfo(NecrosisConfig.LeftMount)
-				--print (LeftMountName)
-				f:SetAttribute("type1", "item")
-				f:SetAttribute("item1", LeftMountName)
-			else -- Mount is a spell
-				f:SetAttribute("type1", "spell")
-				f:SetAttribute("spell1", LeftMountName)				
-			end
-		else
-			local srank1 = self.Warlock_Spells[5784].InSpellBook
-			local srank2 = self.Warlock_Spells[23161].InSpellBook
-
-
-			local Rank1 = srank1 and self.Warlock_Spells[5784].CastName
-			local Rank2 = srank2 and self.Warlock_Spells[23161].CastName
-			if Rank2 then
-				f:SetAttribute("spell1", Rank2)
-				f:SetAttribute("spell2", Rank1)
-			else
-				f:SetAttribute("spell*", Rank1)
-			end			
-		end
-		
-		if (NecrosisConfig.RightMount) then
-				
-			local RightMountName = GetSpellInfo(NecrosisConfig.RightMount)
-			if RightMountName == nil 
-			then 
-				RightMountName = GetItemInfo(NecrosisConfig.RightMount) 
-				f:SetAttribute("type2", "item")
-				f:SetAttribute("item2", RightMountName)
-			else
-				f:SetAttribute("type2", "spell")
-				f:SetAttribute("spell2", RightMountName)
-			
-			end
-	else
-		-- Default Steed for right click if no custom mount configured
-		local srank1 = self.Warlock_Spells[5784].InSpellBook
-		local srank2 = self.Warlock_Spells[23161].InSpellBook
-		local Rank1 = srank1 and self.Warlock_Spells[5784].CastName
-		local Rank2 = srank2 and self.Warlock_Spells[23161].CastName
-		if Rank2 then
-			f:SetAttribute("spell2", Rank2)
-		else
-			f:SetAttribute("spell2", Rank1)
-		end
-		end
-		
-		if (NecrosisConfig.CtrlRightMount) then
-			local CtrlRightMountName = GetSpellInfo(NecrosisConfig.CtrlRightMount)
-			if CtrlRightMountName == nil 
-			then 
-				CtrlRightMountName = GetItemInfo(NecrosisConfig.CtrlRightMount) 
-				f:SetAttribute("ctrl-type2", "item")
-				f:SetAttribute("ctrl-item2", CtrlRightMountName)
-			else
-				f:SetAttribute("ctrl-type2", "spell")
-				f:SetAttribute("ctrl-spell2", CtrlRightMountName)
-			
-			end
-			
-		end	
-		
-		if (NecrosisConfig.CtrlLeftMount) then
-			local CtrlLeftMountName = GetSpellInfo(NecrosisConfig.CtrlLeftMount)
-			if CtrlLeftMountName == nil
-			then 
-				CtrlLeftMountName = GetItemInfo(NecrosisConfig.CtrlLeftMount)
-				f:SetAttribute("ctrl-type1", "item")
-				f:SetAttribute("ctrl-item1", CtrlLeftMountName)
-			else
-				f:SetAttribute("ctrl-type1", "spell")
-				f:SetAttribute("ctrl-spell1", CtrlLeftMountName)			
-			end
-
-	
-		end	
-	--print("Attributs Type", f:GetAttribute("type1"),f:GetAttribute("type2"),f:GetAttribute("ctrl-type1"),f:GetAttribute("ctrl-type2"))	
-	--print("Attributs Spell",f:GetAttribute("spell1"),f:GetAttribute("spell2"),f:GetAttribute("ctrl-spell1"),f:GetAttribute("ctrl-spell2"))
-	
+	if f then
+		f:SetScript("OnClick", NecrosisMountButton_OnClick)
+		f:SetScript("OnEnter", NecrosisMountButton_OnEnter)
+		f:SetScript("OnLeave", NecrosisMountButton_OnLeave)
 	end
 
-	local f = Necrosis.Warlock_Buttons.timer.f
+	f = Necrosis.Warlock_Buttons.timer.f
 	f = _G[f]
 	if f then
 		-- hearthstone || Pour la pierre de foyer

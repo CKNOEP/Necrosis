@@ -278,7 +278,6 @@ C_Timer.After(1, function()
 		"NecrosisMountButton",
 		"NecrosisPetMenuButton",
 		"NecrosisCurseMenuButton",
-		"NecrosisDestroyShardsButton",
 		"NecrosisShadowTranceButton",
 		"NecrosisBacklashButton",
 		"NecrosisAntiFearButton",
@@ -298,16 +297,14 @@ end)
 local eventFrame = CreateFrame("Frame", "NecrosisEventFrame")
 eventFrame:SetScript("OnEvent", function(self, event, ...)
 	-- OnEvent receives events, but we pass NecrosisButton as the frame reference
-	Necrosis:OnEvent(NecrosisButton, event, ...)
+	Necrosis.OnEvent(Necrosis, event, ...)
 end)
-
-eventFrame:RegisterEvent("PLAYER_LOGIN")
-eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-
 
 -- Events utilised by Necrosis || Events utilisés dans Necrosis
 local Events = {
 	"BAG_UPDATE",
+	"PLAYER_LOGIN",
+	"PLAYER_ENTERING_WORLD",
 	"PLAYER_REGEN_DISABLED",
 	"PLAYER_REGEN_ENABLED",
 	"PLAYER_DEAD",
@@ -333,6 +330,78 @@ local Events = {
 	"PLAYER_LEAVING_WORLD",
 	"SPELLS_CHANGED",
 }
+
+-- In WoW 12.0.1, RegisterEvent is blocked during addon load context
+-- We must register events from a player context (slash command)
+local eventsRegistered = false
+local originalOnEvent = eventFrame:GetScript("OnEvent")
+
+eventFrame:SetScript("OnEvent", function(self, event, ...)
+	-- Call original handler if it exists
+	if originalOnEvent then
+		originalOnEvent(self, event, ...)
+	end
+end)
+
+-- Register initial events (no other events can be registered during addon load)
+pcall(function()
+	eventFrame:RegisterEvent("PLAYER_LOGIN")
+	eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+	eventFrame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
+end)
+
+-- Slash command to register remaining events from player context
+-- Create a NEW frame dynamically to avoid protected frame restrictions
+SLASH_NECTIMER1 = "/nectimer"
+SlashCmdList["NECTIMER"] = function()
+	if not eventsRegistered then
+		eventsRegistered = true
+
+		-- Create a new anonymous frame (not restricted like named frames)
+		-- Store it in _G so it persists after function returns
+		_G.spellFrame = CreateFrame("Frame")
+		_G.spellFrame:SetScript("OnEvent", function(self, event, arg1, arg2, arg3, arg4)
+			-- Forward events to Necrosis:OnEvent with explicit arguments
+			Necrosis.OnEvent(Necrosis, event, arg1, arg2, arg3, arg4)
+		end)
+
+		-- Register spell cast events and initialization events
+		local spellEvents = {
+			"UNIT_SPELLCAST_SENT",
+			"UNIT_SPELLCAST_SUCCEEDED",
+			"UNIT_SPELLCAST_FAILED",
+			"UNIT_SPELLCAST_INTERRUPTED",
+		}
+
+		for _, evt in ipairs(spellEvents) do
+			pcall(function()
+				_G.spellFrame:RegisterEvent(evt)
+			end)
+		end
+
+		-- Register initialization events on eventFrame
+		local initEvents = {
+			"PLAYER_ENTERING_WORLD",
+			"GET_ITEM_INFO_RECEIVED",
+		}
+		for _, evt in ipairs(initEvents) do
+			pcall(function()
+				eventFrame:RegisterEvent(evt)
+			end)
+		end
+
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Spell cast events registered. Timers are now active.")
+
+		-- Also initialize the UI if not done yet
+		C_Timer.After(0.1, function()
+			if Necrosis and not _G.NecrosisButton:IsShown() then
+				Necrosis:Initialize(Necrosis.DefaultConfig or {})
+			end
+		end)
+	else
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Events already registered.")
+	end
+end
 
 ------------------------------------------------------------------------------------------------------
 -- FONCTION D'INITIALISATION
@@ -377,15 +446,8 @@ function Necrosis:Initialize(Config)
 	-- These will be set on the real button after it's created
 	-- OnUpdate, OnEnter, OnLeave, OnDragStart, OnDragStop will be added to the new button
 
-	-- Register the events used || Enregistrement des events utilisés
-	-- NOTE: In WOW 12.0.1, RegisterEvent is heavily restricted and causes ADDON_ACTION_FORBIDDEN
-	-- Event handling for Necrosis is managed through other mechanisms in Retail
-	-- The frame is created and has OnEvent script set, but may not receive traditional events
-
-	-- Store events list for potential later use
-	if _G["NecrosisEventFrame"] then
-		_G["NecrosisEventFrame"]._NecrosisEvents = Events
-	end
+	-- Events are already registered when the frame was created (see above)
+	-- No need to register them again here
 
 	Necrosis:Initialize_Speech()
 	-- On charge (ou on crée la configuration pour le joueur et on l'affiche sur la console
@@ -777,7 +839,6 @@ function Necrosis:Initialize(Config)
 					"NecrosisMountButton",
 					"NecrosisPetMenuButton",
 					"NecrosisCurseMenuButton",
-					"NecrosisDestroyShardsButton",
 				}
 				for _, name in ipairs(buttonNames) do
 					local b = _G[name]
