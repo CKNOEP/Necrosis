@@ -348,26 +348,18 @@ function Necrosis:CreateMenuItem(i)
 
 	frame:SetNormalTexture(b.norm)
 	-- Set spell attribute for casting
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("CreateMenuItem XML: tip="..tostring(b.tip).." i.high_of="..tostring(i.high_of).." frame="..tostring(b.f))
 	if i.high_of then
 		local spellID = Necrosis:GetSpellIDFromKey(i.high_of)
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("  -> GetSpellIDFromKey returned: "..tostring(spellID))
 		if spellID then
-			-- For SecureActionButtonTemplate with type="spell", need spell NAME not ID
-			local spellName = GetSpellInfo(spellID)
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("  -> GetSpellInfo("..tostring(spellID)..") = "..tostring(spellName))
-			if spellName then
-				frame:SetAttribute("type", "spell")
-				frame:SetAttribute("spell", spellName)
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage("  -> Set spell attribute to: "..tostring(spellName).." (verify: "..tostring(frame:GetAttribute("spell"))..")")
-			end
+			-- For Retail, use spellID directly, not the spell name
+			frame:SetAttribute("type", "spell")
+			frame:SetAttribute("spell", spellID)
 		end
 	end
 	frame:Hide()
 
 	-- Edit the scripts associated with the button || Edition des scripts associés au bouton
 	frame:SetScript("OnEnter", function(self)
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("Button OnEnter: "..tostring(b.tip).." key="..tostring(i.high_of).." frameName="..tostring(self:GetName()).." spell_attr="..tostring(self:GetAttribute("spell")).." type_attr="..tostring(self:GetAttribute("type")))
 	Necrosis:BuildButtonTooltip(self)
 	--Necrosis:OnDragStart(self)
 	end)
@@ -378,14 +370,8 @@ function Necrosis:CreateMenuItem(i)
 	--Necrosis:OnDragStop(self)
 	end)
 
-	-- Add OnClick handler to execute spell casting
-	frame:SetScript("OnClick", function(self, button)
-		if button == "MiddleButton" then
-			return -- Middle click is for dragging
-		end
-		-- The SecureActionButtonTemplate will handle spell execution based on attributes
-		-- This script just ensures the action is triggered
-	end)
+	-- Attributes are already set above in the creation section
+	-- No need to set them again in PreClick
 
 	--============= Special settings per button
 	--
