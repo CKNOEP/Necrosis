@@ -178,7 +178,7 @@ Local.DefaultConfig = {
 		[20] = {usage = "enslave", show = true},          -- Enslave Demon (300s)
 
 		-- UTILITY BUFFS (1 with Timer=true)
-		[21] = {usage = "ward", show = true},             -- Shadow Ward (30s)
+		[21] = {usage = "dark_pact", show = true},        -- Shadow Pact (30s)
 
 		-- SUMMONING & RITUALS (3 total with Timer=true)
 		[22] = {usage = "soulstone", show = true},        -- Soulstone (900s = 15min)
@@ -1899,7 +1899,7 @@ function Necrosis:BuildButtonTooltip(button)
 	end
 
 	local start,  duration  = Necrosis.Utils.GetSpellCooldown("domination", "spell")
-	local start2, duration2  = Necrosis.Utils.GetSpellCooldown("ward", "spell")
+	local start2, duration2  = Necrosis.Utils.GetSpellCooldown("dark_pact", "spell")
 
 	-- Creating help bubbles .... ||Création des bulles d'aides....
 	GameTooltip:SetOwner(button, anchor)
@@ -2203,7 +2203,7 @@ function Necrosis:BuildButtonTooltip(button)
 	elseif (Type == "TP")			then AddCastAndCost("summoning"); AddShard()
 	-- RETAIL: Soul Link removed in Midnight
 	-- elseif (Type == "SoulLink")		then AddCastAndCost("link")
-	elseif (Type == "ShadowProtection") then AddCastAndCost("ward")
+	elseif (Type == "ShadowProtection") then AddCastAndCost("dark_pact")
 		if start2 > 0 and duration2 > 0 then
 			local seconde = duration2 - ( GetTime() - start2)
 			local affiche

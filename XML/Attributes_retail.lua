@@ -219,38 +219,14 @@ function Necrosis:SetBuffSpellAttribute(button)
 			)
 		end
 		if f.high_of == 'banish' then
-			local high = Necrosis.GetSpellCastName(f.high_of)
-			-- Do NOT like hard coding but leave for now...
-			--local Rank1 = self.Warlock_Spells[710].InSpellBook and self.Warlock_Spells[710].CastName
-			local rank_text = GetSpellSubtext(710) or ""
-			local Rank1 = GetSpellInfo(710)..(rank_text ~= "" and " "..rank_text or "")
-			if Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[f.high_of]].SpellRank == 2 then -- has rank 2
-				local Rank2 = self.Warlock_Spells[18647].InSpellBook and self.Warlock_Spells[18647].CastName
-				
-				-- so lets use the "harmbutton" special attribute!
-				-- assign Banish(rank 2) to LEFT click 
-				f:SetAttribute("type1", "macro")
-				f:SetAttribute("macrotext1", "/focus\n/cast "..Rank1)
-				
-				-- assign Banish(rank 1) to RIGHT click 
-				f:SetAttribute("type2", "macro")
-				f:SetAttribute("macrotext2q", "/focus\n/cast "..Rank2)
+			-- Retail 12.0: Banish uses macro with /focus
+			f:SetAttribute("helpbutton1", "spell1")
+			f:SetAttribute("type1", "macro")
+			f:SetAttribute("macrotext1", "/focus\n/cast Bannir")
 
-				-- allow focused target to be rebanished with CTRL+LEFT or RIGHT click
-				f:SetAttribute("ctrl-type"..l_click, "spell")
-				f:SetAttribute("ctrl-spell"..l_click, Rank2)
-				f:SetAttribute("ctrl-type"..r_click, "spell")
-				f:SetAttribute("ctrl-spell"..r_click, Rank1)
-			else -- only have rank 1
-				-- left & right click will perform the same macro
-				f:SetAttribute("type*", "macro")
-				f:SetAttribute("macrotext*", "/focus\n/cast "..Rank1) 
-
-				-- Si le démoniste control + click le bouton de banish || if the warlock uses ctrl-click then
-				-- On rebanish la dernière cible bannie || rebanish the previously banished target
-				f:SetAttribute("ctrl-type*", "spell")
-				f:SetAttribute("ctrl-spell*", Rank1) 
-			end
+			-- Also set right click to same macro for convenience
+			f:SetAttribute("type2", "macro")
+			f:SetAttribute("macrotext2", "/focus\n/cast Bannir")
 		else
 			-- Retail 12.0 fix: Use numbered attributes (helpbutton1, type1, spell1)
 			f:SetAttribute("helpbutton1", "spell1")

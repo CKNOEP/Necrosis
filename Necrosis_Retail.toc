@@ -88,8 +88,6 @@ XML\Panel_retail.lua
 XML\AboutPanel.lua
 Necrosis_retail.lua
 XML\XML_retail.lua
-test_kilrogg.lua
-test_simple_button.lua
 ThreatMeter.lua
 
 SpellActivations\SpellActivations.xml
