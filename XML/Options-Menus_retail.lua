@@ -563,7 +563,7 @@ function Necrosis:SetMenusConfig()
 
 			-- Check if spell is known
 			local spellKey = Necrosis.NameDemon[i]
-			local spellID = Necrosis:GetSpellIDFromKey(spellKey)
+			local spellID = Necrosis.Warlock_Spell_Use[spellKey]
 			local spellKnown = spellID and Necrosis.Warlock_Spells[spellID] and Necrosis.Warlock_Spells[spellID].InSpellBook
 
 			-- Disable and grey out if spell not known
