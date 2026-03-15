@@ -1638,12 +1638,6 @@ function Necrosis:SpellSetup(reason)
 			-- Check if spell is usable (learned by player)
 			local isUsable = C_Spell.IsSpellUsable(spell_id)
 
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[FALLBACK] Spell "..tostring(spell_id)
-				.." | Name="..(spell_name or "nil")
-				.." | IsUsable="..tostring(isUsable)
-				.." | CastName="..(tostring(self.Warlock_Spells[spell_id].CastName) or "nil")
-				)
-
 			-- Always set InSpellBook based on IsUsable
 			self.Warlock_Spells[spell_id].InSpellBook = isUsable
 
