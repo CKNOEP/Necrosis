@@ -76,7 +76,7 @@ Timers\OtherTimers.lua
 
 
 
-XML\Attributes.lua
+XML\Attributes-Vanilla.lua
 
 XML\Options-Messages.lua
 XML\Options-SummonQueue.lua
@@ -89,8 +89,8 @@ XML\Options-Overlay.lua
 
 XML\Panel.lua
 XML\AboutPanel.lua
-Necrosis.lua
-XML\XML.lua
+Necrosis-classic_ERA.lua
+XML\XML-Vanilla.lua
 ThreatMeter.lua
 NecrosisUI\Framework.xml
 

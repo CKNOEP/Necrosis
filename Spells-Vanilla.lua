@@ -249,9 +249,9 @@ Notes:
 	[5699]	= {UsageRank = 3, SpellRank = 3, Timer = false, Usage = "healthstone",}, -- 34 || https://classicdb.ch/?spell=5699 ||
 	[11729]	= {UsageRank = 4, SpellRank = 4, Timer = false, Usage = "healthstone",}, -- greater 46 || https://classicdb.ch/?spell=11729||
 	[11730]	= {UsageRank = 5, SpellRank = 5, Timer = false, Usage = "healthstone",}, -- major 58 || https://classicdb.ch/?spell=11730 ||
-	[27230]	= {UsageRank = 6, SpellRank = 6, Timer = false, Usage = "healthstone",},
-	[47871]	= {UsageRank = 7, SpellRank = 7, Timer = false, Usage = "healthstone",},
-	[47878]	= {UsageRank = 8, SpellRank = 8, Timer = false, Usage = "healthstone",},
+	-- [27230]	= {UsageRank = 6, SpellRank = 6, Timer = false, Usage = "healthstone",}, -- TBC/Wrath only, not in Classic ERA
+	-- [47871]	= {UsageRank = 7, SpellRank = 7, Timer = false, Usage = "healthstone",}, -- TBC/Wrath only, not in Classic ERA
+	-- [47878]	= {UsageRank = 8, SpellRank = 8, Timer = false, Usage = "healthstone",}, -- TBC/Wrath only, not in Classic ERA
 	
 	-- Create Spellstone || Création pierre de sort
 	[2362]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "spellstone", Length = 60, Cooldown = 180,}, -- 36 || https://classicdb.ch/?spell=2362 || https://classicdb.ch/?item=5522

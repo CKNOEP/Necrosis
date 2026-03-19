@@ -209,6 +209,14 @@ local function CreateStoneButton(stone)
 		end)
 	end
 
+	-- Attributes specific to the healthstone button || Attributs spécifiques à la pierre de soin
+	-- Always allow creating a healthstone on the player || Toujours permettre de créer la pierre sur soi
+	if stone == Necrosis.Warlock_Buttons.health_stone.f then
+		frame:SetScript("PreClick", function(self)
+			self:SetAttribute("unit", "player")
+		end)
+	end
+
 	-- Create a place for text
 	-- Create the soulshard counter || Création du compteur de fragments d'âme
 	local FontString = _G[b.f.."Text"]
@@ -540,7 +548,7 @@ function Necrosis:CreateWarlockPopup()
 	frame:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\ElemAlert")
 	frame:RegisterForDrag("LeftButton")
 	frame:RegisterForClicks("AnyUp")
-	frame:SetAlpha(0)  -- Hidden by default, shown when elemental target is detected
+	frame:SetAlpha(0/100)
 	local hight_rank = Necrosis.GetSpellCastName("banish")
 	
 	local derank = ""

@@ -470,9 +470,13 @@ function UpdateIcons()
 	else
 		Local.Stone.Health.Mode = 1
 		-- If out of combat and we can create a stone, we associate the left button to create a stone. || Si hors combat et qu'on peut créer une pierre, on associe le bouton gauche à créer une pierre.
-		if Necrosis.IsSpellKnown("healthstone") 
-		and NecrosisConfig.ItemSwitchCombat[3] then
-			Necrosis:HealthstoneUpdateAttribute("NoStone")
+		if Necrosis.IsSpellKnown("healthstone") then
+			-- ALWAYS update healthstone button attributes, whether we have a stone or not
+			if NecrosisConfig.ItemSwitchCombat[3] then
+				Necrosis:HealthstoneUpdateAttribute()
+			else
+				Necrosis:HealthstoneUpdateAttribute("NoStone")
+			end
 		end
 	end
 
@@ -889,12 +893,16 @@ local function SetupSpells(reason)
 		Necrosis:BuffSpellAttribute()
 		Necrosis:PetSpellAttribute()
 		Necrosis:CurseSpellAttribute()
-		Necrosis:StoneAttribute(Local.Summon.SteedAvailable)
 	end
 
 	-- (re)create the icons around the main sphere
 	Necrosis:CreateMenu()
 	Necrosis:ButtonSetup()
+
+	-- Set stone attributes AFTER buttons are created
+	if not InCombatLockdown() then
+		Necrosis:StoneAttribute(Local.Summon.SteedAvailable)
+	end
 
 	-- Check for stones - the buttons can be updated as needed
 	Necrosis:BagExplore()
@@ -3273,4 +3281,92 @@ function Necrosis:GetHealthstoneItemCooldown()
 		return startTime, duration, isEnabled
 	end
 	return 0, 0, false
+end
+
+------------------------------------------------------------------------------------------------------
+-- DEBUG FUNCTION FOR HEALTHSTONE || FONCTION DE DEBUG POUR PIERRE DE SOIN
+------------------------------------------------------------------------------------------------------
+
+function Necrosis:DebugHealthstone()
+	local msg = ""
+
+	-- Step 1: Check Warlock_Spell_Use
+	local spellId = Necrosis.Warlock_Spell_Use["healthstone"]
+	msg = msg .. "[1] Warlock_Spell_Use['healthstone'] = " .. tostring(spellId) .. "\n"
+
+	-- Step 2: Check if spell exists in table
+	if spellId then
+		local spellData = Necrosis.Warlock_Spells[spellId]
+		msg = msg .. "[2] Warlock_Spells[" .. spellId .. "] exists = " .. tostring(spellData ~= nil) .. "\n"
+
+		if spellData then
+			msg = msg .. "    Name: " .. tostring(spellData.Name) .. "\n"
+			msg = msg .. "    Usage: " .. tostring(spellData.Usage) .. "\n"
+			msg = msg .. "    UsageRank: " .. tostring(spellData.UsageRank) .. "\n"
+			msg = msg .. "    InSpellBook: " .. tostring(spellData.InSpellBook) .. "\n"
+			msg = msg .. "    CastName: " .. tostring(spellData.CastName) .. "\n"
+		end
+	else
+		msg = msg .. "[2] ERROR: Warlock_Spell_Use['healthstone'] is NIL!\n"
+	end
+
+	-- Step 3: Check IsSpellKnown
+	local isKnown = Necrosis.IsSpellKnown("healthstone")
+	msg = msg .. "[3] IsSpellKnown('healthstone') = " .. tostring(isKnown) .. "\n"
+
+	-- Step 4: Check GetSpellCastName
+	local castName = Necrosis.GetSpellCastName("healthstone")
+	msg = msg .. "[4] GetSpellCastName('healthstone') = " .. tostring(castName) .. "\n"
+
+	-- Step 5: Check GetSpellInfo directly
+	if spellId then
+		local spellName, spellRank, spellIcon, spellCastTime, minRange, maxRange, spellId2 = GetSpellInfo(spellId)
+		msg = msg .. "[5] GetSpellInfo(" .. spellId .. "):\n"
+		msg = msg .. "    Name: " .. tostring(spellName) .. "\n"
+		msg = msg .. "    Rank: " .. tostring(spellRank) .. "\n"
+		msg = msg .. "    SpellID: " .. tostring(spellId2) .. "\n"
+	end
+
+	-- Step 6: Check button
+	local buttonName = Necrosis.Warlock_Buttons.health_stone.f
+	local button = _G[buttonName]
+	msg = msg .. "[6] Button '" .. tostring(buttonName) .. "' = " .. tostring(button) .. "\n"
+	if button then
+		msg = msg .. "    type1: " .. tostring(button:GetAttribute("type1")) .. "\n"
+		msg = msg .. "    spell1: " .. tostring(button:GetAttribute("spell1")) .. "\n"
+		msg = msg .. "    type2: " .. tostring(button:GetAttribute("type2")) .. "\n"
+		msg = msg .. "    spell2: " .. tostring(button:GetAttribute("spell2")) .. "\n"
+	end
+
+	msg = msg .. "===========================\n"
+
+	-- Display in chat
+	print(msg)
+end
+
+function Necrosis:CreateDebugWindow(lines)
+	-- Just display in chat for Classic WoW (SetBackdrop doesn't exist)
+	-- The chat output is sufficient for debugging
+end
+
+-- Register slash command for debug
+SLASH_NECROSISDEBUGGS1 = "/debughs"
+SlashCmdList["NECROSISDEBUGGS"] = function(msg)
+	Necrosis:DebugHealthstone()
+end
+
+-- Add debug script to healthstone button
+function Necrosis:DebugHealthstoneButton()
+	local buttonName = Necrosis.Warlock_Buttons.health_stone.f
+	local button = _G[buttonName]
+
+	if button then
+		button:SetScript("OnClick", function(self, button_clicked)
+			print("[HEALTHSTONE BUTTON CLICKED]")
+			print("  Button: " .. tostring(button_clicked))
+			print("  type1: " .. tostring(self:GetAttribute("type1")))
+			print("  spell1: " .. tostring(self:GetAttribute("spell1")))
+			print("  IsSpellKnown: " .. tostring(Necrosis.IsSpellKnown("healthstone")))
+		end)
+	end
 end
