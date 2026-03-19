@@ -1,0 +1,369 @@
+--[[
+    Necrosis 
+    Copyright (C) - copyright file included in this release
+--]]
+
+local L = LibStub("AceLocale-3.0"):NewLocale(NECROSIS_ID,"zhCN")
+if not L then return end
+
+L["NECROSIS"] = "Necrosis";
+L["NECROSIS_ONLY"] = "Necrosis";
+L["NECROSIS_DEBUG"] = "<Necrosis>";
+L["NECROSIS_PRINT"] = "Necrosis";
+
+-- Configuration
+L["HEALTHSTONE_COOLDOWN"] = "治疗石冷却时间"
+L["USE"] = "使用"
+L["TRADE"] = "交易"
+L["NECROSIS_LABEL"] = "|c00FFFFFF".."Necrosis".."|r"
+L["YES"] = "是"
+L["NO"] = "否"
+L["ON"] = "开"
+L["OFF"] = "关"
+L["SPEECH_API"] = "提示：只在副本、小队或团队中生效"
+--
+L["SOUL_SHARD"] = "灵魂碎片"
+L["SOUL_SHARD_LABEL"] = "灵魂碎片: "
+L["INFERNAL_STONE"] = "地狱火石"
+L["INFERNAL_STONE_LABEL"] = "地狱火石: "
+L["DEMONIAC_STONE"] = "恶魔雕像"
+L["DEMONIAC_STONE_LABEL"] = "恶魔雕像: "
+L["SOUL_STONE"] = "灵魂石"
+L["SOUL_STONE_LABEL"] = "灵魂石: "
+L["HEALTH_STONE"] = "治疗石"
+L["HEALTH_STONE_LABEL"] = "治疗石: "
+L["SPELL_STONE"] = "法术石"
+L["SPELL_STONE_LABEL"] = "法术石: "
+L["FIRE_STONE"] = "火焰石"
+L["FIRE_STONE_LABEL"] = "火焰石: "
+L["CURRENT_DEMON"] = "恶魔: "
+L["ENSLAVED_DEMON"] = "恶魔: 奴役"
+L["NO_CURRENT_DEMON"] = "恶魔: 无"
+L["HEARTH_STONE"] = "炉石"
+L["DESTROY_SHARD_MENU_LABEL"] = "|c00FF99FF".."销毁灵魂石碎片".."|r"
+L["DESTROY_SHARD_MENU_TEXT"] = "达到上限时，右键销毁灵魂碎片："
+
+--
+L["SOULSTONE_TEXT_1"] = "制造"
+L["SOULSTONE_TEXT_2"] = "可使用"
+L["SOULSTONE_TEXT_3"] = "已使用"
+L["SOULSTONE_TEXT_4"] = "等待"
+L["SOULSTONE_RITUAL"] = "|c00FFFFFF".."Shift+左键 施放 召唤仪式".."|r"
+L["HEALTHSTONE_TEXT_1_1"] = "制造"
+L["HEALTHSTONE_TEXT_1_2"] = "使用"
+L["HEALTHSTONE_TEXT_2"] = "按中键或是Ctrl-左键交易"
+L["HEALTHSTONE_RITUAL"] = "|c00FFFFFF".."Shift+左键 施放 灵魂仪式".."|r"
+L["SPELLSTONE_TEXT_1"] = "右键制造"
+L["SPELLSTONE_TEXT_2"] = "背包中\n左键使用"
+L["SPELLSTONE_TEXT_3"] = "已使用"
+L["SPELLSTONE_TEXT_4"] = "已使用\n右键制造"
+L["FIRESTONE_TEXT_1"] = "右键制造"
+L["FIRESTONE_TEXT_2"] = "背包中\n左键使用"
+L["FIRESTONE_TEXT_3"] = "已使用"
+L["FIRESTONE_TEXT_4"] = "已使用\n点击制造"
+L["SPELLTIMER_LABEL"] = "|c00FFFFFF".."法术持续时间".."|r"
+L["SPELLTIMER_TEXT"] = "启用对目标的法术计时"
+L["SPELLTIMER_RIGHT"] = "右键使用炉石到 "
+L["SPELLTIMER_LEFT"] = "左键打开配置"
+L["SHADOW_TRANCE_LABEL"] = "|c00FFFFFF".."暗影冥思".."|r"
+L["BACKLASH_LABEL"] = "|c00FFFFFF".."反冲".."|r"
+L["BANISH_TEXT"] = "按右键施放等级1"
+-- Pets
+L["IMP_LABEL"] = "|c00FFFFFF".."小鬼".."|r"
+L["IMP"] = "小鬼"
+L["VOIDWALKER_LABEL"] = "|c00FFFFFF".."虚空行者".."|r"
+L["VOIDWALKER"] = "虚空行者"
+L["SUCCUBUS_LABEL"] = "|c00FFFFFF".."魅魔".."|r"
+L["SUCCUBUS"] = "魅魔"
+L["INCCUBUS_LABEL"] = "|c00FFFFFF".."夜魔".."|r"
+L["INCCUBUS"] = "夜魔"
+L["FELHUNTER_LABEL"] = "|c00FFFFFF".."地狱猎犬".."|r"
+L["FELHUNTER"] = "地狱猎犬"
+L["FELGUARD_LABEL"] = "|c00FFFFFF".."地狱守卫".."|r"
+L["FELGUARD"] = "地狱火"
+L["INFERNAL_LABEL"] = "|c00FFFFFF".."地狱火".."|r"
+L["INFERNAL"] = "末日守卫"
+L["DOOMGUARD_LABEL"] = "|c00FFFFFF".."末日守卫".."|r"
+L["DOOMGUARD"] = "厄运守卫"
+-- 
+L["MOUNTS_LABEL"] = "|c00FFFFFF".."坐骑".."|r"
+L["MOUNT_TEXT"] = "右键施放等级1"
+L["BUFF_MENU_LABEL"] = "|c00FFFFFF".."法术菜单".."|r"
+L["BUFF_MENU_TEXT_1"] = "右键保持菜单开启"
+L["BUFF_MENU_TEXT_2"] = "自动模式：脱离战斗后自动关闭"
+L["PET_MENU_LABEL"] = "|c00FFFFFF".."恶魔菜单".."|r"
+L["PET_MENU_TEXT_1"] = "右键保持菜单开启"
+L["PET_MENU_TEXT_2"] = "自动模式：脱离战斗后自动关闭"
+L["CURSE_MENU_LABEL"] = "|c00FFFFFF".."诅咒菜单".."|r"
+L["CURSE_MENU_TEXT_1"] = "右键保持菜单开启"
+L["CURSE_MENU_TEXT_2"] = "自动模式：脱离战斗后自动关闭"
+L["DOMINATION_COOLDOWN"] = "右键快速召唤"
+--
+L["SOUND_FEAR"] = "Interface\\AddOns\\Necrosis\\sounds\\Fear-En.mp3"
+L["SOUND_SOUL_STONE_END"] = "Interface\\AddOns\\Necrosis\\sounds\\SoulstoneEnd-En.mp3"
+L["SOUND_ENSLAVE_END"] = "Interface\\AddOns\\Necrosis\\sounds\\EnslaveDemonEnd-En.mp3"
+L["SOUND_SHADOW_TRANCE"] = "Interface\\AddOns\\Necrosis\\sounds\\ShadowTrance-En.mp3"
+L["SOUND_BACKLASH"] = "Interface\\AddOns\\Necrosis\\sounds\\Backlash-Fr.mp3"
+--
+L["PROC_SHADOW_TRANCE"] = "<white>暗<lightPurple1>影<purple>冥<darkPurple1>思<white>！"
+L["PROC_BACKLASH"] = "<white>反<lightPurple1>冲<purple>！"
+L["PROC_MOLTENCORE"] = "<white>M<lightPurple1>o<lightPurple2>l<purple>t<darkPurple1>e<darkPurple2>n<darkPurple1>c<purple>o<lightPurple2>r<lightPurple1>e"
+
+
+L["BAG_FULL_PREFIX"] = "你的 "
+L["BAG_FULL_SUFFIX"] = " 满了 !"
+L["BAG_FULL_DESTROY_PREFIX"] = " 满了; 下个碎片将被摧毁!"
+L["INTERFACE_WELCOME"] = "<white>/necrosis 显示设置菜单!"
+L["INTERFACE_TOOLTIP_ON"] = "打开提示"
+L["INTERFACE_TOOLTIP_OFF"] = "关闭提示"
+L["INTERFACE_MESSAGE_ON"] = "打开聊天信息通知"
+L["INTERFACE_MESSAGE_OFF"] = "关闭聊天信息通知"
+L["INTERFACE_DEFAULT_CONFIG"] = "<lightYellow>默认配置已加载。."
+L["INTERFACE_USER_CONFIG"] = "<lightYellow>配置已加载。."
+L["HELP_1"] = "/necrosis <lightOrange>recall<white> -- <lightBlue>将Necrosis和所有按钮置于屏幕中间"
+L["HELP_2"] = "/necrosis <lightOrange>reset<white> -- <lightBlue>完全重置Necrosis"
+L["INFO_FEAR_PROTECT"] = "你的目标对恐惧免疫!"
+L["INFO_ENSLAVE_BREAK"] = "恶魔摆脱奴役..."
+L["INFO_SOUL_STONE_END"] = "<lightYellow>你的灵魂石失效。."
+--
+L["CONFIG_MESSAGE"] = "信息设置"
+L["CONFIG_SPHERE"] = "球体设置"
+L["CONFIG_BUTTON"] = "按钮设置"
+L["CONFIG_MENU"] = "菜单设置"
+L["CONFIG_TIMER"] = "计时器设置"
+L["CONFIG_MISC"] = "杂项"
+L["CONFIG_OVERLAY"] = "Overlay On Proc (Under Construction) "
+--
+L["MSG_POSITION"] = "<- 这儿将显示Necrosis的信息 ->"
+L["MSG_SHOW_TIPS"] = "显示提示"
+L["MSG_SHOW_SYS"] = "宣告Necrosis信息作为系统信息"
+L["MSG_RANDOM"] = "随机显示召唤的信息"
+L["MSG_USE_SHORT"] = "使用短信"
+L["MSG_RANDOM_SUMMONS"] = "激活随机讲话以召唤仪式"
+L["MSG_RANDOM_SOULSTONE"] = "铸造灵魂石时激活随机语音"
+L["MSG_RANDOM_DEMON"] = "激活随机语言 (恶魔)"
+L["MSG_RANDOM_STEED"] = "激活随机语言 (坐骑)"
+L["MSG_RANDOM_SOULS"] = "激活灵魂仪式的随机信息"
+L["MSG_SOUNDS"] = "开启声音"
+L["MSG_WARN_FEAR"] = "目标免疫恐惧时提醒我"
+L["MSG_WARN_BANISH"] = "目标可被放逐或奴役时提醒我"
+L["MSG_WARN_TRANCE"] = "获得暗影冥思效果时提醒我"
+--
+L["SPHERE_SIZE"] = "Necrosis按钮的大小"
+L["SPHERE_SKIN"] = "Necrosis球体的皮肤"
+L["SPHERE_EVENT"] = "图形显示"
+L["SPHERE_SPELL"] = "点击球体施放的法术"
+L["SPHERE_SPELL2"] = "点击球体施放的法术（Shift+点击 ）"
+L["SPHERE_SPELL_RIGHTCLICK"] = "超过阈值时，右键点击球体销毁，阈值："
+L["SPHERE_SPELL_RIGHTCLICK_L2"] = "Ctrl+左键 打开配置菜单"
+
+L["SPHERE_SPELL+CTRL"] = "打开选项菜单"
+L["SPHERE_COUNTER"] = "显示碎片数量"
+L["SPHERE_STONE"] = "石头类型"
+--	Colour
+L["CATA"] = "大灾变"
+L["PINK"] = "粉红色"
+L["BLUE"] = "蓝色"
+L["ORANGE"] = "橙色"
+L["TURQUOISE"] = "青绿色"
+L["PURPLE"] = "紫色"
+L["PURPLE2"] = "紫色2"
+L["666"] = "666"
+L["X"] = "X"
+-- Count
+L["SOUL_SHARDS"] = "灵魂碎片"
+L["DEMON_SUMMON_STONES"] = "恶魔召唤石"
+L["REZ_TIMER"] = "灵魂石冷却计时"
+L["MANA"] = "法力值"
+L["HEALTH"] = "生命值"
+-- Buttons
+L["BUTTONS_ROTATION"] = "旋转按钮"
+L["BUTTONS_STICK"] = "将按钮固定在球体周围"
+L["BUTTONS_MOUNT"] = "坐骑设置"
+L["BUTTONS_SELECTION"] = "选择显示的按钮"
+L["BOUTONS_PIERRES"] = "石头按钮"
+L["BOUTONS_ACTION"] = "动作按钮"
+L["BUTTONS_LEFT"] = "坐骑 - 左键"
+L["BUTTONS_RIGHT"] = "坐骑 - 右键"
+L["BUTTONS_L"] = "左键"
+L["BUTTONS_R"] = "右键"
+L["BUTTONS_CTRL-LEFT"] = "Mount - Ctrl + Left click"
+L["BUTTONS_CTRL-RIGHT"] = "Mount - Ctrl + Right click"
+
+--
+L["SHOW_FIRE_STONE"] = "显示火焰石按钮"
+L["SHOW_SPELL_STONE"] = "显示法术石按钮"
+L["SHOW_HEALTH_STONE"] = "显示治疗石按钮"
+L["SHOW_SOUL_STONE"] = "显示灵魂石按钮"
+L["SHOW_SPELL"] = "显示buff菜单按钮"
+L["SHOW_STEED"] = "显示战马按钮"
+L["SHOW_DEMON"] = "显示恶魔召唤菜单按钮"
+L["SHOW_CURSE"] = "显示诅咒菜单按钮"
+L["SHOW_DESTROY_SHARDS"]= "显示销毁灵魂碎片按钮"
+--
+L["MENU_GENERAL"] = "通用选项"
+L["MENU_SPELLS"] = "法术菜单"
+L["MENU_DEMONS"] = "恶魔菜单"
+L["MENU_CURSES"] = "诅咒菜单"
+L["MENU_ALWAYS"] = "总是显示菜单"
+L["MENU_AUTO_COMBAT"] = "战斗时自动显示菜单"
+L["MENU_CLOSE_CLICK"] = "点击一项后关闭菜单"
+L["MENU_ORIENTATION"] = "菜单显示方向"
+L["MENU_QUICK_SACRIFICE"] = "Quick Sacrifice : Summon+Sacrifice"
+L["MENU_VERT"] = "改变按钮的垂直对称方式"
+L["MENU_BANISH"] = "放逐按钮大小"
+--
+L["HORIZONTAL"] = "水平"
+L["UPWARDS"] = "向上"
+L["DOWNWARDS"] = "向下"
+--
+L["TIMER_TYPE"] = "计时器类型"
+L["TIMER_ALPHA"]  = "计时器透明度"
+L["TIMER_SPELL"] = "显示法术计时器按钮"
+L["TIMER_LEFT"] = "计时器在按钮左边"
+L["TIMER_UP"] = "计时器向上升"
+--
+L["NO_TIMER"] = "无计时器"
+L["GRAPHICAL"] = "图形"
+L["TEXTUAL"] = "贴图"
+--
+L["MISC_SHARDS_BAG"] = "将碎片放入选择的包。."
+L["MISC_SHARDS_DESTROY"] = "如果包满摧毁所有新的碎片。."
+L["MISC_BAG"] = "选择灵魂碎片包"
+L["MISC_SHARDS_MAX"] = "灵魂碎片最大保留数量"
+L["MISC_LOCK"] = "锁定 Necrosis球体及周围的按钮。"
+L["MISC_HIDDEN"] = "显示隐藏的按钮以拖动它。"
+L["MISC_HIDDEN_SIZE"] = "暗影冥思和反恐按钮的大小"
+-- Functions
+L["UNDEAD"] = "亡灵"
+L["DEMON"] = "恶魔"
+L["ELEMENTAL"] = "元素"
+--
+L["BACKLASH"] = "反冲"
+L["SHADOW_TRANCE"] = "暗影冥思"
+--L["MOLTENCORE"] = select(1, GetSpellInfo(47247))
+--
+L["BAG_SOUL_POUCH"] = "灵魂袋"
+L["BAG_SMALL_SOUL_POUCH"] = "小灵魂袋"
+L["BAG_BOX_OF_SOULS"] = "灵魂包"
+L["BAG_FELCLOTH_BAG"] = "恶魔布包"
+L["BAG_EBON_SHADOW_BAG"] = "Ebon Shadowbag"
+L["BAG_CORE_FELCLOTH_BAG"] = "熔火恶魔布包"
+L["BAG_ABYSSAL_BAG"] = "深渊布包"
+--
+L["MINOR"] = "Minor"
+L["MAJOR"] = "Major"
+L["LESSER"] = "Lesser"
+L["GREATER"] = "Greater"
+--
+L["COOLDOWN"] = "冷却时间"
+L["RANK"] = "等级"
+L["CREATE"] = "制造"
+--
+L["ANTI_FEAR_BUFF_FEAR_WARD"]	= "恐惧防护结界"
+L["ANTI_FEAR_BUFF_FORSAKEN"]	= "亡灵意志"
+L["ANTI_FEAR_BUFF_FEARLESS"]	= "反恐惧"
+L["ANTI_FEAR_BUFF_BERSERK"]		= "狂怒"
+L["ANTI_FEAR_BUFF_RECKLESS"]	= "鲁莽"
+L["ANTI_FEAR_BUFF_WISH"]		= "死亡之愿"
+L["ANTI_FEAR_BUFF_WRATH"]		= "狂野怒火"
+L["ANTI_FEAR_BUFF_ICE"]			= "寒冰屏障"
+L["ANTI_FEAR_BUFF_PROTECT"]		= "圣佑术"
+L["ANTI_FEAR_BUFF_SHIELD"]		= "圣盾术"
+L["ANTI_FEAR_BUFF_TREMOR"]		= "战栗图腾"
+L["ANTI_FEAR_BUFF_ABOLISH"]		= "废除魔法"
+L["ANTI_FEAR_DEBUFF_RECKLESS"]	= "鲁莽诅咒"
+
+-- Speech
+
+--
+L["ABOUT_VERSION"] = "Version";
+L["ABOUT_AUTHOR"] = "Author";
+L["ABOUT_CREDITS"] = "Credits";
+L["ABOUT_CATEGORY"] = "Category";
+L["ABOUT_EMAIL"] = "E-mail";
+L["ABOUT_WEB"] = "Website";
+L["ABOUT_LICENSE"] = "License";
+
+-- Threat Meter & NecrosisUI
+L["THREAT_METER_ENABLED"] = "启用 Threat Meter（圆形指示器）"
+L["NECROSISUI_ENABLED"] = "启用 NecrosisUI（高级框架）"
+
+-- Missing UI Labels (from config pages)
+L["UNFORTUNATELY_TBC_SHARD_MSG"] = "不幸的是，在 TBC 中，暴雪决定移除插件自动删除碎片的能力。战斗后的自动分类不再受支持。现在使用碎片按钮来管理碎片"
+L["OPEN_OPTIONS_OVERLAY"] = "打开选项法术叠加层"
+L["AFK_SCREEN"] = "AFK 屏幕"
+L["MOUNT_DRAG_DROP_INSTRUCTIONS"] = "选择您的坐骑：将坐骑拖放到框架中以绑定它"
+L["OFFSET_X"] = "偏移 X"
+L["OFFSET_Y"] = "偏移 Y"
+L["SELECT_MOUNTS"] = "选择您的坐骑："
+L["PAGE_OF_N"] = "第 %d 页，共 %d 页"
+L["RESET"] = "重置"
+L["TEST_OVERLAY"] = "测试叠加层"
+
+-- Summon Queue Module
+L["SUMMON_QUEUE_LABEL"] = "|c00FFFFFF".."召唤队列".."|r"
+L["SUMMON_QUEUE_ENABLED"] = "启用召唤队列"
+L["SUMMON_QUEUE_TRIGGER"] = "触发代码"
+L["SUMMON_QUEUE_TRIGGER_DESC"] = "加入队列的聊天消息。用逗号分隔多个代码：123, summon, inv"
+L["SUMMON_QUEUE_AUTO_REMOVE"] = "在范围内自动移除"
+L["SUMMON_QUEUE_AUDIO"] = "音频警报"
+L["SUMMON_QUEUE_SYNC"] = "与其他术士同步"
+L["SUMMON_QUEUE_WINDOW"] = "显示队列窗口"
+L["SUMMON_QUEUE_ADDED"] = "<player> 已添加到召唤队列"
+L["SUMMON_QUEUE_REMOVED"] = "<player> 已从队列中移除"
+L["SUMMON_QUEUE_YOUR_TURN"] = "轮到你被召唤了！"
+L["SUMMON_QUEUE_POSITION"] = "队列位置：<pos>/<total>"
+L["SUMMON_QUEUE_CLEAR"] = "清空队列"
+L["SUMMON_QUEUE_MANUAL_ADD"] = "添加目标"
+L["SUMMON_QUEUE_EMPTY"] = "队列为空"
+
+-- Version Check Module
+L["VERSION_UPDATE_AVAILABLE"] = "有可用更新"
+L["CURRENT_VERSION"] = "当前版本"
+L["DOWNLOAD"] = "下载"
+L["GITHUB"] = "GitHub"
+L["TYPE"] = "输入"
+L["VERSION_CHECK_MANUAL"] = "手动检查更新"
+L["CURSEFORGE"] = "CurseForge"
+L["UPDATE_AVAILABLE"] = "有可用更新"
+L["UP_TO_DATE"] = "您已是最新版本！"
+L["VERSION"] = "版本"
+L["UPDATE"] = "更新"
+
+-- About Panel
+L["ABOUT_SUBTITLE"] = "术士界面和灵魂碎片管理"
+L["ABOUT_DESCRIPTION"] = [[
+Necrosis是终极术士插件,为灵魂碎片、法术、恶魔召唤、增益、诅咒和计时器提供全面的界面管理。20多年持续开发和社区支持。
+
+该插件提供径向按钮界面、灵魂碎片图形显示、广泛的自定义选项,以及包括召唤队列管理和团队同步等高级功能。
+
+为术士社区而精心开发。
+]]
+L["DOWNLOAD_SUPPORT"] = "下载和支持"
+L["CREDITS"] = "开发团队和致谢"
+
+-- Tooltip Labels (for main sphere)
+L["TOOLTIP_LEFT_CLICK"] = "左键点击"
+L["TOOLTIP_SHIFT_LEFT_CLICK"] = "Shift+左键点击"
+L["TOOLTIP_RIGHT_CLICK"] = "右键点击"
+L["TOOLTIP_CONFIGURATION"] = "配置"
+L["TOOLTIP_DRAG"] = "拖动"
+L["TOOLTIP_MOVE"] = "移动"
+
+-- Stone Labels (for tooltip display)
+L["STONE_SOULSTONE_LABEL"] = "灵魂石: "
+L["STONE_HEALTHSTONE_LABEL"] = "生命石: "
+L["STONE_SPELLSTONE_LABEL"] = "法术石: "
+L["STONE_FIRESTONE_LABEL"] = "火焰石: "
+L["STONE_INFERNAL_LABEL"] = "地狱石: "
+
+-- Soul Shard Management Tooltip
+L["SHARD_MOUSEWHEEL_HELP"] = "使用鼠标滚轮增加或减少限制"
+L["SHARD_LEFTCLICK_HELP"] = "使用左键单击将灵魂碎片移动到特定的袋子"
+
+-- Spellstone Charges
+L["SPELLSTONE_CHARGES"] = "充能"
+
+-- Demon Cooldown Display
+L["DEMON_COOLDOWN"] = "冷却 : "
