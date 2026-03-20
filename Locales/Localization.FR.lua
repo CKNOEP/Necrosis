@@ -440,6 +440,8 @@ L["TOOLTIP_RIGHT_CLICK"] = "Clic droit"
 L["TOOLTIP_CONFIGURATION"] = "Configuration"
 L["TOOLTIP_DRAG"] = "Drag"
 L["TOOLTIP_MOVE"] = "Déplacer"
+L["TOOLTIP_MIDDLE_CLICK"] = "Clic du milieu"
+L["TOOLTIP_OPEN_BAGS"] = "Ouvrir les sacs"
 
 -- Stone Labels (for tooltip display)
 L["STONE_SOULSTONE_LABEL"] = "Pierre d'âme : "

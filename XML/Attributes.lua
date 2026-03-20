@@ -123,13 +123,19 @@ function Necrosis:MenuAttribute(menu)
 		end
 	]])
 
+	-- Handle middle-click with non-secure script (outside secure context)
+	menuButton:SetScript("OnMouseUp", function(self, button)
+		if button == "MiddleButton" then
+			OpenAllBags()
+		end
+	end)
+
 	menuButton:SetAttribute("_onclick", [[
 		self:SetAttribute("lastClick", button)
 		local Etat = self:GetAttribute("state")
 
 		if  button == "MiddleButton" then
-			-- Open bags on middle click
-			OpenAllBags()
+			-- Handled by OnMouseUp script
 		end
 
 		if  Etat == "Ferme" then

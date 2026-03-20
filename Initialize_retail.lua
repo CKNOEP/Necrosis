@@ -711,6 +711,7 @@ function Necrosis:Initialize(Config)
 						GameTooltip:AddDoubleLine(L["TOOLTIP_SHIFT_LEFT_CLICK"]..":", secondSpell, 1, 1, 1, 1, 1, 1)
 					end
 					GameTooltip:AddDoubleLine(L["TOOLTIP_RIGHT_CLICK"]..":", L["TOOLTIP_CONFIGURATION"], 1, 1, 1, 1, 1, 1)
+				GameTooltip:AddDoubleLine(L["TOOLTIP_MIDDLE_CLICK"]..":", L["TOOLTIP_OPEN_BAGS"], 1, 1, 1, 1, 1, 1)
 					GameTooltip:AddDoubleLine(L["TOOLTIP_DRAG"]..":", L["TOOLTIP_MOVE"], 1, 1, 1, 1, 1, 1)
 
 					-- Add stone counts
