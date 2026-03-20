@@ -126,12 +126,10 @@ function Necrosis:MenuAttribute(menu)
 	menuButton:SetAttribute("_onclick", [[
 		self:SetAttribute("lastClick", button)
 		local Etat = self:GetAttribute("state")
-		
+
 		if  button == "MiddleButton" then
-		
-		
-		
-		
+			-- Open bags on middle click
+			OpenAllBags()
 		end
 		
 		if  Etat == "Ferme" then
