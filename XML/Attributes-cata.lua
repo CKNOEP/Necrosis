@@ -94,7 +94,8 @@ function Necrosis:MenuAttribute(menu)
 	]])
 
 	-- Handle middle-click with non-secure script (outside secure context)
-	menuButton:SetScript("OnMouseUp", function(self, button)
+	-- Use OnMouseDown to handle the click BEFORE SecureButton processes it
+	menuButton:SetScript("OnMouseDown", function(self, button)
 		if button == "MiddleButton" then
 			OpenAllBags()
 		end
