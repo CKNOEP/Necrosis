@@ -797,12 +797,20 @@ function Necrosis:HealthstoneUpdateAttribute(nostone)
 	if NecrosisConfig.ItemSwitchCombat[3] then
 		f:SetAttribute("type1", "macro")
 		f:SetAttribute("macrotext1", "/stopcasting \n/use "..NecrosisConfig.ItemSwitchCombat[3])
-		f:SetAttribute("type3", "Trade")
-		f:SetAttribute("ctrl-type1", "Trade")
+
+		-- Check if it's Demonic Healthstone (ID 224464 or old Cata IDs 36889-36891) - NOT tradeable
+		local itemId = GetItemInfoInstant(NecrosisConfig.ItemSwitchCombat[3])
+		local isDemonicHealthstone = itemId == 224464 or itemId == 36889 or itemId == 36890 or itemId == 36891
+
+		if not isDemonicHealthstone then
+			-- Only enable Trade for other healthstones (not Demonic)
+			f:SetAttribute("type3", "Trade")
+			f:SetAttribute("ctrl-type1", "Trade")
+			f.Trade = function () self:TradeStone() end
+		end
+
 		f:SetAttribute("shift-type*", "spell")
-		f:SetAttribute("shift-spell*", Necrosis.GetSpellCastName("Ritual_of_Souls")) 
-		
-		f.Trade = function () self:TradeStone() end
+		f:SetAttribute("shift-spell*", Necrosis.GetSpellCastName("Ritual_of_Souls"))
 	end
 end
 

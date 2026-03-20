@@ -248,6 +248,7 @@ Notes:
 
 	-- Create Healthstone || Création pierre de soin (MOP version)
 	[23517] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "healthstone",}, -- MOP Healthstone
+	[452930] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "healthstone",}, -- Demonic Healthstone (Midnight 12.0.5)
 
 	-- Spellstone & Firestone do NOT exist in MOP (removed before Cataclysm)
 	-- These spells are commented out for reference only
@@ -958,6 +959,7 @@ Necrosis.Warlock_Lists = {
 		demonic_hs_1		= {id = 36889, }, --3500
 		demonic_hs_2		= {id = 36890, }, --3850
 		demonic_hs_3		= {id = 36891, }, --4200
+		demonic_hs_midnight	= {id = 224464, }, -- Demonic Healthstone (Midnight 12.0.5)
 	},
 	["soul_stones"] = {
 		minor_ss			= {id = 5232, }, --
