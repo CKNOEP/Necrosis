@@ -248,7 +248,7 @@ Notes:
 
 	-- Create Healthstone || Création pierre de soin (MOP version)
 	[23517] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "healthstone",}, -- MOP Healthstone
-	[452930] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "healthstone",}, -- Demonic Healthstone (Midnight 12.0.5)
+	[452930] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "demonic_healthstone",}, -- Demonic Healthstone (Midnight 12.0.5)
 
 	-- Spellstone & Firestone do NOT exist in MOP (removed before Cataclysm)
 	-- These spells are commented out for reference only

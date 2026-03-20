@@ -787,10 +787,22 @@ function Necrosis:HealthstoneUpdateAttribute(nostone)
 	end
 
 	-- Si le démoniste n'a pas de pierre dans son inventaire,
-	-- Un clic gauche crée la pierre
+	-- Un clic gauche crée la pierre (strongest available)
 	if nostone then
 		f:SetAttribute("type1", "spell") -- 52
-		f:SetAttribute("spell1", Necrosis.GetSpellCastName("healthstone")) 
+
+		-- Test for strongest healthstone spell available
+		-- Priority: Demonic Healthstone (452930) > Regular Healthstone (23517)
+		local spellToCreate = nil
+		if Necrosis.IsSpellKnown("demonic_healthstone") or IsSpellKnownOrOverridesKnown(452930) then
+			spellToCreate = Necrosis.GetSpellCastName("demonic_healthstone") or GetSpellInfo(452930)
+		elseif Necrosis.IsSpellKnown("healthstone") or IsSpellKnownOrOverridesKnown(23517) then
+			spellToCreate = Necrosis.GetSpellCastName("healthstone") or GetSpellInfo(23517)
+		end
+
+		if spellToCreate then
+			f:SetAttribute("spell1", spellToCreate)
+		end
 		return
 	end
 
