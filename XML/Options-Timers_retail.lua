@@ -47,11 +47,11 @@ function Necrosis:SetTimersConfig()
 				end
 			end)
 		elseif _G["NecrosisTimersConfig3"] then
-			-- New layout already exists, just show the frames
+			-- New layout already exists, just show the frames (Page 1 only)
 			_G["NecrosisTimersConfig"]:Show()
 			_G["NecrosisTimersConfig1"]:Show()
-			_G["NecrosisTimersConfig2"]:Show()
-			_G["NecrosisTimersConfig3"]:Show()
+			_G["NecrosisTimersConfig2"]:Hide()
+			_G["NecrosisTimersConfig3"]:Hide()
 			return
 		end
 	end
@@ -283,7 +283,7 @@ function Necrosis:SetTimersConfig()
 		frame:EnableMouse(true)
 		frame:SetWidth(350)
 		frame:SetHeight(452)
-		frame:Show()
+		frame:Hide()
 		frame:ClearAllPoints()
 		frame:SetPoint("BOTTOMLEFT")
 
@@ -377,7 +377,7 @@ function Necrosis:SetTimersConfig()
 		frame:EnableMouse(true)
 		frame:SetWidth(350)
 		frame:SetHeight(452)
-		frame:Show()
+		frame:Hide()
 		frame:ClearAllPoints()
 		frame:SetPoint("BOTTOMLEFT")
 

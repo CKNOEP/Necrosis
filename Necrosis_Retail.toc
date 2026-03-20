@@ -1,4 +1,4 @@
-## Interface: 120001,120000
+## Interface: 120005,120001,120000
 ## X-Min-Interface: 110207
 
 ## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Retail
