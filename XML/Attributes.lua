@@ -886,7 +886,7 @@ function Necrosis:HealthstoneUpdateAttribute(nostone)
 
 	if NecrosisConfig.ItemSwitchCombat[3] then
 		f:SetAttribute("type1", "macro")
-		f:SetAttribute("macrotext1", "/stopcasting \n/use "..NecrosisConfig.ItemSwitchCombat[3])
+		f:SetAttribute("macrotext1", "/use "..NecrosisConfig.ItemSwitchCombat[3])
 
 		-- Check if it's Demonic Healthstone (ID 224464) - NOT tradeable
 		local itemId = GetItemInfoInstant(NecrosisConfig.ItemSwitchCombat[3])
