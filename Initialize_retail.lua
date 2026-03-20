@@ -696,6 +696,10 @@ function Necrosis:Initialize(Config)
 				btn:SetAttribute("type2", "macro")
 				btn:SetAttribute("macrotext2", "/necrosis")
 
+			-- Middle click opens bags
+			btn:SetAttribute("type3", "macro")
+			btn:SetAttribute("macrotext3", "/run OpenAllBags()")
+
 				btn:RegisterForClicks("AnyUp")
 
 				-- Configure scripts
