@@ -2024,21 +2024,42 @@ function Necrosis:BuildButtonTooltip(button)
 			if Local.Stone.Health.Mode == 1 then
 				AddCastAndCost("healthstone")
 			end
-			GameTooltip:AddLine(Necrosis.TooltipData[Type].Text[Local.Stone.Health.Mode])
+			local healthText = Necrosis.TooltipData[Type].Text[Local.Stone.Health.Mode]
+
+			-- Add charges to the main text if healthstone is in hand
+			if Local.Stone.Health.OnHand and Local.Stone.Health.Location and Local.Stone.Health.Location[1] and Local.Stone.Health.Location[2] then
+				-- Get the item link to extract the itemID
+				local itemLink = C_Container.GetContainerItemLink(Local.Stone.Health.Location[1], Local.Stone.Health.Location[2])
+				if itemLink then
+					local itemID = Necrosis.Utils.ParseItemLink(itemLink)
+					if itemID then
+						itemID = tonumber(itemID)
+						-- Get charges using C_Item.GetItemCount with the special parameters
+						local charges = C_Item.GetItemCount(itemID, false, true, false, false) or 1
+						if charges and charges > 1 then
+							healthText = healthText .. " |cFFFFFF99("..charges.." charges)|r"
+						end
+					end
+				end
+			end
+
+			GameTooltip:AddLine(healthText)
 			if Local.Stone.Health.Mode == 2 then
 				GameTooltip:AddLine(Necrosis.TooltipData[Type].Text2)
 			end
 			
 			-- cool down or not
 			if Necrosis.Debug.tool_tips then
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip"
-				.." b'"..tostring(f).."'"
-				.." T'"..tostring(Type).."'"
-				.." l'"..tostring(Necrosis.TooltipData[Type].Label).."'"
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip Healthstone"
+				.." Location[1]="..tostring((Local.Stone.Health.Location and Local.Stone.Health.Location[1]) or "nil")
+				.." Location[2]="..tostring((Local.Stone.Health.Location and Local.Stone.Health.Location[2]) or "nil")
 				)
 			end
-			if Local.Stone.Health.Location[1] and Local.Stone.Health.Location[2] then
+			if Local.Stone.Health.Location and Local.Stone.Health.Location[1] and Local.Stone.Health.Location[2] then
 				local startTime, duration, isEnabled = GetContainerItemCooldown(Local.Stone.Health.Location[1], Local.Stone.Health.Location[2])
+				if Necrosis.Debug.tool_tips then
+					_G["DEFAULT_CHAT_FRAME"]:AddMessage("Healthstone CD: startTime="..tostring(startTime).." duration="..tostring(duration).." isEnabled="..tostring(isEnabled))
+				end
 				if startTime == 0 then
 					-- not on cool down
 				else
@@ -2531,10 +2552,8 @@ function Necrosis:BagExplore(arg)
 	The bag update event seems to happen a couple times during login / reload so if names are not known they
 	should be before the player UI is fully ready.
 	--]]
-	if BagNamesKnown() then
-		-- proceed
-	else
-		return -- 
+	if Necrosis.Debug.bags then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage(">>BagExplore START arg="..tostring(arg))
 	end
 
 	for container = 0, NUM_BAG_SLOTS, 1 do
@@ -2585,24 +2604,29 @@ function Necrosis:BagExplore(arg)
 
 		for slot=1, C_Container.GetContainerNumSlots(container), 1 do
 			local item_link = C_Container.GetContainerItemLink(container, slot)
-			local item_id = Necrosis.Utils.ParseItemLink(item_link) --GetContainerItemLink(container, slot))
-			
-			item_id = tonumber(item_id)
-			local itemName = itemString
-						
-			--print (item_id)
+			if not item_link then
+				-- Skip empty slots
+			else
+				local item_id = Necrosis.Utils.ParseItemLink(item_link) --GetContainerItemLink(container, slot))
+
+				item_id = tonumber(item_id)
+				local itemName = string.match(item_link, "%[(.-)%]")
+
+					if Necrosis.Debug.bags then
+					_G["DEFAULT_CHAT_FRAME"]:AddMessage("DEBUG: link='"..tostring(item_link).."' id="..tostring(item_id).." name='"..tostring(itemName).."'")
+				end
 --[[
-			if Necrosis.Debug.bags then
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis:BagExplore"
-				.." a'"..(tostring(arg) or "nyl").."'"
-				.." bs'"..(tostring(bag_start) or "nyl").."'"
-				.." be'"..(tostring(bag_end) or "nyl").."'"
-				)
-			end
+				if Necrosis.Debug.bags then
+					_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis:BagExplore"
+					.." a'"..(tostring(arg) or "nyl").."'"
+					.." bs'"..(tostring(bag_start) or "nyl").."'"
+					.." be'"..(tostring(bag_end) or "nyl").."'"
+					)
+				end
 --]]
-		
-			-- If there is an item located in that bag slot || Dans le cas d'un emplacement non vide
-			if item_id then
+
+				-- If there is an item located in that bag slot || Dans le cas d'un emplacement non vide
+				if item_id then
 				--print (item_id,item_link)
 				-- Check if its a soulstone || Si c'est une pierre d'âme, on note son existence et son emplacement
 				if Necrosis.IsSoulStone(item_id) then
@@ -2679,6 +2703,7 @@ function Necrosis:BagExplore(arg)
 					Local.Stone.Hearth.Location = {container,slot}
 				end
 			end
+			end -- close else block for item_link check
 		end
 	end
 
