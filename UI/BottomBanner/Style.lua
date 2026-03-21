@@ -33,25 +33,30 @@ local function CreateArtwork()
 
 	artFrame.Center = artFrame:CreateTexture('NUI_Art_Classic_Center', 'BACKGROUND')
 	artFrame.Center:SetTexture('Interface\\AddOns\\Necrosis\\UI\\BottomBanner\\Images\\base-center')
+	artFrame.Center:SetSize(320, 139)
 	artFrame.Center:SetPoint('BOTTOM', artFrame, 'BOTTOM')
 	artFrame.Center:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
 
 	artFrame.Left = artFrame:CreateTexture('NUI_Art_Classic_Left', 'BACKGROUND')
 	artFrame.Left:SetTexture('Interface\\AddOns\\Necrosis\\UI\\BottomBanner\\Images\\base-left1')
+	artFrame.Left:SetSize(240, 139)
 	artFrame.Left:SetPoint('BOTTOMRIGHT', artFrame.Center, 'BOTTOMLEFT', 0, 0)
 	artFrame.Left:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
 	artFrame.FarLeft = artFrame:CreateTexture('NUI_Art_Classic_FarLeft', 'BACKGROUND')
 	artFrame.FarLeft:SetTexture('Interface\\AddOns\\Necrosis\\UI\\BottomBanner\\Images\\base-left2')
+	artFrame.FarLeft:SetSize(240, 139)
 	artFrame.FarLeft:SetPoint('BOTTOMRIGHT', artFrame.Left, 'BOTTOMLEFT', 0, 0)
 	artFrame.FarLeft:SetPoint('BOTTOMLEFT', NecrosisUI, 'BOTTOMLEFT', 0, 0)
 	artFrame.FarLeft:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
 
 	artFrame.Right = artFrame:CreateTexture('NUI_Art_Classic_Right', 'BACKGROUND')
 	artFrame.Right:SetTexture('Interface\\AddOns\\Necrosis\\UI\\BottomBanner\\Images\\base-right1')
+	artFrame.Right:SetSize(240, 139)
 	artFrame.Right:SetPoint('BOTTOMLEFT', artFrame.Center, 'BOTTOMRIGHT')
 	artFrame.Right:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
 	artFrame.FarRight = artFrame:CreateTexture('NUI_Art_Classic_FarRight', 'BACKGROUND')
 	artFrame.FarRight:SetTexture('Interface\\AddOns\\Necrosis\\UI\\BottomBanner\\Images\\base-right2')
+	artFrame.FarRight:SetSize(240, 139)
 	artFrame.FarRight:SetPoint('BOTTOMLEFT', artFrame.Right, 'BOTTOMRIGHT')
 	artFrame.FarRight:SetPoint('BOTTOMRIGHT', NecrosisUI, 'BOTTOMRIGHT')
 	artFrame.FarRight:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
