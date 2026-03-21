@@ -15,19 +15,12 @@ local artFrame = CreateFrame('Frame', 'NUI_Art_Classic', NecrosisUI)
 local SkinnedFrames = {}
 
 local function CreateArtwork()
-	print("[NecrosisUI] CreateArtwork() started")
-
-	if not NUI_BottomAnchor then
-		error("[NecrosisUI] ERROR: NUI_BottomAnchor is nil!")
-		return
-	end
 
 	local plate = CreateFrame('Frame', 'Classic_ActionBarPlate', artFrame)
 	plate:SetSize(1002, 139)
 	plate:SetFrameStrata('BACKGROUND')
 	plate:SetFrameLevel(1)
 	plate:SetAllPoints(NUI_BottomAnchor)
-	print("[NecrosisUI] Plate frame created")
 
 	-- Setup the Bottom Artwork
 	artFrame:SetFrameStrata('BACKGROUND')
@@ -62,37 +55,7 @@ local function CreateArtwork()
 	artFrame.FarRight:SetPoint('BOTTOMLEFT', artFrame.Right, 'BOTTOMRIGHT')
 	artFrame.FarRight:SetPoint('BOTTOMRIGHT', NecrosisUI, 'BOTTOMRIGHT')
 	artFrame.FarRight:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
-
-	print("[NecrosisUI] CreateArtwork() completed successfully!")
-	print("[NecrosisUI] artFrame visible:", artFrame:IsVisible())
-	print("[NecrosisUI] NecrosisUI visible:", NecrosisUI:IsVisible())
-end
-
--- Detect WoW version
-local wowBuild = select(4, GetBuildInfo())
-local versionName = "Unknown"
-if WOW_PROJECT_ID == WOW_PROJECT_MAINLINE then
-	versionName = "Retail (Mainline)"
-elseif WOW_PROJECT_ID == WOW_PROJECT_CLASSIC then
-	versionName = "Classic"
-elseif WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC then
-	versionName = "TBC Classic"
-elseif WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC then
-	versionName = "Wrath Classic"
-elseif WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC then
-	versionName = "Cata Classic"
-elseif WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC then
-	versionName = "MOP Classic"
 end
 
 -- Execute immediately on load
-print("[NecrosisUI] ========================================")
-print("[NecrosisUI] Style.lua loaded - WoW Version: " .. versionName .. " (Build: " .. wowBuild .. ")")
-print("[NecrosisUI] Calling CreateArtwork()...")
-if CreateArtwork then
-	CreateArtwork()
-	print("[NecrosisUI] CreateArtwork() executed successfully!")
-else
-	error("[NecrosisUI] ERROR: CreateArtwork function not found!")
-end
-print("[NecrosisUI] ========================================")
+CreateArtwork()

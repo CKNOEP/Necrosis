@@ -2818,7 +2818,7 @@ if NecrosisConfig.NecrosisButtonScale < 150 and NecrosisConfig.NecrosisButtonSca
 		dist = dist - ((rayon-rayondebase)) 
 end
 
--- 160 to 200 (max)		
+-- 160 to 200 (max)
 if NecrosisConfig.NecrosisButtonScale >= 150 then
 		 NBRScale = (100 + (NecrosisConfig.NecrosisButtonScale - 85)) / 100
 		 rayondebase = 13
@@ -2826,11 +2826,17 @@ if NecrosisConfig.NecrosisButtonScale >= 150 then
 		 dist = 35 * NBRScale * 0.85
 		dist = dist - ((rayon-rayondebase))
 end
-	
 
+-- Button spacing multiplier - affects angular spacing between buttons
+local spacingMultiplier = NecrosisConfig.NecrosisButtonSpacing or 1.0
+local buttonAngleSpacing = 36 * spacingMultiplier
+print("[Necrosis] ButtonSetup - button angle spacing: " .. buttonAngleSpacing .. " degrees")
 
-		
-	
+-- Button radius multiplier - affects distance of buttons from center sphere
+local radiusMultiplier = NecrosisConfig.NecrosisButtonRadius or 1.0
+dist = dist * radiusMultiplier
+print("[Necrosis] ButtonSetup - button radius multiplier: " .. radiusMultiplier)
+
 	--print (dist,NBRScale,NecrosisConfig.NecrosisButtonScale)
 
 ---[==[
@@ -2877,7 +2883,7 @@ end
 					((dist) * cos(NecrosisConfig.NecrosisAngle - indexScale)),-- Offset X
 					((dist) * sin(NecrosisConfig.NecrosisAngle - indexScale)) -- Offset Y
 				)
-				indexScale = indexScale + 36
+				indexScale = indexScale + buttonAngleSpacing
 			else
 --]]
 				f:SetPoint(

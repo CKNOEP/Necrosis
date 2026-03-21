@@ -22,7 +22,6 @@
 ## X-Category: Warlock
 ## LoadOnDemand: 0
 ## SavedVariablesPerCharacter: NecrosisConfig
-Necrosis.xml
 
 libs\LibStub\LibStub.lua
 libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
@@ -96,3 +95,4 @@ ThreatMeter.lua
 
 SpellActivations\SpellActivations.xml
 
+UI\BottomBanner\Init.xml

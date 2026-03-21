@@ -94,7 +94,7 @@ function Necrosis:SetMiscConfig()
 		frame:SetHeight(24)
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 120)
+		frame:SetPoint("TOPLEFT", NecrosisMiscConfig, "TOPLEFT", 40, -20)
 
 		frame:SetScript("OnClick", function(self)
 			if (self:GetChecked()) then
@@ -104,37 +104,21 @@ function Necrosis:SetMiscConfig()
 					pcall(function() NUI:Show() end)
 				end
 
-				-- Position and scale the main sphere when NUI is activated
-				-- Use a timer to ensure the frame exists before repositioning
-				local function RepositionSphere()
+				-- Restore the saved sphere position and scale when NUI is activated
+				C_Timer.After(0.1, function()
 					local mainSphere = _G["NecrosisMainSphere"]
-					if mainSphere then
+					local nui = _G["NecrosisUI"]
+					if mainSphere and nui then
+						local baseHeight = 139
+						local heightScale = NecrosisConfig.BottomBannerHeightScale or 1.0
+						local nuiHeight = baseHeight * heightScale
 						mainSphere:ClearAllPoints()
-						mainSphere:SetPoint("BOTTOM", UIParent, "BOTTOM", -57.357116699219, 61.293731689453)
-						mainSphere:SetScale(1.33)
-						-- Save the position and scale to SavedVariables so it persists across reloads
-						if not NecrosisConfig.FramePosition then
-							NecrosisConfig.FramePosition = {}
+						mainSphere:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, nuiHeight / 2)
+						if NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisMainSphere"] then
+							mainSphere:SetScale(NecrosisConfig.FramePosition["NecrosisMainSphere"][6])
 						end
-						NecrosisConfig.FramePosition["NecrosisMainSphere"] = {"BOTTOM", "UIParent", "BOTTOM", -57.357116699219, 61.293731689453, 1.33}
-						return true
-					else
-						return false
 					end
-				end
-
-				-- Try immediately first
-				if not RepositionSphere() then
-					-- If frame doesn't exist, try again after 0.5 second
-					C_Timer.After(0.5, function()
-						if not RepositionSphere() then
-							-- Last attempt after 1 second
-							C_Timer.After(1, function()
-								RepositionSphere()
-							end)
-						end
-					end)
-				end
+				end)
 			else
 				-- Checkbox is unchecked - HIDE NecrosisUI
 				NecrosisConfig.NecrosisUIEnabled = false
@@ -156,6 +140,28 @@ function Necrosis:SetMiscConfig()
 		-- Prevent hovering from affecting UI display
 		frame:SetScript("OnEnter", function() end)
 		frame:SetScript("OnLeave", function() end)
+
+		-- BottomBanner Width Slider
+		frame = CreateFrame("Slider", "BottomBannerWidthSlider", NecrosisMiscConfig, "OptionsSliderTemplate")
+		frame:SetWidth(200)
+		frame:SetHeight(20)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("TOPLEFT", NecrosisMiscConfig, "TOPLEFT", 40, -100)
+		frame:SetMinMaxValues(0.5, 2.0)
+		frame:SetValueStep(0.1)
+		frame:SetValue(NecrosisConfig.BottomBannerWidthScale or 1.0)
+
+		_G["BottomBannerWidthSliderText"] = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		_G["BottomBannerWidthSliderText"]:SetText("BottomBanner Size: " .. string.format("%.1f", NecrosisConfig.BottomBannerWidthScale or 1.0))
+		_G["BottomBannerWidthSliderText"]:SetPoint("BOTTOM", frame, "TOP", 0, 5)
+		frame:SetScript("OnValueChanged", function(self, value)
+			NecrosisConfig.BottomBannerWidthScale = value
+			_G["BottomBannerWidthSliderText"]:SetText("BottomBanner Size: " .. string.format("%.1f", value))
+			if NUI and type(NUI.UpdateBottomBannerSize) == "function" then
+				NUI:UpdateBottomBannerSize()
+			end
+		end)
 
 	NecrosisAFK:SetChecked(NecrosisConfig.AFK)
 

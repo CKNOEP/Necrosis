@@ -134,25 +134,11 @@ function Necrosis:SetSphereConfig()
 				GameTooltip:SetText(self:GetValue().." %")
 				NecrosisConfig.NecrosisButtonScale = self:GetValue()
 
-				NecrosisConfig.FramePosition["NecrosisButton"][4] = NBx / (NecrosisConfig.NecrosisButtonScale / 100)
-				NecrosisConfig.FramePosition["NecrosisButton"][5] = NBy / (NecrosisConfig.NecrosisButtonScale / 100)
-
-				f:ClearAllPoints()
-				f:SetPoint(NecrosisConfig.FramePosition["NecrosisButton"][1],
-					NecrosisConfig.FramePosition["NecrosisButton"][2], --X Position
-					NecrosisConfig.FramePosition["NecrosisButton"][3], --Y Position
-					NBx / (NecrosisConfig.NecrosisButtonScale / 100), --X offset
-					NBy / (NecrosisConfig.NecrosisButtonScale / 100) -- Y Offset
-					)
-
-				--f:SetScale(NecrosisConfig.NecrosisButtonScale / 100)
-				--local Ratio = 1.25
+				-- Ne pas recalculer la position pour éviter que la sphère se déplace
+				-- Seulement changer le scale
 				f:SetScale(NecrosisConfig.NecrosisButtonScale / 100 ) ---- Scaling de la sphere
 
-
-				--if self:GetValue() > 100 then
 				Necrosis:ButtonSetup()
-				--end
 			else
 			Necrosis:ButtonSetup()
 			end
@@ -161,6 +147,53 @@ function Necrosis:SetSphereConfig()
 		NecrosisSphereSizeLow:SetText("50 %")
 		NecrosisSphereSizeHigh:SetText("200 %")
 
+
+	-- Button spacing slider
+	frame = CreateFrame("Slider", "NecrosisButtonSpacing", NecrosisSphereConfig, "OptionsSliderTemplate")
+	frame:SetMinMaxValues(0.5, 2.0)
+	frame:SetValueStep(0.1)
+	frame:SetObeyStepOnDrag(true)
+	frame:SetWidth(150)
+	frame:SetHeight(15)
+
+	local track = frame:CreateTexture(nil, "BACKGROUND")
+	track:SetWidth(150)
+	track:SetHeight(4)
+	track:SetColorTexture(0.2, 0.2, 0.2, 1)
+	track:SetPoint("CENTER", frame, "CENTER", 0, 0)
+
+	local thumb = frame:GetThumbTexture()
+	if thumb then
+		thumb:SetTexture("Interface\Common\Indicator-Yellow")
+		thumb:SetColorTexture(1, 0.8, 0, 1)
+		thumb:SetSize(6, 6)
+	end
+	frame:Show()
+	frame:ClearAllPoints()
+	frame:SetPoint("CENTER", NecrosisSphereConfig, "BOTTOMLEFT", 133, 60)
+
+	frame:SetScript("OnEnter", function(self)
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+		GameTooltip:SetText(self:GetValue().." x")
+	end)
+	frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
+	frame:SetScript("OnValueChanged", function(self)
+		if not (self:GetValue() == NecrosisConfig.NecrosisButtonSpacing) then
+			local value = self:GetValue()
+			print("[Necrosis] Button spacing changed to: " .. value)
+			GameTooltip:SetText(value.." x")
+			NecrosisConfig.NecrosisButtonSpacing = value
+			Necrosis:ButtonSetup()
+		end
+	end)
+
+	NecrosisButtonSpacingLow:SetText("0.5 x")
+	NecrosisButtonSpacingHigh:SetText("2.0 x")
+
+	if not NecrosisConfig.NecrosisButtonSpacing then
+		NecrosisConfig.NecrosisButtonSpacing = 1.0
+	end
+	NecrosisButtonSpacing:SetValue(NecrosisConfig.NecrosisButtonSpacing)
 --------------------------------------------------------------------------------------------------------------------------------
 ------- Create a slider control for rotating the buttons around the sphere || Création du slider de rotation de Necrosis  ------
 --------------------------------------------------------------------------------------------------------------------------------
@@ -205,6 +238,53 @@ function Necrosis:SetSphereConfig()
 
 		NecrosisRotation:SetValue(NecrosisConfig.NecrosisAngle)
 
+
+	-- Button radius/distance slider
+	frame = CreateFrame("Slider", "NecrosisButtonRadius", NecrosisSphereConfig, "OptionsSliderTemplate")
+	frame:SetMinMaxValues(0.8, 1.2)
+	frame:SetValueStep(0.05)
+	frame:SetObeyStepOnDrag(true)
+	frame:SetWidth(150)
+	frame:SetHeight(15)
+
+	local track = frame:CreateTexture(nil, "BACKGROUND")
+	track:SetWidth(150)
+	track:SetHeight(4)
+	track:SetColorTexture(0.2, 0.2, 0.2, 1)
+	track:SetPoint("CENTER", frame, "CENTER", 0, 0)
+
+	local thumb = frame:GetThumbTexture()
+	if thumb then
+		thumb:SetTexture("Interface\Common\Indicator-Yellow")
+		thumb:SetColorTexture(1, 0.8, 0, 1)
+		thumb:SetSize(6, 6)
+	end
+	frame:Show()
+	frame:ClearAllPoints()
+	frame:SetPoint("CENTER", NecrosisSphereConfig, "BOTTOMRIGHT", 18, 60)
+
+	frame:SetScript("OnEnter", function(self)
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+		GameTooltip:SetText(self:GetValue().." x")
+	end)
+	frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
+	frame:SetScript("OnValueChanged", function(self)
+		if not (self:GetValue() == NecrosisConfig.NecrosisButtonRadius) then
+			local value = self:GetValue()
+			print("[Necrosis] Button radius changed to: " .. value)
+			GameTooltip:SetText(value.." x")
+			NecrosisConfig.NecrosisButtonRadius = value
+			Necrosis:ButtonSetup()
+		end
+	end)
+
+	NecrosisButtonRadiusLow:SetText("0.8 x")
+	NecrosisButtonRadiusHigh:SetText("1.2 x")
+
+	if not NecrosisConfig.NecrosisButtonRadius then
+		NecrosisConfig.NecrosisButtonRadius = 1.0
+	end
+	NecrosisButtonRadius:SetValue(NecrosisConfig.NecrosisButtonRadius)
 		---------------------------------------------
 		-- Skin de la sphère
 		---------------------------------------------

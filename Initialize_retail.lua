@@ -6,6 +6,8 @@
     Features removed: Soul Link, Detect Invisibility, Sacrifice Voidwalker
 --]]
 
+print("[NECROSIS] Initialize_retail.lua loaded!")
+
 -- On définit _G comme étant le tableau contenant toutes les frames existantes.
 local _G = getfenv(0)
 
@@ -160,49 +162,145 @@ do
 		end
 	end
 
+	-- Function to update BottomBanner size when sliders change
+	function NUI:UpdateBottomBannerSize()
+		if not _G.NUI_Art_Classic then
+			return
+		end
+		local artFrame = _G.NUI_Art_Classic
+		local textureContainer = _G.NUI_TextureContainer
+		if not textureContainer then
+			return
+		end
+
+		local widthScale = NecrosisConfig.BottomBannerWidthScale or 1.0
+		local heightScale = NecrosisConfig.BottomBannerHeightScale or 1.0
+		local baseHeight = 139
+
+		artFrame:SetHeight(baseHeight * heightScale)
+		local scale = 0.78 * widthScale
+		textureContainer:SetScale(scale)
+		print("[NecrosisUI] BottomBanner size updated - Width: " .. string.format("%.1f", widthScale) .. ", Height: " .. string.format("%.1f", heightScale))
+	end
+
 	-- Create Classic theme module
 	local themeModule = NUI:NewModule('Style_Classic')
+
+	-- Load BottomBanner UI after NUI is ready
+	C_Timer.After(0.5, function()
+		print("[NecrosisUI] Loading BottomBanner UI...")
+		local function LoadBottomBannerScripts()
+			-- Load Framework.lua
+			local frameworkCode = [[
+]] .. [[
+if not NUI then
+	error("ERROR: NUI is nil!")
+	return
 end
 
--- Load Classic theme after all frames are ready
-C_Timer.After(0.5, function()
-	if not (NUI and NecrosisUI and NUI_BottomAnchor) then
+if not NecrosisUI then
+	error("ERROR: NecrosisUI is nil!")
+	return
+end
+
+local NUI, L = NUI, NUI.L
+local artFrame = CreateFrame('Frame', 'NUI_Art_Classic', NecrosisUI)
+-- Create a container for textures so we can scale them independently
+local textureContainer = CreateFrame('Frame', 'NUI_TextureContainer', artFrame)
+textureContainer:SetAllPoints(artFrame)
+
+----------------------------------------------------------------------------------------------------
+local SkinnedFrames = {}
+
+local function CreateArtwork()
+	print("[NecrosisUI] CreateArtwork() started")
+
+	if not NUI_BottomAnchor then
+		error("[NecrosisUI] ERROR: NUI_BottomAnchor is nil!")
 		return
 	end
 
-	local artFrame = CreateFrame('Frame', 'NUI_Art_Classic', NecrosisUI)
+	local plate = CreateFrame('Frame', 'Classic_ActionBarPlate', artFrame)
+	plate:SetSize(1002, 139)
+	plate:SetFrameStrata('BACKGROUND')
+	plate:SetFrameLevel(1)
+	plate:SetAllPoints(NUI_BottomAnchor)
+	print("[NecrosisUI] Plate frame created")
 
 	-- Setup the Bottom Artwork
 	artFrame:SetFrameStrata('BACKGROUND')
 	artFrame:SetFrameLevel(1)
-	artFrame:SetAlpha(0.7)
-	-- Make it cover entire screen width
-	artFrame:SetSize(GetScreenWidth() * UIParent:GetEffectiveScale(), 256)
+	artFrame:SetAlpha(1.0)  -- 100% opaque pour bien voir la teinte violette
+	-- Make artFrame cover full screen width like a banner
 	artFrame:SetPoint('BOTTOMLEFT', UIParent, 'BOTTOMLEFT', 0, 0)
+	artFrame:SetPoint('BOTTOMRIGHT', UIParent, 'BOTTOMRIGHT', 0, 0)
 
-	artFrame.Center = artFrame:CreateTexture('NUI_Art_Classic_Center', 'BACKGROUND')
-	artFrame.Center:SetTexture('Interface\\AddOns\\Necrosis\\NecrosisUI\\Themes\\Classic\\Images\\base-center')
+	-- Apply width and height scaling from sliders
+	local widthScale = NecrosisConfig.BottomBannerWidthScale or 1.0
+	local heightScale = NecrosisConfig.BottomBannerHeightScale or 1.0
+	local baseHeight = 139
+
+	artFrame:SetHeight(baseHeight * heightScale)
+	local scale = 0.78 * widthScale
+	-- Apply scale to texture container instead of main frame
+	textureContainer:SetScale(scale)
+
+	artFrame.Center = textureContainer:CreateTexture('NUI_Art_Classic_Center', 'BACKGROUND')
+	artFrame.Center:SetTexture('Interface\\AddOns\\Necrosis\\UI\\BottomBanner\\Images\\base-center')
 	artFrame.Center:SetPoint('BOTTOM', artFrame, 'BOTTOM')
+	artFrame.Center:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
 
-	artFrame.Left = artFrame:CreateTexture('NUI_Art_Classic_Left', 'BACKGROUND')
-	artFrame.Left:SetTexture('Interface\\AddOns\\Necrosis\\NecrosisUI\\Themes\\Classic\\Images\\base-left1')
+	artFrame.Left = textureContainer:CreateTexture('NUI_Art_Classic_Left', 'BACKGROUND')
+	artFrame.Left:SetTexture('Interface\\AddOns\\Necrosis\\UI\\BottomBanner\\Images\\base-left1')
 	artFrame.Left:SetPoint('BOTTOMRIGHT', artFrame.Center, 'BOTTOMLEFT', 0, 0)
-
-	artFrame.FarLeft = artFrame:CreateTexture('NUI_Art_Classic_FarLeft', 'BACKGROUND')
-	artFrame.FarLeft:SetTexture('Interface\\AddOns\\Necrosis\\NecrosisUI\\Themes\\Classic\\Images\\base-left2')
+	artFrame.Left:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
+	artFrame.FarLeft = textureContainer:CreateTexture('NUI_Art_Classic_FarLeft', 'BACKGROUND')
+	artFrame.FarLeft:SetTexture('Interface\\AddOns\\Necrosis\\UI\\BottomBanner\\Images\\base-left2')
 	artFrame.FarLeft:SetPoint('BOTTOMRIGHT', artFrame.Left, 'BOTTOMLEFT', 0, 0)
-	artFrame.FarLeft:SetPoint('BOTTOMLEFT', NecrosisUI, 'BOTTOMLEFT', 0, 0)
+	artFrame.FarLeft:SetPoint('BOTTOMLEFT', artFrame, 'BOTTOMLEFT', 0, 0)
+	artFrame.FarLeft:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
 
-	artFrame.Right = artFrame:CreateTexture('NUI_Art_Classic_Right', 'BACKGROUND')
-	artFrame.Right:SetTexture('Interface\\AddOns\\Necrosis\\NecrosisUI\\Themes\\Classic\\Images\\base-right1')
+	artFrame.Right = textureContainer:CreateTexture('NUI_Art_Classic_Right', 'BACKGROUND')
+	artFrame.Right:SetTexture('Interface\\AddOns\\Necrosis\\UI\\BottomBanner\\Images\\base-right1')
 	artFrame.Right:SetPoint('BOTTOMLEFT', artFrame.Center, 'BOTTOMRIGHT')
-
-	artFrame.FarRight = artFrame:CreateTexture('NUI_Art_Classic_FarRight', 'BACKGROUND')
-	artFrame.FarRight:SetTexture('Interface\\AddOns\\Necrosis\\NecrosisUI\\Themes\\Classic\\Images\\base-right2')
+	artFrame.Right:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
+	artFrame.FarRight = textureContainer:CreateTexture('NUI_Art_Classic_FarRight', 'BACKGROUND')
+	artFrame.FarRight:SetTexture('Interface\\AddOns\\Necrosis\\UI\\BottomBanner\\Images\\base-right2')
 	artFrame.FarRight:SetPoint('BOTTOMLEFT', artFrame.Right, 'BOTTOMRIGHT')
-	artFrame.FarRight:SetPoint('BOTTOMRIGHT', NecrosisUI, 'BOTTOMRIGHT')
+	artFrame.FarRight:SetPoint('BOTTOMRIGHT', artFrame, 'BOTTOMRIGHT')
+	artFrame.FarRight:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
 
-end)
+	print("[NecrosisUI] CreateArtwork() completed successfully!")
+	print("[NecrosisUI] artFrame visible:", artFrame:IsVisible())
+	print("[NecrosisUI] NecrosisUI visible:", NecrosisUI:IsVisible())
+end
+
+-- Execute immediately on load
+print("[NecrosisUI] Creating BottomBanner artwork...")
+CreateArtwork()
+
+-- Show the NecrosisUI frame immediately if enabled
+if NecrosisConfig.NecrosisUIEnabled then
+	print("[NecrosisUI] Showing NecrosisUI frame...")
+	if NecrosisUI then
+		NecrosisUI:Show()
+	end
+end
+
+print("[NecrosisUI] BottomBanner loaded!")
+]]
+			local func = loadstring(frameworkCode)
+			if func then
+				func()
+			else
+				error("[NecrosisUI] Failed to load BottomBanner code")
+			end
+		end
+		LoadBottomBannerScripts()
+	end)
+end
+
+-- Theme artwork is now handled by Initialize_retail.lua
 
 -- Compatibility wrapper for GetAddOnMetadata (deprecated in modern WoW)
 local function GetMetadata(addon, field)
@@ -580,9 +678,9 @@ function Necrosis:Initialize(Config)
 	else
 	end
 
-	-- Initialize NecrosisUI option (default: disabled)
+	-- Initialize NecrosisUI option (default: enabled)
 	if NecrosisConfig.NecrosisUIEnabled == nil then
-		NecrosisConfig.NecrosisUIEnabled = false
+		NecrosisConfig.NecrosisUIEnabled = true
 	end
 
 	-- Apply NecrosisUI state on startup with delay to ensure SavedVariables are loaded

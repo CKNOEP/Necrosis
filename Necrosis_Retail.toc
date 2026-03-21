@@ -16,8 +16,6 @@
 ## X-Category: Warlock
 ## LoadOnDemand: 0
 ## SavedVariablesPerCharacter: NecrosisConfig
-Necrosis.xml [AllowLoadGameType mainline]
-
 Compat.lua
 
 libs\LibStub\LibStub.lua
@@ -49,6 +47,8 @@ Locales\Localization.MX.lua
 
 Initialize_retail.lua
 Utils.lua
+
+Necrosis.xml [AllowLoadGameType mainline]
 
 Dialog_retail.lua
 AFKS.lua
@@ -92,5 +92,4 @@ ThreatMeter.lua
 
 SpellActivations\SpellActivations.xml
 
-UI\BottomBanner\Framework.xml
-
+UI\BottomBanner\Init.xml

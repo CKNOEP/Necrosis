@@ -2691,23 +2691,23 @@ end
 -- Display or Hide buttons depending on spell availability || Affiche ou masque les boutons de sort à chaque nouveau sort appris
 function Necrosis:ButtonSetup()
 	local NBRScale, rayondebase ,rayon , dist
-	
--- (Min)50 to 100 
+
+-- (Min)50 to 100
 if  NecrosisConfig.NecrosisButtonScale <= 100 then
 
 		NBRScale = 1.1
 		dist = 40 * NBRScale
-end	
+end
 --  100 to 150
 if NecrosisConfig.NecrosisButtonScale < 150 and NecrosisConfig.NecrosisButtonScale > 100 then
 		 NBRScale = (100 + (NecrosisConfig.NecrosisButtonScale - 85)) / 100
 		 rayondebase = 8
 		 rayon = rayondebase * (NecrosisConfig.NecrosisButtonScale/100)
 		 dist = 35 * NBRScale * 0.85
-		dist = dist - ((rayon-rayondebase)) 
+		dist = dist - ((rayon-rayondebase))
 end
 
--- 160 to 200 (max)		
+-- 160 to 200 (max)
 if NecrosisConfig.NecrosisButtonScale >= 150 then
 		 NBRScale = (100 + (NecrosisConfig.NecrosisButtonScale - 85)) / 100
 		 rayondebase = 13
@@ -2715,6 +2715,11 @@ if NecrosisConfig.NecrosisButtonScale >= 150 then
 		 dist = 35 * NBRScale * 0.85
 		dist = dist - ((rayon-rayondebase))
 end
+
+-- Apply button spacing multiplier from slider
+local spacingMultiplier = NecrosisConfig.NecrosisButtonSpacing or 1.0
+dist = dist * spacingMultiplier
+print("[Necrosis] ButtonSetup - dist multiplied by spacing: " .. spacingMultiplier)
 	
 
 
