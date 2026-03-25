@@ -14,6 +14,9 @@ local _G = getfenv(0)
 local _, _, _, tocVersion = GetBuildInfo()
 local IsModernWoW = tocVersion and tocVersion >= 90000 -- WoW 9.0+ has C_Container
 
+-- DEBUG MARKER: Confirm we're using the correct variant
+_G["DEFAULT_CHAT_FRAME"]:AddMessage("|cFF00FF00[NECROSIS] CLASSIC VARIANT LOADED - Initialize.lua v" .. (tocVersion or "unknown") .. "|r")
+
 -- Create compatibility wrappers for C_Container (WoW 9.0+)
 if not C_Container then
     C_Container = {}

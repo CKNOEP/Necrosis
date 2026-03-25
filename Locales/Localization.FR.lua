@@ -6,6 +6,10 @@ L["NECROSIS_ONLY"] = "Necrosis";
 L["NECROSIS_DEBUG"] = "<Necrosis>";
 L["NECROSIS_PRINT"] = "Necrosis";
 
+-- General UI
+L["OPTIONS"] = "Options"
+L["SETTINGS"] = "Paramètres"
+
 -- Dialog
 L["HEALTHSTONE_COOLDOWN"] = "Temps de recharge Pierre de soins"
 L["USE"] = "Utilisation"
@@ -341,6 +345,7 @@ L["SUMMON_QUEUE_AUTO_REMOVE"] = "Retrait auto à portée"
 L["SUMMON_QUEUE_AUDIO"] = "Alertes audio"
 L["SUMMON_QUEUE_SYNC"] = "Sync avec autres démonistes"
 L["SUMMON_QUEUE_WINDOW"] = "Afficher la fenêtre"
+L["SUMMON_QUEUE_SHOW"] = "File d'attente"
 L["SUMMON_QUEUE_ADDED"] = "<player> ajouté à la file d'invocation"
 L["SUMMON_QUEUE_REMOVED"] = "<player> retiré de la file"
 L["SUMMON_QUEUE_YOUR_TURN"] = "C'est votre tour d'être invoqué !"

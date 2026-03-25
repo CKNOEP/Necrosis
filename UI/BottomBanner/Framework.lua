@@ -1,4 +1,6 @@
--- Initialize NUI Addon
+-- Initialize NUI Addon (Classic/Simplified Version - No C_EditMode)
+-- DEBUG MARKER: Confirm Classic variant is loaded
+print("|cFF00FF00[NecrosisUI] CLASSIC VARIANT LOADED - No C_EditMode integration|r")
 local NUI = _G.NUI
 if not NUI then
 	NUI = LibStub('AceAddon-3.0'):NewAddon('NecrosisUI', 'AceEvent-3.0', 'AceConsole-3.0', 'AceSerializer-3.0')
@@ -34,4 +36,45 @@ function NUI:UpdateBottomBannerScale()
 		local scale = 0.78 * (NecrosisConfig.BottomBannerScale or 1.0)
 		NUI_Art_Classic:SetScale(scale)
 	end
+end
+
+-- Apply layout frames to actual game frames (simplified version without EditMode)
+function NUI:ApplyLayoutFrames(layoutInfo)
+	if not layoutInfo or not layoutInfo.frames then
+		return
+	end
+
+	for _, frameData in ipairs(layoutInfo.frames) do
+		if frameData and frameData.frameName then
+			local frame = _G[frameData.frameName]
+			if frame then
+				-- Extract position data
+				local anchor = frameData.anchor or frameData.point or "BOTTOM"
+				local relativeTo = frameData.relativeTo or "UIParent"
+				local relativePoint = frameData.relativePoint or anchor
+				local x = frameData.x or 0
+				local y = frameData.y or 0
+				local scale = frameData.scale or 1.0
+
+				-- Apply position
+				frame:ClearAllPoints()
+				local relativeFrame = relativeTo == "UIParent" and UIParent or _G[relativeTo]
+				if relativeFrame then
+					frame:SetPoint(anchor, relativeFrame, relativePoint, x, y)
+				end
+
+				-- Apply scale
+				if scale and scale ~= 1.0 then
+					frame:SetScale(scale)
+				end
+			end
+		end
+	end
+end
+
+-- No-op ImportLayout for Classic (C_EditMode not available)
+function NUI:ImportLayout()
+	-- EditMode is Retail-only (Dragonflight+)
+	-- This function does nothing in Classic versions
+	return
 end

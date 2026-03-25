@@ -1,5 +1,5 @@
 --[[
-    Necrosis 
+    Necrosis
     Copyright (C) - copyright file included in this release
 --]]
 ------------------------------------------------------------------------------------------------------
@@ -21,7 +21,7 @@ For 7.0 This was rewritten to use data driven logic based on the spell data in W
 -- sort timers according to their group || On trie les timers selon leur groupe
 local function Tri(SpellTimer, clef)
 	--print (SpellTimer, clef,SpellTimer.index)
-	
+
 	return SpellTimer:sort(
 		function (SubTab2, SubTab1)
 			return SubTab1[clef] > SubTab2[clef]
@@ -59,7 +59,7 @@ local function Parsing(SpellGroup, SpellTimer)
 	end
 
 	Tri(SpellTimer, "Group")
-	
+
 	return SpellGroup, SpellTimer
 end
 
@@ -78,7 +78,7 @@ local function OutputTimer(reason, usage, index, Timer, note, override)
 		.." tl'"..(tostring(Timer.SpellTimer[index].TargetLevel) or "nyl").."'"
 		.." t'"..(tostring(Timer.SpellTimer[index].Target) or "nyl").."'"
 		.." '"..(tostring(Timer.SpellTimer[index].TargetGUID) or "nyl").."'"
-		
+
 		.." '"..(tostring(note) or "nyl").."'"
 		)
 	else
@@ -127,7 +127,7 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 		if start_time then
 			length = floor(duration - GetTime() + start_time)
 			length_max = floor(start_time + duration)
-		else 
+		else
 			length = spell.Length
 			length_max = floor(GetTime() + spell.Length)
 		end
@@ -137,7 +137,7 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 		else
 			ttype = 6 -- remove once out of combat
 		end
-			
+
 		-- insert an entry into the table || Insertion de l'entrée dans le tableau
 		Timer.SpellTimer:insert(
 			{
@@ -155,21 +155,21 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 				Gtimer = nil
 			}
 		)
-		
+
 		OutputTimer("Insert", spell.Usage, #Timer.SpellTimer, Timer, note)
-		
+
 	end
-	
+
 	-- check for a cool down to show
 	if spell.Cooldown and (spell.Cooldown > 0) then
 		if start_time then
 			length = floor(duration - GetTime() + start_time)
 			length_max = floor(start_time + duration)
-		else 
+		else
 			length = spell.Cooldown
 			length_max = floor(GetTime() + spell.Cooldown)
 		end
-		
+
 		Timer = Necrosis:RetraitTimerParNom(spell.Name, Timer, "Remove cool down")
 		-- insert an entry into the table || Insertion de l'entrée dans le tableau
 		Timer.SpellTimer:insert(
@@ -210,23 +210,23 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 		end
 		-- update the timer display || Association effective au timer
 		Timer.SpellTimer[#Timer.SpellTimer].Gtimer = TimerLibre
-		local spellTexture = GetSpellTexture(spell.ID)  -- DEBUG: Using GetSpellTexture (Classic variant, not C_Spell)
+		local spellTexture = C_Spell.GetSpellTexture(spell.ID)
 		--print (spellTexture,"spell",spell.ID,spell.Name)
 		local FontString, StatusBar , Icon_Spell = Necrosis:AddFrame("NecrosisTimerFrame"..TimerLibre,spellTexture)
 		--print("update:",spellTexture)
 		FontString:SetText(Timer.SpellTimer[#Timer.SpellTimer].Name)
 
 		--print("icon ", GetSpellTexture(spell.ID), spell.Name,"NecrosisTimerFrame"..TimerLibre)
-		
-		
+
+
 		StatusBar:SetMinMaxValues(
 			Timer.SpellTimer[#Timer.SpellTimer].TimeMax - Timer.SpellTimer[#Timer.SpellTimer].Time,
 			Timer.SpellTimer[#Timer.SpellTimer].TimeMax - Timer.SpellTimer[#Timer.SpellTimer].Time + Timer.SpellTimer[#Timer.SpellTimer].MaxBar
 		)
 		statusMin, statusMax = StatusBar:GetMinMaxValues()
 		--print (statusMin, statusMax,statusMax-statusMin,StatusBar:GetValue(),Timer.SpellTimer[#Timer.SpellTimer].MaxBar)
-		
-		
+
+
 	end
 
 	if NecrosisConfig.TimerType > 0 then
@@ -244,13 +244,13 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 end
 
 function Necrosis:TimerInsert(Cast, Target, Timer, note, start_time, duration, maxi)
-	local spell = Necrosis.GetSpell(Cast.usage) 
+	local spell = Necrosis.GetSpell(Cast.usage)
 
 	if spell.Timer then
 		-- Cleanup, if needed
 		Timer = Necrosis:RemoveTimerByNameAndGuid(spell.Name, Target.guid, Timer, note)
 		Timer = InsertThisTimer(spell, Cast.Guid, Target, Timer, start_time, duration, note)
-		
+
 	else
 		-- safety - no timer associated with spell
 	end
@@ -270,7 +270,7 @@ function Necrosis:RetraitTimerParIndex(index, Timer, note)
 			if Timer.SpellTimer[index].Gtimer and Timer.TimerTable[Timer.SpellTimer[index].Gtimer] then
 				Timer.TimerTable[Timer.SpellTimer[index].Gtimer] = false
 				_G["NecrosisTimerFrame"..Timer.SpellTimer[index].Gtimer]:Hide()
-				
+
 				--print("hide",_G["NecrosisTimerFrame"..Timer.SpellTimer[index].Gtimer.."Icon"]:GetTexture())
 				--_G["NecrosisTimerFrame"..Timer.SpellTimer[index].Gtimer.."Icon"]:SetTexture(nil)
 			end
@@ -291,7 +291,7 @@ function Necrosis:RetraitTimerParIndex(index, Timer, note)
 
 	if note == nil then
 		-- Cheat: Was called from another remove so do not output twice
-	else 
+	else
 		OutputTimer("RetraitTimerParIndex", "", index, Timer, note)
 
 	end
@@ -301,7 +301,7 @@ function Necrosis:RetraitTimerParIndex(index, Timer, note)
 
 	-- update the display || On met à jour l'affichage
 	NecrosisUpdateTimer(Timer.SpellTimer, Timer.SpellGroup)
-	
+
 	return Timer
 end
 
@@ -348,7 +348,7 @@ end
 
 function Necrosis:RemoveTimerByNameAndGuid(name, guid, Timer, note)
 	for index = 1, #Timer.SpellTimer, 1 do
-		
+
 		if Timer.SpellTimer[index].Name == name
 		and Timer.SpellTimer[index].TargetGUID == guid then
 			OutputTimer("RemoveTimerByNameAndGuid", "", index, Timer, note)
@@ -364,11 +364,10 @@ end
 
 
 
-
 -- remove combat timers  || Fonction pour enlever les timers de combat lors de la regen
 function Necrosis:RetraitTimerCombat(Timer, note)
 	--print(Timer.Type, note)
-	
+
 	local top = #Timer.SpellTimer
 	for index = 1, #Timer.SpellTimer, 1 do
 		--print (Timer.SpellTimer[index].Type,Timer.SpellTimer[index].Name)
@@ -384,13 +383,13 @@ function Necrosis:RetraitTimerCombat(Timer, note)
 				or Timer.SpellTimer[index].Type == 5
 				or Timer.SpellTimer[index].Type == 6
 				then
-								
+
 					if not (Timer.SpellTimer[index].Name == Necrosis.GetSpellName("enslave")
 					or Timer.SpellTimer[index].Name == Necrosis.GetSpellName("soulstone")) then
 					OutputTimer("RetraitTimerCombat", "", index, Timer, note)
 					Timer = self:RetraitTimerParIndex(index, Timer)
 					end
-					
+
 			end
 		end
 	end

@@ -179,7 +179,10 @@ local function CreateStoneButton(stone)
 	frame:SetHighlightTexture(b.high) --("Interface\\AddOns\\Necrosis\\UI\\"..stone.."Button-0"..num)
 	frame:RegisterForDrag("LeftButton")
 	frame:RegisterForClicks("AnyUp")
-	frame:Show()
+	-- Can't Show() during combat lockdown, but frame is created
+	if not InCombatLockdown() then
+		frame:Show()
+	end
 
 
 	-- Edit the scripts associated with the buttons || Edition des scripts associés au bouton
@@ -308,9 +311,9 @@ function Necrosis:CreateMenuItem(i)
 	end
 
 	-- Create the button || Creation du bouton
-	local frame = _G[b.f] 
+	local frame = _G[b.f]
 	if not frame then
-		frame = CreateFrame("Button", b.f, UIParent, "SecureUnitButtonTemplate")
+		frame = CreateFrame("Button", b.f, UIParent, "SecureActionButtonTemplate")
 
 		-- Définition de ses attributs
 		frame:SetMovable(true)
@@ -327,14 +330,25 @@ function Necrosis:CreateMenuItem(i)
 		-- Add valuable data to the frame for retrieval later
 		frame.high_of = i.high_of
 		frame.pet = b.pet
-		
+
 		-- Set the tooltip label to the localized name if not given one already
-		
-		Necrosis.TooltipData[b.tip].Label = White(Necrosis.GetSpellName(i.high_of)) 
-		
+
+		Necrosis.TooltipData[b.tip].Label = White(Necrosis.GetSpellName(i.high_of))
+
+		-- Create FontString for mana cost display
+		local fs = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
+		fs:SetPoint("BOTTOM", frame, "BOTTOM", 0, -8)
+		fs:SetText("")
+		frame.manaText = fs
 	end
 
 	frame:SetNormalTexture(b.norm)
+	-- Set spell attribute for casting
+	local spell = Necrosis.GetSpell(i.high_of)
+	if spell and spell.ID then
+		frame:SetAttribute("type", "spell")
+		frame:SetAttribute("spell", spell.ID)
+	end
 	frame:Hide()
 
 	-- Edit the scripts associated with the button || Edition des scripts associés au bouton 

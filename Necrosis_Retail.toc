@@ -1,18 +1,14 @@
-## Interface: 30403
+## Interface: 120005,120001,120000
 ## X-Min-Interface: 110207
-## X-Min-Interface-Classic: 11508
-## X-Min-Interface-BCC: 20505
-## X-Min-Interface-Wrath: 30403
-## X-Min-Interface-Cata: 40400
 
-## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Wrath
-## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Wrath (Русский)
-## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Wrath (Français)
+## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Retail
+## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Retail (Русский)
+## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Retail (Français)
 
-## Notes: Warlock UI & Shard Management
-## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir 
+## Notes: Warlock UI & Shard Management - Retail Midnight
+## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir
 ## Notes-ruRU: Менеджер заклинаний, камней и демонов для чернокнижника.
-## Version: 8.4.9
+## Version: 8.4.1
 ## Website: https://github.com/CKNOEP/Necrosis
 ## DefaultState: Enabled
 ## X-Original-Author: Lomig,lädygaga - sulfuron EUR - As lancestre
@@ -20,8 +16,7 @@
 ## X-Category: Warlock
 ## LoadOnDemand: 0
 ## SavedVariablesPerCharacter: NecrosisConfig
-
-Necrosis.xml
+Compat.lua
 
 libs\LibStub\LibStub.lua
 libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
@@ -41,8 +36,6 @@ libs\!LibUIDropDownMenu\LibUIDropDownMenu\LibUIDropDownMenu.xml
 
 libs\LibDataBroker-1.1.lua
 
-Constants.lua
-
 Locales\Localization.lua
 Locales\Localization.CN.lua
 Locales\Localization.DE.lua
@@ -52,12 +45,15 @@ Locales\Localization.RU.lua
 Locales\Localization.TW.lua
 Locales\Localization.MX.lua
 
-Dialog.lua
-Initialize.lua
-VersionCheck.lua
+Initialize_retail.lua
 Utils.lua
+
+Necrosis.xml [AllowLoadGameType mainline]
+
+Dialog_retail.lua
 AFKS.lua
 SummonQueue.lua
+VersionCheck.lua
 Speech\Speech-fr.lua
 Speech\Speech-en.lua
 Speech\Speech-de.lua
@@ -67,31 +63,34 @@ Speech\Speech-cn.lua
 Speech\Speech-ru.lua
 
 Message.lua
-Spells.lua
-SpellActivations\SpellActivations.xml
+Spells-Midnight.lua
 
-Timers\Functions.lua
+
+Timers\Functions_retail.lua
 Timers\GraphicalTimers.lua
 Timers\OtherTimers.lua
 
 
 
 
-XML\Attributes.lua
+XML\Attributes_retail.lua
 
 XML\Options-Messages.lua
 XML\Options-SummonQueue.lua
-XML\Options-Sphere.lua
-XML\Options-Buttons.lua
-XML\Options-Menus.lua
-XML\Options-Timers.lua
-XML\Options-Misc.lua
+XML\Options-Sphere_retail.lua
+XML\Options-Buttons_retail.lua
+XML\Options-Menus_retail.lua
+XML\Options-Timers_retail.lua
+XML\Options-Misc_retail.lua
 XML\Options-Overlay.lua
 
-XML\Panel.lua
+XML\Panel_retail.lua
 XML\AboutPanel.lua
-Necrosis.lua
-XML\XML.lua
+Necrosis_retail.lua
+XML\XML_retail.lua
 ThreatMeter.lua
 
+SpellActivations\SpellActivations.xml
+
+UI\BottomBanner\Framework_retail.lua
 UI\BottomBanner\Init.xml

@@ -300,6 +300,7 @@ L["SUMMON_QUEUE_TRIGGER_DESC"] = "Chatnachricht(en) zum Beitreten. Mehrere Codes
 L["SUMMON_QUEUE_AUTO_REMOVE"] = "Automatisch entfernen in Reichweite"
 L["SUMMON_QUEUE_AUDIO"] = "Audio-Benachrichtigungen"
 L["SUMMON_QUEUE_SYNC"] = "Mit anderen Hexenmeistern synchronisieren"
+L["SUMMON_QUEUE_SHOW"] = "Warteschlange"
 L["SUMMON_QUEUE_WINDOW"] = "Warteschlangen-Fenster anzeigen"
 L["SUMMON_QUEUE_ADDED"] = "<player> zur Beschwörungs-Warteschlange hinzugefügt"
 L["SUMMON_QUEUE_REMOVED"] = "<player> aus der Warteschlange entfernt"

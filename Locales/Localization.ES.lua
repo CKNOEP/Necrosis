@@ -300,6 +300,7 @@ L["SUMMON_QUEUE_TRIGGER_DESC"] = "Mensaje(s) de chat para unirse. Separe múltip
 L["SUMMON_QUEUE_AUTO_REMOVE"] = "Eliminar automáticamente en rango"
 L["SUMMON_QUEUE_AUDIO"] = "Alertas de audio"
 L["SUMMON_QUEUE_SYNC"] = "Sincronizar con otros brujos"
+L["SUMMON_QUEUE_SHOW"] = "Cola"
 L["SUMMON_QUEUE_WINDOW"] = "Mostrar ventana de cola"
 L["SUMMON_QUEUE_ADDED"] = "<player> agregado a la cola de invocación"
 L["SUMMON_QUEUE_REMOVED"] = "<player> eliminado de la cola"

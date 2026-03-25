@@ -1,18 +1,20 @@
-## Interface: 30403
+## Interface: 120005,120001,120000
 ## X-Min-Interface: 110207
 ## X-Min-Interface-Classic: 11508
 ## X-Min-Interface-BCC: 20505
 ## X-Min-Interface-Wrath: 30403
 ## X-Min-Interface-Cata: 40400
+## X-Min-Interface-MOP: 50503
+## X-Min-Interface-Midnight: 120001
 
-## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Wrath
-## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Wrath (Русский)
-## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Wrath (Français)
+## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8 Midnight
+## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Midnight (Русский)
+## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis Midnight (Français)
 
 ## Notes: Warlock UI & Shard Management
-## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir 
+## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir
 ## Notes-ruRU: Менеджер заклинаний, камней и демонов для чернокнижника.
-## Version: 8.4.9
+## Version: 8.4.1
 ## Website: https://github.com/CKNOEP/Necrosis
 ## DefaultState: Enabled
 ## X-Original-Author: Lomig,lädygaga - sulfuron EUR - As lancestre
@@ -20,8 +22,6 @@
 ## X-Category: Warlock
 ## LoadOnDemand: 0
 ## SavedVariablesPerCharacter: NecrosisConfig
-
-Necrosis.xml
 
 libs\LibStub\LibStub.lua
 libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
@@ -52,12 +52,13 @@ Locales\Localization.RU.lua
 Locales\Localization.TW.lua
 Locales\Localization.MX.lua
 
-Dialog.lua
 Initialize.lua
-VersionCheck.lua
 Utils.lua
+
+Dialog.lua
 AFKS.lua
 SummonQueue.lua
+VersionCheck.lua
 Speech\Speech-fr.lua
 Speech\Speech-en.lua
 Speech\Speech-de.lua
@@ -67,10 +68,10 @@ Speech\Speech-cn.lua
 Speech\Speech-ru.lua
 
 Message.lua
-Spells.lua
-SpellActivations\SpellActivations.xml
+Spells-Midnight.lua
 
-Timers\Functions.lua
+
+Timers\Functions_retail.lua
 Timers\GraphicalTimers.lua
 Timers\OtherTimers.lua
 
@@ -81,7 +82,7 @@ XML\Attributes.lua
 
 XML\Options-Messages.lua
 XML\Options-SummonQueue.lua
-XML\Options-Sphere.lua
+XML\Options-Sphere-Vanilla.lua
 XML\Options-Buttons.lua
 XML\Options-Menus.lua
 XML\Options-Timers.lua
@@ -94,4 +95,7 @@ Necrosis.lua
 XML\XML.lua
 ThreatMeter.lua
 
+SpellActivations\SpellActivations.xml
+
+UI\BottomBanner\Framework_retail.lua
 UI\BottomBanner\Init.xml

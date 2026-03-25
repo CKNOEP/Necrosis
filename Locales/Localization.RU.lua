@@ -321,6 +321,7 @@ L["SUMMON_QUEUE_TRIGGER_DESC"] = "Сообщение(я) в чате для пр
 L["SUMMON_QUEUE_AUTO_REMOVE"] = "Автоматически удалять в пределах досягаемости"
 L["SUMMON_QUEUE_AUDIO"] = "Звуковые оповещения"
 L["SUMMON_QUEUE_SYNC"] = "Синхронизация с другими чернокнижниками"
+L["SUMMON_QUEUE_SHOW"] = "Очередь"
 L["SUMMON_QUEUE_WINDOW"] = "Показать окно очереди"
 L["SUMMON_QUEUE_ADDED"] = "<player> добавлен в очередь призыва"
 L["SUMMON_QUEUE_REMOVED"] = "<player> удален из очереди"
