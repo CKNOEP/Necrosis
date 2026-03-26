@@ -353,6 +353,7 @@ Necrosis.ChatMessage = {
 	},
 	["Interface"] = {
 		["Welcome"] = L["INTERFACE_WELCOME"],
+		["RetailAnnouncement"] = L["RETAIL_ANNOUNCEMENT"],
 		["TooltipOn"] = L["INTERFACE_TOOLTIP_ON"],
 		["TooltipOff"] = L["INTERFACE_TOOLTIP_OFF"],
 		["MessageOn"] = L["INTERFACE_MESSAGE_ON"],
