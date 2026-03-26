@@ -982,15 +982,21 @@ local function StartInit(fm)
 	fm:UnregisterEvent("GET_ITEM_INFO_RECEIVED")
 	-- Initialization of the mod || Initialisation du mod
 	Necrosis:Initialize(Local.DefaultConfig)
-	-- Display Retail release announcement
-	Necrosis:Msg("|n", "USER")
-	Necrosis:Msg(Necrosis.ChatMessage.Interface.RetailAnnouncement, "USER")
 	-- Set timers if any buffs are on
 	SetupBuffTimers()
 
 	--[[ Once the localized strings are known, build the buttons.
 	--]]
 	Local.InWorld = true
+
+	-- Display Retail release announcement after everything is set up
+	C_Timer.After(0.1, function()
+		local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
+		if L and L["RETAIL_ANNOUNCEMENT"] then
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("|n")
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage(L["RETAIL_ANNOUNCEMENT"])
+		end
+	end)
 end
 
 -- Function started when updating the interface (main) - every 0.1 seconds || Fonction lancée à la mise à jour de l'interface (main) -- Toutes les 0,1 secondes environ
