@@ -103,7 +103,7 @@ function Necrosis:MenuAttribute(menu)
 
 	-- Debug: Show button info after initialization
 	if Necrosis.Debug.buttons then
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[MenuAttribute] Menu="..tostring(menu).." State="..tostring(menuButton:GetAttribute("state")).." ButtonCount="..tostring(menuButton:GetAttribute("_buttonCount") or "?"))
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[MenuAttribute] Menu="..tostring(menu).." State="..tostring(menuButton:GetAttribute("state")).." ButtonCount="..tostring(menuButton:GetAttribute("buttonCount") or "?"))
 	end
 	
 	if not menuButton:GetAttribute("lastClick") then 
@@ -123,7 +123,7 @@ function Necrosis:MenuAttribute(menu)
 			buttonCount = buttonCount + 1
 		end
 		-- Store count as attribute for external debugging
-		self:SetAttribute("_buttonCount", buttonCount)
+		self:SetAttribute("buttonCount", buttonCount)
 
 		if self:GetAttribute("state") == "Bloque" then
 			for i, button in ipairs(ButtonList) do
@@ -140,8 +140,8 @@ function Necrosis:MenuAttribute(menu)
 		self:SetAttribute("lastClick", button)
 		local Etat = self:GetAttribute("state")
 		-- Store for external debug
-		self:SetAttribute("_lastState", Etat)
-		self:SetAttribute("_lastClick", button)
+		self:SetAttribute("debugState", Etat)
+		self:SetAttribute("debugClick", button)
 
 		if  button == "MiddleButton" then
 
