@@ -2986,7 +2986,7 @@ function Necrosis:CreateMenu()
 				if Necrosis.Debug.buttons then
 					_G["DEFAULT_CHAT_FRAME"]:AddMessage("[CreateMenu] Setting parent for pet button "..tostring(i).." ("..tostring(Local.Menu.Pet[i]:GetName())..")")
 				end
-				Local.Menu.Pet[i]:SetParent(f)
+				--Local.Menu.Pet[i]:SetParent(f)  -- TEMP: Testing without SetParent
 				-- Close the menu when a child button is clicked || Si le menu se ferme à l'appui d'un bouton, alors il se ferme à l'appui d'un bouton !
 --				f:WrapScript(Local.Menu.Pet[i], "OnClick", [[
 --					if self:GetParent():GetAttribute("state") == "Ouvert" then
@@ -3055,7 +3055,7 @@ function Necrosis:CreateMenu()
 			)
 			-- Secure the menu || Maintenant on sécurise le menu, et on y associe nos nouveaux boutons
 			for i = 1, #Local.Menu.Buff, 1 do
-				Local.Menu.Buff[i]:SetParent(f)
+				--Local.Menu.Buff[i]:SetParent(f)  -- TEMP: Testing without SetParent
 				-- Close the menu upon button Click || Si le menu se ferme à l'appui d'un bouton, alors il se ferme à l'appui d'un bouton !
 --				f:WrapScript(Local.Menu.Buff[i], "OnClick", [[
 --					if self:GetParent():GetAttribute("state") == "Ouvert" then
@@ -3133,7 +3133,7 @@ function Necrosis:CreateMenu()
 			)
 			-- Secure the menu || Maintenant on sécurise le menu, et on y associe nos nouveaux boutons
 			for i = 1, #Local.Menu.Curse, 1 do
-				Local.Menu.Curse[i]:SetParent(f)
+				--Local.Menu.Curse[i]:SetParent(f)  -- TEMP: Testing without SetParent
 				-- Respond to clicks || Si le menu se ferme à l'appui d'un bouton, alors il se ferme à l'appui d'un bouton !
 --				f:WrapScript(Local.Menu.Curse[i], "OnClick", [[
 --					if self:GetParent():GetAttribute("state") == "Ouvert" then
