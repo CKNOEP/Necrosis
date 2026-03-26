@@ -709,11 +709,42 @@ function Necrosis:Initialize(Config)
 
 				-- Create BRAND NEW button
 				local btn = CreateFrame("Button", "NecrosisMainSphere", UIParent, "SecureUnitButtonTemplate")
-				btn:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\Shard")
+
+				-- Apply initial skin based on configuration
+				local initialSkin = "Shard"
+				if NecrosisConfig.Circle == 4 then
+					-- Health indicator: use full sphere if at max health
+					local health = UnitHealth("player")
+					local healthMax = UnitHealthMax("player")
+					if health == healthMax then
+						initialSkin = NecrosisConfig.NecrosisColor.."\\Shard32"
+					else
+						local taux = math.floor(health / (healthMax / 16))
+						initialSkin = NecrosisConfig.NecrosisColor.."\\Shard"..taux
+					end
+				elseif NecrosisConfig.Circle == 3 then
+					-- Mana indicator: use full sphere if at max mana
+					local ptype, ptype_txt = UnitPowerType("player")
+					local mana = UnitPower("player", ptype)
+					local manaMax = UnitPowerMax("player", ptype)
+					if mana == manaMax then
+						initialSkin = NecrosisConfig.NecrosisColor.."\\Shard32"
+					else
+						local taux = math.floor(mana / (manaMax / 16))
+						initialSkin = NecrosisConfig.NecrosisColor.."\\Shard"..taux
+					end
+				else
+					-- No indicator: use full sphere with configured color
+					initialSkin = NecrosisConfig.NecrosisColor.."\\Shard32"
+				end
+				btn:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..initialSkin)
 				btn:SetHighlightTexture("Interface\\Buttons\\UI-Common-MouseHilight")
 				btn:GetHighlightTexture():SetBlendMode("ADD")
 				btn:SetWidth(58)
 				btn:SetHeight(58)
+
+				-- Track the applied skin to avoid redundant texture updates
+				Local.LastSphereSkin = initialSkin
 
 				-- Apply configured scale
 				local scale = (NecrosisConfig.NecrosisButtonScale or 100) / 100
