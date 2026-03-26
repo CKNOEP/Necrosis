@@ -743,9 +743,6 @@ function Necrosis:Initialize(Config)
 				btn:SetWidth(58)
 				btn:SetHeight(58)
 
-				-- Track the applied skin to avoid redundant texture updates
-				Local.LastSphereSkin = initialSkin
-
 				-- Apply configured scale
 				local scale = (NecrosisConfig.NecrosisButtonScale or 100) / 100
 				btn:SetScale(scale)
