@@ -3006,7 +3006,7 @@ function Necrosis:CreateMenu()
 --				if NecrosisConfig.BlockedMenu or not NecrosisConfig.ClosingMenu then
 --					f:UnwrapScript(Local.Menu.Pet[i], "OnClick")
 --				end
---				Necrosis:SetPetSpellAttribute(Local.Menu.Pet[i])
+				Necrosis:SetPetSpellAttribute(Local.Menu.Pet[i])
 			end
 			if Necrosis.Debug.buttons then
 				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[CreateMenu] PETS: Added "..tostring(#Local.Menu.Pet).." buttons")
