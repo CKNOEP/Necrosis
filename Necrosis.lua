@@ -982,6 +982,9 @@ local function StartInit(fm)
 	fm:UnregisterEvent("GET_ITEM_INFO_RECEIVED")
 	-- Initialization of the mod || Initialisation du mod
 	Necrosis:Initialize(Local.DefaultConfig)
+	-- Display Retail release announcement
+	Necrosis:Msg("|n", "USER")
+	Necrosis:Msg(Necrosis.ChatMessage.Interface.RetailAnnouncement, "USER")
 	-- Set timers if any buffs are on
 	SetupBuffTimers()
 

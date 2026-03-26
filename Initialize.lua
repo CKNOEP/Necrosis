@@ -569,13 +569,11 @@ function Necrosis:Initialize(Config)
 	-----------------------------------------------------------
 	-- Exécution des fonctions de démarrage
 	-----------------------------------------------------------
-	-- Display welcome message on console
+	-- Display welcome message on console (announcement will be shown later in StartInit)
 	self:Msg("|n|cffcc6600" .. string.rep("=", 60) .. "|r", "USER")
 	self:Msg("|cffff6600N|cffff9900e|cffffcc00c|cff99cc00r|cff33cc00o|cff00cc99s|cff0099ccis|r |cffffffff(v" .. Necrosis.Data.Version .. ")|r", "USER")
 	self:Msg("|cffcc6600" .. string.rep("=", 60) .. "|r", "USER")
 	self:Msg(self.ChatMessage.Interface.Welcome, "USER")
-	self:Msg("|n", "USER")
-	self:Msg(self.ChatMessage.Interface.RetailAnnouncement, "USER")
 
     -- Enregistrement de la commande console
 	SlashCmdList["NecrosisCommand"] = Necrosis.SlashHandler
