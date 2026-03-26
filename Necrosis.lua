@@ -363,7 +363,12 @@ function UpdateIcons()
 	if Local.TimerManagement.SpellTimer then
 		for index = 1, #Local.TimerManagement.SpellTimer, 1 do
 		--print(Local.TimerManagement.SpellTimer[index].Name)
-			if  Local.TimerManagement.SpellTimer[index].Name == Necrosis.GetSpellName("soulstone") 
+			if  (Local.TimerManagement.SpellTimer[index].Name == Necrosis.GetSpellName("soulstone")
+			or Local.TimerManagement.SpellTimer[index].Name == Necrosis.GetSpellName("minor_ss_used")
+			or Local.TimerManagement.SpellTimer[index].Name == Necrosis.GetSpellName("ss_used")
+			or Local.TimerManagement.SpellTimer[index].Name == Necrosis.GetSpellName("greater_ss_used")
+			or Local.TimerManagement.SpellTimer[index].Name == Necrosis.GetSpellName("major_ss_used")
+			or Local.TimerManagement.SpellTimer[index].Name == Necrosis.GetSpellName("master_ss_used"))
 			and Local.TimerManagement.SpellTimer[index].TimeMax > 0 then
 				SoulstoneInUse = true
 				break
@@ -1290,6 +1295,9 @@ function Necrosis:OnEvent(self, event,...)
 
 
 		Local.SpellCasted[cast_guid] = {} -- clear any previous entry
+		if Necrosis.Debug.spells_cast then
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("SENT: sid='"..tostring(spell_id).."' found='"..tostring(Necrosis.GetSpellById(spell_id) ~= nil).."'")
+		end
 		if spell_id and Necrosis.GetSpellById(spell_id) then -- it is a spell to process
 			local spell = Necrosis.GetSpellById(spell_id)
 	
@@ -2887,7 +2895,8 @@ local function HideList(list, parent)
 	for i, v in pairs(list) do
 		menuVariable = _G[Necrosis.Warlock_Buttons[v.f_ptr].f]
 		if menuVariable then
-			menuVariable:Hide()
+			-- Use SetAlpha(0) instead of Hide() for SecureActionButtonTemplate in Anniversary
+			menuVariable:SetAlpha(0)
 			menuVariable:ClearAllPoints()
 			menuVariable:SetPoint("CENTER", parent, "CENTER", 3000, 3000)
 		end

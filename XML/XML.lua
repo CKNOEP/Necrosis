@@ -349,7 +349,9 @@ function Necrosis:CreateMenuItem(i)
 		frame:SetAttribute("type", "spell")
 		frame:SetAttribute("spell", spell.ID)
 	end
-	frame:Hide()
+	-- For SecureActionButtonTemplate: SetAlpha() instead of Hide() to work in Anniversary
+	-- Buttons must remain visible but transparent to handle click events properly
+	frame:SetAlpha(0)
 
 	-- Edit the scripts associated with the button || Edition des scripts associés au bouton 
 	frame:SetScript("OnEnter", function(self)
