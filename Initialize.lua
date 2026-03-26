@@ -15,7 +15,7 @@ local _, _, _, tocVersion = GetBuildInfo()
 local IsModernWoW = tocVersion and tocVersion >= 90000 -- WoW 9.0+ has C_Container
 
 -- DEBUG MARKER: Confirm we're using the correct variant
-_G["DEFAULT_CHAT_FRAME"]:AddMessage("|cFF00FF00[NECROSIS] CLASSIC VARIANT LOADED - Initialize.lua v" .. (tocVersion or "unknown") .. "|r")
+-- _G["DEFAULT_CHAT_FRAME"]:AddMessage("|cFF00FF00[NECROSIS] CLASSIC VARIANT LOADED - Initialize.lua v" .. (tocVersion or "unknown") .. "|r")
 
 -- Create compatibility wrappers for C_Container (WoW 9.0+)
 if not C_Container then
@@ -569,8 +569,10 @@ function Necrosis:Initialize(Config)
 	-----------------------------------------------------------
 	-- Exécution des fonctions de démarrage
 	-----------------------------------------------------------
-	-- Affichage d'un message sur la console
-	self:Msg("Configuration chargée. Version: |cffffffff" .. Necrosis.Data.Version .. "|r", "USER")
+	-- Display welcome message on console
+	self:Msg("|n|cffcc6600" .. string.rep("=", 60) .. "|r", "USER")
+	self:Msg("|cffff6600N|cffff9900e|cffffcc00c|cff99cc00r|cff33cc00o|cff00cc99s|cff0099ccis|r |cffffffff(v" .. Necrosis.Data.Version .. ")|r", "USER")
+	self:Msg("|cffcc6600" .. string.rep("=", 60) .. "|r", "USER")
 	self:Msg(self.ChatMessage.Interface.Welcome, "USER")
 
     -- Enregistrement de la commande console

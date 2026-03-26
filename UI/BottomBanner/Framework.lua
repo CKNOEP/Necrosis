@@ -1,6 +1,6 @@
 -- Initialize NUI Addon (Classic/Simplified Version - No C_EditMode)
 -- DEBUG MARKER: Confirm Classic variant is loaded
-print("|cFF00FF00[NecrosisUI] CLASSIC VARIANT LOADED - No C_EditMode integration|r")
+-- print("|cFF00FF00[NecrosisUI] CLASSIC VARIANT LOADED - No C_EditMode integration|r")
 local NUI = _G.NUI
 if not NUI then
 	NUI = LibStub('AceAddon-3.0'):NewAddon('NecrosisUI', 'AceEvent-3.0', 'AceConsole-3.0', 'AceSerializer-3.0')
