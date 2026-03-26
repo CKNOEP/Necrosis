@@ -96,9 +96,14 @@ function Necrosis:MenuAttribute(menu)
 	end
 
 	local menuButton = _G[menu]
-	
-	if not menuButton:GetAttribute("state") then 
+
+	if not menuButton:GetAttribute("state") then
 		menuButton:SetAttribute("state", "Ferme")
+	end
+
+	-- Debug: Show button info after initialization
+	if Necrosis.Debug.buttons then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[MenuAttribute] Menu="..tostring(menu).." State="..tostring(menuButton:GetAttribute("state")).." ButtonCount="..tostring(menuButton:GetAttribute("_buttonCount") or "?"))
 	end
 	
 	if not menuButton:GetAttribute("lastClick") then 
@@ -112,6 +117,14 @@ function Necrosis:MenuAttribute(menu)
 	-- run at OnLoad of button
 	menuButton:Execute([[
 		ButtonList = table.new(self:GetChildren())
+		-- Debug: Count buttons in list
+		local buttonCount = 0
+		for i, button in ipairs(ButtonList) do
+			buttonCount = buttonCount + 1
+		end
+		-- Store count as attribute for external debugging
+		self:SetAttribute("_buttonCount", buttonCount)
+
 		if self:GetAttribute("state") == "Bloque" then
 			for i, button in ipairs(ButtonList) do
 				button:SetAlpha(1)
@@ -126,14 +139,17 @@ function Necrosis:MenuAttribute(menu)
 	menuButton:SetAttribute("_onclick", [[
 		self:SetAttribute("lastClick", button)
 		local Etat = self:GetAttribute("state")
-		
+		-- Store for external debug
+		self:SetAttribute("_lastState", Etat)
+		self:SetAttribute("_lastClick", button)
+
 		if  button == "MiddleButton" then
-		
-		
-		
-		
+
+
+
+
 		end
-		
+
 		if  Etat == "Ferme" then
 			if button == "RightButton" then
 				self:SetAttribute("state", "ClicDroit")

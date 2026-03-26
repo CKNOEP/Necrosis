@@ -3002,6 +3002,10 @@ function Necrosis:CreateMenu()
 				end
 --				Necrosis:SetPetSpellAttribute(Local.Menu.Pet[i])
 			end
+			if Necrosis.Debug.buttons then
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[CreateMenu] PETS: Added "..tostring(#Local.Menu.Pet).." buttons")
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[CreateMenu] BlockedMenu="..tostring(NecrosisConfig.BlockedMenu).." ClosingMenu="..tostring(NecrosisConfig.ClosingMenu))
+			end
 			Necrosis:MenuAttribute(fs)
 			Necrosis:PetSpellAttribute()
 		end
