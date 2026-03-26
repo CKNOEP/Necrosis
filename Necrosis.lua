@@ -2988,11 +2988,11 @@ function Necrosis:CreateMenu()
 				end
 				Local.Menu.Pet[i]:SetParent(f)
 				-- Close the menu when a child button is clicked || Si le menu se ferme à l'appui d'un bouton, alors il se ferme à l'appui d'un bouton !
-				f:WrapScript(Local.Menu.Pet[i], "OnClick", [[
-					if self:GetParent():GetAttribute("state") == "Ouvert" then
-						self:GetParent():SetAttribute("state", "Ferme")
-					end
-				]])
+--				f:WrapScript(Local.Menu.Pet[i], "OnClick", [[
+--					if self:GetParent():GetAttribute("state") == "Ouvert" then
+--						self:GetParent():SetAttribute("state", "Ferme")
+--					end
+--				]])
 				f:WrapScript(Local.Menu.Pet[i], "OnEnter", [[
 					self:GetParent():SetAttribute("mousehere", true)
 				]])
@@ -3057,11 +3057,11 @@ function Necrosis:CreateMenu()
 			for i = 1, #Local.Menu.Buff, 1 do
 				Local.Menu.Buff[i]:SetParent(f)
 				-- Close the menu upon button Click || Si le menu se ferme à l'appui d'un bouton, alors il se ferme à l'appui d'un bouton !
-				f:WrapScript(Local.Menu.Buff[i], "OnClick", [[
-					if self:GetParent():GetAttribute("state") == "Ouvert" then
-						self:GetParent():SetAttribute("state", "Ferme")
-					end
-				]])
+--				f:WrapScript(Local.Menu.Buff[i], "OnClick", [[
+--					if self:GetParent():GetAttribute("state") == "Ouvert" then
+--						self:GetParent():SetAttribute("state", "Ferme")
+--					end
+--				]])
 				f:WrapScript(Local.Menu.Buff[i], "OnEnter", [[
 					self:GetParent():SetAttribute("mousehere", true)
 				]])
@@ -3135,11 +3135,11 @@ function Necrosis:CreateMenu()
 			for i = 1, #Local.Menu.Curse, 1 do
 				Local.Menu.Curse[i]:SetParent(f)
 				-- Respond to clicks || Si le menu se ferme à l'appui d'un bouton, alors il se ferme à l'appui d'un bouton !
-				f:WrapScript(Local.Menu.Curse[i], "OnClick", [[
-					if self:GetParent():GetAttribute("state") == "Ouvert" then
-						self:GetParent():SetAttribute("state","Ferme")
-					end
-				]])
+--				f:WrapScript(Local.Menu.Curse[i], "OnClick", [[
+--					if self:GetParent():GetAttribute("state") == "Ouvert" then
+--						self:GetParent():SetAttribute("state","Ferme")
+--					end
+--				]])
 				f:WrapScript(Local.Menu.Curse[i], "OnEnter", [[
 					self:GetParent():SetAttribute("mousehere", true)
 				]])
