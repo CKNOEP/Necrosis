@@ -110,15 +110,15 @@ function Necrosis:MenuAttribute(menu)
 	end
 	
 	-- run at OnLoad of button
-	menuButton:Execute([[ 
+	menuButton:Execute([[
 		ButtonList = table.new(self:GetChildren())
 		if self:GetAttribute("state") == "Bloque" then
 			for i, button in ipairs(ButtonList) do
-				button:Show()
+				button:SetAlpha(1)
 			end
 		else
 			for i, button in ipairs(ButtonList) do
-				button:Hide()
+				button:SetAlpha(0)
 			end
 		end
 	]])
@@ -167,24 +167,24 @@ function Necrosis:MenuAttribute(menu)
 		if name == "state" then
 			if value == "Ferme" then
 				for i, button in ipairs(ButtonList) do
-					button:Hide()
+					button:SetAlpha(0)
 				end
 			elseif value == "Ouvert" then
 				for i, button in ipairs(ButtonList) do
-					button:Show()
+					button:SetAlpha(1)
 				end
-				
+
 				self:SetAttribute("close", self:GetAttribute("close") + 1)
 				-- control:SetTimer(6, self:GetAttribute("close"))
 			elseif value == "Combat" or value == "Bloque" then
 				for i, button in ipairs(ButtonList) do
-					button:Show()
+					button:SetAlpha(1)
 				end
 			elseif value == "Refresh" then
 				self:SetAttribute("state", "Ouvert")
 			elseif value == "ClicDroit" then
 				for i, button in ipairs(ButtonList) do
-					button:Show()
+					button:SetAlpha(1)
 				end
 			end
 		end
