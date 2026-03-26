@@ -86,6 +86,17 @@ local function OutputTimer(reason, usage, index, Timer, note, override)
 	end
 end
 
+-- Helper: Check if a timer name is any Soulstone variant
+local function IsSoulstoneTimer(timerName)
+	if not timerName then return false end
+	return (timerName == Necrosis.GetSpellName("soulstone")
+		or timerName == Necrosis.GetSpellName("minor_ss_used")
+		or timerName == Necrosis.GetSpellName("ss_used")
+		or timerName == Necrosis.GetSpellName("greater_ss_used")
+		or timerName == Necrosis.GetSpellName("major_ss_used")
+		or timerName == Necrosis.GetSpellName("master_ss_used"))
+end
+
 ------------------------------------------------------------------------------------------------------
 -- INSERT FUNCTIONS
 ------------------------------------------------------------------------------------------------------
@@ -263,6 +274,9 @@ end
 
 -- delete a timer by its index || Connaissant l'index du Timer dans la liste, on le supprime
 function Necrosis:RetraitTimerParIndex(index, Timer, note)
+	if Necrosis.Debug.timers then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[REMOVE] Index:"..tostring(index).." Name:'"..tostring(Timer.SpellTimer[index].Name or "nyl").."' Usage:'"..tostring(Timer.SpellTimer[index].Usage or "nyl").."' Note:'"..tostring(note or "nyl").."'")
+	end
 
 	if NecrosisConfig.TimerType > 0 then
 		-- remove the graphical timer || Suppression du timer graphique
@@ -347,10 +361,16 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("RetraitTimer::"
 end
 
 function Necrosis:RemoveTimerByNameAndGuid(name, guid, Timer, note)
+	if Necrosis.Debug.timers then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SEARCH-REMOVE] Looking for Name:'"..tostring(name).."' GUID:'"..tostring(guid).."'")
+	end
 	for index = 1, #Timer.SpellTimer, 1 do
-		
+
 		if Timer.SpellTimer[index].Name == name
 		and Timer.SpellTimer[index].TargetGUID == guid then
+			if Necrosis.Debug.timers then
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[FOUND-REMOVE] Index:"..tostring(index).." Name:'"..tostring(Timer.SpellTimer[index].Name).."' Usage:'"..tostring(Timer.SpellTimer[index].Usage).."'")
+			end
 			OutputTimer("RemoveTimerByNameAndGuid", "", index, Timer, note)
 			Timer = self:RetraitTimerParIndex(index, Timer)
 			break
@@ -386,7 +406,7 @@ function Necrosis:RetraitTimerCombat(Timer, note)
 				then
 								
 					if not (Timer.SpellTimer[index].Name == Necrosis.GetSpellName("enslave")
-					or Timer.SpellTimer[index].Name == Necrosis.GetSpellName("soulstone")) then
+					or IsSoulstoneTimer(Timer.SpellTimer[index].Name)) then
 					OutputTimer("RetraitTimerCombat", "", index, Timer, note)
 					Timer = self:RetraitTimerParIndex(index, Timer)
 					end
