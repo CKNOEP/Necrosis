@@ -313,7 +313,7 @@ function Necrosis:CreateMenuItem(i)
 	-- Create the button || Creation du bouton
 	local frame = _G[b.f]
 	if not frame then
-		frame = CreateFrame("Button", b.f, UIParent, "SecureActionButtonTemplate")
+		frame = CreateFrame("Button", b.f, UIParent, "SecureUnitButtonTemplate")
 
 		-- Définition de ses attributs
 		frame:SetMovable(true)
@@ -343,15 +343,7 @@ function Necrosis:CreateMenuItem(i)
 	end
 
 	frame:SetNormalTexture(b.norm)
-	-- Set spell attribute for casting
-	local spell = Necrosis.GetSpell(i.high_of)
-	if spell and spell.ID then
-		frame:SetAttribute("type", "spell")
-		frame:SetAttribute("spell", spell.ID)
-	end
-	-- For SecureActionButtonTemplate: SetAlpha() instead of Hide() to work in Anniversary
-	-- Buttons must remain visible but transparent to handle click events properly
-	frame:SetAlpha(0)
+	frame:Hide()
 
 	-- Edit the scripts associated with the button || Edition des scripts associés au bouton 
 	frame:SetScript("OnEnter", function(self)

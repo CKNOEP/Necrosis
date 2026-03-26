@@ -2895,8 +2895,7 @@ local function HideList(list, parent)
 	for i, v in pairs(list) do
 		menuVariable = _G[Necrosis.Warlock_Buttons[v.f_ptr].f]
 		if menuVariable then
-			-- Use SetAlpha(0) instead of Hide() for SecureActionButtonTemplate in Anniversary
-			menuVariable:SetAlpha(0)
+			menuVariable:Hide()
 			menuVariable:ClearAllPoints()
 			menuVariable:SetPoint("CENTER", parent, "CENTER", 3000, 3000)
 		end
