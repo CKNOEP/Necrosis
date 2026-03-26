@@ -2,6 +2,32 @@
 
 ---
 
+## Version 8.5.0 - March 26, 2026
+
+### Features
+- **Retail Release Announcement**: Added fun, warlock-themed announcement celebrating Necrosis arrival on RETAIL in all supported languages (EN, FR, DE, ES, MX, RU, ZH-CN, ZH-TW)
+- **Menu Auto-Close**: Menus now properly close when clicking spell buttons (Pet, Buff, Curse menus)
+- **Welcome Header Restored**: Beautiful Necrosis branding message with version displays at addon startup
+
+### Bug Fixes
+- **Soulstone Timer Variants**: Fixed all Soulstone variants (soulstone, minor_ss_used, ss_used, greater_ss_used, major_ss_used, master_ss_used) not being preserved during combat
+- **Menu Button Clicks**: Fixed non-responsive menu buttons (demons, sorts, malédiction) by restoring SecureUnitButtonTemplate and WrapScript OnClick handlers
+- **Sphere Skin Initialization**: Fixed sphere not displaying selected color/skin at addon startup - now applies correct skin based on configuration
+- **Frame Visibility**: Reverted SetAlpha() back to Show()/Hide() for proper secure frame visibility in Anniversary
+
+### Technical Details
+- Restored SecureUnitButtonTemplate for menu buttons (was incorrectly changed to SecureActionButtonTemplate)
+- Added IsSoulstoneTimer() helper function to check all soulstone variants
+- Direct chat frame access for announcements and welcome messages (improved reliability)
+- Small C_Timer delay (0.1s) for announcement display to ensure proper initialization
+- Updated all .toc files to v8.5.0
+- Updated Initialize.lua to v8.5.0
+
+### Multi-Language Support
+- English, French, German, Spanish, Mexican Spanish, Russian, Simplified Chinese, Traditional Chinese
+
+---
+
 ## Version 8.4.7 - March 8, 2026
 
 ### Improvements
