@@ -2972,6 +2972,9 @@ function Necrosis:CreateMenu()
 		if Local.Menu.Pet[1] then
 			local f = _G[Necrosis.Warlock_Buttons.pets.f]
 			local fs = Necrosis.Warlock_Buttons.pets.f
+			if Necrosis.Debug.buttons then
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[CreateMenu] PETS parent frame: "..tostring(f).." name="..tostring(f:GetName()))
+			end
 			Local.Menu.Pet[1]:ClearAllPoints()
 			Local.Menu.Pet[1]:SetPoint(
 				"CENTER", f, "CENTER",
@@ -2980,6 +2983,9 @@ function Necrosis:CreateMenu()
 			)
 			-- Secure the menu || Maintenant on sécurise le menu, et on y associe nos nouveaux boutons
 			for i = 1, #Local.Menu.Pet, 1 do
+				if Necrosis.Debug.buttons then
+					_G["DEFAULT_CHAT_FRAME"]:AddMessage("[CreateMenu] Setting parent for pet button "..tostring(i).." ("..tostring(Local.Menu.Pet[i]:GetName())..")")
+				end
 				Local.Menu.Pet[i]:SetParent(f)
 				-- Close the menu when a child button is clicked || Si le menu se ferme à l'appui d'un bouton, alors il se ferme à l'appui d'un bouton !
 				f:WrapScript(Local.Menu.Pet[i], "OnClick", [[
@@ -2997,9 +3003,9 @@ function Necrosis:CreateMenu()
 						self:GetParent():SetAttribute("state", "Refresh")
 					end
 				]])
-				if NecrosisConfig.BlockedMenu or not NecrosisConfig.ClosingMenu then
-					f:UnwrapScript(Local.Menu.Pet[i], "OnClick")
-				end
+--				if NecrosisConfig.BlockedMenu or not NecrosisConfig.ClosingMenu then
+--					f:UnwrapScript(Local.Menu.Pet[i], "OnClick")
+--				end
 --				Necrosis:SetPetSpellAttribute(Local.Menu.Pet[i])
 			end
 			if Necrosis.Debug.buttons then
@@ -3066,9 +3072,9 @@ function Necrosis:CreateMenu()
 						self:GetParent():SetAttribute("state", "Refresh")
 					end
 				]])
-				if NecrosisConfig.BlockedMenu or not NecrosisConfig.ClosingMenu then
-					f:UnwrapScript(Local.Menu.Buff[i], "OnClick")
-				end
+--				if NecrosisConfig.BlockedMenu or not NecrosisConfig.ClosingMenu then
+--					f:UnwrapScript(Local.Menu.Buff[i], "OnClick")
+--				end
 			end
 			Necrosis:MenuAttribute(fs)
 			Necrosis:BuffSpellAttribute()
@@ -3144,9 +3150,9 @@ function Necrosis:CreateMenu()
 						self:GetParent():SetAttribute("state", "Refresh")
 					end
 				]])
-				if NecrosisConfig.BlockedMenu or not NecrosisConfig.ClosingMenu then
-					f:UnwrapScript(Local.Menu.Curse[i], "OnClick")
-				end
+--				if NecrosisConfig.BlockedMenu or not NecrosisConfig.ClosingMenu then
+--					f:UnwrapScript(Local.Menu.Curse[i], "OnClick")
+--				end
 			end
 			Necrosis:MenuAttribute(fs)
 			Necrosis:CurseSpellAttribute()
