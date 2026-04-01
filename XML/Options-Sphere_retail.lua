@@ -463,17 +463,24 @@ end
 function Necrosis.Skin_Click(self)
 	local ID = self:GetID()
 	local couleur = {"Rose", "Bleu", "Orange", "Turquoise", "Violet1", "Violet2", "666", "X"}
-	UIDropDownMenu_SetSelectedID(NecrosisSkinSelection, ID)
 	if couleur[ID] then
 		NecrosisConfig.NecrosisColor = couleur[ID]
 		local f = _G[Necrosis.Warlock_Buttons.main.f]
 		if f then
 			pcall(function() f:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..couleur[ID].."\\Shard0-2") end)
 		end
-		-- Mettre à jour le texte du dropdown
+		-- Mettre à jour le dropdown avec le texte localisé
+		UIDropDownMenu_SetSelectedID(NecrosisSkinSelection, ID)
 		local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
 		local couleurLabels = {L["ROSE"], L["BLEU"], L["ORANGE"], L["TURQUOISE"], L["VIOLET1"], L["VIOLET2"], L["666"], L["X"]}
-		UIDropDownMenu_SetText(NecrosisSkinSelection, couleurLabels[ID])
+		if couleurLabels[ID] then
+			-- Mettre à jour le texte du bouton dropdown
+			local button = _G["NecrosisSkinSelectionButton"]
+			if button then
+				button:SetText(couleurLabels[ID])
+			end
+			UIDropDownMenu_SetText(NecrosisSkinSelection, couleurLabels[ID])
+		end
 	end
 end
 
