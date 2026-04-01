@@ -339,8 +339,10 @@ L["SUMMON_QUEUE_MANUAL_ADD"] = "Add target to queue"
 L["SUMMON_QUEUE_EMPTY"] = "Queue is empty"
 L["SUMMON_QUEUE_MAX_SIZE"] = "Max queue size"
 L["SUMMON_QUEUE_RANGE_CHECK"] = "Range check interval (seconds)"
-L["SUMMON_QUEUE_SHOW"] = "Show Queue Window"
+L["SUMMON_QUEUE_SHOW"] = "Queue"
 L["ENABLED"] = "Enabled"
+L["OPTIONS"] = "Options"
+L["SETTINGS"] = "Settings"
 
 -- Version Check Module
 L["VERSION_UPDATE_AVAILABLE"] = "Update available"

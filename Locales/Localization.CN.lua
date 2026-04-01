@@ -368,3 +368,9 @@ L["SPELLSTONE_CHARGES"] = "充能"
 
 -- Demon Cooldown Display
 L["DEMON_COOLDOWN"] = "冷却 : "
+
+-- Summon Queue Config UI
+L["ENABLED"] = "启用"
+L["OPTIONS"] = "选项"
+L["SETTINGS"] = "设置"
+L["SUMMON_QUEUE_SHOW"] = "队列"

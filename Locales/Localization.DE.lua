@@ -377,3 +377,9 @@ L["SPELLSTONE_CHARGES"] = "Ladungen"
 
 -- Demon Cooldown Display
 L["DEMON_COOLDOWN"] = "Abklingzeit : "
+
+-- Summon Queue Config UI
+L["ENABLED"] = "Aktiviert"
+L["OPTIONS"] = "Optionen"
+L["SETTINGS"] = "Einstellungen"
+L["SUMMON_QUEUE_SHOW"] = "Warteschlange"

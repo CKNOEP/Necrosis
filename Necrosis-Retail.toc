@@ -1,29 +1,29 @@
-## Interface: 120005,120001,120000,11508,20505,30403,40400,50503
+## Interface: 120001
 ## X-Min-Interface: 110207
 ## X-Min-Interface-Classic: 11508
 ## X-Min-Interface-BCC: 20505
 ## X-Min-Interface-Wrath: 30403
 ## X-Min-Interface-Cata: 40400
+## X-Min-Interface-MOP: 50503
 
-## Title     : .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis 8
-## Title-ruRU: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis (Русский)
-## Title-frFR: .|TInterface/AddOns/Necrosis/UI/Icon-Small:16:16|t  Necrosis (Français)
 
-## Notes: Warlock UI & Shard Management
-## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir 
+
+## Title     : .|TInterface\AddOns\Necrosis\UI\Icon-Small:16:16|t  Necrosis 8 Retail
+## Title-ruRU: .|TInterface\AddOns\Necrosis\UI\Icon-Small:16:16|t  Necrosis Retail (Русский)
+## Title-frFR: .|TInterface\AddOns\Necrosis\UI\Icon-Small:16:16|t  Necrosis Retail (Français)
+
+## Notes: Warlock UI & Shard Management - Retail Midnight
+## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir
 ## Notes-ruRU: Менеджер заклинаний, камней и демонов для чернокнижника.
 ## Version: 8.5.0
-## Website: https://github.com/CKNOEP/Necrosis
+## Website: https:\\github.com\CKNOEP\Necrosis
 ## DefaultState: Enabled
 ## X-Original-Author: Lomig,lädygaga - sulfuron EUR - As lancestre
 ## X-Localizations: enUS, enGB, deDE, frFR, koKR, zhCN, zhTW, esES, ruRU
 ## X-Category: Warlock
 ## LoadOnDemand: 0
 ## SavedVariablesPerCharacter: NecrosisConfig
-
 Compat.lua
-
-Necrosis.xml
 
 libs\LibStub\LibStub.lua
 libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
@@ -55,6 +55,8 @@ Locales\Localization.MX.lua
 Initialize_retail.lua
 Utils.lua
 
+Necrosis.xml [AllowLoadGameType mainline]
+
 Dialog_retail.lua
 AFKS.lua
 SummonQueue.lua
@@ -71,7 +73,7 @@ Message.lua
 Spells-Midnight.lua
 
 
-Timers\Functions.lua
+Timers\Functions_retail.lua
 Timers\GraphicalTimers.lua
 Timers\OtherTimers.lua
 
@@ -99,4 +101,3 @@ SpellActivations\SpellActivations.xml
 
 UI\BottomBanner\Framework_retail.lua
 UI\BottomBanner\Init.xml
-

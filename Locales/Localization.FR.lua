@@ -459,3 +459,9 @@ L["SPELLSTONE_CHARGES"] = "Charges"
 
 -- Demon Cooldown Display
 L["DEMON_COOLDOWN"] = "Délai : "
+
+-- Summon Queue Config UI
+L["ENABLED"] = "Activé"
+L["OPTIONS"] = "Options"
+L["SETTINGS"] = "Paramètres"
+L["SUMMON_QUEUE_SHOW"] = "File"
