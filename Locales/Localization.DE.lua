@@ -383,3 +383,13 @@ L["ENABLED"] = "Aktiviert"
 L["OPTIONS"] = "Optionen"
 L["SETTINGS"] = "Einstellungen"
 L["SUMMON_QUEUE_SHOW"] = "Warteschlange"
+
+-- Additional Skin Colors (German)
+if not L["ROSE"] then
+L["ROSE"] = "Rosa"
+L["BLEU"] = "Blau"
+L["VIOLET1"] = "Violett"
+L["VIOLET2"] = "Violett 2"
+L["666"] = "Grau"
+L["X"] = "Spezial"
+end

@@ -374,3 +374,13 @@ L["ENABLED"] = "启用"
 L["OPTIONS"] = "选项"
 L["SETTINGS"] = "设置"
 L["SUMMON_QUEUE_SHOW"] = "队列"
+
+-- Additional Skin Colors (Simplified Chinese)
+if not L["ROSE"] then
+L["ROSE"] = "粉红色"
+L["BLEU"] = "蓝色"
+L["VIOLET1"] = "紫色"
+L["VIOLET2"] = "紫色 2"
+L["666"] = "灰色"
+L["X"] = "特殊"
+end

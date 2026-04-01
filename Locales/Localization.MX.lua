@@ -365,3 +365,13 @@ L["ENABLED"] = "Habilitado"
 L["OPTIONS"] = "Opciones"
 L["SETTINGS"] = "Configuración"
 L["SUMMON_QUEUE_SHOW"] = "Cola"
+
+-- Additional Skin Colors (Mexican Spanish)
+if not L["ROSE"] then
+L["ROSE"] = "Rosa"
+L["BLEU"] = "Azul"
+L["VIOLET1"] = "Púrpura"
+L["VIOLET2"] = "Púrpura 2"
+L["666"] = "Gris"
+L["X"] = "Especial"
+end

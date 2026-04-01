@@ -409,7 +409,7 @@ function Necrosis:SetSphereConfig()
 	NecrosisSphereSize:SetValue(NecrosisConfig.NecrosisButtonScale)
 	NecrosisShowCount:SetChecked(NecrosisConfig.ShowCount)
 
-	local couleur = {"Cata"}
+	local couleur = {"Rose", "Bleu", "Orange", "Turquoise", "Violet1", "Violet2", "666", "X"}
 	for i in ipairs(couleur) do
 		if couleur[i] == NecrosisConfig.NecrosisColor then
 			UIDropDownMenu_SetSelectedID(NecrosisSkinSelection, i)
@@ -443,18 +443,16 @@ function Necrosis.Skin_Init()
 	local element = {}
     local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
     Necrosis.Config.Sphere.Colour = {
-        L["CATA"],
-        --L["BLUE"],
-        --L["ORANGE"],
-        --L["TURQUOISE"],
-        L["PURPLE"],
-        --L["PURPLE2"],
-        --L["666"],
-        --L["X"],
+        L["ROSE"],
+        L["BLEU"],
+        L["ORANGE"],
+        L["TURQUOISE"],
+        L["VIOLET1"],
+        L["VIOLET2"],
+        L["666"],
+        L["X"],
     }
-	--Seuleument le 1er pour cata
     for i in ipairs(Necrosis.Config.Sphere.Colour) do
-    --i= "CATA"
 		element.text = Necrosis.Config.Sphere.Colour[i]
 		element.checked = false
 		element.func = Necrosis.Skin_Click
@@ -464,7 +462,7 @@ end
 
 function Necrosis.Skin_Click(self)
 	local ID = self:GetID()
-	local couleur = {"Cata", "Purple"}
+	local couleur = {"Rose", "Bleu", "Orange", "Turquoise", "Violet1", "Violet2", "666", "X"}
 	UIDropDownMenu_SetSelectedID(NecrosisSkinSelection, ID)
 	if couleur[ID] then
 		NecrosisConfig.NecrosisColor = couleur[ID]

@@ -386,3 +386,13 @@ L["SUMMON_QUEUE_SHOW"] = "Очередь"
 
 -- Demon Cooldown Display
 L["DEMON_COOLDOWN"] = "Перезарядка : "
+
+-- Additional Skin Colors (Russian)
+if not L["ROSE"] then
+L["ROSE"] = "Розовый"
+L["BLEU"] = "Синий"
+L["VIOLET1"] = "Фиолетовый"
+L["VIOLET2"] = "Фиолетовый 2"
+L["666"] = "Серый"
+L["X"] = "Специальный"
+end
