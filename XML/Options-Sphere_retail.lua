@@ -470,6 +470,10 @@ function Necrosis.Skin_Click(self)
 		if f then
 			pcall(function() f:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..couleur[ID].."\\Shard0-2") end)
 		end
+		-- Mettre à jour le texte du dropdown
+		local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
+		local couleurLabels = {L["ROSE"], L["BLEU"], L["ORANGE"], L["TURQUOISE"], L["VIOLET1"], L["VIOLET2"], L["666"], L["X"]}
+		UIDropDownMenu_SetText(NecrosisSkinSelection, couleurLabels[ID])
 	end
 end
 
