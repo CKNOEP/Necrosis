@@ -329,6 +329,10 @@ Necrosis.Config = {}
 
 NecrosisConfig = {}
 
+-- RGB Encoding cache for storing health/mana values without taint
+-- Used to bypass Secret Value restrictions in Retail 12.0+
+Necrosis.HealthCache = CreateFrame("Frame", "NecrosisHealthCache", UIParent)
+Necrosis.HealthCache.texture = Necrosis.HealthCache:CreateTexture()
 
 -- Any of these could generate a lot of output
 Necrosis.Debug = {

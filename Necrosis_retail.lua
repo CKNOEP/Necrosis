@@ -2301,16 +2301,41 @@ end
 
 -- Update the sphere according to life || Update de la sphere en fonction de la vie
 function Necrosis:UpdateHealth()
-	-- ⚠️ RETAIL 12.0+ LIMITATION: UnitHealth() returns Secret Values
-	-- Cannot compare or do arithmetic with Secret Values even in pcall()
-	-- Display counter only, sphere texture update is disabled in Retail 12.0+
+	-- ⚠️ RETAIL 12.0+ FIX: Use RGB Encoding to bypass Secret Value restrictions
+	-- SetVertexColor/GetVertexColor are NOT tainted, allowing us to encode/decode health
 
 	pcall(function()
+		local health = UnitHealth("player")
+		local healthMax = UnitHealthMax("player")
+
+		-- Encode health into RGB cache (non-tainted operation)
+		Necrosis.HealthCache.texture:SetVertexColor(health / 30000, healthMax / 30000, 0)
+
+		-- Retrieve from RGB cache (non-tainted operation)
+		local r, g, b = Necrosis.HealthCache.texture:GetVertexColor()
+		local cachedHealth = math.floor(r * 30000)
+		local cachedHealthMax = math.floor(g * 30000)
+
+		-- If the sphere shows health || Si la sphère affiche la santé
+		if NecrosisConfig.Circle == 4 then
+			local fm = _G[Necrosis.Warlock_Buttons.main.f]
+			if fm and cachedHealthMax > 0 then
+				-- Calculate percentage (0-16 for 16 Shard levels)
+				local percentage = math.floor((cachedHealth / cachedHealthMax) * 16)
+				percentage = math.max(0, math.min(16, percentage))  -- Clamp 0-16
+
+				local targetTexture = NecrosisConfig.NecrosisColor .. "\\Shard" .. percentage
+				if not (Local.LastSphereSkin == targetTexture) then
+					Local.LastSphereSkin = targetTexture
+					fm:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\" .. Local.LastSphereSkin)
+				end
+			end
+		end
+
 		-- If the inside of the stone shows life || Si l'intérieur de la pierre affiche la vie
 		if NecrosisConfig.CountType == 5 then
 			if NecrosisShardCount then
-				local health = UnitHealth("player")
-				NecrosisShardCount:SetText(health)
+				NecrosisShardCount:SetText(cachedHealth)
 			end
 		end
 	end)
