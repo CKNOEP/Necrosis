@@ -180,7 +180,7 @@ do
 		artFrame:SetHeight(baseHeight * heightScale)
 		local scale = 0.78 * widthScale
 		textureContainer:SetScale(scale)
-		print("[NecrosisUI] BottomBanner size updated - Width: " .. string.format("%.1f", widthScale) .. ", Height: " .. string.format("%.1f", heightScale))
+		--print("[NecrosisUI] BottomBanner size updated - Width: " .. string.format("%.1f", widthScale) .. ", Height: " .. string.format("%.1f", heightScale))
 	end
 
 	-- Create Classic theme module
@@ -188,7 +188,7 @@ do
 
 	-- Load BottomBanner UI after NUI is ready
 	C_Timer.After(0.5, function()
-		print("[NecrosisUI] Loading BottomBanner UI...")
+		--print("[NecrosisUI] Loading BottomBanner UI...")
 		local function LoadBottomBannerScripts()
 			-- Load Framework.lua
 			local frameworkCode = [[
@@ -213,7 +213,7 @@ textureContainer:SetAllPoints(artFrame)
 local SkinnedFrames = {}
 
 local function CreateArtwork()
-	print("[NecrosisUI] CreateArtwork() started")
+	--print("[NecrosisUI] CreateArtwork() started")
 
 	if not NUI_BottomAnchor then
 		error("[NecrosisUI] ERROR: NUI_BottomAnchor is nil!")
@@ -225,7 +225,7 @@ local function CreateArtwork()
 	plate:SetFrameStrata('BACKGROUND')
 	plate:SetFrameLevel(1)
 	plate:SetAllPoints(NUI_BottomAnchor)
-	print("[NecrosisUI] Plate frame created")
+	--print("[NecrosisUI] Plate frame created")
 
 	-- Setup the Bottom Artwork
 	artFrame:SetFrameStrata('BACKGROUND')
@@ -270,24 +270,24 @@ local function CreateArtwork()
 	artFrame.FarRight:SetPoint('BOTTOMRIGHT', artFrame, 'BOTTOMRIGHT')
 	artFrame.FarRight:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
 
-	print("[NecrosisUI] CreateArtwork() completed successfully!")
-	print("[NecrosisUI] artFrame visible:", artFrame:IsVisible())
-	print("[NecrosisUI] NecrosisUI visible:", NecrosisUI:IsVisible())
+	--print("[NecrosisUI] CreateArtwork() completed successfully!")
+	--print("[NecrosisUI] artFrame visible:", artFrame:IsVisible())
+	--print("[NecrosisUI] NecrosisUI visible:", NecrosisUI:IsVisible())
 end
 
 -- Execute immediately on load
-print("[NecrosisUI] Creating BottomBanner artwork...")
+--print("[NecrosisUI] Creating BottomBanner artwork...")
 CreateArtwork()
 
 -- Show the NecrosisUI frame immediately if enabled
 if NecrosisConfig.NecrosisUIEnabled then
-	print("[NecrosisUI] Showing NecrosisUI frame...")
+	--print("[NecrosisUI] Showing NecrosisUI frame...")
 	if NecrosisUI then
 		NecrosisUI:Show()
 	end
 end
 
-print("[NecrosisUI] BottomBanner loaded!")
+--print("[NecrosisUI] BottomBanner loaded!")
 ]]
 			local func = loadstring(frameworkCode)
 			if func then
