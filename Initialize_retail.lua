@@ -353,16 +353,23 @@ nbutton:Hide()
 _G["NecrosisButton"] = nbutton
 	_G["NecrosisMainSphere"] = nbutton  -- Placeholder, will be replaced later
 
--- Create text overlay frame IMMEDIATELY with HIGH FrameStrata so it's above the button
--- This prevents XML.lua from creating it on UIParent (which would be behind the button)
-local textOverlay = CreateFrame("Frame", "NecrosisShardCountFrame_Placeholder", nbutton)  -- PARENT = nbutton!
-textOverlay:SetFrameStrata("HIGH")  -- Above MEDIUM (button strata)
+-- Create text overlay frame on UIParent (NOT on the button, since nbutton has no dimensions yet)
+-- The button will be positioned later, so we anchor the FontString directly to it by name
+local textOverlay = CreateFrame("Frame", "NecrosisShardCountFrame_Placeholder", UIParent)
+textOverlay:SetFrameStrata("HIGH")
 textOverlay:SetFrameLevel(100)
-textOverlay:SetAllPoints(nbutton)  -- Cover the entire button
+textOverlay:SetSize(34, 34)  -- Match button size
 -- Create the FontString on this high-strata frame
 local shardCount = textOverlay:CreateFontString("NecrosisShardCount", "OVERLAY", "GameFontNormal")
 shardCount:SetPoint("CENTER")  -- Center in parent
 shardCount:SetTextColor(1, 1, 1, 1)
+-- Position the overlay on the button using name (will work when button is positioned)
+C_Timer.After(0.1, function()
+	if _G["NecrosisButton"] then
+		textOverlay:SetPoint("CENTER", _G["NecrosisButton"], "CENTER")
+		textOverlay:Show()
+	end
+end)
 
 -- Hide all peripheral buttons at startup - will be shown after position restoration
 -- Wait 1 second to ensure all buttons are created by XML.lua first
@@ -429,6 +436,9 @@ local Events = {
 	"SPELLS_CHANGED",
 }
 
+-- ✅ Save Events to Necrosis so it can be accessed from slash commands
+Necrosis.Events = Events
+
 -- In WoW 12.0.1, RegisterEvent is blocked during addon load context
 -- We must register events from a player context (slash command)
 local eventsRegistered = false
@@ -442,11 +452,16 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 end)
 
 -- Register initial events (no other events can be registered during addon load)
+-- ✅ Include critical events that update health/mana counter
 pcall(function()
 	eventFrame:RegisterEvent("PLAYER_LOGIN")
 	eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	eventFrame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
 	eventFrame:RegisterEvent("SPELLS_CHANGED")
+	eventFrame:RegisterEvent("UNIT_HEALTH")   -- ✅ Health counter
+	eventFrame:RegisterEvent("UNIT_MANA")     -- ✅ Mana counter
+	eventFrame:RegisterEvent("UNIT_POWER_UPDATE")  -- ✅ Power updates
+	eventFrame:RegisterEvent("BAG_UPDATE")    -- ✅ Inventory updates
 end)
 
 -- Slash command to register remaining events from player context
@@ -464,30 +479,9 @@ SlashCmdList["NECTIMER"] = function()
 			Necrosis.OnEvent(Necrosis, event, arg1, arg2, arg3, arg4)
 		end)
 
-		-- Register spell cast events and initialization events
-		local spellEvents = {
-			"UNIT_SPELLCAST_SENT",
-			"UNIT_SPELLCAST_SUCCEEDED",
-			"UNIT_SPELLCAST_FAILED",
-			"UNIT_SPELLCAST_INTERRUPTED",
-		}
-
-		for _, evt in ipairs(spellEvents) do
-			pcall(function()
-				_G.spellFrame:RegisterEvent(evt)
-			end)
-		end
-
-		-- Register initialization events on eventFrame
-		local initEvents = {
-			"PLAYER_ENTERING_WORLD",
-			"GET_ITEM_INFO_RECEIVED",
-		}
-		for _, evt in ipairs(initEvents) do
-			pcall(function()
-				eventFrame:RegisterEvent(evt)
-			end)
-		end
+		-- ⚠️ RETAIL 12.0+ LIMITATION: RegisterEvent() is protected and cannot be called from slash commands
+		-- Only essential events (UNIT_HEALTH, UNIT_MANA, etc.) are registered during addon load
+		-- Other events can only be registered during secure contexts
 
 		--_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Spell cast events registered. Timers are now active.")
 

@@ -464,13 +464,31 @@ end
 
 function Necrosis.Skin_Click(self)
 	local ID = self:GetID()
-	local couleur = {"Cata", "Purple"}
-	UIDropDownMenu_SetSelectedID(NecrosisSkinSelection, ID)
+	local couleur = {"Rose", "Bleu", "Orange", "Turquoise", "Violet1", "Violet2", "666", "X"}
+
 	if couleur[ID] then
+		-- ✅ Sauvegarder le choix en config (SAFE - pas d'accès à API tainte)
 		NecrosisConfig.NecrosisColor = couleur[ID]
+
+		-- ✅ Appliquer la texture de la sphère (SAFE - SetNormalTexture n'est pas tainte)
 		local f = _G[Necrosis.Warlock_Buttons.main.f]
 		if f then
-			pcall(function() f:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..couleur[ID].."\\Shard0-2") end)
+			pcall(function()
+				f:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..couleur[ID].."\\Shard0")
+			end)
+		end
+
+		-- ✅ Mettre à jour le dropdown visuel
+		UIDropDownMenu_SetSelectedID(NecrosisSkinSelection, ID)
+		local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
+		local couleurLabels = {L["ROSE"], L["BLEU"], L["ORANGE"], L["TURQUOISE"], L["VIOLET1"], L["VIOLET2"], L["666"], L["X"]}
+
+		if couleurLabels[ID] then
+			local button = _G["NecrosisSkinSelectionButton"]
+			if button then
+				button:SetText(couleurLabels[ID])
+			end
+			UIDropDownMenu_SetText(NecrosisSkinSelection, couleurLabels[ID])
 		end
 	end
 end

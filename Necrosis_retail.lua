@@ -1216,6 +1216,17 @@ function Necrosis:OnEvent(event,...)
 				Necrosis:Initialize(Local.DefaultConfig)
 				Local.InWorld = true
 
+				-- Restore the saved sphere texture color at startup and update counter
+				if not NecrosisConfig.NecrosisColor then
+					NecrosisConfig.NecrosisColor = "666"
+				end
+				Local.LastSphereSkin = "Aucune"  -- Force update by resetting cache
+
+				-- Force an update now to show the health counter
+				C_Timer.After(0.2, function()
+					Necrosis:UpdateHealth()
+				end)
+
 				-- Auto-register spell events from player context
 				C_Timer.After(0.5, function()
 					if SlashCmdList["NECTIMER"] then
@@ -2283,27 +2294,19 @@ end
 
 -- Update the sphere according to life || Update de la sphere en fonction de la vie
 function Necrosis:UpdateHealth()
-	local health = UnitHealth("player")
-	if NecrosisConfig.Circle == 4 then
-		local healthMax = UnitHealthMax("player")
-		local fm = _G[Necrosis.Warlock_Buttons.main.f]
-		if health == healthMax then
-			if not (Local.LastSphereSkin == NecrosisConfig.NecrosisColor.."\\Shard32") then
-				Local.LastSphereSkin = NecrosisConfig.NecrosisColor.."\\Shard32"
-				fm:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..Local.LastSphereSkin)
-			end
-		else
-			local taux = math.floor(health / (healthMax / 16))
-			if not (Local.LastSphereSkin == NecrosisConfig.NecrosisColor.."\\Shard"..taux) then
-				Local.LastSphereSkin = NecrosisConfig.NecrosisColor.."\\Shard"..taux
-				fm:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..Local.LastSphereSkin)
+	-- ⚠️ RETAIL 12.0+ LIMITATION: UnitHealth() returns Secret Values
+	-- Cannot compare or do arithmetic with Secret Values even in pcall()
+	-- Display counter only, sphere texture update is disabled in Retail 12.0+
+
+	pcall(function()
+		-- If the inside of the stone shows life || Si l'intérieur de la pierre affiche la vie
+		if NecrosisConfig.CountType == 5 then
+			if NecrosisShardCount then
+				local health = UnitHealth("player")
+				NecrosisShardCount:SetText(health)
 			end
 		end
-	end
-	-- If the inside of the stone shows life || Si l'intérieur de la pierre affiche la vie
-	if NecrosisConfig.CountType == 5 then
-		NecrosisShardCount:SetText(health)
-	end
+	end)
 end
 
 local function SetTexPerMana(f, spell, mana) -- frame and warlock spell
@@ -2332,67 +2335,90 @@ local function SetSat(f, val) -- frame and desaturate value
 		end
 	end
 end
+-- Helper: Decode mana from RGB cache (values are NOT tainted!)
+local function DecodeManaFromRGB()
+	if not Necrosis.ManaCache then return 0, 0 end
+	local r, g, b = Necrosis.ManaCache.texture:GetVertexColor()
+
+	-- ✅ Retrieve from RGB (THESE VALUES ARE NOT TAINTED!)
+	local decodedMana = math.floor(r * 30000)
+	local decodedMax = math.floor(g * 30000)
+	return decodedMana, decodedMax
+end
+
 -- Update buttons according to mana || Update des boutons en fonction de la mana
 function Necrosis:UpdateMana()
 	if Local.Dead then return end
 --	if UnitIsDead("player") then return end
 
-	local ptype,ptype_txt = UnitPowerType("player")
-	local mana = UnitPower("player",ptype)
-	local manaMax = UnitPowerMax("player", ptype)
+	-- ⚠️ RETAIL 12.0+ LIMITATION: UnitPower() returns Secret Values
+	-- We cannot do arithmetic on Secret Values in Retail, so we skip mana-dependent features
+	-- Health counter still works (CountType 1-3), but Mana (CountType 4) is disabled
 
-	local fm = _G[Necrosis.Warlock_Buttons.main.f]
-	-- If the perimeter of the stone shows the mana || Si le pourtour de la pierre affiche la mana
-	if NecrosisConfig.Circle == 3 then
-		if mana == manaMax then
-			if not (Local.LastSphereSkin == NecrosisConfig.NecrosisColor.."\\Shard32") then
-				Local.LastSphereSkin = NecrosisConfig.NecrosisColor.."\\Shard32"
-				fm:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..Local.LastSphereSkin)
-			end
-		else
-			local taux = math.floor(mana / (manaMax / 16))
-			if not (Local.LastSphereSkin == NecrosisConfig.NecrosisColor.."\\Shard"..taux) then
-				Local.LastSphereSkin = NecrosisConfig.NecrosisColor.."\\Shard"..taux
-				fm:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..Local.LastSphereSkin)
-			end
-		end
-	end
-
-	-- If the inside of the stone shows mana || Si l'intérieur de la pierre affiche la mana
+	-- Set default to 0 if Mana counter is selected (not supported in Retail 12.0+)
 	if NecrosisConfig.CountType == 4 then
-		NecrosisShardCount:SetText(mana)
+		NecrosisShardCount:SetText("0")
 	end
 
-	-- Menus - mana only
-	-----------------------------------------------
-	if mana then
-		-- curses
-		for i, v in ipairs(Necrosis.Warlock_Lists.curses) do
-			local f = _G[Necrosis.Warlock_Buttons[v.f_ptr].f]
-			local spell = Necrosis.GetSpell(v.high_of)
-			SetTexPerMana(f, spell, mana)
-			-- Update mana text display
-			if f and f.manaText and spell and spell.Mana then
-				f.manaText:SetText(spell.Mana .. " Mana")
+	-- ⚠️ RETAIL 12.0+ Taint Protection: Wrap mana operations in pcall
+	-- If any error occurs, silently skip mana-dependent features
+	pcall(function()
+		local ptype, ptype_txt = UnitPowerType("player")
+		local mana = UnitPower("player", ptype)
+		local manaMax = UnitPowerMax("player", ptype)
+
+		local fm = _G[Necrosis.Warlock_Buttons.main.f]
+		-- If the perimeter of the stone shows the mana || Si le pourtour de la pierre affiche la mana
+		if NecrosisConfig.Circle == 3 then
+			if mana == manaMax then
+				if not (Local.LastSphereSkin == NecrosisConfig.NecrosisColor.."\\Shard16") then
+					Local.LastSphereSkin = NecrosisConfig.NecrosisColor.."\\Shard16"
+					fm:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..Local.LastSphereSkin)
+				end
+			else
+				local taux = math.floor(mana / (manaMax / 16))
+				if not (Local.LastSphereSkin == NecrosisConfig.NecrosisColor.."\\Shard"..taux) then
+					Local.LastSphereSkin = NecrosisConfig.NecrosisColor.."\\Shard"..taux
+					fm:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..Local.LastSphereSkin)
+				end
 			end
 		end
-		-- buffs
-		for i, v in ipairs(Necrosis.Warlock_Lists.buffs) do
-			local f = _G[Necrosis.Warlock_Buttons[v.f_ptr].f]
-			local spell = Necrosis.GetSpell(v.high_of)
-			SetTexPerMana(f, spell, mana)
-			-- Update mana text display
-			if f and f.manaText and spell and spell.Mana then
-				f.manaText:SetText(spell.Mana .. " Mana")
-			end
+
+		-- If the inside of the stone shows mana || Si l'intérieur de la pierre affiche la mana
+		if NecrosisConfig.CountType == 4 then
+			NecrosisShardCount:SetText(mana)
 		end
-		-- pets
-		for i, v in ipairs(Necrosis.Warlock_Lists.pets) do
-			
-			--print (Necrosis.Warlock_Buttons[v.f_ptr],i)
-			local b = Necrosis.Warlock_Buttons[v.f_ptr]
-			local f = _G[b.f]
-			local spell = Necrosis.GetSpell(v.high_of)
+
+		-- Menus - mana only
+		-----------------------------------------------
+		if mana then
+			-- curses
+			for i, v in ipairs(Necrosis.Warlock_Lists.curses) do
+				local f = _G[Necrosis.Warlock_Buttons[v.f_ptr].f]
+				local spell = Necrosis.GetSpell(v.high_of)
+				SetTexPerMana(f, spell, mana)
+				-- Update mana text display
+				if f and f.manaText and spell and spell.Mana then
+					f.manaText:SetText(spell.Mana .. " Mana")
+				end
+			end
+			-- buffs
+			for i, v in ipairs(Necrosis.Warlock_Lists.buffs) do
+				local f = _G[Necrosis.Warlock_Buttons[v.f_ptr].f]
+				local spell = Necrosis.GetSpell(v.high_of)
+				SetTexPerMana(f, spell, mana)
+				-- Update mana text display
+				if f and f.manaText and spell and spell.Mana then
+					f.manaText:SetText(spell.Mana .. " Mana")
+				end
+			end
+			-- pets
+			for i, v in ipairs(Necrosis.Warlock_Lists.pets) do
+
+				--print (Necrosis.Warlock_Buttons[v.f_ptr],i)
+				local b = Necrosis.Warlock_Buttons[v.f_ptr]
+				local f = _G[b.f]
+				local spell = Necrosis.GetSpell(v.high_of)
 --[[
 _G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis:UpdateMana"
 .." i'"..(tostring(i or "nyl"))..'"'
@@ -2401,22 +2427,23 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis:UpdateMana"
 .." di'"..(tostring(Local.Summon.DemonId or "nyl"))..'"'
 )
 --]]
-			if spell and f then
-				SetTexPerMana(f, spell, mana)
-				
-				if spell.reagent then
-					if Necrosis.Warlock_Lists.reagents[spell.reagent].count <= 0 then
+				if spell and f then
+					SetTexPerMana(f, spell, mana)
+
+					if spell.reagent then
+						if Necrosis.Warlock_Lists.reagents[spell.reagent].count <= 0 then
+							SetSat(f, 1)
+						end
+					end
+
+					if spell.NeedPet and not UnitExists("pet") then
 						SetSat(f, 1)
 					end
+				else
 				end
-				
-				if spell.NeedPet and not UnitExists("pet") then
-					SetSat(f, 1)
-				end			
-			else
 			end
 		end
-	end
+	end)  -- End of pcall for mana operations
 
 
 	-- Spell interactions
