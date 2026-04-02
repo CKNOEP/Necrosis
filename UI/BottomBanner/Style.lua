@@ -15,7 +15,7 @@ local artFrame = CreateFrame('Frame', 'NUI_Art_Classic', NecrosisUI)
 local SkinnedFrames = {}
 
 local function CreateArtwork()
-	print("[NecrosisUI] CreateArtwork() started")
+	--print("[NecrosisUI] CreateArtwork() started")
 
 	if not NUI_BottomAnchor then
 		error("[NecrosisUI] ERROR: NUI_BottomAnchor is nil!")
@@ -27,7 +27,7 @@ local function CreateArtwork()
 	plate:SetFrameStrata('BACKGROUND')
 	plate:SetFrameLevel(1)
 	plate:SetAllPoints(NUI_BottomAnchor)
-	print("[NecrosisUI] Plate frame created")
+	--print("[NecrosisUI] Plate frame created")
 
 	-- Setup the Bottom Artwork
 	artFrame:SetFrameStrata('BACKGROUND')
@@ -63,9 +63,9 @@ local function CreateArtwork()
 	artFrame.FarRight:SetPoint('BOTTOMRIGHT', NecrosisUI, 'BOTTOMRIGHT')
 	artFrame.FarRight:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
 
-	print("[NecrosisUI] CreateArtwork() completed successfully!")
-	print("[NecrosisUI] artFrame visible:", artFrame:IsVisible())
-	print("[NecrosisUI] NecrosisUI visible:", NecrosisUI:IsVisible())
+	--print("[NecrosisUI] CreateArtwork() completed successfully!")
+	--print("[NecrosisUI] artFrame visible:", artFrame:IsVisible())
+	--print("[NecrosisUI] NecrosisUI visible:", NecrosisUI:IsVisible())
 end
 
 -- Detect WoW version
@@ -86,13 +86,13 @@ elseif WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC then
 end
 
 -- Execute immediately on load
-print("[NecrosisUI] ========================================")
-print("[NecrosisUI] Style.lua loaded - WoW Version: " .. versionName .. " (Build: " .. wowBuild .. ")")
-print("[NecrosisUI] Calling CreateArtwork()...")
+--print("[NecrosisUI] ========================================")
+--print("[NecrosisUI] Style.lua loaded - WoW Version: " .. versionName .. " (Build: " .. wowBuild .. ")")
+--print("[NecrosisUI] Calling CreateArtwork()...")
 if CreateArtwork then
 	CreateArtwork()
-	print("[NecrosisUI] CreateArtwork() executed successfully!")
+	--print("[NecrosisUI] CreateArtwork() executed successfully!")
 else
 	error("[NecrosisUI] ERROR: CreateArtwork function not found!")
 end
-print("[NecrosisUI] ========================================")
+--print("[NecrosisUI] ========================================")

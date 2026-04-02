@@ -1222,8 +1222,15 @@ function Necrosis:OnEvent(event,...)
 				end
 				Local.LastSphereSkin = "Aucune"  -- Force update by resetting cache
 
-				-- Force an update now to show the health counter
+				-- Force an update now to show the health counter and apply saved skin
 				C_Timer.After(0.2, function()
+					-- Apply the saved skin texture
+					local fm = _G[Necrosis.Warlock_Buttons.main.f]
+					if fm then
+						fm:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..NecrosisConfig.NecrosisColor.."\\Shard0")
+						Local.LastSphereSkin = NecrosisConfig.NecrosisColor.."\\Shard0"
+					end
+					-- Show health counter
 					Necrosis:UpdateHealth()
 				end)
 
@@ -2857,12 +2864,12 @@ end
 -- Button spacing multiplier - affects angular spacing between buttons
 local spacingMultiplier = NecrosisConfig.NecrosisButtonSpacing or 1.0
 local buttonAngleSpacing = 36 * spacingMultiplier
-print("[Necrosis] ButtonSetup - button angle spacing: " .. buttonAngleSpacing .. " degrees")
+--print("[Necrosis] ButtonSetup - button angle spacing: " .. buttonAngleSpacing .. " degrees")
 
 -- Button radius multiplier - affects distance of buttons from center sphere
 local radiusMultiplier = NecrosisConfig.NecrosisButtonRadius or 1.0
 dist = dist * radiusMultiplier
-print("[Necrosis] ButtonSetup - button radius multiplier: " .. radiusMultiplier)
+--print("[Necrosis] ButtonSetup - button radius multiplier: " .. radiusMultiplier)
 
 	--print (dist,NBRScale,NecrosisConfig.NecrosisButtonScale)
 
