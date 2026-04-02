@@ -1222,8 +1222,15 @@ function Necrosis:OnEvent(event,...)
 				end
 				Local.LastSphereSkin = "Aucune"  -- Force update by resetting cache
 
-				-- Force an update now to show the health counter
+				-- Force an update now to show the health counter and apply saved skin
 				C_Timer.After(0.2, function()
+					-- Apply the saved skin texture
+					local fm = _G[Necrosis.Warlock_Buttons.main.f]
+					if fm then
+						fm:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..NecrosisConfig.NecrosisColor.."\\Shard0")
+						Local.LastSphereSkin = NecrosisConfig.NecrosisColor.."\\Shard0"
+					end
+					-- Show health counter
 					Necrosis:UpdateHealth()
 				end)
 
