@@ -6,7 +6,7 @@
     Features removed: Soul Link, Detect Invisibility, Sacrifice Voidwalker
 --]]
 
-print("[NECROSIS] Initialize_retail.lua loaded!")
+--print("[NECROSIS] Initialize_retail.lua loaded!")
 
 -- On définit _G comme étant le tableau contenant toutes les frames existantes.
 local _G = getfenv(0)
