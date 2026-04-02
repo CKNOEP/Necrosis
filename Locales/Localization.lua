@@ -185,6 +185,11 @@ L["PURPLE"] = "Purple"
 L["PURPLE2"] = "Purple2"
 L["666"] = "666"
 L["X"] = "X"
+-- Sphere skins (all 8 colors)
+L["ROSE"] = "Pink"
+L["BLEU"] = "Blue"
+L["VIOLET1"] = "Purple"
+L["VIOLET2"] = "Purple2"
 -- Count
 L["SOUL_SHARDS"] = "Soulshards"
 L["DEMON_SUMMON_STONES"] = "Demon summoning stones"
