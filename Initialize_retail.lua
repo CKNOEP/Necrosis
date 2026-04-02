@@ -737,7 +737,9 @@ function Necrosis:Initialize(Config)
 
 				-- Create BRAND NEW button
 				local btn = CreateFrame("Button", "NecrosisMainSphere", UIParent, "SecureUnitButtonTemplate")
-				btn:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\Shard")
+				-- Apply saved skin color, or default to 666
+				local skinColor = NecrosisConfig.NecrosisColor or "666"
+				btn:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..skinColor.."\\Shard16")
 				btn:SetHighlightTexture("Interface\\Buttons\\UI-Common-MouseHilight")
 				btn:GetHighlightTexture():SetBlendMode("ADD")
 				btn:SetWidth(58)
