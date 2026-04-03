@@ -1225,6 +1225,12 @@ function Necrosis:OnEvent(event,...)
 					end
 				end)
 
+				-- Also register via UpdateHealth/UpdateMana in case event registration fails
+				C_Timer.After(0.3, function()
+					Necrosis:UpdateHealth()
+					Necrosis:UpdateMana()
+				end)
+
 				-- Restore the saved sphere texture color at startup and update counter
 				if not NecrosisConfig.NecrosisColor then
 					NecrosisConfig.NecrosisColor = "666"
@@ -1246,9 +1252,7 @@ function Necrosis:OnEvent(event,...)
 				-- ✅ FALLBACK: Update health counter every 0.5s if events aren't firing
 				-- This ensures counter always updates even if UNIT_HEALTH event fails
 				C_Timer.NewTicker(0.5, function()
-					if NecrosisConfig.ShowCount and NecrosisConfig.CountType == 5 then
-						Necrosis:UpdateHealth()
-					end
+					Necrosis:UpdateHealth()
 				end)
 
 				-- Auto-register spell events from player context
@@ -2318,49 +2322,19 @@ end
 
 -- Update the sphere according to life || Update de la sphere en fonction de la vie
 function Necrosis:UpdateHealth()
-	-- ⚠️ RETAIL 12.0+ FIX: Use RGB Encoding to bypass Secret Value restrictions
-	-- SetVertexColor/GetVertexColor are NOT tainted, allowing us to encode/decode health
+	-- ⚠️ RETAIL 12.0+ LIMITATION: Cannot do arithmetic on Secret Values
+	-- Simply display the health value directly without encoding/decoding
 
-	pcall(function()
-		local health = UnitHealth("player")
-		local healthMax = UnitHealthMax("player")
+	local health = UnitHealth("player")
+	local healthMax = UnitHealthMax("player")
 
-		-- Encode health into RGB cache (non-tainted operation)
-		Necrosis.HealthCache.texture:SetVertexColor(health / 30000, healthMax / 30000, 0)
-
-		-- Retrieve from RGB cache (non-tainted operation)
-		local r, g, b = Necrosis.HealthCache.texture:GetVertexColor()
-		local cachedHealth = math.floor(r * 30000)
-		local cachedHealthMax = math.floor(g * 30000)
-
-		-- If the sphere shows health || Si la sphère affiche la santé
-		if NecrosisConfig.Circle == 4 then
-			local fm = _G[Necrosis.Warlock_Buttons.main.f]
-			if fm and cachedHealthMax > 0 then
-				-- Calculate percentage (0-16 for 16 Shard levels)
-				local percentage = math.floor((cachedHealth / cachedHealthMax) * 16)
-				percentage = math.max(0, math.min(16, percentage))  -- Clamp 0-16
-
-				local targetTexture = NecrosisConfig.NecrosisColor .. "\\Shard" .. percentage
-				if not (Local.LastSphereSkin == targetTexture) then
-					Local.LastSphereSkin = targetTexture
-					fm:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\" .. Local.LastSphereSkin)
-				end
-			end
+	-- If the inside of the stone shows life || Si l'intérieur de la pierre affiche la vie
+	if NecrosisConfig.CountType == 5 then
+		if NecrosisShardCount then
+			-- Display health directly (no arithmetic allowed on Secret Values)
+			NecrosisShardCount:SetText(tostring(health))
 		end
-
-		-- If the inside of the stone shows life || Si l'intérieur de la pierre affiche la vie
-		if NecrosisConfig.ShowCount and NecrosisConfig.CountType == 5 then
-			if NecrosisShardCount then
-				-- Display health directly (more reliable than RGB encoded value)
-				if health and health > 0 then
-					NecrosisShardCount:SetText(health)
-				else
-					NecrosisShardCount:SetText(cachedHealth)
-				end
-			end
-		end
-	end)
+	end
 end
 
 local function SetTexPerMana(f, spell, mana) -- frame and warlock spell
@@ -2410,8 +2384,10 @@ function Necrosis:UpdateMana()
 	-- Health counter still works (CountType 1-3), but Mana (CountType 4) is disabled
 
 	-- Set default to 0 if Mana counter is selected (not supported in Retail 12.0+)
-	if NecrosisConfig.ShowCount and NecrosisConfig.CountType == 4 then
-		NecrosisShardCount:SetText("0")
+	if NecrosisConfig.CountType == 4 then
+		if NecrosisShardCount then
+			NecrosisShardCount:SetText("0")
+		end
 	end
 
 	-- ⚠️ RETAIL 12.0+ Taint Protection: Wrap mana operations in pcall
@@ -2845,6 +2821,8 @@ function Necrosis:BagExplore(arg)
 				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
 			end
 		end
+		-- CountType 4 (Mana) and 5 (Health) are updated by UpdateMana() and UpdateHealth()
+		-- Don't clear them here, let the event handlers manage the display
 	else
 		NecrosisShardCount:SetText("")
 	end
