@@ -2322,17 +2322,47 @@ end
 
 -- Update the sphere according to life || Update de la sphere en fonction de la vie
 function Necrosis:UpdateHealth()
-	-- ⚠️ RETAIL 12.0+ LIMITATION: Cannot do arithmetic on Secret Values
-	-- Simply display the health value directly without encoding/decoding
+	-- ⚠️ RETAIL 12.0+ FIX: Use RGB Encoding to bypass Secret Value restrictions
+	-- Convert Secret Values to normal numbers before arithmetic to avoid taint
 
 	local health = UnitHealth("player")
 	local healthMax = UnitHealthMax("player")
 
-	-- If the inside of the stone shows life || Si l'intérieur de la pierre affiche la vie
-	if NecrosisConfig.CountType == 5 then
-		if NecrosisShardCount then
-			-- Display health directly (no arithmetic allowed on Secret Values)
-			NecrosisShardCount:SetText(tostring(health))
+	-- ✅ Convert Secret Values to normal numbers (CRITICAL: avoids taint error)
+	local healthNum = tonumber(tostring(health))
+	local healthMaxNum = tonumber(tostring(healthMax))
+
+	if healthNum and healthMaxNum and healthMaxNum > 0 then
+		-- Encode health into RGB cache (safe - no arithmetic on Secret Values)
+		Necrosis.HealthCache.texture:SetVertexColor(healthNum / 30000, healthMaxNum / 30000, 0)
+
+		-- Retrieve from RGB cache (non-tainted operation)
+		local r, g, b = Necrosis.HealthCache.texture:GetVertexColor()
+		local cachedHealth = math.floor(r * 30000)
+		local cachedHealthMax = math.floor(g * 30000)
+
+		-- If the sphere shows health || Si la sphère affiche la santé
+		if NecrosisConfig.Circle == 4 and cachedHealthMax > 0 then
+			local fm = _G[Necrosis.Warlock_Buttons.main.f]
+			if fm then
+				-- Calculate percentage (0-16 for 16 Shard levels)
+				local percentage = math.floor((cachedHealth / cachedHealthMax) * 16)
+				percentage = math.max(0, math.min(16, percentage))  -- Clamp 0-16
+
+				local targetTexture = NecrosisConfig.NecrosisColor .. "\\Shard" .. percentage
+				if not (Local.LastSphereSkin == targetTexture) then
+					Local.LastSphereSkin = targetTexture
+					fm:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\" .. Local.LastSphereSkin)
+				end
+			end
+		end
+
+		-- If the inside of the stone shows life || Si l'intérieur de la pierre affiche la vie
+		if NecrosisConfig.CountType == 5 then
+			if NecrosisShardCount then
+				-- Display health directly
+				NecrosisShardCount:SetText(tostring(healthNum))
+			end
 		end
 	end
 end
