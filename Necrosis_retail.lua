@@ -2333,7 +2333,7 @@ function Necrosis:UpdateHealth()
 		end
 
 		-- If the inside of the stone shows life || Si l'intérieur de la pierre affiche la vie
-		if NecrosisConfig.CountType == 5 then
+		if NecrosisConfig.ShowCount and NecrosisConfig.CountType == 5 then
 			if NecrosisShardCount then
 				NecrosisShardCount:SetText(cachedHealth)
 			end
@@ -2388,7 +2388,7 @@ function Necrosis:UpdateMana()
 	-- Health counter still works (CountType 1-3), but Mana (CountType 4) is disabled
 
 	-- Set default to 0 if Mana counter is selected (not supported in Retail 12.0+)
-	if NecrosisConfig.CountType == 4 then
+	if NecrosisConfig.ShowCount and NecrosisConfig.CountType == 4 then
 		NecrosisShardCount:SetText("0")
 	end
 
@@ -2417,7 +2417,7 @@ function Necrosis:UpdateMana()
 		end
 
 		-- If the inside of the stone shows mana || Si l'intérieur de la pierre affiche la mana
-		if NecrosisConfig.CountType == 4 then
+		if NecrosisConfig.ShowCount and NecrosisConfig.CountType == 4 then
 			NecrosisShardCount:SetText(mana)
 		end
 
