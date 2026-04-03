@@ -5,40 +5,6 @@ if not NUI then
 	_G.NUI = NUI
 end
 
--- ========================================
--- REGISTER FOR ADDON_LOADED TO IMPORT LAYOUT
--- ========================================
--- Using ADDON_LOADED to ensure timing is right
-
-local startupFrame = CreateFrame("Frame")
-startupFrame:RegisterEvent("ADDON_LOADED")
-startupFrame:RegisterEvent("PLAYER_LOGIN")
-
-local addonLoaded = false
-local playerLoggedIn = false
-
-startupFrame:SetScript("OnEvent", function(self, event, addon)
-	if event == "ADDON_LOADED" and addon == "Necrosis" then
-		addonLoaded = true
-	elseif event == "PLAYER_LOGIN" then
-		playerLoggedIn = true
-	end
-
-	-- Only proceed after both events have fired
-	if addonLoaded and playerLoggedIn then
-		C_Timer.After(1, function()
-			-- Only import layout if NecrosisUI is enabled
-			if NecrosisConfig and NecrosisConfig.NecrosisUIEnabled and NUI and NUI.ImportLayout then
-				pcall(function()
-					NUI:ImportLayout()
-				end)
-			end
-		end)
-		self:UnregisterEvent("ADDON_LOADED")
-		self:UnregisterEvent("PLAYER_LOGIN")
-	end
-end)
-
 -- Get dynamic system offset based on actual layout counts
 local function GetSystemOffset()
 	-- Dynamic method: GetNumLayouts() - #custom layouts
@@ -94,13 +60,6 @@ function NUI:UpdateBottomBannerScale()
 		NUI_Art_Classic:SetScale(scale)
 	end
 end
-
--- ========================================
--- NECROSISUI DEFAULT LAYOUT
--- ========================================
--- This layout string is automatically imported on first login
-
-_G.NECROSISUI_LAYOUT_STRING = "2 50 0 0 0 0 0 UIParent 368.2 -1004.0 -1 ##$$%/&&'%)$+#,$ 0 1 0 8 2 MainActionBar 0.0 4.0 -1 ##$$%/&&'%(#,$ 0 2 0 0 0 UIParent 1171.4 -964.5 -1 ##$$%/&&'%(#,$ 0 3 0 5 5 UIParent -2.0 -112.0 -1 #$$$%/&&'%(#,$ 0 4 0 8 6 MultiBarRight -4.0 0.0 -1 #$$$%/&&'%(#,$ 0 5 1 1 4 UIParent 0.0 0.0 -1 ##$$%/&('%(#,$ 0 6 1 1 4 UIParent 0.0 -50.0 -1 ##$$%/&('%(#,$ 0 7 1 1 4 UIParent 0.0 -100.0 -1 ##$$%/&('%(#,$ 0 10 1 7 7 UIParent 0.0 45.0 -1 ##$$&('% 0 11 0 6 6 UIParent 361.1 128.0 -1 ##$$&&'%,# 0 12 1 7 7 UIParent 0.0 45.0 -1 ##$$&('% 1 -1 1 4 4 UIParent 0.0 0.0 -1 ##$#%# 2 -1 1 2 2 UIParent 0.0 0.0 -1 ##$#%( 3 0 0 7 7 UIParent -335.0 218.0 -1 $#3# 3 1 0 7 7 UIParent 290.0 213.0 -1 %#3# 3 2 1 6 7 UIParent 520.0 265.0 -1 %#&#3# 3 3 1 0 2 CompactRaidFrameManager 0.0 -7.0 -1 '#(#)#-5.)/#1$3#5#6(7-7$ 3 4 1 0 2 CompactRaidFrameManager 0.0 -5.0 -1 ,#-5.)/#0#1#2(5#6(7-7$ 3 5 1 5 5 UIParent 0.0 0.0 -1 &#*$3# 3 6 1 5 5 UIParent 0.0 0.0 -1 -5.)/#4$5#6(7-7$ 3 7 1 4 4 UIParent 0.0 0.0 -1 3# 4 -1 1 7 7 UIParent 0.0 45.0 -1 # 5 -1 1 7 7 UIParent 0.0 45.0 -1 # 6 0 1 2 2 UIParent -255.0 -10.0 -1 ##$#%#&.(()( 6 1 1 2 2 UIParent -270.0 -155.0 -1 ##$#%#'+(()(-$ 6 2 1 1 1 UIParent 0.0 -25.0 -1 ##$#%$&.(()(+#,-,$ 7 -1 1 7 7 UIParent 0.0 45.0 -1 # 8 -1 0 6 6 UIParent 35.0 56.0 -1 #%$|%$&c 9 -1 1 7 7 UIParent 0.0 45.0 -1 # 10 -1 1 0 0 UIParent 16.0 -116.0 -1 # 11 -1 1 8 8 UIParent -9.0 85.0 -1 # 12 -1 1 2 2 UIParent -110.0 -275.0 -1 #K$#%# 13 -1 0 5 5 UIParent -2.0 -370.0 -1 ##$#%#&# 14 -1 1 2 2 MicroButtonAndBagsBar 0.0 10.0 -1 ##$#%( 15 0 1 7 7 StatusTrackingBarManager 0.0 0.0 -1 # 15 1 1 7 7 StatusTrackingBarManager 0.0 17.0 -1 # 16 -1 1 5 5 UIParent 0.0 0.0 -1 #( 17 -1 1 1 1 UIParent 0.0 -100.0 -1 ## 18 -1 1 5 5 UIParent 0.0 0.0 -1 #- 19 -1 1 7 7 UIParent 0.0 0.0 -1 ## 20 0 1 7 7 UIParent 0.0 310.0 -1 ##$/%$&('%(-($)#+$,$-$ 20 1 1 7 7 UIParent 0.0 240.0 -1 ##$*%$&('%(-($)#+$,$-$ 20 2 1 7 7 UIParent 0.0 370.0 -1 ##$$%$&('((-($)#+$,$-$ 20 3 1 7 7 UIParent 420.0 430.0 -1 #$$$%#&('((-($)#*#+$,$-$.-.$ 21 -1 1 7 7 UIParent -410.0 380.0 -1 ##$# 22 0 1 8 7 UIParent -457.0 336.0 -1 #$$$%#&('((#)U*$+%,$-#.#/U0% 22 1 1 1 1 UIParent 0.0 -40.0 -1 &('()U*#+% 22 2 1 1 1 UIParent 0.0 -90.0 -1 &('()U*#+% 22 3 1 1 1 UIParent 0.0 -130.0 -1 &('()U*#+% 23 -1 1 0 0 UIParent 0.0 0.0 -1 ##$#%$&-&$'7(%)U+$,$-$.(/U"
 
 -- Import NecrosisUI Layout via C_EditMode
 function NUI:ImportLayout()
@@ -318,4 +277,3 @@ SlashCmdList["NUIDEBUG"] = function()
 		end
 	end)
 end
-

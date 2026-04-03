@@ -19,7 +19,6 @@ local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
 
 -- On crée ou on affiche le panneau de configuration de NecrosisUI
 function Necrosis:SetNecrosisUIConfig()
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("|cFFFF00FFSetNecrosisUIConfig called!|r")
 
 	local frame = _G["NecrosisUIConfig"]
 	if not frame then

@@ -2,26 +2,21 @@
 
 ---
 
-## Version 8.4.3 - March 3, 2026
+## Version 8.5.0 - March 30, 2026
 
-### 🐛 Bug Fixes
+### ✨ New Features & Improvements
 
-- **Fixed critical error in Necrosis-cata.lua**: Corrected `TimerManagement` reference that was causing `attempt to index field 'TimerManagement' (a nil value)` error at lines 657-658
-- **Removed debug messages**: Eliminated debug print statements from creature alert system that were cluttering chat output
-- **Fixed corruption refresh timer lookup**: Corrected nil reference in spell timer lookup when refreshing corruption debuffs on targets
-
-### ✨ Improvements
-
-- **Code consistency**: Standardized `TimerManagement` references across `Necrosis.lua` and `Necrosis-cata.lua` for better maintainability
-- **Better error handling**: Improved stability of the creature alert button system (Enslave Demon/Banish Elemental)
+- **NecrosisUI Layout System**: Integrated C_EditMode API for drag-and-drop UI customization (Midnight/TWW)
+- **BottomBanner Framework**: Enhanced retail framework with dynamic layout support
+- **Debug Cleanup**: Removed debug messages from configuration panels for production stability
 
 ### 🔧 Technical Details
 
 | File | Changes |
 |------|---------|
-| `Necrosis.lua` | Line 647: Fixed TimerManagement reference |
-| `Necrosis-cata.lua` | Lines 657-658: Fixed TimerManagement reference |
-| All TOC files | Updated version to 8.4.3 |
+| `Framework_retail.lua` | C_EditMode layout integration |
+| `Options-NecrosisUI_retail.lua` | Removed debug messages, production-ready |
+| All TOC files | Updated version to 8.5.0 |
 
 ---
 
