@@ -1193,6 +1193,10 @@ This *should* happen quickly. Waiting avoids issues by ensuring localized string
 function Necrosis:OnEvent(event,...)
 	local arg1,arg2,arg3,arg4,arg5,arg6 = ...
 
+	if event == "UNIT_HEALTH" or event == "UNIT_MANA" then
+		print("[Necrosis.OnEvent] event="..event.." arg1="..tostring(arg1))
+	end
+
 	local fm = _G[Necrosis.Warlock_Buttons.main.f]
 	local ev = {} -- debug
 	local msg = ""
@@ -1216,6 +1220,16 @@ function Necrosis:OnEvent(event,...)
 				Necrosis:Initialize(Local.DefaultConfig)
 				Local.InWorld = true
 
+				-- ✅ Register UNIT_HEALTH/UNIT_MANA from secure context (PLAYER_ENTERING_WORLD)
+				pcall(function()
+					local eventFrame = _G["NecrosisEventFrame"]
+					if eventFrame then
+						eventFrame:RegisterEvent("UNIT_HEALTH")
+						eventFrame:RegisterEvent("UNIT_MANA")
+						print("[Necrosis] Registered UNIT_HEALTH and UNIT_MANA events")
+					end
+				end)
+
 				-- Restore the saved sphere texture color at startup and update counter
 				if not NecrosisConfig.NecrosisColor then
 					NecrosisConfig.NecrosisColor = "666"
@@ -1232,6 +1246,14 @@ function Necrosis:OnEvent(event,...)
 					end
 					-- Show health counter
 					Necrosis:UpdateHealth()
+				end)
+
+				-- ✅ FALLBACK: Update health counter every 0.5s if events aren't firing
+				-- This ensures counter always updates even if UNIT_HEALTH event fails
+				C_Timer.NewTicker(0.5, function()
+					if NecrosisConfig.ShowCount and NecrosisConfig.CountType == 5 then
+						Necrosis:UpdateHealth()
+					end
 				end)
 
 				-- Auto-register spell events from player context
@@ -2307,6 +2329,8 @@ function Necrosis:UpdateHealth()
 	pcall(function()
 		local health = UnitHealth("player")
 		local healthMax = UnitHealthMax("player")
+
+		print("[Necrosis:UpdateHealth] health="..tostring(health).." healthMax="..tostring(healthMax).." ShowCount="..tostring(NecrosisConfig.ShowCount).." CountType="..tostring(NecrosisConfig.CountType).." NecrosisShardCount="..tostring(NecrosisShardCount))
 
 		-- Encode health into RGB cache (non-tainted operation)
 		Necrosis.HealthCache.texture:SetVertexColor(health / 30000, healthMax / 30000, 0)
