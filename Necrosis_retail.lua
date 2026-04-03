@@ -1193,10 +1193,6 @@ This *should* happen quickly. Waiting avoids issues by ensuring localized string
 function Necrosis:OnEvent(event,...)
 	local arg1,arg2,arg3,arg4,arg5,arg6 = ...
 
-	if event == "UNIT_HEALTH" or event == "UNIT_MANA" then
-		print("[Necrosis.OnEvent] event="..event.." arg1="..tostring(arg1))
-	end
-
 	local fm = _G[Necrosis.Warlock_Buttons.main.f]
 	local ev = {} -- debug
 	local msg = ""
@@ -1226,7 +1222,6 @@ function Necrosis:OnEvent(event,...)
 					if eventFrame then
 						eventFrame:RegisterEvent("UNIT_HEALTH")
 						eventFrame:RegisterEvent("UNIT_MANA")
-						print("[Necrosis] Registered UNIT_HEALTH and UNIT_MANA events")
 					end
 				end)
 
@@ -2330,8 +2325,6 @@ function Necrosis:UpdateHealth()
 		local health = UnitHealth("player")
 		local healthMax = UnitHealthMax("player")
 
-		print("[Necrosis:UpdateHealth] health="..tostring(health).." healthMax="..tostring(healthMax).." ShowCount="..tostring(NecrosisConfig.ShowCount).." CountType="..tostring(NecrosisConfig.CountType).." NecrosisShardCount="..tostring(NecrosisShardCount))
-
 		-- Encode health into RGB cache (non-tainted operation)
 		Necrosis.HealthCache.texture:SetVertexColor(health / 30000, healthMax / 30000, 0)
 
@@ -2359,7 +2352,12 @@ function Necrosis:UpdateHealth()
 		-- If the inside of the stone shows life || Si l'intérieur de la pierre affiche la vie
 		if NecrosisConfig.ShowCount and NecrosisConfig.CountType == 5 then
 			if NecrosisShardCount then
-				NecrosisShardCount:SetText(cachedHealth)
+				-- Display health directly (more reliable than RGB encoded value)
+				if health and health > 0 then
+					NecrosisShardCount:SetText(health)
+				else
+					NecrosisShardCount:SetText(cachedHealth)
+				end
 			end
 		end
 	end)
