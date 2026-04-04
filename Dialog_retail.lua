@@ -442,6 +442,13 @@ Necrosis.Config.Sphere.Count = {
 	L["DEMON_SUMMON_STONES"],
 	L["REZ_TIMER"],
 }
+Necrosis.Config.Sphere.CountType = {
+	L["SOUL_SHARDS"],
+	L["DEMON_SUMMON_STONES"],
+	L["REZ_TIMER"],
+	L["HEALTH"],
+	L["MANA"],
+}
 
 Necrosis.Config.Buttons = {
 	["Rotation des boutons"] = L["BUTTONS_ROTATION"],
