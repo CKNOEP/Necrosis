@@ -2349,7 +2349,10 @@ function Necrosis:UpdateHealth()
 
 	-- Display health counter (CountType 5)
 	if NecrosisConfig.CountType == 5 and NecrosisShardCount then
+		print("[COUNTER] Setting text to: " .. tostring(health) .. " CountType=" .. NecrosisConfig.CountType)
 		NecrosisShardCount:SetText(tostring(health))
+	else
+		print("[COUNTER] NOT setting (CountType=" .. NecrosisConfig.CountType .. ")")
 	end
 
 
