@@ -99,29 +99,16 @@ function Necrosis:SetMiscConfig()
 		frame:SetScript("OnClick", function(self)
 			if (self:GetChecked()) then
 				-- Checkbox is checked - SHOW NecrosisUI
-				print("[Options-Misc] NecrosisUI checkbox clicked: CHECKED")
 				NecrosisConfig.NecrosisUIEnabled = true
-
-				print("[Options-Misc] NUI object:", tostring(NUI))
-				if NUI then
-					print("[Options-Misc] NUI.Show type:", type(NUI.Show))
-					print("[Options-Misc] NUI.ImportLayout type:", type(NUI.ImportLayout))
-				end
-
 				if NUI and type(NUI.Show) == "function" then
-					print("[Options-Misc] Calling NUI:Show()")
 					pcall(function() NUI:Show() end)
 				end
 
 				-- Import and create the NecrosisUI layout when activated
 				if NUI and type(NUI.ImportLayout) == "function" then
-					print("[Options-Misc] Scheduling ImportLayout() call in 0.5s")
 					C_Timer.After(0.5, function()
-						print("[Options-Misc] Timer fired, calling ImportLayout()")
 						pcall(function() NUI:ImportLayout() end)
 					end)
-				else
-					print("[Options-Misc] NUI.ImportLayout not available - NUI:", tostring(NUI), "type:", NUI and type(NUI.ImportLayout) or "N/A")
 				end
 
 				-- Restore the saved sphere position and scale when NUI is activated
