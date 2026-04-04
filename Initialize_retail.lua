@@ -410,29 +410,30 @@ end)
 
 -- Hide all peripheral buttons at startup - will be shown after position restoration
 -- Wait 1 second to ensure all buttons are created by XML.lua first
-C_Timer.After(1, function()
-	local buttonNames = {
-		"NecrosisFirestoneButton",
-		"NecrosisSpellstoneButton",
-		"NecrosisHealthstoneButton",
-		"NecrosisSoulstoneButton",
-		"NecrosisBuffMenuButton",
-		"NecrosisMountButton",
-		"NecrosisPetMenuButton",
-		"NecrosisCurseMenuButton",
-		"NecrosisShadowTranceButton",
-		"NecrosisBacklashButton",
-		"NecrosisAntiFearButton",
-		"NecrosisCreatureAlertButton_demon",
-		"NecrosisCreatureAlertButton_elemental",
-	}
-	for _, name in ipairs(buttonNames) do
-		local btn = _G[name]
-		if btn then
-			btn:Hide()
-		end
-	end
-end)
+-- TODO: Disabled due to protected function restrictions in Retail 12.0+
+-- C_Timer.After(1, function()
+-- 	local buttonNames = {
+-- 		"NecrosisFirestoneButton",
+-- 		"NecrosisSpellstoneButton",
+-- 		"NecrosisHealthstoneButton",
+-- 		"NecrosisSoulstoneButton",
+-- 		"NecrosisBuffMenuButton",
+-- 		"NecrosisMountButton",
+-- 		"NecrosisPetMenuButton",
+-- 		"NecrosisCurseMenuButton",
+-- 		"NecrosisShadowTranceButton",
+-- 		"NecrosisBacklashButton",
+-- 		"NecrosisAntiFearButton",
+-- 		"NecrosisCreatureAlertButton_demon",
+-- 		"NecrosisCreatureAlertButton_elemental",
+-- 	}
+-- 	for _, name in ipairs(buttonNames) do
+-- 		local btn = _G[name]
+-- 		if btn then
+-- 			btn:Hide()
+-- 		end
+-- 	end
+-- end)
 
 -- Create separate frame for event handling (NOT the button itself!)
 -- This is the KEY: Events are handled by eventFrame, clicks by NecrosisButton!
