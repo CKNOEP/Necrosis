@@ -2351,26 +2351,8 @@ function Necrosis:UpdateHealth()
 
 	-- Change sphere texture based on health percentage (Circle == 4)
 	if NecrosisConfig.Circle == 4 and issecretvalue then
-		-- Get health fresh for RGB calculation
-		local health = UnitHealth("player")
-		local healthMax = UnitHealthMax("player")
-
-		-- CRITICAL: Encode Secret Values into RGB cache for safe arithmetic
-		if not Necrosis.HealthCache then
-			Necrosis.HealthCache = CreateFrame("Frame", "NecrosisHealthCache", UIParent)
-			Necrosis.HealthCache.texture = Necrosis.HealthCache:CreateTexture()
-		end
-
-		-- Encode health and healthMax into RGB channels (NO TAINT!)
-		Necrosis.HealthCache.texture:SetVertexColor(health / 30000, healthMax / 30000, 0)
-
-		-- Retrieve from RGB and decode (NO TAINT!)
-		local r, g, b = Necrosis.HealthCache.texture:GetVertexColor()
-		local healthNum = math.floor(r * 30000)
-		local healthMaxNum = math.floor(g * 30000)
-
-		-- NOW we can do arithmetic on normal numbers
-		local healthPercent = (healthMaxNum > 0) and math.floor((healthNum / healthMaxNum) * 100) or 100
+		-- Use native UnitHealthPercent API which handles Secret Values properly
+		local healthPercent = UnitHealthPercent("player") or 100
 
 		-- Calculate shard index (0-16) from percentage
 		local shardIndex = math.floor((healthPercent / 100) * 16)
