@@ -2320,33 +2320,6 @@ function Necrosis:BuildButtonTooltip(button)
 	GameTooltip:Show()
 end
 
--- RGB Color mapping for sphere texture filename (Shard0-16 → color_R_G_B.tga)
-local RGBColorMap = {
-	[0] = {r=0, g=0, b=0},
-	[1] = {r=15, g=0, b=0},
-	[2] = {r=30, g=0, b=0},
-	[3] = {r=45, g=0, b=0},
-	[4] = {r=60, g=0, b=0},
-	[5] = {r=75, g=0, b=0},
-	[6] = {r=90, g=0, b=0},
-	[7] = {r=105, g=0, b=0},
-	[8] = {r=120, g=0, b=0},
-	[9] = {r=135, g=0, b=0},
-	[10] = {r=150, g=0, b=0},
-	[11] = {r=165, g=0, b=0},
-	[12] = {r=180, g=0, b=0},
-	[13] = {r=195, g=0, b=0},
-	[14] = {r=210, g=0, b=0},
-	[15] = {r=225, g=0, b=0},
-	[16] = {r=255, g=0, b=0},
-}
-
--- Lookup table: percent (0-100) → shardIndex (0-16) to avoid Secret Value arithmetic
-local PercentToShardIndex = {}
-for i = 0, 100 do
-	PercentToShardIndex[i] = math.min(16, math.floor((i / 100) * 16))
-end
-
 -- Update the sphere according to life || Update de la sphere en fonction de la vie
 -- Uses pre-calculated percent from clean context (no Secret Value arithmetic here)
 function Necrosis:UpdateHealth()
@@ -2357,36 +2330,6 @@ function Necrosis:UpdateHealth()
 		NecrosisShardCount:SetText(tostring(cache.health))
 	end
 
-	-- Change sphere texture based on health percentage (Circle == 4)
-	if NecrosisConfig.Circle == 4 then
-		-- Use cached PERCENT (computed in clean context, normal number)
-		local percentInt = math.floor(cache.percent)
-		local shardIndex = PercentToShardIndex[percentInt] or 0
-
-		-- Get RGB values from mapping table
-		local colorData = RGBColorMap[shardIndex] or RGBColorMap[0]
-		local r, g, b = colorData.r, colorData.g, colorData.b
-
-		-- Build filename: color_R_G_B.tga (use forward slashes for WoW texture paths!)
-		local filename = "Interface/AddOns/Necrosis/UI/" .. NecrosisConfig.NecrosisColor .. "/color_" .. r .. "_" .. g .. "_" .. b .. ".tga"
-
-		-- DEBUG: Only log if value changed
-		if not Local.LastLoggedPercent or Local.LastLoggedPercent ~= percentInt then
-			print("[CACHE→RGB] Percent=" .. percentInt .. "% → ShardIndex=" .. shardIndex .. " → " .. filename)
-			Local.LastLoggedPercent = percentInt
-		end
-
-		-- Load texture if changed
-		local fm = _G[Necrosis.Warlock_Buttons.main.f]
-		if fm then
-			local texture = fm:GetNormalTexture()
-			if texture then
-				texture:SetTexture(filename)
-			else
-				fm:SetNormalTexture(filename)
-			end
-		end
-	end
 end
 
 local function SetTexPerMana(f, spell, mana) -- frame and warlock spell
