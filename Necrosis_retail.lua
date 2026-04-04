@@ -2323,8 +2323,18 @@ end
 -- Update the sphere according to life || Update de la sphere en fonction de la vie
 -- Uses pre-calculated percent from clean context (no Secret Value arithmetic here)
 function Necrosis:UpdateHealth()
-	-- Health tracking is not included in sphere events in Retail 12.0+
-	-- (Secret Values cannot be reliably tracked dynamically)
+	local cache = self.UnitCache
+
+	-- Update cache from unit health
+	pcall(function()
+		cache.health = UnitHealth("player")
+		cache.healthmax = UnitHealthMax("player")
+	end)
+
+	-- Display health counter (CountType 4)
+	if NecrosisConfig.CountType == 4 and NecrosisShardCount then
+		NecrosisShardCount:SetText(tostring(cache.health))
+	end
 end
 
 local function SetTexPerMana(f, spell, mana) -- frame and warlock spell
