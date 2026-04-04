@@ -46,25 +46,34 @@ bottomAnchor:SetAllPoints(necrosisUIFrame)
 
 -- Implement Show/Hide Methods
 function NUI:Show()
+	print("[Framework] NUI:Show() called")
 	if NecrosisUI then
 		NecrosisUI:Show()
 	end
 end
 
 function NUI:Hide()
+	print("[Framework] NUI:Hide() called")
 	if NecrosisUI then
 		NecrosisUI:Hide()
 	end
 end
 
 function NUI:UpdateBottomBannerScale()
+	print("[Framework] NUI:UpdateBottomBannerScale() called")
 	if NUI_Art_Classic then
 		local scale = 0.78 * (NecrosisConfig.BottomBannerScale or 1.0)
 		NUI_Art_Classic:SetScale(scale)
 	end
 end
 
+-- Verify methods are added
+print("[Framework] Defining NUI methods...")
+print("[Framework] NUI.Show type after definition:", type(NUI.Show))
+print("[Framework] NUI.ImportLayout type after definition:", type(NUI.ImportLayout))
+
 -- Import NecrosisUI Layout via C_EditMode
+print("[Framework] About to define ImportLayout, current NUI:", tostring(NUI))
 function NUI:ImportLayout()
 	print("[NUI] ImportLayout() called")
 
@@ -329,3 +338,12 @@ SlashCmdList["NUIDEBUG"] = function()
 		end
 	end)
 end
+
+-- Final verification at end of file
+print("[Framework] FRAMEWORK_RETAIL.LUA LOADED - Final state:")
+print("[Framework] _G.NUI:", tostring(_G.NUI))
+print("[Framework] _G.NUI.Show:", type(_G.NUI and _G.NUI.Show))
+print("[Framework] _G.NUI.Hide:", type(_G.NUI and _G.NUI.Hide))
+print("[Framework] _G.NUI.UpdateBottomBannerScale:", type(_G.NUI and _G.NUI.UpdateBottomBannerScale))
+print("[Framework] _G.NUI.ImportLayout:", type(_G.NUI and _G.NUI.ImportLayout))
+print("[Framework] _G.NUI.CreateNecrosisLayout:", type(_G.NUI and _G.NUI.CreateNecrosisLayout))
