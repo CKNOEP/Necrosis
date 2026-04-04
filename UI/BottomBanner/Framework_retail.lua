@@ -66,31 +66,45 @@ end
 
 -- Import NecrosisUI Layout via C_EditMode
 function NUI:ImportLayout()
+	-- DEBUG
+	print("[NecrosisUI] ImportLayout() called")
+
 	if not C_EditMode or not C_EditMode.GetLayouts or not C_EditMode.ConvertStringToLayoutInfo then
+		print("[NecrosisUI] C_EditMode API not available")
 		return
 	end
 
 	local layoutString = _G.NECROSISUI_LAYOUT_STRING
 	if not layoutString then
+		print("[NecrosisUI] NECROSISUI_LAYOUT_STRING not defined")
 		return
 	end
 
+	print("[NecrosisUI] Converting layout string...")
 	local importedLayoutInfo = C_EditMode.ConvertStringToLayoutInfo(layoutString)
 	if not importedLayoutInfo then
+		print("[NecrosisUI] Failed to convert layout string")
 		return
 	end
+
+	print("[NecrosisUI] Layout string converted successfully")
 
 	-- Ensure Blizzard_EditMode is loaded
 	if not C_AddOns.IsAddOnLoaded("Blizzard_EditMode") then
+		print("[NecrosisUI] Loading Blizzard_EditMode...")
 		UIParentLoadAddOn("Blizzard_EditMode")
 	end
 
 	-- Wait a bit for everything to initialize
 	C_Timer.After(0.5, function()
+		print("[NecrosisUI] Getting current layouts...")
 		local currentLayouts = C_EditMode.GetLayouts()
 		if not currentLayouts or not currentLayouts.layouts then
+			print("[NecrosisUI] No layouts found")
 			return
 		end
+
+		print("[NecrosisUI] Found " .. #currentLayouts.layouts .. " layouts")
 
 		-- Find a custom layout to copy layoutType from
 		local customLayoutType = nil
@@ -105,8 +119,9 @@ function NUI:ImportLayout()
 		-- If no custom layout exists, use a default layoutType
 		if not customLayoutType then
 			customLayoutType = 2  -- Default custom layout type
-			end
+		end
 
+		print("[NecrosisUI] Creating layout with customLayoutType=" .. customLayoutType)
 		NUI:CreateNecrosisLayout(currentLayouts, importedLayoutInfo, customLayoutType)
 	end)
 end
