@@ -165,6 +165,12 @@ do
 	function NUI:Show()
 		if NecrosisUI then
 			NecrosisUI:Show()
+			-- Import and apply NecrosisUI layout when showing
+			if self.ImportLayout then
+				C_Timer.After(0.5, function()
+					self:ImportLayout()
+				end)
+			end
 		end
 	end
 
