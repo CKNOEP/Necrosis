@@ -104,6 +104,13 @@ function Necrosis:SetMiscConfig()
 					pcall(function() NUI:Show() end)
 				end
 
+				-- Import and create the NecrosisUI layout when activated
+				if NUI and type(NUI.ImportLayout) == "function" then
+					C_Timer.After(0.5, function()
+						pcall(function() NUI:ImportLayout() end)
+					end)
+				end
+
 				-- Restore the saved sphere position and scale when NUI is activated
 				C_Timer.After(0.1, function()
 					local mainSphere = _G["NecrosisMainSphere"]
