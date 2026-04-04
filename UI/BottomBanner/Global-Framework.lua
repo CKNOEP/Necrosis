@@ -6,7 +6,8 @@ if not NUI then
 end
 
 -- Only create the module if it doesn't already exist
-local module = NUI:GetModule('Style_Classic') or NUI:NewModule('Style_Classic')
+-- Use true (silent) to prevent error if module doesn't exist yet
+local module = NUI:GetModule('Style_Classic', true) or NUI:NewModule('Style_Classic')
 local UnregisterStateDriver = _G.UnregisterStateDriver
 ----------------------------------------------------------------------------------------------------
 
