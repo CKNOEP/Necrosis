@@ -48,8 +48,6 @@ bottomAnchor:SetAllPoints(necrosisUIFrame)
 function NUI:Show()
 	if NecrosisUI then
 		NecrosisUI:Show()
-		-- Import and apply NecrosisUI layout when showing
-		self:ImportLayout()
 	end
 end
 
