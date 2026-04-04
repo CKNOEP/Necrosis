@@ -2517,11 +2517,17 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis:UpdateMana"
 
 	-- Spell interactions
 	-----------------------------------------------
+	-- Soulstone: never gray (it's a utility spell, not mana-dependent)
+	local f_ss = _G[Necrosis.Warlock_Buttons.soul_stone.f]
+	if f_ss then
+		SetSat(f_ss, nil)
+	end
+
 	-- If corrupt domination cooldown is gray || Si cooldown de domination corrompue on grise
 	local usage = "domination" -- 15
 	if Necrosis.IsSpellKnown(usage) then
 		local f = _G[Necrosis.Warlock_Buttons[usage].f]
-		
+
 		local spell = Necrosis.GetSpell(usage)
 		if f and not Local.BuffActif.Domination then
 --[[
@@ -2858,6 +2864,52 @@ function Necrosis:BagExplore(arg)
 				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
 			else
 				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
+			end
+		elseif NecrosisConfig.CountType == 3 then
+			-- Display Soulstone resurrection timer
+			-- RETAIL 12.0+: Use C_UnitAuras.GetAuraDataByIndex (modern API)
+			local Time, TimeMax
+			if Local.TimerManagement and Local.TimerManagement.SpellTimer then
+				for index, valeur in ipairs(Local.TimerManagement.SpellTimer) do
+					if Necrosis.IsSpellRez(Necrosis.GetSpellName(valeur.Usage)) then
+						Time = valeur.Time
+						TimeMax = valeur.TimeMax
+						break
+					end
+				end
+			end
+
+			-- If not found in SpellTimer, search for Soulstone aura by spell ID 20707
+			if not Time and C_UnitAuras then
+				for i = 1, 40 do
+					local auraData = C_UnitAuras.GetAuraDataByIndex("player", i)
+					if not auraData then break end
+					if auraData.spellId == 20707 then  -- Soulstone spell ID
+						if auraData.expirationTime and auraData.expirationTime > 0 then
+							Time = GetTime()
+							TimeMax = auraData.expirationTime
+							break
+						end
+					end
+				end
+			end
+
+			if Time and TimeMax then
+				local Secondes = TimeMax - floor(GetTime())
+				local Minutes = floor(Secondes / 60)
+				Secondes = mod(Secondes, 60)
+
+				if Secondes >= 0 then
+					if Minutes > 0 then
+						NecrosisShardCount:SetText(Minutes .. " m")
+					else
+						NecrosisShardCount:SetText(Secondes)
+					end
+				else
+					NecrosisShardCount:SetText("--")
+				end
+			else
+				NecrosisShardCount:SetText("--")
 			end
 		end
 		-- CountType 4 (Mana) and 5 (Health) are updated by UpdateMana() and UpdateHealth()
