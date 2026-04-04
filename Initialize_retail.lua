@@ -450,6 +450,9 @@ local originalOnEvent = eventFrame:GetScript("OnEvent")
 
 eventFrame:SetScript("OnEvent", function(self, event, ...)
 	-- Call original handler if it exists
+	if event == "UNIT_HEALTH" or event == "UNIT_MANA" then
+		print("[EventFrame] Received event: " .. event)
+	end
 	if originalOnEvent then
 		originalOnEvent(self, event, ...)
 	end
