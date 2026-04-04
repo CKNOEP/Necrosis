@@ -357,6 +357,41 @@ nbutton:Hide()
 _G["NecrosisButton"] = nbutton
 	_G["NecrosisMainSphere"] = nbutton  -- Placeholder, will be replaced later
 
+-- RETAIL 12.0+ FIX: Use SecureUnitButtonTemplate built-in functionality
+-- Set unit for the secure button - it can read health safely
+nbutton:SetAttribute("unit", "player")
+
+-- Use the button itself to compute health percentage via built-in secure logic
+-- The SecureUnitButtonTemplate can safely read Secret Values
+nbutton:RegisterEvent("UNIT_HEALTH")
+nbutton:SetScript("OnEvent", function(self, event, unit)
+	if event == "UNIT_HEALTH" and unit == "player" then
+		-- Call UpdateHealth from here - still in Lua context but fresh call
+		Necrosis:UpdateHealth()
+	end
+end)
+
+-- RETAIL 12.0+ FIX: Keep Soulstone button visible and unsaturated (WoW auto-grays it on cooldown)
+C_Timer.NewTicker(0.5, function()
+	if not Necrosis or not Necrosis.Warlock_Buttons then return end
+	local f_ss = _G[Necrosis.Warlock_Buttons.soul_stone.f]
+	if f_ss then
+		-- Make sure button is visible
+		f_ss:Show()
+
+		local texture = f_ss:GetNormalTexture()
+		if texture and texture:IsDesaturated() then
+			texture:SetDesaturated(nil)
+		end
+		f_ss:Enable()
+		f_ss:SetAlpha(1)
+		if texture then
+			texture:SetAlpha(1)
+		end
+	end
+end)
+
+
 -- Create text overlay frame on UIParent (NOT on the button, since nbutton has no dimensions yet)
 -- The button will be positioned later, so we anchor the FontString directly to it by name
 local textOverlay = CreateFrame("Frame", "NecrosisShardCountFrame_Placeholder", UIParent)

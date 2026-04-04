@@ -2320,50 +2320,59 @@ function Necrosis:BuildButtonTooltip(button)
 	GameTooltip:Show()
 end
 
+-- RGB Color mapping for sphere texture filename (Shard0-16 → color_R_G_B.tga)
+local RGBColorMap = {
+	[0] = {r=0, g=0, b=0},
+	[1] = {r=15, g=0, b=0},
+	[2] = {r=30, g=0, b=0},
+	[3] = {r=45, g=0, b=0},
+	[4] = {r=60, g=0, b=0},
+	[5] = {r=75, g=0, b=0},
+	[6] = {r=90, g=0, b=0},
+	[7] = {r=105, g=0, b=0},
+	[8] = {r=120, g=0, b=0},
+	[9] = {r=135, g=0, b=0},
+	[10] = {r=150, g=0, b=0},
+	[11] = {r=165, g=0, b=0},
+	[12] = {r=180, g=0, b=0},
+	[13] = {r=195, g=0, b=0},
+	[14] = {r=210, g=0, b=0},
+	[15] = {r=225, g=0, b=0},
+	[16] = {r=255, g=0, b=0},
+}
+
 -- Update the sphere according to life || Update de la sphere en fonction de la vie
 function Necrosis:UpdateHealth()
-	-- ⚠️ RETAIL 12.0+ FIX: Use RGB Encoding to bypass Secret Value restrictions
-	-- Convert Secret Values to normal numbers before arithmetic to avoid taint
+	-- Display health counter (CountType 5)
+	if NecrosisConfig.CountType == 5 and NecrosisShardCount then
+		local health = UnitHealth("player")
+		NecrosisShardCount:SetText(tostring(health))
+	end
 
-	local health = UnitHealth("player")
-	local healthMax = UnitHealthMax("player")
+	-- Change sphere texture based on health percentage (Circle == 4)
+	if NecrosisConfig.Circle == 4 and issecretvalue then
+		pcall(function()
+			-- Get health percentage safely using UnitHealthPercent (works with Secret Values)
+			local healthPercent = UnitHealthPercent("player", true, CurveConstants and CurveConstants.ScaleTo100) or 100
 
-	-- ✅ Convert Secret Values to normal numbers (CRITICAL: avoids taint error)
-	local healthNum = tonumber(tostring(health))
-	local healthMaxNum = tonumber(tostring(healthMax))
+			-- Calculate shard index (0-16) from percentage
+			local shardIndex = math.floor((healthPercent / 100) * 16)
+			shardIndex = math.max(0, math.min(16, shardIndex))
 
-	if healthNum and healthMaxNum and healthMaxNum > 0 then
-		-- Encode health into RGB cache (safe - no arithmetic on Secret Values)
-		Necrosis.HealthCache.texture:SetVertexColor(healthNum / 30000, healthMaxNum / 30000, 0)
+			-- Get RGB values from mapping table
+			local colorData = RGBColorMap[shardIndex] or RGBColorMap[0]
+			local r, g, b = colorData.r, colorData.g, colorData.b
 
-		-- Retrieve from RGB cache (non-tainted operation)
-		local r, g, b = Necrosis.HealthCache.texture:GetVertexColor()
-		local cachedHealth = math.floor(r * 30000)
-		local cachedHealthMax = math.floor(g * 30000)
+			-- Build filename: color_R_G_B.tga
+			local filename = "Interface\\AddOns\\Necrosis\\UI\\" .. NecrosisConfig.NecrosisColor .. "\\color_" .. r .. "_" .. g .. "_" .. b .. ".tga"
 
-		-- If the sphere shows health || Si la sphère affiche la santé
-		if NecrosisConfig.Circle == 4 and cachedHealthMax > 0 then
+			-- Load texture if changed
 			local fm = _G[Necrosis.Warlock_Buttons.main.f]
-			if fm then
-				-- Calculate percentage (0-16 for 16 Shard levels)
-				local percentage = math.floor((cachedHealth / cachedHealthMax) * 16)
-				percentage = math.max(0, math.min(16, percentage))  -- Clamp 0-16
-
-				local targetTexture = NecrosisConfig.NecrosisColor .. "\\Shard" .. percentage
-				if not (Local.LastSphereSkin == targetTexture) then
-					Local.LastSphereSkin = targetTexture
-					fm:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\" .. Local.LastSphereSkin)
-				end
+			if fm and not (Local.LastSphereSkin == filename) then
+				Local.LastSphereSkin = filename
+				fm:SetNormalTexture(filename)
 			end
-		end
-
-		-- If the inside of the stone shows life || Si l'intérieur de la pierre affiche la vie
-		if NecrosisConfig.CountType == 5 then
-			if NecrosisShardCount then
-				-- Display health directly
-				NecrosisShardCount:SetText(tostring(healthNum))
-			end
-		end
+		end)
 	end
 end
 
@@ -2508,11 +2517,17 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis:UpdateMana"
 
 	-- Spell interactions
 	-----------------------------------------------
+	-- Soulstone: never gray (it's a utility spell, not mana-dependent)
+	local f_ss = _G[Necrosis.Warlock_Buttons.soul_stone.f]
+	if f_ss then
+		SetSat(f_ss, nil)
+	end
+
 	-- If corrupt domination cooldown is gray || Si cooldown de domination corrompue on grise
 	local usage = "domination" -- 15
 	if Necrosis.IsSpellKnown(usage) then
 		local f = _G[Necrosis.Warlock_Buttons[usage].f]
-		
+
 		local spell = Necrosis.GetSpell(usage)
 		if f and not Local.BuffActif.Domination then
 --[[
@@ -2849,6 +2864,52 @@ function Necrosis:BagExplore(arg)
 				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
 			else
 				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
+			end
+		elseif NecrosisConfig.CountType == 3 then
+			-- Display Soulstone resurrection timer
+			-- RETAIL 12.0+: Use C_UnitAuras.GetAuraDataByIndex (modern API)
+			local Time, TimeMax
+			if Local.TimerManagement and Local.TimerManagement.SpellTimer then
+				for index, valeur in ipairs(Local.TimerManagement.SpellTimer) do
+					if Necrosis.IsSpellRez(Necrosis.GetSpellName(valeur.Usage)) then
+						Time = valeur.Time
+						TimeMax = valeur.TimeMax
+						break
+					end
+				end
+			end
+
+			-- If not found in SpellTimer, search for Soulstone aura by spell ID 20707
+			if not Time and C_UnitAuras then
+				for i = 1, 40 do
+					local auraData = C_UnitAuras.GetAuraDataByIndex("player", i)
+					if not auraData then break end
+					if auraData.spellId == 20707 then  -- Soulstone spell ID
+						if auraData.expirationTime and auraData.expirationTime > 0 then
+							Time = GetTime()
+							TimeMax = auraData.expirationTime
+							break
+						end
+					end
+				end
+			end
+
+			if Time and TimeMax then
+				local Secondes = TimeMax - floor(GetTime())
+				local Minutes = floor(Secondes / 60)
+				Secondes = mod(Secondes, 60)
+
+				if Secondes >= 0 then
+					if Minutes > 0 then
+						NecrosisShardCount:SetText(Minutes .. " m")
+					else
+						NecrosisShardCount:SetText(Secondes)
+					end
+				else
+					NecrosisShardCount:SetText("--")
+				end
+			else
+				NecrosisShardCount:SetText("--")
 			end
 		end
 		-- CountType 4 (Mana) and 5 (Health) are updated by UpdateMana() and UpdateHealth()

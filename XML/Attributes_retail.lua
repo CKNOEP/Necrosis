@@ -20,7 +20,7 @@ local function SetSSAttribs(nostone, reason)
 
 	if Necrosis.IsSpellKnown("soulstone") then
 		local str = ""
-		-- Configure button as spell type to display cooldown
+		-- Configure button as spell type to display cooldown properly
 		f:SetAttribute("type", "spell")
 		str = Necrosis.GetSpellCastName("soulstone")
 		f:SetAttribute("spell", str)
