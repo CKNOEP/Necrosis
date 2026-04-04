@@ -2343,22 +2343,20 @@ local RGBColorMap = {
 
 -- Update the sphere according to life || Update de la sphere en fonction de la vie
 function Necrosis:UpdateHealth()
-	-- Get health once (works from secure context via C_Timer.After)
-	local health = UnitHealth("player")
-	local healthMax = UnitHealthMax("player")
-
 	-- Display health counter (CountType 5)
 	if NecrosisConfig.CountType == 5 and NecrosisShardCount then
+		local health = UnitHealth("player")
 		print("[COUNTER] Setting text to: " .. tostring(health) .. " CountType=" .. NecrosisConfig.CountType)
 		NecrosisShardCount:SetText(tostring(health))
-	else
-		print("[COUNTER] NOT setting (CountType=" .. NecrosisConfig.CountType .. ")")
 	end
-
 
 	-- Change sphere texture based on health percentage (Circle == 4)
 	if NecrosisConfig.Circle == 4 and issecretvalue then
 		pcall(function()
+			-- Get health fresh for RGB calculation
+			local health = UnitHealth("player")
+			local healthMax = UnitHealthMax("player")
+
 			-- Convert Secret Values to normal numbers
 			local healthNum = tonumber(tostring(health)) or 0
 			local healthMaxNum = tonumber(tostring(healthMax)) or 1
