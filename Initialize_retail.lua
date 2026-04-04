@@ -361,12 +361,12 @@ _G["NecrosisButton"] = nbutton
 -- Set unit for the secure button - it can read health safely
 nbutton:SetAttribute("unit", "player")
 
--- Use the button itself to compute health percentage via built-in secure logic
--- The SecureUnitButtonTemplate can safely read Secret Values
-nbutton:RegisterEvent("UNIT_HEALTH")
-nbutton:SetScript("OnEvent", function(self, event, unit)
+-- Create a SEPARATE non-secure frame for event handling (SecureUnitButtonTemplate has restrictions)
+local healthEventFrame = CreateFrame("Frame", "NecrosisHealthEventFrame")
+healthEventFrame:RegisterEvent("UNIT_HEALTH")
+healthEventFrame:SetScript("OnEvent", function(self, event, unit)
 	if event == "UNIT_HEALTH" and unit == "player" then
-		-- Call UpdateHealth from here - still in Lua context but fresh call
+		print("[HEALTH_EVENT] Updating health")
 		Necrosis:UpdateHealth()
 	end
 end)
