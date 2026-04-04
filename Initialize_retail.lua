@@ -383,12 +383,12 @@ function Necrosis:UpdateHealthViaRGB()
 	local health = UnitHealth("player")
 	local maxHealth = UnitHealthMax("player")
 
-	-- DEBUG: Print raw values
-	if not self.LastDebugHealth or self.LastDebugHealth ~= tostring(health) then
+	-- DEBUG: Print raw values every 50 calls (to reduce spam)
+	self.DebugCounter = (self.DebugCounter or 0) + 1
+	if self.DebugCounter % 50 == 0 then
 		print("[RGB-RAW] health=" .. tostring(health) .. ", maxHealth=" .. tostring(maxHealth)
 			.. ", issecret(h)=" .. tostring(issecretvalue(health))
 			.. ", issecret(m)=" .. tostring(issecretvalue(maxHealth)))
-		self.LastDebugHealth = tostring(health)
 	end
 
 	-- Encode in RGB: use red channel for health percentage
