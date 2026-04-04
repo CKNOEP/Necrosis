@@ -2351,9 +2351,9 @@ function Necrosis:UpdateHealth()
 
 	-- Change sphere texture based on health percentage (Circle == 4)
 	if NecrosisConfig.Circle == 4 and issecretvalue then
-		-- Use native UnitHealthPercent API which handles Secret Values properly
-		-- BUT it returns a Secret Value, so convert it first
-		local healthPercent = tonumber(tostring(UnitHealthPercent("player") or 100)) or 100
+		-- Use UnitHealthPercent with proper parameters (like VuhDo does!)
+		-- The second parameter (true) and CurveConstants.ScaleTo100 make it return a normal number
+		local healthPercent = UnitHealthPercent("player", true, CurveConstants and CurveConstants.ScaleTo100) or 100
 
 		-- Calculate shard index (0-16) from percentage
 		local shardIndex = math.floor((healthPercent / 100) * 16)
