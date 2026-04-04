@@ -376,8 +376,8 @@ C_Timer.NewTicker(0.5, function()
 	if not Necrosis or not Necrosis.Warlock_Buttons then return end
 	local f_ss = _G[Necrosis.Warlock_Buttons.soul_stone.f]
 	if f_ss then
-		-- Make sure button is visible
-		f_ss:Show()
+		-- Make sure button is visible (pcall to avoid taint in Retail 12.0+)
+		pcall(function() f_ss:Show() end)
 
 		local texture = f_ss:GetNormalTexture()
 		if texture and texture:IsDesaturated() then
