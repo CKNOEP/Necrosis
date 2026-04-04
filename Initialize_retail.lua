@@ -51,8 +51,8 @@ function Necrosis:UpdateHealthInCleanContext()
 	end
 end
 
--- Initialize cache at startup (clean context)
-Necrosis:UpdateHealthInCleanContext()
+-- DO NOT initialize at startup - context is already tainted
+-- The first UNIT_HEALTH event will populate the cache via C_Timer.After(0)
 
 -- ============================================================================
 -- WoW Version Compatibility Wrappers (Retail Midnight 12.0+)
