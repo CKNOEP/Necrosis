@@ -2358,6 +2358,8 @@ function Necrosis:UpdateHealth()
 			local healthPercent = UnitHealthPercent("player", true, CurveConstants and CurveConstants.ScaleTo100) or 100
 			healthPercent = tonumber(tostring(healthPercent)) or 100
 
+			print("[RGB] healthPercent=" .. healthPercent .. "% shardIndex=" .. math.floor((healthPercent / 100) * 16))
+
 			-- Calculate shard index (0-16) from percentage
 			local shardIndex = math.floor((healthPercent / 100) * 16)
 			shardIndex = math.max(0, math.min(16, shardIndex))
@@ -2373,6 +2375,7 @@ function Necrosis:UpdateHealth()
 			local fm = _G[Necrosis.Warlock_Buttons.main.f]
 			if fm and not (Local.LastSphereSkin == filename) then
 				Local.LastSphereSkin = filename
+				print("[RGB] ✅ TEXTURE CHANGED: " .. filename)
 				fm:SetNormalTexture(filename)
 			end
 		end)
