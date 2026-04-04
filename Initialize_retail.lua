@@ -27,17 +27,24 @@ Necrosis.UnitCache = {
 	percent = 100,
 }
 
--- Function to update cache - use UnitHealthPercent directly (no arithmetic on Secret Values)
--- This is the simplest approach: just call the API that's designed for percentages
+-- Function to update cache - use UnitHealthPercent and convert safely
+-- Secret Values cannot be operated on, so we convert to string then back to number
 function Necrosis:UpdateHealthInCleanContext()
 	local health = UnitHealth("player")
 	local healthmax = UnitHealthMax("player")
 	local percent = UnitHealthPercent("player") or 100
 
-	-- Store values - percent is already a normal number from UnitHealthPercent API
+	-- Convert Secret Value to normal number: Secret → String → Number
+	-- This is the ONLY way to safely convert Secret Values in tainted context
+	local percentNum = tonumber(tostring(percent))
+	if not percentNum then
+		percentNum = 100
+	end
+
+	-- Store values - percent is now a normal number
 	self.UnitCache.health = health
 	self.UnitCache.healthmax = healthmax
-	self.UnitCache.percent = percent
+	self.UnitCache.percent = percentNum
 end
 
 -- DO NOT initialize at startup - context is already tainted
