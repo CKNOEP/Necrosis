@@ -428,7 +428,7 @@ function Necrosis:SetSphereConfig()
 --	Necrosis.Spell_Click(NecrosisSpellSelection)
 
 	UIDropDownMenu_SetSelectedID(NecrosisCountSelection, NecrosisConfig.CountType)
-	UIDropDownMenu_SetText(NecrosisCountSelection, self.Config.Sphere.Count[NecrosisConfig.CountType])
+	UIDropDownMenu_SetText(NecrosisCountSelection, self.Config.Sphere.CountType[NecrosisConfig.CountType])
 
 	frame:Show()
 end
@@ -601,8 +601,8 @@ end
 -- Fonctions du Dropdown des Events du compteur
 function Necrosis.Count_Init()
 	local element = {}
-	for i in ipairs(Necrosis.Config.Sphere.Count) do
-		element.text = Necrosis.Config.Sphere.Count[i]
+	for i in ipairs(Necrosis.Config.Sphere.CountType) do
+		element.text = Necrosis.Config.Sphere.CountType[i]
 		element.checked = false
 		element.func = Necrosis.Count_Click
 		UIDropDownMenu_AddButton(element)
