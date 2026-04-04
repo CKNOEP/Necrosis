@@ -2375,13 +2375,13 @@ function Necrosis:UpdateHealth()
 
 		-- Load texture if changed
 		local fm = _G[Necrosis.Warlock_Buttons.main.f]
-		-- Force first load by initializing LastSphereSkin to nil if not set
-		if Local.LastSphereSkin == nil then
-			Local.LastSphereSkin = ""
-		end
-		if fm and not (Local.LastSphereSkin == filename) then
-			Local.LastSphereSkin = filename
-			fm:SetNormalTexture(filename)
+		if fm then
+			local texture = fm:GetNormalTexture()
+			if texture then
+				texture:SetTexture(filename)
+			else
+				fm:SetNormalTexture(filename)
+			end
 		end
 	end
 end
