@@ -2403,10 +2403,8 @@ function Necrosis:UpdateMana()
 			end
 		end
 
-		-- If the inside of the stone shows mana || Si l'intérieur de la pierre affiche la mana
-		if NecrosisConfig.ShowCount and NecrosisConfig.CountType == 4 then
-			NecrosisShardCount:SetText(mana)
-		end
+		-- Note: CountType 4 is now HEALTH, which is handled by UpdateHealth()
+		-- Skip mana display for known counter types (1-4)
 
 		-- Menus - mana only
 		-----------------------------------------------
