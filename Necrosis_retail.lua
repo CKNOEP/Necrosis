@@ -2352,41 +2352,34 @@ function Necrosis:UpdateHealth()
 
 	-- Change sphere texture based on health percentage (Circle == 4)
 	if NecrosisConfig.Circle == 4 and issecretvalue then
-		pcall(function()
-			-- Get health fresh for RGB calculation
-			local health = UnitHealth("player")
-			local healthMax = UnitHealthMax("player")
+		-- Get health fresh for RGB calculation (NO pcall - it breaks health access!)
+		local health = UnitHealth("player")
+		local healthMax = UnitHealthMax("player")
 
-			print("[RGB RAW] health type=" .. type(health) .. " value=" .. tostring(health) .. " | healthMax=" .. tostring(healthMax))
+		-- Convert Secret Values to normal numbers
+		local healthNum = tonumber(tostring(health)) or 0
+		local healthMaxNum = tonumber(tostring(healthMax)) or 1
 
-			-- Convert Secret Values to normal numbers
-			local healthNum = tonumber(tostring(health)) or 0
-			local healthMaxNum = tonumber(tostring(healthMax)) or 1
+		-- Calculate percentage
+		local healthPercent = (healthMaxNum > 0) and math.floor((healthNum / healthMaxNum) * 100) or 100
 
-			-- Calculate percentage
-			local healthPercent = (healthMaxNum > 0) and math.floor((healthNum / healthMaxNum) * 100) or 100
+		-- Calculate shard index (0-16) from percentage
+		local shardIndex = math.floor((healthPercent / 100) * 16)
+		shardIndex = math.max(0, math.min(16, shardIndex))
 
-			print("[RGB] health=" .. healthNum .. "/" .. healthMaxNum .. " percent=" .. healthPercent .. "% shardIndex=" .. math.floor((healthPercent / 100) * 16))
+		-- Get RGB values from mapping table
+		local colorData = RGBColorMap[shardIndex] or RGBColorMap[0]
+		local r, g, b = colorData.r, colorData.g, colorData.b
 
-			-- Calculate shard index (0-16) from percentage
-			local shardIndex = math.floor((healthPercent / 100) * 16)
-			shardIndex = math.max(0, math.min(16, shardIndex))
+		-- Build filename: color_R_G_B.tga
+		local filename = "Interface\\AddOns\\Necrosis\\UI\\" .. NecrosisConfig.NecrosisColor .. "\\color_" .. r .. "_" .. g .. "_" .. b .. ".tga"
 
-			-- Get RGB values from mapping table
-			local colorData = RGBColorMap[shardIndex] or RGBColorMap[0]
-			local r, g, b = colorData.r, colorData.g, colorData.b
-
-			-- Build filename: color_R_G_B.tga
-			local filename = "Interface\\AddOns\\Necrosis\\UI\\" .. NecrosisConfig.NecrosisColor .. "\\color_" .. r .. "_" .. g .. "_" .. b .. ".tga"
-
-			-- Load texture if changed
-			local fm = _G[Necrosis.Warlock_Buttons.main.f]
-			if fm and not (Local.LastSphereSkin == filename) then
-				Local.LastSphereSkin = filename
-				print("[RGB] ✅ TEXTURE CHANGED: " .. filename)
-				fm:SetNormalTexture(filename)
-			end
-		end)
+		-- Load texture if changed
+		local fm = _G[Necrosis.Warlock_Buttons.main.f]
+		if fm and not (Local.LastSphereSkin == filename) then
+			Local.LastSphereSkin = filename
+			fm:SetNormalTexture(filename)
+		end
 	end
 end
 
