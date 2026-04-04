@@ -2370,8 +2370,8 @@ function Necrosis:UpdateHealth()
 		local colorData = RGBColorMap[shardIndex] or RGBColorMap[0]
 		local r, g, b = colorData.r, colorData.g, colorData.b
 
-		-- Build filename: color_R_G_B.tga
-		local filename = "Interface\\AddOns\\Necrosis\\UI\\" .. NecrosisConfig.NecrosisColor .. "\\color_" .. r .. "_" .. g .. "_" .. b .. ".tga"
+		-- Build filename: color_R_G_B.tga (use forward slashes for WoW texture paths!)
+		local filename = "Interface/AddOns/Necrosis/UI/" .. NecrosisConfig.NecrosisColor .. "/color_" .. r .. "_" .. g .. "_" .. b .. ".tga"
 
 		print("[RGB DEBUG] Filename: " .. filename .. " | NecrosisColor: " .. tostring(NecrosisConfig.NecrosisColor) .. " | RGB: " .. r .. "," .. g .. "," .. b)
 
