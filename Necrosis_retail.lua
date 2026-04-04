@@ -2347,12 +2347,6 @@ for i = 0, 100 do
 	PercentToShardIndex[i] = math.min(16, math.floor((i / 100) * 16))
 end
 
--- CRITICAL: Global function to get health percent in non-tainted context
--- This avoids Secret Value restrictions by returning the result without comparisons
-_G.NecrosisGetHealthPercent = function()
-	return UnitHealthPercent("player", true, CurveConstants and CurveConstants.ScaleTo100) or 100
-end
-
 -- Update the sphere according to life || Update de la sphere en fonction de la vie
 -- Uses pre-calculated percent from clean context (no Secret Value arithmetic here)
 function Necrosis:UpdateHealth()
