@@ -372,24 +372,22 @@ nbutton:SetScript("OnEvent", function(self, event, unit)
 end)
 
 -- RETAIL 12.0+ FIX: Keep Soulstone button visible and unsaturated (WoW auto-grays it on cooldown)
-C_Timer.NewTicker(0.5, function()
-	if not Necrosis or not Necrosis.Warlock_Buttons then return end
-	local f_ss = _G[Necrosis.Warlock_Buttons.soul_stone.f]
-	if f_ss then
-		-- Make sure button is visible (pcall to avoid taint in Retail 12.0+)
-		pcall(function() f_ss:Show() end)
-
-		local texture = f_ss:GetNormalTexture()
-		if texture and texture:IsDesaturated() then
-			texture:SetDesaturated(nil)
-		end
-		f_ss:Enable()
-		f_ss:SetAlpha(1)
-		if texture then
-			texture:SetAlpha(1)
-		end
-	end
-end)
+-- TODO: Disabled due to protected function restrictions in Retail 12.0+
+-- C_Timer.NewTicker(0.5, function()
+-- 	if not Necrosis or not Necrosis.Warlock_Buttons then return end
+-- 	local f_ss = _G[Necrosis.Warlock_Buttons.soul_stone.f]
+-- 	if f_ss then
+-- 		local texture = f_ss:GetNormalTexture()
+-- 		if texture and texture:IsDesaturated() then
+-- 			texture:SetDesaturated(nil)
+-- 		end
+-- 		f_ss:Enable()
+-- 		f_ss:SetAlpha(1)
+-- 		if texture then
+-- 			texture:SetAlpha(1)
+-- 		end
+-- 	end
+-- end)
 
 
 -- Create text overlay frame on UIParent (NOT on the button, since nbutton has no dimensions yet)
