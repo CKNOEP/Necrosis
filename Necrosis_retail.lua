@@ -2325,8 +2325,8 @@ end
 function Necrosis:UpdateHealth()
 	local cache = self.UnitCache
 
-	-- Display health counter (CountType 5)
-	if NecrosisConfig.CountType == 5 and NecrosisShardCount then
+	-- Display health counter (CountType 4)
+	if NecrosisConfig.CountType == 4 and NecrosisShardCount then
 		NecrosisShardCount:SetText(tostring(cache.health))
 	end
 
@@ -2376,14 +2376,8 @@ function Necrosis:UpdateMana()
 
 	-- ⚠️ RETAIL 12.0+ LIMITATION: UnitPower() returns Secret Values
 	-- We cannot do arithmetic on Secret Values in Retail, so we skip mana-dependent features
-	-- Health counter still works (CountType 1-3), but Mana (CountType 4) is disabled
-
-	-- Set default to 0 if Mana counter is selected (not supported in Retail 12.0+)
-	if NecrosisConfig.CountType == 4 then
-		if NecrosisShardCount then
-			NecrosisShardCount:SetText("0")
-		end
-	end
+	-- Health counter (CountType 4) is handled by UpdateHealth()
+	-- Soul Shards (CountType 1-3) still work
 
 	-- ⚠️ RETAIL 12.0+ Taint Protection: Wrap mana operations in pcall
 	-- If any error occurs, silently skip mana-dependent features
