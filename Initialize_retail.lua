@@ -27,12 +27,14 @@ Necrosis.UnitCache = {
 	percent = 100,
 }
 
--- Function to update cache - use UnitHealthPercent and convert safely
--- Secret Values cannot be operated on, so we convert to string then back to number
+-- Function to update cache - use UnitHealthPercent with VuhDo parameters
+-- VuhDo uses: UnitHealthPercent(unit, true, CurveConstants.ScaleTo100)
 function Necrosis:UpdateHealthInCleanContext()
 	local health = UnitHealth("player")
 	local healthmax = UnitHealthMax("player")
-	local percent = UnitHealthPercent("player") or 100
+
+	-- Use VuhDo's approach: second param true, third param CurveConstants.ScaleTo100
+	local percent = UnitHealthPercent("player", true, CurveConstants and CurveConstants.ScaleTo100) or 100
 
 	-- Convert Secret Value to normal number: Secret → String → Number
 	-- This is the ONLY way to safely convert Secret Values in tainted context
