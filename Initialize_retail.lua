@@ -27,32 +27,21 @@ Necrosis.UnitCache = {
 	percent = 100,
 }
 
--- Function to update cache AND calculate percent in SAME clean context
--- This avoids Secret Value issues by computing immediately, not storing Secret Values
+-- Function to update cache - use UnitHealthPercent directly (no arithmetic on Secret Values)
+-- This is the simplest approach: just call the API that's designed for percentages
 function Necrosis:UpdateHealthInCleanContext()
 	local health = UnitHealth("player")
 	local healthmax = UnitHealthMax("player")
+	local percent = UnitHealthPercent("player") or 100
 
-	-- Calculate percent in CLEAN CONTEXT (right where we read the values)
-	local percent = 0
-	if healthmax > 0 then
-		percent = math.min(100, math.max(0, (health / healthmax) * 100))
-	end
-
-	-- Store ONLY the normal number result, not the Secret Values
-	self.UnitCache.health = health      -- For display only
+	-- Store values - percent is already a normal number from UnitHealthPercent API
+	self.UnitCache.health = health
 	self.UnitCache.healthmax = healthmax
-	self.UnitCache.percent = percent    -- CRITICAL: Store computed percent, not health!
-
-	if issecretvalue then
-		if issecretvalue(health) then
-			print("[CACHE] Health is Secret Value - computed percent=" .. percent .. "%")
-		end
-	end
+	self.UnitCache.percent = percent
 end
 
 -- DO NOT initialize at startup - context is already tainted
--- The first UNIT_HEALTH event will populate the cache via C_Timer.After(0)
+-- The ticker will populate the cache when first tick fires
 
 -- ============================================================================
 -- WoW Version Compatibility Wrappers (Retail Midnight 12.0+)
@@ -400,18 +389,12 @@ _G["NecrosisButton"] = nbutton
 -- Set unit for the secure button - it can read health safely
 nbutton:SetAttribute("unit", "player")
 
--- Use secure context: RegisterEvent on the secure button itself, but call UpdateHealth via C_Timer
--- This ensures UpdateHealth runs fresh in Lua context with proper health data access
-nbutton:RegisterEvent("UNIT_HEALTH")
-nbutton:SetScript("OnEvent", function(self, event, unit)
-	if event == "UNIT_HEALTH" and unit == "player" then
-		-- Queue BOTH reading and computing to run in next Lua tick (clean context)
-		-- Key insight: Don't store Secret Values, compute percent in clean context IMMEDIATELY
-		C_Timer.After(0, function()
-			Necrosis:UpdateHealthInCleanContext()  -- Read UnitHealth + compute percent in clean context
-			Necrosis:UpdateHealth()                 -- Use cached percent (normal number)
-		end)
-	end
+-- Use ticker instead of event handler to avoid taint issues
+-- Tickers might have cleaner context than event handlers
+C_Timer.NewTicker(0.1, function()
+	if not Necrosis then return end
+	Necrosis:UpdateHealthInCleanContext()
+	Necrosis:UpdateHealth()
 end)
 
 -- RETAIL 12.0+ FIX: Keep Soulstone button visible and unsaturated (WoW auto-grays it on cooldown)
