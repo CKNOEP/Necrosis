@@ -2323,13 +2323,8 @@ end
 -- Update the sphere according to life || Update de la sphere en fonction de la vie
 -- Uses pre-calculated percent from clean context (no Secret Value arithmetic here)
 function Necrosis:UpdateHealth()
-	local cache = self.UnitCache
-
-	-- Display health counter (CountType 4)
-	if NecrosisConfig.CountType == 4 and NecrosisShardCount then
-		NecrosisShardCount:SetText(tostring(cache.health))
-	end
-
+	-- Health tracking is not included in sphere events in Retail 12.0+
+	-- (Secret Values cannot be reliably tracked dynamically)
 end
 
 local function SetTexPerMana(f, spell, mana) -- frame and warlock spell
@@ -2376,8 +2371,7 @@ function Necrosis:UpdateMana()
 
 	-- ⚠️ RETAIL 12.0+ LIMITATION: UnitPower() returns Secret Values
 	-- We cannot do arithmetic on Secret Values in Retail, so we skip mana-dependent features
-	-- Health counter (CountType 4) is handled by UpdateHealth()
-	-- Soul Shards (CountType 1-3) still work
+	-- Valid sphere event options: Soul Shards (1-3), Rez Timer
 
 	-- ⚠️ RETAIL 12.0+ Taint Protection: Wrap mana operations in pcall
 	-- If any error occurs, silently skip mana-dependent features
@@ -2403,8 +2397,6 @@ function Necrosis:UpdateMana()
 			end
 		end
 
-		-- Note: CountType 4 is now HEALTH, which is handled by UpdateHealth()
-		-- Skip mana display for known counter types (1-4)
 
 		-- Menus - mana only
 		-----------------------------------------------
