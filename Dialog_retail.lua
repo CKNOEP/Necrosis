@@ -518,6 +518,11 @@ Necrosis.Unit = {
 	["Elemental"] = L["ELEMENTAL"],
 }
 
+-- Initialize Necrosis.Translation table if not already done
+if not Necrosis.Translation then
+	Necrosis.Translation = {}
+end
+
 -- Traduction du nom des procs utilisés par Necrosis
 Necrosis.Translation.Proc = {
 	["Backlash"] = L["BACKLASH"],   -- https://classicdb.ch/?spell=4947 not sure this right one
