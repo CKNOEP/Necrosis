@@ -2346,7 +2346,6 @@ function Necrosis:UpdateHealth()
 	-- Display health counter (CountType 5)
 	if NecrosisConfig.CountType == 5 and NecrosisShardCount then
 		local health = UnitHealth("player")
-		print("[COUNTER] Setting text to: " .. tostring(health) .. " CountType=" .. NecrosisConfig.CountType)
 		NecrosisShardCount:SetText(tostring(health))
 	end
 
