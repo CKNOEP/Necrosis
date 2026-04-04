@@ -439,7 +439,9 @@ Necrosis.Config.Sphere.Colour = {
 }
 Necrosis.Config.Sphere.Count = {
 	L["SOUL_SHARDS"],
+	L["DEMON_SUMMON_STONES"],
 	L["REZ_TIMER"],
+	L["MANA"],
 }
 
 Necrosis.Config.Buttons = {
