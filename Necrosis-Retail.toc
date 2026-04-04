@@ -84,6 +84,8 @@ Timers\OtherTimers.lua
 
 XML\Attributes_retail.lua
 
+UI\BottomBanner\Framework_retail.lua
+
 XML\Options-Messages.lua
 XML\Options-SummonQueue.lua
 XML\Options-Sphere_retail.lua
@@ -101,5 +103,4 @@ ThreatMeter.lua
 
 SpellActivations\SpellActivations.xml
 
-UI\BottomBanner\Framework_retail.lua
 UI\BottomBanner\Init.xml
