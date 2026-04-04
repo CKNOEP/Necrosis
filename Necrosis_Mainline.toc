@@ -47,6 +47,7 @@ Locales\Localization.RU.lua
 Locales\Localization.TW.lua
 Locales\Localization.MX.lua
 
+UI\BottomBanner\Framework_retail.lua
 Initialize_retail.lua
 Utils.lua
 
