@@ -27,34 +27,6 @@ Necrosis.UnitCache = {
 	percent = 100,
 }
 
--- Function to update cache - calculate percent manually from health values
--- UnitHealthPercent() always returns 100% in tainted context, so calculate it ourselves
-function Necrosis:UpdateHealthInCleanContext()
-	local health = UnitHealth("player")
-	local healthmax = UnitHealthMax("player")
-
-	-- Calculate percent manually: (health / maxhealth) * 100
-	-- Convert to normal numbers first to avoid Secret Value arithmetic errors
-	local healthNum = tonumber(tostring(health)) or 0
-	local maxNum = tonumber(tostring(healthmax)) or 1
-
-	local percent = 0
-	if maxNum > 0 then
-		percent = (healthNum / maxNum) * 100
-	end
-
-	-- Clamp to 0-100
-	percent = math.min(100, math.max(0, percent))
-
-	-- Store values
-	self.UnitCache.health = healthNum
-	self.UnitCache.healthmax = maxNum
-	self.UnitCache.percent = percent
-end
-
--- DO NOT initialize at startup - context is already tainted
--- The ticker will populate the cache when first tick fires
-
 -- ============================================================================
 -- WoW Version Compatibility Wrappers (Retail Midnight 12.0+)
 -- ============================================================================
@@ -401,12 +373,39 @@ _G["NecrosisButton"] = nbutton
 -- Set unit for the secure button - it can read health safely
 nbutton:SetAttribute("unit", "player")
 
+-- Create a hidden texture on the secure button to encode/decode health values
+-- This avoids Secret Value arithmetic by using RGB encoding
+local healthTexture = nbutton:CreateTexture()
+Necrosis.HealthTexture = healthTexture
+
+-- Function to encode health in RGB and decode back to normal numbers
+function Necrosis:UpdateHealthViaRGB()
+	local health = UnitHealth("player")
+	local maxHealth = UnitHealthMax("player")
+
+	-- Encode in RGB: use red channel for health percentage
+	-- health / maxhealth is stored as R value (0.0 to 1.0)
+	if maxHealth > 0 then
+		local percent = health / maxHealth
+		healthTexture:SetVertexColor(percent, 0, 0, 1)
+		-- Now READ the color back - this converts Secret Values to normal numbers!
+		local r, g, b, a = healthTexture:GetVertexColor()
+		-- r is now a normal number (0.0 to 1.0)
+		local healthPercent = r * 100
+		self.UnitCache.percent = healthPercent
+	else
+		self.UnitCache.percent = 0
+	end
+	self.UnitCache.health = health
+	self.UnitCache.healthmax = maxHealth
+end
+
 -- Use ticker instead of event handler to avoid taint issues
 -- Tickers might have cleaner context than event handlers
 local tickCount = 0
 C_Timer.NewTicker(0.1, function()
 	if not Necrosis then return end
-	Necrosis:UpdateHealthInCleanContext()
+	Necrosis:UpdateHealthViaRGB()
 	Necrosis:UpdateHealth()
 
 	-- Debug every 50 ticks (~5 seconds)
