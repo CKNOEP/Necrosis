@@ -366,7 +366,6 @@ local healthEventFrame = CreateFrame("Frame", "NecrosisHealthEventFrame")
 healthEventFrame:RegisterEvent("UNIT_HEALTH")
 healthEventFrame:SetScript("OnEvent", function(self, event, unit)
 	if event == "UNIT_HEALTH" and unit == "player" then
-		print("[HEALTH_EVENT] Updating health")
 		Necrosis:UpdateHealth()
 	end
 end)

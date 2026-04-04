@@ -2349,50 +2349,33 @@ function Necrosis:UpdateHealth()
 		NecrosisShardCount:SetText(tostring(health))
 	end
 
-	print("[UPDATE_HEALTH] Circle=" .. tostring(NecrosisConfig.Circle) .. " issecretvalue=" .. tostring(issecretvalue ~= nil))
 
 	-- Change sphere texture based on health percentage (Circle == 4)
 	if NecrosisConfig.Circle == 4 and issecretvalue then
-		print("[RGB] Entering RGB update, calling pcall")
-		local ok, err = pcall(function()
-			print("[RGB] Inside pcall body")
+		pcall(function()
 			-- Get health percentage safely using UnitHealthPercent (works with Secret Values)
 			-- IMPORTANT: Result is a Secret Number, must convert to normal number first!
 			local healthPercent = UnitHealthPercent("player", true, CurveConstants and CurveConstants.ScaleTo100) or 100
-			print("[RGB] Before conversion: healthPercent=" .. type(healthPercent))
 			healthPercent = tonumber(tostring(healthPercent)) or 100
-			print("[RGB] After conversion: healthPercent=" .. tostring(healthPercent))
 
 			-- Calculate shard index (0-16) from percentage
 			local shardIndex = math.floor((healthPercent / 100) * 16)
 			shardIndex = math.max(0, math.min(16, shardIndex))
-			print("[RGB] shardIndex=" .. shardIndex)
 
 			-- Get RGB values from mapping table
 			local colorData = RGBColorMap[shardIndex] or RGBColorMap[0]
-			print("[RGB] colorData exists=" .. tostring(colorData ~= nil))
 			local r, g, b = colorData.r, colorData.g, colorData.b
-			print("[RGB] RGB=" .. r .. "," .. g .. "," .. b)
 
 			-- Build filename: color_R_G_B.tga
 			local filename = "Interface\\AddOns\\Necrosis\\UI\\" .. NecrosisConfig.NecrosisColor .. "\\color_" .. r .. "_" .. g .. "_" .. b .. ".tga"
-			print("[RGB] filename=" .. filename)
 
 			-- Load texture if changed
 			local fm = _G[Necrosis.Warlock_Buttons.main.f]
-			print("[RGB] fm=" .. tostring(fm ~= nil) .. " LastSphereSkin=" .. tostring(Local.LastSphereSkin) .. " same=" .. tostring(Local.LastSphereSkin == filename))
 			if fm and not (Local.LastSphereSkin == filename) then
 				Local.LastSphereSkin = filename
-				print("[RGB] ✅ Setting texture: " .. filename)
 				fm:SetNormalTexture(filename)
-			else
-				if not fm then print("[RGB] ❌ fm is nil!") end
-				if Local.LastSphereSkin == filename then print("[RGB] ℹ️ Texture unchanged, skipping") end
 			end
 		end)
-		if not ok then
-			print("[RGB ERROR] " .. tostring(err))
-		end
 	end
 end
 
