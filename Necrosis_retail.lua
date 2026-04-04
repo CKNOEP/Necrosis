@@ -2347,6 +2347,12 @@ for i = 0, 100 do
 	PercentToShardIndex[i] = math.min(16, math.floor((i / 100) * 16))
 end
 
+-- CRITICAL: Global function to get health percent in non-tainted context
+-- This avoids Secret Value restrictions by returning the result without comparisons
+_G.NecrosisGetHealthPercent = function()
+	return UnitHealthPercent("player", true, CurveConstants and CurveConstants.ScaleTo100) or 100
+end
+
 -- Update the sphere according to life || Update de la sphere en fonction de la vie
 function Necrosis:UpdateHealth()
 	-- Display health counter (CountType 5)
@@ -2357,11 +2363,12 @@ function Necrosis:UpdateHealth()
 
 	-- Change sphere texture based on health percentage (Circle == 4)
 	if NecrosisConfig.Circle == 4 and issecretvalue then
-		-- Use UnitHealthPercent with proper parameters (like VuhDo does!)
-		local healthPercent = UnitHealthPercent("player", true, CurveConstants and CurveConstants.ScaleTo100) or 100
+		-- Call global non-tainted function to get health percent
+		-- This avoids Secret Value restrictions
+		local healthPercent = _G.NecrosisGetHealthPercent()
 
-		-- Use lookup table to avoid arithmetic on Secret Value
-		-- Cast to int first to index the table safely
+		-- Use lookup table to map percent to shard index
+		-- tonumber(tostring()) converts the value safely
 		local percentInt = tonumber(tostring(healthPercent)) or 100
 		percentInt = math.max(0, math.min(100, percentInt))
 		local shardIndex = PercentToShardIndex[percentInt] or 0
@@ -2373,7 +2380,7 @@ function Necrosis:UpdateHealth()
 		-- Build filename: color_R_G_B.tga (use forward slashes for WoW texture paths!)
 		local filename = "Interface/AddOns/Necrosis/UI/" .. NecrosisConfig.NecrosisColor .. "/color_" .. r .. "_" .. g .. "_" .. b .. ".tga"
 
-		print("[RGB DEBUG] Filename: " .. filename .. " | NecrosisColor: " .. tostring(NecrosisConfig.NecrosisColor) .. " | RGB: " .. r .. "," .. g .. "," .. b)
+		print("[RGB] HealthPercent=" .. percentInt .. "% → ShardIndex=" .. shardIndex .. " → " .. filename)
 
 		-- Load texture if changed
 		local fm = _G[Necrosis.Warlock_Buttons.main.f]
