@@ -2380,9 +2380,14 @@ function Necrosis:UpdateHealth()
 
 			-- Load texture if changed
 			local fm = _G[Necrosis.Warlock_Buttons.main.f]
+			print("[RGB] fm=" .. tostring(fm ~= nil) .. " LastSphereSkin=" .. tostring(Local.LastSphereSkin) .. " same=" .. tostring(Local.LastSphereSkin == filename))
 			if fm and not (Local.LastSphereSkin == filename) then
 				Local.LastSphereSkin = filename
+				print("[RGB] ✅ Setting texture: " .. filename)
 				fm:SetNormalTexture(filename)
+			else
+				if not fm then print("[RGB] ❌ fm is nil!") end
+				if Local.LastSphereSkin == filename then print("[RGB] ℹ️ Texture unchanged, skipping") end
 			end
 		end)
 		if not ok then
