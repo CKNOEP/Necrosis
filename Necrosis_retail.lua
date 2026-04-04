@@ -2349,9 +2349,13 @@ function Necrosis:UpdateHealth()
 		NecrosisShardCount:SetText(tostring(health))
 	end
 
+	print("[UPDATE_HEALTH] Circle=" .. tostring(NecrosisConfig.Circle) .. " issecretvalue=" .. tostring(issecretvalue ~= nil))
+
 	-- Change sphere texture based on health percentage (Circle == 4)
 	if NecrosisConfig.Circle == 4 and issecretvalue then
-		pcall(function()
+		print("[RGB] Entering RGB update, calling pcall")
+		local ok, err = pcall(function()
+			print("[RGB] Inside pcall body")
 			-- Get health percentage safely using UnitHealthPercent (works with Secret Values)
 			local healthPercent = UnitHealthPercent("player", true, CurveConstants and CurveConstants.ScaleTo100) or 100
 
@@ -2373,6 +2377,9 @@ function Necrosis:UpdateHealth()
 				fm:SetNormalTexture(filename)
 			end
 		end)
+		if not ok then
+			print("[RGB ERROR] " .. tostring(err))
+		end
 	end
 end
 
