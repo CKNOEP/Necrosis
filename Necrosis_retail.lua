@@ -2354,23 +2354,28 @@ _G.NecrosisGetHealthPercent = function()
 end
 
 -- Update the sphere according to life || Update de la sphere en fonction de la vie
+-- VUHDO-STYLE: Use cached unit data (updated in clean context, no Secret Value arithmetic here)
 function Necrosis:UpdateHealth()
+	local cache = self.UnitCache
+
 	-- Display health counter (CountType 5)
 	if NecrosisConfig.CountType == 5 and NecrosisShardCount then
-		local health = UnitHealth("player")
-		NecrosisShardCount:SetText(tostring(health))
+		NecrosisShardCount:SetText(tostring(cache.health))
 	end
 
 	-- Change sphere texture based on health percentage (Circle == 4)
-	if NecrosisConfig.Circle == 4 and issecretvalue then
-		-- Call global non-tainted function to get health percent
-		-- This avoids Secret Value restrictions
-		local healthPercent = _G.NecrosisGetHealthPercent()
+	if NecrosisConfig.Circle == 4 then
+		-- Use cached values (non-Secret numbers) - no arithmetic restrictions!
+		local healthmax = cache.healthmax
 
-		-- Use lookup table to map percent to shard index
-		-- tonumber(tostring()) converts the value safely
-		local percentInt = tonumber(tostring(healthPercent)) or 100
-		percentInt = math.max(0, math.min(100, percentInt))
+		-- Calculate percent from cached normal numbers
+		local percent = 0
+		if healthmax > 0 then
+			percent = math.min(100, math.max(0, (cache.health / healthmax) * 100))
+		end
+
+		-- Map to shard index
+		local percentInt = math.floor(percent)
 		local shardIndex = PercentToShardIndex[percentInt] or 0
 
 		-- Get RGB values from mapping table
@@ -2380,21 +2385,21 @@ function Necrosis:UpdateHealth()
 		-- Build filename: color_R_G_B.tga (use forward slashes for WoW texture paths!)
 		local filename = "Interface/AddOns/Necrosis/UI/" .. NecrosisConfig.NecrosisColor .. "/color_" .. r .. "_" .. g .. "_" .. b .. ".tga"
 
-		print("[RGB] HealthPercent=" .. percentInt .. "% → ShardIndex=" .. shardIndex .. " → " .. filename)
+		-- DEBUG: Only log if value changed
+		if not Local.LastLoggedPercent or Local.LastLoggedPercent ~= percentInt then
+			print("[CACHE→RGB] Health=" .. cache.health .. "/" .. cache.healthmax .. " → " .. percentInt .. "% → ShardIndex=" .. shardIndex .. " → " .. filename)
+			Local.LastLoggedPercent = percentInt
+		end
 
 		-- Load texture if changed
 		local fm = _G[Necrosis.Warlock_Buttons.main.f]
 		if fm then
 			local texture = fm:GetNormalTexture()
 			if texture then
-				print("[RGB] Setting texture via SetTexture()")
 				texture:SetTexture(filename)
 			else
-				print("[RGB] Setting texture via SetNormalTexture()")
 				fm:SetNormalTexture(filename)
 			end
-		else
-			print("[RGB] ERROR: fm is nil!")
 		end
 	end
 end

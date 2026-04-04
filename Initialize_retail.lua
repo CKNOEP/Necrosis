@@ -16,6 +16,43 @@ SAO ={}
 -- NECROSIS_ID is now defined in Core-Init.lua before locales load
 
 -- ============================================================================
+-- VUHDO-STYLE CACHE: Non-tainted data storage (Clean context)
+-- ============================================================================
+-- This pattern matches VuhDo's approach - store unit data in clean context,
+-- then use cached values in tainted code (no arithmetic on Secret Values)
+
+Necrosis.UnitCache = {
+	health = 0,
+	healthmax = 1,
+	hasSecretHealth = false,
+	hasSecretHealthMax = false,
+}
+
+-- Function to update cache in clean context - captures the raw data once
+function Necrosis:UpdateUnitCache()
+	local health = UnitHealth("player")
+	local healthmax = UnitHealthMax("player")
+
+	self.UnitCache.health = health
+	self.UnitCache.healthmax = healthmax
+
+	-- Detect if values are Secret Values
+	if issecretvalue then
+		self.UnitCache.hasSecretHealth = issecretvalue(health)
+		self.UnitCache.hasSecretHealthMax = issecretvalue(healthmax)
+	else
+		self.UnitCache.hasSecretHealth = false
+		self.UnitCache.hasSecretHealthMax = false
+	end
+
+	print("[CACHE] Updated: health=" .. tostring(health) .. ", healthmax=" .. tostring(healthmax)
+		.. ", hasSecret=" .. tostring(self.UnitCache.hasSecretHealth))
+end
+
+-- Initialize cache at startup (clean context)
+Necrosis:UpdateUnitCache()
+
+-- ============================================================================
 -- WoW Version Compatibility Wrappers (Retail Midnight 12.0+)
 -- ============================================================================
 
@@ -366,9 +403,11 @@ nbutton:SetAttribute("unit", "player")
 nbutton:RegisterEvent("UNIT_HEALTH")
 nbutton:SetScript("OnEvent", function(self, event, unit)
 	if event == "UNIT_HEALTH" and unit == "player" then
-		-- Queue UpdateHealth to run in next Lua tick (fresh context)
+		-- Queue cache update + health update to run in next Lua tick (clean context)
+		-- This matches VuhDo's pattern: separate data reading from data manipulation
 		C_Timer.After(0, function()
-			Necrosis:UpdateHealth()
+			Necrosis:UpdateUnitCache()  -- Update cache (read UnitHealth/UnitHealthMax safely)
+			Necrosis:UpdateHealth()      -- Use cached values (no arithmetic on Secret Values)
 		end)
 	end
 end)
