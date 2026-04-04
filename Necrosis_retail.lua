@@ -2355,12 +2355,18 @@ function Necrosis:UpdateHealth()
 		local health = UnitHealth("player")
 		local healthMax = UnitHealthMax("player")
 
+		print("[RGB RAW VALUES] health=" .. tostring(health) .. " healthMax=" .. tostring(healthMax))
+
 		-- Convert Secret Values to normal numbers
 		local healthNum = tonumber(tostring(health)) or 0
 		local healthMaxNum = tonumber(tostring(healthMax)) or 1
 
+		print("[RGB CONVERTED] healthNum=" .. healthNum .. " healthMaxNum=" .. healthMaxNum)
+
 		-- Calculate percentage
 		local healthPercent = (healthMaxNum > 0) and math.floor((healthNum / healthMaxNum) * 100) or 100
+
+		print("[RGB PERCENT] healthPercent=" .. healthPercent .. "%")
 
 		-- Calculate shard index (0-16) from percentage
 		local shardIndex = math.floor((healthPercent / 100) * 16)
