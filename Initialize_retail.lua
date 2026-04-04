@@ -27,26 +27,29 @@ Necrosis.UnitCache = {
 	percent = 100,
 }
 
--- Function to update cache - use UnitHealthPercent with VuhDo parameters
--- VuhDo uses: UnitHealthPercent(unit, true, CurveConstants.ScaleTo100)
+-- Function to update cache - calculate percent manually from health values
+-- UnitHealthPercent() always returns 100% in tainted context, so calculate it ourselves
 function Necrosis:UpdateHealthInCleanContext()
 	local health = UnitHealth("player")
 	local healthmax = UnitHealthMax("player")
 
-	-- Use VuhDo's approach: second param true, third param CurveConstants.ScaleTo100
-	local percent = UnitHealthPercent("player", true, CurveConstants and CurveConstants.ScaleTo100) or 100
+	-- Calculate percent manually: (health / maxhealth) * 100
+	-- Convert to normal numbers first to avoid Secret Value arithmetic errors
+	local healthNum = tonumber(tostring(health)) or 0
+	local maxNum = tonumber(tostring(healthmax)) or 1
 
-	-- Convert Secret Value to normal number: Secret → String → Number
-	-- This is the ONLY way to safely convert Secret Values in tainted context
-	local percentNum = tonumber(tostring(percent))
-	if not percentNum then
-		percentNum = 100
+	local percent = 0
+	if maxNum > 0 then
+		percent = (healthNum / maxNum) * 100
 	end
 
-	-- Store values - percent is now a normal number
-	self.UnitCache.health = health
-	self.UnitCache.healthmax = healthmax
-	self.UnitCache.percent = percentNum
+	-- Clamp to 0-100
+	percent = math.min(100, math.max(0, percent))
+
+	-- Store values
+	self.UnitCache.health = healthNum
+	self.UnitCache.healthmax = maxNum
+	self.UnitCache.percent = percent
 end
 
 -- DO NOT initialize at startup - context is already tainted
