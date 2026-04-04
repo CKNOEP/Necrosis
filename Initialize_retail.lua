@@ -391,10 +391,21 @@ nbutton:SetAttribute("unit", "player")
 
 -- Use ticker instead of event handler to avoid taint issues
 -- Tickers might have cleaner context than event handlers
+local tickCount = 0
 C_Timer.NewTicker(0.1, function()
 	if not Necrosis then return end
 	Necrosis:UpdateHealthInCleanContext()
 	Necrosis:UpdateHealth()
+
+	-- Debug every 50 ticks (~5 seconds)
+	tickCount = tickCount + 1
+	if tickCount % 50 == 0 then
+		if NecrosisConfig then
+			print("[TICKER] Circle=" .. (NecrosisConfig.Circle or "nil") .. ", Percent=" .. (Necrosis.UnitCache.percent or "nil") .. "%")
+		else
+			print("[TICKER] NecrosisConfig not loaded yet!")
+		end
+	end
 end)
 
 -- RETAIL 12.0+ FIX: Keep Soulstone button visible and unsaturated (WoW auto-grays it on cooldown)
