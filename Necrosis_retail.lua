@@ -2390,6 +2390,11 @@ function Necrosis:UpdateMana()
 		local mana = UnitPower("player", ptype)
 		local manaMax = UnitPowerMax("player", ptype)
 
+		-- Display mana counter (CountType 5)
+		if NecrosisConfig.CountType == 5 and NecrosisShardCount then
+			NecrosisShardCount:SetText(tostring(mana))
+		end
+
 		local fm = _G[Necrosis.Warlock_Buttons.main.f]
 		-- If the perimeter of the stone shows the mana || Si le pourtour de la pierre affiche la mana
 		if NecrosisConfig.Circle == 3 then
