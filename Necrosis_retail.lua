@@ -2343,9 +2343,12 @@ local RGBColorMap = {
 
 -- Update the sphere according to life || Update de la sphere en fonction de la vie
 function Necrosis:UpdateHealth()
+	-- Get health once (works from secure context via C_Timer.After)
+	local health = UnitHealth("player")
+	local healthMax = UnitHealthMax("player")
+
 	-- Display health counter (CountType 5)
 	if NecrosisConfig.CountType == 5 and NecrosisShardCount then
-		local health = UnitHealth("player")
 		NecrosisShardCount:SetText(tostring(health))
 	end
 
@@ -2353,18 +2356,14 @@ function Necrosis:UpdateHealth()
 	-- Change sphere texture based on health percentage (Circle == 4)
 	if NecrosisConfig.Circle == 4 and issecretvalue then
 		pcall(function()
-			-- Get health using the raw API (returns Secret Values)
-			local health = UnitHealth("player")
-			local healthMax = UnitHealthMax("player")
-
 			-- Convert Secret Values to normal numbers
-			health = tonumber(tostring(health)) or 0
-			healthMax = tonumber(tostring(healthMax)) or 1
+			local healthNum = tonumber(tostring(health)) or 0
+			local healthMaxNum = tonumber(tostring(healthMax)) or 1
 
 			-- Calculate percentage
-			local healthPercent = (healthMax > 0) and math.floor((health / healthMax) * 100) or 100
+			local healthPercent = (healthMaxNum > 0) and math.floor((healthNum / healthMaxNum) * 100) or 100
 
-			print("[RGB] health=" .. health .. "/" .. healthMax .. " percent=" .. healthPercent .. "% shardIndex=" .. math.floor((healthPercent / 100) * 16))
+			print("[RGB] health=" .. healthNum .. "/" .. healthMaxNum .. " percent=" .. healthPercent .. "% shardIndex=" .. math.floor((healthPercent / 100) * 16))
 
 			-- Calculate shard index (0-16) from percentage
 			local shardIndex = math.floor((healthPercent / 100) * 16)
