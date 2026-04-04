@@ -46,85 +46,51 @@ bottomAnchor:SetAllPoints(necrosisUIFrame)
 
 -- Implement Show/Hide Methods
 function NUI:Show()
-	print("[Framework] NUI:Show() called")
 	if NecrosisUI then
 		NecrosisUI:Show()
 	end
 end
 
 function NUI:Hide()
-	print("[Framework] NUI:Hide() called")
 	if NecrosisUI then
 		NecrosisUI:Hide()
 	end
 end
 
 function NUI:UpdateBottomBannerScale()
-	print("[Framework] NUI:UpdateBottomBannerScale() called")
 	if NUI_Art_Classic then
 		local scale = 0.78 * (NecrosisConfig.BottomBannerScale or 1.0)
 		NUI_Art_Classic:SetScale(scale)
 	end
 end
 
--- Verify methods are added
-print("[Framework] Defining NUI methods...")
-print("[Framework] NUI.Show type after definition:", type(NUI.Show))
-print("[Framework] NUI.ImportLayout type after definition:", type(NUI.ImportLayout))
-
 -- Import NecrosisUI Layout via C_EditMode
-print("[Framework] About to define ImportLayout, current NUI:", tostring(NUI))
 function NUI:ImportLayout()
-	print("[NUI] ImportLayout() called")
-
-	if not C_EditMode then
-		print("[NUI] C_EditMode missing")
-		return
-	end
-	if not C_EditMode.GetLayouts then
-		print("[NUI] C_EditMode.GetLayouts missing")
-		return
-	end
-	if not C_EditMode.ConvertStringToLayoutInfo then
-		print("[NUI] C_EditMode.ConvertStringToLayoutInfo missing")
+	if not C_EditMode or not C_EditMode.GetLayouts or not C_EditMode.ConvertStringToLayoutInfo then
 		return
 	end
 
 	local layoutString = _G.NECROSISUI_LAYOUT_STRING
 	if not layoutString then
-		print("[NUI] NECROSISUI_LAYOUT_STRING not found")
 		return
 	end
-	print("[NUI] Layout string length:", string.len(layoutString))
 
 	local importedLayoutInfo = C_EditMode.ConvertStringToLayoutInfo(layoutString)
 	if not importedLayoutInfo then
-		print("[NUI] ConvertStringToLayoutInfo returned nil")
 		return
 	end
-	print("[NUI] Layout converted successfully")
 
 	-- Ensure Blizzard_EditMode is loaded
 	if not C_AddOns.IsAddOnLoaded("Blizzard_EditMode") then
-		print("[NUI] Loading Blizzard_EditMode...")
 		UIParentLoadAddOn("Blizzard_EditMode")
-	else
-		print("[NUI] Blizzard_EditMode already loaded")
 	end
 
 	-- Wait a bit for everything to initialize
 	C_Timer.After(0.5, function()
-		print("[NUI] Timer callback fired, getting layouts...")
 		local currentLayouts = C_EditMode.GetLayouts()
-		if not currentLayouts then
-			print("[NUI] GetLayouts returned nil")
+		if not currentLayouts or not currentLayouts.layouts then
 			return
 		end
-		if not currentLayouts.layouts then
-			print("[NUI] GetLayouts returned object with no layouts table")
-			return
-		end
-		print("[NUI] Got " .. #currentLayouts.layouts .. " layouts")
 
 		-- Find a custom layout to copy layoutType from
 		local customLayoutType = nil
@@ -132,7 +98,6 @@ function NUI:ImportLayout()
 			-- Custom layouts should have a different layoutType than system ones
 			if layout.layoutType and layout.layoutType ~= 1 then -- Assuming 1 is system type
 				customLayoutType = layout.layoutType
-				print("[NUI] Found custom layoutType:", customLayoutType)
 				break
 			end
 		end
@@ -140,21 +105,15 @@ function NUI:ImportLayout()
 		-- If no custom layout exists, use a default layoutType
 		if not customLayoutType then
 			customLayoutType = 2  -- Default custom layout type
-			print("[NUI] Using default layoutType: 2")
 		end
 
-		print("[NUI] Calling CreateNecrosisLayout...")
 		NUI:CreateNecrosisLayout(currentLayouts, importedLayoutInfo, customLayoutType)
 	end)
 end
 
 -- Helper function to create or update NecrosisUI layout
 function NUI:CreateNecrosisLayout(currentLayouts, importedLayoutInfo, customLayoutType)
-	print("[NUI] CreateNecrosisLayout() called")
-
 	local necrosisLayoutName = "NecrosisUI_" .. UnitName("player")
-	print("[NUI] Creating layout with name:", necrosisLayoutName)
-
 	local necrosisLayoutIndex = nil
 	local templateLayout = currentLayouts.layouts[1]
 
@@ -162,25 +121,21 @@ function NUI:CreateNecrosisLayout(currentLayouts, importedLayoutInfo, customLayo
 	for i, layout in ipairs(currentLayouts.layouts) do
 		if layout.layoutName == necrosisLayoutName then
 			necrosisLayoutIndex = i
-			print("[NUI] Layout already exists at index:", i)
 			break
 		end
 	end
 
 	-- Create or update layout
 	if not necrosisLayoutIndex then
-		print("[NUI] Creating new layout...")
 		-- Create new layout based on template or imported data
 		local newLayout = {}
 
 		if templateLayout then
-			print("[NUI] Using template layout")
 			-- Copy all fields from template (systems field is required by SaveLayouts)
 			for k, v in pairs(templateLayout) do
 				newLayout[k] = v
 			end
 		else
-			print("[NUI] No template, using imported layout info")
 			-- No template exists, use imported layout data
 			-- Copy systems from importedLayoutInfo if available
 			if importedLayoutInfo.systems then
@@ -196,40 +151,32 @@ function NUI:CreateNecrosisLayout(currentLayouts, importedLayoutInfo, customLayo
 		newLayout.layoutType = customLayoutType
 		if importedLayoutInfo.frames then
 			newLayout.frames = importedLayoutInfo.frames
-			print("[NUI] Set frames count:", #importedLayoutInfo.frames)
 		end
 
 		table.insert(currentLayouts.layouts, newLayout)
 		necrosisLayoutIndex = #currentLayouts.layouts
-		print("[NUI] New layout inserted at index:", necrosisLayoutIndex)
 	else
 		-- Update existing layout
-		print("[NUI] Updating existing layout...")
 		if importedLayoutInfo.frames then
 			currentLayouts.layouts[necrosisLayoutIndex].frames = importedLayoutInfo.frames
 		end
 	end
 
 	-- Save layouts (keep all fields including required 'systems')
-	print("[NUI] Saving layouts...")
 	local saveInfo = {
 		layouts = currentLayouts.layouts,
 		activeLayout = currentLayouts.activeLayout
 	}
 	C_EditMode.SaveLayouts(saveInfo)
-	print("[NUI] SaveLayouts called")
 
 	-- Wait for save to complete, then activate by name
 	C_Timer.After(0.2, function()
-		print("[NUI] Activation timer fired")
 		local necrosisLayoutName = "NecrosisUI_" .. UnitName("player")
 
 		-- Method: Search by name in EditModeManagerFrame (most reliable)
 		if EditModeManagerFrame and EditModeManagerFrame.layouts then
-			print("[NUI] EditModeManagerFrame found, searching layouts...")
 			for i, layout in ipairs(EditModeManagerFrame.layouts) do
 				if layout.layoutName == necrosisLayoutName then
-					print("[NUI] Found layout in EditModeManagerFrame, activating index:", i)
 					-- Found layout by name - activate directly by index
 					C_EditMode.SetActiveLayout(i)
 
@@ -243,16 +190,13 @@ function NUI:CreateNecrosisLayout(currentLayouts, importedLayoutInfo, customLayo
 		end
 
 		-- Fallback: Use C_EditMode.GetLayouts() if EditModeManagerFrame unavailable
-		print("[NUI] Using C_EditMode.GetLayouts fallback...")
 		local updatedLayouts = C_EditMode.GetLayouts()
 		if updatedLayouts and updatedLayouts.layouts then
 			local offset = GetSystemOffset()
-			print("[NUI] Got updated layouts, offset:", offset)
 
 			for i, layout in ipairs(updatedLayouts.layouts) do
 				if layout.layoutName == necrosisLayoutName then
 					local globalLayoutIndex = offset + i
-					print("[NUI] Found layout, activating global index:", globalLayoutIndex)
 					C_EditMode.SetActiveLayout(globalLayoutIndex)
 
 					C_Timer.After(0.3, function()
@@ -261,8 +205,6 @@ function NUI:CreateNecrosisLayout(currentLayouts, importedLayoutInfo, customLayo
 					return
 				end
 			end
-		else
-			print("[NUI] Updated layouts nil or no layouts table")
 		end
 
 	end)
@@ -338,12 +280,3 @@ SlashCmdList["NUIDEBUG"] = function()
 		end
 	end)
 end
-
--- Final verification at end of file
-print("[Framework] FRAMEWORK_RETAIL.LUA LOADED - Final state:")
-print("[Framework] _G.NUI:", tostring(_G.NUI))
-print("[Framework] _G.NUI.Show:", type(_G.NUI and _G.NUI.Show))
-print("[Framework] _G.NUI.Hide:", type(_G.NUI and _G.NUI.Hide))
-print("[Framework] _G.NUI.UpdateBottomBannerScale:", type(_G.NUI and _G.NUI.UpdateBottomBannerScale))
-print("[Framework] _G.NUI.ImportLayout:", type(_G.NUI and _G.NUI.ImportLayout))
-print("[Framework] _G.NUI.CreateNecrosisLayout:", type(_G.NUI and _G.NUI.CreateNecrosisLayout))
