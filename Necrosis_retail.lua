@@ -2373,15 +2373,21 @@ function Necrosis:UpdateHealth()
 		-- Build filename: color_R_G_B.tga
 		local filename = "Interface\\AddOns\\Necrosis\\UI\\" .. NecrosisConfig.NecrosisColor .. "\\color_" .. r .. "_" .. g .. "_" .. b .. ".tga"
 
+		print("[RGB DEBUG] Filename: " .. filename .. " | NecrosisColor: " .. tostring(NecrosisConfig.NecrosisColor) .. " | RGB: " .. r .. "," .. g .. "," .. b)
+
 		-- Load texture if changed
 		local fm = _G[Necrosis.Warlock_Buttons.main.f]
 		if fm then
 			local texture = fm:GetNormalTexture()
 			if texture then
+				print("[RGB] Setting texture via SetTexture()")
 				texture:SetTexture(filename)
 			else
+				print("[RGB] Setting texture via SetNormalTexture()")
 				fm:SetNormalTexture(filename)
 			end
+		else
+			print("[RGB] ERROR: fm is nil!")
 		end
 	end
 end
