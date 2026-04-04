@@ -2357,6 +2357,8 @@ function Necrosis:UpdateHealth()
 			local health = UnitHealth("player")
 			local healthMax = UnitHealthMax("player")
 
+			print("[RGB RAW] health type=" .. type(health) .. " value=" .. tostring(health) .. " | healthMax=" .. tostring(healthMax))
+
 			-- Convert Secret Values to normal numbers
 			local healthNum = tonumber(tostring(health)) or 0
 			local healthMaxNum = tonumber(tostring(healthMax)) or 1
