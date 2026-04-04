@@ -378,52 +378,44 @@ nbutton:SetAttribute("unit", "player")
 local healthTexture = nbutton:CreateTexture()
 Necrosis.HealthTexture = healthTexture
 
--- Function to encode health in RGB and decode back to normal numbers
-function Necrosis:UpdateHealthViaRGB()
+-- OnUpdate on the secure button runs in a cleaner context
+-- Use this to read health and encode in RGB texture
+nbutton:SetScript("OnUpdate", function(self, elapsed)
+	if not Necrosis or not NecrosisConfig then return end
+
 	local health = UnitHealth("player")
 	local maxHealth = UnitHealthMax("player")
 
-	-- DEBUG: Print raw values every 50 calls (to reduce spam)
-	self.DebugCounter = (self.DebugCounter or 0) + 1
-	if self.DebugCounter % 50 == 0 then
-		print("[RGB-RAW] health=" .. tostring(health) .. ", maxHealth=" .. tostring(maxHealth)
-			.. ", issecret(h)=" .. tostring(issecretvalue(health))
-			.. ", issecret(m)=" .. tostring(issecretvalue(maxHealth)))
-	end
+	-- Try to encode in RGB without doing arithmetic
+	-- This should work because SetVertexColor might not require arithmetic on Secret Values
+	pcall(function()
+		if maxHealth and maxHealth > 0 then
+			local percent = health / maxHealth  -- Do arithmetic HERE in cleaner context
+			healthTexture:SetVertexColor(percent, 0, 0, 1)
 
-	-- Encode in RGB: use red channel for health percentage
-	-- health / maxhealth is stored as R value (0.0 to 1.0)
-	if maxHealth > 0 then
-		local percent = health / maxHealth
-		healthTexture:SetVertexColor(percent, 0, 0, 1)
-		-- Now READ the color back - this converts Secret Values to normal numbers!
-		local r, g, b, a = healthTexture:GetVertexColor()
-		-- r is now a normal number (0.0 to 1.0)
-		local healthPercent = r * 100
-		self.UnitCache.percent = healthPercent
-	else
-		self.UnitCache.percent = 0
-	end
-	self.UnitCache.health = health
-	self.UnitCache.healthmax = maxHealth
-end
+			-- Decode from RGB
+			local r, g, b, a = healthTexture:GetVertexColor()
+			Necrosis.UnitCache.percent = r * 100
+		else
+			Necrosis.UnitCache.percent = 0
+		end
+	end)
 
--- Use ticker instead of event handler to avoid taint issues
--- Tickers might have cleaner context than event handlers
-local tickCount = 0
+	Necrosis.UnitCache.health = health
+	Necrosis.UnitCache.healthmax = maxHealth
+end)
+
+-- Use ticker to call UpdateHealth (which uses the cached percent)
+-- Ticker runs frequently to update texture
 C_Timer.NewTicker(0.1, function()
-	if not Necrosis then return end
-	Necrosis:UpdateHealthViaRGB()
+	if not Necrosis or not NecrosisConfig then return end
 	Necrosis:UpdateHealth()
 
 	-- Debug every 50 ticks (~5 seconds)
-	tickCount = tickCount + 1
-	if tickCount % 50 == 0 then
-		if NecrosisConfig then
-			print("[TICKER] Circle=" .. (NecrosisConfig.Circle or "nil") .. ", Percent=" .. (Necrosis.UnitCache.percent or "nil") .. "%")
-		else
-			print("[TICKER] NecrosisConfig not loaded yet!")
-		end
+	if not Necrosis.DebugCounter then Necrosis.DebugCounter = 0 end
+	Necrosis.DebugCounter = Necrosis.DebugCounter + 1
+	if Necrosis.DebugCounter % 50 == 0 then
+		print("[TICKER] Circle=" .. (NecrosisConfig.Circle or "nil") .. ", Percent=" .. (Necrosis.UnitCache.percent or "nil") .. "%")
 	end
 end)
 
