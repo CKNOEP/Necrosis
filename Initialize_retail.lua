@@ -361,12 +361,15 @@ _G["NecrosisButton"] = nbutton
 -- Set unit for the secure button - it can read health safely
 nbutton:SetAttribute("unit", "player")
 
--- Create a SEPARATE non-secure frame for event handling (SecureUnitButtonTemplate has restrictions)
-local healthEventFrame = CreateFrame("Frame", "NecrosisHealthEventFrame")
-healthEventFrame:RegisterEvent("UNIT_HEALTH")
-healthEventFrame:SetScript("OnEvent", function(self, event, unit)
+-- Use secure context: RegisterEvent on the secure button itself, but call UpdateHealth via C_Timer
+-- This ensures UpdateHealth runs fresh in Lua context with proper health data access
+nbutton:RegisterEvent("UNIT_HEALTH")
+nbutton:SetScript("OnEvent", function(self, event, unit)
 	if event == "UNIT_HEALTH" and unit == "player" then
-		Necrosis:UpdateHealth()
+		-- Queue UpdateHealth to run in next Lua tick (fresh context)
+		C_Timer.After(0, function()
+			Necrosis:UpdateHealth()
+		end)
 	end
 end)
 
