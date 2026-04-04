@@ -384,6 +384,10 @@ Necrosis.ChatMessage = {
 	}
 }
 
+-- Initialize Necrosis.Config table if not already done
+if not Necrosis.Config then
+	Necrosis.Config = {}
+end
 
 -- Gestion XML - Menu de configuration
 Necrosis.Config.Panel = {
