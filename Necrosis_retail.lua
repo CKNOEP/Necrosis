@@ -2341,6 +2341,12 @@ local RGBColorMap = {
 	[16] = {r=255, g=0, b=0},
 }
 
+-- Lookup table: percent (0-100) → shardIndex (0-16) to avoid Secret Value arithmetic
+local PercentToShardIndex = {}
+for i = 0, 100 do
+	PercentToShardIndex[i] = math.min(16, math.floor((i / 100) * 16))
+end
+
 -- Update the sphere according to life || Update de la sphere en fonction de la vie
 function Necrosis:UpdateHealth()
 	-- Display health counter (CountType 5)
@@ -2352,12 +2358,13 @@ function Necrosis:UpdateHealth()
 	-- Change sphere texture based on health percentage (Circle == 4)
 	if NecrosisConfig.Circle == 4 and issecretvalue then
 		-- Use UnitHealthPercent with proper parameters (like VuhDo does!)
-		-- The second parameter (true) and CurveConstants.ScaleTo100 make it return a normal number
 		local healthPercent = UnitHealthPercent("player", true, CurveConstants and CurveConstants.ScaleTo100) or 100
 
-		-- Calculate shard index (0-16) from percentage
-		local shardIndex = math.floor((healthPercent / 100) * 16)
-		shardIndex = math.max(0, math.min(16, shardIndex))
+		-- Use lookup table to avoid arithmetic on Secret Value
+		-- Cast to int first to index the table safely
+		local percentInt = tonumber(tostring(healthPercent)) or 100
+		percentInt = math.max(0, math.min(100, percentInt))
+		local shardIndex = PercentToShardIndex[percentInt] or 0
 
 		-- Get RGB values from mapping table
 		local colorData = RGBColorMap[shardIndex] or RGBColorMap[0]
