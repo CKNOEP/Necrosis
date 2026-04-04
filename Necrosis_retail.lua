@@ -2354,7 +2354,7 @@ _G.NecrosisGetHealthPercent = function()
 end
 
 -- Update the sphere according to life || Update de la sphere en fonction de la vie
--- VUHDO-STYLE: Use cached unit data (updated in clean context, no Secret Value arithmetic here)
+-- Uses pre-calculated percent from clean context (no Secret Value arithmetic here)
 function Necrosis:UpdateHealth()
 	local cache = self.UnitCache
 
@@ -2365,17 +2365,8 @@ function Necrosis:UpdateHealth()
 
 	-- Change sphere texture based on health percentage (Circle == 4)
 	if NecrosisConfig.Circle == 4 then
-		-- Use cached values (non-Secret numbers) - no arithmetic restrictions!
-		local healthmax = cache.healthmax
-
-		-- Calculate percent from cached normal numbers
-		local percent = 0
-		if healthmax > 0 then
-			percent = math.min(100, math.max(0, (cache.health / healthmax) * 100))
-		end
-
-		-- Map to shard index
-		local percentInt = math.floor(percent)
+		-- Use cached PERCENT (computed in clean context, normal number)
+		local percentInt = math.floor(cache.percent)
 		local shardIndex = PercentToShardIndex[percentInt] or 0
 
 		-- Get RGB values from mapping table
@@ -2387,7 +2378,7 @@ function Necrosis:UpdateHealth()
 
 		-- DEBUG: Only log if value changed
 		if not Local.LastLoggedPercent or Local.LastLoggedPercent ~= percentInt then
-			print("[CACHE→RGB] Health=" .. cache.health .. "/" .. cache.healthmax .. " → " .. percentInt .. "% → ShardIndex=" .. shardIndex .. " → " .. filename)
+			print("[CACHE→RGB] Percent=" .. percentInt .. "% → ShardIndex=" .. shardIndex .. " → " .. filename)
 			Local.LastLoggedPercent = percentInt
 		end
 

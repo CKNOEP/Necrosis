@@ -24,33 +24,35 @@ SAO ={}
 Necrosis.UnitCache = {
 	health = 0,
 	healthmax = 1,
-	hasSecretHealth = false,
-	hasSecretHealthMax = false,
+	percent = 100,
 }
 
--- Function to update cache in clean context - captures the raw data once
-function Necrosis:UpdateUnitCache()
+-- Function to update cache AND calculate percent in SAME clean context
+-- This avoids Secret Value issues by computing immediately, not storing Secret Values
+function Necrosis:UpdateHealthInCleanContext()
 	local health = UnitHealth("player")
 	local healthmax = UnitHealthMax("player")
 
-	self.UnitCache.health = health
-	self.UnitCache.healthmax = healthmax
-
-	-- Detect if values are Secret Values
-	if issecretvalue then
-		self.UnitCache.hasSecretHealth = issecretvalue(health)
-		self.UnitCache.hasSecretHealthMax = issecretvalue(healthmax)
-	else
-		self.UnitCache.hasSecretHealth = false
-		self.UnitCache.hasSecretHealthMax = false
+	-- Calculate percent in CLEAN CONTEXT (right where we read the values)
+	local percent = 0
+	if healthmax > 0 then
+		percent = math.min(100, math.max(0, (health / healthmax) * 100))
 	end
 
-	print("[CACHE] Updated: health=" .. tostring(health) .. ", healthmax=" .. tostring(healthmax)
-		.. ", hasSecret=" .. tostring(self.UnitCache.hasSecretHealth))
+	-- Store ONLY the normal number result, not the Secret Values
+	self.UnitCache.health = health      -- For display only
+	self.UnitCache.healthmax = healthmax
+	self.UnitCache.percent = percent    -- CRITICAL: Store computed percent, not health!
+
+	if issecretvalue then
+		if issecretvalue(health) then
+			print("[CACHE] Health is Secret Value - computed percent=" .. percent .. "%")
+		end
+	end
 end
 
 -- Initialize cache at startup (clean context)
-Necrosis:UpdateUnitCache()
+Necrosis:UpdateHealthInCleanContext()
 
 -- ============================================================================
 -- WoW Version Compatibility Wrappers (Retail Midnight 12.0+)
@@ -403,11 +405,11 @@ nbutton:SetAttribute("unit", "player")
 nbutton:RegisterEvent("UNIT_HEALTH")
 nbutton:SetScript("OnEvent", function(self, event, unit)
 	if event == "UNIT_HEALTH" and unit == "player" then
-		-- Queue cache update + health update to run in next Lua tick (clean context)
-		-- This matches VuhDo's pattern: separate data reading from data manipulation
+		-- Queue BOTH reading and computing to run in next Lua tick (clean context)
+		-- Key insight: Don't store Secret Values, compute percent in clean context IMMEDIATELY
 		C_Timer.After(0, function()
-			Necrosis:UpdateUnitCache()  -- Update cache (read UnitHealth/UnitHealthMax safely)
-			Necrosis:UpdateHealth()      -- Use cached values (no arithmetic on Secret Values)
+			Necrosis:UpdateHealthInCleanContext()  -- Read UnitHealth + compute percent in clean context
+			Necrosis:UpdateHealth()                 -- Use cached percent (normal number)
 		end)
 	end
 end)
