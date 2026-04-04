@@ -2357,7 +2357,9 @@ function Necrosis:UpdateHealth()
 		local ok, err = pcall(function()
 			print("[RGB] Inside pcall body")
 			-- Get health percentage safely using UnitHealthPercent (works with Secret Values)
+			-- IMPORTANT: Result is a Secret Number, must convert to normal number first!
 			local healthPercent = UnitHealthPercent("player", true, CurveConstants and CurveConstants.ScaleTo100) or 100
+			healthPercent = tonumber(tostring(healthPercent)) or 100
 
 			-- Calculate shard index (0-16) from percentage
 			local shardIndex = math.floor((healthPercent / 100) * 16)
