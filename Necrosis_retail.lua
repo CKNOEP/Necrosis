@@ -907,7 +907,7 @@ function Necrosis:ChangeDemon()
 		local fn = Necrosis.Warlock_Buttons[Necrosis.Warlock_Lists.pets[i].f_ptr].f
 		local f = _G[fn]
 		local spell = Necrosis.GetSpell(Necrosis.Warlock_Lists.pets[i].high_of)
-		if f and spell.PetId then
+		if f and spell and spell.PetId then
 			if tonumber(Local.Summon.DemonId) == spell.PetId then
 				NecrosisConfig.PetInfo[Necrosis.Warlock_Lists.pets[i].high_of] = UnitName("pet")
 				high = spell.PetId -- only expect one
