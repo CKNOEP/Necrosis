@@ -1075,8 +1075,9 @@ function Necrosis.IsSpellKnown(usage)
 
 	if Necrosis.Warlock_Spell_Use[usage] -- get spell id
 	then
-		-- Check InSpellBook flag, not GetSpellInfo (which returns true even for unlearned spells)
-		return Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].InSpellBook or false
+		-- Use IsSpellKnownOrOverridesKnown to check if spell is actually learned/usable
+		-- This handles optional talents and other conditional spells correctly
+		return IsSpellKnownOrOverridesKnown(Necrosis.Warlock_Spell_Use[usage])
 	else
 		return false -- safety
 	end
