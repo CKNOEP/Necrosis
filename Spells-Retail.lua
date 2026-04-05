@@ -610,8 +610,7 @@ This allows a more flexible scheme and should reduce maintenance and impact if W
 -- Spell ID mapping for button casting
 Necrosis.SpellIDMap = {
 	breath = 5697,		-- Unending Breath (Retail 12.0)
-	invis = 66,			-- Invisibility (Retail 12.0)
-	invisible = 66,		-- Invisibility (alias)
+	invisible = 11649,	-- Detect Invisibility (Retail 12.0)
 	eye = 126,			-- Eye of Kilrogg
 	summoning = 698,	-- Ritual of Summoning
 	ward = 47891,		-- Shadow Ward
@@ -860,7 +859,7 @@ Necrosis.Warlock_Lists = {
 --	local buffID = {31, 47, 32, 33, 34, 37, 38, 43, 59, 9}
 	["buffs"] = {
 		[1] = {f_ptr = "breath", high_of = "breath", },
-		[2] = {f_ptr = "invis", high_of = "invisible", },
+		[2] = {f_ptr = "invis", high_of = "invisible", },  -- f_ptr="invis" refers to Warlock_Buttons.invis, high_of="invisible" refers to SpellIDMap.invisible
 		[3] = {f_ptr = "eye", high_of = "eye", },
 		[4] = {f_ptr = "summoning", high_of = "summoning", },
 		[5] = {f_ptr = "ward", high_of = "dark_pact", },
