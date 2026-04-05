@@ -193,6 +193,7 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 
 	-- attach a graphical timer if enabled || Association d'un timer graphique au timer
 	-- associate it to the frame (if present) || Si il y a une frame timer de libérée, on l'associe au timer
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] TimerInsert: TimerType="..tostring(NecrosisConfig.TimerType).." SpellTimer count="..tostring(#Timer.SpellTimer))
 	if NecrosisConfig.TimerType == 1 and #Timer.SpellTimer > 0 then -- si timer graphics AND there's a timer
 
 	    local TimerLibre = nil
