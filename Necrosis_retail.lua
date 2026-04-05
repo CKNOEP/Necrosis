@@ -3118,8 +3118,9 @@ function Necrosis:CreateMenuItem(spellListItem)
 			btn:EnableMouse(true)
 		end
 
-		-- Store spell info on the frame for SetBuffSpellAttribute to use
+		-- Store spell info and button config on the frame for SetBuffSpellAttribute to use
 		btn.high_of = spellListItem.high_of
+		btn.can_target = Necrosis.Warlock_Buttons[spellListItem.f_ptr].can_target
 
 		-- Special attributes for casting certain buffs || Attributs spéciaux pour les buffs castables sur les autres joueurs
 		if spellListItem.high_of == "breath" or spellListItem.high_of == "invis" then
