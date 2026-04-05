@@ -364,7 +364,10 @@ function Necrosis:CreateMenuItem(i)
 
 	-- Edit the scripts associated with the button || Edition des scripts associés au bouton
 	frame:SetScript("OnEnter", function(self)
-	Necrosis:BuildButtonTooltip(self)
+		-- Don't highlight or show tooltip if spell is unknown (grayed)
+		if not self.spellUnknown then
+			Necrosis:BuildButtonTooltip(self)
+		end
 	--Necrosis:OnDragStart(self)
 	end)
 	frame:SetScript("OnDragStart", function(self) Necrosis:OnDragStart(self) end)

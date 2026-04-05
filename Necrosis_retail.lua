@@ -3224,6 +3224,7 @@ function Necrosis:CreateMenu()
 					if menuVariable:GetNormalTexture() then
 						menuVariable:GetNormalTexture():SetDesaturated(true)
 					end
+					menuVariable:EnableMouse(false)  -- Disable mouse interaction for grayed buttons
 					menuVariable.spellUnknown = true
 				else
 					-- Restaurer si le sort a été appris depuis le dernier rebuild
@@ -3304,6 +3305,7 @@ function Necrosis:CreateMenu()
 					if menuVariable:GetNormalTexture() then
 						menuVariable:GetNormalTexture():SetDesaturated(true)
 					end
+					menuVariable:EnableMouse(false)  -- Disable mouse interaction for grayed buttons
 					menuVariable.spellUnknown = true
 				else
 					-- Restaurer si le sort a été appris depuis le dernier rebuild
@@ -3396,6 +3398,7 @@ function Necrosis:CreateMenu()
 					if menuVariable:GetNormalTexture() then
 						menuVariable:GetNormalTexture():SetDesaturated(true)
 					end
+					menuVariable:EnableMouse(false)  -- Disable mouse interaction for grayed buttons
 					menuVariable.spellUnknown = true
 				else
 					-- Restaurer si le sort a été appris depuis le dernier rebuild
