@@ -618,6 +618,7 @@ Necrosis.SpellIDMap = {
 	banish = 710,		-- Banish
 	enslave = 1098,		-- Enslave Demon
 	healthstone = 6201,		-- Create Healthstone (Retail 12.0)
+	demonic_healthstone = 452930,	-- Demonic Healthstone (Retail 12.0)
 	soulstone = 20707,	-- Create Soulstone (Retail 12.0)
 	agony = 980,		-- Curse of Agony
 	weakness = 702,		-- Curse of Weakness

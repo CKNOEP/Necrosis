@@ -20,12 +20,12 @@ local function SetSSAttribs(nostone, reason)
 
 	-- Soulstone check: try InSpellBook first, then fallback to IsSpellKnownOrOverridesKnown
 	-- Soulstone may be automatic/passive and not in spellbook
-	local hasSoulstone = Necrosis.IsSpellKnown("soulstone") or IsSpellKnownOrOverridesKnown(20707)
+	local soulstoneID = Necrosis.SpellIDMap and Necrosis.SpellIDMap.soulstone
+	local hasSoulstone = Necrosis.IsSpellKnown("soulstone") or (soulstoneID and IsSpellKnownOrOverridesKnown(soulstoneID))
 	if hasSoulstone then
-		local str = ""
+		local str = Necrosis.GetSpellCastName("soulstone")
 		-- Configure button as spell type to display cooldown properly
 		f:SetAttribute("type", "spell")
-		str = Necrosis.GetSpellCastName("soulstone") or GetSpellInfo(20707)
 		f:SetAttribute("spell", str)
 
 		-- Left click: Use item if exists, otherwise cast spell to create
@@ -424,14 +424,16 @@ function Necrosis:StoneAttribute(Steed)
 	end
 	-- Healthstone check: try InSpellBook first, then fallback to IsSpellKnownOrOverridesKnown
 	-- Healthstone may be automatic/passive and not in spellbook
-	local hasHealthstone = Necrosis.IsSpellKnown("healthstone") or IsSpellKnownOrOverridesKnown(6201)
+	local healthstoneID = Necrosis.SpellIDMap and Necrosis.SpellIDMap.healthstone
+	local hasHealthstone = Necrosis.IsSpellKnown("healthstone") or (healthstoneID and IsSpellKnownOrOverridesKnown(healthstoneID))
 	if hasHealthstone then
 		local f = _G[Necrosis.Warlock_Buttons.health_stone.f]
 		if f then
+			local spellName = Necrosis.GetSpellCastName("healthstone")
 			f:SetAttribute("type1", "spell")
-			f:SetAttribute("spell1", Necrosis.GetSpellCastName("healthstone") or GetSpellInfo(6201))
+			f:SetAttribute("spell1", spellName)
 			f:SetAttribute("type2", "spell")
-			f:SetAttribute("spell2", Necrosis.GetSpellCastName("healthstone") or GetSpellInfo(6201))
+			f:SetAttribute("spell2", spellName)
 			f:SetAttribute("shift-type*", "spell")
 			f:SetAttribute("shift-spell*", Necrosis.GetSpellCastName("Ritual_of_Souls"))
 		end
@@ -726,12 +728,12 @@ function Necrosis:HealthstoneUpdateAttribute(nostone)
 		f:SetAttribute("type1", "spell") -- 52
 
 		-- Test for strongest healthstone spell available
-		-- Priority: Demonic Healthstone (452930) > Regular Healthstone (6201)
+		-- Priority: Demonic Healthstone > Regular Healthstone
 		local spellToCreate = nil
-		if Necrosis.IsSpellKnown("demonic_healthstone") or IsSpellKnownOrOverridesKnown(452930) then
-			spellToCreate = Necrosis.GetSpellCastName("demonic_healthstone") or GetSpellInfo(452930)
-		elseif Necrosis.IsSpellKnown("healthstone") or IsSpellKnownOrOverridesKnown(6201) then
-			spellToCreate = Necrosis.GetSpellCastName("healthstone") or GetSpellInfo(6201)
+		if Necrosis.IsSpellKnown("demonic_healthstone") then
+			spellToCreate = Necrosis.GetSpellCastName("demonic_healthstone")
+		elseif Necrosis.IsSpellKnown("healthstone") then
+			spellToCreate = Necrosis.GetSpellCastName("healthstone")
 		end
 
 		if spellToCreate then
