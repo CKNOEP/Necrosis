@@ -531,28 +531,6 @@ SlashCmdList["NECTIMER"] = function()
 	end
 end
 
--- Initialize events using OnUpdate (executes outside addon load context)
--- Create frame that will auto-register events once
-local bootstrapFrame = CreateFrame("Frame")
-bootstrapFrame:SetScript("OnUpdate", function(self)
-	-- Only run once, then stop
-	self:SetScript("OnUpdate", nil)
-
-	-- Now we're outside addon load context, RegisterEvent works
-	_G.spellFrame = CreateFrame("Frame")
-	_G.spellFrame:SetScript("OnEvent", function(self, event, arg1, arg2, arg3, arg4)
-		Necrosis.OnEvent(Necrosis, event, arg1, arg2, arg3, arg4)
-	end)
-
-	-- Register all events
-	for _, eventName in ipairs(Necrosis.Events or {}) do
-		_G.spellFrame:RegisterEvent(eventName)
-	end
-
-	eventsRegistered = true
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Events registered via bootstrap.")
-end)
-
 ------------------------------------------------------------------------------------------------------
 -- FONCTION D'INITIALISATION
 ------------------------------------------------------------------------------------------------------
