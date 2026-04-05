@@ -2853,7 +2853,7 @@ function Necrosis:BagExplore(arg)
 				for i = 1, 40 do
 					local auraData = C_UnitAuras.GetAuraDataByIndex("player", i)
 					if not auraData then break end
-					if auraData.spellId == 20707 then  -- Soulstone spell ID
+					if tonumber(auraData.spellId) == 20707 then  -- Soulstone spell ID (convert secret number)
 						if auraData.expirationTime and auraData.expirationTime > 0 then
 							Time = GetTime()
 							TimeMax = auraData.expirationTime
