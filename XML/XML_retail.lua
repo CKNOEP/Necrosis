@@ -172,10 +172,14 @@ end
 
 -- Create stone buttons for Retail (only Healthstone and Soulstone exist)
 function Necrosis:CreateStoneButtons()
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] CreateStoneButtons() called")
 	-- Create Healthstone button if not already created
 	if not _G["NecrosisHealthstoneButton"] then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] Creating Healthstone button")
 		local b = Necrosis.Warlock_Buttons.health_stone
 		local frame = CreateFrame("Button", b.f, UIParent, "SecureUnitButtonTemplate")
+
+		-- Define its attributes || Définition de ses attributs
 		frame:SetMovable(true)
 		frame:EnableMouse(true)
 		frame:SetWidth(34)
@@ -185,6 +189,8 @@ function Necrosis:CreateStoneButtons()
 		frame:RegisterForDrag("LeftButton")
 		frame:RegisterForClicks("AnyUp")
 		frame:Show()
+
+		-- Edit the scripts associated with the buttons || Edition des scripts associés au bouton
 		frame:SetScript("OnEnter", function(self) Necrosis:BuildButtonTooltip(self) end)
 		frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
 		frame:SetScript("OnMouseUp", function(self) Necrosis:OnDragStop(self) end)
@@ -194,9 +200,31 @@ function Necrosis:CreateStoneButtons()
 			end
 		end)
 		frame:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
-		frame:ClearAllPoints()
-		local pos = NecrosisConfig.FramePosition["NecrosisHealthstoneButton"] or {"CENTER", "UIParent", "CENTER", -53, -100}
-		frame:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+
+		-- Create a FontString for timer display (healthstone timer)
+		local FontString = _G[b.f.."Text"]
+		if not FontString then
+			FontString = frame:CreateFontString(b.f.."Text", nil, "GameFontNormal")
+		end
+
+		-- Hidden but very useful...
+		frame.high_of = b.f  -- Store button identifier
+		frame.font_string = FontString
+
+		-- Define FontString attributes || Définition de ses attributs
+		FontString:SetText("") -- blank for now
+		FontString:SetPoint("CENTER", frame, "CENTER", 0, -8)
+
+		-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
+		if not NecrosisConfig.NecrosisLockServ then
+			frame:ClearAllPoints()
+			local pos = NecrosisConfig.FramePosition["NecrosisHealthstoneButton"] or {"CENTER", "UIParent", "CENTER", -53, -100}
+			frame:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+		end
+
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] Healthstone button created: "..tostring(_G["NecrosisHealthstoneButton"]))
+	else
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] Healthstone button already exists")
 	end
 end
 
