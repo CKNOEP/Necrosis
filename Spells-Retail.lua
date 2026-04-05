@@ -850,7 +850,7 @@ Necrosis.Warlock_Lists = {
 		[1] = {f_ptr = "health_stone", high_of = "healthstone", item = true},
 		[2] = {f_ptr = "soul_stone", high_of = "soulstone", item = true},
 		[3] = {f_ptr = "buffs",	menu = "buffs", },
-		[4] = {f_ptr = "mounts", high_of = "mounts",},
+		[4] = {f_ptr = "mounts", high_of = "mounts", item = true},
 		[5] = {f_ptr = "pets", menu = "pets", },
 		[6] = {f_ptr = "curses", menu = "curses", },
 		

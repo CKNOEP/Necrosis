@@ -3190,6 +3190,7 @@ function Necrosis:CreateMenu()
 			mountBtn:ClearAllPoints()
 			-- Always use default position for mounts button
 			mountBtn:SetPoint("CENTER", UIParent, "CENTER", 53, -100)
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] Mount positioned, size="..mountBtn:GetWidth().."x"..mountBtn:GetHeight().." norm="..tostring(mountBtn:GetNormalTexture()))
 		end
 	end
 	-- Show/hide stone buttons based on config
@@ -3210,10 +3211,13 @@ function Necrosis:CreateMenu()
 	end
 
 	-- Show/hide based on config (StonePosition[6] controls mounts visibility)
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] Mount: exists="..tostring(_G[Necrosis.Warlock_Buttons.mounts.f]).." StonePosition[6]="..tostring(NecrosisConfig.StonePosition[6]))
 	if NecrosisConfig.StonePosition[6] > 0 then
-		_G[Necrosis.Warlock_Buttons.mounts.f]:Show()
+		local m = _G[Necrosis.Warlock_Buttons.mounts.f]
+		if m then m:Show() end
 	else
-		_G[Necrosis.Warlock_Buttons.mounts.f]:Hide()
+		local m = _G[Necrosis.Warlock_Buttons.mounts.f]
+		if m then m:Hide() end
 	end
 
 	if NecrosisConfig.StonePosition[7] > 0 then -- pets
