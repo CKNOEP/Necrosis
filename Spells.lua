@@ -1110,10 +1110,8 @@ function Necrosis.GetSpellName(usage)
 end
 
 function Necrosis.GetSpell(usage) -- return the Warlock_Spells table (pointer)
-	if Necrosis.Warlock_Spell_Use[usage] -- 
-	then
-		return 
-			Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]]
+	if Necrosis.Warlock_Spell_Use[usage] then
+		return Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]]
 	else
 		return nil
 	end
