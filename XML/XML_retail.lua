@@ -391,6 +391,9 @@ function Necrosis:CreateMenuItem(i)
 		frame:SetScale(NecrosisConfig.BanishScale/100)
 	end
 
+	-- Set spell attributes for the menu button || Définir les attributs de sort pour le bouton du menu
+	Necrosis:SetBuffSpellAttribute(b.f)
+
 	return frame
 end
 
