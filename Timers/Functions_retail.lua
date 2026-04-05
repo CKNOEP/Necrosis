@@ -215,17 +215,22 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 		--print (spellTexture,"spell",spell.ID,spell.Name)
 		local FontString, StatusBar , Icon_Spell = Necrosis:AddFrame("NecrosisTimerFrame"..TimerLibre,spellTexture)
 		--print("update:",spellTexture)
-		FontString:SetText(Timer.SpellTimer[#Timer.SpellTimer].Name)
 
-		--print("icon ", GetSpellTexture(spell.ID), spell.Name,"NecrosisTimerFrame"..TimerLibre)
+		if FontString and StatusBar then
+			FontString:SetText(Timer.SpellTimer[#Timer.SpellTimer].Name)
+
+			--print("icon ", GetSpellTexture(spell.ID), spell.Name,"NecrosisTimerFrame"..TimerLibre)
 
 
-		StatusBar:SetMinMaxValues(
-			Timer.SpellTimer[#Timer.SpellTimer].TimeMax - Timer.SpellTimer[#Timer.SpellTimer].Time,
-			Timer.SpellTimer[#Timer.SpellTimer].TimeMax - Timer.SpellTimer[#Timer.SpellTimer].Time + Timer.SpellTimer[#Timer.SpellTimer].MaxBar
-		)
-		statusMin, statusMax = StatusBar:GetMinMaxValues()
-		--print (statusMin, statusMax,statusMax-statusMin,StatusBar:GetValue(),Timer.SpellTimer[#Timer.SpellTimer].MaxBar)
+			StatusBar:SetMinMaxValues(
+				Timer.SpellTimer[#Timer.SpellTimer].TimeMax - Timer.SpellTimer[#Timer.SpellTimer].Time,
+				Timer.SpellTimer[#Timer.SpellTimer].TimeMax - Timer.SpellTimer[#Timer.SpellTimer].Time + Timer.SpellTimer[#Timer.SpellTimer].MaxBar
+			)
+			statusMin, statusMax = StatusBar:GetMinMaxValues()
+			--print (statusMin, statusMax,statusMax-statusMin,StatusBar:GetValue(),Timer.SpellTimer[#Timer.SpellTimer].MaxBar)
+		else
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] ERROR: AddFrame returned nil - FontString="..tostring(FontString).." StatusBar="..tostring(StatusBar))
+		end
 
 
 	end
