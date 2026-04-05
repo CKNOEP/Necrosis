@@ -611,11 +611,15 @@ This allows a more flexible scheme and should reduce maintenance and impact if W
 Necrosis.SpellIDMap = {
 	breath = 5697,		-- Unending Breath (Retail 12.0)
 	invis = 66,			-- Invisibility (Retail 12.0)
+	invisible = 66,		-- Invisibility (alias)
 	eye = 126,			-- Eye of Kilrogg
 	summoning = 698,	-- Ritual of Summoning
 	link = 110307,		-- Soul Link
 	ward = 47891,		-- Shadow Ward
+	dark_pact = 47891,	-- Shadow Ward (alias used in menu lists)
 	banish = 710,		-- Banish
+	enslave = 1098,		-- Enslave Demon
+	fel_armor = 403619,	-- Fel Armor
 	agony = 980,		-- Curse of Agony
 	weakness = 702,		-- Curse of Weakness
 	tongues = 1108,		-- Curse of Tongues
@@ -857,16 +861,15 @@ Necrosis.Warlock_Lists = {
 -- 31=Demon Armor | 47=Fel Armor | 32=Unending Breath | 33=Detect Invis | 34=Eye of Kilrogg | 37=Ritual of Summoning | 38=Soul Link | 43=Shadow Ward | 35=Enslave Demon | 59=Demonic Empowerment | 9=Banish
 --	local buffID = {31, 47, 32, 33, 34, 37, 38, 43, 59, 9}
 	["buffs"] = {
-		[1] = {f_ptr = "armor", high_of = "armor", },
-		[2] = {f_ptr = "breath", high_of = "breath", },
-		[3] = {f_ptr = "invis", high_of = "invisible", },
-		[4] = {f_ptr = "eye", high_of = "eye", },
-		[5] = {f_ptr = "summoning", high_of = "summoning", },
-		[6] = {f_ptr = "link", high_of = "link", },
-		[7] = {f_ptr = "ward", high_of = "dark_pact", },
-		[8] = {f_ptr = "banish", high_of = "banish", },
-		[9] = {f_ptr = "enslave", high_of = "enslave", },
-		[10] = {f_ptr = "fel_armor", high_of = "fel_armor", },
+		[1] = {f_ptr = "breath", high_of = "breath", },
+		[2] = {f_ptr = "invis", high_of = "invisible", },
+		[3] = {f_ptr = "eye", high_of = "eye", },
+		[4] = {f_ptr = "summoning", high_of = "summoning", },
+		[5] = {f_ptr = "link", high_of = "link", },
+		[6] = {f_ptr = "ward", high_of = "dark_pact", },
+		[7] = {f_ptr = "banish", high_of = "banish", },
+		[8] = {f_ptr = "enslave", high_of = "enslave", },
+		[9] = {f_ptr = "fel_armor", high_of = "fel_armor", },
 	},
 -- 			15, 3, 4, 5, 6, 8, 30, 35, 44, 59
 	["pets"] = { -- 2 types: summon pet and (buff or temporary) pet
