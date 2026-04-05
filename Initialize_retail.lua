@@ -500,20 +500,27 @@ end)
 
 -- Register initial events (no other events can be registered during addon load)
 -- ✅ Include critical events that update health/mana counter
+-- In WoW 12.0, RegisterEvent() is blocked on named frames during addon load
+-- Solution: Create anonymous frame for event registration during load
+local initFrame = CreateFrame("Frame")  -- Anonymous frame
+initFrame:SetScript("OnEvent", function(self, event, ...)
+	Necrosis.OnEvent(Necrosis, event, ...)
+end)
+
 pcall(function()
-	eventFrame:RegisterEvent("PLAYER_LOGIN")
-	eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-	eventFrame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
-	eventFrame:RegisterEvent("SPELLS_CHANGED")
-	eventFrame:RegisterEvent("UNIT_SPELLCAST_SENT")       -- ✅ Spell cast starting (required BEFORE succeeded)
-	eventFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")  -- ✅ Spell cast success for timers
-	eventFrame:RegisterEvent("UNIT_SPELLCAST_FAILED")     -- ✅ Spell cast failed (cleanup)
-	eventFrame:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED") -- ✅ Spell cast interrupted (cleanup)
-	eventFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED") -- ✅ Combat log for UNIT_DIED event cleanup
-	eventFrame:RegisterEvent("UNIT_HEALTH")   -- ✅ Health counter
-	eventFrame:RegisterEvent("UNIT_MANA")     -- ✅ Mana counter
-	eventFrame:RegisterEvent("UNIT_POWER_UPDATE")  -- ✅ Power updates
-	eventFrame:RegisterEvent("BAG_UPDATE")    -- ✅ Inventory updates
+	initFrame:RegisterEvent("PLAYER_LOGIN")
+	initFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+	initFrame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
+	initFrame:RegisterEvent("SPELLS_CHANGED")
+	initFrame:RegisterEvent("UNIT_SPELLCAST_SENT")       -- ✅ Spell cast starting (required BEFORE succeeded)
+	initFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")  -- ✅ Spell cast success for timers
+	initFrame:RegisterEvent("UNIT_SPELLCAST_FAILED")     -- ✅ Spell cast failed (cleanup)
+	initFrame:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED") -- ✅ Spell cast interrupted (cleanup)
+	initFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED") -- ✅ Combat log for UNIT_DIED event cleanup
+	initFrame:RegisterEvent("UNIT_HEALTH")   -- ✅ Health counter
+	initFrame:RegisterEvent("UNIT_MANA")     -- ✅ Mana counter
+	initFrame:RegisterEvent("UNIT_POWER_UPDATE")  -- ✅ Power updates
+	initFrame:RegisterEvent("BAG_UPDATE")    -- ✅ Inventory updates
 end)
 
 -- Slash command to register remaining events from player context
