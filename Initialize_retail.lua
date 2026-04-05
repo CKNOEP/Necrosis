@@ -509,6 +509,7 @@ pcall(function()
 	eventFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")  -- ✅ Spell cast success for timers
 	eventFrame:RegisterEvent("UNIT_SPELLCAST_FAILED")     -- ✅ Spell cast failed (cleanup)
 	eventFrame:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED") -- ✅ Spell cast interrupted (cleanup)
+	eventFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED") -- ✅ Combat log for UNIT_DIED event cleanup
 	eventFrame:RegisterEvent("UNIT_HEALTH")   -- ✅ Health counter
 	eventFrame:RegisterEvent("UNIT_MANA")     -- ✅ Mana counter
 	eventFrame:RegisterEvent("UNIT_POWER_UPDATE")  -- ✅ Power updates
