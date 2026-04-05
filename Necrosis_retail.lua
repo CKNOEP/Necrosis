@@ -3121,6 +3121,20 @@ function Necrosis:CreateMenuItem(spellListItem)
 		-- Store spell info on the frame for SetBuffSpellAttribute to use
 		btn.high_of = spellListItem.high_of
 
+		-- Special attributes for casting certain buffs || Attributs spéciaux pour les buffs castables sur les autres joueurs
+		if spellListItem.high_of == "breath" or spellListItem.high_of == "invis" then
+			btn:SetScript("PreClick", function(self)
+				if not (InCombatLockdown() or UnitIsFriend("player","target")) then
+					self:SetAttribute("unit", "player")
+				end
+			end)
+			btn:SetScript("PostClick", function(self)
+				if not InCombatLockdown() then
+					self:SetAttribute("unit", "target")
+				end
+			end)
+		end
+
 		-- Set spell attributes using the proper method for Retail
 		Necrosis:SetBuffSpellAttribute(buttonName)
 
