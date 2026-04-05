@@ -3112,20 +3112,17 @@ function Necrosis:CreateMenuItem(spellListItem)
 
 		-- If button doesn't exist yet, create it
 		if not btn then
-			btn = CreateFrame("Button", buttonName, UIParent, "SecureActionButtonTemplate")
+			-- Retail 12.0: Use SecureUnitButtonTemplate for proper spell casting
+			btn = CreateFrame("Button", buttonName, UIParent, "SecureUnitButtonTemplate")
 			btn:SetSize(60, 60)
 			btn:EnableMouse(true)
 		end
 
-		-- Update button attributes
-		local spellID = Necrosis:GetSpellIDFromKey(spellListItem.high_of)
-		if spellID then
-			btn:SetAttribute("type", "spell")
-			btn:SetAttribute("spell", spellID)
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("CreateMenuItem: "..tostring(spellListItem.f_ptr).." key="..tostring(spellListItem.high_of).." spellID="..tostring(spellID).." set on button")
-		else
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("CreateMenuItem: "..tostring(spellListItem.f_ptr).." key="..tostring(spellListItem.high_of).." NO SPELL ID FOUND")
-		end
+		-- Store spell info on the frame for SetBuffSpellAttribute to use
+		btn.high_of = spellListItem.high_of
+
+		-- Set spell attributes using the proper method for Retail
+		Necrosis:SetBuffSpellAttribute(buttonName)
 
 		return btn
 	end
