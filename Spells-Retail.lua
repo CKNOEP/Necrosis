@@ -614,12 +614,10 @@ Necrosis.SpellIDMap = {
 	invisible = 66,		-- Invisibility (alias)
 	eye = 126,			-- Eye of Kilrogg
 	summoning = 698,	-- Ritual of Summoning
-	link = 110307,		-- Soul Link
 	ward = 47891,		-- Shadow Ward
 	dark_pact = 47891,	-- Shadow Ward (alias used in menu lists)
 	banish = 710,		-- Banish
 	enslave = 1098,		-- Enslave Demon
-	fel_armor = 403619,	-- Fel Armor
 	agony = 980,		-- Curse of Agony
 	weakness = 702,		-- Curse of Weakness
 	tongues = 1108,		-- Curse of Tongues
@@ -865,10 +863,9 @@ Necrosis.Warlock_Lists = {
 		[2] = {f_ptr = "invis", high_of = "invisible", },
 		[3] = {f_ptr = "eye", high_of = "eye", },
 		[4] = {f_ptr = "summoning", high_of = "summoning", },
-		[5] = {f_ptr = "link", high_of = "link", },
-		[6] = {f_ptr = "ward", high_of = "dark_pact", },
-		[7] = {f_ptr = "banish", high_of = "banish", },
-		[8] = {f_ptr = "enslave", high_of = "enslave", },
+		[5] = {f_ptr = "ward", high_of = "dark_pact", },
+		[6] = {f_ptr = "banish", high_of = "banish", },
+		[7] = {f_ptr = "enslave", high_of = "enslave", },
 	},
 -- 			15, 3, 4, 5, 6, 8, 30, 35, 44, 59
 	["pets"] = { -- 2 types: summon pet and (buff or temporary) pet
