@@ -172,10 +172,8 @@ end
 
 -- Create stone buttons for Retail (only Healthstone and Soulstone exist)
 function Necrosis:CreateStoneButtons()
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] CreateStoneButtons() called")
 	-- Create Healthstone button if not already created
 	if not _G["NecrosisHealthstoneButton"] then
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] Creating Healthstone button")
 		local b = Necrosis.Warlock_Buttons.health_stone
 		local frame = CreateFrame("Button", b.f, UIParent, "SecureUnitButtonTemplate")
 
@@ -216,15 +214,9 @@ function Necrosis:CreateStoneButtons()
 		FontString:SetPoint("CENTER", frame, "CENTER", 0, -8)
 
 		-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
-		if not NecrosisConfig.NecrosisLockServ then
-			frame:ClearAllPoints()
-			local pos = NecrosisConfig.FramePosition["NecrosisHealthstoneButton"] or {"CENTER", "UIParent", "CENTER", -53, -100}
-			frame:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
-		end
-
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] Healthstone button created: "..tostring(_G["NecrosisHealthstoneButton"]))
-	else
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] Healthstone button already exists")
+		frame:ClearAllPoints()
+		local pos = NecrosisConfig.FramePosition["NecrosisHealthstoneButton"] or {"CENTER", "UIParent", "CENTER", -53, -100}
+		frame:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
 	end
 end
 
