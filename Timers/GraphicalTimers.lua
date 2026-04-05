@@ -114,8 +114,8 @@ function Necrosis:AddFrame(FrameName,spellTexture)
 		--print ("different")
 		_G[FrameName.."Icon"]:SetTexture(spellTexture)
 		end
-		
-		return _G[FrameName.."Text"], _G[FrameName.."Bar"]
+
+		return _G[FrameName.."Text"], _G[FrameName.."Bar"], _G[FrameName.."Icon"]
 
 	end
 
