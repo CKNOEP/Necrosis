@@ -1716,7 +1716,7 @@ function Necrosis:OnEvent(event,...)
 			then
 				Local.SomethingOnHand = "Rien"
 				UpdateIcons()
-		elseif subevent == "UNIT_DIED" 
+		elseif subevent == "UNIT_DIED"
 			then
 			-- Any unit death within range
 			-- Will cleanup timers even if not target or focus

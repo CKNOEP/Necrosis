@@ -518,7 +518,6 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 			end)
 
 			-- Register spell casting events from secure context (PLAYER_LOGIN)
-			-- UNIT_SPELLCAST_SUCCEEDED/SENT work with RegisterEvent from here
 			pcall(function()
 				eventFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
 				eventFrame:RegisterEvent("UNIT_SPELLCAST_SENT")
@@ -546,6 +545,23 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 end)
 
 _G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Initialized (WoW 12.0 - using PLAYER_LOGIN event)")
+
+-- WoW 12.0: Hook global events that cannot be registered with RegisterEvent()
+-- COMBAT_LOG_EVENT_UNFILTERED is needed for timer cleanup when units die
+
+local originalCombatLogHandler = _G.COMBAT_LOG_EVENT_UNFILTERED
+
+_G.COMBAT_LOG_EVENT_UNFILTERED = function(...)
+	-- Forward to Necrosis event handler
+	if Necrosis and Necrosis.OnEvent then
+		Necrosis:OnEvent("COMBAT_LOG_EVENT_UNFILTERED", ...)
+	end
+
+	-- Call original if exists
+	if originalCombatLogHandler then
+		originalCombatLogHandler(...)
+	end
+end
 
 ------------------------------------------------------------------------------------------------------
 -- FONCTION D'INITIALISATION
@@ -1038,6 +1054,15 @@ function Necrosis:Initialize(Config)
 	if NecrosisConfig.SoulshardSort then
 		--self:SoulshardSwitch("CHECK")
 	end
+
+	-- Register OnUpdate to handle timer updates every frame
+	-- This is CRITICAL for displaying and cleaning up timers
+	local updateFrame = CreateFrame("Frame")
+	updateFrame:SetScript("OnUpdate", function(self, elapsed)
+		if Necrosis and Necrosis.OnUpdate then
+			Necrosis:OnUpdate(self, elapsed)
+		end
+	end)
 end
 
 ------------------------------------------------------------------------------------------------------
