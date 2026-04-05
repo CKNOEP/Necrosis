@@ -604,8 +604,9 @@ end
 -- Event : UNIT_SPELLCAST_SUCCEEDED
 -- Manages everything related to successful spell casts || Permet de gérer tout ce qui touche aux sorts une fois leur incantation réussie
 function SpellManagement(SpellCasted)
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] SpellManagement called: spell="..tostring((SpellCasted and SpellCasted.Name) or "nil"))
 	if Necrosis.Debug.timers then
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("SpellManagement called: spell="..tostring((SpellCasted and SpellCasted.Name) or "nil"))
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("SpellManagement (debug): spell="..tostring((SpellCasted and SpellCasted.Name) or "nil"))
 	end
 	
 	
@@ -620,13 +621,14 @@ function SpellManagement(SpellCasted)
 
 		-- Handle any timers on cast spells
 		local spell = Necrosis.GetSpellById(cast_spell.Id)
-		
-		
-		
-			
-		if spell.Buff then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] Spell: "..tostring(cast_spell.Name).." Timer="..tostring(spell and spell.Timer).." Buff="..tostring(spell and spell.Buff))
+
+
+
+
+		if spell and spell.Buff then
 			-- Handled by the aura events
-		elseif spell.Timer then
+		elseif spell and spell.Timer then
 			local target = {}
 --[[
 			if cast_spell.TargetName == UnitName("player") then
@@ -665,6 +667,7 @@ function SpellManagement(SpellCasted)
 		--print (spell.Usage,cast_spell.Id,cast_spell.Guid)
 		--print (cast_spell.TargetName,cast_spell.TargetLevel,cast_spell.TargetGUID)
 		--print (cast_spell.TargetName,cast_spell.TargetLevel,cast_spell.TargetGUID)
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] TimerInsert for: "..tostring(spell.Usage))
 			Local.TimerManagement = Necrosis:TimerInsert(cast_info, target, Local.TimerManagement, "spell cast")
 			
 			--print (spell.Usage,cast_spell.Id,cast_spell.Guid)
@@ -2983,25 +2986,27 @@ dist = dist * radiusMultiplier
 
 				Necrosis:StoneAttribute(Local.Summon.SteedAvailable)
 			end
-					
-			f:ClearAllPoints()
+
+			if not InCombatLockdown() then
+				f:ClearAllPoints()
 ---[[
-			if NecrosisConfig.NecrosisLockServ then
-				f:SetPoint(
-					"CENTER", fm, "CENTER",
-					((dist) * cos(NecrosisConfig.NecrosisAngle - indexScale)),-- Offset X
-					((dist) * sin(NecrosisConfig.NecrosisAngle - indexScale)) -- Offset Y
-				)
-				indexScale = indexScale + buttonAngleSpacing
-			else
+				if NecrosisConfig.NecrosisLockServ then
+					f:SetPoint(
+						"CENTER", fm, "CENTER",
+						((dist) * cos(NecrosisConfig.NecrosisAngle - indexScale)),-- Offset X
+						((dist) * sin(NecrosisConfig.NecrosisAngle - indexScale)) -- Offset Y
+					)
+					indexScale = indexScale + buttonAngleSpacing
+				else
 --]]
-				f:SetPoint(
-					NecrosisConfig.FramePosition[fr][1],
-					NecrosisConfig.FramePosition[fr][2],
-					NecrosisConfig.FramePosition[fr][3],
-					NecrosisConfig.FramePosition[fr][4],
-					NecrosisConfig.FramePosition[fr][5]
-				)
+					f:SetPoint(
+						NecrosisConfig.FramePosition[fr][1],
+						NecrosisConfig.FramePosition[fr][2],
+						NecrosisConfig.FramePosition[fr][3],
+						NecrosisConfig.FramePosition[fr][4],
+						NecrosisConfig.FramePosition[fr][5]
+					)
+				end
 			end
 			f:Show()
 			f:SetScale(NBRScale)
@@ -3250,6 +3255,10 @@ function Necrosis:CreateMenu()
 					if menuVariable:GetNormalTexture() then
 						menuVariable:GetNormalTexture():SetDesaturated(true)
 					end
+					-- Désactiver la surbrillance au survol pour les boutons grisés
+					if menuVariable:GetHighlightTexture() then
+						menuVariable:GetHighlightTexture():SetAlpha(0)
+					end
 					menuVariable:EnableMouse(false)  -- Disable mouse interaction for grayed buttons
 					menuVariable.spellUnknown = true
 				else
@@ -3257,6 +3266,11 @@ function Necrosis:CreateMenu()
 					if menuVariable:GetNormalTexture() then
 						menuVariable:GetNormalTexture():SetDesaturated(false)
 					end
+					-- Restaurer la surbrillance
+					if menuVariable:GetHighlightTexture() then
+						menuVariable:GetHighlightTexture():SetAlpha(1)
+					end
+					menuVariable:EnableMouse(true)  -- Re-enable mouse for learned spells
 					menuVariable.spellUnknown = false
 				end
 				menuVariable:ClearAllPoints()
@@ -3330,6 +3344,10 @@ function Necrosis:CreateMenu()
 					if menuVariable:GetNormalTexture() then
 						menuVariable:GetNormalTexture():SetDesaturated(true)
 					end
+					-- Désactiver la surbrillance au survol pour les boutons grisés
+					if menuVariable:GetHighlightTexture() then
+						menuVariable:GetHighlightTexture():SetAlpha(0)
+					end
 					menuVariable:EnableMouse(false)  -- Disable mouse interaction for grayed buttons
 					menuVariable.spellUnknown = true
 				else
@@ -3337,6 +3355,11 @@ function Necrosis:CreateMenu()
 					if menuVariable:GetNormalTexture() then
 						menuVariable:GetNormalTexture():SetDesaturated(false)
 					end
+					-- Restaurer la surbrillance
+					if menuVariable:GetHighlightTexture() then
+						menuVariable:GetHighlightTexture():SetAlpha(1)
+					end
+					menuVariable:EnableMouse(true)  -- Re-enable mouse for learned spells
 					menuVariable.spellUnknown = false
 				end
 				menuVariable:ClearAllPoints()
@@ -3411,6 +3434,10 @@ function Necrosis:CreateMenu()
 					if menuVariable:GetNormalTexture() then
 						menuVariable:GetNormalTexture():SetDesaturated(true)
 					end
+					-- Désactiver la surbrillance au survol pour les boutons grisés
+					if menuVariable:GetHighlightTexture() then
+						menuVariable:GetHighlightTexture():SetAlpha(0)
+					end
 					menuVariable:EnableMouse(false)  -- Disable mouse interaction for grayed buttons
 					menuVariable.spellUnknown = true
 				else
@@ -3418,6 +3445,11 @@ function Necrosis:CreateMenu()
 					if menuVariable:GetNormalTexture() then
 						menuVariable:GetNormalTexture():SetDesaturated(false)
 					end
+					-- Restaurer la surbrillance
+					if menuVariable:GetHighlightTexture() then
+						menuVariable:GetHighlightTexture():SetAlpha(1)
+					end
+					menuVariable:EnableMouse(true)  -- Re-enable mouse for learned spells
 					menuVariable.spellUnknown = false
 				end
 				menuVariable:ClearAllPoints()
