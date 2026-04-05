@@ -505,6 +505,10 @@ pcall(function()
 	eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
 	eventFrame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
 	eventFrame:RegisterEvent("SPELLS_CHANGED")
+	eventFrame:RegisterEvent("UNIT_SPELLCAST_SENT")       -- ✅ Spell cast starting (required BEFORE succeeded)
+	eventFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")  -- ✅ Spell cast success for timers
+	eventFrame:RegisterEvent("UNIT_SPELLCAST_FAILED")     -- ✅ Spell cast failed (cleanup)
+	eventFrame:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED") -- ✅ Spell cast interrupted (cleanup)
 	eventFrame:RegisterEvent("UNIT_HEALTH")   -- ✅ Health counter
 	eventFrame:RegisterEvent("UNIT_MANA")     -- ✅ Mana counter
 	eventFrame:RegisterEvent("UNIT_POWER_UPDATE")  -- ✅ Power updates
