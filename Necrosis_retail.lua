@@ -3135,7 +3135,10 @@ function Necrosis:CreateMenuItem(spellListItem)
 			end)
 		end
 
-		-- Note: Spell attributes are set later by BuffSpellAttribute() after CreateMenu completes
+		-- Set spell attributes if not in combat
+		if not InCombatLockdown() then
+			Necrosis:SetBuffSpellAttribute(buttonName)
+		end
 
 		return btn
 	end
