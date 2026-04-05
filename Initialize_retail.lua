@@ -498,18 +498,6 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 	end
 end)
 
--- In WoW 12.0, RegisterEvent() is forbidden during addon load
--- Even on anonymous frames, even with pcall()
--- Solution: Trigger the slash command after addon load completes
--- The slash command creates the anonymous frame and registers events
-
--- Automatically initialize events after addon load
-C_Timer.After(0.5, function()
-	if SlashCmdList["NECTIMER"] and not eventsRegistered then
-		SlashCmdList["NECTIMER"]()
-	end
-end)
-
 -- Slash command to register all events from player context
 -- Creates anonymous frame to avoid protected frame restrictions
 SLASH_NECTIMER1 = "/nectimer"
@@ -542,6 +530,14 @@ SlashCmdList["NECTIMER"] = function()
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Events already registered.")
 	end
 end
+
+-- Automatically initialize events after addon load completes
+-- Slash command creates anonymous frame and registers all events
+C_Timer.After(0.5, function()
+	if SlashCmdList["NECTIMER"] and not eventsRegistered then
+		SlashCmdList["NECTIMER"]()
+	end
+end)
 
 ------------------------------------------------------------------------------------------------------
 -- FONCTION D'INITIALISATION
