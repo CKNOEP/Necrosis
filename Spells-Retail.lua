@@ -869,7 +869,6 @@ Necrosis.Warlock_Lists = {
 		[6] = {f_ptr = "ward", high_of = "dark_pact", },
 		[7] = {f_ptr = "banish", high_of = "banish", },
 		[8] = {f_ptr = "enslave", high_of = "enslave", },
-		[9] = {f_ptr = "fel_armor", high_of = "fel_armor", },
 	},
 -- 			15, 3, 4, 5, 6, 8, 30, 35, 44, 59
 	["pets"] = { -- 2 types: summon pet and (buff or temporary) pet
