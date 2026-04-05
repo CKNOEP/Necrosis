@@ -344,8 +344,9 @@ function Necrosis:CreateMenuItem(i)
 		frame.pet = b.pet
 
 		-- Set the tooltip label to the localized name if not given one already
-
-		Necrosis.TooltipData[b.tip].Label = White(Necrosis.GetSpellName(i.high_of))
+		if Necrosis.TooltipData[b.tip] then
+			Necrosis.TooltipData[b.tip].Label = White(Necrosis.GetSpellName(i.high_of))
+		end
 
 		-- Create FontString for mana cost display
 		local fs = frame:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
