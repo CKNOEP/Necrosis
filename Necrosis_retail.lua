@@ -3192,6 +3192,23 @@ function Necrosis:CreateMenu()
 			mountBtn:SetPoint("CENTER", UIParent, "CENTER", 53, -100)
 		end
 	end
+	-- Show/hide stone buttons based on config
+	if NecrosisConfig.StonePosition[2] > 0 then
+		local h = _G[Necrosis.Warlock_Buttons.health_stone.f]
+		if h then h:Show() end
+	else
+		local h = _G[Necrosis.Warlock_Buttons.health_stone.f]
+		if h then h:Hide() end
+	end
+
+	if NecrosisConfig.StonePosition[4] > 0 then
+		local s = _G[Necrosis.Warlock_Buttons.soul_stone.f]
+		if s then s:Show() end
+	else
+		local s = _G[Necrosis.Warlock_Buttons.soul_stone.f]
+		if s then s:Hide() end
+	end
+
 	-- Show/hide based on config (StonePosition[6] controls mounts visibility)
 	if NecrosisConfig.StonePosition[6] > 0 then
 		_G[Necrosis.Warlock_Buttons.mounts.f]:Show()
