@@ -3188,8 +3188,8 @@ function Necrosis:CreateMenu()
 		local mountBtn = _G[Necrosis.Warlock_Buttons.mounts.f]
 		if mountBtn then
 			mountBtn:ClearAllPoints()
-			local pos = NecrosisConfig.FramePosition["NecrosisMountButton"] or {"CENTER", "UIParent", "CENTER", 53, -100}
-			mountBtn:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+			-- Always use default position for mounts button
+			mountBtn:SetPoint("CENTER", UIParent, "CENTER", 53, -100)
 		end
 	end
 	-- Show/hide based on config (StonePosition[6] controls mounts visibility)
