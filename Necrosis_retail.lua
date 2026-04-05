@@ -3255,9 +3255,12 @@ function Necrosis:CreateMenu()
 					if menuVariable:GetNormalTexture() then
 						menuVariable:GetNormalTexture():SetDesaturated(true)
 					end
-					-- Désactiver la surbrillance au survol pour les boutons grisés
-					if menuVariable:GetHighlightTexture() then
-						menuVariable:GetHighlightTexture():SetAlpha(0)
+					-- Create a blocking texture to hide highlight on hover
+					if not menuVariable._blockTexture then
+						menuVariable._blockTexture = menuVariable:CreateTexture(nil, "HIGHLIGHT")
+						menuVariable._blockTexture:SetAllPoints(menuVariable)
+						menuVariable._blockTexture:SetTexture("Interface\\Tooltips\\UI-Tooltip-Background")
+						menuVariable._blockTexture:SetColorTexture(0.08, 0.08, 0.08, 0.3)
 					end
 					menuVariable:EnableMouse(false)  -- Disable mouse interaction for grayed buttons
 					menuVariable.spellUnknown = true
@@ -3266,9 +3269,9 @@ function Necrosis:CreateMenu()
 					if menuVariable:GetNormalTexture() then
 						menuVariable:GetNormalTexture():SetDesaturated(false)
 					end
-					-- Restaurer la surbrillance
-					if menuVariable:GetHighlightTexture() then
-						menuVariable:GetHighlightTexture():SetAlpha(1)
+					-- Remove blocking texture
+					if menuVariable._blockTexture then
+						menuVariable._blockTexture:Hide()
 					end
 					menuVariable:EnableMouse(true)  -- Re-enable mouse for learned spells
 					menuVariable.spellUnknown = false
@@ -3303,13 +3306,17 @@ function Necrosis:CreateMenu()
 					end
 				]])
 				f:WrapScript(Local.Menu.Pet[i], "OnEnter", [[
-					self:GetParent():SetAttribute("mousehere", true)
+					if not self.spellUnknown then
+						self:GetParent():SetAttribute("mousehere", true)
+					end
 				]])
 				f:WrapScript(Local.Menu.Pet[i], "OnLeave", [[
-					self:GetParent():SetAttribute("mousehere", false)
-					local stateMenu = self:GetParent():GetAttribute("state")
-					if not (stateMenu == "Bloque" or stateMenu == "Combat" or stateMenu == "ClicDroit") then
-						self:GetParent():SetAttribute("state", "Refresh")
+					if not self.spellUnknown then
+						self:GetParent():SetAttribute("mousehere", false)
+						local stateMenu = self:GetParent():GetAttribute("state")
+						if not (stateMenu == "Bloque" or stateMenu == "Combat" or stateMenu == "ClicDroit") then
+							self:GetParent():SetAttribute("state", "Refresh")
+						end
 					end
 				]])
 				if NecrosisConfig.BlockedMenu or not NecrosisConfig.ClosingMenu then
@@ -3344,20 +3351,12 @@ function Necrosis:CreateMenu()
 					if menuVariable:GetNormalTexture() then
 						menuVariable:GetNormalTexture():SetDesaturated(true)
 					end
-					-- Désactiver la surbrillance au survol pour les boutons grisés
-					if menuVariable:GetHighlightTexture() then
-						menuVariable:GetHighlightTexture():SetAlpha(0)
-					end
 					menuVariable:EnableMouse(false)  -- Disable mouse interaction for grayed buttons
 					menuVariable.spellUnknown = true
 				else
 					-- Restaurer si le sort a été appris depuis le dernier rebuild
 					if menuVariable:GetNormalTexture() then
 						menuVariable:GetNormalTexture():SetDesaturated(false)
-					end
-					-- Restaurer la surbrillance
-					if menuVariable:GetHighlightTexture() then
-						menuVariable:GetHighlightTexture():SetAlpha(1)
 					end
 					menuVariable:EnableMouse(true)  -- Re-enable mouse for learned spells
 					menuVariable.spellUnknown = false
@@ -3393,13 +3392,17 @@ function Necrosis:CreateMenu()
 					end
 				]])
 				f:WrapScript(Local.Menu.Buff[i], "OnEnter", [[
-					self:GetParent():SetAttribute("mousehere", true)
+					if not self.spellUnknown then
+						self:GetParent():SetAttribute("mousehere", true)
+					end
 				]])
 				f:WrapScript(Local.Menu.Buff[i], "OnLeave", [[
-					self:GetParent():SetAttribute("mousehere", false)
-					local stateMenu = self:GetParent():GetAttribute("state")
-					if not (stateMenu == "Bloque" or stateMenu == "Combat" or stateMenu == "ClicDroit") then
-						self:GetParent():SetAttribute("state", "Refresh")
+					if not self.spellUnknown then
+						self:GetParent():SetAttribute("mousehere", false)
+						local stateMenu = self:GetParent():GetAttribute("state")
+						if not (stateMenu == "Bloque" or stateMenu == "Combat" or stateMenu == "ClicDroit") then
+							self:GetParent():SetAttribute("state", "Refresh")
+						end
 					end
 				]])
 				if NecrosisConfig.BlockedMenu or not NecrosisConfig.ClosingMenu then
@@ -3434,9 +3437,12 @@ function Necrosis:CreateMenu()
 					if menuVariable:GetNormalTexture() then
 						menuVariable:GetNormalTexture():SetDesaturated(true)
 					end
-					-- Désactiver la surbrillance au survol pour les boutons grisés
-					if menuVariable:GetHighlightTexture() then
-						menuVariable:GetHighlightTexture():SetAlpha(0)
+					-- Create a blocking texture to hide highlight on hover
+					if not menuVariable._blockTexture then
+						menuVariable._blockTexture = menuVariable:CreateTexture(nil, "HIGHLIGHT")
+						menuVariable._blockTexture:SetAllPoints(menuVariable)
+						menuVariable._blockTexture:SetTexture("Interface\\Tooltips\\UI-Tooltip-Background")
+						menuVariable._blockTexture:SetColorTexture(0.08, 0.08, 0.08, 0.3)
 					end
 					menuVariable:EnableMouse(false)  -- Disable mouse interaction for grayed buttons
 					menuVariable.spellUnknown = true
@@ -3445,9 +3451,9 @@ function Necrosis:CreateMenu()
 					if menuVariable:GetNormalTexture() then
 						menuVariable:GetNormalTexture():SetDesaturated(false)
 					end
-					-- Restaurer la surbrillance
-					if menuVariable:GetHighlightTexture() then
-						menuVariable:GetHighlightTexture():SetAlpha(1)
+					-- Remove blocking texture
+					if menuVariable._blockTexture then
+						menuVariable._blockTexture:Hide()
 					end
 					menuVariable:EnableMouse(true)  -- Re-enable mouse for learned spells
 					menuVariable.spellUnknown = false
@@ -3482,13 +3488,17 @@ function Necrosis:CreateMenu()
 					end
 				]])
 				f:WrapScript(Local.Menu.Curse[i], "OnEnter", [[
-					self:GetParent():SetAttribute("mousehere", true)
+					if not self.spellUnknown then
+						self:GetParent():SetAttribute("mousehere", true)
+					end
 				]])
 				f:WrapScript(Local.Menu.Curse[i], "OnLeave", [[
-					self:GetParent():SetAttribute("mousehere", false)
-					local stateMenu = self:GetParent():GetAttribute("state")
-					if not (stateMenu == "Bloque" or stateMenu == "Combat" or stateMenu == "ClicDroit") then
-						self:GetParent():SetAttribute("state", "Refresh")
+					if not self.spellUnknown then
+						self:GetParent():SetAttribute("mousehere", false)
+						local stateMenu = self:GetParent():GetAttribute("state")
+						if not (stateMenu == "Bloque" or stateMenu == "Combat" or stateMenu == "ClicDroit") then
+							self:GetParent():SetAttribute("state", "Refresh")
+						end
 					end
 				]])
 				if NecrosisConfig.BlockedMenu or not NecrosisConfig.ClosingMenu then
