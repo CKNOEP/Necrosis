@@ -1920,11 +1920,14 @@ function Necrosis:BuildButtonTooltip(button)
 	
 	if b == nil or b.tip == nil then
 		return -- a button we are not interested in was given
-	else
-	
-		Type = b.tip
-		
 	end
+
+	-- Check if TooltipData exists for this Type
+	if not Necrosis.TooltipData[Type] then
+		return -- no tooltip data for this button type
+	end
+
+	Type = b.tip
 
 	if Necrosis.Debug.tool_tips then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("BuildButtonTooltip"
