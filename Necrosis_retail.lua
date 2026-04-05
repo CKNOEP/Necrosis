@@ -3118,9 +3118,30 @@ function Necrosis:CreateMenuItem(spellListItem)
 			btn:EnableMouse(true)
 		end
 
-		-- Store spell info and button config on the frame for SetBuffSpellAttribute to use
+		-- Store spell info and button config on the frame
 		btn.high_of = spellListItem.high_of
 		btn.can_target = Necrosis.Warlock_Buttons[spellListItem.f_ptr].can_target
+
+		-- Set base spell attributes for Retail 12.0
+		btn:SetAttribute("helpbutton1", "spell1")
+		btn:SetAttribute("type1", "spell")
+
+		-- Get spell name and set it
+		local spellName = Necrosis.GetSpellCastName(spellListItem.high_of)
+		if not spellName or spellName == "" then
+			local spellID = Necrosis:GetSpellIDFromKey(spellListItem.high_of)
+			if spellID then
+				spellName = GetSpellInfo(spellID)
+			end
+		end
+		if spellName then
+			btn:SetAttribute("spell1", spellName)
+		end
+
+		-- Set unit targeting
+		if btn.can_target then
+			btn:SetAttribute("unit", "target")
+		end
 
 		-- Special attributes for casting certain buffs || Attributs spéciaux pour les buffs castables sur les autres joueurs
 		if spellListItem.high_of == "breath" or spellListItem.high_of == "invis" then
@@ -3134,11 +3155,6 @@ function Necrosis:CreateMenuItem(spellListItem)
 					self:SetAttribute("unit", "player")
 				end
 			end)
-		end
-
-		-- Set spell attributes if not in combat
-		if not InCombatLockdown() then
-			Necrosis:SetBuffSpellAttribute(buttonName)
 		end
 
 		return btn
