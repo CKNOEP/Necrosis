@@ -172,13 +172,31 @@ end
 
 -- Create stone buttons for Retail (only Healthstone and Soulstone exist)
 function Necrosis:CreateStoneButtons()
-	-- Create Healthstone button
+	-- Create Healthstone button if not already created
 	if not _G["NecrosisHealthstoneButton"] then
-		_ = CreateStoneButton(Necrosis.Warlock_Buttons.health_stone)
-	end
-	-- Soulstone is already created elsewhere, but ensure it exists
-	if not _G["NecrosisSoulstoneButton"] then
-		_ = CreateStoneButton(Necrosis.Warlock_Buttons.soul_stone)
+		local b = Necrosis.Warlock_Buttons.health_stone
+		local frame = CreateFrame("Button", b.f, UIParent, "SecureUnitButtonTemplate")
+		frame:SetMovable(true)
+		frame:EnableMouse(true)
+		frame:SetWidth(34)
+		frame:SetHeight(34)
+		frame:SetNormalTexture(b.norm)
+		frame:SetHighlightTexture(b.high)
+		frame:RegisterForDrag("LeftButton")
+		frame:RegisterForClicks("AnyUp")
+		frame:Show()
+		frame:SetScript("OnEnter", function(self) Necrosis:BuildButtonTooltip(self) end)
+		frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
+		frame:SetScript("OnMouseUp", function(self) Necrosis:OnDragStop(self) end)
+		frame:SetScript("OnDragStart", function(self)
+			if not NecrosisConfig.NecrosisLockServ then
+				Necrosis:OnDragStart(self)
+			end
+		end)
+		frame:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
+		frame:ClearAllPoints()
+		local pos = NecrosisConfig.FramePosition["NecrosisHealthstoneButton"] or {"CENTER", "UIParent", "CENTER", -53, -100}
+		frame:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
 	end
 end
 
