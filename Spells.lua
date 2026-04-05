@@ -229,8 +229,8 @@ Notes:
 	[691]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "felhunter", PetId = 417, reagent = "soul_shard", }, -- Felhunter
 	[30146]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "felguard", PetId = 17252, reagent = "soul_shard", }, -- Felguard
 
-	[1122]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "inferno", Length = 5, Cooldown = 3600, reagent = "infernal_stone", }, -- 5852 Inferno || https://classicdb.ch/?spell=1122 -- Infernals https://classic.wowhead.com/spell=23426 Needs research
-	[18540] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "rit_of_doom", Length = 0, Cooldown = 3600, reagent = "demonic_figurine", }, -- 11859 Ritual of Doom || Rituel funeste || https://classicdb.ch/?spell=18540
+	[1122]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "inferno", Length = 5, Cooldown = 3600, }, -- 5852 Inferno || https://classicdb.ch/?spell=1122 -- Infernals https://classic.wowhead.com/spell=23426 Needs research
+	[18540]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "rit_of_doom", Length = 0, Cooldown = 3600, }, -- 11859 Ritual of Doom || Rituel funeste || https://classicdb.ch/?spell=18540
 	
 	-- ::: Stones
 	-- Create Soulstone minor || Création pierre d'âme
@@ -628,8 +628,8 @@ Necrosis.Warlock_Buttons = {
 					high = "Interface\\AddOns\\Necrosis\\UI\\Kilrogg-02",
 					}, --
 	summoning 	= {f = "NecrosisBuffMenu05", tip = "TP", anchor = "ANCHOR_RIGHT", can_target = true,
-					norm = "Interface\\AddOns\\Necrosis\\UI\\TP-01",
-					high = "Interface\\AddOns\\Necrosis\\UI\\TP-02",
+					norm = "Interface\\AddOns\\Necrosis\\UI\\TP-RitualOfSummon",
+					high = "Interface\\AddOns\\Necrosis\\UI\\TP-RitualOfSummon",
 					}, --
 	link 		= {f = "NecrosisBuffMenu06", tip = "SoulLink", anchor = "ANCHOR_RIGHT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\SoulLink-01",
@@ -1029,19 +1029,16 @@ function Necrosis.IsSpellKnown(usage)
 	if usage and usage =="mounts" then
 	--print ("usage "..usage)
 	end
-	
+
 	if usage and usage =="destroy_shards" then
 	return true
 	end
-	
-	
+
+
 	if Necrosis.Warlock_Spell_Use[usage] -- get spell id
 	then
-		if GetSpellInfo(GetSpellInfo(Necrosis.Warlock_Spell_Use[usage])) then --- test if spell is know
-		return true
-		
-		--return Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].InSpellBook
-		end
+		-- Check if spell is actually in player's spell book using InSpellBook flag
+		return Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].InSpellBook or false
 	else
 		return false -- safety
 	end

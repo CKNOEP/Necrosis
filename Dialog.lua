@@ -446,6 +446,7 @@ Necrosis.Config.Buttons = {
 	["Monture - Ctrl+Clic droit"] = L["BUTTONS_CTRL-RIGHT"],
 	["Boutons Pierres"] = L["BOUTONS_PIERRES"],
 	["Boutons d'Action"] = L["BOUTONS_ACTION"],
+	["Montures"] = L["MOUNTS_TITLE"],
 
 }
 Necrosis.Config.Buttons.Name = {

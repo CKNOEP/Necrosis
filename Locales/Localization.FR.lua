@@ -73,10 +73,18 @@ L["VOIDWALKER_LABEL"] = "|c00FFFFFF".."Marcheur \195\169th\195\169r\195\169".."|
 L["VOIDWALKER"] = "Marcheur \195\169th\195\169r\195\169"
 L["SUCCUBUS_LABEL"] = "|c00FFFFFF".."Succube".."|r"
 L["SUCCUBUS"] = "Succube"
+L["SAYAAD_LABEL"] = "|c00FFFFFF".."Sayaad".."|r"
+L["SAYAAD"] = "Sayaad"
 L["FELHUNTER_LABEL"] = "|c00FFFFFF".."Chasseur corrompu".."|r"
 L["FELHUNTER"] = "Chasseur corrompu"
 L["FELGUARD_LABEL"] = "|c00FFFFFF".."Gangregarde".."|r"
 L["FELGUARD"] = "Gangregarde"
+L["DARKGLARE_LABEL"] = "|c00FFFFFF".."Regard-noir".."|r"
+L["DARKGLARE"] = "Regard-noir"
+L["VILEFIEND_LABEL"] = "|c00FFFFFF".."Démon abject".."|r"
+L["VILEFIEND"] = "Démon abject"
+L["TYRANT_LABEL"] = "|c00FFFFFF".."Tyran démoniaque".."|r"
+L["TYRANT"] = "Tyran démoniaque"
 L["INFERNAL_LABEL"] = "|c00FFFFFF".."Infernal".."|r"
 L["INFERNAL"] = "Infernal"
 L["DOOMGUARD_LABEL"] = "|c00FFFFFF".."Garde funeste".."|r"
@@ -156,13 +164,19 @@ L["SPHERE_SPELL+CTRL"] = "Ouvrir le menu des options"
 L["SPHERE_COUNTER"] = "Afficher le compteur num\195\169rique"
 L["SPHERE_STONE"] = "Type de compteur num\195\169rique"
 --	Colour
-L["PINK"] = "Pink"
-L["BLUE"] = "Bleu"
+L["ROSE"] = "Rose"
+L["BLEU"] = "Bleu"
 L["ORANGE"] = "Orange"
 L["TURQUOISE"] = "Turquoise"
-L["PURPLE"] = "Purple"
-L["666"] = "666"
-L["X"] = "X"
+L["VIOLET1"] = "Violet"
+L["VIOLET2"] = "Violet 2"
+L["666"] = "Gris"
+L["X"] = "Spécial"
+L["CATA"] = "Cataclysme"
+L["PINK"] = "Rose"
+L["BLUE"] = "Bleu"
+L["PURPLE"] = "Violet"
+L["PURPLE2"] = "Violet2"
 -- Count
 L["SOUL_SHARDS"] = "Fragments d'\195\162me"
 L["DEMON_SUMMON_STONES"] = "Pierres d'invocations"
@@ -176,6 +190,7 @@ L["BUTTONS_MOUNT"] = "Utiliser mes propres montures"
 L["BUTTONS_SELECTION"] = "Choix des boutons \195\160 afficher"
 L["BOUTONS_PIERRES"] = "Boutons Pierres"
 L["BOUTONS_ACTION"] = "Boutons d'Action"
+L["MOUNTS_TITLE"] = "Montures"
 L["BUTTONS_LEFT"] = "Monture Clic gauche"
 L["BUTTONS_RIGHT"] = "Monture Clic droit"
 --
@@ -321,6 +336,11 @@ L["BUTTONS_L"] = "Monture Clic gauche"
 L["BUTTONS_R"] = "Monture Clic droit"
 L["CATA"] = "Cataclysme"
 L["PURPLE2"] = "Purple2"
+-- Sphere skins (all 8 colors)
+L["ROSE"] = "Rose"
+L["BLEU"] = "Bleu"
+L["VIOLET1"] = "Violet1"
+L["VIOLET2"] = "Violet2"
 L["MENU_QUICK_SACRIFICE"] = "Sacrifice rapide"
 L["TIMER_ALPHA"] = "Transparence du timer"
 L["SPEECH_API"] = "API de synthèse vocale"
@@ -391,6 +411,19 @@ L["ABOUT_CREDITS"] = [[
 |c00FFD700Remerciements Spéciaux:|r
 • Équipe API WoW
 • Développeurs Ace3
+
+-- Timers Options
+L["TIMER_SETTINGS"] = "Paramètres des Timers"
+L["TIMER_TYPE"] = "Type de Timer"
+L["SHOW_SPELL_TIMER"] = "Afficher le bouton des Timers"
+L["TIMER_ON_LEFT"] = "Afficher les Timers sur la gauche"
+L["TIMER_UPWARD"] = "Afficher les Timers de bas en haut"
+L["TIMER_ALPHA"] = "Transparence des Timers"
+L["SELECT_TIMERS"] = "Sélectionner les Timers"
+L["AFK_SCREEN"] = "Écran AFK"
+L["THREAT_METER_ENABLED"] = "Activer le Compteur de Menace (indicateur circulaire)"
+L["NECROSISUI_ENABLED"] = "Activer NecrosisUI (framework avancé)"
+L["OPEN_OPTIONS_OVERLAY"] = "Ouvrir les Options de l'Overlay de Sort"
 • Contributeurs LibStub
 • Communauté Mondiale Démoniste
 
@@ -424,6 +457,8 @@ L["TOOLTIP_RIGHT_CLICK"] = "Clic droit"
 L["TOOLTIP_CONFIGURATION"] = "Configuration"
 L["TOOLTIP_DRAG"] = "Drag"
 L["TOOLTIP_MOVE"] = "Déplacer"
+L["TOOLTIP_MIDDLE_CLICK"] = "Clic du milieu"
+L["TOOLTIP_OPEN_BAGS"] = "Ouvrir les sacs"
 
 -- Stone Labels (for tooltip display)
 L["STONE_SOULSTONE_LABEL"] = "Pierre d'âme : "
@@ -441,3 +476,9 @@ L["SPELLSTONE_CHARGES"] = "Charges"
 
 -- Demon Cooldown Display
 L["DEMON_COOLDOWN"] = "Délai : "
+
+-- Summon Queue Config UI
+L["ENABLED"] = "Activé"
+L["OPTIONS"] = "Options"
+L["SETTINGS"] = "Paramètres"
+L["SUMMON_QUEUE_SHOW"] = "File"

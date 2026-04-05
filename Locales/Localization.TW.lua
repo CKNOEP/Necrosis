@@ -168,6 +168,7 @@ L["BUTTONS_MOUNT"] = "使用自己的坐騎"
 L["BUTTONS_SELECTION"] = "顯示選擇的按鈕"
 L["BOUTONS_PIERRES"] = "石頭按鈕"
 L["BOUTONS_ACTION"] = "動作按鈕"
+L["MOUNTS_TITLE"] = "坐騎"
 L["BUTTONS_LEFT"] = "坐騎 - 左鍵"
 L["BUTTONS_RIGHT"] = "坐騎 - 右鍵"
 --
@@ -360,3 +361,19 @@ L["SPELLSTONE_CHARGES"] = "充能"
 
 -- Demon Cooldown Display
 L["DEMON_COOLDOWN"] = "冷卻 : "
+
+-- Summon Queue Config UI
+L["ENABLED"] = "啟用"
+L["OPTIONS"] = "選項"
+L["SETTINGS"] = "設定"
+L["SUMMON_QUEUE_SHOW"] = "隊列"
+
+-- Additional Skin Colors (Traditional Chinese)
+if not L["ROSE"] then
+L["ROSE"] = "粉紅色"
+L["BLEU"] = "藍色"
+L["VIOLET1"] = "紫色"
+L["VIOLET2"] = "紫色 2"
+L["666"] = "灰色"
+L["X"] = "特殊"
+end

@@ -168,6 +168,7 @@ L["BUTTONS_MOUNT"] = "Use my own mounts"
 L["BUTTONS_SELECTION"] = "Selection of buttons to be shown"
 L["BOUTONS_PIERRES"] = "Botones de Piedra"
 L["BOUTONS_ACTION"] = "Botones de Accion"
+L["MOUNTS_TITLE"] = "Monturas"
 L["BUTTONS_LEFT"] = "Left click"
 L["BUTTONS_RIGHT"] = "Right click"
 --
@@ -378,3 +379,19 @@ L["SPELLSTONE_CHARGES"] = "Cargas"
 
 -- Demon Cooldown Display
 L["DEMON_COOLDOWN"] = "Recarga : "
+
+-- Summon Queue Config UI
+L["ENABLED"] = "Habilitado"
+L["OPTIONS"] = "Opciones"
+L["SETTINGS"] = "Configuración"
+L["SUMMON_QUEUE_SHOW"] = "Cola"
+
+-- Additional Skin Colors (Spanish)
+if not L["ROSE"] then
+L["ROSE"] = "Rosa"
+L["BLEU"] = "Azul"
+L["VIOLET1"] = "Púrpura"
+L["VIOLET2"] = "Púrpura 2"
+L["666"] = "Gris"
+L["X"] = "Especial"
+end

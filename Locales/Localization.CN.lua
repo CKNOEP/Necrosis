@@ -75,8 +75,8 @@ L["VOIDWALKER_LABEL"] = "|c00FFFFFF".."虚空行者".."|r"
 L["VOIDWALKER"] = "虚空行者"
 L["SUCCUBUS_LABEL"] = "|c00FFFFFF".."魅魔".."|r"
 L["SUCCUBUS"] = "魅魔"
-L["INCCUBUS_LABEL"] = "|c00FFFFFF".."夜魔".."|r"
-L["INCCUBUS"] = "夜魔"
+L["SAYAAD_LABEL"] = "|c00FFFFFF".."夜魔".."|r"
+L["SAYAAD"] = "夜魔"
 L["FELHUNTER_LABEL"] = "|c00FFFFFF".."地狱猎犬".."|r"
 L["FELHUNTER"] = "地狱猎犬"
 L["FELGUARD_LABEL"] = "|c00FFFFFF".."地狱守卫".."|r"
@@ -184,6 +184,7 @@ L["BUTTONS_MOUNT"] = "坐骑设置"
 L["BUTTONS_SELECTION"] = "选择显示的按钮"
 L["BOUTONS_PIERRES"] = "石头按钮"
 L["BOUTONS_ACTION"] = "动作按钮"
+L["MOUNTS_TITLE"] = "坐骑"
 L["BUTTONS_LEFT"] = "坐骑 - 左键"
 L["BUTTONS_RIGHT"] = "坐骑 - 右键"
 L["BUTTONS_L"] = "左键"
@@ -369,3 +370,19 @@ L["SPELLSTONE_CHARGES"] = "充能"
 
 -- Demon Cooldown Display
 L["DEMON_COOLDOWN"] = "冷却 : "
+
+-- Summon Queue Config UI
+L["ENABLED"] = "启用"
+L["OPTIONS"] = "选项"
+L["SETTINGS"] = "设置"
+L["SUMMON_QUEUE_SHOW"] = "队列"
+
+-- Additional Skin Colors (Simplified Chinese)
+if not L["ROSE"] then
+L["ROSE"] = "粉红色"
+L["BLEU"] = "蓝色"
+L["VIOLET1"] = "紫色"
+L["VIOLET2"] = "紫色 2"
+L["666"] = "灰色"
+L["X"] = "特殊"
+end

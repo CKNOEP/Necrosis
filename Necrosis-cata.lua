@@ -1711,8 +1711,35 @@ local function ManaLocalize(mana)
 	end
 end
 local function AddCastAndCost(usage)
-	GameTooltip:AddLine(Necrosis.GetSpellCastName(usage)) 
-	ManaLocalize(Necrosis.GetSpellMana(usage)) 
+	GameTooltip:AddLine(Necrosis.GetSpellCastName(usage))
+
+	-- Get spell ID for the usage
+	local spellID = Necrosis.Warlock_Spell_Use[usage]
+	if spellID then
+		local manaCost = 0
+
+		-- Get mana cost dynamically using C_Spell API
+		local costs = C_Spell.GetSpellPowerCost(spellID)
+
+		if costs and #costs > 0 then
+			for _, cost in ipairs(costs) do
+				-- Check by name first (more reliable)
+				if cost.name == "MANA" and cost.cost > 0 then
+					manaCost = cost.cost
+					break
+				-- Fallback: check by type
+				elseif (cost.type == Enum.PowerType.Mana or cost.type == 1) and cost.cost > 0 then
+					manaCost = cost.cost
+					break
+				end
+			end
+		end
+
+		-- Display the mana cost if found
+		if manaCost and manaCost > 0 then
+			ManaLocalize(manaCost)
+		end
+	end
 end
 local function AddShard()
 	if Local.Soulshard.Count == 0 then
@@ -2188,12 +2215,20 @@ function Necrosis:UpdateMana()
 			local f = _G[Necrosis.Warlock_Buttons[v.f_ptr].f]
 			local spell = Necrosis.GetSpell(v.high_of)
 			SetTexPerMana(f, spell, mana)
+			-- Update mana text display
+			if f and f.manaText and spell and spell.Mana then
+				f.manaText:SetText(spell.Mana .. " Mana")
+			end
 		end
 		-- buffs
 		for i, v in ipairs(Necrosis.Warlock_Lists.buffs) do
 			local f = _G[Necrosis.Warlock_Buttons[v.f_ptr].f]
 			local spell = Necrosis.GetSpell(v.high_of)
 			SetTexPerMana(f, spell, mana)
+			-- Update mana text display
+			if f and f.manaText and spell and spell.Mana then
+				f.manaText:SetText(spell.Mana .. " Mana")
+			end
 		end
 		-- pets
 		for i, v in ipairs(Necrosis.Warlock_Lists.pets) do

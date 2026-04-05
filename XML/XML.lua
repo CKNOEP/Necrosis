@@ -313,7 +313,7 @@ function Necrosis:CreateMenuItem(i)
 	-- Create the button || Creation du bouton
 	local frame = _G[b.f]
 	if not frame then
-		frame = CreateFrame("Button", b.f, UIParent, "SecureUnitButtonTemplate")
+		frame = CreateFrame("Button", b.f, UIParent, "SecureActionButtonTemplate")
 
 		-- Définition de ses attributs
 		frame:SetMovable(true)
@@ -343,6 +343,12 @@ function Necrosis:CreateMenuItem(i)
 	end
 
 	frame:SetNormalTexture(b.norm)
+	-- Set spell attribute for casting
+	local spell = Necrosis.GetSpell(i.high_of)
+	if spell and spell.ID then
+		frame:SetAttribute("type", "spell")
+		frame:SetAttribute("spell", spell.ID)
+	end
 	frame:Hide()
 
 	-- Edit the scripts associated with the button || Edition des scripts associés au bouton 

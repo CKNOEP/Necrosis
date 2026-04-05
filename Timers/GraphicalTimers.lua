@@ -224,16 +224,25 @@ end
 ------------------------------------------------------------------------------------------------------
 
 function NecrosisUpdateTimer(tableau, Changement)
-	if not (NecrosisConfig.TimerType == 1 and tableau[1]) 
+	if not (NecrosisConfig.TimerType == 1 and tableau[1])
 	then
+		-- Debug: Check why we're returning
+		if Necrosis.Debug.timers then
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("NecrosisUpdateTimer returning: TimerType="..tostring(NecrosisConfig.TimerType).." tableau[1]="..tostring(tableau[1]))
+		end
 		return
 	else
-	
+
  	table.sort(tableau, function(a,b) return a.Time < b.Time end)
 	
 
 
-	
+
+	end
+
+	-- Ensure the timer anchor frame exists before trying to get its point
+	if not _G["NecrosisTimerFrame0"] then
+		return
 	end
 
 	_lastPoint[1], _lastPoint[2], _lastPoint[3], _lastPoint[4], _lastPoint[5] = NecrosisTimerFrame0:GetPoint()
@@ -258,6 +267,11 @@ function NecrosisUpdateTimer(tableau, Changement)
 		local StatusBar = _G["NecrosisTimerFrame"..tableau[index].Gtimer.."Bar"]
 		local Spark = _G["NecrosisTimerFrame"..tableau[index].Gtimer.."Spark"]
 		local Text = _G["NecrosisTimerFrame"..tableau[index].Gtimer.."OutText"]
+
+		-- Safety check: if frame doesn't exist, skip this timer
+		if not Frame or not StatusBar then
+			break
+		end
 
 		--print(tableau[index].Name,tableau[index].Time)
 		--	todo for index =  1, #tableau, 1 do

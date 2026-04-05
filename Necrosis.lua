@@ -1727,8 +1727,35 @@ local function ManaLocalize(mana)
 	end
 end
 local function AddCastAndCost(usage)
-	GameTooltip:AddLine(Necrosis.GetSpellCastName(usage)) 
-	ManaLocalize(Necrosis.GetSpellMana(usage)) 
+	GameTooltip:AddLine(Necrosis.GetSpellCastName(usage))
+
+	-- Get spell ID for the usage
+	local spellID = Necrosis.Warlock_Spell_Use[usage]
+	if spellID then
+		local manaCost = 0
+
+		-- Get mana cost dynamically using C_Spell API
+		local costs = C_Spell.GetSpellPowerCost(spellID)
+
+		if costs and #costs > 0 then
+			for _, cost in ipairs(costs) do
+				-- Check by name first (more reliable)
+				if cost.name == "MANA" and cost.cost > 0 then
+					manaCost = cost.cost
+					break
+				-- Fallback: check by type
+				elseif (cost.type == Enum.PowerType.Mana or cost.type == 1) and cost.cost > 0 then
+					manaCost = cost.cost
+					break
+				end
+			end
+		end
+
+		-- Display the mana cost if found
+		if manaCost and manaCost > 0 then
+			ManaLocalize(manaCost)
+		end
+	end
 end
 local function AddShard()
 	if Local.Soulshard.Count == 0 then
@@ -2307,12 +2334,20 @@ function Necrosis:UpdateMana()
 			local f = _G[Necrosis.Warlock_Buttons[v.f_ptr].f]
 			local spell = Necrosis.GetSpell(v.high_of)
 			SetTexPerMana(f, spell, mana)
+			-- Update mana text display
+			if f and f.manaText and spell and spell.Mana then
+				f.manaText:SetText(spell.Mana .. " Mana")
+			end
 		end
 		-- buffs
 		for i, v in ipairs(Necrosis.Warlock_Lists.buffs) do
 			local f = _G[Necrosis.Warlock_Buttons[v.f_ptr].f]
 			local spell = Necrosis.GetSpell(v.high_of)
 			SetTexPerMana(f, spell, mana)
+			-- Update mana text display
+			if f and f.manaText and spell and spell.Mana then
+				f.manaText:SetText(spell.Mana .. " Mana")
+			end
 		end
 		-- pets
 		for i, v in ipairs(Necrosis.Warlock_Lists.pets) do
@@ -2726,23 +2761,23 @@ end
 -- Display or Hide buttons depending on spell availability || Affiche ou masque les boutons de sort à chaque nouveau sort appris
 function Necrosis:ButtonSetup()
 	local NBRScale, rayondebase ,rayon , dist
-	
--- (Min)50 to 100 
+
+-- (Min)50 to 100
 if  NecrosisConfig.NecrosisButtonScale <= 100 then
 
 		NBRScale = 1.1
 		dist = 40 * NBRScale
-end	
+end
 --  100 to 150
 if NecrosisConfig.NecrosisButtonScale < 150 and NecrosisConfig.NecrosisButtonScale > 100 then
 		 NBRScale = (100 + (NecrosisConfig.NecrosisButtonScale - 85)) / 100
 		 rayondebase = 8
 		 rayon = rayondebase * (NecrosisConfig.NecrosisButtonScale/100)
 		 dist = 35 * NBRScale * 0.85
-		dist = dist - ((rayon-rayondebase)) 
+		dist = dist - ((rayon-rayondebase))
 end
 
--- 160 to 200 (max)		
+-- 160 to 200 (max)
 if NecrosisConfig.NecrosisButtonScale >= 150 then
 		 NBRScale = (100 + (NecrosisConfig.NecrosisButtonScale - 85)) / 100
 		 rayondebase = 13
@@ -2750,6 +2785,11 @@ if NecrosisConfig.NecrosisButtonScale >= 150 then
 		 dist = 35 * NBRScale * 0.85
 		dist = dist - ((rayon-rayondebase))
 end
+
+-- Apply button spacing multiplier from slider
+local spacingMultiplier = NecrosisConfig.NecrosisButtonSpacing or 1.0
+dist = dist * spacingMultiplier
+print("[Necrosis] ButtonSetup - dist multiplied by spacing: " .. spacingMultiplier)
 	
 
 

@@ -1,0 +1,1080 @@
+--[[
+    Necrosis - RETAIL VERSION
+    Copyright (C) - copyright file included in this release
+
+    This is the Retail-specific initialization for Midnight (12.0+)
+    Features removed: Soul Link, Detect Invisibility, Sacrifice Voidwalker
+--]]
+
+--print("[NECROSIS] Initialize_retail.lua loaded!")
+
+-- On définit _G comme étant le tableau contenant toutes les frames existantes.
+local _G = getfenv(0)
+
+Necrosis = {}
+SAO ={}
+-- NECROSIS_ID is now defined in Core-Init.lua before locales load
+
+-- ============================================================================
+-- VUHDO-STYLE CACHE: Non-tainted data storage (Clean context)
+-- ============================================================================
+-- This pattern matches VuhDo's approach - store unit data in clean context,
+-- then use cached values in tainted code (no arithmetic on Secret Values)
+
+Necrosis.UnitCache = {
+	health = 0,
+	healthmax = 1,
+	percent = 100,
+}
+
+-- ============================================================================
+-- WoW Version Compatibility Wrappers (Retail Midnight 12.0+)
+-- ============================================================================
+
+-- Detect WoW version (Retail Midnight and beyond)
+local _, _, _, tocVersion = GetBuildInfo()
+local IsModernWoW = tocVersion and tocVersion >= 120000 -- WoW 12.0+ (Midnight+) has C_Container
+
+-- Create compatibility wrappers for C_Container (WoW 9.0+)
+if not C_Container then
+    C_Container = {}
+end
+
+if not C_Container.GetContainerNumSlots then
+    function C_Container.GetContainerNumSlots(container)
+        return GetContainerNumSlots(container)
+    end
+end
+
+if not C_Container.GetContainerItemInfo then
+    function C_Container.GetContainerItemInfo(container, slot)
+        return GetContainerItemInfo(container, slot)
+    end
+end
+
+if not C_Container.GetContainerItemLink then
+    function C_Container.GetContainerItemLink(container, slot)
+        return GetContainerItemLink(container, slot)
+    end
+end
+
+if not C_Container.GetContainerItemCooldown then
+    function C_Container.GetContainerItemCooldown(container, slot)
+        -- GetContainerItemCooldown doesn't exist in TBC, return default (no cooldown)
+        if GetContainerItemCooldown then
+            return GetContainerItemCooldown(container, slot)
+        else
+            -- TBC doesn't have this API, return no cooldown (0, 0, true)
+            return 0, 0, true
+        end
+    end
+end
+
+-- Also create a global wrapper for direct calls
+if not GetContainerItemCooldown then
+    function GetContainerItemCooldown(container, slot)
+        -- TBC/Vanilla don't have this API, return no cooldown
+        return 0, 0, true
+    end
+end
+
+if not C_Container.PickupContainerItem then
+    function C_Container.PickupContainerItem(container, slot)
+        return PickupContainerItem(container, slot)
+    end
+end
+
+-- Create compatibility wrapper for C_Timer (WoW 9.0+)
+if not C_Timer then
+    C_Timer = {}
+end
+
+if not C_Timer.After then
+    -- Create a fallback using AceTimer or frame-based timer
+    function C_Timer.After(delay, callback)
+        if Necrosis and Necrosis.TimerCount == nil then
+            Necrosis.TimerCount = 0
+        end
+        Necrosis.TimerCount = Necrosis.TimerCount + 1
+        local timerId = Necrosis.TimerCount
+
+        -- Use frame-based OnUpdate as fallback
+        local frame = CreateFrame("Frame")
+        local elapsed = 0
+        frame:SetScript("OnUpdate", function(self, delta)
+            elapsed = elapsed + delta
+            if elapsed >= delay then
+                callback()
+                frame:SetScript("OnUpdate", nil)
+            end
+        end)
+    end
+end
+
+-- Load localization with fallback
+local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
+-- Fallback function for localization keys if they're not available yet
+local function GetLocalizedString(key, default)
+	if L and L[key] then
+		return L[key]
+	end
+	return default
+end
+
+if not L then
+	-- Create empty table if localization not loaded yet
+	L = {}
+end
+
+-- Ensure fallback values are available if localization keys are missing
+L["TOOLTIP_LEFT_CLICK"] = L["TOOLTIP_LEFT_CLICK"] or "Left Click"
+L["TOOLTIP_SHIFT_LEFT_CLICK"] = L["TOOLTIP_SHIFT_LEFT_CLICK"] or "Shift+Left Click"
+L["TOOLTIP_RIGHT_CLICK"] = L["TOOLTIP_RIGHT_CLICK"] or "Right Click"
+L["TOOLTIP_CONFIGURATION"] = L["TOOLTIP_CONFIGURATION"] or "Configuration"
+L["TOOLTIP_DRAG"] = L["TOOLTIP_DRAG"] or "Drag"
+L["TOOLTIP_MOVE"] = L["TOOLTIP_MOVE"] or "Move"
+L["STONE_SOULSTONE_LABEL"] = L["STONE_SOULSTONE_LABEL"] or "Soulstone: "
+L["STONE_HEALTHSTONE_LABEL"] = L["STONE_HEALTHSTONE_LABEL"] or "Healthstone: "
+L["STONE_SPELLSTONE_LABEL"] = L["STONE_SPELLSTONE_LABEL"] or "Spellstone: "
+L["STONE_FIRESTONE_LABEL"] = L["STONE_FIRESTONE_LABEL"] or "Firestone: "
+L["STONE_INFERNAL_LABEL"] = L["STONE_INFERNAL_LABEL"] or "Infernal Stone: "
+
+-- Initialize NecrosisUI Framework
+do
+	local NUI = _G.NUI or {}
+	if not NUI.name then
+		NUI = LibStub('AceAddon-3.0'):NewAddon('NecrosisUI', 'AceEvent-3.0', 'AceConsole-3.0', 'AceSerializer-3.0')
+		_G.NUI = NUI
+	end
+
+	-- Create NecrosisUI frame - this will be populated by themes
+	if not _G.NecrosisUI then
+		local necrosisUIFrame = CreateFrame("Frame", "NecrosisUI", UIParent)
+		necrosisUIFrame:SetFrameStrata("BACKGROUND")
+		necrosisUIFrame:SetPoint("BOTTOMLEFT", UIParent, "BOTTOMLEFT", 0, 0)
+		necrosisUIFrame:SetPoint("BOTTOMRIGHT", UIParent, "BOTTOMRIGHT", 0, 0)
+		necrosisUIFrame:SetHeight(256)
+		necrosisUIFrame:Hide()
+
+		-- Create bottom anchor for theme artwork positioning
+		local bottomAnchor = CreateFrame("Frame", "NUI_BottomAnchor", necrosisUIFrame)
+		bottomAnchor:SetAllPoints(necrosisUIFrame)
+	end
+
+	-- Implement Show/Hide methods
+	function NUI:Show()
+		if NecrosisUI then
+			NecrosisUI:Show()
+			-- Import and apply NecrosisUI layout when showing
+			if self.ImportLayout then
+				C_Timer.After(0.5, function()
+					self:ImportLayout()
+				end)
+			end
+		end
+	end
+
+	function NUI:Hide()
+		if NecrosisUI then
+			NecrosisUI:Hide()
+		end
+	end
+
+	-- Function to update BottomBanner size when sliders change
+	function NUI:UpdateBottomBannerSize()
+		if not _G.NUI_Art_Classic then
+			return
+		end
+		local artFrame = _G.NUI_Art_Classic
+		local textureContainer = _G.NUI_TextureContainer
+		if not textureContainer then
+			return
+		end
+
+		local widthScale = NecrosisConfig.BottomBannerWidthScale or 1.0
+		local heightScale = NecrosisConfig.BottomBannerHeightScale or 1.0
+		local baseHeight = 139
+
+		artFrame:SetHeight(baseHeight * heightScale)
+		local scale = 0.78 * widthScale
+		textureContainer:SetScale(scale)
+		--print("[NecrosisUI] BottomBanner size updated - Width: " .. string.format("%.1f", widthScale) .. ", Height: " .. string.format("%.1f", heightScale))
+	end
+
+	-- Create Classic theme module
+	local themeModule = NUI:NewModule('Style_Classic')
+
+	-- Load BottomBanner UI after NUI is ready
+	C_Timer.After(0.5, function()
+		--print("[NecrosisUI] Loading BottomBanner UI...")
+		local function LoadBottomBannerScripts()
+			-- Load Framework.lua
+			local frameworkCode = [[
+]] .. [[
+if not NUI then
+	error("ERROR: NUI is nil!")
+	return
+end
+
+if not NecrosisUI then
+	error("ERROR: NecrosisUI is nil!")
+	return
+end
+
+local NUI, L = NUI, NUI.L
+local artFrame = CreateFrame('Frame', 'NUI_Art_Classic', NecrosisUI)
+-- Create a container for textures so we can scale them independently
+local textureContainer = CreateFrame('Frame', 'NUI_TextureContainer', artFrame)
+textureContainer:SetAllPoints(artFrame)
+
+----------------------------------------------------------------------------------------------------
+local SkinnedFrames = {}
+
+local function CreateArtwork()
+	--print("[NecrosisUI] CreateArtwork() started")
+
+	if not NUI_BottomAnchor then
+		error("[NecrosisUI] ERROR: NUI_BottomAnchor is nil!")
+		return
+	end
+
+	local plate = CreateFrame('Frame', 'Classic_ActionBarPlate', artFrame)
+	plate:SetSize(1002, 139)
+	plate:SetFrameStrata('BACKGROUND')
+	plate:SetFrameLevel(1)
+	plate:SetAllPoints(NUI_BottomAnchor)
+	--print("[NecrosisUI] Plate frame created")
+
+	-- Setup the Bottom Artwork
+	artFrame:SetFrameStrata('BACKGROUND')
+	artFrame:SetFrameLevel(1)
+	artFrame:SetAlpha(1.0)  -- 100% opaque pour bien voir la teinte violette
+	-- Make artFrame cover full screen width like a banner
+	artFrame:SetPoint('BOTTOMLEFT', UIParent, 'BOTTOMLEFT', 0, 0)
+	artFrame:SetPoint('BOTTOMRIGHT', UIParent, 'BOTTOMRIGHT', 0, 0)
+
+	-- Apply width and height scaling from sliders
+	local widthScale = NecrosisConfig.BottomBannerWidthScale or 1.0
+	local heightScale = NecrosisConfig.BottomBannerHeightScale or 1.0
+	local baseHeight = 139
+
+	artFrame:SetHeight(baseHeight * heightScale)
+	local scale = 0.78 * widthScale
+	-- Apply scale to texture container instead of main frame
+	textureContainer:SetScale(scale)
+
+	artFrame.Center = textureContainer:CreateTexture('NUI_Art_Classic_Center', 'BACKGROUND')
+	artFrame.Center:SetTexture('Interface\\AddOns\\Necrosis\\UI\\BottomBanner\\Images\\base-center')
+	artFrame.Center:SetPoint('BOTTOM', artFrame, 'BOTTOM')
+	artFrame.Center:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
+
+	artFrame.Left = textureContainer:CreateTexture('NUI_Art_Classic_Left', 'BACKGROUND')
+	artFrame.Left:SetTexture('Interface\\AddOns\\Necrosis\\UI\\BottomBanner\\Images\\base-left1')
+	artFrame.Left:SetPoint('BOTTOMRIGHT', artFrame.Center, 'BOTTOMLEFT', 0, 0)
+	artFrame.Left:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
+	artFrame.FarLeft = textureContainer:CreateTexture('NUI_Art_Classic_FarLeft', 'BACKGROUND')
+	artFrame.FarLeft:SetTexture('Interface\\AddOns\\Necrosis\\UI\\BottomBanner\\Images\\base-left2')
+	artFrame.FarLeft:SetPoint('BOTTOMRIGHT', artFrame.Left, 'BOTTOMLEFT', 0, 0)
+	artFrame.FarLeft:SetPoint('BOTTOMLEFT', artFrame, 'BOTTOMLEFT', 0, 0)
+	artFrame.FarLeft:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
+
+	artFrame.Right = textureContainer:CreateTexture('NUI_Art_Classic_Right', 'BACKGROUND')
+	artFrame.Right:SetTexture('Interface\\AddOns\\Necrosis\\UI\\BottomBanner\\Images\\base-right1')
+	artFrame.Right:SetPoint('BOTTOMLEFT', artFrame.Center, 'BOTTOMRIGHT')
+	artFrame.Right:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
+	artFrame.FarRight = textureContainer:CreateTexture('NUI_Art_Classic_FarRight', 'BACKGROUND')
+	artFrame.FarRight:SetTexture('Interface\\AddOns\\Necrosis\\UI\\BottomBanner\\Images\\base-right2')
+	artFrame.FarRight:SetPoint('BOTTOMLEFT', artFrame.Right, 'BOTTOMRIGHT')
+	artFrame.FarRight:SetPoint('BOTTOMRIGHT', artFrame, 'BOTTOMRIGHT')
+	artFrame.FarRight:SetVertexColor(0.7, 0.3, 1.0)  -- Violet moyen
+
+	--print("[NecrosisUI] CreateArtwork() completed successfully!")
+	--print("[NecrosisUI] artFrame visible:", artFrame:IsVisible())
+	--print("[NecrosisUI] NecrosisUI visible:", NecrosisUI:IsVisible())
+end
+
+-- Execute immediately on load
+--print("[NecrosisUI] Creating BottomBanner artwork...")
+CreateArtwork()
+
+-- Show the NecrosisUI frame immediately if enabled
+if NecrosisConfig.NecrosisUIEnabled then
+	--print("[NecrosisUI] Showing NecrosisUI frame...")
+	if NecrosisUI then
+		NecrosisUI:Show()
+	end
+end
+
+--print("[NecrosisUI] BottomBanner loaded!")
+]]
+			local func = loadstring(frameworkCode)
+			if func then
+				func()
+			else
+				error("[NecrosisUI] Failed to load BottomBanner code")
+			end
+		end
+		LoadBottomBannerScripts()
+	end)
+end
+
+-- Theme artwork is now handled by Initialize_retail.lua
+
+-- Compatibility wrapper for GetAddOnMetadata (deprecated in modern WoW)
+local function GetMetadata(addon, field)
+	if C_AddOns and C_AddOns.GetAddOnMetadata then
+		return C_AddOns.GetAddOnMetadata(addon, field)
+	elseif GetAddOnMetadata then
+		return GetAddOnMetadata(addon, field)
+	end
+	return nil
+end
+
+Necrosis.Data = {
+	Version = GetMetadata("Necrosis", "Version"),
+	AppName = "Necrosis",
+	LastConfig = "8.0.6",
+	Enabled = false,
+}
+
+Necrosis.Data.Label = Necrosis.Data.AppName.." "..Necrosis.Data.Version
+
+Necrosis.Speech = {}
+Necrosis.Unit = {}
+Necrosis.Translation = {}
+
+Necrosis.Config = {}
+
+NecrosisConfig = {}
+
+-- RGB Encoding cache for storing health/mana values without taint
+-- Used to bypass Secret Value restrictions in Retail 12.0+
+Necrosis.HealthCache = CreateFrame("Frame", "NecrosisHealthCache", UIParent)
+Necrosis.HealthCache.texture = Necrosis.HealthCache:CreateTexture()
+
+-- Any of these could generate a lot of output
+Necrosis.Debug = {
+	init_path 		= false, -- notable points as Necrosis starts
+	events 			= false, -- various events tracked, chatty but informative; overlap with spells_cast
+	spells_init 	= false, -- setting spell data and highest and helper tables
+	spells_cast 	= false, -- spells as they are cast and some resulting actions and auras; overlap with events
+	timers 			= false	, -- track as they are created and removed
+	buttons 		= false , -- buttons and menus as they are created and updated
+	bags			= false, -- what is found in bags and shard management - could be very chatty on large, full bags
+	tool_tips		= false, -- spell info that goes into tool tips
+	speech			= false, -- steps to produce the 'speech' when summoning
+	}
+
+--local ntooltip = CreateFrame("Frame", "NecrosisTooltip", UIParent, BackdropTemplateMixin and "GameTooltipTemplate");
+-- CRITICAL FIX: Create NecrosisButton immediately with unique name!
+-- The point in the name was causing click issues!
+local nbutton = CreateFrame("Button", "NecrosisMainSphere_Placeholder", UIParent, "SecureUnitButtonTemplate")
+-- Keep invisible - will be replaced by final button after 5s delay
+nbutton:Hide()
+-- Register it as NecrosisButton for the rest of the code
+_G["NecrosisButton"] = nbutton
+	_G["NecrosisMainSphere"] = nbutton  -- Placeholder, will be replaced later
+
+-- RETAIL 12.0+ FIX: Use SecureUnitButtonTemplate built-in functionality
+-- Set unit for the secure button - it can read health safely
+nbutton:SetAttribute("unit", "player")
+
+
+-- RETAIL 12.0+ FIX: Keep Soulstone button visible and unsaturated (WoW auto-grays it on cooldown)
+-- TODO: Disabled due to protected function restrictions in Retail 12.0+
+-- C_Timer.NewTicker(0.5, function()
+-- 	if not Necrosis or not Necrosis.Warlock_Buttons then return end
+-- 	local f_ss = _G[Necrosis.Warlock_Buttons.soul_stone.f]
+-- 	if f_ss then
+-- 		local texture = f_ss:GetNormalTexture()
+-- 		if texture and texture:IsDesaturated() then
+-- 			texture:SetDesaturated(nil)
+-- 		end
+-- 		f_ss:Enable()
+-- 		f_ss:SetAlpha(1)
+-- 		if texture then
+-- 			texture:SetAlpha(1)
+-- 		end
+-- 	end
+-- end)
+
+
+-- Create text overlay frame on UIParent (NOT on the button, since nbutton has no dimensions yet)
+-- The button will be positioned later, so we anchor the FontString directly to it by name
+local textOverlay = CreateFrame("Frame", "NecrosisShardCountFrame_Placeholder", UIParent)
+textOverlay:SetFrameStrata("HIGH")
+textOverlay:SetFrameLevel(100)
+textOverlay:SetSize(34, 34)  -- Match button size
+-- Create the FontString on this high-strata frame
+local shardCount = textOverlay:CreateFontString("NecrosisShardCount", "OVERLAY", "GameFontNormal")
+shardCount:SetPoint("CENTER")  -- Center in parent
+shardCount:SetTextColor(1, 1, 1, 1)
+-- Position the overlay on the button using name (will work when button is positioned)
+C_Timer.After(0.1, function()
+	if _G["NecrosisButton"] then
+		textOverlay:SetPoint("CENTER", _G["NecrosisButton"], "CENTER")
+		textOverlay:Show()
+	end
+end)
+
+-- Hide all peripheral buttons at startup - will be shown after position restoration
+-- Wait 1 second to ensure all buttons are created by XML.lua first
+-- TODO: Disabled due to protected function restrictions in Retail 12.0+
+-- C_Timer.After(1, function()
+-- 	local buttonNames = {
+-- 		"NecrosisFirestoneButton",
+-- 		"NecrosisSpellstoneButton",
+-- 		"NecrosisHealthstoneButton",
+-- 		"NecrosisSoulstoneButton",
+-- 		"NecrosisBuffMenuButton",
+-- 		"NecrosisMountButton",
+-- 		"NecrosisPetMenuButton",
+-- 		"NecrosisCurseMenuButton",
+-- 		"NecrosisShadowTranceButton",
+-- 		"NecrosisBacklashButton",
+-- 		"NecrosisAntiFearButton",
+-- 		"NecrosisCreatureAlertButton_demon",
+-- 		"NecrosisCreatureAlertButton_elemental",
+-- 	}
+-- 	for _, name in ipairs(buttonNames) do
+-- 		local btn = _G[name]
+-- 		if btn then
+-- 			btn:Hide()
+-- 		end
+-- 	end
+-- end)
+
+-- Create separate frame for event handling (NOT the button itself!)
+-- This is the KEY: Events are handled by eventFrame, clicks by NecrosisButton!
+local eventFrame = CreateFrame("Frame", "NecrosisEventFrame")
+eventFrame:SetScript("OnEvent", function(self, event, ...)
+	-- OnEvent receives events, but we pass NecrosisButton as the frame reference
+	Necrosis.OnEvent(Necrosis, event, ...)
+end)
+
+-- Events utilised by Necrosis || Events utilisés dans Necrosis
+local Events = {
+	"BAG_UPDATE",
+	"PLAYER_LOGIN",
+	"PLAYER_ENTERING_WORLD",
+	"PLAYER_REGEN_DISABLED",
+	"PLAYER_REGEN_ENABLED",
+	"PLAYER_DEAD",
+	"PLAYER_ALIVE",
+	"PLAYER_UNGHOST",
+	"UNIT_PET",
+	"UNIT_SPELLCAST_FAILED",
+	"UNIT_SPELLCAST_INTERRUPTED",
+	"UNIT_SPELLCAST_SUCCEEDED",
+	"UNIT_SPELLCAST_SENT",
+	"UNIT_MANA",
+	"UNIT_HEALTH",
+	"UNIT_POWER_UPDATE",
+	-- "LEARNED_SPELL_IN_TAB", -- Removed: deprecated in WoW Classic 2026, use SPELLS_CHANGED instead
+	"PLAYER_TARGET_CHANGED",
+	"TRADE_REQUEST",
+	"TRADE_REQUEST_CANCEL",
+	"TRADE_ACCEPT_UPDATE",
+	"TRADE_SHOW",
+	"TRADE_CLOSED",
+	"COMBAT_LOG_EVENT_UNFILTERED",
+	"SKILL_LINES_CHANGED",
+	"PLAYER_LEAVING_WORLD",
+	"SPELLS_CHANGED",
+}
+
+-- ✅ Save Events to Necrosis so it can be accessed from slash commands
+Necrosis.Events = Events
+
+-- In WoW 12.0.1, RegisterEvent is blocked during addon load context
+-- We must register events from a player context (slash command)
+local eventsRegistered = false
+local originalOnEvent = eventFrame:GetScript("OnEvent")
+
+eventFrame:SetScript("OnEvent", function(self, event, ...)
+	-- Call original handler if it exists
+	if originalOnEvent then
+		originalOnEvent(self, event, ...)
+	end
+end)
+
+-- Register initial events (no other events can be registered during addon load)
+-- ✅ Include critical events that update health/mana counter
+pcall(function()
+	eventFrame:RegisterEvent("PLAYER_LOGIN")
+	eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
+	eventFrame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
+	eventFrame:RegisterEvent("SPELLS_CHANGED")
+	eventFrame:RegisterEvent("UNIT_HEALTH")   -- ✅ Health counter
+	eventFrame:RegisterEvent("UNIT_MANA")     -- ✅ Mana counter
+	eventFrame:RegisterEvent("UNIT_POWER_UPDATE")  -- ✅ Power updates
+	eventFrame:RegisterEvent("BAG_UPDATE")    -- ✅ Inventory updates
+end)
+
+-- Slash command to register remaining events from player context
+-- Create a NEW frame dynamically to avoid protected frame restrictions
+SLASH_NECTIMER1 = "/nectimer"
+SlashCmdList["NECTIMER"] = function()
+	if not eventsRegistered then
+		eventsRegistered = true
+
+		-- Create a new anonymous frame (not restricted like named frames)
+		-- Store it in _G so it persists after function returns
+		_G.spellFrame = CreateFrame("Frame")
+		_G.spellFrame:SetScript("OnEvent", function(self, event, arg1, arg2, arg3, arg4)
+			-- Forward events to Necrosis:OnEvent with explicit arguments
+			Necrosis.OnEvent(Necrosis, event, arg1, arg2, arg3, arg4)
+		end)
+
+		-- ⚠️ RETAIL 12.0+ LIMITATION: RegisterEvent() is protected and cannot be called from slash commands
+		-- Only essential events (UNIT_HEALTH, UNIT_MANA, etc.) are registered during addon load
+		-- Other events can only be registered during secure contexts
+
+		--_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Spell cast events registered. Timers are now active.")
+
+		-- Also initialize the UI if not done yet
+		C_Timer.After(0.1, function()
+			if Necrosis and not _G.NecrosisButton:IsShown() then
+				Necrosis:Initialize(Necrosis.DefaultConfig or {})
+			end
+		end)
+	else
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Events already registered.")
+	end
+end
+
+------------------------------------------------------------------------------------------------------
+-- FONCTION D'INITIALISATION
+------------------------------------------------------------------------------------------------------
+
+function Necrosis:Initialize_Speech()
+	self.Localization_Dialog()
+	
+	-- Speech could not be done using Ace...
+	self.Speech.TP = {}
+	local lang = ""
+	lang = GetLocale()
+	Necrosis.Data.Lang = lang
+	if lang == "frFR" then
+		self:Localization_Speech_Fr()
+	elseif lang == "deDE" then
+		self:Localization_Speech_De()
+	elseif lang == "zhTW" then
+		self:Localization_Speech_Tw()
+	elseif lang == "zhCN" then
+		self:Localization_Speech_Cn()
+	elseif lang == "esES" or lang == "esMX" then
+		self:Localization_Speech_Es()
+	elseif lang == "ruRU" then
+		self:Localization_Speech_Ru()
+	else
+		Necrosis:Localization_Speech_En()
+	end
+end
+
+function Necrosis:Initialize(Config)
+
+	local f = Necrosis.Warlock_Buttons.main.f
+	if Necrosis.Debug.init_path then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis- Initialize"
+		.." f:'"..(tostring(f) or "nyl").."'"
+		)
+	end
+
+	f = _G[f]
+	-- Configure scripts for the placeholder (will be replaced by real button)
+	-- These will be set on the real button after it's created
+	-- OnUpdate, OnEnter, OnLeave, OnDragStart, OnDragStop will be added to the new button
+
+	-- Events are already registered when the frame was created (see above)
+	-- No need to register them again here
+
+	Necrosis:Initialize_Speech()
+	-- On charge (ou on crée la configuration pour le joueur et on l'affiche sur la console
+	if not Necrosis.Data.LastConfig or  Necrosis.Data.LastConfig > Necrosis.Data.Version or NecrosisConfig.Version == nil then		
+		NecrosisConfig = {}
+		NecrosisConfig = Config
+		NecrosisConfig.Version = Necrosis.Data.LastConfig
+		self:Msg(self.ChatMessage.Interface.DefaultConfig, "USER")
+	else
+		self:Msg(self.ChatMessage.Interface.UserConfig, "USER")
+	end
+	
+	if NecrosisConfig.PetInfo then -- just in case... pet config info was redone for speech
+	else	
+		NecrosisConfig.PetInfo = {}
+	end
+	
+	if NecrosisConfig.Timers then -- just in case... was added in 7.2
+	else	
+		NecrosisConfig.Timers = Config.Timers
+		
+	end
+	--  Add new parameter between 2 version
+	if NecrosisConfig.NecrosisAlphaBar then
+	else
+	NecrosisConfig.NecrosisAlphaBar = 85 -- just in case... was added in 7.6
+	end
+
+	-- Initialize threat meter settings
+	if NecrosisConfig.ThreatMeterEnabled == nil then
+		NecrosisConfig.ThreatMeterEnabled = true -- Enable threat meter by default
+	end
+	if NecrosisConfig.ThreatRingThickness == nil then
+		NecrosisConfig.ThreatRingThickness = 1 -- Very thin ring thickness (1px)
+	end
+
+	-- Initialize Version Check settings
+	if NecrosisConfig.VersionCheck == nil then
+		NecrosisConfig.VersionCheck = {
+			Enabled = true,
+			CheckOnLoad = true,
+			NotifyOnUpdate = true,
+			CheckInterval = 86400, -- 24 hours
+			LastCheck = 0,
+		}
+	end
+
+	Necrosis.UpdateSpellTimers(NecrosisConfig.Timers)-- init timers
+	
+	-- Création de la liste des sorts disponibles
+	self:SpellSetup("Initialize")
+	-- Dessine les UI et button Popoup
+	self:CreateWarlockUI()
+	self:CreateWarlockPopup()
+	-----------------------------------------------------------
+	-- Exécution des fonctions de démarrage
+	-----------------------------------------------------------
+	-- Affichage d'un message sur la console
+	self:Msg(self.ChatMessage.Interface.Welcome, "USER")
+
+    -- Enregistrement de la commande console
+	SlashCmdList["NecrosisCommand"] = Necrosis.SlashHandler
+	SLASH_NecrosisCommand1 = "/necrosis"
+
+	-- On règle la taille de la pierre et des boutons suivant les réglages du SavedVariables
+	local val = NecrosisConfig.ShadowTranceScale/100
+--	f:SetScale(val)
+
+	local ft = _G[Necrosis.Warlock_Buttons.trance.f]; ft:SetScale(val)
+	local fb = _G[Necrosis.Warlock_Buttons.backlash.f]; fb:SetScale(val)
+	local fa = _G[Necrosis.Warlock_Buttons.anti_fear.f]; fa:SetScale(val)
+	local fe = _G[Necrosis.Warlock_Buttons.elemental.f]; fe:SetScale(val)
+
+	local ftb = _G[Necrosis.Warlock_Buttons.timer.f]
+
+	-- On définit l'affichage des Timers Graphiques à gauche ou à droite du bouton
+	if _G["NecrosisTimerFrame0"] then
+		NecrosisTimerFrame0:ClearAllPoints()
+		NecrosisTimerFrame0:SetPoint(
+			NecrosisConfig.SpellTimerJust,
+			ftb,
+			"CENTER",
+			NecrosisConfig.SpellTimerPos * 20,
+			0
+		)
+	end
+	-- On définit l'affichage des Timers Textes à gauche ou à droite du bouton
+	if _G["NecrosisListSpells"] then
+		NecrosisListSpells:ClearAllPoints()
+		NecrosisListSpells:SetJustifyH(NecrosisConfig.SpellTimerJust)
+		NecrosisListSpells:SetPoint(
+			"TOP"..NecrosisConfig.SpellTimerJust,
+			ftb,
+			"CENTER",
+			NecrosisConfig.SpellTimerPos * 23,
+			5
+		)
+	end
+
+	--On affiche ou on cache le bouton, d'ailleurs !
+	if not NecrosisConfig.ShowSpellTimers then ftb:Hide() end
+	-- Le Shard est-il verrouillé sur l'interface ?
+	if NecrosisConfig.NoDragAll then
+		self:NoDrag()
+		f:RegisterForDrag("")
+		ftb:RegisterForDrag("")
+		ft:RegisterForDrag("")
+		fb:RegisterForDrag("")
+		fa:RegisterForDrag("")
+		fe:RegisterForDrag("")
+	else
+		self:Drag()
+		-- CRITICAL TEST: Disable drag on main sphere to see if clicks work
+		-- RegisterForDrag("LeftButton") blocks SecureActionButton clicks!
+		f:RegisterForDrag("")  -- TEST: No drag at all
+		ftb:RegisterForDrag("LeftButton")
+		ft:RegisterForDrag("LeftButton")
+		fb:RegisterForDrag("LeftButton")
+		fa:RegisterForDrag("LeftButton")
+		fe:RegisterForDrag("LeftButton")
+	end
+
+	-- Initialize just case the player has updated from an older version
+	if NecrosisConfig.PlayerSummons == nil then
+		NecrosisConfig.PlayerSummons = NecrosisConfig.ChatMsg
+		NecrosisConfig.PlayerSummonsSM = false
+		NecrosisConfig.PlayerSS = NecrosisConfig.ChatMsg
+		NecrosisConfig.PlayerSSSM = false
+	else
+	end
+
+	-- Initialize NecrosisUI option (default: enabled)
+	if NecrosisConfig.NecrosisUIEnabled == nil then
+		NecrosisConfig.NecrosisUIEnabled = true
+	end
+
+	-- Apply NecrosisUI state on startup with delay to ensure SavedVariables are loaded
+	C_Timer.After(1, function()
+	if NecrosisConfig.NecrosisUIEnabled and NUI then
+		pcall(function() NUI:Show() end)
+		elseif NUI then
+		pcall(function() NUI:Hide() end)
+		end
+	end)
+
+	-- Request the localized strings - this may need events and time...
+	Necrosis.UpdatePouches()
+
+	-- If the sphere must indicate life or mana, we go there || Si la sphere doit indiquer la vie ou la mana, on y va
+	Necrosis:UpdateHealth()
+	Necrosis:UpdateMana()
+	Necrosis:ButtonSetup()
+
+	-- Configure button click attributes || Configuration des attributs de clics des boutons
+	if not InCombatLockdown() then
+		-- Determine if mount spell is available
+		local SteedAvailable = false
+		if GetSpellInfo(5784) or GetSpellInfo(23161) then
+			SteedAvailable = true
+		end
+
+		-- Configure all button attributes
+		-- TEMP: Disable MainButtonAttribute to test if it breaks clicks!
+		-- Necrosis:MainButtonAttribute()
+
+		-- CRITICAL: Re-enable clicks on main sphere AFTER all SetScript calls!
+		-- DISABLED: Old config code - button is now created with delay below
+		-- DEBUG: Checking main button...")
+		-- The real button will be created after delay
+
+		Necrosis:BuffSpellAttribute()
+		Necrosis:PetSpellAttribute()
+		Necrosis:CurseSpellAttribute()
+		Necrosis:StoneAttribute(SteedAvailable)
+
+		-- CRITICAL: CREATE BRAND NEW BUTTON with delay (like test 5 that WORKS!)
+		-- Increased delay to 5 seconds to ensure proper initialization on first login
+		C_Timer.After(5, function()
+			if not InCombatLockdown() then
+				-- DESTROY old button completely (including placeholder)
+			local oldBtn = _G["NecrosisButton"]
+			if oldBtn then
+				oldBtn:Hide()
+				oldBtn:SetParent(nil)
+				oldBtn = nil
+			end
+			-- Also destroy the placeholder overlay frame
+			local oldOverlay = _G["NecrosisShardCountFrame_Placeholder"]
+			if oldOverlay then
+				oldOverlay:Hide()
+				oldOverlay:SetParent(nil)
+				oldOverlay = nil
+			end
+
+				-- Create BRAND NEW button
+				local btn = CreateFrame("Button", "NecrosisMainSphere", UIParent, "SecureUnitButtonTemplate")
+				-- Apply saved skin color, or default to 666
+				local skinColor = NecrosisConfig.NecrosisColor or "666"
+				btn:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\"..skinColor.."\\Shard16")
+				btn:SetHighlightTexture("Interface\\Buttons\\UI-Common-MouseHilight")
+				btn:GetHighlightTexture():SetBlendMode("ADD")
+				btn:SetWidth(58)
+				btn:SetHeight(58)
+
+				-- Apply configured scale
+				local scale = (NecrosisConfig.NecrosisButtonScale or 100) / 100
+				btn:SetScale(scale)
+
+				btn:SetFrameStrata("MEDIUM")
+				btn:SetFrameLevel(1)
+
+				-- Keep invisible until position is restored
+				btn:Hide()
+
+				-- FontString already created at file load time with HIGH FrameStrata
+				-- Reparent the overlay frame to the new button so it follows automatically
+				local textOverlay = _G["NecrosisShardCountFrame_Placeholder"] or _G["NecrosisShardCountFrame"]
+				if textOverlay then
+					textOverlay:SetParent(btn)  -- Make it child of the new button
+					textOverlay:ClearAllPoints()
+					textOverlay:SetAllPoints(btn)  -- Cover the entire button
+					textOverlay:Show()  -- Make the overlay visible
+					-- Register in _G for future references
+					_G["NecrosisShardCountFrame"] = textOverlay
+				end
+
+				btn:SetMovable(true)
+				btn:EnableMouse(true)
+
+				-- Get configured spells
+				local mainSpell = Necrosis.GetSpellCastName(NecrosisConfig.MainSpell)
+				local secondSpell = Necrosis.GetSpellCastName(NecrosisConfig.MainSpell2)
+
+				-- Configure attributes - Left click main spell
+				if mainSpell then
+					btn:SetAttribute("type1", "spell")
+					btn:SetAttribute("spell1", mainSpell)
+				end
+
+				-- Shift+Left click second spell
+				if secondSpell and secondSpell ~= "" then
+					btn:SetAttribute("shift-type1", "spell")
+					btn:SetAttribute("shift-spell1", secondSpell)
+				end
+
+				-- Right click opens config menu
+				btn:SetAttribute("type2", "macro")
+				btn:SetAttribute("macrotext2", "/necrosis")
+
+			-- Middle click opens bags
+			btn:SetAttribute("type3", "macro")
+			btn:SetAttribute("macrotext3", "/run OpenAllBags()")
+
+				btn:RegisterForClicks("AnyUp")
+
+				-- Configure scripts
+				btn:SetScript("OnUpdate", function(self, arg1) Necrosis:OnUpdate(self, arg1) end)
+				btn:SetScript("OnEnter", function(self)
+					GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+					GameTooltip:SetText("Necrosis", 0.5, 0, 0.9)
+					GameTooltip:AddLine(" ")
+					if mainSpell then
+						GameTooltip:AddDoubleLine(L["TOOLTIP_LEFT_CLICK"]..":", mainSpell, 1, 1, 1, 1, 1, 1)
+					end
+					if secondSpell and secondSpell ~= "" then
+						GameTooltip:AddDoubleLine(L["TOOLTIP_SHIFT_LEFT_CLICK"]..":", secondSpell, 1, 1, 1, 1, 1, 1)
+					end
+					GameTooltip:AddDoubleLine(L["TOOLTIP_RIGHT_CLICK"]..":", L["TOOLTIP_CONFIGURATION"], 1, 1, 1, 1, 1, 1)
+				GameTooltip:AddDoubleLine(L["TOOLTIP_MIDDLE_CLICK"]..":", L["TOOLTIP_OPEN_BAGS"], 1, 1, 1, 1, 1, 1)
+					GameTooltip:AddDoubleLine(L["TOOLTIP_DRAG"]..":", L["TOOLTIP_MOVE"], 1, 1, 1, 1, 1, 1)
+
+					-- Add stone counts
+					GameTooltip:AddLine(" ")
+
+					-- Soulstone
+					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.soul_stones then
+						local soulCount = 0
+						for i, v in pairs(Necrosis.Warlock_Lists.soul_stones) do
+							soulCount = soulCount + GetItemCount(v.id)
+						end
+						local soulColor = soulCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
+						local soulText = L["STONE_SOULSTONE_LABEL"]..soulColor..soulCount.."|r"
+
+						-- Check cooldown for soulstone item (not the spell)
+						local startTime, duration, isEnabled = Necrosis:GetSoulstoneItemCooldown()
+						if startTime and startTime > 0 and duration and duration > 0 then
+							local timeLeft = math.ceil((startTime + duration) - GetTime())
+							if timeLeft > 0 then
+								local minutes = math.floor(timeLeft / 60)
+								local seconds = timeLeft % 60
+								soulText = soulText .. " |cFFFF9999("..minutes..":"..string.format("%02d", seconds)..")|r"
+							end
+						end
+						GameTooltip:AddLine(soulText)
+					end
+
+					-- Healthstone
+					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.health_stones then
+						local healthCount = 0
+						for i, v in pairs(Necrosis.Warlock_Lists.health_stones) do
+							healthCount = healthCount + GetItemCount(v.id)
+						end
+						local healthColor = healthCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
+						local healthText = L["STONE_HEALTHSTONE_LABEL"]..healthColor..healthCount.."|r"
+
+						-- Check cooldown for healthstone item
+						local startTime, duration, isEnabled = Necrosis:GetHealthstoneItemCooldown()
+						if startTime and startTime > 0 and duration and duration > 0 then
+							local timeLeft = math.ceil((startTime + duration) - GetTime())
+							if timeLeft > 0 then
+								local minutes = math.floor(timeLeft / 60)
+								local seconds = timeLeft % 60
+								healthText = healthText .. " |cFFFF9999("..minutes..":"..string.format("%02d", seconds)..")|r"
+							end
+						end
+						GameTooltip:AddLine(healthText)
+					end
+
+					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.spell_stones then
+						local spellCount = 0
+						for i, v in pairs(Necrosis.Warlock_Lists.spell_stones) do
+							spellCount = spellCount + GetItemCount(v.id)
+						end
+						local spellColor = spellCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
+						GameTooltip:AddLine(L["STONE_SPELLSTONE_LABEL"]..spellColor..spellCount.."|r")
+					end
+
+					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.fire_stones then
+						local fireCount = 0
+						for i, v in pairs(Necrosis.Warlock_Lists.fire_stones) do
+							fireCount = fireCount + GetItemCount(v.id)
+						end
+						local fireColor = fireCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
+						GameTooltip:AddLine(L["STONE_FIRESTONE_LABEL"]..fireColor..fireCount.."|r")
+					end
+
+					-- Infernal Stone (reagent)
+					if Necrosis.Warlock_Lists and Necrosis.Warlock_Lists.reagents and Necrosis.Warlock_Lists.reagents.infernal_stone then
+						local infernalCount = GetItemCount(Necrosis.Warlock_Lists.reagents.infernal_stone.id)
+						local infernalColor = infernalCount > 0 and "|cFFFFFFFF" or "|cFFFF0000"
+						GameTooltip:AddLine(L["STONE_INFERNAL_LABEL"]..infernalColor..infernalCount.."|r")
+					end
+
+					GameTooltip:Show()
+				end)
+				btn:SetScript("OnLeave", function() GameTooltip:Hide() end)
+				btn:SetScript("OnDragStart", function(self) Necrosis:OnDragStart(self) end)
+				btn:SetScript("OnDragStop", function(self)
+					Necrosis:OnDragStop(self)
+					-- Make text overlay cover the button again after drag
+					local overlay = _G["NecrosisShardCountFrame"]
+					if overlay then
+						overlay:ClearAllPoints()
+						overlay:SetAllPoints(self)
+					end
+				end)
+
+				-- Enable drag if not locked
+				if not NecrosisConfig.NoDragAll then
+					btn:RegisterForDrag("LeftButton")
+				end
+
+				-- Position
+				-- Try to restore from NecrosisMainSphere (current name) first, then NecrosisButton (legacy)
+				if NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisMainSphere"] then
+					local pos = NecrosisConfig.FramePosition["NecrosisMainSphere"]
+					btn:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+					-- Restore scale if it exists (6th element), otherwise use default 1
+					if pos[6] then
+						btn:SetScale(pos[6])
+					end
+				elseif NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisButton"] then
+					local pos = NecrosisConfig.FramePosition["NecrosisButton"]
+					btn:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+					-- Restore scale if it exists (6th element)
+					if pos[6] then
+						btn:SetScale(pos[6])
+					end
+				else
+					btn:SetPoint("CENTER", UIParent, "CENTER", 0, -200)
+				end
+
+				btn:Show()
+				_G["NecrosisButton"] = btn
+				_G["NecrosisMainSphere"] = btn
+
+				-- Show all peripheral buttons now that main button is positioned
+				-- NOTE: ShadowTrance, Backlash, AntiFear, CreatureAlert buttons stay hidden
+				-- They only show in specific conditions (combat, rare mobs, etc.)
+				local buttonNames = {
+					"NecrosisFirestoneButton",
+					"NecrosisSpellstoneButton",
+					"NecrosisHealthstoneButton",
+					"NecrosisSoulstoneButton",
+					"NecrosisBuffMenuButton",
+					"NecrosisMountButton",
+					"NecrosisPetMenuButton",
+					"NecrosisCurseMenuButton",
+				}
+				for _, name in ipairs(buttonNames) do
+					local b = _G[name]
+					if b then
+						b:Show()
+					end
+				end
+
+				-- Set tooltip type for the main button
+				btn.tip = "Main"
+
+				-- Reposition peripheral buttons around the sphere
+				Necrosis:ButtonSetup()
+
+				-- Re-scan spells after 3 seconds to get current data from WoW
+				Necrosis:SpellSetup("TimerCallback")
+
+				-- Create menu buttons BEFORE configuring their attributes
+				Necrosis:CreateMenu()
+
+				-- Configure button click attributes
+				local SteedAvailable = false
+				if GetSpellInfo(5784) or GetSpellInfo(23161) then
+					SteedAvailable = true
+				end
+
+				Necrosis:MainButtonAttribute()
+				Necrosis:BuffSpellAttribute()
+				Necrosis:PetSpellAttribute()
+				Necrosis:CurseSpellAttribute()
+				Necrosis:StoneAttribute(SteedAvailable)
+
+				-- Create threat meter ring (circular indicator around main sphere)
+				Necrosis:CreateThreatRing()
+
+				-- Scan bags for soul shards
+				Necrosis:BagExplore()
+
+				-- Shard count will be automatically updated by Necrosis:OnUpdate()
+				-- No need to force update here - let the normal system handle it
+			end
+		end)
+	end
+
+	-- We check that the fragments are in the bag defined by the Warlock || On vérifie que les fragments sont dans le sac défini par le Démoniste
+	if NecrosisConfig.SoulshardSort then
+		--self:SoulshardSwitch("CHECK")
+	end
+end
+
+------------------------------------------------------------------------------------------------------
+-- FONCTION GERANT LA COMMANDE CONSOLE /NECRO
+------------------------------------------------------------------------------------------------------
+
+function Necrosis.SlashHandler(arg1)
+	if arg1:lower():find("recall") then
+		Necrosis:Recall()
+		
+	elseif arg1:lower():find("reset") and not InCombatLockdown() then
+		NecrosisConfig = {}
+		ReloadUI()
+	elseif arg1:lower():find("glasofruix") then
+		NecrosisConfig.Smooth = not NecrosisConfig.Smooth
+		Necrosis:Msg("SpellTimer smoothing  : <lightBlue>Toggled", "USER")
+		self:CreateWarlockUI()
+		
+	else
+		Necrosis:OpenConfigPanel()
+	end
+end
+
+--_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis- init")
+
+-- ============================================================================
+-- RETAIL-SPECIFIC NOTES (Midnight 12.0+)
+-- ============================================================================
+--
+-- Spells removed in Midnight and not available in Retail:
+-- - Soul Link ([19028]) - Removed completely
+-- - Detect Invisibility ([132]) - Removed in patch 4.0.1
+-- - Sacrifice Voidwalker ([7812]) - Removed in patch 5.0.4
+--
+-- Spell ID changes for Midnight:
+-- - Curse of the Elements: [1490] -> [44332]
+-- - Drain Soul: [1120] -> [198590]
+-- - Siphon Life: [18265] -> [63106]
+-- - Shadow Ward: [6229] -> [153415]
+-- - Haunt: [59161] -> [48181]
+--
+-- See Necrosis_retail.lua for UI modifications (BuffSpellPosition, DemonSpellPosition)
+-- See Spells-Midnight.lua for updated spell database
+-- ============================================================================

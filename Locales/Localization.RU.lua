@@ -74,8 +74,8 @@ L["VOIDWALKER_LABEL"] = "|c00FFFFFF".."Демон Бездны".."|r"
 L["VOIDWALKER"] = "Демон Бездны"
 L["SUCCUBUS_LABEL"] = "|c00FFFFFF".."Суккуба".."|r"
 L["SUCCUBUS"] = "Суккуба"
-L["INCCUBUS_LABEL"] = "|c00FFFFFF".."Инккуб".."|r"
-L["INCCUBUS"] = "Инккуб"
+L["SAYAAD_LABEL"] = "|c00FFFFFF".."Инккуб".."|r"
+L["SAYAAD"] = "Инккуб"
 L["FELHUNTER_LABEL"] = "|c00FFFFFF".."Охотник Скверны".."|r"
 L["FELHUNTER"] = "Охотник Скверны"
 L["FELGUARD_LABEL"] = "|c00FFFFFF".."Страж Скверны".."|r"
@@ -181,6 +181,7 @@ L["BUTTONS_MOUNT"] = "Использовать мой транспорт"
 L["BUTTONS_SELECTION"] = "Выбор кнопок, которые будут показаны"
 L["BOUTONS_PIERRES"] = "Knopki Kamnej"
 L["BOUTONS_ACTION"] = "Knopki Dejstvij"
+L["MOUNTS_TITLE"] = "Верховые животные"
 L["BUTTONS_LEFT"] = "Прикреплено - [Левый Клик]"
 L["BUTTONS_RIGHT"] = "Прикреплено - [Правый Клик]"
 L["BUTTONS_L"] = "[Левый Клик]"
@@ -379,5 +380,21 @@ L["SHARD_LEFTCLICK_HELP"] = "Используйте левый клик, что�
 -- Spellstone Charges
 L["SPELLSTONE_CHARGES"] = "Заряды"
 
+-- Summon Queue Config UI
+L["ENABLED"] = "Включено"
+L["OPTIONS"] = "Опции"
+L["SETTINGS"] = "Настройки"
+L["SUMMON_QUEUE_SHOW"] = "Очередь"
+
 -- Demon Cooldown Display
 L["DEMON_COOLDOWN"] = "Перезарядка : "
+
+-- Additional Skin Colors (Russian)
+if not L["ROSE"] then
+L["ROSE"] = "Розовый"
+L["BLEU"] = "Синий"
+L["VIOLET1"] = "Фиолетовый"
+L["VIOLET2"] = "Фиолетовый 2"
+L["666"] = "Серый"
+L["X"] = "Специальный"
+end

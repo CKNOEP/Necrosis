@@ -94,6 +94,9 @@ Necrosis.lua
 XML\XML.lua
 ThreatMeter.lua
 
+<<<<<<< HEAD
 UI\BottomBanner\Init.xml
 
+=======
+>>>>>>> retail
 SpellActivations\SpellActivations.xml

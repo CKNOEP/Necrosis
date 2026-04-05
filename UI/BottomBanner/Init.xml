@@ -1,0 +1,6 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+	<Script file="Framework.lua" />
+	<Script file="Global-Framework.lua" />
+	<Script file="Style.lua" />
+	<Include file="Framework.xml" />
+</Ui>

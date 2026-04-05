@@ -168,6 +168,7 @@ L["BUTTONS_MOUNT"] = "Use my own mounts"
 L["BUTTONS_SELECTION"] = "Selection of buttons to be shown"
 L["BOUTONS_PIERRES"] = "Stein-Schaltflaechen"
 L["BOUTONS_ACTION"] = "Aktions-Schaltflaechen"
+L["MOUNTS_TITLE"] = "Reittiere"
 L["BUTTONS_LEFT"] = "Left click"
 L["BUTTONS_RIGHT"] = "Right click"
 --
@@ -276,6 +277,11 @@ L["BUTTONS_L"] = "Begleiter Linksklick"
 L["BUTTONS_R"] = "Begleiter Rechtsklick"
 L["CATA"] = "Kataklysmus"
 L["PURPLE2"] = "Purple2"
+-- Sphere skins (all 8 colors)
+L["ROSE"] = "Pink"
+L["BLEU"] = "Blue"
+L["VIOLET1"] = "Purple"
+L["VIOLET2"] = "Purple2"
 L["MENU_QUICK_SACRIFICE"] = "Schnelles Opfer"
 L["TIMER_ALPHA"] = "Timer-Transparenz"
 L["SPEECH_API"] = "Sprachsyntheseapi"
@@ -378,3 +384,19 @@ L["SPELLSTONE_CHARGES"] = "Ladungen"
 
 -- Demon Cooldown Display
 L["DEMON_COOLDOWN"] = "Abklingzeit : "
+
+-- Summon Queue Config UI
+L["ENABLED"] = "Aktiviert"
+L["OPTIONS"] = "Optionen"
+L["SETTINGS"] = "Einstellungen"
+L["SUMMON_QUEUE_SHOW"] = "Warteschlange"
+
+-- Additional Skin Colors (German)
+if not L["ROSE"] then
+L["ROSE"] = "Rosa"
+L["BLEU"] = "Blau"
+L["VIOLET1"] = "Violett"
+L["VIOLET2"] = "Violett 2"
+L["666"] = "Grau"
+L["X"] = "Spezial"
+end
