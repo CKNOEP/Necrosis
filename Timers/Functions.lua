@@ -204,6 +204,7 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 
 	-- attach a graphical timer if enabled || Association d'un timer graphique au timer
 	-- associate it to the frame (if present) || Si il y a une frame timer de libérée, on l'associe au timer
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] TimerInsert: TimerType="..tostring(NecrosisConfig.TimerType).." SpellTimer count="..tostring(#Timer.SpellTimer))
 	if NecrosisConfig.TimerType == 1 and #Timer.SpellTimer > 0 then -- si timer graphics AND there's a timer
 
 	    local TimerLibre = nil
@@ -221,7 +222,7 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 		end
 		-- update the timer display || Association effective au timer
 		Timer.SpellTimer[#Timer.SpellTimer].Gtimer = TimerLibre
-		local spellTexture = GetSpellTexture(spell.ID)  -- DEBUG: Using GetSpellTexture (Classic variant, not C_Spell)
+		local spellTexture = C_Spell.GetSpellTexture(spell.ID)  -- Retail 12.0+ API
 		--print (spellTexture,"spell",spell.ID,spell.Name)
 		local FontString, StatusBar , Icon_Spell = Necrosis:AddFrame("NecrosisTimerFrame"..TimerLibre,spellTexture)
 		--print("update:",spellTexture)
