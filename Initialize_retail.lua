@@ -974,6 +974,12 @@ function Necrosis:Initialize(Config)
 				_G["NecrosisButton"] = btn
 				_G["NecrosisMainSphere"] = btn
 
+				-- Set tooltip type for the main button
+				btn.tip = "Main"
+
+				-- Create menu buttons BEFORE showing them
+				Necrosis:CreateMenu()
+
 				-- Show all peripheral buttons now that main button is positioned
 				-- NOTE: ShadowTrance, Backlash, AntiFear, CreatureAlert buttons stay hidden
 				-- They only show in specific conditions (combat, rare mobs, etc.)
@@ -994,17 +1000,11 @@ function Necrosis:Initialize(Config)
 					end
 				end
 
-				-- Set tooltip type for the main button
-				btn.tip = "Main"
-
 				-- Reposition peripheral buttons around the sphere
 				Necrosis:ButtonSetup()
 
 				-- Re-scan spells after 3 seconds to get current data from WoW
 				Necrosis:SpellSetup("TimerCallback")
-
-				-- Create menu buttons BEFORE configuring their attributes
-				Necrosis:CreateMenu()
 
 				-- Configure button click attributes
 				local SteedAvailable = false
