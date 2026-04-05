@@ -186,7 +186,7 @@ Local.DefaultConfig = {
 		[24] = {usage = "rit_of_doom", show = false},     -- Ritual of Doom (600s)
 
 		-- DETECTION & MOVEMENT
-		[25] = {usage = "breath", show = false},          -- Unending Breath (600s)
+		[25] = {usage = "breath", show = true},           -- Unending Breath (600s)
 
 		-- UTILITY (eye is also here)
 		[26] = {usage = "eye", show = false},             -- Eye of Kilrogg (45s)
