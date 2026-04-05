@@ -498,38 +498,41 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 	end
 end)
 
--- Slash command to register all events from player context
--- Creates anonymous frame to avoid protected frame restrictions
-SLASH_NECTIMER1 = "/nectimer"
-SlashCmdList["NECTIMER"] = function()
-	if not eventsRegistered then
-		eventsRegistered = true
+-- WoW 12.0 CRITICAL: RegisterEvent() is forbidden EVERYWHERE
+-- SOLUTION: Hook COMBAT_LOG_EVENT_UNFILTERED globally
+-- This is a system event that WoW calls automatically without RegisterEvent()
 
-		-- Create a new anonymous frame (not restricted like named frames)
-		-- Store it in _G so it persists after function returns
-		_G.spellFrame = CreateFrame("Frame")
-		_G.spellFrame:SetScript("OnEvent", function(self, event, arg1, arg2, arg3, arg4)
-			-- Forward events to Necrosis:OnEvent with explicit arguments
-			Necrosis.OnEvent(Necrosis, event, arg1, arg2, arg3, arg4)
-		end)
+local originalCombatLogHandler = _G.COMBAT_LOG_EVENT_UNFILTERED
 
-		-- Register all critical events via anonymous frame (protected frames cannot register events in WoW 12.0)
-		for _, eventName in ipairs(Necrosis.Events or {}) do
-			_G.spellFrame:RegisterEvent(eventName)
-		end
+_G.COMBAT_LOG_EVENT_UNFILTERED = function(...)
+	-- Forward to Necrosis event handler
+	if Necrosis and Necrosis.OnEvent then
+		Necrosis:OnEvent("COMBAT_LOG_EVENT_UNFILTERED", ...)
+	end
 
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: "..tostring(#(Necrosis.Events or {})).." events registered. Timers are active.")
-
-		-- Also initialize the UI if not done yet
-		C_Timer.After(0.1, function()
-			if Necrosis and not _G.NecrosisButton:IsShown() then
-				Necrosis:Initialize(Necrosis.DefaultConfig or {})
-			end
-		end)
-	else
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Events already registered.")
+	-- Call original if exists
+	if originalCombatLogHandler then
+		originalCombatLogHandler(...)
 	end
 end
+
+-- Also hook PLAYER_ENTERING_WORLD globally
+local originalPlayerEnteringWorld = _G.PLAYER_ENTERING_WORLD
+
+_G.PLAYER_ENTERING_WORLD = function(...)
+	if not _G.NecrosisInitialized then
+		_G.NecrosisInitialized = true
+		if Necrosis and Necrosis.OnEvent then
+			Necrosis:OnEvent("PLAYER_ENTERING_WORLD", ...)
+		end
+	end
+
+	if originalPlayerEnteringWorld then
+		originalPlayerEnteringWorld(...)
+	end
+end
+
+_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Initialized (WoW 12.0 - using global event hooks)")
 
 ------------------------------------------------------------------------------------------------------
 -- FONCTION D'INITIALISATION
