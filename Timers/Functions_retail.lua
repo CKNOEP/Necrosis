@@ -227,8 +227,6 @@ local function InsertThisTimer(spell, cast_guid, Target, Timer, start_time, dura
 			)
 			statusMin, statusMax = StatusBar:GetMinMaxValues()
 			--print (statusMin, statusMax,statusMax-statusMin,StatusBar:GetValue(),Timer.SpellTimer[#Timer.SpellTimer].MaxBar)
-		else
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] ERROR: AddFrame returned nil - FontString="..tostring(FontString).." StatusBar="..tostring(StatusBar))
 		end
 
 

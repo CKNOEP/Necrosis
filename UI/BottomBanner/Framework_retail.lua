@@ -21,12 +21,18 @@ local function GetSystemOffset()
 end
 
 
--- Listen for layout changes
+-- Listen for layout changes and specialization changes
 local layoutChangeFrame = CreateFrame("Frame")
 layoutChangeFrame:RegisterEvent("EDIT_MODE_LAYOUTS_UPDATED")
+layoutChangeFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
 layoutChangeFrame:SetScript("OnEvent", function(self, event)
 	if event == "EDIT_MODE_LAYOUTS_UPDATED" then
 		-- Layout change detected, update handled automatically
+	elseif event == "ACTIVE_TALENT_GROUP_CHANGED" then
+		-- Restore NecrosisUI layout when specialization changes
+		C_Timer.After(0.5, function()
+			NUI:RestoreNecrosisLayout()
+		end)
 	end
 end)
 
@@ -207,6 +213,55 @@ function NUI:CreateNecrosisLayout(currentLayouts, importedLayoutInfo, customLayo
 	end)
 end
 
+-- Restore NecrosisUI layout by name (called after specialization change or when enabling the option)
+function NUI:RestoreNecrosisLayout()
+	if not C_EditMode then
+		return
+	end
+
+	-- Wait a bit for EditMode to be ready
+	C_Timer.After(0.3, function()
+		local necrosisLayoutName = "NecrosisUI_" .. UnitName("player")
+
+		-- Method: Search by name in EditModeManagerFrame (most reliable, same as CreateNecrosisLayout)
+		if EditModeManagerFrame and EditModeManagerFrame.layouts then
+			for i, layout in ipairs(EditModeManagerFrame.layouts) do
+				if layout.layoutName == necrosisLayoutName then
+					-- Found layout by name - activate directly by index (no offset!)
+					C_EditMode.SetActiveLayout(i)
+					return
+				end
+			end
+		end
+
+		-- Fallback: Use C_EditMode.GetLayouts() if EditModeManagerFrame unavailable
+		local updatedLayouts = C_EditMode.GetLayouts()
+		if updatedLayouts and updatedLayouts.layouts then
+			local offset = GetSystemOffset()
+
+			for i, layout in ipairs(updatedLayouts.layouts) do
+				if layout.layoutName == necrosisLayoutName then
+					local globalLayoutIndex = offset + i
+					C_EditMode.SetActiveLayout(globalLayoutIndex)
+
+					-- Apply the layout frames after activation
+					C_Timer.After(0.3, function()
+						if layout.frames then
+							NUI:ApplyLayoutFrames(layout)
+						end
+					end)
+					return
+				end
+			end
+		end
+
+		-- Layout not found, create it via ImportLayout()
+		if type(NUI.ImportLayout) == "function" then
+			NUI:ImportLayout()
+		end
+	end)
+end
+
 -- Apply layout frames to actual game frames
 function NUI:ApplyLayoutFrames(layoutInfo)
 	if not layoutInfo or not layoutInfo.frames then
@@ -241,39 +296,44 @@ function NUI:ApplyLayoutFrames(layoutInfo)
 	end
 end
 
--- Debug command with dynamic offset
-SLASH_NUIDEBUG1 = "/nuidebug"
-SlashCmdList["NUIDEBUG"] = function()
+-- List all layouts
+function NUI:ListLayouts()
 	UIParentLoadAddOn("Blizzard_EditMode")
 	C_Timer.After(0.5, function()
 		local l = C_EditMode.GetLayouts()
-		print("=== Layout Index Mapping ===")
-		print("activeLayout global:", l.activeLayout)
-		print("custom count:", #l.layouts)
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("=== Layout Index Mapping ===")
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("activeLayout global: " .. l.activeLayout)
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("custom count: " .. #l.layouts)
 
 		-- Calculate dynamic offset
 		local offset = GetSystemOffset()
-		print("Offset (système layouts):", offset)
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("Offset (système layouts): " .. offset)
 
 		-- Map custom layouts to global indices
-		print("--- Custom Layouts ---")
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("--- Custom Layouts ---")
 		for i, layout in ipairs(l.layouts) do
 			local globalIdx = offset + i
 			local marker = (globalIdx == l.activeLayout) and " [ACTIVE]" or ""
-			print(string.format("  custom[%d] → global[%d] = '%s'%s",
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage(string.format("  custom[%d] → global[%d] = '%s'%s",
 				i, globalIdx, tostring(layout.layoutName), marker))
 		end
 
 		-- Try to access system layouts via GetLayoutInfo
-		print("--- System Layouts ---")
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("--- System Layouts ---")
 		for globalIdx = 1, offset do
 			if C_EditMode.GetLayoutInfo then
 				local info = C_EditMode.GetLayoutInfo(globalIdx)
 				if info then
-					print(string.format("  system[%d] = '%s'",
+					_G["DEFAULT_CHAT_FRAME"]:AddMessage(string.format("  system[%d] = '%s'",
 						globalIdx, tostring(info.layoutName)))
 				end
 			end
 		end
 	end)
+end
+
+-- Debug command with dynamic offset
+SLASH_NUIDEBUG1 = "/nuidebug"
+SlashCmdList["NUIDEBUG"] = function()
+	NUI:ListLayouts()
 end

@@ -1398,8 +1398,6 @@ function Necrosis:OnEvent(self, event,...)
 					-- Use SetAlpha instead of Show() for secure frames (cannot call protected functions in combat)
 					NecrosisCreatureAlertButton_demon:SetAlpha(1)
 					NecrosisCreatureAlertButton_demon:SetMovable(true)
-				else
-					print("[DEBUG] ERROR: NecrosisCreatureAlertButton_demon is NIL!")
 				end
 			else
 				if NecrosisCreatureAlertButton_demon then
@@ -1414,8 +1412,6 @@ function Necrosis:OnEvent(self, event,...)
 					-- Use SetAlpha instead of Show() for secure frames (cannot call protected functions in combat)
 					NecrosisCreatureAlertButton_elemental:SetAlpha(1)
 					NecrosisCreatureAlertButton_elemental:SetMovable(true)
-				else
-					print("[DEBUG] ERROR: NecrosisCreatureAlertButton_elemental is NIL!")
 				end
 			else
 				if NecrosisCreatureAlertButton_elemental then

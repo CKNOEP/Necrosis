@@ -190,7 +190,9 @@ function VersionCheck:NotifyUpdate(newVersion)
 end
 
 function VersionCheck:NotifyManualCheck()
-    -- No HTTP available - suggest manual check
+    -- No HTTP available - suggest manual check (silent)
+    -- Uncomment below to show version check notifications:
+    --[[
     local message = format(
         "|cff00ff00[%s]|r " .. (L["VERSION_CHECK_MANUAL"] or "Check for updates manually"),
         CONFIG.ADDON_NAME
@@ -205,6 +207,7 @@ function VersionCheck:NotifyManualCheck()
         L["GITHUB"] or "GitHub",
         CONFIG.GITHUB_URL
     ))
+    ]]--
 end
 
 function VersionCheck:NotifyCurrentVersion()
