@@ -2338,6 +2338,7 @@ function Necrosis:UpdateHealth()
 end
 
 local function SetTexPerMana(f, spell, mana) -- frame and warlock spell
+	if f and f.spellUnknown then return end -- sorts non appris restent grisés
 	if f and spell and (spell.Mana and spell.Mana > 0) and mana then
 		if spell.Mana > mana then
 			if not f:GetNormalTexture():IsDesaturated() then
@@ -3186,37 +3187,48 @@ function Necrosis:CreateMenu()
 		end
 
 		for index = 1, #Necrosis.Warlock_Lists.pets, 1 do
-		
+
 			if NecrosisConfig.PetShow[index] == true 		then
 				show = NecrosisConfig.PetShow[index]
 			elseif NecrosisConfig.PetShow[index] == false 	then
 				show = NecrosisConfig.PetShow[index]
 			elseif not NecrosisConfig.PetShow[index] 			then
 				show = true
-			else 
-			
+			else
+
 			end
 		--print (show,NecrosisConfig.PetShow[index],#Necrosis.Warlock_Lists.pets)
 		if  show  == true then
-		
+
 			local v = Necrosis.Warlock_Lists.pets[index]
 			local f = Necrosis.Warlock_Buttons[v.f_ptr].f
-			--print (v,f)					
-			if Necrosis.IsSpellKnown(v.high_of)  -- in spell book (RETAIL: sacrifice removed)
---			
+			local spellKnown = Necrosis.IsSpellKnown(v.high_of)  -- in spell book (RETAIL: sacrifice removed)
 
-			--and NecrosisConfig.DemonSpellPosition[index] > 0 -- and requested
-			
-			then
-			
-				if Necrosis.Debug.buttons then
-					_G["DEFAULT_CHAT_FRAME"]:AddMessage("CreateMenu pets"
-					.." f'"..(v.f_ptr or "nyl")..'"'
+			if Necrosis.Debug.buttons then
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("CreateMenu pets"
+				.." f'"..(v.f_ptr or "nyl")..'"'
+				.." known'"..tostring(spellKnown)..'"'
 --					.." p'"..(NecrosisConfig.DemonSpellPosition[index] or "nyl")..'"'
-					.." pr'"..(prior_button or "nyl")..'"'
-					)
+				.." pr'"..(prior_button or "nyl")..'"'
+				)
+			end
+			menuVariable = Necrosis:CreateMenuItem(v) -- Necrosis:CreateMenuPet(v.f_ptr)
+			if menuVariable then
+				if not spellKnown then
+					-- Griser et désactiver pour sort non appris
+					menuVariable:SetAttribute("type1", nil)
+					menuVariable:SetAttribute("spell1", nil)
+					if menuVariable:GetNormalTexture() then
+						menuVariable:GetNormalTexture():SetDesaturated(true)
+					end
+					menuVariable.spellUnknown = true
+				else
+					-- Restaurer si le sort a été appris depuis le dernier rebuild
+					if menuVariable:GetNormalTexture() then
+						menuVariable:GetNormalTexture():SetDesaturated(false)
+					end
+					menuVariable.spellUnknown = false
 				end
-				menuVariable = Necrosis:CreateMenuItem(v) -- Necrosis:CreateMenuPet(v.f_ptr)
 				menuVariable:ClearAllPoints()
 				menuVariable:SetPoint(
 					"CENTER", prior_button, "CENTER",
@@ -3278,10 +3290,25 @@ function Necrosis:CreateMenu()
 		for index = 1, #Necrosis.Warlock_Lists.buffs, 1 do
 			local v = Necrosis.Warlock_Lists.buffs[index]
 			local f = Necrosis.Warlock_Buttons[v.f_ptr].f
-			if Necrosis.IsSpellKnown(v.high_of) -- in spell book
---			and NecrosisConfig.BuffSpellPosition[index] > 0 -- and requested
-			then
-				menuVariable = Necrosis:CreateMenuItem(v) -- Necrosis:CreateMenuBuff(v.f_ptr)
+			local spellKnown = Necrosis.IsSpellKnown(v.high_of) -- in spell book
+
+			menuVariable = Necrosis:CreateMenuItem(v) -- Necrosis:CreateMenuBuff(v.f_ptr)
+			if menuVariable then
+				if not spellKnown then
+					-- Griser et désactiver pour sort non appris
+					menuVariable:SetAttribute("type1", nil)
+					menuVariable:SetAttribute("spell1", nil)
+					if menuVariable:GetNormalTexture() then
+						menuVariable:GetNormalTexture():SetDesaturated(true)
+					end
+					menuVariable.spellUnknown = true
+				else
+					-- Restaurer si le sort a été appris depuis le dernier rebuild
+					if menuVariable:GetNormalTexture() then
+						menuVariable:GetNormalTexture():SetDesaturated(false)
+					end
+					menuVariable.spellUnknown = false
+				end
 				menuVariable:ClearAllPoints()
 				menuVariable:SetPoint(
 					"CENTER", prior_button, "CENTER",
@@ -3340,25 +3367,40 @@ function Necrosis:CreateMenu()
 		end
 
 		for index = 1, #Necrosis.Warlock_Lists.curses, 1 do
-			
+
 			if NecrosisConfig.CurseShow[index] and NecrosisConfig.CurseShow[index] == true 		then
 				show = NecrosisConfig.CurseShow[index]
 			elseif NecrosisConfig.CurseShow[index] == false 	then
 				show = NecrosisConfig.CurseShow[index]
 			elseif not NecrosisConfig.CurseShow[index] 			then
 				show = true
-			else 
-			
+			else
+
 			end
-			
-			
+
+
 			if  show  == true then
 			local v = Necrosis.Warlock_Lists.curses[index]
 			local f = Necrosis.Warlock_Buttons[v.f_ptr].f
-			if Necrosis.IsSpellKnown(v.high_of) -- in spell book
---			and NecrosisConfig.DemonSpellPosition[index] > 0 -- and requested
-			then
-				menuVariable = Necrosis:CreateMenuItem(v)   -- Necrosis:CreateMenuCurse(v.f_ptr)
+			local spellKnown = Necrosis.IsSpellKnown(v.high_of) -- in spell book
+
+			menuVariable = Necrosis:CreateMenuItem(v)   -- Necrosis:CreateMenuCurse(v.f_ptr)
+			if menuVariable then
+				if not spellKnown then
+					-- Griser et désactiver pour sort non appris
+					menuVariable:SetAttribute("type1", nil)
+					menuVariable:SetAttribute("spell1", nil)
+					if menuVariable:GetNormalTexture() then
+						menuVariable:GetNormalTexture():SetDesaturated(true)
+					end
+					menuVariable.spellUnknown = true
+				else
+					-- Restaurer si le sort a été appris depuis le dernier rebuild
+					if menuVariable:GetNormalTexture() then
+						menuVariable:GetNormalTexture():SetDesaturated(false)
+					end
+					menuVariable.spellUnknown = false
+				end
 				menuVariable:ClearAllPoints()
 				menuVariable:SetPoint(
 					"CENTER", prior_button, "CENTER",
