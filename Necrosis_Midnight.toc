@@ -68,7 +68,7 @@ Speech\Speech-cn.lua
 Speech\Speech-ru.lua
 
 Message.lua
-Spells-Midnight.lua
+Spells-Retail.lua
 
 
 Timers\Functions_retail.lua
