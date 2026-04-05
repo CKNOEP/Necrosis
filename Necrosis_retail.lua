@@ -1337,13 +1337,19 @@ function Necrosis:OnEvent(event,...)
 		Local.Desatured = {}
 		Local.Dead = false
 	-- Successful spell casting management || Gestion de l'incantation des sorts réussie
-	elseif (event == "UNIT_SPELLCAST_SUCCEEDED") and arg1 == "player" then
+	elseif (event == "UNIT_SPELLCAST_SUCCEEDED") then
+		-- DEBUG: Log ALL UNIT_SPELLCAST_SUCCEEDED events to see what arguments we're getting
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] UNIT_SPELLCAST_SUCCEEDED RECEIVED: arg1="..tostring(arg1).." arg2="..tostring(arg2).." arg3="..tostring(arg3).." arg4="..tostring(arg4))
+
 		-- UNIT_SPELLCAST_SUCCEEDED: "unitTarget", "castGUID", spellID || https://wow.gamepedia.com/UNIT_SPELLCAST_SUCCEEDED
 		-- This can get chatty as other 'casts' are sent such as enchanting / skinning / ...
 
 		if Necrosis.Debug.timers then
 			_G["DEFAULT_CHAT_FRAME"]:AddMessage("UNIT_SPELLCAST_SUCCEEDED: spellID="..tostring(arg3).." spellName="..tostring(GetSpellInfo(arg3)).." registered="..tostring(Local.SpellCasted[arg2] ~= nil))
 		end
+
+		if arg1 == "player" then
+			-- Continue normal processing
 
 		local target, cast_guid, spell_id = arg1, arg2, arg3
 		
@@ -1385,7 +1391,8 @@ function Necrosis:OnEvent(event,...)
 			Local.SpellCasted[cast_guid] = nil -- processed so clear
 		end
 		target, cast_guid, spell_id = nil, nil, nil
-		
+		end -- Close if arg1 == "player"
+
 	-- When the warlock begins to cast a spell, we get the spell name and id
 	elseif (event == "UNIT_SPELLCAST_SENT") then
 		-- UNIT_SPELLCAST_SENT: "unit", "target", "castGUID", spellID || https://wow.gamepedia.com/UNIT_SPELLCAST_SENT
