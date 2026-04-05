@@ -247,7 +247,7 @@ Notes:
 
 
 	-- Create Healthstone || Création pierre de soin (MOP version)
-	[23517] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "healthstone",}, -- MOP Healthstone
+	[6201] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "healthstone",}, -- Create Healthstone (Retail 12.0)
 	[452930] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "demonic_healthstone",}, -- Demonic Healthstone (Midnight 12.0.5)
 
 	-- Spellstone & Firestone do NOT exist in MOP (removed before Cataclysm)
@@ -617,7 +617,7 @@ Necrosis.SpellIDMap = {
 	dark_pact = 47891,	-- Shadow Ward (alias used in menu lists)
 	banish = 710,		-- Banish
 	enslave = 1098,		-- Enslave Demon
-	healthstone = 23517,	-- Create Healthstone (Retail 12.0)
+	healthstone = 6201,		-- Create Healthstone (Retail 12.0)
 	soulstone = 20707,	-- Create Soulstone (Retail 12.0)
 	agony = 980,		-- Curse of Agony
 	weakness = 702,		-- Curse of Weakness
@@ -1615,7 +1615,7 @@ function Necrosis:SpellSetup(reason)
 	local fallback_spells = {
 		5697,    -- Unending Breath (Respiration interminable)
 		20707,   -- Soulstone
-		23517,   -- Healthstone
+		6201,    -- Healthstone
 		688,     -- Imp (Diablotin)
 		697,     -- Voidwalker (Marcheur du Vide)
 		712,     -- Succubus (Succube)
