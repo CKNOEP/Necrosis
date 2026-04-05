@@ -499,40 +499,35 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 end)
 
 -- WoW 12.0 CRITICAL: RegisterEvent() is forbidden EVERYWHERE
--- SOLUTION: Hook COMBAT_LOG_EVENT_UNFILTERED globally
--- This is a system event that WoW calls automatically without RegisterEvent()
+-- SOLUTION: Use OnUpdate to detect when game is loaded, then initialize
+-- This bypasses RegisterEvent() completely by polling game state
 
-local originalCombatLogHandler = _G.COMBAT_LOG_EVENT_UNFILTERED
+local bootstrapFrame = CreateFrame("Frame")
+local initialized = false
 
-_G.COMBAT_LOG_EVENT_UNFILTERED = function(...)
-	-- Forward to Necrosis event handler
-	if Necrosis and Necrosis.OnEvent then
-		Necrosis:OnEvent("COMBAT_LOG_EVENT_UNFILTERED", ...)
-	end
+bootstrapFrame:SetScript("OnUpdate", function(self, elapsed)
+	-- Check if we're in world (IsLoggedIn and main UI shown)
+	if not initialized and IsLoggedIn() and _G.NecrosisButton then
+		initialized = true
 
-	-- Call original if exists
-	if originalCombatLogHandler then
-		originalCombatLogHandler(...)
-	end
-end
+		-- Initialize the addon
+		if Necrosis and Necrosis.Initialize then
+			Necrosis:Initialize(Necrosis.DefaultConfig or {})
+		end
 
--- Also hook PLAYER_ENTERING_WORLD globally
-local originalPlayerEnteringWorld = _G.PLAYER_ENTERING_WORLD
-
-_G.PLAYER_ENTERING_WORLD = function(...)
-	if not _G.NecrosisInitialized then
-		_G.NecrosisInitialized = true
+		-- Stop polling
+		self:SetScript("OnUpdate", nil)
+	elseif not initialized and IsLoggedIn() and not _G.NecrosisButton then
+		-- Game is loaded, create UI if Necrosis exists
 		if Necrosis and Necrosis.OnEvent then
-			Necrosis:OnEvent("PLAYER_ENTERING_WORLD", ...)
+			Necrosis:OnEvent("PLAYER_ENTERING_WORLD")
+			initialized = true
+			self:SetScript("OnUpdate", nil)
 		end
 	end
+end)
 
-	if originalPlayerEnteringWorld then
-		originalPlayerEnteringWorld(...)
-	end
-end
-
-_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Initialized (WoW 12.0 - using global event hooks)")
+_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Bootstrap ready (WoW 12.0 workaround)")
 
 ------------------------------------------------------------------------------------------------------
 -- FONCTION D'INITIALISATION
