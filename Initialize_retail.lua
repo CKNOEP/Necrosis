@@ -498,29 +498,13 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 	end
 end)
 
--- Register initial events ONLY AFTER addon load context ends
--- In WoW 12.0, RegisterEvent() is forbidden during addon load, even in pcall()
--- Solution: Delay registration until C_Timer context (after addon load)
-C_Timer.After(0.1, function()
-	pcall(function()
-		eventFrame:RegisterEvent("PLAYER_LOGIN")
-		eventFrame:RegisterEvent("PLAYER_ENTERING_WORLD")
-		eventFrame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
-		eventFrame:RegisterEvent("SPELLS_CHANGED")
-		eventFrame:RegisterEvent("UNIT_SPELLCAST_SENT")       -- ✅ Spell cast starting (required BEFORE succeeded)
-		eventFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")  -- ✅ Spell cast success for timers
-		eventFrame:RegisterEvent("UNIT_SPELLCAST_FAILED")     -- ✅ Spell cast failed (cleanup)
-		eventFrame:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED") -- ✅ Spell cast interrupted (cleanup)
-		eventFrame:RegisterEvent("COMBAT_LOG_EVENT_UNFILTERED") -- ✅ Combat log for UNIT_DIED event cleanup
-		eventFrame:RegisterEvent("UNIT_HEALTH")   -- ✅ Health counter
-		eventFrame:RegisterEvent("UNIT_MANA")     -- ✅ Mana counter
-		eventFrame:RegisterEvent("UNIT_POWER_UPDATE")  -- ✅ Power updates
-		eventFrame:RegisterEvent("BAG_UPDATE")    -- ✅ Inventory updates
-	end)
-end)
+-- In WoW 12.0, RegisterEvent() is protected on named frames
+-- Solution: Register events via slash command /nectimer which uses anonymous frames
+-- This will be called automatically from OnEvent(PLAYER_ENTERING_WORLD)
+-- User can also manually call /nectimer if needed
 
--- Slash command to register remaining events from player context
--- Create a NEW frame dynamically to avoid protected frame restrictions
+-- Slash command to register all events from player context
+-- Creates anonymous frame to avoid protected frame restrictions
 SLASH_NECTIMER1 = "/nectimer"
 SlashCmdList["NECTIMER"] = function()
 	if not eventsRegistered then
@@ -534,11 +518,12 @@ SlashCmdList["NECTIMER"] = function()
 			Necrosis.OnEvent(Necrosis, event, arg1, arg2, arg3, arg4)
 		end)
 
-		-- ⚠️ RETAIL 12.0+ LIMITATION: RegisterEvent() is protected and cannot be called from slash commands
-		-- Only essential events (UNIT_HEALTH, UNIT_MANA, etc.) are registered during addon load
-		-- Other events can only be registered during secure contexts
+		-- Register all critical events via anonymous frame (protected frames cannot register events in WoW 12.0)
+		for _, eventName in ipairs(Necrosis.Events or {}) do
+			_G.spellFrame:RegisterEvent(eventName)
+		end
 
-		--_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Spell cast events registered. Timers are now active.")
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: "..tostring(#(Necrosis.Events or {})).." events registered. Timers are active.")
 
 		-- Also initialize the UI if not done yet
 		C_Timer.After(0.1, function()
