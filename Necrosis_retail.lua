@@ -3125,13 +3125,13 @@ function Necrosis:CreateMenuItem(spellListItem)
 		-- Special attributes for casting certain buffs || Attributs spéciaux pour les buffs castables sur les autres joueurs
 		if spellListItem.high_of == "breath" or spellListItem.high_of == "invis" then
 			btn:SetScript("PreClick", function(self)
-				if not (InCombatLockdown() or UnitIsFriend("player","target")) then
-					self:SetAttribute("unit", "player")
-				end
-			end)
-			btn:SetScript("PostClick", function(self)
-				if not InCombatLockdown() then
+				-- Always cast on self if no target or target is enemy
+				if UnitExists("target") and UnitIsFriend("player", "target") then
+					-- Target exists and is friendly, cast on target
 					self:SetAttribute("unit", "target")
+				else
+					-- No target or hostile target, cast on self
+					self:SetAttribute("unit", "player")
 				end
 			end)
 		end
