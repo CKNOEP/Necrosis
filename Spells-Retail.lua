@@ -622,7 +622,7 @@ Necrosis.SpellIDMap = {
 	tongues = 1108,		-- Curse of Tongues
 	corruption = 172,	-- Corruption
 	exhaustion = 4511,	-- Curse of Exhaustion
-	doom = 603,			-- Curse of Doom
+	doom = 460551,		-- Curse of Doom (optional talent in Retail 12.0)
 }
 
 Necrosis.Warlock_Buttons = {
