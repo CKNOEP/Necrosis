@@ -3181,6 +3181,17 @@ function Necrosis:CreateMenu()
 	HideList(Necrosis.Warlock_Lists.buffs, f) -- Hide the general buff spell buttons || On cache toutes les icones des sorts
 	HideList(Necrosis.Warlock_Lists.curses, f) -- Hide the curse buttons || On cache toutes les icones des curses
 
+	-- Create mounts button if not already created
+	if not _G[Necrosis.Warlock_Buttons.mounts.f] then
+		_ = Necrosis:CreateSphereButtons(Necrosis.Warlock_Buttons.mounts)
+	end
+	-- Show/hide based on config (StonePosition[6] controls mounts visibility)
+	if NecrosisConfig.StonePosition[6] > 0 then
+		_G[Necrosis.Warlock_Buttons.mounts.f]:Show()
+	else
+		_G[Necrosis.Warlock_Buttons.mounts.f]:Hide()
+	end
+
 	if NecrosisConfig.StonePosition[7] > 0 then -- pets
 		-- Setup the buttons available on the pets menu 
 		local prior_button = Necrosis.Warlock_Buttons.pets.f -- menu button on sphere
