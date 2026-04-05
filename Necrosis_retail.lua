@@ -3217,40 +3217,27 @@ function Necrosis:CreateMenu()
 	end
 
 	if NecrosisConfig.StonePosition[7] > 0 then -- pets
-		-- Setup the buttons available on the pets menu 
+		-- Setup the buttons available on the pets menu
 		local prior_button = Necrosis.Warlock_Buttons.pets.f -- menu button on sphere
-		-- Create on demand 
+		-- Create on demand
 		if not _G[prior_button] then
 			_ = Necrosis:CreateSphereButtons(Necrosis.Warlock_Buttons.pets)
 		end
 
+		-- Create ALL pet spell buttons (grayed if not learned)
 		for index = 1, #Necrosis.Warlock_Lists.pets, 1 do
-
-			if NecrosisConfig.PetShow[index] == true 		then
-				show = NecrosisConfig.PetShow[index]
-			elseif NecrosisConfig.PetShow[index] == false 	then
-				show = NecrosisConfig.PetShow[index]
-			elseif not NecrosisConfig.PetShow[index] 			then
-				show = true
-			else
-
-			end
-		--print (show,NecrosisConfig.PetShow[index],#Necrosis.Warlock_Lists.pets)
-		if  show  == true then
-
 			local v = Necrosis.Warlock_Lists.pets[index]
 			local f = Necrosis.Warlock_Buttons[v.f_ptr].f
-			local spellKnown = Necrosis.IsSpellKnown(v.high_of)  -- in spell book (RETAIL: sacrifice removed)
+			local spellKnown = Necrosis.IsSpellKnown(v.high_of)
 
 			if Necrosis.Debug.buttons then
 				_G["DEFAULT_CHAT_FRAME"]:AddMessage("CreateMenu pets"
 				.." f'"..(v.f_ptr or "nyl")..'"'
 				.." known'"..tostring(spellKnown)..'"'
---					.." p'"..(NecrosisConfig.DemonSpellPosition[index] or "nyl")..'"'
 				.." pr'"..(prior_button or "nyl")..'"'
 				)
 			end
-			menuVariable = Necrosis:CreateMenuItem(v) -- Necrosis:CreateMenuPet(v.f_ptr)
+			menuVariable = Necrosis:CreateMenuItem(v)
 			if menuVariable then
 				if not spellKnown then
 					-- Griser et désactiver pour sort non appris
@@ -3277,7 +3264,6 @@ function Necrosis:CreateMenu()
 				prior_button = f -- anchor the next button
 				Local.Menu.Pet:insert(menuVariable)
 			end
-		end
 		end
 		-- Display the pets menu button || Maintenant que tous les boutons de pet sont placés les uns à côté des autres, on affiche les disponibles
 		if Local.Menu.Pet and Local.Menu.Pet[1] then
@@ -3399,32 +3385,20 @@ function Necrosis:CreateMenu()
 	end
 
 	if NecrosisConfig.StonePosition[8] > 0 then -- curses
-		-- Setup the buttons available on the curses menu 
+		-- Setup the buttons available on the curses menu
 		local prior_button = Necrosis.Warlock_Buttons.curses.f -- menu button on sphere
-		-- Create on demand 
+		-- Create on demand
 		if not _G[prior_button] then
 			_ = Necrosis:CreateSphereButtons(Necrosis.Warlock_Buttons.curses)
 		end
 
+		-- Create ALL curse spell buttons (grayed if not learned)
 		for index = 1, #Necrosis.Warlock_Lists.curses, 1 do
-
-			if NecrosisConfig.CurseShow[index] and NecrosisConfig.CurseShow[index] == true 		then
-				show = NecrosisConfig.CurseShow[index]
-			elseif NecrosisConfig.CurseShow[index] == false 	then
-				show = NecrosisConfig.CurseShow[index]
-			elseif not NecrosisConfig.CurseShow[index] 			then
-				show = true
-			else
-
-			end
-
-
-			if  show  == true then
 			local v = Necrosis.Warlock_Lists.curses[index]
 			local f = Necrosis.Warlock_Buttons[v.f_ptr].f
 			local spellKnown = Necrosis.IsSpellKnown(v.high_of) -- in spell book
 
-			menuVariable = Necrosis:CreateMenuItem(v)   -- Necrosis:CreateMenuCurse(v.f_ptr)
+			menuVariable = Necrosis:CreateMenuItem(v)
 			if menuVariable then
 				if not spellKnown then
 					-- Griser et désactiver pour sort non appris
@@ -3448,10 +3422,8 @@ function Necrosis:CreateMenu()
 					NecrosisConfig.CurseMenuPos.direction * NecrosisConfig.CurseMenuPos.x * 32,
 					NecrosisConfig.CurseMenuPos.y * 32
 				)
---				menuVariable.high_of = v.high_of
 				prior_button = f -- anchor the next button
 				Local.Menu.Curse:insert(menuVariable)
-			end
 			end
 		end
 		-- Display the curse menu button on the sphere || Maintenant que tous les boutons de curse sont placés les uns à côté des autres, on affiche les disponibles
@@ -3498,6 +3470,100 @@ function Necrosis:CreateMenu()
 		SetState(_G[Necrosis.Warlock_Buttons.buffs.f], s)
 		SetState(_G[Necrosis.Warlock_Buttons.pets.f], s)
 		SetState(_G[Necrosis.Warlock_Buttons.curses.f], s)
+	end
+end
+
+-- Update grayed state of menu buttons based on current spell knowledge
+-- Called when spells change (SPELLS_CHANGED, LEARNED_SPELL_IN_TAB events)
+function Necrosis:UpdateMenuSaturation()
+	-- Update buffs menu
+	if Local.Menu.Buff then
+		for i = 1, #Local.Menu.Buff do
+			local btn = Local.Menu.Buff[i]
+			if btn then
+				local spellList = Necrosis.Warlock_Lists.buffs[i]
+				if spellList then
+					local spellKnown = Necrosis.IsSpellKnown(spellList.high_of)
+					if not spellKnown then
+						btn:SetAttribute("type1", nil)
+						btn:SetAttribute("spell1", nil)
+						if btn:GetNormalTexture() then
+							btn:GetNormalTexture():SetDesaturated(true)
+						end
+						btn:EnableMouse(false)
+						btn.spellUnknown = true
+					else
+						if btn:GetNormalTexture() then
+							btn:GetNormalTexture():SetDesaturated(false)
+						end
+						btn:EnableMouse(true)
+						btn.spellUnknown = false
+						-- Re-establish spell attributes for learned spells
+						Necrosis:SetBuffSpellAttribute()
+					end
+				end
+			end
+		end
+	end
+
+	-- Update pets menu
+	if Local.Menu.Pet then
+		for i = 1, #Local.Menu.Pet do
+			local btn = Local.Menu.Pet[i]
+			if btn then
+				local spellList = Necrosis.Warlock_Lists.pets[i]
+				if spellList then
+					local spellKnown = Necrosis.IsSpellKnown(spellList.high_of)
+					if not spellKnown then
+						btn:SetAttribute("type1", nil)
+						btn:SetAttribute("spell1", nil)
+						if btn:GetNormalTexture() then
+							btn:GetNormalTexture():SetDesaturated(true)
+						end
+						btn:EnableMouse(false)
+						btn.spellUnknown = true
+					else
+						if btn:GetNormalTexture() then
+							btn:GetNormalTexture():SetDesaturated(false)
+						end
+						btn:EnableMouse(true)
+						btn.spellUnknown = false
+						-- Re-establish spell attributes for learned spells
+						Necrosis:PetSpellAttribute()
+					end
+				end
+			end
+		end
+	end
+
+	-- Update curses menu
+	if Local.Menu.Curse then
+		for i = 1, #Local.Menu.Curse do
+			local btn = Local.Menu.Curse[i]
+			if btn then
+				local spellList = Necrosis.Warlock_Lists.curses[i]
+				if spellList then
+					local spellKnown = Necrosis.IsSpellKnown(spellList.high_of)
+					if not spellKnown then
+						btn:SetAttribute("type1", nil)
+						btn:SetAttribute("spell1", nil)
+						if btn:GetNormalTexture() then
+							btn:GetNormalTexture():SetDesaturated(true)
+						end
+						btn:EnableMouse(false)
+						btn.spellUnknown = true
+					else
+						if btn:GetNormalTexture() then
+							btn:GetNormalTexture():SetDesaturated(false)
+						end
+						btn:EnableMouse(true)
+						btn.spellUnknown = false
+						-- Re-establish spell attributes for learned spells
+						Necrosis:CurseSpellAttribute()
+					end
+				end
+			end
+		end
 	end
 end
 
