@@ -413,6 +413,7 @@ function Necrosis:CreateMenuItem(i)
 	end
 
 	frame:SetNormalTexture(b.norm)
+
 	-- Store spell info on the frame for SetBuffSpellAttribute to use later
 	frame.high_of = i.high_of
 
@@ -439,19 +440,8 @@ function Necrosis:CreateMenuItem(i)
 
 	--============= Special settings per button
 	--
-	-- Special attributes for casting certain buffs || Attributs spéciaux pour les buffs castables sur les autres joueurs
-	if i.high_of == "breath" or i.high_of == "invis" then
-		frame:SetScript("PreClick", function(self)
-			if not (InCombatLockdown() or UnitIsFriend("player","target")) then
-				self:SetAttribute("unit", "player")
-			end
-		end)
-		frame:SetScript("PostClick", function(self)
-			if not InCombatLockdown() then
-				self:SetAttribute("unit", "target")
-			end
-		end)
-	end
+	-- Special attributes for casting certain buffs are handled in SetBuffSpellAttribute
+	-- No PreClick/PostClick needed - SetBuffSpellAttribute handles breath/invis with macros
 
 	-- Special attribute for the Banish button || Attributes spéciaux pour notre ami le sort de Bannissement
 	if i.high_of == "banish" then

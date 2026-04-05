@@ -291,7 +291,7 @@ Notes:
 	[403619]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
 	]]
 	--
-	[5697]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "breath", Length = 600, Buff = false, }, -- Unending Breath || Respiration interminable
+	[5697]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "breath", Length = 600, Buff = true, DefaultSelf = true, }, -- Unending Breath || Respiration interminable
 	[126]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "eye", Length = 45, Buff = true, SelfOnly = true, }, -- Eye of Kilrogg
 	[698]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "summoning", Length = 600, Buff = true, }, -- Ritual of Summoning || Rituel d'invocation
 
@@ -379,18 +379,20 @@ Notes:
 	--[17862]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "shadow", Length = 300, }, -- Curse of Shadow 
 	--[17937] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "shadow", Length = 300, }, --  
 
-	[603]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "doom", Length = 60, Cooldown = 60,}, -- Curse of Doom || Malédiction funeste 
+	[603]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "doom", Length = 60, Cooldown = 60,}, -- Curse of Doom || Malédiction funeste (removed in WoW 12.0)
 	[30910]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "doom", Length = 60, Cooldown = 60,},
 	[47867]	= {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "doom", Length = 60, Cooldown = 60,}, -- r3:  https://www.wowhead.com/wotlk/spell=47867/curse-of-doom
-	
-	
+
+
 	[704]	= {UsageRank = 1, SpellRank = 1 , Timer = true, Usage = "recklessness", Length = 120, }, -- Curse of Recklessness - removed in patch 3.1 || Malédiction Témérité || 
 	[7658]	= {UsageRank = 2, SpellRank = 2 , Timer = true, Usage = "recklessness", Length = 120, }, --  
 	[7659]	= {UsageRank = 3, SpellRank = 3 , Timer = true, Usage = "recklessness", Length = 120, }, -- 
 	[11717] = {UsageRank = 4, SpellRank = 4 , Timer = true, Usage = "recklessness", Length = 120, }, -- 
-	[27226] = {UsageRank = 5, SpellRank = 5 , Timer = true, Usage = "recklessness", Length = 120, }, -- 
-	
-	[172]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "corruption", Length = 12, }, -- Corruption 
+	[27226] = {UsageRank = 5, SpellRank = 5 , Timer = true, Usage = "recklessness", Length = 120, }, --
+
+	[445468] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "wither", Length = 12, }, -- Wither (Retail 12.0 PTR)
+
+	[172]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "corruption", Length = 12, }, -- Corruption (Mainline only) 
 	[6222]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "corruption", Length = 15, }, --  
 	[6223]	= {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "corruption", Length = 18, }, --  
 	[7648]	= {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "corruption", Length = 18, }, --  
@@ -624,7 +626,8 @@ Necrosis.SpellIDMap = {
 	agony = 980,		-- Curse of Agony
 	weakness = 702,		-- Curse of Weakness
 	tongues = 1108,		-- Curse of Tongues
-	corruption = 172,	-- Corruption
+	wither = 445468,	-- Wither (Retail 12.0 PTR)
+	corruption = 172,	-- Corruption (Mainline)
 	exhaustion = 4511,	-- Curse of Exhaustion
 	doom = 460551,		-- Curse of Doom (optional talent in Retail 12.0)
 }
@@ -805,6 +808,10 @@ Necrosis.Warlock_Buttons = {
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Doom-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\Doom-02",
 					}, --
+	wither 		= {f = "NecrosisCurseMenu07", tip = "Wither", anchor = "ANCHOR_RIGHT",
+					norm = "Interface\\AddOns\\Necrosis\\UI\\inv_ability_hellcallerwarlock_wither",
+					high = "Interface\\AddOns\\Necrosis\\UI\\inv_ability_hellcallerwarlock_wither",
+					}, --
 	corruption 	= {f = "NecrosisCurseMenu07", tip = "Corruption", anchor = "ANCHOR_RIGHT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\Corruption-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\Corruption-02",
@@ -894,10 +901,10 @@ Necrosis.Warlock_Lists = {
 		[1] = {f_ptr = "weakness", high_of = "weakness", },
 		[2] = {f_ptr = "agony", high_of = "agony", },
 		[3] = {f_ptr = "tongues", high_of = "tongues", },
-		[4] = {f_ptr = "corruption", high_of = "corruption", },
+		[4] = {f_ptr = "wither", high_of = "wither", },
 		[5] = {f_ptr = "exhaustion", high_of = "exhaustion", },
-		[6] = {f_ptr = "doom", high_of = "doom", },
-	  --[7] = {f_ptr = "exhaustion", high_of = "exhaustion", },
+	  --[6] = {f_ptr = "corruption", high_of = "corruption", }, -- Replaced by Wither on PTR 12.0
+	  --[7] = {f_ptr = "doom", high_of = "doom", }, -- Removed in WoW 12.0
 	  --[8] = {f_ptr = "recklessness", high_of = "recklessness", },
 --		[9] = {f_ptr = "shadow", high_of = "shadow", },
 	},
@@ -1618,6 +1625,7 @@ function Necrosis:SpellSetup(reason)
 		5697,    -- Unending Breath (Respiration interminable)
 		20707,   -- Soulstone
 		6201,    -- Healthstone
+		445468,  -- Wither (Retail 12.0 PTR)
 		688,     -- Imp (Diablotin)
 		697,     -- Voidwalker (Marcheur du Vide)
 		712,     -- Succubus (Succube)

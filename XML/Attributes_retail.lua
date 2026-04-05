@@ -227,6 +227,16 @@ function Necrosis:SetBuffSpellAttribute(button)
 			-- Also set right click to same macro for convenience
 			f:SetAttribute("type2", "macro")
 			f:SetAttribute("macrotext2", "/focus\n/cast Bannir")
+		elseif f.high_of == 'breath' or f.high_of == 'invis' or f.high_of == 'invisible' then
+			-- Retail 12.0: Breath/Invis use macro with conditional targeting
+			-- @target,help = cast on target if friendly, fail otherwise
+			-- Fallback to @player to cast on self if no valid target
+			local spellName = Necrosis.GetSpellCastName(f.high_of)
+			if spellName then
+				f:SetAttribute("helpbutton1", "spell1")
+				f:SetAttribute("type1", "macro")
+				f:SetAttribute("macrotext1", "/cast [@target,help,nodead] "..spellName.."; [@player] "..spellName)
+			end
 		else
 			-- Retail 12.0 fix: Use numbered attributes (helpbutton1, type1, spell1)
 			f:SetAttribute("helpbutton1", "spell1")

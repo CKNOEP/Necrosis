@@ -469,6 +469,7 @@ local Events = {
 	"UNIT_SPELLCAST_SENT",
 	"UNIT_MANA",
 	"UNIT_HEALTH",
+	"UNIT_DIED",
 	"UNIT_POWER_UPDATE",
 	-- "LEARNED_SPELL_IN_TAB", -- Removed: deprecated in WoW Classic 2026, use SPELLS_CHANGED instead
 	"PLAYER_TARGET_CHANGED",
@@ -481,6 +482,7 @@ local Events = {
 	"SKILL_LINES_CHANGED",
 	"PLAYER_LEAVING_WORLD",
 	"SPELLS_CHANGED",
+	"ACTIVE_TALENT_GROUP_CHANGED",  -- Rebuild menus when specialization changes
 }
 
 -- ✅ Save Events to Necrosis so it can be accessed from slash commands
@@ -523,7 +525,17 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 				eventFrame:RegisterEvent("UNIT_SPELLCAST_SENT")
 				eventFrame:RegisterEvent("UNIT_SPELLCAST_FAILED")
 				eventFrame:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
-				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[NECROSIS] Spell casting events registered")
+			end)
+
+			-- Register UNIT_HEALTH for health monitoring
+			-- Check multiple units since timers can be on target, focus, or other units
+			pcall(function()
+				eventFrame:RegisterUnitEvent("UNIT_HEALTH", "target", "focus", "boss1", "boss2", "boss3", "boss4", "boss5")
+			end)
+
+			-- Register UNIT_DIED via RegisterEvent() to detect unit deaths
+			pcall(function()
+				eventFrame:RegisterEvent("UNIT_DIED")
 			end)
 		end
 
@@ -545,23 +557,6 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 end)
 
 _G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Initialized (WoW 12.0 - using PLAYER_LOGIN event)")
-
--- WoW 12.0: Hook global events that cannot be registered with RegisterEvent()
--- COMBAT_LOG_EVENT_UNFILTERED is needed for timer cleanup when units die
-
-local originalCombatLogHandler = _G.COMBAT_LOG_EVENT_UNFILTERED
-
-_G.COMBAT_LOG_EVENT_UNFILTERED = function(...)
-	-- Forward to Necrosis event handler
-	if Necrosis and Necrosis.OnEvent then
-		Necrosis:OnEvent("COMBAT_LOG_EVENT_UNFILTERED", ...)
-	end
-
-	-- Call original if exists
-	if originalCombatLogHandler then
-		originalCombatLogHandler(...)
-	end
-end
 
 ------------------------------------------------------------------------------------------------------
 -- FONCTION D'INITIALISATION

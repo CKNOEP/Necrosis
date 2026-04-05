@@ -35,10 +35,8 @@ function Necrosis:GetSpellIDFromKey(spellKey)
 	-- Use the SpellIDMap table if available
 	if Necrosis.SpellIDMap and Necrosis.SpellIDMap[spellKey] then
 		local spellID = Necrosis.SpellIDMap[spellKey]
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("GetSpellIDFromKey: key="..tostring(spellKey).." -> spellID="..tostring(spellID))
 		return spellID
 	end
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("GetSpellIDFromKey: key="..tostring(spellKey).." NOT FOUND in SpellIDMap")
 	return nil
 end
 
@@ -1289,6 +1287,13 @@ function Necrosis:OnEvent(event,...)
 		end
 	end
 
+	-- Rebuild menus when specialization changes
+	if (event == "ACTIVE_TALENT_GROUP_CHANGED") then
+		if not InCombatLockdown() then
+			SetupSpells("ACTIVE_TALENT_GROUP_CHANGED")
+		end
+	end
+
 	-- If the contents of the bags have changed, we check that Soul Fragments are always in the right bag || Si le contenu des sacs a changé, on vérifie que les Fragments d'âme sont toujours dans le bon sac
 	if (event == "BAG_UPDATE") then
 		Necrosis:BagExplore(arg1)
@@ -1301,6 +1306,15 @@ function Necrosis:OnEvent(event,...)
 	-- If the player wins or loses his life || Si le joueur gagneou perd de la vie
 	elseif (event == "UNIT_HEALTH") and arg1 == "player" then
 		Necrosis:UpdateHealth()
+	-- Monitor unit death (curses, corruptions, etc.) || Surveiller la mort des unités
+	elseif (event == "UNIT_DIED") then
+		-- UNIT_DIED passes the GUID directly as arg1, not a unit token
+		local guid = arg1
+
+		-- Remove timers for this dead unit
+		if guid then
+			Local.TimerManagement = Necrosis:RetraitTimerParGuid(guid, Local.TimerManagement, "UNIT_DIED")
+		end
 	-- If the player dies || Si le joueur meurt
 	elseif (event == "PLAYER_DEAD") then
 		-- It may hide the Twilight or Backlit buttons. || On cache éventuellement les boutons de Crépuscule ou Contrecoup.
@@ -1410,9 +1424,9 @@ function Necrosis:OnEvent(event,...)
 		Local.SpellCasted[cast_guid] = {} -- clear any previous entry
 		if spell_id and Necrosis.GetSpellById(spell_id) then -- it is a spell to process
 			local spell = Necrosis.GetSpellById(spell_id)
-	
+
 			if (target == nil or target == "")
-			and spell.SelfOnly
+			and (spell.SelfOnly or spell.DefaultSelf)
 			then
 				-- Not all UNIT_SPELLCAST_SENT events specify the target (player for Demon Armor)...
 				Local.SpellCasted[cast_guid].TargetName = UnitName("player")
@@ -1545,16 +1559,35 @@ function Necrosis:OnEvent(event,...)
 	elseif (event == "UNIT_PET" and arg1 == "player") then
 		Necrosis:ChangeDemon()
 
+	-- ============= UNIT_HEALTH (for unit death detection)
+	-- Check if unit died and cleanup timers
+	elseif event == "UNIT_HEALTH" then
+		local unit = arg1  -- arg1 is the unit that changed health
+
+		if unit and UnitIsDeadOrGhost(unit) then
+			local guid = UnitGUID(unit)
+
+			-- Remove timers for this dead unit
+			if guid then
+				Local.TimerManagement = Necrosis:RetraitTimerParGuid(guid, Local.TimerManagement, "UNIT_HEALTH_DIED")
+			end
+		end
+
 	-- ============= COMBAT_LOG_EVENT_UNFILTERED
 	-- Reading the combat log || Lecture du journal de combat
 	elseif event == "COMBAT_LOG_EVENT_UNFILTERED" then
 		-- The parameters differ depending on the event... || https://wow.gamepedia.com/COMBAT_LOG_EVENT
-		local a1, a2, a3, a4, a5, 
-			a6, a7, a8, a9, a10, 
+		local a1, a2, a3, a4, a5,
+			a6, a7, a8, a9, a10,
 			a11, a12, a13, a14, a15
 			= CombatLogGetCurrentEventInfo()
 		local timestamp = a1
-		local subevent = a2 
+		local subevent = a2
+
+		-- Debug: Log all subevent types
+		if subevent == "UNIT_DIED" then
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG COMBAT] subevent="..tostring(subevent))
+		end 
 		local sourceGUID = a4
 		local sourceName = a5
 		local sourceFlags = a6
@@ -1716,21 +1749,6 @@ function Necrosis:OnEvent(event,...)
 			then
 				Local.SomethingOnHand = "Rien"
 				UpdateIcons()
-		elseif subevent == "UNIT_DIED"
-			then
-			-- Any unit death within range
-			-- Will cleanup timers even if not target or focus
-
-			msg = " e'"..tostring(Effect or "nyl").."'"
-				.." se'"..tostring(subevent or "nyl").."'"
-				.." s'"..tostring(sourceName or "nyl").."'"
-				.." sg'"..tostring(sourceGUID or "nyl").."'"
-				.." d'"..tostring(destName or "nyl").."'"
-				.." dg'"..tostring(destGUID or "nyl").."'"
-				.." #'"..tostring(#ev or "nyl").."'"
-			ev_out(event, msg, false, true, false)
-
-			Local.TimerManagement = Necrosis:RetraitTimerParGuid(destGUID, Local.TimerManagement, "UNIT_DIED")
 		end
 
 	-- If we change weapons, we look at whether a spell / fire enchantment is on the new || Si on change d'arme, on regarde si un enchantement de sort / feu est sur la nouvelle
@@ -3129,10 +3147,6 @@ function Necrosis:CreateMenuItem(spellListItem)
 		btn.high_of = spellListItem.high_of
 		btn.can_target = Necrosis.Warlock_Buttons[spellListItem.f_ptr].can_target
 
-		-- Set base spell attributes for Retail 12.0
-		btn:SetAttribute("helpbutton1", "spell1")
-		btn:SetAttribute("type1", "spell")
-
 		-- Get spell name and set it
 		local spellName = Necrosis.GetSpellCastName(spellListItem.high_of)
 		if not spellName or spellName == "" then
@@ -3141,6 +3155,11 @@ function Necrosis:CreateMenuItem(spellListItem)
 				spellName = GetSpellInfo(spellID)
 			end
 		end
+
+		-- Set base spell attributes for Retail 12.0 (SecureUnitButtonTemplate)
+		btn:SetAttribute("helpbutton1", "spell1")
+		btn:SetAttribute("type1", "spell")
+
 		if spellName then
 			btn:SetAttribute("spell1", spellName)
 		end
@@ -3148,20 +3167,6 @@ function Necrosis:CreateMenuItem(spellListItem)
 		-- Set unit targeting
 		if btn.can_target then
 			btn:SetAttribute("unit", "target")
-		end
-
-		-- Special attributes for casting certain buffs || Attributs spéciaux pour les buffs castables sur les autres joueurs
-		if spellListItem.high_of == "breath" or spellListItem.high_of == "invis" then
-			btn:SetScript("PreClick", function(self)
-				-- Always cast on self if no target or target is enemy
-				if UnitExists("target") and UnitIsFriend("player", "target") then
-					-- Target exists and is friendly, cast on target
-					self:SetAttribute("unit", "target")
-				else
-					-- No target or hostile target, cast on self
-					self:SetAttribute("unit", "player")
-				end
-			end)
 		end
 
 		return btn
@@ -3193,7 +3198,6 @@ function Necrosis:CreateMenu()
 			mountBtn:ClearAllPoints()
 			-- Always use default position for mounts button
 			mountBtn:SetPoint("CENTER", UIParent, "CENTER", 53, -100)
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] Mount positioned, size="..mountBtn:GetWidth().."x"..mountBtn:GetHeight().." norm="..tostring(mountBtn:GetNormalTexture()))
 		end
 	end
 	-- Show/hide stone buttons based on config
@@ -3214,7 +3218,6 @@ function Necrosis:CreateMenu()
 	end
 
 	-- Show/hide based on config (StonePosition[6] controls mounts visibility)
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] Mount: exists="..tostring(_G[Necrosis.Warlock_Buttons.mounts.f]).." StonePosition[6]="..tostring(NecrosisConfig.StonePosition[6]))
 	if NecrosisConfig.StonePosition[6] > 0 then
 		local m = _G[Necrosis.Warlock_Buttons.mounts.f]
 		if m then m:Show() end
@@ -3341,6 +3344,7 @@ function Necrosis:CreateMenu()
 			local spellKnown = Necrosis.IsSpellKnown(v.high_of) -- in spell book
 
 			menuVariable = Necrosis:CreateMenuItem(v) -- Necrosis:CreateMenuBuff(v.f_ptr)
+
 			if menuVariable then
 				if not spellKnown then
 					-- Griser et désactiver pour sort non appris
@@ -3794,5 +3798,4 @@ end
 -- This is called from Initialize_retail.lua hook
 function Necrosis:EnableEventProcessing()
 	Local.InWorld = true
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[NECROSIS] Event processing enabled - Local.InWorld = true")
 end
