@@ -305,6 +305,12 @@ function Necrosis:CreateMenuItem(i)
 		else
 		end
 	end
+
+	-- If button config not found, return nil (spell doesn't exist)
+	if not b then
+		return nil
+	end
+
 	if Necrosis.Debug.buttons then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("CreateMenuItem"
 		.." i'"..tostring(i.f_ptr).."'"
