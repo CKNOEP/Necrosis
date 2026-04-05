@@ -52,7 +52,7 @@ Locales\Localization.RU.lua
 Locales\Localization.TW.lua
 Locales\Localization.MX.lua
 
-Initialize.lua
+Initialize_retail.lua
 Utils.lua
 
 Dialog.lua
@@ -77,22 +77,22 @@ Timers\OtherTimers.lua
 
 
 
-
-XML\Attributes.lua
+XML\Attributes_retail.lua
 
 XML\Options-Messages.lua
 XML\Options-SummonQueue.lua
-XML\Options-Sphere-Vanilla.lua
-XML\Options-Buttons.lua
-XML\Options-Menus.lua
-XML\Options-Timers.lua
-XML\Options-Misc.lua
+XML\Options-Sphere_retail.lua
+XML\Options-Buttons_retail.lua
+XML\Options-Menus_retail.lua
+XML\Options-Timers_retail.lua
+XML\Options-Misc_retail.lua
 XML\Options-Overlay.lua
 
-XML\Panel.lua
+XML\Panel_retail.lua
 XML\AboutPanel.lua
+Necrosis_retail.lua
 Necrosis.lua
-XML\XML.lua
+XML\XML_retail.lua
 ThreatMeter.lua
 
 SpellActivations\SpellActivations.xml

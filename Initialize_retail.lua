@@ -491,43 +491,39 @@ Necrosis.Events = Events
 local eventsRegistered = false
 local originalOnEvent = eventFrame:GetScript("OnEvent")
 
+-- ✅ PLAYER_LOGIN is NOT blocked in WoW 12.0! Register it directly
+eventFrame:RegisterEvent("PLAYER_LOGIN")
+
 eventFrame:SetScript("OnEvent", function(self, event, ...)
-	-- Call original handler if it exists
-	if originalOnEvent then
-		originalOnEvent(self, event, ...)
-	end
-end)
-
--- WoW 12.0 CRITICAL: RegisterEvent() is forbidden EVERYWHERE
--- SOLUTION: Use OnUpdate to detect when game is loaded, then initialize
--- This bypasses RegisterEvent() completely by polling game state
-
-local bootstrapFrame = CreateFrame("Frame")
-local initialized = false
-
-bootstrapFrame:SetScript("OnUpdate", function(self, elapsed)
-	-- Check if we're in world (IsLoggedIn and main UI shown)
-	if not initialized and IsLoggedIn() and _G.NecrosisButton then
-		initialized = true
-
-		-- Initialize the addon
+	if event == "PLAYER_LOGIN" then
+		-- Initialize addon directly (PLAYER_LOGIN doesn't do it automatically)
 		if Necrosis and Necrosis.Initialize then
 			Necrosis:Initialize(Necrosis.DefaultConfig or {})
+
+			-- Set button texture after initialization (ensures visibility)
+			C_Timer.After(0.5, function()
+				local btn = _G["NecrosisMainSphere"] or _G["NecrosisButton"]
+				if btn then
+					-- Apply default texture if not already set
+					local texturePath = "Interface\\AddOns\\Necrosis\\UI\\666\\Shard0"
+					btn:SetNormalTexture(texturePath)
+				end
+			end)
 		end
 
-		-- Stop polling
-		self:SetScript("OnUpdate", nil)
-	elseif not initialized and IsLoggedIn() and not _G.NecrosisButton then
-		-- Game is loaded, create UI if Necrosis exists
+		-- Also call OnEvent for other processing
 		if Necrosis and Necrosis.OnEvent then
-			Necrosis:OnEvent("PLAYER_ENTERING_WORLD")
-			initialized = true
-			self:SetScript("OnUpdate", nil)
+			Necrosis:OnEvent(event, ...)
+		end
+	else
+		-- Call original handler if it exists
+		if originalOnEvent then
+			originalOnEvent(self, event, ...)
 		end
 	end
 end)
 
-_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Bootstrap ready (WoW 12.0 workaround)")
+_G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis: Initialized (WoW 12.0 - using PLAYER_LOGIN event)")
 
 ------------------------------------------------------------------------------------------------------
 -- FONCTION D'INITIALISATION
