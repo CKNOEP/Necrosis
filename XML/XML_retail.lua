@@ -61,6 +61,13 @@ end
 
 function Necrosis:CreateWarlockUI()
 ------------------------------------------------------------------------------------------------------
+-- STONE BUTTONS || BOUTONS DES PIERRES
+------------------------------------------------------------------------------------------------------
+
+	-- Create stone buttons (Healthstone, Soulstone)
+	self:CreateStoneButtons()
+
+------------------------------------------------------------------------------------------------------
 -- TIMER BUTTON || BOUTON DU TIMER DES SORTS
 ------------------------------------------------------------------------------------------------------
 
@@ -162,6 +169,18 @@ end
 ------------------------------------------------------------------------------------------------------
 -- BUTTONS for stones (health / spell / Fire), and the Mount || BOUTON DES PIERRES, DE LA MONTURE
 ------------------------------------------------------------------------------------------------------
+
+-- Create stone buttons for Retail (only Healthstone and Soulstone exist)
+function Necrosis:CreateStoneButtons()
+	-- Create Healthstone button
+	if not _G["NecrosisHealthstoneButton"] then
+		_ = CreateStoneButton(Necrosis.Warlock_Buttons.health_stone)
+	end
+	-- Soulstone is already created elsewhere, but ensure it exists
+	if not _G["NecrosisSoulstoneButton"] then
+		_ = CreateStoneButton(Necrosis.Warlock_Buttons.soul_stone)
+	end
+end
 
 local function CreateStoneButton(stone)
 	-- Create the stone button || Création du bouton de la pierre
