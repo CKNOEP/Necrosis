@@ -299,7 +299,7 @@ Notes:
 	[29893]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "Ritual_of_Souls", Length = 600, Buff = true, }, -- Create Soulwell (12.0.1 name) || Rituel des âmes
 
 	-- Fel Domination in 12.0.1 (Domination gangrenée)
-	[333889] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "fel_domination", Length = 15, Cooldown = 900, }, -- Domination gangrenée (12.0.1)
+	[333889] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "domination", Length = 15, Cooldown = 900, }, -- Domination gangrenée (12.0.1)
 
 	-- Dark Pact (Sombre pacte) - 20 sec buff, 60 sec cooldown
 	[108416] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "dark_pact", Length = 20, Cooldown = 60, Buff = false, }, -- Sombre pacte
@@ -434,7 +434,7 @@ Notes:
 	
 	-- Fel Domination does NOT exist in 12.0.1 (replaced by Domination gangrenée which is usage "dark_pact")
 	--[[ Fel Domination (Legacy - does not exist in 12.0.1)
-	[18708] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "domination", Length = 15, Cooldown = 900,}, -- Fel Domination || Domination corrompue (Legacy)
+	[18708] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "fel_domination_legacy", Length = 15, Cooldown = 900,}, -- Fel Domination || Domination corrompue (Legacy)
 	]] 
 	
 	[6353]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "soul_fire", Cooldown = 60,}, -- Soul Fire || Feu de l'âme 
@@ -620,6 +620,7 @@ Necrosis.SpellIDMap = {
 	healthstone = 6201,		-- Create Healthstone (Retail 12.0)
 	demonic_healthstone = 452930,	-- Demonic Healthstone (Retail 12.0)
 	soulstone = 20707,	-- Create Soulstone (Retail 12.0)
+	domination = 333889,	-- Domination Gangrenée (Retail 12.0)
 	agony = 980,		-- Curse of Agony
 	weakness = 702,		-- Curse of Weakness
 	tongues = 1108,		-- Curse of Tongues

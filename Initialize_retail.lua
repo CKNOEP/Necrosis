@@ -509,6 +509,23 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 					btn:SetNormalTexture(texturePath)
 				end
 			end)
+
+			-- Enable event processing (allows spell casting events to be handled)
+			C_Timer.After(0.1, function()
+				if Necrosis and Necrosis.EnableEventProcessing then
+					Necrosis:EnableEventProcessing()
+				end
+			end)
+
+			-- Register spell casting events from secure context (PLAYER_LOGIN)
+			-- UNIT_SPELLCAST_SUCCEEDED/SENT work with RegisterEvent from here
+			pcall(function()
+				eventFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
+				eventFrame:RegisterEvent("UNIT_SPELLCAST_SENT")
+				eventFrame:RegisterEvent("UNIT_SPELLCAST_FAILED")
+				eventFrame:RegisterEvent("UNIT_SPELLCAST_INTERRUPTED")
+				_G["DEFAULT_CHAT_FRAME"]:AddMessage("[NECROSIS] Spell casting events registered")
+			end)
 		end
 
 		-- Also call OnEvent for other processing
@@ -519,6 +536,11 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 		-- Call original handler if it exists
 		if originalOnEvent then
 			originalOnEvent(self, event, ...)
+		end
+
+		-- Call Necrosis.OnEvent for all events
+		if Necrosis and Necrosis.OnEvent then
+			Necrosis:OnEvent(event, ...)
 		end
 	end
 end)

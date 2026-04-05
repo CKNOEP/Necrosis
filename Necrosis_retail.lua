@@ -604,12 +604,10 @@ end
 -- Event : UNIT_SPELLCAST_SUCCEEDED
 -- Manages everything related to successful spell casts || Permet de gérer tout ce qui touche aux sorts une fois leur incantation réussie
 function SpellManagement(SpellCasted)
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] SpellManagement called: spell="..tostring((SpellCasted and SpellCasted.Name) or "nil"))
 	if Necrosis.Debug.timers then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("SpellManagement (debug): spell="..tostring((SpellCasted and SpellCasted.Name) or "nil"))
 	end
-	
-	
+
 	local SortActif = false
 	local cast_spell = SpellCasted
 	
@@ -621,9 +619,6 @@ function SpellManagement(SpellCasted)
 
 		-- Handle any timers on cast spells
 		local spell = Necrosis.GetSpellById(cast_spell.Id)
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] Spell: "..tostring(cast_spell.Name).." Timer="..tostring(spell and spell.Timer).." Buff="..tostring(spell and spell.Buff))
-
-
 
 
 		if spell and spell.Buff then
@@ -667,7 +662,6 @@ function SpellManagement(SpellCasted)
 		--print (spell.Usage,cast_spell.Id,cast_spell.Guid)
 		--print (cast_spell.TargetName,cast_spell.TargetLevel,cast_spell.TargetGUID)
 		--print (cast_spell.TargetName,cast_spell.TargetLevel,cast_spell.TargetGUID)
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] TimerInsert for: "..tostring(spell.Usage))
 			Local.TimerManagement = Necrosis:TimerInsert(cast_info, target, Local.TimerManagement, "spell cast")
 			
 			--print (spell.Usage,cast_spell.Id,cast_spell.Guid)
@@ -1338,8 +1332,6 @@ function Necrosis:OnEvent(event,...)
 		Local.Dead = false
 	-- Successful spell casting management || Gestion de l'incantation des sorts réussie
 	elseif (event == "UNIT_SPELLCAST_SUCCEEDED") then
-		-- DEBUG: Log ALL UNIT_SPELLCAST_SUCCEEDED events to see what arguments we're getting
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG] UNIT_SPELLCAST_SUCCEEDED RECEIVED: arg1="..tostring(arg1).." arg2="..tostring(arg2).." arg3="..tostring(arg3).." arg4="..tostring(arg4))
 
 		-- UNIT_SPELLCAST_SUCCEEDED: "unitTarget", "castGUID", spellID || https://wow.gamepedia.com/UNIT_SPELLCAST_SUCCEEDED
 		-- This can get chatty as other 'casts' are sent such as enchanting / skinning / ...
@@ -1352,13 +1344,12 @@ function Necrosis:OnEvent(event,...)
 			-- Continue normal processing
 
 		local target, cast_guid, spell_id = arg1, arg2, arg3
-		
-		
+
 		msg = " sid'"..tostring(spell_id or "nyl").."'"
 			.." t'"..tostring(target or "nyl").."'"
 			.." cg'"..tostring(cast_guid or "nyl").."'"
 		ev_out(event, msg, false, true, true)
-		
+
 		if Local.SpellCasted[cast_guid] then -- processing this one
 			local sc = Local.SpellCasted[cast_guid]
 
@@ -3797,4 +3788,11 @@ function Necrosis:GetHealthstoneItemCooldown()
 		return startTime, duration, isEnabled
 	end
 	return 0, 0, false
+end
+
+-- CRITICAL: Mark addon as ready to process events
+-- This is called from Initialize_retail.lua hook
+function Necrosis:EnableEventProcessing()
+	Local.InWorld = true
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[NECROSIS] Event processing enabled - Local.InWorld = true")
 end
