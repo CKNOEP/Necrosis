@@ -1070,16 +1070,13 @@ function Necrosis.IsSpellKnown(usage)
 	if usage and usage =="mounts" then
 	--print ("usage "..usage)
 	end
-	
-	
-	
+
+
+
 	if Necrosis.Warlock_Spell_Use[usage] -- get spell id
 	then
-		if GetSpellInfo(Necrosis.Warlock_Spell_Use[usage]) then --- test if spell is known
-		return true
-
-		--return Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].InSpellBook
-		end
+		-- Check InSpellBook flag, not GetSpellInfo (which returns true even for unlearned spells)
+		return Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].InSpellBook or false
 	else
 		return false -- safety
 	end
