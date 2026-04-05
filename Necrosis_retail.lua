@@ -3184,6 +3184,13 @@ function Necrosis:CreateMenu()
 	-- Create mounts button if not already created
 	if not _G[Necrosis.Warlock_Buttons.mounts.f] then
 		_ = Necrosis:CreateSphereButtons(Necrosis.Warlock_Buttons.mounts)
+		-- Set position for mounts button (CreateStoneButton doesn't set it if NecrosisLockServ is true)
+		local mountBtn = _G[Necrosis.Warlock_Buttons.mounts.f]
+		if mountBtn then
+			mountBtn:ClearAllPoints()
+			local pos = NecrosisConfig.FramePosition["NecrosisMountButton"] or {"CENTER", "UIParent", "CENTER", 53, -100}
+			mountBtn:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+		end
 	end
 	-- Show/hide based on config (StonePosition[6] controls mounts visibility)
 	if NecrosisConfig.StonePosition[6] > 0 then
