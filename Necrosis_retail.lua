@@ -3135,8 +3135,7 @@ function Necrosis:CreateMenuItem(spellListItem)
 			end)
 		end
 
-		-- Set spell attributes using the proper method for Retail
-		Necrosis:SetBuffSpellAttribute(buttonName)
+		-- Note: Spell attributes are set later by BuffSpellAttribute() after CreateMenu completes
 
 		return btn
 	end
