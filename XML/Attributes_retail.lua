@@ -422,10 +422,12 @@ function Necrosis:StoneAttribute(Steed)
 	if Necrosis.IsSpellKnown("healthstone") then
 		local f = _G[Necrosis.Warlock_Buttons.health_stone.f]
 		if f then
+			f:SetAttribute("type1", "spell")
+			f:SetAttribute("spell1", Necrosis.GetSpellCastName("healthstone"))
 			f:SetAttribute("type2", "spell")
-			f:SetAttribute("spell2", Necrosis.GetSpellCastName("healthstone")) 
+			f:SetAttribute("spell2", Necrosis.GetSpellCastName("healthstone"))
 			f:SetAttribute("shift-type*", "spell")
-			f:SetAttribute("shift-spell*", Necrosis.GetSpellCastName("Ritual_of_Souls")) 			
+			f:SetAttribute("shift-spell*", Necrosis.GetSpellCastName("Ritual_of_Souls"))
 
 		end
 	end
