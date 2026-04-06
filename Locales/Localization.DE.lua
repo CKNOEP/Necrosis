@@ -297,6 +297,7 @@ L["MOUNT_DRAG_DROP_INSTRUCTIONS"] = "Wählen Sie Ihre Begleiter: Ziehen Sie den 
 L["OFFSET_X"] = "Versatz X"
 L["OFFSET_Y"] = "Versatz Y"
 L["SELECT_MOUNTS"] = "Wählen Sie Ihre Begleiter:"
+L["OPEN_COLLECTIONS"] = "Sammlungen öffnen"
 L["PAGE_OF_N"] = "Seite %d von %d"
 L["RESET"] = "Zurücksetzen"
 L["TEST_OVERLAY"] = "Overlay testen"

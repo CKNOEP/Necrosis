@@ -355,6 +355,7 @@ L["MOUNT_DRAG_DROP_INSTRUCTIONS"] = "Sélectionnez vos montures : glissez-dépos
 L["OFFSET_X"] = "Décalage X"
 L["OFFSET_Y"] = "Décalage Y"
 L["SELECT_MOUNTS"] = "Sélectionnez vos montures :"
+L["OPEN_COLLECTIONS"] = "Ouvrir Collections"
 L["PAGE_OF_N"] = "Page %d sur %d"
 L["RESET"] = "Réinitialiser"
 L["TEST_OVERLAY"] = "Tester Overlay"

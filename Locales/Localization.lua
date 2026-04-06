@@ -329,6 +329,7 @@ L["MOUNT_DRAG_DROP_INSTRUCTIONS"] = "Select your mounts: drag and drop the Mount
 L["OFFSET_X"] = "Offset X"
 L["OFFSET_Y"] = "Offset Y"
 L["SELECT_MOUNTS"] = "Select your mounts:"
+L["OPEN_COLLECTIONS"] = "Open Collections"
 L["PAGE_OF_N"] = "Page %d of %d"
 L["RESET"] = "Reset"
 L["TEST_OVERLAY"] = "Test Overlay"

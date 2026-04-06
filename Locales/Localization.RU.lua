@@ -313,6 +313,7 @@ L["MOUNT_DRAG_DROP_INSTRUCTIONS"] = "Выберите ваши ездовых ж
 L["OFFSET_X"] = "Смещение X"
 L["OFFSET_Y"] = "Смещение Y"
 L["SELECT_MOUNTS"] = "Выберите ваших ездовых животных:"
+L["OPEN_COLLECTIONS"] = "Открыть коллекцию"
 L["PAGE_OF_N"] = "Страница %d из %d"
 L["RESET"] = "Сброс"
 L["TEST_OVERLAY"] = "Тестовый оверлей"

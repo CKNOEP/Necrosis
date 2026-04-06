@@ -511,7 +511,7 @@ function Necrosis:SetButtonsConfig()
 		collectionsButton:EnableMouse(true)
 		collectionsButton:Show()
 		collectionsButton:ClearAllPoints()
-		collectionsButton:SetPoint("BOTTOM", NecrosisMountsSelectionFrame, "BOTTOM", 0, -100)
+		collectionsButton:SetPoint("LEFT", NecrosisChooseMountsText, "RIGHT", 10, 0)
 		collectionsButton:SetWidth(32)
 		collectionsButton:SetHeight(32)
 
@@ -523,19 +523,22 @@ function Necrosis:SetButtonsConfig()
 
 		collectionsButton:SetScript("OnClick", function()
 			CollectionsJournal_LoadUI()
-			ShowUIPanel(CollectionsJournalFrame)
-			-- Navigate to Mounts tab (tab 2 in Collections Journal)
-			local tab = _G["CollectionsJournalTab2"]
-			if tab then
-				PanelTemplates_SetTab(CollectionsJournalFrame, 2)
-				CollectionsJournal_OnTabClicked(CollectionsJournalFrame, 2)
+			if CollectionsJournalFrame then
+				ShowUIPanel(CollectionsJournalFrame)
+				-- Try to navigate to Mounts tab
+				if CollectionsJournalFrame.tabGroup then
+					CollectionsJournalFrame.tabGroup:SelectTab("mounts")
+				elseif CollectionsJournal_OnTabClicked then
+					-- Fallback for older API versions
+					CollectionsJournal_OnTabClicked(CollectionsJournalFrame, 2)
+				end
 			end
 		end)
 
 		-- Add tooltip
 		collectionsButton:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-			GameTooltip:SetText("Ouvrir Collections")
+			GameTooltip:SetText(L["OPEN_COLLECTIONS"])
 		end)
 		collectionsButton:SetScript("OnLeave", function()
 			GameTooltip:Hide()
