@@ -462,6 +462,25 @@ function Necrosis:UpdateTimerCheckboxes()
 	print(msg)
 	if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage(msg) end
 
+	-- Check Necrosis.Config.Timers
+	local configTimersStatus = tostring(Necrosis.Config.Timers)
+	local configMsg = "[Necrosis] Necrosis.Config.Timers: " .. configTimersStatus
+	print(configMsg)
+	if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage(configMsg) end
+
+	if Necrosis.Config.Timers then
+		local configCount = #Necrosis.Config.Timers
+		local configCountMsg = "[Necrosis] Necrosis.Config.Timers count: " .. configCount
+		print(configCountMsg)
+		if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage(configCountMsg) end
+
+		if Necrosis.Config.Timers[1] then
+			local configItemMsg = "[Necrosis] Necrosis.Config.Timers[1].usage: " .. tostring(Necrosis.Config.Timers[1].usage)
+			print(configItemMsg)
+			if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage(configItemMsg) end
+		end
+	end
+
 	local timerStatus = tostring(NecrosisConfig.Timers)
 	local msg2 = "[Necrosis] NecrosisConfig.Timers: " .. timerStatus
 	print(msg2)
