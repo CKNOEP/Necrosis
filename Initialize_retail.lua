@@ -630,11 +630,20 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 
 			-- Import/Restore NecrosisUI layout if enabled
 			C_Timer.After(2.0, function()
+				print("[Necrosis] PLAYER_LOGIN timer fired")
+				print("[Necrosis] NecrosisUIEnabled=" .. tostring(NecrosisConfig.NecrosisUIEnabled))
 				if NecrosisConfig.NecrosisUIEnabled then
 					local NUI = _G.NUI
+					print("[Necrosis] NUI=" .. tostring(NUI ~= nil))
+					if NUI then
+						print("[Necrosis] NUI.ImportLayout=" .. tostring(type(NUI.ImportLayout)))
+					end
 					if NUI and type(NUI.ImportLayout) == "function" then
 						print("[Necrosis] Calling NUI:ImportLayout() from PLAYER_LOGIN")
-						local ok, err = pcall(function() NUI:ImportLayout() end)
+						-- Try calling without self
+						local ImportLayout = NUI.ImportLayout
+						local ok, err = pcall(function() ImportLayout(NUI) end)
+						print("[Necrosis] pcall returned: ok=" .. tostring(ok) .. " err=" .. tostring(err))
 						if not ok then
 							print("[Necrosis] ImportLayout error: " .. tostring(err))
 						end

@@ -78,9 +78,20 @@ _G.NECROSISUI_LAYOUT_STRING = _G.NECROSISUI_LAYOUT_STRING or "2 50 0 0 0 0 0 UIP
 
 -- Import NecrosisUI Layout via C_EditMode
 function NUI:ImportLayout()
+	if DEFAULT_CHAT_FRAME then
+		DEFAULT_CHAT_FRAME:AddMessage("[NecrosisUI] ImportLayout() called - VISIBLE IN CHAT")
+	end
 	print("[NecrosisUI] ImportLayout() called")
+	print("[NecrosisUI] C_EditMode exists:", C_EditMode ~= nil)
+	if C_EditMode then
+		print("[NecrosisUI] C_EditMode.GetLayouts:", C_EditMode.GetLayouts ~= nil)
+		print("[NecrosisUI] C_EditMode.ConvertStringToLayoutInfo:", C_EditMode.ConvertStringToLayoutInfo ~= nil)
+	end
 	if not C_EditMode or not C_EditMode.GetLayouts or not C_EditMode.ConvertStringToLayoutInfo then
-		print("[NecrosisUI] C_EditMode not available - C_EditMode:" .. tostring(C_EditMode ~= nil))
+		if DEFAULT_CHAT_FRAME then
+			DEFAULT_CHAT_FRAME:AddMessage("[NecrosisUI] C_EditMode not available - returning")
+		end
+		print("[NecrosisUI] C_EditMode not available - returning")
 		return
 	end
 
