@@ -80,7 +80,7 @@ _G.NECROSISUI_LAYOUT_STRING = _G.NECROSISUI_LAYOUT_STRING or "2 50 0 0 0 0 0 UIP
 function NUI:ImportLayout()
 	print("[NecrosisUI] ImportLayout() called")
 	if not C_EditMode or not C_EditMode.GetLayouts or not C_EditMode.ConvertStringToLayoutInfo then
-		print("[NecrosisUI] C_EditMode not available")
+		print("[NecrosisUI] C_EditMode not available - C_EditMode:" .. tostring(C_EditMode ~= nil))
 		return
 	end
 
@@ -89,7 +89,8 @@ function NUI:ImportLayout()
 		print("[NecrosisUI] No layout string found")
 		return
 	end
-	print("[NecrosisUI] Layout string found, converting...")
+
+	print("[NecrosisUI] Layout string exists, converting...")
 
 	local importedLayoutInfo = C_EditMode.ConvertStringToLayoutInfo(layoutString)
 	if not importedLayoutInfo then

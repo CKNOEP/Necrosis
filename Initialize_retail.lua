@@ -633,8 +633,13 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 				if NecrosisConfig.NecrosisUIEnabled then
 					local NUI = _G.NUI
 					if NUI and type(NUI.ImportLayout) == "function" then
-						DEFAULT_CHAT_FRAME:AddMessage("[Necrosis] Calling NUI:ImportLayout() from PLAYER_LOGIN")
-						pcall(function() NUI:ImportLayout() end)
+						print("[Necrosis] Calling NUI:ImportLayout() from PLAYER_LOGIN")
+						local ok, err = pcall(function() NUI:ImportLayout() end)
+						if not ok then
+							print("[Necrosis] ImportLayout error: " .. tostring(err))
+						end
+					else
+						print("[Necrosis] NUI.ImportLayout not found - NUI:" .. tostring(NUI ~= nil))
 					end
 				end
 			end)
