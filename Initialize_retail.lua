@@ -760,7 +760,15 @@ function Necrosis:Initialize(Config)
 		-- First load: create new config with all defaults
 		NecrosisConfig = {}
 		for key, value in pairs(Necrosis.Config) do
-			NecrosisConfig[key] = value
+			-- Deep copy for Timers to avoid reference issues
+			if key == "Timers" and type(value) == "table" then
+				NecrosisConfig[key] = {}
+				for i, timerData in ipairs(value) do
+					NecrosisConfig[key][i] = timerData
+				end
+			else
+				NecrosisConfig[key] = value
+			end
 		end
 		NecrosisConfig.Version = Necrosis.Data.LastConfig
 		self:Msg(self.ChatMessage.Interface.DefaultConfig, "USER")
@@ -769,7 +777,15 @@ function Necrosis:Initialize(Config)
 		-- Keep player's existing settings and add any missing defaults
 		for key, defaultValue in pairs(Necrosis.Config) do
 			if NecrosisConfig[key] == nil then
-				NecrosisConfig[key] = defaultValue
+				-- Deep copy for Timers to avoid reference issues
+				if key == "Timers" and type(defaultValue) == "table" then
+					NecrosisConfig[key] = {}
+					for i, timerData in ipairs(defaultValue) do
+						NecrosisConfig[key][i] = timerData
+					end
+				else
+					NecrosisConfig[key] = defaultValue
+				end
 			end
 		end
 		NecrosisConfig.Version = Necrosis.Data.Version
@@ -837,9 +853,12 @@ function Necrosis:Initialize(Config)
 		}
 	end
 
-	-- Initialize Timers with defaults if not present
-	if not NecrosisConfig.Timers then
-		NecrosisConfig.Timers = Necrosis.Config.Timers
+	-- Initialize Timers with defaults if not present or incomplete
+	if not NecrosisConfig.Timers or not NecrosisConfig.Timers[1] or not NecrosisConfig.Timers[1].usage then
+		NecrosisConfig.Timers = {}
+		for i, timerData in ipairs(Necrosis.Config.Timers) do
+			NecrosisConfig.Timers[i] = timerData
+		end
 	end
 
 	-- Initialize FramePosition with defaults if empty
