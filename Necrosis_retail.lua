@@ -98,8 +98,8 @@ Local.DefaultConfig = {
 	PetMenuPos = {x=1, y=0, direction=1},
 	PetMenuDecalage = {x=1, y=49},
 
-	BuffMenuPos = {x=0, y=1, direction=1},
-	BuffMenuDecalage = {x=-65, y=18},
+	BuffMenuPos = {x=1, y=0, direction=-1},
+	BuffMenuDecalage = {x=8, y=30},
 
 	CurseMenuPos = {x=1, y=0, direction=1},
 	CurseMenuDecalage = {x=1, y=30},

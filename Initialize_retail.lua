@@ -361,7 +361,7 @@ Necrosis.Config = {
 	["MainSpell"] = "dark_pact",
 	["BottomBannerWidthScale"] = 1.308064699172974,
 	["NecrosisLockServ"] = true,
-	["BuffMenuPos"] = { ["y"] = 0, ["x"] = 1, ["direction"] = 1 },
+	["BuffMenuPos"] = { ["y"] = 0, ["x"] = 1, ["direction"] = -1 },
 	["PlayerSummonsSM"] = false,
 	["BlockedMenu"] = false,
 	["NoDragAll"] = false,
@@ -431,7 +431,7 @@ Necrosis.Config = {
 	["NecrosisButtonSpacing"] = 1.200000047683716,
 	["SpellTimerPos"] = 1,
 	["NecrosisButtonScale"] = 143,
-	["BuffMenuDecalage"] = { ["y"] = 26, ["x"] = 1 },
+	["BuffMenuDecalage"] = { ["y"] = 30, ["x"] = 8 },
 	["NecrosisButtonRadius"] = 0.9000000357627869,
 	["CurseMenuPos"] = { ["y"] = 0, ["x"] = 1, ["direction"] = 1 },
 }
