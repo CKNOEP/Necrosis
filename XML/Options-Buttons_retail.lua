@@ -504,7 +504,27 @@ function Necrosis:SetButtonsConfig()
 		FontString:ClearAllPoints()
 		FontString:SetPoint("RIGHT", NecrosisSelectedMountCtrlRight, "LEFT", -10, 0)
 		FontString:SetTextColor(1, 1, 1)
-		FontString:SetText(self.Config.Buttons["Monture - Ctrl+Clic droit"])		
+		FontString:SetText(self.Config.Buttons["Monture - Ctrl+Clic droit"])
+
+		-- Add button to open Collections/Mounts interface || Bouton pour ouvrir l'interface Collections/Montures
+		local collectionsButton = CreateFrame("Button", "NecrosisOpenCollectionsButton", NecrosisMountsSelectionFrame, "UIPanelButtonTemplate")
+		collectionsButton:SetText("Ouvrir Collections")
+		collectionsButton:EnableMouse(true)
+		collectionsButton:Show()
+		collectionsButton:ClearAllPoints()
+		collectionsButton:SetPoint("BOTTOM", NecrosisMountsSelectionFrame, "BOTTOM", 0, -100)
+		collectionsButton:SetWidth(120)
+		collectionsButton:SetHeight(22)
+		collectionsButton:SetScript("OnClick", function()
+			CollectionsJournal_LoadUI()
+			ShowUIPanel(CollectionsJournalFrame)
+			-- Navigate to Mounts tab (tab 2 in Collections Journal)
+			local tab = _G["CollectionsJournalTab2"]
+			if tab then
+				PanelTemplates_SetTab(CollectionsJournalFrame, 2)
+				CollectionsJournal_OnTabClicked(CollectionsJournalFrame, 2)
+			end
+		end)
 	end
 	
 	-- the frame is created, so set some defaults
