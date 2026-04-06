@@ -1246,21 +1246,20 @@ function Necrosis:Initialize(Config)
 
 				-- Position
 				-- Try to restore from NecrosisMainSphere (current name) first, then NecrosisButton (legacy)
-				if NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisMainSphere"] then
-					local pos = NecrosisConfig.FramePosition["NecrosisMainSphere"]
+				local pos = nil
+				if NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisMainSphere"] and #NecrosisConfig.FramePosition["NecrosisMainSphere"] >= 5 then
+					pos = NecrosisConfig.FramePosition["NecrosisMainSphere"]
+				elseif NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisButton"] and #NecrosisConfig.FramePosition["NecrosisButton"] >= 5 then
+					pos = NecrosisConfig.FramePosition["NecrosisButton"]
+				end
+
+				if pos then
 					btn:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
-					-- Restore scale if it exists (6th element), otherwise use default 1
-					if pos[6] then
-						btn:SetScale(pos[6])
-					end
-				elseif NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisButton"] then
-					local pos = NecrosisConfig.FramePosition["NecrosisButton"]
-					btn:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
-					-- Restore scale if it exists (6th element)
 					if pos[6] then
 						btn:SetScale(pos[6])
 					end
 				else
+					-- Use default position
 					btn:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, 59.01052474975586)
 					btn:SetScale(1.429999947547913)
 				end
