@@ -17,11 +17,13 @@ local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
 ------------------------------------------------------------------------------------------------------
 
 function Necrosis:SetTimersConfig()
+	print("[Necrosis] SetTimersConfig() called!")
 
 	-- ========================================
 	-- CLEAN UP OLD FRAMES (force recreation for new layout)
 	-- ========================================
 	local oldFrame = _G["NecrosisTimersConfig"]
+	print("[Necrosis] oldFrame exists:", oldFrame)
 	if oldFrame then
 		-- Check if it has the old 2-page layout (missing Page 3)
 		if _G["NecrosisTimersConfig2"] and not _G["NecrosisTimersConfig3"] then
