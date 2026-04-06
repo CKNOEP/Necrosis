@@ -521,6 +521,10 @@ function Necrosis:SetButtonsConfig()
 		texture:SetTexture(C_Spell.GetSpellTexture(150544))
 		collectionsButton.texture = texture
 
+		-- Get locale for tooltip (stored as upvalue for OnEnter access)
+		local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
+		local tooltipText = L and L["OPEN_COLLECTIONS"] or "Open Collections"
+
 		collectionsButton:SetScript("OnClick", function()
 			CollectionsJournal_LoadUI()
 			if CollectionsJournalFrame then
@@ -538,7 +542,7 @@ function Necrosis:SetButtonsConfig()
 		-- Add tooltip
 		collectionsButton:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-			GameTooltip:SetText(L["OPEN_COLLECTIONS"])
+			GameTooltip:SetText(tooltipText)
 		end)
 		collectionsButton:SetScript("OnLeave", function()
 			GameTooltip:Hide()
