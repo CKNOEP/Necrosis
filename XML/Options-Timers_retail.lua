@@ -333,49 +333,8 @@ function Necrosis:SetTimersConfig()
 		local initY = 395
 		local leftX = 40
 		local rightX = 220
-
-		if NecrosisConfig.Timers then
-			for i = 1, math.min(20, #NecrosisConfig.Timers), 1 do
-				-- Skip if timer entry is missing or malformed
-				if not NecrosisConfig.Timers[i] or not NecrosisConfig.Timers[i].usage then
-					break
-				end
-
-				frame = CreateFrame("CheckButton", "NecrosisTimerShow"..i, NecrosisTimersConfig2, "UICheckButtonTemplate")
-				frame:EnableMouse(true)
-				frame:SetWidth(24)
-				frame:SetHeight(24)
-				frame:Show()
-				frame:ClearAllPoints()
-
-				-- Layout: 2 columns x 10 rows
-				if i <= 10 then
-					-- Left column (items 1-10)
-					frame:SetPoint("LEFT", NecrosisTimersConfig2, "BOTTOMLEFT", leftX, initY - (25 * i))
-				else
-					-- Right column (items 11-20)
-					frame:SetPoint("LEFT", NecrosisTimersConfig2, "BOTTOMLEFT", rightX, initY - (25 * (i-10)))
-				end
-
-				frame:SetScript("OnClick", function(self)
-					if Necrosis.UpdateSpellTimer then
-						Necrosis.UpdateSpellTimer(i, self:GetChecked())
-					end
-				end)
-
-				FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
-				FontString:Show()
-				FontString:ClearAllPoints()
-				FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
-				FontString:SetTextColor(1, 1, 1)
-				frame:SetFontString(FontString)
-
-				frame:SetChecked(NecrosisConfig.Timers[i].show or false)
-				frame:SetText(Necrosis.GetSpellName(NecrosisConfig.Timers[i].usage) or "Unknown")
-			end
-		end
-
-		NecrosisTimersConfig2:Hide()
+		-- Checkboxes will be created by UpdateTimerCheckboxes() function
+		-- Hide page 2 initially (will be shown by UpdateTimerCheckboxes if needed)
 
 		-- ========================================
 		-- PAGE 3: TIMER SPELLS (ITEMS 21-40)
@@ -427,51 +386,8 @@ function Necrosis:SetTimersConfig()
 		end)
 
 		-- ========================================
-		-- TIMER CHECKBOXES PAGE 3 (2 COLUMNS x 10 ROWS)
+		-- TIMER CHECKBOXES PAGE 3 (created by UpdateTimerCheckboxes())
 		-- ========================================
-		if NecrosisConfig.Timers then
-			for i = 21, #NecrosisConfig.Timers, 1 do
-				-- Skip if timer entry is missing or malformed
-				if not NecrosisConfig.Timers[i] or not NecrosisConfig.Timers[i].usage then
-					break
-				end
-
-				frame = CreateFrame("CheckButton", "NecrosisTimerShow"..i, NecrosisTimersConfig3, "UICheckButtonTemplate")
-				frame:EnableMouse(true)
-				frame:SetWidth(24)
-				frame:SetHeight(24)
-				frame:Show()
-				frame:ClearAllPoints()
-
-				-- Layout: 2 columns x 10 rows (relative to start of page 3)
-				local pageIndex = i - 20  -- Convert to 1-based for this page
-				if pageIndex <= 10 then
-					-- Left column (items 21-30)
-					frame:SetPoint("LEFT", NecrosisTimersConfig3, "BOTTOMLEFT", leftX, initY - (25 * pageIndex))
-				else
-					-- Right column (items 31-40)
-					frame:SetPoint("LEFT", NecrosisTimersConfig3, "BOTTOMLEFT", rightX, initY - (25 * (pageIndex-10)))
-				end
-
-				frame:SetScript("OnClick", function(self)
-					if Necrosis.UpdateSpellTimer then
-						Necrosis.UpdateSpellTimer(i, self:GetChecked())
-					end
-				end)
-
-				FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
-				FontString:Show()
-				FontString:ClearAllPoints()
-				FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
-				FontString:SetTextColor(1, 1, 1)
-				frame:SetFontString(FontString)
-
-				frame:SetChecked(NecrosisConfig.Timers[i].show or false)
-				frame:SetText(Necrosis.GetSpellName(NecrosisConfig.Timers[i].usage) or "Unknown")
-			end
-		end
-
-		NecrosisTimersConfig3:Hide()
 	end
 
 	-- ========================================
