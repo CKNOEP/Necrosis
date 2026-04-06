@@ -1067,6 +1067,13 @@ local function StartInit(fm)
 	--[[ Once the localized strings are known, build the buttons.
 	--]]
 	Local.InWorld = true
+
+	-- Import/Restore NecrosisUI layout if enabled
+	if NecrosisConfig.NecrosisUIEnabled and NUI and type(NUI.ImportLayout) == "function" then
+		C_Timer.After(0.5, function()
+			pcall(function() NUI:ImportLayout() end)
+		end)
+	end
 end
 
 -- Function started when updating the interface (main) - every 0.1 seconds || Fonction lancée à la mise à jour de l'interface (main) -- Toutes les 0,1 secondes environ
@@ -1218,13 +1225,9 @@ function Necrosis:OnEvent(event,...)
 		msg = " '"..tostring(done).."'"
 			.." '"..tostring(Local.InWorld).."'"
 		ev_out(event, msg, false, true, false)
-		print("[NECROSIS DEBUG] PLAYER_ENTERING_WORLD - Class:", Class, "InWorld:", Local.InWorld)
 		if Class == "WARLOCK" then
-			print("[NECROSIS DEBUG] Is WARLOCK")
 			if Local.InWorld then
-				print("[NECROSIS DEBUG] Already InWorld")
 			else
-				print("[NECROSIS DEBUG] First time - initializing")
 				ev_out(event, done, true, false, false)
 				-- Initialize immediately instead of waiting for items
 				Necrosis:Initialize(Local.DefaultConfig)
@@ -1276,16 +1279,6 @@ function Necrosis:OnEvent(event,...)
 					end
 				end)
 
-				-- Import/Restore NecrosisUI layout on startup if enabled
-				print("[NECROSIS] NecrosisUIEnabled:", NecrosisConfig.NecrosisUIEnabled, "NUI exists:", NUI ~= nil)
-				if NecrosisConfig.NecrosisUIEnabled and NUI then
-					C_Timer.After(0.8, function()
-						print("[NECROSIS] Calling NUI:ImportLayout()")
-						pcall(function() NUI:ImportLayout() end)
-					end)
-				else
-					print("[NECROSIS] Skipping ImportLayout - NecrosisUIEnabled:", NecrosisConfig.NecrosisUIEnabled, "NUI:", NUI)
-				end
 			end
 
 			-- Detecting the type of demon present at the connection || Détection du Type de démon présent à la connexion
