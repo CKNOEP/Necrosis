@@ -7,6 +7,14 @@
 local _G = getfenv(0)
 local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
 
+-- Helper function to safely get frame position with defaults
+local function GetFramePosition(buttonName, defaults)
+	if NecrosisConfig and NecrosisConfig.FramePosition and NecrosisConfig.FramePosition[buttonName] then
+		return NecrosisConfig.FramePosition[buttonName]
+	end
+	return defaults or {"CENTER", "UIParent", "CENTER", 0, 0}
+end
+
 function White(str)
 	return "|c00FFFFFF"..str.."|r"
 end
@@ -100,13 +108,9 @@ function Necrosis:CreateWarlockUI()
 
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
 	frame:ClearAllPoints()
-	frame:SetPoint(
-		NecrosisConfig.FramePosition["NecrosisSpellTimerButton"][1],
-		NecrosisConfig.FramePosition["NecrosisSpellTimerButton"][2],
-		NecrosisConfig.FramePosition["NecrosisSpellTimerButton"][3],
-		NecrosisConfig.FramePosition["NecrosisSpellTimerButton"][4],
-		NecrosisConfig.FramePosition["NecrosisSpellTimerButton"][5]
-	)
+	local pos = GetFramePosition("NecrosisSpellTimerButton", {"CENTER", "UIParent", "CENTER", 100, 300})
+	frame:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+	if pos[6] then frame:SetScale(pos[6]) end
 
 	frame:Show()
 
@@ -135,21 +139,9 @@ function Necrosis:CreateWarlockUI()
 
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
 	frame:ClearAllPoints()
-	if NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisButton"] then
-		frame:SetPoint(
-			NecrosisConfig.FramePosition["NecrosisButton"][1],
-			NecrosisConfig.FramePosition["NecrosisButton"][2],
-			NecrosisConfig.FramePosition["NecrosisButton"][3],
-			NecrosisConfig.FramePosition["NecrosisButton"][4],
-			NecrosisConfig.FramePosition["NecrosisButton"][5]
-		)
-	else
-		-- Default position if no saved position
-		print("WARNING: No saved position for NecrosisButton, using default CENTER")
-		frame:SetPoint("CENTER", UIParent, "CENTER", 0, -200)
-	end
-
-	frame:SetScale((NecrosisConfig.NecrosisButtonScale / 100))
+	local pos = GetFramePosition("NecrosisButton", {"CENTER", "UIParent", "CENTER", 0, -200})
+	frame:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+	if pos[6] then frame:SetScale(pos[6]) else frame:SetScale((NecrosisConfig.NecrosisButtonScale or 100) / 100) end
 	frame:Show()
 
 	-- Create the soulshard counter || Création du compteur de fragments d'âme
@@ -215,8 +207,15 @@ function Necrosis:CreateStoneButtons()
 
 		-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
 		frame:ClearAllPoints()
-		local pos = NecrosisConfig.FramePosition["NecrosisHealthstoneButton"] or {"CENTER", "UIParent", "CENTER", -53, -100}
+		local pos = GetFramePosition("NecrosisHealthstoneButton", {"CENTER", "NecrosisMainSphere", "CENTER", -42.38417434692383, -6.71299409866333, 1.549999952316284})
 		frame:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+		-- Handle scale (new format has 6 elements, old format has 5)
+		if pos[6] then
+			frame:SetScale(pos[6])
+		else
+			-- Old format without scale, use default
+			frame:SetScale(1.549999952316284)
+		end
 	end
 end
 
@@ -291,8 +290,9 @@ local function CreateStoneButton(stone)
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
 	if not NecrosisConfig.NecrosisLockServ then
 		frame:ClearAllPoints()
-		local pos = NecrosisConfig.FramePosition[frame:GetName()] or {"CENTER", "UIParent", "CENTER", 0, 0}
+		local pos = GetFramePosition(frame:GetName(), {"CENTER", "UIParent", "CENTER", 0, 0})
 		frame:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+		if pos[6] then frame:SetScale(pos[6]) else frame:SetScale(1.549999952316284) end
 	end
 
 	return frame
@@ -343,8 +343,9 @@ local function CreateMenuButton(button)
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
 	if not NecrosisConfig.NecrosisLockServ then
 		frame:ClearAllPoints()
-		local pos = NecrosisConfig.FramePosition[frame:GetName()] or {"CENTER", "UIParent", "CENTER", 0, 0}
+		local pos = GetFramePosition(frame:GetName(), {"CENTER", "UIParent", "CENTER", 0, 0})
 		frame:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+		if pos[6] then frame:SetScale(pos[6]) else frame:SetScale(1.549999952316284) end
 	end
 
 	return frame
@@ -488,13 +489,9 @@ function Necrosis:CreateWarlockPopup()
 
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
 	frame:ClearAllPoints()
-	frame:SetPoint(
-		NecrosisConfig.FramePosition["NecrosisShadowTranceButton"][1],
-		NecrosisConfig.FramePosition["NecrosisShadowTranceButton"][2],
-		NecrosisConfig.FramePosition["NecrosisShadowTranceButton"][3],
-		NecrosisConfig.FramePosition["NecrosisShadowTranceButton"][4],
-		NecrosisConfig.FramePosition["NecrosisShadowTranceButton"][5]
-	)
+	local pos = GetFramePosition("NecrosisShadowTranceButton", {"CENTER", "UIParent", "CENTER", 308.96533203125, -124.1379699707031, 1.450000047683716})
+	frame:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+	if pos[6] then frame:SetScale(pos[6]) end
 
 ------------------------------------------------------------------------------------------------------
 	-- Create the Backlash button || Creation du bouton de BackLash
@@ -522,13 +519,9 @@ function Necrosis:CreateWarlockPopup()
 
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
 	frame:ClearAllPoints()
-	frame:SetPoint(
-		NecrosisConfig.FramePosition["NecrosisBacklashButton"][1],
-		NecrosisConfig.FramePosition["NecrosisBacklashButton"][2],
-		NecrosisConfig.FramePosition["NecrosisBacklashButton"][3],
-		NecrosisConfig.FramePosition["NecrosisBacklashButton"][4],
-		NecrosisConfig.FramePosition["NecrosisBacklashButton"][5]
-	)
+	local pos = GetFramePosition("NecrosisBacklashButton", {"CENTER", "UIParent", "CENTER", 60, 0})
+	frame:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+	if pos[6] then frame:SetScale(pos[6]) else frame:SetScale(1.549999952316284) end
 
 ---------------------------------------------
 	-- Create the Elemental & demon alert button || 
@@ -585,21 +578,10 @@ function Necrosis:CreateWarlockPopup()
 	frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
 
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
-	if NecrosisConfig.FramePosition then
-		if NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_demon"] then
-			frame:ClearAllPoints()
-			frame:SetPoint(
-				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_demon"][1],
-				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_demon"][2],
-				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_demon"][3],
-				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_demon"][4],
-				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_demon"][5]
-			)
-		end
-	else
-		frame:ClearAllPoints()
-		frame:SetPoint("CENTER", UIParent, "CENTER", -50, 0)
-	end
+	frame:ClearAllPoints()
+	local pos = GetFramePosition("NecrosisCreatureAlertButton_demon", {"CENTER", "UIParent", "CENTER", -50, 0})
+	frame:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+	if pos[6] then frame:SetScale(pos[6]) else frame:SetScale(1.549999952316284) end
 
 ---------------
 -- Elemental --
@@ -659,21 +641,10 @@ function Necrosis:CreateWarlockPopup()
 
 
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
-	if NecrosisConfig.FramePosition then
-		if NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_elemental"] then
-			frame:ClearAllPoints()
-			frame:SetPoint(
-				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_elemental"][1],
-				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_elemental"][2],
-				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_elemental"][3],
-				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_elemental"][4],
-				NecrosisConfig.FramePosition["NecrosisCreatureAlertButton_elemental"][5]
-			)
-		end
-	else
-		frame:ClearAllPoints()
-		frame:SetPoint("CENTER", UIParent, "CENTER", -50, 0)
-	end
+	frame:ClearAllPoints()
+	local pos = GetFramePosition("NecrosisCreatureAlertButton_elemental", {"CENTER", "UIParent", "CENTER", -50, 0})
+	frame:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+	if pos[6] then frame:SetScale(pos[6]) else frame:SetScale(1.549999952316284) end
 
 	
 	-- TTIP
@@ -702,21 +673,10 @@ function Necrosis:CreateWarlockPopup()
 
 
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
-	if NecrosisConfig.FramePosition then
-		if NecrosisConfig.FramePosition["NecrosisAntiFearButton"] then
-			frame:ClearAllPoints()
-			frame:SetPoint(
-				NecrosisConfig.FramePosition["NecrosisAntiFearButton"][1],
-				NecrosisConfig.FramePosition["NecrosisAntiFearButton"][2],
-				NecrosisConfig.FramePosition["NecrosisAntiFearButton"][3],
-				NecrosisConfig.FramePosition["NecrosisAntiFearButton"][4],
-				NecrosisConfig.FramePosition["NecrosisAntiFearButton"][5]
-			)
-		end
-	else
-		frame:ClearAllPoints()
-		frame:SetPoint("CENTER", UIParent, "CENTER", 50, 0)
-	end
+	frame:ClearAllPoints()
+	local pos = GetFramePosition("NecrosisAntiFearButton", {"CENTER", "UIParent", "CENTER", 50, 0})
+	frame:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+	if pos[6] then frame:SetScale(pos[6]) else frame:SetScale(1.549999952316284) end
 end
 
 
