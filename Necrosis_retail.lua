@@ -1218,9 +1218,13 @@ function Necrosis:OnEvent(event,...)
 		msg = " '"..tostring(done).."'"
 			.." '"..tostring(Local.InWorld).."'"
 		ev_out(event, msg, false, true, false)
+		print("[NECROSIS DEBUG] PLAYER_ENTERING_WORLD - Class:", Class, "InWorld:", Local.InWorld)
 		if Class == "WARLOCK" then
+			print("[NECROSIS DEBUG] Is WARLOCK")
 			if Local.InWorld then
+				print("[NECROSIS DEBUG] Already InWorld")
 			else
+				print("[NECROSIS DEBUG] First time - initializing")
 				ev_out(event, done, true, false, false)
 				-- Initialize immediately instead of waiting for items
 				Necrosis:Initialize(Local.DefaultConfig)
@@ -1273,10 +1277,14 @@ function Necrosis:OnEvent(event,...)
 				end)
 
 				-- Import/Restore NecrosisUI layout on startup if enabled
+				print("[NECROSIS] NecrosisUIEnabled:", NecrosisConfig.NecrosisUIEnabled, "NUI exists:", NUI ~= nil)
 				if NecrosisConfig.NecrosisUIEnabled and NUI then
 					C_Timer.After(0.8, function()
-						NUI:ImportLayout()
+						print("[NECROSIS] Calling NUI:ImportLayout()")
+						pcall(function() NUI:ImportLayout() end)
 					end)
+				else
+					print("[NECROSIS] Skipping ImportLayout - NecrosisUIEnabled:", NecrosisConfig.NecrosisUIEnabled, "NUI:", NUI)
 				end
 			end
 
