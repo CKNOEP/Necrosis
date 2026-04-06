@@ -465,7 +465,10 @@ function Necrosis:UpdateTimerCheckboxes()
 		end
 	end
 
-	if not NecrosisConfig.Timers then return end
+	if not NecrosisConfig.Timers then
+		return
+	end
+
 
 	local initY = 395
 	local leftX = 40
@@ -503,7 +506,8 @@ function Necrosis:UpdateTimerCheckboxes()
 		frame:SetFontString(FontString)
 
 		frame:SetChecked(NecrosisConfig.Timers[i].show or false)
-		frame:SetText(Necrosis.GetSpellName(NecrosisConfig.Timers[i].usage) or "Unknown")
+		local spellName = Necrosis.GetSpellName(NecrosisConfig.Timers[i].usage) or "Unknown"
+		frame:SetText(spellName)
 	end
 
 	-- Create Page 3 checkboxes (items 21-40)

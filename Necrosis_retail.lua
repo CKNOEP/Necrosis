@@ -159,57 +159,53 @@ Local.DefaultConfig = {
 	CurseShow = {true,true,true,true,true,true,true,true,},
 
 	Timers = { -- Order is for options screen; Active timer spells for Midnight 12.0.1
-		-- CURSES (6 actual working)
+		-- CURSES (5 working - removed Demon Armor)
 		[1] = {usage = "agony", show = true},              -- Curse of Agony (24s)
 		[2] = {usage = "weakness", show = true},          -- Curse of Weakness (120s)
-		[3] = {usage = "armor", show = true},            -- Demon Armor (buff)
-		[4] = {usage = "doom", show = true},              -- Curse of Doom (60s)
-		[5] = {usage = "tongues", show = false},          -- Curse of Tongues (30s)
-		[6] = {usage = "exhaustion", show = false},       -- Curse of Exhaustion (12s) - ID 334725 in 12.0.1
+		[3] = {usage = "doom", show = true},              -- Curse of Doom (60s)
+		[4] = {usage = "tongues", show = false},          -- Curse of Tongues (30s)
+		[5] = {usage = "exhaustion", show = false},       -- Curse of Exhaustion (12s) - ID 334725 in 12.0.1
 
 		-- AFFLICTION DoTs (5 total with Timer=true)
-		[7] = {usage = "corruption", show = true},        -- Corruption (12-18s)
-		[8] = {usage = "unstable_affliction", show = true}, -- Unstable Affliction (15-18s)
-		[9] = {usage = "haunt", show = true},            -- Haunt (18s)
-		[10] = {usage = "siphon_life", show = true},      -- Siphon Life (15s)
-		[11] = {usage = "drain_soul", show = true},       -- Drain Soul (5s)
+		[6] = {usage = "corruption", show = true},        -- Corruption (12-18s)
+		[7] = {usage = "unstable_affliction", show = true}, -- Unstable Affliction (15-18s)
+		[8] = {usage = "haunt", show = true},            -- Haunt (18s)
+		[9] = {usage = "siphon_life", show = true},      -- Siphon Life (15s)
+		[10] = {usage = "drain_soul", show = true},       -- Drain Soul (5s)
 
 		-- DESTRUCTION DoTs & Abilities (7 total with Timer=true)
-		[12] = {usage = "immolate", show = true},         -- Immolate (15s)
-		[13] = {usage = "fear", show = true},             -- Fear (10-20s)
-		[14] = {usage = "howl", show = false},            -- Howl of Terror (10-15s)
-		[15] = {usage = "soul_fire", show = true},        -- Soul Fire (60s cooldown)
-		[16] = {usage = "death_coil", show = true},       -- Death Coil (3s + 180s CD)
-		[17] = {usage = "shadowburn", show = true},       -- Shadowburn (15s cooldown)
-		[18] = {usage = "domination", show = false},     -- Domination / Domination gangrenée (15s)
+		[11] = {usage = "immolate", show = true},         -- Immolate (15s)
+		[12] = {usage = "fear", show = true},             -- Fear (10-20s)
+		[13] = {usage = "howl", show = false},            -- Howl of Terror (10-15s)
+		[14] = {usage = "soul_fire", show = true},        -- Soul Fire (60s cooldown)
+		[15] = {usage = "death_coil", show = true},       -- Death Coil (3s + 180s CD)
+		[16] = {usage = "shadowburn", show = true},       -- Shadowburn (15s cooldown)
+		[17] = {usage = "domination", show = false},     -- Domination / Domination gangrenée (15s)
 
 		-- CONTROL & DEBUFFS (2 total)
-		[19] = {usage = "banish", show = true},           -- Banish (20-30s)
-		[20] = {usage = "enslave", show = true},          -- Enslave Demon (300s)
+		[18] = {usage = "banish", show = true},           -- Banish (20-30s)
+		[19] = {usage = "enslave", show = true},          -- Enslave Demon (300s)
 
 		-- UTILITY BUFFS (1 with Timer=true)
-		[21] = {usage = "dark_pact", show = true},        -- Shadow Pact (30s)
+		[20] = {usage = "dark_pact", show = true},        -- Shadow Pact (30s)
 
 		-- SUMMONING & RITUALS (3 total with Timer=true)
-		[22] = {usage = "soulstone", show = true},        -- Soulstone (900s = 15min)
-		[23] = {usage = "summoning", show = true},        -- Ritual of Summoning (600s)
-		[24] = {usage = "rit_of_doom", show = false},     -- Ritual of Doom (600s)
+		[21] = {usage = "soulstone", show = true},        -- Soulstone (900s = 15min)
+		[22] = {usage = "summoning", show = true},        -- Ritual of Summoning (600s)
+		[23] = {usage = "rit_of_doom", show = false},     -- Ritual of Doom (600s)
 
 		-- DETECTION & MOVEMENT
-		[25] = {usage = "breath", show = true},           -- Unending Breath (600s)
+		[24] = {usage = "breath", show = true},           -- Unending Breath (600s)
 
 		-- UTILITY (eye is also here)
-		[26] = {usage = "eye", show = false},             -- Eye of Kilrogg (45s)
+		[25] = {usage = "eye", show = false},             -- Eye of Kilrogg (45s)
 
-		
+
 		-- RITUALS
-		[27] = {usage = "Ritual_of_Souls", show = false}, -- Ritual of Souls (600s)
+		[26] = {usage = "Ritual_of_Souls", show = false}, -- Ritual of Souls (600s)
 
-		-- DARK PACT
-		[28] = {usage = "sacrifice", show = false},      -- Sacrifice / Sacrifice (buff)
-
-		-- INFERNAL
-		[29] = {usage = "inferno", show = false},         -- Inferno (5s summon)
+		-- INFERNAL (removed Sacrifice)
+		[27] = {usage = "inferno", show = false},         -- Inferno (5s summon)
 	},
 }
 

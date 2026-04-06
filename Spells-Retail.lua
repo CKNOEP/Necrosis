@@ -1166,10 +1166,25 @@ function Necrosis.GetSpellName(usage)
 	end
 
 	-- Fallback: search for any spell with this usage in Warlock_Spells
-	-- This handles cases where spell is not in player's spellbook yet
+	-- Try to get the name for any spell with this usage
+	local bestSpellId = nil
+	local bestRank = 0
+
 	for spellId, spellData in pairs(Necrosis.Warlock_Spells) do
-		if spellData.Usage == usage and spellData.Name then
-			return spellData.Name
+		if spellData.Usage == usage then
+			-- Prefer spells with Timer=true and higher UsageRank
+			local rank = (spellData.Timer and 1000 or 0) + (spellData.UsageRank or 0)
+			if rank > bestRank then
+				bestRank = rank
+				bestSpellId = spellId
+			end
+		end
+	end
+
+	if bestSpellId then
+		local spellName = GetSpellInfo(bestSpellId)
+		if spellName then
+			return spellName
 		end
 	end
 
