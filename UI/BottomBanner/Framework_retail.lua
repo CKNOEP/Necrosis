@@ -50,7 +50,13 @@ bottomAnchor:SetAllPoints(necrosisUIFrame)
 -- Implement Show/Hide Methods
 function NUI:Show()
 	if NecrosisUI then
+		print("[NecrosisUI] NUI:Show() called")
 		NecrosisUI:Show()
+		-- Import layout when showing NecrosisUI
+		C_Timer.After(0.5, function()
+			print("[NecrosisUI] Calling ImportLayout()")
+			self:ImportLayout()
+		end)
 	end
 end
 
@@ -67,21 +73,30 @@ function NUI:UpdateBottomBannerScale()
 	end
 end
 
+-- Default NecrosisUI Layout String (exported from WoW EditMode)
+_G.NECROSISUI_LAYOUT_STRING = _G.NECROSISUI_LAYOUT_STRING or "2 50 0 0 0 0 0 UIParent 386.2 -1022.0 -1 ##$$%/&&'%)$+#,$ 0 1 0 0 0 UIParent 385.2 -982.0 -1 ##$$%/&&'%(#,$ 0 2 0 7 7 UIParent 347.0 62.0 -1 ##$$%/&&'%(#,$ 0 3 1 5 5 UIParent -5.0 -77.0 -1 #$$$%/&&'%(#,$ 0 4 1 5 5 UIParent -5.0 -77.0 -1 #$$$%/&&'%(#,$ 0 5 0 0 0 UIParent 1083.2 -1023.0 -1 ##$$%/&&'%(#,$ 0 6 1 1 4 UIParent 0.0 -50.0 -1 ##$$%/&('%(#,$ 0 7 1 1 4 UIParent 0.0 -100.0 -1 ##$$%/&('%(#,$ 0 10 0 4 4 UIParent 3.0 -257.0 -1 ##$$&('% 0 11 0 7 7 UIParent -340.0 121.0 -1 ##$$&('%,# 0 12 0 7 7 UIParent 182.0 189.0 -1 ##$$&('% 1 -1 0 7 7 UIParent -1.0 252.0 -1 ##$#%# 2 -1 1 2 2 UIParent 0.0 0.0 -1 ##$#%( 3 0 0 7 7 UIParent -260.0 208.0 -1 $#3# 3 1 0 7 7 UIParent 258.0 204.0 -1 %#3# 3 2 1 6 7 UIParent 520.0 265.0 -1 %#&#3# 3 3 1 0 2 CompactRaidFrameManager 0.0 -7.0 -1 '#(#)#-5.)/#1$3#5#6(7-7$ 3 4 1 0 2 CompactRaidFrameManager 0.0 -5.0 -1 ,#-5.)/#0#1#2(5#6(7-7$ 3 5 1 5 5 UIParent 0.0 0.0 -1 &#*$3# 3 6 1 5 5 UIParent 0.0 0.0 -1 -5.)/#4$5#6(7-7$ 3 7 1 4 4 UIParent 0.0 0.0 -1 3# 4 -1 0 7 7 UIParent 2.0 5.0 -1 # 5 -1 0 4 4 UIParent -5.0 -109.0 -1 # 6 0 1 2 2 UIParent -255.0 -10.0 -1 ##$#%#&.(()( 6 1 1 2 2 UIParent -270.0 -155.0 -1 ##$#%#'+(()(-$ 6 2 1 1 1 UIParent 0.0 -25.0 -1 ##$#%$&.(()(+#,-,$ 7 -1 0 4 4 UIParent -57.0 -78.5 -1 # 8 -1 0 6 6 UIParent 34.0 46.0 -1 #&$:%$&h 9 -1 0 7 7 UIParent -140.0 185.0 -1 # 10 -1 1 0 0 UIParent 16.0 -116.0 -1 # 11 -1 1 8 8 UIParent -9.0 85.0 -1 # 12 -1 1 2 2 UIParent -110.0 -275.0 -1 #K$#%# 13 -1 1 8 8 MicroButtonAndBagsBar 0.0 0.0 -1 ##$#%)&# 14 -1 0 8 8 UIParent -6.0 58.4 -1 ##$#%$ 15 0 0 0 0 UIParent 664.5 -4.0 -1 # 15 1 1 7 7 StatusTrackingBarManager 0.0 17.0 -1 # 16 -1 1 5 5 UIParent 0.0 0.0 -1 #( 17 -1 1 1 1 UIParent 0.0 -100.0 -1 ## 18 -1 1 5 5 UIParent 0.0 0.0 -1 #- 19 -1 1 7 7 UIParent 0.0 0.0 -1 ## 20 0 0 4 4 UIParent 1.0 -246.0 -1 ##$/%$&('%(-($)#+$,$-$ 20 1 0 7 7 UIParent 166.0 107.0 -1 ##$*%$&('%(-($)#+$,$-$ 20 2 0 4 4 UIParent 1.0 -199.0 -1 ##$$%$&('((-($)#+$,$-$ 20 3 1 7 7 UIParent 420.0 430.0 -1 #$$$%#&('((-($)#*#+$,$-$.-.$ 21 -1 1 7 7 UIParent -410.0 380.0 -1 ##$# 22 0 1 8 7 UIParent -457.0 336.0 -1 #$$$%#&('((#)U*$+%,$-#.#/U0% 22 1 1 1 1 UIParent 0.0 -40.0 -1 &('()U*#+% 22 2 1 1 1 UIParent 0.0 -90.0 -1 &('()U*#+% 22 3 1 1 1 UIParent 0.0 -130.0 -1 &('()U*#+% 23 -1 1 0 0 UIParent 0.0 0.0 -1 ##$#%$&-&$'7(%)U+$,$-$.(/U"
+
 -- Import NecrosisUI Layout via C_EditMode
 function NUI:ImportLayout()
+	print("[NecrosisUI] ImportLayout() called")
 	if not C_EditMode or not C_EditMode.GetLayouts or not C_EditMode.ConvertStringToLayoutInfo then
+		print("[NecrosisUI] C_EditMode not available")
 		return
 	end
 
 	local layoutString = _G.NECROSISUI_LAYOUT_STRING
 	if not layoutString then
+		print("[NecrosisUI] No layout string found")
 		return
 	end
+	print("[NecrosisUI] Layout string found, converting...")
 
 	local importedLayoutInfo = C_EditMode.ConvertStringToLayoutInfo(layoutString)
 	if not importedLayoutInfo then
+		print("[NecrosisUI] Failed to convert layout string")
 		return
 	end
+	print("[NecrosisUI] Layout converted successfully")
 
 	-- Ensure Blizzard_EditMode is loaded
 	if not C_AddOns.IsAddOnLoaded("Blizzard_EditMode") then
