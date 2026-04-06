@@ -443,6 +443,11 @@ function Necrosis:SetTimersConfig()
 		frame:Show()
 	end
 
+	-- Show Page 1, hide Pages 2-3 by default
+	if _G["NecrosisTimersConfig1"] then _G["NecrosisTimersConfig1"]:Show() end
+	if _G["NecrosisTimersConfig2"] then _G["NecrosisTimersConfig2"]:Hide() end
+	if _G["NecrosisTimersConfig3"] then _G["NecrosisTimersConfig3"]:Hide() end
+
 	-- Always update timer checkboxes with current data
 	Necrosis:UpdateTimerCheckboxes()
 end
@@ -537,9 +542,7 @@ function Necrosis:UpdateTimerCheckboxes()
 		frame:SetText(Necrosis.GetSpellName(NecrosisConfig.Timers[i].usage) or "Unknown")
 	end
 
-	-- Show pages
-	if _G["NecrosisTimersConfig2"] then _G["NecrosisTimersConfig2"]:Show() end
-	if _G["NecrosisTimersConfig3"] then _G["NecrosisTimersConfig3"]:Show() end
+	-- Pages visibility is managed by navigation buttons and SetTimersConfig()
 end
 
 
