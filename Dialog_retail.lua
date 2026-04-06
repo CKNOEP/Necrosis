@@ -492,13 +492,13 @@ Necrosis.Config.Menus.Orientation = {
 	L["DOWNWARDS"],
 }
 
-Necrosis.Config.Timers = {
-	["Type de timers"] = L["TIMER_TYPE"],
-	["Afficher le bouton des timers"] = L["TIMER_SPELL"],
-	["Transparence des timers"] = L["TIMER_ALPHA"],
-	["Afficher les timers sur la gauche du bouton"] = L["TIMER_LEFT"],
-	["Afficher les timers de bas en haut"] = L["TIMER_UP"],
-}
+-- MERGE UI labels into existing Timers table (don't replace it!)
+if not Necrosis.Config.Timers then Necrosis.Config.Timers = {} end
+Necrosis.Config.Timers["Type de timers"] = L["TIMER_TYPE"]
+Necrosis.Config.Timers["Afficher le bouton des timers"] = L["TIMER_SPELL"]
+Necrosis.Config.Timers["Transparence des timers"] = L["TIMER_ALPHA"]
+Necrosis.Config.Timers["Afficher les timers sur la gauche du bouton"] = L["TIMER_LEFT"]
+Necrosis.Config.Timers["Afficher les timers de bas en haut"] = L["TIMER_UP"]
 Necrosis.Config.Timers.Type = {
 	L["NO_TIMER"],
 	L["GRAPHICAL"],

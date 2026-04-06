@@ -17,17 +17,11 @@ local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
 ------------------------------------------------------------------------------------------------------
 
 function Necrosis:SetTimersConfig()
-	local msg = "[Necrosis] SetTimersConfig() called!"
-	print(msg)
-	if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage(msg) end
 
 	-- ========================================
 	-- CLEAN UP OLD FRAMES (force recreation for new layout)
 	-- ========================================
 	local oldFrame = _G["NecrosisTimersConfig"]
-	local msg2 = "[Necrosis] oldFrame exists: " .. tostring(oldFrame)
-	print(msg2)
-	if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage(msg2) end
 	if oldFrame then
 		-- Check if it has the old 2-page layout (missing Page 3)
 		if _G["NecrosisTimersConfig2"] and not _G["NecrosisTimersConfig3"] then
@@ -457,63 +451,6 @@ end
 -- UPDATE TIMER CHECKBOXES (called every time config is shown)
 ------------------------------------------------------------------------------------------------------
 function Necrosis:UpdateTimerCheckboxes()
-	-- Debug: check if we're being called
-	local msg = "[Necrosis] UpdateTimerCheckboxes() called"
-	print(msg)
-	if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage(msg) end
-
-	-- Check Necrosis.Config.Timers
-	local configTimersStatus = tostring(Necrosis.Config.Timers)
-	local configMsg = "[Necrosis] Necrosis.Config.Timers: " .. configTimersStatus
-	print(configMsg)
-	if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage(configMsg) end
-
-	if Necrosis.Config.Timers then
-		local configCount = #Necrosis.Config.Timers
-		local configCountMsg = "[Necrosis] Necrosis.Config.Timers count: " .. configCount
-		print(configCountMsg)
-		if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage(configCountMsg) end
-
-		-- Show all keys to see what's ACTUALLY in Timers
-		local keyMsg = "[Necrosis] Necrosis.Config.Timers keys: "
-		for key in pairs(Necrosis.Config.Timers) do
-			keyMsg = keyMsg .. tostring(key) .. ", "
-		end
-		print(keyMsg)
-		if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage(keyMsg) end
-
-		if Necrosis.Config.Timers[1] then
-			local configItemMsg = "[Necrosis] Necrosis.Config.Timers[1].usage: " .. tostring(Necrosis.Config.Timers[1].usage)
-			print(configItemMsg)
-			if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage(configItemMsg) end
-		end
-	end
-
-	local timerStatus = tostring(NecrosisConfig.Timers)
-	local msg2 = "[Necrosis] NecrosisConfig.Timers: " .. timerStatus
-	print(msg2)
-	if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage(msg2) end
-
-	if NecrosisConfig.Timers then
-		local msg3 = "[Necrosis] Timers count: " .. #NecrosisConfig.Timers
-		print(msg3)
-		if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage(msg3) end
-
-		if NecrosisConfig.Timers[1] then
-			local msg4 = "[Necrosis] Timers[1].usage: " .. tostring(NecrosisConfig.Timers[1].usage)
-			print(msg4)
-			if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage(msg4) end
-		end
-	end
-
-	local msg5 = "[Necrosis] NecrosisTimersConfig2: " .. tostring(_G["NecrosisTimersConfig2"])
-	local msg6 = "[Necrosis] NecrosisTimersConfig3: " .. tostring(_G["NecrosisTimersConfig3"])
-	print(msg5)
-	print(msg6)
-	if DEFAULT_CHAT_FRAME then
-		DEFAULT_CHAT_FRAME:AddMessage(msg5)
-		DEFAULT_CHAT_FRAME:AddMessage(msg6)
-	end
 
 	-- Clean up old checkboxes first
 	for i = 1, 50 do
@@ -523,26 +460,17 @@ function Necrosis:UpdateTimerCheckboxes()
 		end
 	end
 
-	if not NecrosisConfig.Timers then
-		local errMsg = "[Necrosis] ERROR: NecrosisConfig.Timers is nil!"
-		print(errMsg)
-		if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage(errMsg) end
-		return
-	end
+	if not NecrosisConfig.Timers then return end
 
 	local initY = 395
 	local leftX = 40
 	local rightX = 220
 
 	-- Create Page 2 checkboxes (items 1-20)
-	print("[Necrosis] Creating Page 2 checkboxes...")
 	for i = 1, math.min(20, #NecrosisConfig.Timers), 1 do
 		if not NecrosisConfig.Timers[i] or not NecrosisConfig.Timers[i].usage then
-			print("[Necrosis] Stopping at item", i, "- data missing")
 			break
 		end
-
-		print("[Necrosis] Creating checkbox", i, "for", NecrosisConfig.Timers[i].usage)
 		local frame = CreateFrame("CheckButton", "NecrosisTimerShow"..i, _G["NecrosisTimersConfig2"], "UICheckButtonTemplate")
 		frame:EnableMouse(true)
 		frame:SetWidth(24)
@@ -574,14 +502,10 @@ function Necrosis:UpdateTimerCheckboxes()
 	end
 
 	-- Create Page 3 checkboxes (items 21-40)
-	print("[Necrosis] Creating Page 3 checkboxes...")
 	for i = 21, #NecrosisConfig.Timers, 1 do
 		if not NecrosisConfig.Timers[i] or not NecrosisConfig.Timers[i].usage then
-			print("[Necrosis] Stopping at item", i, "- data missing")
 			break
 		end
-
-		print("[Necrosis] Creating checkbox", i, "for", NecrosisConfig.Timers[i].usage)
 		local frame = CreateFrame("CheckButton", "NecrosisTimerShow"..i, _G["NecrosisTimersConfig3"], "UICheckButtonTemplate")
 		frame:EnableMouse(true)
 		frame:SetWidth(24)
@@ -614,20 +538,8 @@ function Necrosis:UpdateTimerCheckboxes()
 	end
 
 	-- Show pages
-	print("[Necrosis] Showing pages...")
-	if _G["NecrosisTimersConfig2"] then
-		print("[Necrosis] Showing NecrosisTimersConfig2")
-		_G["NecrosisTimersConfig2"]:Show()
-	else
-		print("[Necrosis] ERROR: NecrosisTimersConfig2 doesn't exist!")
-	end
-	if _G["NecrosisTimersConfig3"] then
-		print("[Necrosis] Showing NecrosisTimersConfig3")
-		_G["NecrosisTimersConfig3"]:Show()
-	else
-		print("[Necrosis] ERROR: NecrosisTimersConfig3 doesn't exist!")
-	end
-	print("[Necrosis] UpdateTimerCheckboxes() finished")
+	if _G["NecrosisTimersConfig2"] then _G["NecrosisTimersConfig2"]:Show() end
+	if _G["NecrosisTimersConfig3"] then _G["NecrosisTimersConfig3"]:Show() end
 end
 
 
