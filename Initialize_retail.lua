@@ -347,6 +347,18 @@ Necrosis.Config = {}
 
 NecrosisConfig = {}
 
+-- Initialize early - these will be used by XML_retail.lua functions
+NecrosisConfig.FramePosition = {
+	["NecrosisSpellTimerButton"] = {"CENTER", "UIParent", "CENTER", 100, 300},
+	["NecrosisButton"] = {"CENTER", "UIParent", "CENTER", 0, -200},
+	["NecrosisCreatureAlertButton_elemental"] = {"CENTER", "UIParent", "CENTER", -60, 0},
+	["NecrosisCreatureAlertButton_demon"] = {"CENTER", "UIParent", "CENTER", -50, 0},
+	["NecrosisAntiFearButton"] = {"CENTER", "UIParent", "CENTER", -20, 0},
+	["NecrosisShadowTranceButton"] = {"CENTER", "UIParent", "CENTER", 20, 0},
+	["NecrosisBacklashButton"] = {"CENTER", "UIParent", "CENTER", 60, 0},
+}
+NecrosisConfig.NecrosisButtonScale = 100
+
 -- RGB Encoding cache for storing health/mana values without taint
 -- Used to bypass Secret Value restrictions in Retail 12.0+
 Necrosis.HealthCache = CreateFrame("Frame", "NecrosisHealthCache", UIParent)
@@ -650,8 +662,33 @@ function Necrosis:Initialize(Config)
 		}
 	end
 
+	-- Initialize Timers with defaults if not present
+	if not NecrosisConfig.Timers then
+		NecrosisConfig.Timers = Necrosis.Config.Timers
+	end
+
+	-- Initialize FramePosition with defaults if empty
+	if not NecrosisConfig.FramePosition or next(NecrosisConfig.FramePosition) == nil then
+		NecrosisConfig.FramePosition = Necrosis.Config.FramePosition
+	end
+
+	-- Initialize other defaults
+	if not NecrosisConfig.NecrosisButtonScale or NecrosisConfig.NecrosisButtonScale == 100 then
+		NecrosisConfig.NecrosisButtonScale = 100
+	end
+
+	-- Initialize ShadowTranceScale if not present (backward compatibility)
+	if not NecrosisConfig.ShadowTranceScale then
+		NecrosisConfig.ShadowTranceScale = Necrosis.Config.ShadowTranceScale or 100
+	end
+
 	Necrosis.UpdateSpellTimers(NecrosisConfig.Timers)-- init timers
-	
+
+	-- Reschedule timers for spells with active cooldowns (e.g., Soulstone on reload)
+	C_Timer.After(2, function()
+		Necrosis:RescheduleExistingTimers()
+	end)
+
 	-- Création de la liste des sorts disponibles
 	self:SpellSetup("Initialize")
 	-- Dessine les UI et button Popoup
