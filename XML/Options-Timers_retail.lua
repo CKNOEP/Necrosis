@@ -332,6 +332,11 @@ function Necrosis:SetTimersConfig()
 
 		if NecrosisConfig.Timers then
 			for i = 1, math.min(20, #NecrosisConfig.Timers), 1 do
+				-- Skip if timer entry is missing or malformed
+				if not NecrosisConfig.Timers[i] or not NecrosisConfig.Timers[i].usage then
+					break
+				end
+
 				frame = CreateFrame("CheckButton", "NecrosisTimerShow"..i, NecrosisTimersConfig2, "UICheckButtonTemplate")
 				frame:EnableMouse(true)
 				frame:SetWidth(24)
@@ -361,8 +366,8 @@ function Necrosis:SetTimersConfig()
 				FontString:SetTextColor(1, 1, 1)
 				frame:SetFontString(FontString)
 
-				frame:SetChecked(NecrosisConfig.Timers[i].show)
-				frame:SetText(Necrosis.GetSpellName(NecrosisConfig.Timers[i].usage))
+				frame:SetChecked(NecrosisConfig.Timers[i].show or false)
+				frame:SetText(Necrosis.GetSpellName(NecrosisConfig.Timers[i].usage) or "Unknown")
 			end
 		end
 
@@ -422,6 +427,11 @@ function Necrosis:SetTimersConfig()
 		-- ========================================
 		if NecrosisConfig.Timers then
 			for i = 21, #NecrosisConfig.Timers, 1 do
+				-- Skip if timer entry is missing or malformed
+				if not NecrosisConfig.Timers[i] or not NecrosisConfig.Timers[i].usage then
+					break
+				end
+
 				frame = CreateFrame("CheckButton", "NecrosisTimerShow"..i, NecrosisTimersConfig3, "UICheckButtonTemplate")
 				frame:EnableMouse(true)
 				frame:SetWidth(24)
@@ -452,8 +462,8 @@ function Necrosis:SetTimersConfig()
 				FontString:SetTextColor(1, 1, 1)
 				frame:SetFontString(FontString)
 
-				frame:SetChecked(NecrosisConfig.Timers[i].show)
-				frame:SetText(Necrosis.GetSpellName(NecrosisConfig.Timers[i].usage))
+				frame:SetChecked(NecrosisConfig.Timers[i].show or false)
+				frame:SetText(Necrosis.GetSpellName(NecrosisConfig.Timers[i].usage) or "Unknown")
 			end
 		end
 
