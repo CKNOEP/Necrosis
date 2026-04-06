@@ -130,7 +130,6 @@ Local.DefaultConfig = {
 	NecrosisUIEnabled = true,
 	deleteshards = true,
 	ItemSwitchCombat = {[3] = "Pierre de soins démoniaque"},
-	DestroyCount = 5,
 	AutomaticMenu = false,
 	ClosingMenu = true,
 	BlockedMenu = false,
@@ -1891,15 +1890,6 @@ local function AddShard()
 		GameTooltip:AddLine(Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count)
 	end
 end
-local function AddDestroyCount()
-
-
-	if NecrosisConfig.DestroyCount then
-		GameTooltip:AddLine("|c00FF4444"..Necrosis.TooltipData.Main.Soulshard..Local.Soulshard.Count.."|r".."/".."|c00FF4444"..NecrosisConfig.DestroyCount.."|r")
-		GameTooltip:AddLine("|c00FFFFFF"..L["SHARD_MOUSEWHEEL_HELP"])
-		GameTooltip:AddLine("|c00FFFFFF"..L["SHARD_LEFTCLICK_HELP"])
-	end
-end
 
 local function AddDominion(start, duration)
 	if not (start > 0 and duration > 0) then
@@ -2866,10 +2856,9 @@ function Necrosis:BagExplore(arg)
 			NecrosisShardCount:SetText(Local.Reagent.Infernal.." / "..Local.Reagent.Demoniac)
 		elseif NecrosisConfig.CountType == 1 then
 			if Local.Soulshard.Count < 10 then
-				--NecrosisShardCount:SetText("0"..Local.Soulshard.Count)
-				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
+				NecrosisShardCount:SetText("0"..Local.Soulshard.Count)
 			else
-				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
+				NecrosisShardCount:SetText(Local.Soulshard.Count)
 			end
 		elseif NecrosisConfig.CountType == 3 then
 			-- Display Soulstone resurrection timer
@@ -3773,25 +3762,21 @@ function Necrosis:DeleteShards()
     	
 	if NecrosisConfig.DestroyShard then
         Local.Soulshard.Count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
-        local RemainingShardsToDelete = Local.Soulshard.Count - NecrosisConfig.DestroyCount
         for container = 0, NUM_BAG_SLOTS, 1 do
             if Local.BagIsSoulPouch[container] then break end
             for slot=1, C_Container.GetContainerNumSlots(container), 1 do
-                if math.floor(NecrosisConfig.DestroyCount) >= Local.Soulshard.Count then break end
+                if Local.Soulshard.Count == 0 then break end
                 local itemLink = C_Container.GetContainerItemLink(container, slot)
                 if (itemLink) then
                     local itemID, itemName = Necrosis.Utils.ParseItemLink(itemLink) --GetContainerItemLink(container, slot))
                     itemID = tonumber(itemID)
                     if (itemID == Necrosis.Warlock_Lists.reagents.soul_shard.id) then
-                        if (RemainingShardsToDelete > 0) then
-                            C_Container.PickupContainerItem(container, slot)
-                            local infoType, info1, info2 = GetCursorInfo()
-                            if (CursorHasItem() and infoType == "item" and tonumber(info1) == Necrosis.Warlock_Lists.reagents.soul_shard.id) then
-                                DeleteCursorItem()
-                                Local.Soulshard.Count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
-                                ClearCursor()
-                                RemainingShardsToDelete = RemainingShardsToDelete - 1
-                            end
+                        C_Container.PickupContainerItem(container, slot)
+                        local infoType, info1, info2 = GetCursorInfo()
+                        if (CursorHasItem() and infoType == "item" and tonumber(info1) == Necrosis.Warlock_Lists.reagents.soul_shard.id) then
+                            DeleteCursorItem()
+                            Local.Soulshard.Count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
+                            ClearCursor()
                         end
                     end
                 end

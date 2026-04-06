@@ -60,7 +60,6 @@ Necrosis.Config = {
 	NecrosisUIEnabled = true,
 	deleteshards = true,
 	ItemSwitchCombat = {[3] = "Pierre de soins démoniaque"},
-	DestroyCount = 5,
 	AutomaticMenu = false,
 	ClosingMenu = true,
 	BlockedMenu = false,

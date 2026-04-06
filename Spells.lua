@@ -712,23 +712,7 @@ Necrosis.Warlock_Buttons = {
 						--print ("Move Shard ",i," to ", GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id))
 						Necrosis:SoulshardSwitch(i)
 						end
-						
-						elseif arg1 == 1 then
-						
-							if NecrosisConfig.DestroyCount < 32 then 
-							NecrosisConfig.DestroyCount = NecrosisConfig.DestroyCount + 1 
-							Necrosis:BuildButtonTooltip(self)
-							Necrosis:BagExplore()
-							end
-						elseif arg1 == -1 then
-							if NecrosisConfig.DestroyCount >0 then 
-							NecrosisConfig.DestroyCount = NecrosisConfig.DestroyCount - 1 
-							Necrosis:BuildButtonTooltip(self)
-							Necrosis:BagExplore()
-							end
-						
-						
-						
+
 						else
 						end
 					end

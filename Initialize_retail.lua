@@ -416,7 +416,6 @@ Necrosis.Config = {
 	["VersionCheck"] = { ["Enabled"] = true, ["CheckOnLoad"] = true, ["NotifyOnUpdate"] = true, ["LastCheck"] = 0, ["CheckInterval"] = 86400 },
 	["ItemSwitchCombat"] = { [3] = "Pierre de soins démoniaque" },
 	["ShowCount"] = true,
-	["DestroyCount"] = 5,
 	["classes"] = {},
 	["SummonQueue"] = {
 		["Enabled"] = true,
@@ -772,9 +771,6 @@ function Necrosis:Initialize(Config)
 	end
 	if not NecrosisConfig.ShowCount then
 		NecrosisConfig.ShowCount = true
-	end
-	if not NecrosisConfig.DestroyCount then
-		NecrosisConfig.DestroyCount = 5
 	end
 	if not NecrosisConfig.MainSpell then
 		NecrosisConfig.MainSpell = "death_coil"
