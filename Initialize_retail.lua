@@ -1261,7 +1261,8 @@ function Necrosis:Initialize(Config)
 						btn:SetScale(pos[6])
 					end
 				else
-					btn:SetPoint("CENTER", UIParent, "CENTER", 0, -200)
+					btn:SetPoint("BOTTOM", UIParent, "BOTTOM", 7.142076015472412, 74.26144409179688)
+					btn:SetScale(1.259999990463257)
 				end
 
 				btn:Show()
