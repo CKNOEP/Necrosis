@@ -507,14 +507,20 @@ function Necrosis:SetButtonsConfig()
 		FontString:SetText(self.Config.Buttons["Monture - Ctrl+Clic droit"])
 
 		-- Add button to open Collections/Mounts interface || Bouton pour ouvrir l'interface Collections/Montures
-		local collectionsButton = CreateFrame("Button", "NecrosisOpenCollectionsButton", NecrosisMountsSelectionFrame, "UIPanelButtonTemplate")
-		collectionsButton:SetText("Ouvrir Collections")
+		local collectionsButton = CreateFrame("Button", "NecrosisOpenCollectionsButton", NecrosisMountsSelectionFrame)
 		collectionsButton:EnableMouse(true)
 		collectionsButton:Show()
 		collectionsButton:ClearAllPoints()
 		collectionsButton:SetPoint("BOTTOM", NecrosisMountsSelectionFrame, "BOTTOM", 0, -100)
-		collectionsButton:SetWidth(120)
-		collectionsButton:SetHeight(22)
+		collectionsButton:SetWidth(32)
+		collectionsButton:SetHeight(32)
+
+		-- Set texture from spell 150544 (Summon Random Favorite Mount)
+		local texture = collectionsButton:CreateTexture("NecrosisOpenCollectionsButtonTexture", "BACKGROUND")
+		texture:SetAllPoints()
+		texture:SetTexture(C_Spell.GetSpellTexture(150544))
+		collectionsButton.texture = texture
+
 		collectionsButton:SetScript("OnClick", function()
 			CollectionsJournal_LoadUI()
 			ShowUIPanel(CollectionsJournalFrame)
@@ -524,6 +530,15 @@ function Necrosis:SetButtonsConfig()
 				PanelTemplates_SetTab(CollectionsJournalFrame, 2)
 				CollectionsJournal_OnTabClicked(CollectionsJournalFrame, 2)
 			end
+		end)
+
+		-- Add tooltip
+		collectionsButton:SetScript("OnEnter", function(self)
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+			GameTooltip:SetText("Ouvrir Collections")
+		end)
+		collectionsButton:SetScript("OnLeave", function()
+			GameTooltip:Hide()
 		end)
 	end
 	
