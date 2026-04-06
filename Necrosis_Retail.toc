@@ -49,6 +49,8 @@ Defaults_retail.lua
 Initialize_retail.lua
 Utils.lua
 
+UI\BottomBanner\Framework_retail.lua
+
 Necrosis.xml [AllowLoadGameType mainline]
 
 Dialog_retail.lua
@@ -93,5 +95,4 @@ ThreatMeter.lua
 
 SpellActivations\SpellActivations.xml
 
-UI\BottomBanner\Framework_retail.lua
 UI\BottomBanner\Init.xml
