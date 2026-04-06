@@ -526,15 +526,17 @@ function Necrosis:SetButtonsConfig()
 		local tooltipText = L and L["OPEN_COLLECTIONS"] or "Open Collections"
 
 		collectionsButton:SetScript("OnClick", function()
-			CollectionsJournal_LoadUI()
-			if CollectionsJournalFrame then
-				ShowUIPanel(CollectionsJournalFrame)
-				-- Try to navigate to Mounts tab
-				if CollectionsJournalFrame.tabGroup then
-					CollectionsJournalFrame.tabGroup:SelectTab("mounts")
-				elseif CollectionsJournal_OnTabClicked then
-					-- Fallback for older API versions
-					CollectionsJournal_OnTabClicked(CollectionsJournalFrame, 2)
+			-- Open Collections Journal
+			if ToggleCollectionsJournal then
+				ToggleCollectionsJournal(2)  -- 2 = Mounts tab
+			else
+				-- Fallback
+				CollectionsJournal_LoadUI()
+				if CollectionsJournalFrame then
+					ShowUIPanel(CollectionsJournalFrame)
+					if CollectionsJournalFrame.tabGroup then
+						CollectionsJournalFrame.tabGroup:SelectTab("mounts")
+					end
 				end
 			end
 		end)
