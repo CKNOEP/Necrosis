@@ -357,7 +357,7 @@ Necrosis.Config = {
 		["Transparence des timers"] = "Transparence du timer",
 	},
 	["TimerType"] = 1,
-	["Version"] = "8.0.6",
+	["Version"] = "8.5.0",
 	["MainSpell"] = "dark_pact",
 	["BottomBannerWidthScale"] = 1.308064699172974,
 	["NecrosisLockServ"] = true,
@@ -726,11 +726,22 @@ function Necrosis:Initialize(Config)
 	Necrosis:Initialize_Speech()
 	-- On charge (ou on crée la configuration pour le joueur et on l'affiche sur la console
 	if not Necrosis.Data.LastConfig or  Necrosis.Data.LastConfig > Necrosis.Data.Version or NecrosisConfig.Version == nil then
+		-- First load: create new config with all defaults
 		NecrosisConfig = {}
-		NecrosisConfig = Config
+		for key, value in pairs(Necrosis.Config) do
+			NecrosisConfig[key] = value
+		end
 		NecrosisConfig.Version = Necrosis.Data.LastConfig
 		self:Msg(self.ChatMessage.Interface.DefaultConfig, "USER")
 	else
+		-- Existing config: merge with defaults (soft update)
+		-- Keep player's existing settings and add any missing defaults
+		for key, defaultValue in pairs(Necrosis.Config) do
+			if NecrosisConfig[key] == nil then
+				NecrosisConfig[key] = defaultValue
+			end
+		end
+		NecrosisConfig.Version = Necrosis.Data.Version
 		self:Msg(self.ChatMessage.Interface.UserConfig, "USER")
 	end
 
