@@ -1271,6 +1271,13 @@ function Necrosis:OnEvent(event,...)
 						SlashCmdList["NECTIMER"]()
 					end
 				end)
+
+				-- Import/Restore NecrosisUI layout on startup if enabled
+				if NecrosisConfig.NecrosisUIEnabled and NUI then
+					C_Timer.After(0.8, function()
+						NUI:ImportLayout()
+					end)
+				end
 			end
 
 			-- Detecting the type of demon present at the connection || Détection du Type de démon présent à la connexion
