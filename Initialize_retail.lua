@@ -358,6 +358,15 @@ NecrosisConfig.FramePosition = {
 	["NecrosisBacklashButton"] = {"CENTER", "UIParent", "CENTER", 60, 0},
 }
 NecrosisConfig.NecrosisButtonScale = 100
+NecrosisConfig.BanishScale = 100
+NecrosisConfig.StonePosition = {1, 2, 3, 4, 5, 6, 7, 8, 9}
+NecrosisConfig.ItemSwitchCombat = {}
+NecrosisConfig.PetMenuPos = {x=1, y=0, direction=1}
+NecrosisConfig.PetMenuDecalage = {x=1, y=26}
+NecrosisConfig.BuffMenuPos = {x=1, y=0, direction=1}
+NecrosisConfig.BuffMenuDecalage = {x=1, y=26}
+NecrosisConfig.CurseMenuPos = {x=1, y=0, direction=1}
+NecrosisConfig.CurseMenuDecalage = {x=1, y=-26}
 
 -- RGB Encoding cache for storing health/mana values without taint
 -- Used to bypass Secret Value restrictions in Retail 12.0+
@@ -677,9 +686,44 @@ function Necrosis:Initialize(Config)
 		NecrosisConfig.NecrosisButtonScale = 100
 	end
 
+	-- Initialize BanishScale if not present (backward compatibility)
+	if not NecrosisConfig.BanishScale then
+		NecrosisConfig.BanishScale = Necrosis.Config.BanishScale or 100
+	end
+
 	-- Initialize ShadowTranceScale if not present (backward compatibility)
 	if not NecrosisConfig.ShadowTranceScale then
 		NecrosisConfig.ShadowTranceScale = Necrosis.Config.ShadowTranceScale or 100
+	end
+
+	-- Initialize StonePosition if not present (backward compatibility)
+	if not NecrosisConfig.StonePosition then
+		NecrosisConfig.StonePosition = Necrosis.Config.StonePosition or {1, 2, 3, 4, 5, 6, 7, 8, 9}
+	end
+
+	-- Initialize ItemSwitchCombat if not present (backward compatibility)
+	if not NecrosisConfig.ItemSwitchCombat then
+		NecrosisConfig.ItemSwitchCombat = Necrosis.Config.ItemSwitchCombat or {}
+	end
+
+	-- Initialize Menu positions if not present (backward compatibility)
+	if not NecrosisConfig.PetMenuPos then
+		NecrosisConfig.PetMenuPos = Necrosis.Config.PetMenuPos or {x=1, y=0, direction=1}
+	end
+	if not NecrosisConfig.PetMenuDecalage then
+		NecrosisConfig.PetMenuDecalage = Necrosis.Config.PetMenuDecalage or {x=1, y=26}
+	end
+	if not NecrosisConfig.BuffMenuPos then
+		NecrosisConfig.BuffMenuPos = Necrosis.Config.BuffMenuPos or {x=1, y=0, direction=1}
+	end
+	if not NecrosisConfig.BuffMenuDecalage then
+		NecrosisConfig.BuffMenuDecalage = Necrosis.Config.BuffMenuDecalage or {x=1, y=26}
+	end
+	if not NecrosisConfig.CurseMenuPos then
+		NecrosisConfig.CurseMenuPos = Necrosis.Config.CurseMenuPos or {x=1, y=0, direction=1}
+	end
+	if not NecrosisConfig.CurseMenuDecalage then
+		NecrosisConfig.CurseMenuDecalage = Necrosis.Config.CurseMenuDecalage or {x=1, y=-26}
 	end
 
 	Necrosis.UpdateSpellTimers(NecrosisConfig.Timers)-- init timers

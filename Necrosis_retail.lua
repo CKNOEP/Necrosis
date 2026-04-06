@@ -112,6 +112,8 @@ Local.DefaultConfig = {
 	ShadowTranceScale = 100,
 	NecrosisButtonScale = 90,
 	NecroisButtonRadius = 1,
+	NecrosisButtonRadius = 1.0,
+	NecrosisButtonSpacing = 1.0,
 	NecrosisColor = "Rose",
 	Sound = true,
 	SpellTimerPos = 1,
@@ -124,6 +126,9 @@ Local.DefaultConfig = {
 	BanishScale = 100,
 	ItemSwitchCombat = {},
 	DestroyCount = 5,
+	AutomaticMenu = false,
+	ClosingMenu = true,
+	BlockedMenu = false,
 	FramePosition = {
 		["NecrosisSpellTimerButton"] = {"CENTER", "UIParent", "CENTER", 100, 300},
 		["NecrosisButton"] = {"CENTER", "UIParent", "CENTER", 0, -200},
@@ -134,12 +139,12 @@ Local.DefaultConfig = {
 		["NecrosisBacklashButton"] = {"CENTER", "UIParent", "CENTER", 60, 0},
 		["NecrosisFirestoneButton"] = {"CENTER", "UIParent", "CENTER", -121,-100},
 		["NecrosisSpellstoneButton"] = {"CENTER", "UIParent", "CENTER", -87,-100},
-		["NecrosisHealthstoneButton"] = {"CENTER", "UIParent", "CENTER", -53,-100},
-		["NecrosisSoulstoneButton"] = {"CENTER", "UIParent", "CENTER", -17,-100},
-		["NecrosisBuffMenuButton"] = {"CENTER", "UIParent", "CENTER", 17,-100},
-		["NecrosisMountButton"] = {"CENTER", "UIParent", "CENTER", 53,-100},
-		["NecrosisPetMenuButton"] = {"CENTER", "UIParent", "CENTER", 87,-100},
-		["NecrosisCurseMenuButton"] = {"CENTER", "UIParent", "CENTER", 121,-100},
+		["NecrosisHealthstoneButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", -42.38417434692383, -6.71299409866333, 1.549999952316284},
+		["NecrosisSoulstoneButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", -38.23531723022461, 19.48186874389648, 1.549999952316284},
+		["NecrosisBuffMenuButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", -19.48186874389648, 38.23531723022461, 1.549999952316284},
+		["NecrosisMountButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", 6.71299409866333, 42.38417434692383, 1.549999952316284},
+		["NecrosisPetMenuButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", 30.34371948242188, 30.34371948242188, 1.549999952316284},
+		["NecrosisCurseMenuButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", 42.38417434692383, 6.71299409866333, 1.549999952316284},
 	},
 	
 	PetShow = {true,true,true,true,true,true,true,true,true,},
@@ -2545,6 +2550,22 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("Necrosis:UpdateMana"
 end
 
 ------------------------------------------------------------------------------------------------------
+-- Reschedule timers for spells with active cooldowns on reload
+function Necrosis:RescheduleExistingTimers()
+	-- Check Soulstone cooldown
+	local soulstone_spell_id = 20707  -- Soulstone Resurrection (or equivalent in current expansion)
+	local start, duration = GetSpellCooldown(soulstone_spell_id, BOOKTYPE_SPELL)
+
+	if start and duration and duration > 0 then
+		-- Soulstone has an active cooldown, reschedule timer
+		print("[Necrosis] Rescheduling Soulstone timer from cooldown")
+		local remaining = start + duration - GetTime()
+		if remaining > 0 then
+			self:TimerInsert("Soulstone", "player", math.ceil(remaining), "Soulstone CD", start, duration)
+		end
+	end
+end
+
 -- FUNCTIONS MANAGING STONES & SHARDS || FONCTIONS DES PIERRES ET DES FRAGMENTS
 ------------------------------------------------------------------------------------------------------
 
@@ -3015,13 +3036,9 @@ dist = dist * radiusMultiplier
 					indexScale = indexScale + buttonAngleSpacing
 				else
 --]]
-					f:SetPoint(
-						NecrosisConfig.FramePosition[fr][1],
-						NecrosisConfig.FramePosition[fr][2],
-						NecrosisConfig.FramePosition[fr][3],
-						NecrosisConfig.FramePosition[fr][4],
-						NecrosisConfig.FramePosition[fr][5]
-					)
+					-- Safe access to FramePosition with fallback
+					local pos = (NecrosisConfig and NecrosisConfig.FramePosition and NecrosisConfig.FramePosition[fr]) or {"CENTER", "UIParent", "CENTER", 0, 0}
+					f:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
 				end
 			end
 			f:Show()

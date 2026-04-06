@@ -29,9 +29,10 @@ local function SetSSAttribs(nostone, reason)
 		f:SetAttribute("spell", str)
 
 		-- Left click: Use item if exists, otherwise cast spell to create
-		if NecrosisConfig.ItemSwitchCombat[4] then
+		local itemSwitchCombat = NecrosisConfig and NecrosisConfig.ItemSwitchCombat or {}
+		if itemSwitchCombat[4] then
 			f:SetAttribute("type1", "item")
-			f:SetAttribute("item1", NecrosisConfig.ItemSwitchCombat[4])
+			f:SetAttribute("item1", itemSwitchCombat[4])
 		else
 			f:SetAttribute("type1", "spell")
 			f:SetAttribute("spell1", str)
@@ -43,9 +44,9 @@ local function SetSSAttribs(nostone, reason)
 
 		-- Middle click to use
 		f:SetAttribute("type3", "macro")
-		if NecrosisConfig.ItemSwitchCombat[4] then
-			f:SetAttribute("macrotext3", "/stopcasting \n/use "..NecrosisConfig.ItemSwitchCombat[4])
-			f:SetAttribute("item3", NecrosisConfig.ItemSwitchCombat[4])
+		if itemSwitchCombat[4] then
+			f:SetAttribute("macrotext3", "/stopcasting \n/use "..itemSwitchCombat[4])
+			f:SetAttribute("item3", itemSwitchCombat[4])
 		else
 			f:SetAttribute("macrotext3", "/stopcasting \n/cast "..str)
 		end

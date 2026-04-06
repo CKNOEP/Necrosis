@@ -236,6 +236,9 @@ function Necrosis:SetSphereConfig()
 		NecrosisRotationLow:SetText("0")
 		NecrosisRotationHigh:SetText("360")
 
+		if not NecrosisConfig.NecrosisAngle then
+			NecrosisConfig.NecrosisAngle = 180
+		end
 		NecrosisRotation:SetValue(NecrosisConfig.NecrosisAngle)
 
 
@@ -387,11 +390,12 @@ function Necrosis:SetSphereConfig()
 
 	end
 
-	UIDropDownMenu_Initialize(NecrosisSkinSelection, Necrosis.Skin_Init)
-	UIDropDownMenu_Initialize(NecrosisEventSelection, Necrosis.Event_Init)
-	UIDropDownMenu_Initialize(NecrosisSpellSelection, Necrosis.Spell_Init)
-	UIDropDownMenu_Initialize(NecrosisSpellSelection2, Necrosis.Spell_Init2)
-	UIDropDownMenu_Initialize(NecrosisCountSelection, Necrosis.Count_Init)
+	-- Safe initialization of dropdowns - they may not exist yet
+	if NecrosisSkinSelection then UIDropDownMenu_Initialize(NecrosisSkinSelection, Necrosis.Skin_Init) end
+	if NecrosisEventSelection then UIDropDownMenu_Initialize(NecrosisEventSelection, Necrosis.Event_Init) end
+	if NecrosisSpellSelection then UIDropDownMenu_Initialize(NecrosisSpellSelection, Necrosis.Spell_Init) end
+	if NecrosisSpellSelection2 then UIDropDownMenu_Initialize(NecrosisSpellSelection2, Necrosis.Spell_Init2) end
+	if NecrosisCountSelection then UIDropDownMenu_Initialize(NecrosisCountSelection, Necrosis.Count_Init) end
 
 	NecrosisLock:SetText(self.Config.Misc["Verrouiller Necrosis sur l'interface"])
 	NecrosisSphereSizeText:SetText(self.Config.Sphere["Taille de la sphere"])
@@ -406,7 +410,14 @@ function Necrosis:SetSphereConfig()
 
 	NecrosisLock:SetChecked(NecrosisConfig.NoDragAll)
 
+	if not NecrosisConfig.NecrosisButtonScale then
+		NecrosisConfig.NecrosisButtonScale = 100
+	end
 	NecrosisSphereSize:SetValue(NecrosisConfig.NecrosisButtonScale)
+
+	if not NecrosisConfig.ShowCount then
+		NecrosisConfig.ShowCount = false
+	end
 	NecrosisShowCount:SetChecked(NecrosisConfig.ShowCount)
 
 	local couleur = {"Rose", "Bleu", "Orange", "Turquoise", "Violet1", "Violet2", "666", "X"}
@@ -418,6 +429,9 @@ function Necrosis:SetSphereConfig()
 		end
 	end
 
+	if not NecrosisConfig.Circle then
+		NecrosisConfig.Circle = 1
+	end
 	UIDropDownMenu_SetSelectedID(NecrosisEventSelection, NecrosisConfig.Circle)
 	if NecrosisConfig.Circle == 1 then
 		UIDropDownMenu_SetText(NecrosisEventSelection, self.Config.Sphere.Count[NecrosisConfig.Circle])

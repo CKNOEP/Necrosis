@@ -533,6 +533,11 @@ function Necrosis:SetMenusConfig()
 		end
 
 		-- option Pet visisble dans le menus
+		-- Initialize PetShow table if it doesn't exist
+		if not NecrosisConfig.PetShow then
+			NecrosisConfig.PetShow = {}
+		end
+
 		for i in ipairs(Necrosis.Translation.DemonName) do
 
 
@@ -899,10 +904,46 @@ function Necrosis:SetMenusConfig()
 
 	end
 
-	UIDropDownMenu_Initialize(NecrosisBuffVector, self.BuffVector_Init)
-	UIDropDownMenu_Initialize(NecrosisDemonVector, self.DemonVector_Init)
-	UIDropDownMenu_Initialize(NecrosisCurseVector, self.CurseVector_Init)
-	UIDropDownMenu_Initialize(NecrosisDemonSacrifice, self.Sacrifice_Init)
+	-- Initialize missing config values for backward compatibility
+	if not NecrosisConfig.AutomaticMenu then
+		NecrosisConfig.AutomaticMenu = false
+	end
+	if not NecrosisConfig.ClosingMenu then
+		NecrosisConfig.ClosingMenu = true
+	end
+	if not NecrosisConfig.BlockedMenu then
+		NecrosisConfig.BlockedMenu = false
+	end
+	if not NecrosisConfig.BanishScale then
+		NecrosisConfig.BanishScale = 100
+	end
+	if not NecrosisConfig.CountType then
+		NecrosisConfig.CountType = 1
+	end
+	if not NecrosisConfig.BuffMenuPos then
+		NecrosisConfig.BuffMenuPos = {x=1, y=0, direction=1}
+	end
+	if not NecrosisConfig.BuffMenuDecalage then
+		NecrosisConfig.BuffMenuDecalage = {x=1, y=26}
+	end
+	if not NecrosisConfig.PetMenuPos then
+		NecrosisConfig.PetMenuPos = {x=1, y=0, direction=1}
+	end
+	if not NecrosisConfig.PetMenuDecalage then
+		NecrosisConfig.PetMenuDecalage = {x=1, y=26}
+	end
+	if not NecrosisConfig.CurseMenuPos then
+		NecrosisConfig.CurseMenuPos = {x=1, y=0, direction=1}
+	end
+	if not NecrosisConfig.CurseMenuDecalage then
+		NecrosisConfig.CurseMenuDecalage = {x=1, y=26}
+	end
+
+	-- Safe initialization of dropdowns - they may not exist yet
+	if NecrosisBuffVector then UIDropDownMenu_Initialize(NecrosisBuffVector, self.BuffVector_Init) end
+	if NecrosisDemonVector then UIDropDownMenu_Initialize(NecrosisDemonVector, self.DemonVector_Init) end
+	if NecrosisCurseVector then UIDropDownMenu_Initialize(NecrosisCurseVector, self.CurseVector_Init) end
+	if NecrosisDemonSacrifice then UIDropDownMenu_Initialize(NecrosisDemonSacrifice, self.Sacrifice_Init) end
 
 	NecrosisMenusConfig1Text:SetText(self.Config.Menus["Options Generales"])
 	NecrosisMenusConfig2Text:SetText(self.Config.Menus["Menu des Buffs"])

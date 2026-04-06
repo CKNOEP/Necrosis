@@ -446,7 +446,7 @@ function Necrosis:CreateMenuItem(i)
 
 	-- Special attribute for the Banish button || Attributes spéciaux pour notre ami le sort de Bannissement
 	if i.high_of == "banish" then
-		frame:SetScale(NecrosisConfig.BanishScale/100)
+		frame:SetScale((NecrosisConfig and NecrosisConfig.BanishScale or 100)/100)
 	end
 
 	-- Set spell attributes for the menu button || Définir les attributs de sort pour le bouton du menu
