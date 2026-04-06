@@ -1069,7 +1069,9 @@ local function StartInit(fm)
 	Local.InWorld = true
 
 	-- Import/Restore NecrosisUI layout if enabled
+	DEFAULT_CHAT_FRAME:AddMessage("[Necrosis] StartInit - NecrosisUIEnabled:" .. tostring(NecrosisConfig.NecrosisUIEnabled) .. " NUI exists:" .. tostring(NUI ~= nil))
 	if NecrosisConfig.NecrosisUIEnabled and NUI and type(NUI.ImportLayout) == "function" then
+		DEFAULT_CHAT_FRAME:AddMessage("[Necrosis] Calling ImportLayout in 0.5s")
 		C_Timer.After(0.5, function()
 			pcall(function() NUI:ImportLayout() end)
 		end)
@@ -1286,8 +1288,10 @@ function Necrosis:OnEvent(event,...)
 		end
 	elseif event == "GET_ITEM_INFO_RECEIVED" then
 		-- Process the server response: arg1 is item id; arg2 is success / fail
+		DEFAULT_CHAT_FRAME:AddMessage("[Necrosis] GET_ITEM_INFO_RECEIVED - done:" .. tostring(Necrosis.WarlockItemsDone()))
 		Necrosis.SetItem(arg1, arg2)
 		if Necrosis.WarlockItemsDone() then --and BagNamesKnown() then
+			DEFAULT_CHAT_FRAME:AddMessage("[Necrosis] WarlockItemsDone - calling StartInit")
 			ev_out(event, Necrosis.WarlockItemsDone(), true, true, false)
 			StartInit(fm)
 		else -- safe to start up

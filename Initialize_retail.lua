@@ -602,6 +602,7 @@ local originalOnEvent = eventFrame:GetScript("OnEvent")
 
 -- ✅ PLAYER_LOGIN is NOT blocked in WoW 12.0! Register it directly
 eventFrame:RegisterEvent("PLAYER_LOGIN")
+eventFrame:RegisterEvent("GET_ITEM_INFO_RECEIVED")
 
 eventFrame:SetScript("OnEvent", function(self, event, ...)
 	if event == "PLAYER_LOGIN" then
