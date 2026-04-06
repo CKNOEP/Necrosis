@@ -1804,6 +1804,10 @@ function Necrosis:OnDragStop(button)
 	else
 		BoutonParent = BoutonParent:GetName()
 	end
+	-- Initialize FramePosition table if it doesn't exist
+	if not NecrosisConfig.FramePosition then
+		NecrosisConfig.FramePosition = {}
+	end
 	-- Save position with scale (scale is 6th element in array, 1.35 if NUI is enabled and active, 1 otherwise)
 	local scale = button:GetScale()
 	NecrosisConfig.FramePosition[NomBouton] = {AncreBouton, BoutonParent, AncreParent, BoutonX, BoutonY, scale}
@@ -2552,18 +2556,10 @@ end
 ------------------------------------------------------------------------------------------------------
 -- Reschedule timers for spells with active cooldowns on reload
 function Necrosis:RescheduleExistingTimers()
-	-- Check Soulstone cooldown
-	local soulstone_spell_id = 20707  -- Soulstone Resurrection (or equivalent in current expansion)
-	local start, duration = GetSpellCooldown(soulstone_spell_id, BOOKTYPE_SPELL)
-
-	if start and duration and duration > 0 then
-		-- Soulstone has an active cooldown, reschedule timer
-		print("[Necrosis] Rescheduling Soulstone timer from cooldown")
-		local remaining = start + duration - GetTime()
-		if remaining > 0 then
-			self:TimerInsert("Soulstone", "player", math.ceil(remaining), "Soulstone CD", start, duration)
-		end
-	end
+	-- This function would reschedule timers after addon reload
+	-- For now, disabled to avoid complex timer object setup
+	-- TODO: Implement proper timer rescheduling with correct timer object format
+	return
 end
 
 -- FUNCTIONS MANAGING STONES & SHARDS || FONCTIONS DES PIERRES ET DES FRAGMENTS

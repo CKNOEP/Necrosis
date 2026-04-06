@@ -367,6 +367,9 @@ NecrosisConfig.BuffMenuPos = {x=1, y=0, direction=1}
 NecrosisConfig.BuffMenuDecalage = {x=1, y=26}
 NecrosisConfig.CurseMenuPos = {x=1, y=0, direction=1}
 NecrosisConfig.CurseMenuDecalage = {x=1, y=-26}
+NecrosisConfig.FramePosition = {}
+NecrosisConfig.PetShow = {true,true,true,true,true,true,true,true,true,}
+NecrosisConfig.CurseShow = {true,true,true,true,true,true,true,true}
 
 -- RGB Encoding cache for storing health/mana values without taint
 -- Used to bypass Secret Value restrictions in Retail 12.0+
@@ -627,13 +630,30 @@ function Necrosis:Initialize(Config)
 
 	Necrosis:Initialize_Speech()
 	-- On charge (ou on crée la configuration pour le joueur et on l'affiche sur la console
-	if not Necrosis.Data.LastConfig or  Necrosis.Data.LastConfig > Necrosis.Data.Version or NecrosisConfig.Version == nil then		
+	if not Necrosis.Data.LastConfig or  Necrosis.Data.LastConfig > Necrosis.Data.Version or NecrosisConfig.Version == nil then
 		NecrosisConfig = {}
 		NecrosisConfig = Config
 		NecrosisConfig.Version = Necrosis.Data.LastConfig
 		self:Msg(self.ChatMessage.Interface.DefaultConfig, "USER")
 	else
 		self:Msg(self.ChatMessage.Interface.UserConfig, "USER")
+	end
+
+	-- Immediate initialization of critical values that are used early in Initialize()
+	if not NecrosisConfig.SpellTimerPos then
+		NecrosisConfig.SpellTimerPos = 1
+	end
+	if not NecrosisConfig.SpellTimerJust then
+		NecrosisConfig.SpellTimerJust = "LEFT"
+	end
+	if not NecrosisConfig.SensListe then
+		NecrosisConfig.SensListe = 1
+	end
+	if not NecrosisConfig.Smooth then
+		NecrosisConfig.Smooth = false
+	end
+	if not NecrosisConfig.TimerType then
+		NecrosisConfig.TimerType = 1
 	end
 	
 	if NecrosisConfig.PetInfo then -- just in case... pet config info was redone for speech
@@ -724,6 +744,21 @@ function Necrosis:Initialize(Config)
 	end
 	if not NecrosisConfig.CurseMenuDecalage then
 		NecrosisConfig.CurseMenuDecalage = Necrosis.Config.CurseMenuDecalage or {x=1, y=-26}
+	end
+
+	-- Initialize FramePosition if not present (backward compatibility)
+	if not NecrosisConfig.FramePosition then
+		NecrosisConfig.FramePosition = {}
+	end
+
+	-- Initialize PetShow if not present (backward compatibility)
+	if not NecrosisConfig.PetShow then
+		NecrosisConfig.PetShow = Necrosis.Config.PetShow or {true,true,true,true,true,true,true,true,true,}
+	end
+
+	-- Initialize CurseShow if not present (backward compatibility)
+	if not NecrosisConfig.CurseShow then
+		NecrosisConfig.CurseShow = Necrosis.Config.CurseShow or {true,true,true,true,true,true,true,true}
 	end
 
 	Necrosis.UpdateSpellTimers(NecrosisConfig.Timers)-- init timers

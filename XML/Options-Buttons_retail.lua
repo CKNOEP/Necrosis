@@ -159,6 +159,10 @@ function Necrosis:SetButtonsConfig()
 					Necrosis.Warlock_Buttons.curses.f, --"NecrosisCurseMenuButton"
 				}
 				local loc = {-121, -87, -53, -17, 17, 53, 87, 121}
+				-- Initialize FramePosition table if needed
+				if not NecrosisConfig.FramePosition then
+					NecrosisConfig.FramePosition = {}
+				end
 				for i in ipairs(ButtonName) do
 					if _G[ButtonName[i]] then
 						_G[ButtonName[i]]:SetPoint("CENTER", "UIParent", "CENTER", loc[i], -100)

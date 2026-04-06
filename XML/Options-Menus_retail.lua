@@ -766,7 +766,12 @@ function Necrosis:SetMenusConfig()
 		FontString:SetTextColor(1, 1, 1)
 		frame:SetFontString(FontString)
 
-			for  i = 1, #Necrosis.Warlock_Lists.curses, 1 do
+		-- Initialize CurseShow table if needed
+		if not NecrosisConfig.CurseShow then
+			NecrosisConfig.CurseShow = {}
+		end
+
+		for  i = 1, #Necrosis.Warlock_Lists.curses, 1 do
 
 				
 			frame = CreateFrame("CheckButton", "NecrosisShowCurse"..i, NecrosisMenusConfig4, "UICheckButtonTemplate")
