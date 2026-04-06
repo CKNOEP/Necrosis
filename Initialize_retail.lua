@@ -14,6 +14,7 @@ local _G = getfenv(0)
 Necrosis = {}
 SAO ={}
 -- NECROSIS_ID is now defined in Core-Init.lua before locales load
+-- Necrosis.Config is defined in Defaults_retail.lua which loads before this file
 
 -- ============================================================================
 -- VUHDO-STYLE CACHE: Non-tainted data storage (Clean context)
@@ -343,7 +344,89 @@ Necrosis.Speech = {}
 Necrosis.Unit = {}
 Necrosis.Translation = {}
 
-Necrosis.Config = {}
+-- Default configuration for Retail - extracted from user's SavedVariables
+-- When a player resets configuration, this will be loaded as defaults
+Necrosis.Config = {
+	["ThreatMeterEnabled"] = true,
+	["Timers"] = {
+		["Type"] = { "Aucun", "Graphiques", "Textuels" },
+		["Afficher les timers sur la gauche du bouton"] = "Afficher les timers sur la gauche du bouton",
+		["Afficher les timers de bas en haut"] = "Afficher les timers de bas en haut",
+		["Type de timers"] = "Type de timers",
+		["Afficher le bouton des timers"] = "Afficher le bouton des timers",
+		["Transparence des timers"] = "Transparence du timer",
+	},
+	["TimerType"] = 1,
+	["Version"] = "8.0.6",
+	["MainSpell"] = "dark_pact",
+	["BottomBannerWidthScale"] = 1.308064699172974,
+	["NecrosisLockServ"] = true,
+	["BuffMenuPos"] = { ["y"] = 0, ["x"] = 1, ["direction"] = 1 },
+	["PlayerSummonsSM"] = false,
+	["BlockedMenu"] = false,
+	["NoDragAll"] = false,
+	["deleteshards"] = true,
+	["NecrosisColor"] = "666",
+	["SpellTimerJust"] = "LEFT",
+	["AntiFearAlert"] = true,
+	["Smooth"] = false,
+	["CurseMenuDecalage"] = { ["y"] = -26, ["x"] = 1 },
+	["PetShow"] = { true, true, true, true, false, false, false, false, true, false },
+	["SteedSummon"] = true,
+	["AutomaticMenu"] = false,
+	["ShadowTranceScale"] = 170,
+	["Banish"] = true,
+	["DemonSummon"] = true,
+	["PlayerSS"] = true,
+	["PlayerSummons"] = true,
+	["StonePosition"] = { 1, 2, 3, 4, 5, 6, 7, 8, 9 },
+	["version"] = 257,
+	["ChatMsg"] = true,
+	["NecrosisToolTip"] = true,
+	["ShowSpellTimers"] = true,
+	["PetMenuPos"] = { ["y"] = 0, ["x"] = 1, ["direction"] = 1 },
+	["BanishScale"] = 100,
+	["NecrosisAlphaBar"] = 85,
+	["alert"] = { ["offset"] = 0, ["scale"] = 1, ["timer"] = 1, ["opacity"] = 1, ["sound"] = 1, ["enabled"] = true },
+	["SensListe"] = 1,
+	["CountType"] = 1,
+	["PlayerSSSM"] = false,
+	["PetInfo"] = {},
+	["glow"] = { ["enabled"] = true },
+	["ClosingMenu"] = true,
+	["FramePosition"] = {},
+	["NecrosisUIEnabled"] = true,
+	["NecrosisAngle"] = 162,
+	["MainSpell2"] = "death_coil",
+	["Sound"] = true,
+	["AFK"] = true,
+	["Circle"] = 1,
+	["ThreatRingThickness"] = 1,
+	["PetMenuDecalage"] = { ["y"] = 26, ["x"] = 1 },
+	["CurseShow"] = { true, true, true, true, true, true, true, true },
+	["questions"] = {},
+	["VersionCheck"] = { ["Enabled"] = true, ["CheckOnLoad"] = true, ["NotifyOnUpdate"] = true, ["LastCheck"] = 0, ["CheckInterval"] = 86400 },
+	["ItemSwitchCombat"] = { [3] = "Pierre de soins démoniaque" },
+	["ShowCount"] = false,
+	["classes"] = {},
+	["SummonQueue"] = {
+		["Enabled"] = true,
+		["TriggerCode"] = "123, summon, inv, +1",
+		["MaxQueueSize"] = 50,
+		["AutoRemoveInRange"] = true,
+		["SyncEnabled"] = true,
+		["Position"] = { "CENTER", "UIParent", "CENTER", 0, 100 },
+		["AudioAlert"] = true,
+		["ShowGUI"] = false,
+		["RangeCheckInterval"] = 2,
+	},
+	["NecrosisButtonSpacing"] = 1.200000047683716,
+	["SpellTimerPos"] = 1,
+	["NecrosisButtonScale"] = 143,
+	["BuffMenuDecalage"] = { ["y"] = 26, ["x"] = 1 },
+	["NecrosisButtonRadius"] = 0.9000000357627869,
+	["CurseMenuPos"] = { ["y"] = 0, ["x"] = 1, ["direction"] = 1 },
+}
 
 NecrosisConfig = {}
 
@@ -524,7 +607,8 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 	if event == "PLAYER_LOGIN" then
 		-- Initialize addon directly (PLAYER_LOGIN doesn't do it automatically)
 		if Necrosis and Necrosis.Initialize then
-			Necrosis:Initialize(Necrosis.DefaultConfig or {})
+			local defaultConfig = Necrosis.Config or {}
+			Necrosis:Initialize(defaultConfig)
 
 			-- Set button texture after initialization (ensures visibility)
 			C_Timer.After(0.5, function()
@@ -654,6 +738,15 @@ function Necrosis:Initialize(Config)
 	end
 	if not NecrosisConfig.TimerType then
 		NecrosisConfig.TimerType = 1
+	end
+	if not NecrosisConfig.ShowCount then
+		NecrosisConfig.ShowCount = false
+	end
+	if not NecrosisConfig.MainSpell then
+		NecrosisConfig.MainSpell = "death_coil"
+	end
+	if not NecrosisConfig.MainSpell2 then
+		NecrosisConfig.MainSpell2 = "dark_pact"
 	end
 	
 	if NecrosisConfig.PetInfo then -- just in case... pet config info was redone for speech

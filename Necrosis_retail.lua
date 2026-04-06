@@ -92,30 +92,32 @@ Local.DefaultConfig = {
 		-- 8 = Banish || Bannir (was 10)
 	NecrosisToolTip = true,
 
-	MainSpell = "armor",
+	MainSpell = "death_coil",
+	MainSpell2 = "dark_pact",
 
 	PetMenuPos = {x=1, y=0, direction=1},
-	PetMenuDecalage = {x=1, y=26},
+	PetMenuDecalage = {x=1, y=49},
 
-	BuffMenuPos = {x=1, y=0, direction=1},
-	BuffMenuDecalage = {x=1, y=26},
+	BuffMenuPos = {x=0, y=1, direction=1},
+	BuffMenuDecalage = {x=-65, y=18},
 
 	CurseMenuPos = {x=1, y=0, direction=1},
-	CurseMenuDecalage = {x=1, y=-26},
+	CurseMenuDecalage = {x=1, y=30},
 
 	ChatMsg = true,
 	ChatType = true,
 	Language = GetLocale(),
-	ShowCount = true,
+	ShowCount = false,
 	CountType = 1,
 	DestroyShardwithsphere = true,
-	ShadowTranceScale = 100,
-	NecrosisButtonScale = 90,
+	ShadowTranceScale = 130,
+	NecrosisButtonScale = 136,
 	NecroisButtonRadius = 1,
-	NecrosisButtonRadius = 1.0,
-	NecrosisButtonSpacing = 1.0,
-	NecrosisColor = "Rose",
+	NecrosisButtonRadius = 0.95,
+	NecrosisButtonSpacing = 1.1,
+	NecrosisColor = "666",
 	Sound = true,
+	Smooth = false,
 	SpellTimerPos = 1,
 	SpellTimerJust = "LEFT",
 	Circle = 1,
@@ -124,11 +126,17 @@ Local.DefaultConfig = {
 	PetName = {},
 	DemonSummon = true,
 	BanishScale = 100,
-	ItemSwitchCombat = {},
+	Banish = true,
+	NecrosisUIEnabled = true,
+	deleteshards = true,
+	ItemSwitchCombat = {[3] = "Pierre de soins démoniaque"},
 	DestroyCount = 5,
 	AutomaticMenu = false,
 	ClosingMenu = true,
 	BlockedMenu = false,
+	PlayerSummons = true,
+	PlayerSS = true,
+	SteedSummon = true,
 	FramePosition = {
 		["NecrosisSpellTimerButton"] = {"CENTER", "UIParent", "CENTER", 100, 300},
 		["NecrosisButton"] = {"CENTER", "UIParent", "CENTER", 0, -200},
@@ -205,6 +213,8 @@ Local.DefaultConfig = {
 		[29] = {usage = "inferno", show = false},         -- Inferno (5s summon)
 	},
 }
+
+-- Default config is now loaded from Defaults_retail.lua which loads before Initialize_retail.lua
 
 -- Casted spell variables (name, rank, target, target level) || Variables des sorts castés (nom, rang, cible, niveau de la cible)
 Local.SpellCasted = {}
