@@ -451,6 +451,18 @@ end
 -- UPDATE TIMER CHECKBOXES (called every time config is shown)
 ------------------------------------------------------------------------------------------------------
 function Necrosis:UpdateTimerCheckboxes()
+	-- Debug: check if we're being called
+	print("[Necrosis] UpdateTimerCheckboxes() called")
+	print("[Necrosis] NecrosisConfig.Timers:", NecrosisConfig.Timers)
+	if NecrosisConfig.Timers then
+		print("[Necrosis] Timers count:", #NecrosisConfig.Timers)
+		if NecrosisConfig.Timers[1] then
+			print("[Necrosis] Timers[1].usage:", NecrosisConfig.Timers[1].usage)
+		end
+	end
+	print("[Necrosis] NecrosisTimersConfig2:", _G["NecrosisTimersConfig2"])
+	print("[Necrosis] NecrosisTimersConfig3:", _G["NecrosisTimersConfig3"])
+
 	-- Clean up old checkboxes first
 	for i = 1, 50 do
 		if _G["NecrosisTimerShow"..i] then
@@ -459,18 +471,24 @@ function Necrosis:UpdateTimerCheckboxes()
 		end
 	end
 
-	if not NecrosisConfig.Timers then return end
+	if not NecrosisConfig.Timers then
+		print("[Necrosis] ERROR: NecrosisConfig.Timers is nil!")
+		return
+	end
 
 	local initY = 395
 	local leftX = 40
 	local rightX = 220
 
 	-- Create Page 2 checkboxes (items 1-20)
+	print("[Necrosis] Creating Page 2 checkboxes...")
 	for i = 1, math.min(20, #NecrosisConfig.Timers), 1 do
 		if not NecrosisConfig.Timers[i] or not NecrosisConfig.Timers[i].usage then
+			print("[Necrosis] Stopping at item", i, "- data missing")
 			break
 		end
 
+		print("[Necrosis] Creating checkbox", i, "for", NecrosisConfig.Timers[i].usage)
 		local frame = CreateFrame("CheckButton", "NecrosisTimerShow"..i, _G["NecrosisTimersConfig2"], "UICheckButtonTemplate")
 		frame:EnableMouse(true)
 		frame:SetWidth(24)
@@ -502,11 +520,14 @@ function Necrosis:UpdateTimerCheckboxes()
 	end
 
 	-- Create Page 3 checkboxes (items 21-40)
+	print("[Necrosis] Creating Page 3 checkboxes...")
 	for i = 21, #NecrosisConfig.Timers, 1 do
 		if not NecrosisConfig.Timers[i] or not NecrosisConfig.Timers[i].usage then
+			print("[Necrosis] Stopping at item", i, "- data missing")
 			break
 		end
 
+		print("[Necrosis] Creating checkbox", i, "for", NecrosisConfig.Timers[i].usage)
 		local frame = CreateFrame("CheckButton", "NecrosisTimerShow"..i, _G["NecrosisTimersConfig3"], "UICheckButtonTemplate")
 		frame:EnableMouse(true)
 		frame:SetWidth(24)
@@ -539,8 +560,20 @@ function Necrosis:UpdateTimerCheckboxes()
 	end
 
 	-- Show pages
-	if _G["NecrosisTimersConfig2"] then _G["NecrosisTimersConfig2"]:Show() end
-	if _G["NecrosisTimersConfig3"] then _G["NecrosisTimersConfig3"]:Show() end
+	print("[Necrosis] Showing pages...")
+	if _G["NecrosisTimersConfig2"] then
+		print("[Necrosis] Showing NecrosisTimersConfig2")
+		_G["NecrosisTimersConfig2"]:Show()
+	else
+		print("[Necrosis] ERROR: NecrosisTimersConfig2 doesn't exist!")
+	end
+	if _G["NecrosisTimersConfig3"] then
+		print("[Necrosis] Showing NecrosisTimersConfig3")
+		_G["NecrosisTimersConfig3"]:Show()
+	else
+		print("[Necrosis] ERROR: NecrosisTimersConfig3 doesn't exist!")
+	end
+	print("[Necrosis] UpdateTimerCheckboxes() finished")
 end
 
 
