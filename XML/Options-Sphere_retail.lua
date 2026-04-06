@@ -180,7 +180,6 @@ function Necrosis:SetSphereConfig()
 	frame:SetScript("OnValueChanged", function(self)
 		if not (self:GetValue() == NecrosisConfig.NecrosisButtonSpacing) then
 			local value = self:GetValue()
-			print("[Necrosis] Button spacing changed to: " .. value)
 			GameTooltip:SetText(value.." x")
 			NecrosisConfig.NecrosisButtonSpacing = value
 			Necrosis:ButtonSetup()

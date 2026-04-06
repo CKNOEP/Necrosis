@@ -50,11 +50,9 @@ bottomAnchor:SetAllPoints(necrosisUIFrame)
 -- Implement Show/Hide Methods
 function NUI:Show()
 	if NecrosisUI then
-		print("[NecrosisUI] NUI:Show() called")
 		NecrosisUI:Show()
 		-- Import layout when showing NecrosisUI
 		C_Timer.After(0.5, function()
-			print("[NecrosisUI] Calling ImportLayout()")
 			self:ImportLayout()
 		end)
 	end
