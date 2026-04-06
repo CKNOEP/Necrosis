@@ -474,6 +474,14 @@ function Necrosis:UpdateTimerCheckboxes()
 		print(configCountMsg)
 		if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage(configCountMsg) end
 
+		-- Show all keys to see what's ACTUALLY in Timers
+		local keyMsg = "[Necrosis] Necrosis.Config.Timers keys: "
+		for key in pairs(Necrosis.Config.Timers) do
+			keyMsg = keyMsg .. tostring(key) .. ", "
+		end
+		print(keyMsg)
+		if DEFAULT_CHAT_FRAME then DEFAULT_CHAT_FRAME:AddMessage(keyMsg) end
+
 		if Necrosis.Config.Timers[1] then
 			local configItemMsg = "[Necrosis] Necrosis.Config.Timers[1].usage: " .. tostring(Necrosis.Config.Timers[1].usage)
 			print(configItemMsg)
