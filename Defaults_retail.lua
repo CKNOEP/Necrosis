@@ -25,14 +25,14 @@ Necrosis.Config = {
 	MainSpell = "death_coil",
 	MainSpell2 = "dark_pact",
 
-	PetMenuPos = {x=1, y=0, direction=1},
-	PetMenuDecalage = {x=1, y=49},
+	PetMenuPos = {x=0, y=1, direction=1},
+	PetMenuDecalage = {x=55, y=11},
 
 	BuffMenuPos = {x=1, y=0, direction=-1},
 	BuffMenuDecalage = {x=8, y=30},
 
 	CurseMenuPos = {x=1, y=0, direction=1},
-	CurseMenuDecalage = {x=1, y=30},
+	CurseMenuDecalage = {x=1, y=32},
 
 	ChatMsg = true,
 	ChatType = true,

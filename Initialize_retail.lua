@@ -370,7 +370,7 @@ Necrosis.Config = {
 	["SpellTimerJust"] = "LEFT",
 	["AntiFearAlert"] = true,
 	["Smooth"] = false,
-	["CurseMenuDecalage"] = { ["y"] = -26, ["x"] = 1 },
+	["CurseMenuDecalage"] = { ["y"] = 32, ["x"] = 1 },
 	["PetShow"] = { true, true, true, true, false, false, false, false, true, false },
 	["SteedSummon"] = true,
 	["AutomaticMenu"] = false,
@@ -384,7 +384,7 @@ Necrosis.Config = {
 	["ChatMsg"] = true,
 	["NecrosisToolTip"] = true,
 	["ShowSpellTimers"] = true,
-	["PetMenuPos"] = { ["y"] = 0, ["x"] = 1, ["direction"] = 1 },
+	["PetMenuPos"] = { ["y"] = 1, ["x"] = 0, ["direction"] = 1 },
 	["BanishScale"] = 100,
 	["NecrosisAlphaBar"] = 85,
 	["alert"] = { ["offset"] = 0, ["scale"] = 1, ["timer"] = 1, ["opacity"] = 1, ["sound"] = 1, ["enabled"] = true },
@@ -410,7 +410,7 @@ Necrosis.Config = {
 	["AFK"] = true,
 	["Circle"] = 1,
 	["ThreatRingThickness"] = 1,
-	["PetMenuDecalage"] = { ["y"] = 26, ["x"] = 1 },
+	["PetMenuDecalage"] = { ["y"] = 11, ["x"] = 55 },
 	["CurseShow"] = { true, true, true, true, true, true, true, true },
 	["questions"] = {},
 	["VersionCheck"] = { ["Enabled"] = true, ["CheckOnLoad"] = true, ["NotifyOnUpdate"] = true, ["LastCheck"] = 0, ["CheckInterval"] = 86400 },
@@ -452,12 +452,12 @@ NecrosisConfig.NecrosisButtonScale = 100
 NecrosisConfig.BanishScale = 100
 NecrosisConfig.StonePosition = {1, 2, 3, 4, 5, 6, 7, 8, 9}
 NecrosisConfig.ItemSwitchCombat = {}
-NecrosisConfig.PetMenuPos = {x=1, y=0, direction=1}
-NecrosisConfig.PetMenuDecalage = {x=1, y=26}
+NecrosisConfig.PetMenuPos = {x=0, y=1, direction=1}
+NecrosisConfig.PetMenuDecalage = {x=55, y=11}
 NecrosisConfig.BuffMenuPos = {x=1, y=0, direction=1}
 NecrosisConfig.BuffMenuDecalage = {x=1, y=26}
 NecrosisConfig.CurseMenuPos = {x=1, y=0, direction=1}
-NecrosisConfig.CurseMenuDecalage = {x=1, y=-26}
+NecrosisConfig.CurseMenuDecalage = {x=1, y=32}
 NecrosisConfig.FramePosition = {}
 NecrosisConfig.PetShow = {true,true,true,true,true,true,true,true,true,}
 NecrosisConfig.CurseShow = {true,true,true,true,true,true,true,true}
