@@ -389,7 +389,7 @@ Necrosis.Config = {
 	["NecrosisAlphaBar"] = 85,
 	["alert"] = { ["offset"] = 0, ["scale"] = 1, ["timer"] = 1, ["opacity"] = 1, ["sound"] = 1, ["enabled"] = true },
 	["SensListe"] = 1,
-	["CountType"] = 1,
+	["CountType"] = 3,
 	["PlayerSSSM"] = false,
 	["PetInfo"] = {},
 	["glow"] = { ["enabled"] = true },
