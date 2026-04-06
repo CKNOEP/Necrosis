@@ -257,7 +257,61 @@ function Necrosis:TimerInsert(Cast, Target, Timer, note, start_time, duration, m
 	else
 		-- safety - no timer associated with spell
 	end
+
+	-- Update resurrection timer display if CountType==3
+	if NecrosisConfig.CountType == 3 and NecrosisShardCount and NecrosisConfig.ShowCount then
+		Necrosis:UpdateResurrectionTimerDisplay(Timer)
+	end
+
 	return Timer
+end
+
+-- Update the resurrection timer display in the sphere || Mise à jour de l'affichage du minuteur de résurrection
+function Necrosis:UpdateResurrectionTimerDisplay(Timer)
+	local Time, TimeMax
+	if Timer and Timer.SpellTimer then
+		for index, valeur in ipairs(Timer.SpellTimer) do
+			-- valeur.Name already contains the spell name, use it directly
+			if Necrosis.IsSpellRez(valeur.Name) then
+				Time = valeur.Time
+				TimeMax = valeur.TimeMax
+				break
+			end
+		end
+	end
+
+	-- If not found in SpellTimer, search for Soulstone aura by spell ID 20707
+	if not Time and C_UnitAuras then
+		for i = 1, 40 do
+			local auraData = C_UnitAuras.GetAuraDataByIndex("player", i)
+			if not auraData then break end
+			if tonumber(auraData.spellId) == 20707 then  -- Soulstone spell ID
+				if auraData.expirationTime and auraData.expirationTime > 0 then
+					Time = GetTime()
+					TimeMax = auraData.expirationTime
+					break
+				end
+			end
+		end
+	end
+
+	if Time and TimeMax then
+		local Secondes = TimeMax - floor(GetTime())
+		local Minutes = floor(Secondes / 60)
+		Secondes = mod(Secondes, 60)
+
+		if Secondes >= 0 then
+			if Minutes > 0 then
+				NecrosisShardCount:SetText(Minutes .. " m")
+			else
+				NecrosisShardCount:SetText(Secondes)
+			end
+		else
+			NecrosisShardCount:SetText("--")
+		end
+	else
+		NecrosisShardCount:SetText("--")
+	end
 end
 
 ------------------------------------------------------------------------------------------------------

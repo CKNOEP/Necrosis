@@ -286,6 +286,12 @@ local function CreateStoneButton(stone)
 	-- Define its attributes || Définition de ses attributs
 	FontString:SetText("") -- blank for now
 	FontString:SetPoint("CENTER")
+	FontString:SetTextScale(0.6)  -- Reduce size of resurrection timer text on soulstone button
+
+	-- Hide timer text on soulstone button || Masquer le texte du timer sur le bouton soulstone
+	if stone == Necrosis.Warlock_Buttons.soul_stone.f then
+		FontString:Hide()
+	end
 
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
 	if not NecrosisConfig.NecrosisLockServ then

@@ -551,6 +551,7 @@ textOverlay:SetSize(34, 34)  -- Match button size
 local shardCount = textOverlay:CreateFontString("NecrosisShardCount", "OVERLAY", "GameFontNormal")
 shardCount:SetPoint("CENTER")  -- Center in parent
 shardCount:SetTextColor(1, 1, 1, 1)
+shardCount:SetTextScale(0.7)  -- 70% of normal size for countdown timer
 -- Position the overlay on the button using name (will work when button is positioned)
 C_Timer.After(0.1, function()
 	if _G["NecrosisButton"] then
@@ -558,6 +559,7 @@ C_Timer.After(0.1, function()
 		textOverlay:Show()
 	end
 end)
+
 
 -- Hide all peripheral buttons at startup - will be shown after position restoration
 -- Wait 1 second to ensure all buttons are created by XML.lua first
@@ -632,6 +634,8 @@ Necrosis.Events = Events
 
 -- In WoW 12.0.1, RegisterEvent is blocked during addon load context
 -- We must register events from a player context (slash command)
+-- Create event frame if not already created
+local eventFrame = _G["NecrosisEventFrame"] or CreateFrame("Frame", "NecrosisEventFrame")
 local eventsRegistered = false
 local originalOnEvent = eventFrame:GetScript("OnEvent")
 
@@ -961,9 +965,10 @@ function Necrosis:Initialize(Config)
 	Necrosis.UpdateSpellTimers(NecrosisConfig.Timers)-- init timers
 
 	-- Reschedule timers for spells with active cooldowns (e.g., Soulstone on reload)
-	C_Timer.After(2, function()
-		Necrosis:RescheduleExistingTimers()
-	end)
+	-- TODO: Check if RescheduleExistingTimers is properly available at this point
+	-- C_Timer.After(2, function()
+	-- 	Necrosis:RescheduleExistingTimers()
+	-- end)
 
 	-- Création de la liste des sorts disponibles
 	self:SpellSetup("Initialize")

@@ -430,97 +430,61 @@ function UpdateIcons()
 		end
 	end
 
-	-- If the stone was not used, and there is no stone in inventory -> Mode 1 || Si la Pierre n'a pas été utilisée, et qu'il n'y a pas de pierre en inventaire -> Mode 1
-	if not (Local.Stone.Soul.OnHand or SoulstoneInUse) then
-		--print ("mode1")
-		Local.Stone.Soul.Mode = 1
-	end
-
-	-- If the stone was not used, but there is a stone in inventory || Si la Pierre n'a pas été utilisée, mais qu'il y a une pierre en inventaire
-	--[[On Hand			In Use
-		1 : no				no
-		2 : yes				no
-		3 : no				yes
-		4 : yes				yes
-	--]]
-	if Local.Stone.Soul.OnHand and (not SoulstoneInUse) then
-		-- If the stone in inventory contains a timer, and we leave a RL -> Mode 4 || Si la pierre en inventaire contient un timer, et qu'on sort d'un RL --> Mode 4
-		local start, duration = GetContainerItemCooldown(Local.Stone.Soul.Location[1],Local.Stone.Soul.Location[2])
-		if Necrosis.Debug.timers then
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("UpdateIcons - soul stone found"
-			.." s'"..tostring(start or "nyl").."'"
-			.." d'"..tostring(duration or "nyl").."'"
-			.." l1'"..tostring(Local.Stone.Soul.Location[1] or "nyl").."'"
-			.." l2'"..tostring(Local.Stone.Soul.Location[2] or "nyl").."'"
-			)
-		end
-		if start > 0 and duration > 0 then
-			--[[ This situation is after a stone is used and another is created.
-			The timer is on USING a soul stone, not the stone itself.  
-			So use the lowest soul stone 'resurrection' spell the warlock can learn just for the timer.
-			Take advantage that the various 'resurrection' spells share the same localized name AND the same cool down time. 
-			From the id, WoW knows the health and mana to give if the soul stone is used.
-			Note: WoW will only allow one soul stone at a time so we do not have to worry about multiple stones...
-			Note: The target guid (below) must match the cool down setting in Functions.lua or two timers could be spawned.
-			--]] 
-			if Local.Stone.Soul.Timer == true then
-			else
-				local spell = Necrosis.GetSpellById(20707)
-				local cast_info = {}
-				cast_info = {
-					usage = spell.Usage,
-					spell_id  = 20707,
-					guid = nil,
-					}
-				local target = {}
-				target = {
-					name = "",
-					lvl  = "",
-					guid = "",
-					}
-
-					
-				Local.TimerManagement = Necrosis:TimerInsert(cast_info, target, Local.TimerManagement, "soul stone in inventory cool down", start, duration, spell.Cooldown)
-				Local.Stone.Soul.Mode = 4
-				Local.Stone.Soul.Timer = true
-			end
-		-- If the stone does not contain a timer, or you do not leave an RL -> Mode 2 || Si la pierre ne contient pas de timer, ou qu'on ne sort pas d'un RL --> Mode 2
-		else
-			Local.Stone.Soul.Mode = 2
-		end
-	else
-		if Local.Stone.Soul.Timer == true then
-			Local.Stone.Soul.Timer = false
-			local spell = Necrosis.GetSpell("minor_ss_used")
-			Necrosis:RetraitTimerParNom(spell.Name, Local.TimerManagement, "No soul stone...")
-		end
-	end
-
-	-- If the stone was used but there is no stone in inventory -> Mode 3 || Si la Pierre a été utilisée mais qu'il n'y a pas de pierre en inventaire --> Mode 3
-	if (not Local.Stone.Soul.OnHand) and SoulstoneInUse then
+	-- RETAIL 12.0+: Soulstone is now a spell, not an item
+	-- Mode 2: Soulstone is known but not on cooldown
+	-- Mode 3: Soulstone is on cooldown (in use on someone)
+	if SoulstoneInUse then
 		Local.Stone.Soul.Mode = 3
+	else
+		Local.Stone.Soul.Mode = 2
 	end
-
-	-- If the stone was used and there is a stone in inventory || Si la Pierre a été utilisée et qu'il y a une pierre en inventaire
-	if Local.Stone.Soul.OnHand and SoulstoneInUse then
-			Local.Stone.Soul.Mode = 4
-	end
---[[
-	-- If out of combat and we can create a stone, we associate the left button to create a stone. || Si hors combat et qu'on peut créer une pierre, on associe le bouton gauche à créer une pierre.
-	if Necrosis.IsSpellKnown("soulstone") 
-	and NecrosisConfig.ItemSwitchCombat[4] 
-	and (Local.Stone.Soul.Mode == 1 or Local.Stone.Soul.Mode == 3) 
-	then
-		Necrosis:SoulstoneUpdateAttribute(Local.Stone.Soul.Mode)
-	end
---]]	
-	local stone_exists = (Local.Stone.Soul.Mode == 1 or Local.Stone.Soul.Mode == 3) and true or false
+	-- RETAIL 12.0+: Soulstone is on cooldown (Mode 3)
+	local stone_exists = (Local.Stone.Soul.Mode == 3)
 	Necrosis:SoulstoneUpdateAttribute(stone_exists)
 
 	-- Display of the mode icon || Affichage de l'icone liée au mode
 	local f = _G[Necrosis.Warlock_Buttons.soul_stone.f]
 	if f then
 		f:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\SoulstoneButton-0"..Local.Stone.Soul.Mode)
+
+		-- Create circular cooldown if it doesn't exist
+		if not f.cooldown then
+			-- Create circular mask
+			if not f.cdMask then
+				f.cdMask = f:CreateMaskTexture()
+				f.cdMask:SetTexture("Interface\\AddOns\\Necrosis\\UI\\Mask", "CLAMPTOBLACKADDITIVE", "CLAMPTOBLACKADDITIVE")
+				f.cdMask:SetAllPoints(f)
+
+				-- Apply mask to button texture
+				local btnTex = f:GetNormalTexture()
+				if btnTex then
+					btnTex:AddMaskTexture(f.cdMask)
+				end
+			end
+
+			-- Create cooldown without template (template doesn't exist in Retail 12.0)
+			f.cooldown = CreateFrame("Cooldown", f:GetName().."Cooldown", f)
+			if f.cooldown then
+				f.cooldown:SetAllPoints(f)
+				f.cooldown:SetUseCircularEdge(true)
+				f.cooldown:SetDrawSwipe(true)
+				f.cooldown:SetSwipeColor(0, 0, 0, 0.7)
+				f.cooldown:SetSwipeTexture("Interface\\AddOns\\Necrosis\\UI\\Mask")
+				f.cooldown:SetDrawEdge(true)
+				f.cooldown:SetHideCountdownNumbers(true)
+			end
+		end
+
+		-- Update cooldown display - always check spell cooldown
+		-- Soulstone spell ID is 20707
+		if f.cooldown then
+			local startTime, duration, isEnabled = GetSpellCooldown(20707)
+			if startTime and startTime > 0 and duration and duration > 0 then
+				f.cooldown:SetCooldown(startTime, duration)
+			else
+				f.cooldown:SetCooldown(0, 0)
+			end
+		end
 	end
 
 	-- Stone of life || Pierre de vie
@@ -606,6 +570,11 @@ function UpdateIcons()
 	local f = _G[Necrosis.Warlock_Buttons.fire_stone.f]
 	if f then
 		f:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\FirestoneButton-0"..Local.Stone.Fire.Mode)
+	end
+
+	-- Display resurrection timer on soulstone button if timers exist || Affichage du minuteur de rez sur le bouton SS s'il existe
+	if Local.TimerManagement and Local.TimerManagement.SpellTimer and #Local.TimerManagement.SpellTimer > 0 then
+		Necrosis:RezStoneUpdate(Local.TimerManagement.SpellTimer)
 	end
 end
 
@@ -1005,38 +974,44 @@ function SetupBuffTimers()
 	local buffs_found = false
 	local res = false
 	for i=1,40 do -- hate hard coded numbers! Forums suggest the max buffs is 32 but no one is sure...
-	  local name, icon, count, debuffType, duration, 
-		expirationTime, source, isStealable, nameplateShowPersonal, spellId, 
-		canApplyAura, isBossDebuff, castByPlayer, nameplateShowAll, timeMod 
-		= UnitBuff("player", i)
+	  -- Use C_UnitAuras.GetAuraDataByIndex() in Retail 12.0+
+	  local auraData = C_UnitAuras.GetAuraDataByIndex("player", i)
 
-		if name then
-			buffs_found = true
-			if Necrosis.Debug.init_path then
-				print("SetupBuffTimers"
-					.." '"..name.."'"
-					.." "..Necrosis.Utils.TimeLeft(expirationTime-GetTime())
-					)
-			end
+	  if auraData then
+	    buffs_found = true
+	    local name = auraData.name
+	    local spellId = auraData.spellId
+	    local expirationTime = auraData.expirationTime or 0
+	    local duration = auraData.duration or 0
 
-			local s_id, s_usage, s_timer, s_buff, s_cool = Necrosis.GetSpellByName(name)
-			if s_timer and s_buff then
-				local target = {
-						name = UnitName("player"),
-						lvl  = UnitLevel("player"),
-						guid = UnitGUID("player"),
-						}
-				local cast_info = {
-					usage = s_usage,
-					spell_id  = s_id,
-					guid = "",
-					}
-				Local.TimerManagement = Necrosis:TimerInsert(cast_info, target, Local.TimerManagement, "buff found", expirationTime-duration, duration, s_cool)
-			else
-			end
-		else
-			break -- no more
-		end
+	    if Necrosis.Debug.init_path then
+	      print("SetupBuffTimers"
+	        .." '"..name.."'"
+	        .." "..Necrosis.Utils.TimeLeft(expirationTime-GetTime())
+	        )
+	    end
+
+	    local s_id, s_usage, s_timer, s_buff, s_cool = Necrosis.GetSpellByName(name)
+	    -- Check if spell should be restored: s_buff=true OR special case RestoreBuff for soulstone
+	    local spell_config = Necrosis.GetSpell(s_usage)
+	    local should_restore = s_timer and (s_buff or (spell_config and spell_config.RestoreBuff))
+
+	    if should_restore then
+	      local target = {
+	          name = UnitName("player"),
+	          lvl  = UnitLevel("player"),
+	          guid = UnitGUID("player"),
+	          }
+	      local cast_info = {
+	        usage = s_usage,
+	        spell_id  = s_id,
+	        guid = "",
+	        }
+	      Local.TimerManagement = Necrosis:TimerInsert(cast_info, target, Local.TimerManagement, "buff found", expirationTime-duration, duration, s_cool)
+	    end
+	  else
+	    break -- no more
+	  end
 	end
 
 	if buffs_found or (Local.buff_attempts >= 5) then
@@ -1275,11 +1250,15 @@ function Necrosis:OnEvent(event,...)
 	elseif event == "GET_ITEM_INFO_RECEIVED" then
 		-- Process the server response: arg1 is item id; arg2 is success / fail
 		Necrosis.SetItem(arg1, arg2)
-		if Necrosis.WarlockItemsDone() then --and BagNamesKnown() then
-			ev_out(event, Necrosis.WarlockItemsDone(), true, true, false)
-			StartInit(fm)
-		else -- safe to start up
-			-- need to wait for server to give more localized strings
+		if not Local.InitStarted then
+			if Necrosis.WarlockItemsDone() then
+				Local.InitStarted = true
+				ev_out(event, Necrosis.WarlockItemsDone(), true, true, false)
+				StartInit(fm)
+			elseif Local.ItemInfoAttempts >= 7 then
+				Local.InitStarted = true
+				StartInit(fm)
+			end
 		end
 	end
 

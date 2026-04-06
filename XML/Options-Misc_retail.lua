@@ -116,14 +116,25 @@ function Necrosis:SetMiscConfig()
 					local mainSphere = _G["NecrosisMainSphere"]
 					local nui = _G["NecrosisUI"]
 					if mainSphere and nui then
+						mainSphere:ClearAllPoints()
+
+						-- Try to restore saved position first
+						if NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisMainSphere"] then
+							local pos = NecrosisConfig.FramePosition["NecrosisMainSphere"]
+							if pos and #pos >= 5 then
+								mainSphere:SetPoint(pos[1], pos[2], pos[3], pos[4], pos[5])
+								if pos[6] then
+									mainSphere:SetScale(pos[6])
+								end
+								return  -- Use saved position, don't fall back to calculation
+							end
+						end
+
+						-- Fallback: use calculated position if no saved position exists
 						local baseHeight = 139
 						local heightScale = NecrosisConfig.BottomBannerHeightScale or 1.0
 						local nuiHeight = baseHeight * heightScale
-						mainSphere:ClearAllPoints()
 						mainSphere:SetPoint("BOTTOM", UIParent, "BOTTOM", 0, nuiHeight / 2)
-						if NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisMainSphere"] then
-							mainSphere:SetScale(NecrosisConfig.FramePosition["NecrosisMainSphere"][6])
-						end
 					end
 				end)
 			else

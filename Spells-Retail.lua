@@ -243,7 +243,7 @@ Notes:
 	
 	-- ::: Stones
 	-- Create Soulstone || Création pierre d'âme (MOP version)
-	[20707] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "soulstone", Length = 900, Cooldown = 0, Buff = false}, -- MOP Soulstone (15 min duration)	
+	[20707] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "soulstone", Length = 900, Cooldown = 0, Buff = false, RestoreBuff = true}, -- MOP Soulstone (15 min duration)
 
 
 	-- Create Healthstone || Création pierre de soin (MOP version)

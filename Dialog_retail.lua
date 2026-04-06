@@ -27,19 +27,9 @@ This file and Spells.lua are the two places WoW ids are specified. Then short na
 --]]
 Necrosis.GetItemsCount = 0 -- used to register / unregister event GET_ITEM_INFO_RECEIVED
 local items_to_get = 0
-local items_list = { -- Items to get localized names (strings) for
-	[21340]	= "soul_pouch", -- BAG_SOUL_POUCH
-	[22243]	= "small_soul_pouch", -- BAG_SMALL_SOUL_POUCH
-	[22244]	= "box_of_souls", -- BAG_BOX_OF_SOULS
-	[21341]	= "felcloth_bag", -- BAG_FELCLOTH_BAG
-	[6265]	= "soul_shard", -- Soul shard
-	[5565]	= "infernal_stone", -- Infernal stone
-	[16583]	= "demonic_figurine", -- Demonic figurine
-	[16893]	= "soul_stone", -- Soul stone
-	[5509]	= "health_stone", -- Health stone
-	[5522]	= "spell_stone", -- Spell stone
-	[1254]	= "fire_stone", -- Fire stone
-	[6948]	= "hearth_stone", -- Hearth stone
+local items_list = { -- Items to get localized names (strings) for (Retail 12.0+)
+	-- Retail 12.0: Only healthstone variants, IDs depend on player level - not worth tracking
+	-- System disabled - use empty table to skip item initialization
 }
 --[[
 At initialization, this table will be filled with localized names.
