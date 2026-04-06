@@ -162,7 +162,7 @@ Local.DefaultConfig = {
 		-- CURSES (6 actual working)
 		[1] = {usage = "agony", show = true},              -- Curse of Agony (24s)
 		[2] = {usage = "weakness", show = true},          -- Curse of Weakness (120s)
-		[3] = {usage = "elements", show = true},          -- Curse of Elements (300s)
+		[3] = {usage = "armor", show = true},            -- Demon Armor (buff)
 		[4] = {usage = "doom", show = true},              -- Curse of Doom (60s)
 		[5] = {usage = "tongues", show = false},          -- Curse of Tongues (30s)
 		[6] = {usage = "exhaustion", show = false},       -- Curse of Exhaustion (12s) - ID 334725 in 12.0.1
@@ -181,7 +181,7 @@ Local.DefaultConfig = {
 		[15] = {usage = "soul_fire", show = true},        -- Soul Fire (60s cooldown)
 		[16] = {usage = "death_coil", show = true},       -- Death Coil (3s + 180s CD)
 		[17] = {usage = "shadowburn", show = true},       -- Shadowburn (15s cooldown)
-		[18] = {usage = "fel_domination", show = false},  -- Fel Domination / Domination gangrenée (15s)
+		[18] = {usage = "domination", show = false},     -- Domination / Domination gangrenée (15s)
 
 		-- CONTROL & DEBUFFS (2 total)
 		[19] = {usage = "banish", show = true},           -- Banish (20-30s)
@@ -206,7 +206,7 @@ Local.DefaultConfig = {
 		[27] = {usage = "Ritual_of_Souls", show = false}, -- Ritual of Souls (600s)
 
 		-- DARK PACT
-		[28] = {usage = "dark_pact", show = false},       -- Dark Pact / Sombre pacte (20s buff)
+		[28] = {usage = "sacrifice", show = false},      -- Sacrifice / Sacrifice (buff)
 
 		-- INFERNAL
 		[29] = {usage = "inferno", show = false},         -- Inferno (5s summon)
