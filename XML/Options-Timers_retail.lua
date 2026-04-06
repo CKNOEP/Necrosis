@@ -47,12 +47,16 @@ function Necrosis:SetTimersConfig()
 				end
 			end)
 		elseif _G["NecrosisTimersConfig3"] then
-			-- New layout already exists, just show the frames (Page 1 only)
-			_G["NecrosisTimersConfig"]:Show()
-			_G["NecrosisTimersConfig1"]:Show()
-			_G["NecrosisTimersConfig2"]:Hide()
-			_G["NecrosisTimersConfig3"]:Hide()
-			return
+			-- New layout already exists - clean up old checkboxes and recreate them
+			pcall(function()
+				for i = 1, 50 do
+					if _G["NecrosisTimerShow"..i] then
+						_G["NecrosisTimerShow"..i]:Hide()
+						_G["NecrosisTimerShow"..i] = nil
+					end
+				end
+			end)
+			-- Continue to recreate checkboxes with current data
 		end
 	end
 
@@ -522,6 +526,105 @@ function Necrosis:SetTimersConfig()
 	if frame then
 		frame:Show()
 	end
+
+	-- Always update timer checkboxes with current data
+	Necrosis:UpdateTimerCheckboxes()
+end
+
+------------------------------------------------------------------------------------------------------
+-- UPDATE TIMER CHECKBOXES (called every time config is shown)
+------------------------------------------------------------------------------------------------------
+function Necrosis:UpdateTimerCheckboxes()
+	-- Clean up old checkboxes first
+	for i = 1, 50 do
+		if _G["NecrosisTimerShow"..i] then
+			_G["NecrosisTimerShow"..i]:Hide()
+			_G["NecrosisTimerShow"..i] = nil
+		end
+	end
+
+	if not NecrosisConfig.Timers then return end
+
+	local initY = 395
+	local leftX = 40
+	local rightX = 220
+
+	-- Create Page 2 checkboxes (items 1-20)
+	for i = 1, math.min(20, #NecrosisConfig.Timers), 1 do
+		if not NecrosisConfig.Timers[i] or not NecrosisConfig.Timers[i].usage then
+			break
+		end
+
+		local frame = CreateFrame("CheckButton", "NecrosisTimerShow"..i, _G["NecrosisTimersConfig2"], "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+
+		if i <= 10 then
+			frame:SetPoint("LEFT", _G["NecrosisTimersConfig2"], "BOTTOMLEFT", leftX, initY - (25 * i))
+		else
+			frame:SetPoint("LEFT", _G["NecrosisTimersConfig2"], "BOTTOMLEFT", rightX, initY - (25 * (i-10)))
+		end
+
+		frame:SetScript("OnClick", function(self)
+			if Necrosis.UpdateSpellTimer then
+				Necrosis.UpdateSpellTimer(i, self:GetChecked())
+			end
+		end)
+
+		local FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		frame:SetFontString(FontString)
+
+		frame:SetChecked(NecrosisConfig.Timers[i].show or false)
+		frame:SetText(Necrosis.GetSpellName(NecrosisConfig.Timers[i].usage) or "Unknown")
+	end
+
+	-- Create Page 3 checkboxes (items 21-40)
+	for i = 21, #NecrosisConfig.Timers, 1 do
+		if not NecrosisConfig.Timers[i] or not NecrosisConfig.Timers[i].usage then
+			break
+		end
+
+		local frame = CreateFrame("CheckButton", "NecrosisTimerShow"..i, _G["NecrosisTimersConfig3"], "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+
+		local pageIndex = i - 20
+		if pageIndex <= 10 then
+			frame:SetPoint("LEFT", _G["NecrosisTimersConfig3"], "BOTTOMLEFT", leftX, initY - (25 * pageIndex))
+		else
+			frame:SetPoint("LEFT", _G["NecrosisTimersConfig3"], "BOTTOMLEFT", rightX, initY - (25 * (pageIndex-10)))
+		end
+
+		frame:SetScript("OnClick", function(self)
+			if Necrosis.UpdateSpellTimer then
+				Necrosis.UpdateSpellTimer(i, self:GetChecked())
+			end
+		end)
+
+		local FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		frame:SetFontString(FontString)
+
+		frame:SetChecked(NecrosisConfig.Timers[i].show or false)
+		frame:SetText(Necrosis.GetSpellName(NecrosisConfig.Timers[i].usage) or "Unknown")
+	end
+
+	-- Show pages
+	if _G["NecrosisTimersConfig2"] then _G["NecrosisTimersConfig2"]:Show() end
+	if _G["NecrosisTimersConfig3"] then _G["NecrosisTimersConfig3"]:Show() end
 end
 
 
