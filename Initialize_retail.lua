@@ -628,6 +628,17 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 				end
 			end)
 
+			-- Import/Restore NecrosisUI layout if enabled
+			C_Timer.After(2.0, function()
+				if NecrosisConfig.NecrosisUIEnabled then
+					local NUI = _G.NUI
+					if NUI and type(NUI.ImportLayout) == "function" then
+						DEFAULT_CHAT_FRAME:AddMessage("[Necrosis] Calling NUI:ImportLayout() from PLAYER_LOGIN")
+						pcall(function() NUI:ImportLayout() end)
+					end
+				end
+			end)
+
 			-- Register spell casting events from secure context (PLAYER_LOGIN)
 			pcall(function()
 				eventFrame:RegisterEvent("UNIT_SPELLCAST_SUCCEEDED")
