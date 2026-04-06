@@ -462,12 +462,19 @@ NecrosisConfig = {}
 -- Initialize early - these will be used by XML_retail.lua functions
 NecrosisConfig.FramePosition = {
 	["NecrosisSpellTimerButton"] = {"CENTER", "UIParent", "CENTER", 100, 300},
-	["NecrosisButton"] = {"CENTER", "UIParent", "CENTER", 0, -200},
+	["NecrosisMainSphere"] = {"BOTTOM", "UIParent", "BOTTOM", 0, 59.01052474975586, 1.429999947547913},
+	["NecrosisButton"] = {"BOTTOM", "UIParent", "BOTTOM", 0, 59.01052474975586, 1.429999947547913},
 	["NecrosisCreatureAlertButton_elemental"] = {"CENTER", "UIParent", "CENTER", -60, 0},
 	["NecrosisCreatureAlertButton_demon"] = {"CENTER", "UIParent", "CENTER", -50, 0},
 	["NecrosisAntiFearButton"] = {"CENTER", "UIParent", "CENTER", -20, 0},
 	["NecrosisShadowTranceButton"] = {"CENTER", "UIParent", "CENTER", 20, 0},
 	["NecrosisBacklashButton"] = {"CENTER", "UIParent", "CENTER", 60, 0},
+	["NecrosisHealthstoneButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", -42.38417434692383, -6.71299409866333, 1.549999952316284},
+	["NecrosisSoulstoneButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", -38.23531723022461, 19.48186874389648, 1.549999952316284},
+	["NecrosisBuffMenuButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", -19.48186874389648, 38.23531723022461, 1.549999952316284},
+	["NecrosisMountButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", 6.71299409866333, 42.38417434692383, 1.549999952316284},
+	["NecrosisPetMenuButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", 30.34371948242188, 30.34371948242188, 1.549999952316284},
+	["NecrosisCurseMenuButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", 42.38417434692383, 6.71299409866333, 1.549999952316284},
 }
 NecrosisConfig.NecrosisButtonScale = 100
 NecrosisConfig.BanishScale = 100
@@ -479,7 +486,6 @@ NecrosisConfig.BuffMenuPos = {x=1, y=0, direction=1}
 NecrosisConfig.BuffMenuDecalage = {x=1, y=26}
 NecrosisConfig.CurseMenuPos = {x=1, y=0, direction=1}
 NecrosisConfig.CurseMenuDecalage = {x=1, y=32}
-NecrosisConfig.FramePosition = {}
 NecrosisConfig.PetShow = {true,true,true,true,true,true,true,true,true,}
 NecrosisConfig.CurseShow = {true,true,true,true,true,true,true,true}
 
@@ -639,6 +645,34 @@ eventFrame:SetScript("OnEvent", function(self, event, ...)
 		if Necrosis and Necrosis.Initialize then
 			local defaultConfig = Necrosis.Config or {}
 			Necrosis:Initialize(defaultConfig)
+
+			-- Soft merge FramePosition defaults with saved config
+			-- This ensures frame positions from early initialization are applied if missing
+			if not NecrosisConfig.FramePosition then
+				NecrosisConfig.FramePosition = {}
+			end
+			-- Use the early-initialized defaults from lines 463-475
+			local defaultFramePos = {
+				["NecrosisSpellTimerButton"] = {"CENTER", "UIParent", "CENTER", 100, 300},
+				["NecrosisMainSphere"] = {"BOTTOM", "UIParent", "BOTTOM", 0, 59.01052474975586, 1.429999947547913},
+				["NecrosisButton"] = {"BOTTOM", "UIParent", "BOTTOM", 0, 59.01052474975586, 1.429999947547913},
+				["NecrosisCreatureAlertButton_elemental"] = {"CENTER", "UIParent", "CENTER", -60, 0},
+				["NecrosisCreatureAlertButton_demon"] = {"CENTER", "UIParent", "CENTER", -50, 0},
+				["NecrosisAntiFearButton"] = {"CENTER", "UIParent", "CENTER", -20, 0},
+				["NecrosisShadowTranceButton"] = {"CENTER", "UIParent", "CENTER", 20, 0},
+				["NecrosisBacklashButton"] = {"CENTER", "UIParent", "CENTER", 60, 0},
+				["NecrosisHealthstoneButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", -42.38417434692383, -6.71299409866333, 1.549999952316284},
+				["NecrosisSoulstoneButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", -38.23531723022461, 19.48186874389648, 1.549999952316284},
+				["NecrosisBuffMenuButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", -19.48186874389648, 38.23531723022461, 1.549999952316284},
+				["NecrosisMountButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", 6.71299409866333, 42.38417434692383, 1.549999952316284},
+				["NecrosisPetMenuButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", 30.34371948242188, 30.34371948242188, 1.549999952316284},
+				["NecrosisCurseMenuButton"] = {"CENTER", "NecrosisMainSphere", "CENTER", 42.38417434692383, 6.71299409866333, 1.549999952316284},
+			}
+			for key, defaultPos in pairs(defaultFramePos) do
+				if not NecrosisConfig.FramePosition[key] or #NecrosisConfig.FramePosition[key] < 5 then
+					NecrosisConfig.FramePosition[key] = defaultPos
+				end
+			end
 
 			-- Set button texture after initialization (ensures visibility)
 			C_Timer.After(0.5, function()
