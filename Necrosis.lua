@@ -1958,7 +1958,7 @@ function Necrosis:BuildButtonTooltip(button)
 			local titleWithCooldown = Necrosis.TooltipData[Type].Label..coolText
 			GameTooltip:SetText(titleWithCooldown)
 
-			AddCastAndCost("soulstone")
+			--AddCastAndCost("soulstone")
 			-- We display the name of the stone and the action that will produce the click on the button ||On affiche le nom de la pierre et l'action que produira le clic sur le bouton
 			-- And also the cooldown ||Et aussi le Temps de recharge
 
@@ -2011,7 +2011,7 @@ function Necrosis:BuildButtonTooltip(button)
 		elseif (Type == "Healthstone") then
 			-- Idem ||Idem
 			if Local.Stone.Health.Mode == 1 then
-				AddCastAndCost("healthstone")
+				--AddCastAndCost("healthstone")
 			end
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Text[Local.Stone.Health.Mode])
 			if Local.Stone.Health.Mode == 2 then
@@ -2051,7 +2051,7 @@ function Necrosis:BuildButtonTooltip(button)
 		elseif (Type == "Spellstone") then
 			-- Eadem ||Eadem
 			if Local.Stone.Spell.Mode == 1 then
-				AddCastAndCost("spellstone")
+				--AddCastAndCost("spellstone")
 			end
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Text[Local.Stone.Spell.Mode])
 			GameTooltip:AddLine(GetItemCount(41196, nil, true).." "..L["SPELLSTONE_CHARGES"])
@@ -2059,7 +2059,7 @@ function Necrosis:BuildButtonTooltip(button)
 		elseif (Type == "Firestone") then
 			-- Idem ||Idem
 			if Local.Stone.Fire.Mode == 1 then
-				AddCastAndCost("firestone")
+				--AddCastAndCost("firestone")
 			end
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Text[Local.Stone.Fire.Mode])
 		end
@@ -2085,7 +2085,8 @@ function Necrosis:BuildButtonTooltip(button)
 	elseif (Type == "ShadowTrance") then
 		GameTooltip:SetText(Necrosis.TooltipData[Type].Label.."          |CFF808080"..Necrosis.GetSpellCastName("bolt").."|r")
 	-- ..... for other buffs and demons, the mana cost ... ||..... pour les autres buffs et démons, le coût en mana...
-	elseif (Type == "Enslave") then AddCastAndCost("enslave"); AddShard()
+	elseif (Type == "Enslave") then --AddCastAndCost("enslave");
+	 AddShard()
 	
 	--elseif (Type == "Mount") and Necrosis.Warlock_Spells[23161].InSpellBook then
 	elseif (Type == "Mount")  then
@@ -2185,24 +2186,24 @@ function Necrosis:BuildButtonTooltip(button)
 
 	--End ToolTip Mount
 
-	elseif (Type == "Armor") 		then AddCastAndCost("armor")
-	elseif (Type == "FelArmor") 	then AddCastAndCost("fel_armor")
-	elseif (Type == "Invisible")	then AddCastAndCost("invisible")
-	elseif (Type == "Aqua")			then AddCastAndCost("breath")
-	elseif (Type == "Kilrogg")		then AddCastAndCost("eye")
-	elseif (Type == "Banish") 		then AddCastAndCost("banish")
+	elseif (Type == "Armor") 		then --AddCastAndCost("armor")
+	elseif (Type == "FelArmor") 	then --AddCastAndCost("fel_armor")
+	elseif (Type == "Invisible")	then --AddCastAndCost("invisible")
+	elseif (Type == "Aqua")			then --AddCastAndCost("breath")
+	elseif (Type == "Kilrogg")		then --AddCastAndCost("eye")
+	elseif (Type == "Banish") 		then --AddCastAndCost("banish")
 --		if Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use["banish"]].SpellRank == 2 then
 		if Necrosis.GetSpellRank("banish") == 2 then
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Text) -- R click rank 1
 		end
-	elseif (Type == "Weakness")		then AddCastAndCost("weakness")
-	elseif (Type == "Agony")		then AddCastAndCost("agony")
-	elseif (Type == "Tongues")		then AddCastAndCost("tongues")
-	elseif (Type == "Exhaust")		then AddCastAndCost("exhaustion")
-	elseif (Type == "Elements")		then AddCastAndCost("elements")
-	elseif (Type == "Doom")			then AddCastAndCost("doom")
-	elseif (Type == "Corruption")	then AddCastAndCost("corruption")
-	elseif (Type == "Reckless")		then AddCastAndCost("recklessness")
+	elseif (Type == "Weakness")		then --AddCastAndCost("weakness")
+	elseif (Type == "Agony")		then --AddCastAndCost("agony")
+	elseif (Type == "Tongues")		then --AddCastAndCost("tongues")
+	elseif (Type == "Exhaust")		then --AddCastAndCost("exhaustion")
+	elseif (Type == "Elements")		then --AddCastAndCost("elements")
+	elseif (Type == "Doom")			then --AddCastAndCost("doom")
+	elseif (Type == "Corruption")	then --AddCastAndCost("corruption")
+	elseif (Type == "Reckless")		then --AddCastAndCost("recklessness")
 	elseif (Type == "TP")			then AddCastAndCost("summoning"); AddShard()
 	elseif (Type == "SoulLink")		then AddCastAndCost("link")
 	elseif (Type == "ShadowProtection") then AddCastAndCost("ward")
@@ -2235,9 +2236,12 @@ function Necrosis:BuildButtonTooltip(button)
 	elseif (Type == "Succubus")		then AddCastAndCost("succubus"); AddShard(); AddDominion(start, duration)
 	elseif (Type == "Inccubus")		then AddCastAndCost("inccubus"); AddShard(); AddDominion(start, duration)
 	elseif (Type == "Felhunter")	then AddCastAndCost("felhunter"); AddShard(); AddDominion(start, duration)
-	elseif (Type == "felguard")		then AddCastAndCost("felguard"); AddShard(); AddDominion(start, duration)	
-	elseif (Type == "Infernal")		then AddCastAndCost("inferno"); AddInfernalReagent()
-	elseif (Type == "Doomguard")	then AddCastAndCost("ritual_doom"); AddDemoniacReagent()
+	elseif (Type == "felguard")		then --AddCastAndCost("felguard");
+	 AddShard(); AddDominion(start, duration)
+	elseif (Type == "Infernal")		then --AddCastAndCost("inferno");
+	 AddInfernalReagent()
+	elseif (Type == "Doomguard")	then --AddCastAndCost("ritual_doom");
+	 AddDemoniacReagent()
 	elseif (Type == "BuffMenu")		then AddMenuTip(Type)
 	elseif (Type == "CurseMenu")	then AddMenuTip(Type)
 	elseif (Type == "PetMenu")		then AddMenuTip(Type)
@@ -3041,7 +3045,9 @@ function Necrosis:CreateMenu()
 				-- Close the menu when a child button is clicked || Si le menu se ferme à l'appui d'un bouton, alors il se ferme à l'appui d'un bouton !
 				f:WrapScript(Local.Menu.Pet[i], "OnClick", [[
 					if self:GetParent():GetAttribute("state") == "Ouvert" then
-						self:GetParent():SetAttribute("state", "Ferme")
+						-- Add small delay to allow spell to be cast before closing menu
+						local parent = self:GetParent()
+						parent:SetAttribute("state", "Ferme")
 					end
 				]])
 				f:WrapScript(Local.Menu.Pet[i], "OnEnter", [[
@@ -3166,7 +3172,7 @@ function Necrosis:CreateMenu()
 					NecrosisConfig.CurseMenuPos.direction * NecrosisConfig.CurseMenuPos.x * 32,
 					NecrosisConfig.CurseMenuPos.y * 32
 				)
---				menuVariable.high_of = v.high_of
+				menuVariable.high_of = v.high_of
 				prior_button = f -- anchor the next button
 				Local.Menu.Curse:insert(menuVariable)
 			end

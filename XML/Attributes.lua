@@ -389,7 +389,10 @@ function Necrosis:SetCurseSpellAttribute(button)
 		f:SetAttribute("harmbutton", "debuff")
 		f:SetAttribute("type-debuff", "spell")
 		f:SetAttribute("unit", "target")
-		f:SetAttribute("spell-debuff", Necrosis.GetSpellCastName(f.high_of)) 
+		f:SetAttribute("spell-debuff", Necrosis.GetSpellCastName(f.high_of))
+		if Necrosis.Debug.buttons then
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("SetCurseSpellAttribute: " .. tostring(f:GetName()) .. " spell: " .. tostring(Necrosis.GetSpellCastName(f.high_of)))
+		end 
 
 		if Necrosis.Debug.buttons then
 			_G["DEFAULT_CHAT_FRAME"]:AddMessage("SetCurseSpellAttribute"

@@ -313,7 +313,7 @@ function Necrosis:CreateMenuItem(i)
 	-- Create the button || Creation du bouton
 	local frame = _G[b.f]
 	if not frame then
-		frame = CreateFrame("Button", b.f, UIParent, "SecureActionButtonTemplate")
+		frame = CreateFrame("Button", b.f, UIParent, "SecureUnitButtonTemplate")
 
 		-- Définition de ses attributs
 		frame:SetMovable(true)
