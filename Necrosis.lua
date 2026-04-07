@@ -469,6 +469,9 @@ function UpdateIcons()
 		f:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\SoulstoneButton-0"..Local.Stone.Soul.Mode)
 	end
 
+	-- Update cooldown visual display || Mettre à jour l'affichage visuel du cooldown
+	Necrosis:UpdateSoulstoneVisualCooldown()
+
 	-- Stone of life || Pierre de vie
 	-----------------------------------------------
 
@@ -3398,9 +3401,9 @@ end
 function Necrosis:GetSoulstoneItemCooldown()
 	-- Try item cooldown first using modern API
 	if Local.Stone.Soul.Location[1] and Local.Stone.Soul.Location[2] then
-		local startTime, duration, isEnabled = C_Container.C_Container.GetContainerItemCooldown(Local.Stone.Soul.Location[1], Local.Stone.Soul.Location[2])
+		local startTime, duration, isEnabled = C_Container.GetContainerItemCooldown(Local.Stone.Soul.Location[1], Local.Stone.Soul.Location[2])
 		if Necrosis.Debug.bags then
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("C_Container.C_Container.GetContainerItemCooldown: c="..tostring(Local.Stone.Soul.Location[1]).." s="..tostring(Local.Stone.Soul.Location[2]).." start="..tostring(startTime).." dur="..tostring(duration))
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("C_Container.GetContainerItemCooldown: c="..tostring(Local.Stone.Soul.Location[1]).." s="..tostring(Local.Stone.Soul.Location[2]).." start="..tostring(startTime).." dur="..tostring(duration))
 		end
 		if startTime > 0 then
 			return startTime, duration, isEnabled
@@ -3429,4 +3432,15 @@ function Necrosis:GetHealthstoneItemCooldown()
 		return startTime, duration, isEnabled
 	end
 	return 0, 0, false
+end
+
+-- Function to update soulstone cooldown visual || Fonction pour mettre à jour l'affichage visuel du cooldown du soulstone
+function Necrosis:UpdateSoulstoneVisualCooldown()
+	local f = _G[Necrosis.Warlock_Buttons.soul_stone.f]
+	if f and f.cooldown then
+		local startTime, duration, isEnabled = Necrosis:GetSoulstoneItemCooldown()
+		if startTime and duration then
+			f.cooldown:SetCooldown(startTime, duration)
+		end
+	end
 end

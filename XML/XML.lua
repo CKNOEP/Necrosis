@@ -227,6 +227,15 @@ local function CreateStoneButton(stone)
 	FontString:SetText("") -- blank for now
 	FontString:SetPoint("CENTER")
 
+	-- Create a native Cooldown frame for visual display (like Retail) || Créer un frame Cooldown natif pour l'affichage visuel
+	if stone == Necrosis.Warlock_Buttons.soul_stone.f then
+		frame.cooldown = CreateFrame("Cooldown", frame:GetName().."Cooldown", frame)
+		frame.cooldown:SetAllPoints()
+		frame.cooldown:SetUseCircularEdge(true)
+		frame.cooldown:SetDrawSwipe(true)
+		frame.cooldown:SetSwipeColor(0, 0, 0, 0.5)
+	end
+
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
 	if not NecrosisConfig.NecrosisLockServ then
 		frame:ClearAllPoints()
