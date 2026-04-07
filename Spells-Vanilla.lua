@@ -239,7 +239,7 @@ Notes:
 	[20755] = {UsageRank = 3, SpellRank = 3, Timer = false, Usage = "soulstone",}, -- 40 || https://classicdb.ch/?spell=20755 || https://classicdb.ch/?item=16893
 	[20756] = {UsageRank = 4, SpellRank = 4, Timer = false, Usage = "soulstone",}, -- greater 50|| https://classicdb.ch/?spell=20756 || https://classicdb.ch/?item=16895
 	[20757] = {UsageRank = 5, SpellRank = 5, Timer = false, Usage = "soulstone",}, -- major 60|| https://classicdb.ch/?spell=20757 || https://classicdb.ch/?item=16896
-	[27238] = {UsageRank = 6, SpellRank = 6, Timer = false, Usage = "soulstone",}, --  TBC 70
+	[27238] = {UsageRank = 6, SpellRank = 6, Timer = true, Usage = "soulstone", Length = 1800, Buff = true,}, --  TBC 70 (30 min duration in Anniversary)
 	[47884] = {UsageRank = 7, SpellRank = 7, Timer = false, Usage = "soulstone",}, --  WOLTK	
 
 	
@@ -516,11 +516,11 @@ Notes:
 	From the id, WoW knows the health and mana to give if the soul stone is used.
 	Note: WoW will only allow one soul stone at a time so we do not have to worry about multiple stones...
 	--]] 
-	[20707] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "minor_ss_used",   Result = true, Cooldown = 900, Group = 1, }, -- ss_rez
-	[20762] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "lesser_ss_used",  Result = true, Cooldown = 900, Group = 1, }, -- 
-	[20763] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ss_used",         Result = true, Cooldown = 900, Group = 1, }, -- 
-	[20764] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "greater_ss_used", Result = true, Cooldown = 900, Group = 1, }, -- 
-	[20765] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "major_ss_used",   Result = true, Cooldown = 900, Group = 1, }, --
+	[20707] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "minor_ss_used",   Result = true, Cooldown = 900, Group = 1, Buff = true, }, -- Soulstone buff restoration
+	[20762] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "lesser_ss_used",  Result = true, Cooldown = 900, Group = 1, Buff = true, }, -- Soulstone buff restoration
+	[20763] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ss_used",         Result = true, Cooldown = 900, Group = 1, Buff = true, }, -- Soulstone buff restoration
+	[20764] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "greater_ss_used", Result = true, Cooldown = 900, Group = 1, Buff = true, }, -- Soulstone buff restoration
+	[20765] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "major_ss_used",   Result = true, Cooldown = 900, Group = 1, Buff = true, }, -- Soulstone buff restoration
 	--[27239] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "master_ss_used",  Result = true, Cooldown = 900, Group = 1, }, -- 
 	--[47883] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "demonic_ss_used",  Result = true, Cooldown = 900, Group = 1, }, -- 	
 

@@ -1171,6 +1171,13 @@ function Necrosis:OnEvent(self, event,...)
 
 			-- Detecting the type of demon present at the connection || Détection du Type de démon présent à la connexion
 			Local.Summon.DemonType = UnitCreatureFamily("pet")
+
+			-- Restore timers/buffs on reload (SetupBuffTimers already called in StartInit on fresh login)
+			if Local.InWorld then
+				C_Timer.After(0.5, function()
+					SetupBuffTimers()
+				end)
+			end
 		end
 	elseif event == "GET_ITEM_INFO_RECEIVED" then
 		-- Process the server response: arg1 is item id; arg2 is success / fail
