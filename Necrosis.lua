@@ -2792,7 +2792,7 @@ end
 -- Apply button spacing multiplier from slider
 local spacingMultiplier = NecrosisConfig.NecrosisButtonSpacing or 1.0
 dist = dist * spacingMultiplier
-print("[Necrosis] ButtonSetup - dist multiplied by spacing: " .. spacingMultiplier)
+--print("[Necrosis] ButtonSetup - dist multiplied by spacing: " .. spacingMultiplier)
 	
 
 
