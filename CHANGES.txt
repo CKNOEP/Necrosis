@@ -1,83 +1,54 @@
-## Necrosis - Changelog
+================================================================================
+NECROSIS CHANGELOG
+================================================================================
 
----
+VERSION 8.5.2 (2026-04-07)
+================================================================================
+FEATURES
+--------
+- Add native Cooldown frame for visual cooldown display on soulstone button
+  * Displays visual cooldown animation on the button (Retail-like)
+  * Uses SetUseCircularEdge and SetDrawSwipe for proper visual effect
+  * Real-time synchronization with item and spell cooldowns
 
-## Version 8.5.0 - March 26, 2026
+BUG FIXES
+---------
+- Fix C_Container namespace duplication (C_Container.C_Container) in GetSoulstoneItemCooldown()
 
-### Features
-- **Retail Release Announcement**: Added fun, warlock-themed announcement celebrating Necrosis arrival on RETAIL in all supported languages (EN, FR, DE, ES, MX, RU, ZH-CN, ZH-TW)
-- **Menu Auto-Close**: Menus now properly close when clicking spell buttons (Pet, Buff, Curse menus)
-- **Welcome Header Restored**: Beautiful Necrosis branding message with version displays at addon startup
+TECHNICAL CHANGES
+-----------------
+- Refactor cooldown update logic with centralized UpdateSoulstoneVisualCooldown() helper
+- Integrate visual cooldown update in UpdateIcons() for consistent synchronization
 
-### Bug Fixes
-- **Soulstone Timer Variants**: Fixed all Soulstone variants (soulstone, minor_ss_used, ss_used, greater_ss_used, major_ss_used, master_ss_used) not being preserved during combat
-- **Menu Button Clicks**: Fixed non-responsive menu buttons (demons, sorts, malédiction) by restoring SecureUnitButtonTemplate and WrapScript OnClick handlers
-- **Sphere Skin Initialization**: Fixed sphere not displaying selected color/skin at addon startup - now applies correct skin based on configuration
-- **Frame Visibility**: Reverted SetAlpha() back to Show()/Hide() for proper secure frame visibility in Anniversary
+KNOWN ISSUES
+-----------
+- Timer settings for Rez/Healthstone may conflict with sphere configuration
+- Potential interaction between timer events and cooldown display needs investigation
 
-### Technical Details
-- Restored SecureUnitButtonTemplate for menu buttons (was incorrectly changed to SecureActionButtonTemplate)
-- Added IsSoulstoneTimer() helper function to check all soulstone variants
-- Direct chat frame access for announcements and welcome messages (improved reliability)
-- Small C_Timer delay (0.1s) for announcement display to ensure proper initialization
-- Updated all .toc files to v8.5.0
-- Updated Initialize.lua to v8.5.0
+================================================================================
+VERSION 8.5.1 (2026-04-06)
+================================================================================
+BUG FIXES
+---------
+- Fix TBC Anniversary to use modern C_Container API for item cooldown detection
+- Fix menu buttons in TBC Anniversary (change from SecureActionButtonTemplate to SecureUnitButtonTemplate)
+- Remove mana cost display in menu buttons
+- Fix soulstone timer restoration on reload
 
-### Multi-Language Support
-- English, French, German, Spanish, Mexican Spanish, Russian, Simplified Chinese, Traditional Chinese
+================================================================================
+VERSION 8.5.0 (2026-03-XX)
+================================================================================
+FEATURES
+--------
+- Add Collections button with mount icon and tooltip
+- Add Ace Locale translations for Collections button
+- Update Collections button positioning on page 2
 
----
+BUG FIXES
+---------
+- Use ToggleCollectionsJournal() to open Collections with Mounts tab
+- Resolve locale access error in Collections button tooltip
+- Implement robust creature type checking with multi-locale variant support
+- Update creature type translations to official WoW values
 
-## Version 8.4.7 - March 8, 2026
-
-### Improvements
-- **Enhanced Threat Ring visibility**: Increased default ring thickness from 1px to 8px for better visibility and visibility in combat
-- **Improved threat ring rendering**: Adjusted segment sizing (12px width, 4px height) and layer rendering for better threat indicator visibility
-- **Better timer group spacing**: Enhanced spacing between general timers (1-3) and target-specific timers (4+) for improved clarity
-- **Optimized timer group headers**: Added proper group header creation with improved layout management for target-specific timer groups
-
-### Technical Details
-- Updated: ThreatMeter.lua (default thickness, segment rendering)
-- Updated: Initialize.lua (default ThreatRingThickness = 8)
-- Updated: Timers/GraphicalTimers.lua (improved group spacing logic)
-- All TOC files updated to v8.4.7
-
----
-
-## Version 8.4.6 - March 7, 2026
-
-### Bug Fixes
-- **Fixed Fel Armor spell IDs for TBC Anniversary**: Corrected spell IDs from invalid SOD ID (403619) to proper TBC Classic IDs (28176 for Rank 1, 28189 for Rank 2)
-- **Restored Fel Armor timer display**: Re-enabled timer = true for proper cooldown tracking in chat
-
-### Features
-- **Added debug message for GetMainSpellList()**: Display available main spells in chat when opening options panel (Vanilla Anniversary version)
-
-### Technical Details
-- Updated: Spells-Vanilla.lua (lines 288-290)
-- Updated: XML/Options-Sphere-Vanilla.lua (added debug output)
-- All TOC files updated to v8.4.6
-
----
-
-## Version 8.4.3 - March 3, 2026
-
-### Bug Fixes
-- **Fixed critical error in Necrosis-cata.lua**: Corrected TimerManagement reference that was causing "attempt to index field 'TimerManagement' (a nil value)" error at lines 657-658
-- **Removed debug messages**: Eliminated debug print statements from creature alert system that were cluttering chat output
-- **Fixed corruption refresh timer lookup**: Corrected nil reference in spell timer lookup when refreshing corruption debuffs on targets
-
-### Improvements
-- **Code consistency**: Standardized TimerManagement references across Necrosis.lua and Necrosis-cata.lua for better maintainability
-- **Better error handling**: Improved stability of the creature alert button system (Enslave Demon/Banish Elemental)
-
-### Technical Details
-- Updated: Necrosis.lua (line 647)
-- Updated: Necrosis-cata.lua (lines 657-658)
-- All TOC files updated to v8.4.3
-
----
-
-## Version 8.4.1 - Previous Release
-
-[Earlier versions documented in git history]
+================================================================================
