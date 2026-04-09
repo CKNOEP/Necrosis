@@ -131,7 +131,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 90, 105)
 
 		frame:SetScript("OnEnter", function(self)
-			GameTooltip:SetOwner(frame, "ANCHOR_RIGHT")
+			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 			GameTooltip:SetText(self:GetValue())
 		end)
 		frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
@@ -172,7 +172,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		end
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 30, 60)
+		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 110, 60)
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -217,7 +217,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		end
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 30, 60)
+		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 90, 60)
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")

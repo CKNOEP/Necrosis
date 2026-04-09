@@ -231,7 +231,7 @@ function Necrosis:SetSphereConfig()
 		end
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 30, 60)
+		frame:SetPoint("CENTER", NecrosisSphereConfig, "BOTTOMLEFT", 123, 60)
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -276,7 +276,7 @@ function Necrosis:SetSphereConfig()
 		end
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 30, 60)
+		frame:SetPoint("CENTER", NecrosisSphereConfig, "BOTTOMRIGHT", 28, 60)
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
