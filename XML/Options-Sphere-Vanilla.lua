@@ -50,7 +50,7 @@ function Necrosis:SetSphereConfig()
 		end
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 120, 80)
+		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 120, 105)
 
 		local f = _G[Necrosis.Warlock_Buttons.main.f]
 --		local NBx, NBy = f:GetCenter()
@@ -128,7 +128,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		end
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 80, 80)
+		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 80, 105)
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(frame, "ANCHOR_RIGHT")
@@ -151,7 +151,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		---------------------------------------------
 
 		local spacingLabel = NecrosisSphereConfig:CreateFontString(nil, nil, "GameFontNormalSmall")
-		spacingLabel:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 50, 60)
+		spacingLabel:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 50, 70)
 		spacingLabel:SetText("Espacement")
 		spacingLabel:SetTextColor(1, 1, 1)
 
@@ -177,7 +177,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		end
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 120, 50)
+		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 120, 60)
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -201,7 +201,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		---------------------------------------------
 
 		local radiusLabel = NecrosisSphereConfig:CreateFontString(nil, nil, "GameFontNormalSmall")
-		radiusLabel:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", -40, 60)
+		radiusLabel:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", -40, 70)
 		radiusLabel:SetText("Distance")
 		radiusLabel:SetTextColor(1, 1, 1)
 
@@ -227,7 +227,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		end
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 80, 50)
+		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 80, 60)
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
