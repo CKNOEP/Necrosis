@@ -102,7 +102,8 @@ Local.DefaultConfig = {
 	DestroyShardwithsphere = true,
 	ShadowTranceScale = 100,
 	NecrosisButtonScale = 90,
-	NecrosisButtonRadius = 1,
+	NecrosisButtonRadius = 1.0,
+	NecrosisButtonSpacing = 1.0,
 	NecrosisColor = "Rose",
 	Sound = true,
 	SpellTimerPos = 1,
@@ -2804,10 +2805,12 @@ if NecrosisConfig.NecrosisButtonScale >= 150 then
 		dist = dist - ((rayon-rayondebase))
 end
 
--- Apply button spacing multiplier from slider
+-- Spacing multiplier: controls angular gap between buttons
 local spacingMultiplier = NecrosisConfig.NecrosisButtonSpacing or 1.0
-dist = dist * spacingMultiplier
---print("[Necrosis] ButtonSetup - dist multiplied by spacing: " .. spacingMultiplier)
+local buttonAngleSpacing = 36 * spacingMultiplier
+
+-- Radius multiplier: controls distance from sphere center
+dist = dist * (NecrosisConfig.NecrosisButtonRadius or 1.0)
 	
 
 
@@ -2859,7 +2862,7 @@ dist = dist * spacingMultiplier
 					((dist) * cos(NecrosisConfig.NecrosisAngle - indexScale)),-- Offset X
 					((dist) * sin(NecrosisConfig.NecrosisAngle - indexScale)) -- Offset Y
 				)
-				indexScale = indexScale + 36
+				indexScale = indexScale + buttonAngleSpacing
 			else
 --]]
 				f:SetPoint(

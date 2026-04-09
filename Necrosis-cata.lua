@@ -146,7 +146,8 @@ Local.DefaultConfig = {
 	DestroyShardwithsphere = false,
 	ShadowTranceScale = 100,
 	NecrosisButtonScale = 90,
-	NecroisButtonRadius = 1,
+	NecrosisButtonRadius = 1.0,
+	NecrosisButtonSpacing = 1.0,
 	NecrosisColor = "Cata",
 	Sound = true,
 	SpellTimerPos = 1,
@@ -2674,12 +2675,19 @@ end
 	
 	--print (dist,NBRScale,NecrosisConfig.NecrosisButtonScale)
 
+	-- Spacing multiplier: controls angular gap between buttons
+	local spacingMultiplier = NecrosisConfig.NecrosisButtonSpacing or 1.0
+	local buttonAngleSpacing = 36 * spacingMultiplier
+
+	-- Radius multiplier: controls distance from sphere center
+	dist = dist * (NecrosisConfig.NecrosisButtonRadius or 1.0)
+
 ---[==[
 	if Necrosis.Debug.buttons then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("ButtonSetup === Begin"
 		)
 	end
-	
+
 	local fm = Necrosis.Warlock_Buttons.main.f
 	local indexScale = - 36
 	
@@ -2718,7 +2726,7 @@ end
 					((dist) * cos(NecrosisConfig.NecrosisAngle - indexScale)),-- Offset X
 					((dist) * sin(NecrosisConfig.NecrosisAngle - indexScale)) -- Offset Y
 				)
-				indexScale = indexScale + 36
+				indexScale = indexScale + buttonAngleSpacing
 			else
 --]]
 				f:SetPoint(
