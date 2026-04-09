@@ -50,7 +50,7 @@ function Necrosis:SetSphereConfig()
 		end
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 120, 105)
+		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 110, 105)
 
 		local f = _G[Necrosis.Warlock_Buttons.main.f]
 --		local NBx, NBy = f:GetCenter()
@@ -128,7 +128,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		end
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 80, 105)
+		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 90, 105)
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(frame, "ANCHOR_RIGHT")
@@ -150,16 +150,11 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		-- Slider espacement entre les boutons
 		---------------------------------------------
 
-		local spacingLabel = NecrosisSphereConfig:CreateFontString(nil, nil, "GameFontNormalSmall")
-		spacingLabel:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 50, 70)
-		spacingLabel:SetText("Espacement")
-		spacingLabel:SetTextColor(1, 1, 1)
-
 		frame = CreateFrame("Slider", "NecrosisButtonSpacing", NecrosisSphereConfig, "OptionsSliderTemplate")
 		frame:SetMinMaxValues(0.5, 2.0)
 		frame:SetValueStep(0.1)
 		frame:SetObeyStepOnDrag(true)
-		frame:SetWidth(150)
+		frame:SetWidth(140)
 		frame:SetHeight(15)
 
 		local track = frame:CreateTexture(nil, "BACKGROUND")
@@ -177,7 +172,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		end
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 120, 60)
+		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 30, 60)
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -200,16 +195,11 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		-- Slider distance sphère-boutons
 		---------------------------------------------
 
-		local radiusLabel = NecrosisSphereConfig:CreateFontString(nil, nil, "GameFontNormalSmall")
-		radiusLabel:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", -40, 70)
-		radiusLabel:SetText("Distance")
-		radiusLabel:SetTextColor(1, 1, 1)
-
 		frame = CreateFrame("Slider", "NecrosisButtonRadius", NecrosisSphereConfig, "OptionsSliderTemplate")
 		frame:SetMinMaxValues(0.8, 1.2)
 		frame:SetValueStep(0.05)
 		frame:SetObeyStepOnDrag(true)
-		frame:SetWidth(150)
+		frame:SetWidth(140)
 		frame:SetHeight(15)
 
 		local track = frame:CreateTexture(nil, "BACKGROUND")
@@ -227,7 +217,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("SetSphereConfig scale"
 		end
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 80, 60)
+		frame:SetPoint("RIGHT", NecrosisSphereConfig, "BOTTOMRIGHT", 30, 60)
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
