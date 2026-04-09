@@ -2,6 +2,35 @@
 NECROSIS CHANGELOG
 ================================================================================
 
+VERSION 8.5.3 (2026-04-09)
+================================================================================
+FEATURES
+--------
+- Add button spacing and radius sliders to Anniversary/Cata sphere config panels
+  * New "Espacement des boutons" slider (0.5x - 2.0x) to control angular gap between buttons
+  * New "Distance de la sphere" slider (0.8x - 1.2x) to control radial distance of buttons
+  * Sliders available in both Vanilla/TBC Anniversary and Cata versions
+  * Enable fine-tuning of sphere button layout without code changes
+
+TECHNICAL CHANGES
+-----------------
+- Refactor ButtonSetup() in Necrosis.lua and Necrosis-cata.lua:
+  * Add buttonAngleSpacing calculation using spacing multiplier
+  * Add radius multiplier to control button distance from sphere center
+  * Use dynamic angle spacing instead of hardcoded 36-degree increments
+- Update sphere config panels (Options-Sphere-Vanilla.lua, Options-Sphere-Cata.lua):
+  * Increase Vanilla panel height from 452px to 555px for new sliders
+  * Add proper slider positioning and alignment
+  * Maintain clean vertical alignment between slider pairs
+- Fix typo: NecroisButtonRadius → NecrosisButtonRadius in Necrosis-cata.lua
+
+QUALITY OF LIFE
+---------------
+- Improved sphere button layout customization
+- Better visual organization of config panel sliders
+- Four sliders now positioned consistently at bottom of panel
+
+================================================================================
 VERSION 8.5.2 (2026-04-07)
 ================================================================================
 FEATURES
