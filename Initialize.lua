@@ -223,15 +223,15 @@ Necrosis.Unit.MechanicalVariants = {}
 
 if locale == "frFR" then
 	Necrosis.Unit.Demon = "Démon"
-	Necrosis.Unit.DemonVariants = {"Démon"}
+	Necrosis.Unit.DemonVariants = {"Démon", "Demon"}
 	Necrosis.Unit.Elemental = "Élémentaire"
 	-- Include variants to handle all accent variations in WoW client versions
 	Necrosis.Unit.ElementalVariants = {"Élémentaire", "Elémentaire", "Elementaire"}
 	Necrosis.Unit.Undead = "Mort-vivant"
-	Necrosis.Unit.UndeadVariants = {"Mort-vivant"}
+	Necrosis.Unit.UndeadVariants = {"Mort-vivant", "Mort vivant"}
 elseif locale == "deDE" then
 	Necrosis.Unit.Demon = "Dämon"
-	Necrosis.Unit.DemonVariants = {"Dämon"}
+	Necrosis.Unit.DemonVariants = {"Dämon", "Daemon", "Damon"}
 	Necrosis.Unit.Elemental = "Elementar"
 	Necrosis.Unit.ElementalVariants = {"Elementar"}
 	Necrosis.Unit.Undead = "Untoter"
@@ -242,7 +242,7 @@ elseif locale == "esES" or locale == "esMX" then
 	Necrosis.Unit.Elemental = "Elemental"
 	Necrosis.Unit.ElementalVariants = {"Elemental"}
 	Necrosis.Unit.Undead = "No-muerto"
-	Necrosis.Unit.UndeadVariants = {"No-muerto"}
+	Necrosis.Unit.UndeadVariants = {"No-muerto", "No muerto"}
 elseif locale == "itIT" then
 	Necrosis.Unit.Demon = "Demone"
 	Necrosis.Unit.DemonVariants = {"Demone"}
@@ -252,7 +252,7 @@ elseif locale == "itIT" then
 	Necrosis.Unit.UndeadVariants = {"Non Morto"}
 elseif locale == "ptBR" then
 	Necrosis.Unit.Demon = "Demônio"
-	Necrosis.Unit.DemonVariants = {"Demônio"}
+	Necrosis.Unit.DemonVariants = {"Demônio", "Demonio"}
 	Necrosis.Unit.Elemental = "Elemental"
 	Necrosis.Unit.ElementalVariants = {"Elemental"}
 	Necrosis.Unit.Undead = "Renegado"
