@@ -225,8 +225,8 @@ if locale == "frFR" then
 	Necrosis.Unit.Demon = "Démon"
 	Necrosis.Unit.DemonVariants = {"Démon"}
 	Necrosis.Unit.Elemental = "Élémentaire"
-	-- Include variant without accent on first E (observed in some client versions)
-	Necrosis.Unit.ElementalVariants = {"Élémentaire", "Elémentaire"}
+	-- Include variants to handle all accent variations in WoW client versions
+	Necrosis.Unit.ElementalVariants = {"Élémentaire", "Elémentaire", "Elementaire"}
 	Necrosis.Unit.Undead = "Mort-vivant"
 	Necrosis.Unit.UndeadVariants = {"Mort-vivant"}
 elseif locale == "deDE" then

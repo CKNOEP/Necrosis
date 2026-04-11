@@ -1411,13 +1411,13 @@ function Necrosis:OnEvent(self, event,...)
 			-- Show enslave button if can be enslaved
 			if canEnslave then
 				if NecrosisCreatureAlertButton_demon then
-					-- Use SetAlpha instead of Show() for secure frames (cannot call protected functions in combat)
+					NecrosisCreatureAlertButton_demon:Show()
 					NecrosisCreatureAlertButton_demon:SetAlpha(1)
 					NecrosisCreatureAlertButton_demon:SetMovable(true)
 				end
 			else
 				if NecrosisCreatureAlertButton_demon then
-					-- Use SetAlpha(0) instead of Hide() for secure frames (cannot be hidden in combat)
+					NecrosisCreatureAlertButton_demon:Hide()
 					NecrosisCreatureAlertButton_demon:SetAlpha(0)
 				end
 			end
@@ -1425,21 +1425,23 @@ function Necrosis:OnEvent(self, event,...)
 			-- Show banish button if can be banished
 			if canBanish then
 				if NecrosisCreatureAlertButton_elemental then
-					-- Use SetAlpha instead of Show() for secure frames (cannot call protected functions in combat)
+					NecrosisCreatureAlertButton_elemental:Show()
 					NecrosisCreatureAlertButton_elemental:SetAlpha(1)
 					NecrosisCreatureAlertButton_elemental:SetMovable(true)
 				end
 			else
 				if NecrosisCreatureAlertButton_elemental then
-					-- Use SetAlpha(0) instead of Hide() for secure frames (cannot be hidden in combat)
+					NecrosisCreatureAlertButton_elemental:Hide()
 					NecrosisCreatureAlertButton_elemental:SetAlpha(0)
 				end
 			end
 		else
-		NecrosisCreatureAlertButton_demon:SetAlpha(0) 
-		NecrosisCreatureAlertButton_elemental:SetAlpha(0) 	
+		NecrosisCreatureAlertButton_demon:Hide()
+		NecrosisCreatureAlertButton_demon:SetAlpha(0)
+		NecrosisCreatureAlertButton_elemental:Hide()
+		NecrosisCreatureAlertButton_elemental:SetAlpha(0)
 
-		NecrosisCreatureAlertButton_demon:SetMovable(true)		
+		NecrosisCreatureAlertButton_demon:SetMovable(true)
 		NecrosisCreatureAlertButton_elemental:SetMovable(true)			
 		--print(UnitCreatureType("target"))
 
