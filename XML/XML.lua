@@ -661,6 +661,59 @@ function Necrosis:CreateWarlockPopup()
 		frame:ClearAllPoints()
 		frame:SetPoint("CENTER", UIParent, "CENTER", 50, 0)
 	end
+
+	------------------------------------------------------------------------------------------------------
+	-- Create the Armor Reminder button || Creation du bouton reminder d'armure
+	local frame = _G["NecrosisArmorReminderButton"]
+	if not frame then
+		frame = CreateFrame("Button", "NecrosisArmorReminderButton", UIParent)
+	end
+
+	-- Define its attributes || Définition de ses attributs
+	frame:SetMovable(true)
+	frame:SetFrameStrata("HIGH")
+	frame:SetWidth(40)
+	frame:SetHeight(40)
+	frame:RegisterForDrag("LeftButton")
+	frame:SetAlpha(0)  -- Hidden by default
+
+	-- Edit the scripts associated with the button || Edition des scripts associés au bouton
+	frame:SetScript("OnMouseUp", function(self) Necrosis:OnDragStop(self) end)
+	frame:SetScript("OnDragStart", function(self) Necrosis:OnDragStart(self) end)
+	frame:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
+	frame:SetScript("OnEnter", function(self)
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+		GameTooltip:SetText("|cFFFF0000No Armor Buff!|r")
+		GameTooltip:AddLine("Click to cast highest armor spell")
+		GameTooltip:Show()
+	end)
+	frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
+	frame:SetScript("OnClick", function(self, button)
+		if button == "LeftButton" then
+			-- Cast the highest armor spell known
+			local armorSpell = Necrosis.GetSpellName("armor")
+			if armorSpell then
+				CastSpellByName(armorSpell)
+			end
+		end
+	end)
+
+	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
+	if NecrosisConfig.FramePosition then
+		if NecrosisConfig.FramePosition["NecrosisArmorReminderButton"] then
+			frame:ClearAllPoints()
+			frame:SetPoint(
+				NecrosisConfig.FramePosition["NecrosisArmorReminderButton"][1],
+				NecrosisConfig.FramePosition["NecrosisArmorReminderButton"][2],
+				NecrosisConfig.FramePosition["NecrosisArmorReminderButton"][3],
+				NecrosisConfig.FramePosition["NecrosisArmorReminderButton"][4],
+				NecrosisConfig.FramePosition["NecrosisArmorReminderButton"][5]
+			)
+		end
+	else
+		frame:ClearAllPoints()
+		frame:SetPoint("CENTER", UIParent, "CENTER", 0, -50)
+	end
 end
 
 

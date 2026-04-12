@@ -240,6 +240,14 @@ Local.Warning = {
 	}
 }
 
+-- Variables for armor reminder button || Variables pour le bouton reminder d'armure
+Local.ArmorReminder = {
+	BlinkState = false,
+	BlinkTimer = 0,
+	BlinkInterval = 0.5,  -- Blink every 0.5 seconds
+	NoBuffWarningActive = false
+}
+
 -- Time elapsed between two OnUpdate events || Temps écoulé entre deux event OnUpdate
 Local.LastUpdate = {0, 0}
 
@@ -981,6 +989,55 @@ function SetupBuffTimers()
 	end
 end
 
+-- Function to check for armor buffs and update reminder button || Fonction pour vérifier les buffs d'armure
+local function UpdateArmorReminder()
+	local armorButton = _G["NecrosisArmorReminderButton"]
+	if not armorButton then return end
+
+	local hasArmorBuff = false
+
+	-- Check for armor buff (Demon Armor / Demon Skin)
+	local armorSpell = Necrosis.GetSpellName("armor")
+	if armorSpell and UnitHasAura("player", armorSpell, false) then
+		hasArmorBuff = true
+	end
+
+	-- Check for Fel Armor buff
+	if not hasArmorBuff then
+		local felArmorSpell = Necrosis.GetSpellName("fel_armor")
+		if felArmorSpell and UnitHasAura("player", felArmorSpell, false) then
+			hasArmorBuff = true
+		end
+	end
+
+	-- Update button visibility and texture
+	if hasArmorBuff then
+		Local.ArmorReminder.NoBuffWarningActive = false
+		armorButton:SetAlpha(0)
+	else
+		Local.ArmorReminder.NoBuffWarningActive = true
+		-- Set texture based on highest armor spell known
+		local armorSpell = Necrosis.GetSpell("armor")
+		local felArmorSpell = Necrosis.GetSpell("fel_armor")
+
+		if armorSpell and felArmorSpell then
+			-- Compare UsageRank to determine which is highest
+			local armorRank = armorSpell.UsageRank or 0
+			local felArmorRank = felArmorSpell.UsageRank or 0
+
+			if felArmorRank > armorRank then
+				armorButton:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\FelArmor-01")
+			else
+				armorButton:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\Armor-01")
+			end
+		elseif armorSpell then
+			armorButton:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\Armor-01")
+		elseif felArmorSpell then
+			armorButton:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\FelArmor-01")
+		end
+	end
+end
+
 local function StartInit(fm)
 	-- unregister, server can spam unrelated ids  !?
 	fm:UnregisterEvent("GET_ITEM_INFO_RECEIVED")
@@ -988,6 +1045,9 @@ local function StartInit(fm)
 	Necrosis:Initialize(Local.DefaultConfig)
 	-- Set timers if any buffs are on
 	SetupBuffTimers()
+
+	-- Initialize armor reminder button
+	UpdateArmorReminder()
 
 	--[[ Once the localized strings are known, build the buttons.
 	--]]
@@ -1070,7 +1130,10 @@ function Necrosis:OnUpdate(something, elapsed)
 		if Local.buff_needed then
 			SetupBuffTimers()
 		end
-		
+
+		-- Update armor reminder button
+		UpdateArmorReminder()
+
 		Local.LastUpdate[1] = 0
 	-- Every half second || Toutes les demies secondes
 	elseif Local.LastUpdate[2] > 0.5 then
@@ -1078,8 +1141,8 @@ function Necrosis:OnUpdate(something, elapsed)
 		if not NecrosisConfig.Smooth then
 			NecrosisUpdateTimer(Local.TimerManagement.SpellTimer)
 		end
-		
-		
+
+
 		-- If configured, display warnings from Antifear || Si configuré, affichage des avertissements d'Antifear
 		if NecrosisConfig.AntiFearAlert then
 			ShowAntiFearWarning()
@@ -1097,6 +1160,23 @@ function Necrosis:OnUpdate(something, elapsed)
 			Necrosis:RezStoneUpdate(Local.TimerManagement.SpellTimer)
 		end
 		Local.LastUpdate[2] = 0
+	end
+
+	-- Handle armor reminder button blinking || Gérer le clignotement du bouton reminder d'armure
+	if Local.ArmorReminder.NoBuffWarningActive then
+		Local.ArmorReminder.BlinkTimer = Local.ArmorReminder.BlinkTimer + elapsed
+		if Local.ArmorReminder.BlinkTimer > Local.ArmorReminder.BlinkInterval then
+			Local.ArmorReminder.BlinkTimer = 0
+			Local.ArmorReminder.BlinkState = not Local.ArmorReminder.BlinkState
+			local armorButton = _G["NecrosisArmorReminderButton"]
+			if armorButton then
+				if Local.ArmorReminder.BlinkState then
+					armorButton:SetAlpha(1)
+				else
+					armorButton:SetAlpha(0.3)
+				end
+			end
+		end
 	end
 end
 
@@ -1411,13 +1491,11 @@ function Necrosis:OnEvent(self, event,...)
 			-- Show enslave button if can be enslaved
 			if canEnslave then
 				if NecrosisCreatureAlertButton_demon then
-					NecrosisCreatureAlertButton_demon:Show()
 					NecrosisCreatureAlertButton_demon:SetAlpha(1)
 					NecrosisCreatureAlertButton_demon:SetMovable(true)
 				end
 			else
 				if NecrosisCreatureAlertButton_demon then
-					NecrosisCreatureAlertButton_demon:Hide()
 					NecrosisCreatureAlertButton_demon:SetAlpha(0)
 				end
 			end
@@ -1425,20 +1503,16 @@ function Necrosis:OnEvent(self, event,...)
 			-- Show banish button if can be banished
 			if canBanish then
 				if NecrosisCreatureAlertButton_elemental then
-					NecrosisCreatureAlertButton_elemental:Show()
 					NecrosisCreatureAlertButton_elemental:SetAlpha(1)
 					NecrosisCreatureAlertButton_elemental:SetMovable(true)
 				end
 			else
 				if NecrosisCreatureAlertButton_elemental then
-					NecrosisCreatureAlertButton_elemental:Hide()
 					NecrosisCreatureAlertButton_elemental:SetAlpha(0)
 				end
 			end
 		else
-		NecrosisCreatureAlertButton_demon:Hide()
 		NecrosisCreatureAlertButton_demon:SetAlpha(0)
-		NecrosisCreatureAlertButton_elemental:Hide()
 		NecrosisCreatureAlertButton_elemental:SetAlpha(0)
 
 		NecrosisCreatureAlertButton_demon:SetMovable(true)
