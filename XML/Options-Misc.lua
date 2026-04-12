@@ -563,8 +563,10 @@ function Necrosis:SetMiscConfig()
 		frame:ClearAllPoints()
 		frame:SetPoint("CENTER", NecrosisMiscConfig, "BOTTOMLEFT", 225, 60)
 
-		local STx, STy, BLx, BLy, AFx, AFy, CAx, CAy, ARx, ARy
-		frame:SetScript("OnEnter", function(self)
+		local STx, STy, BLx, BLy, AFx, AFy, CAx, CAy, CDx, CDy, ARx, ARy
+
+		-- Initialize button positions on first load
+		local initializePositions = function()
 			STx, STy = NecrosisShadowTranceButton:GetCenter()
 			STx = STx * (NecrosisConfig.ShadowTranceScale / 100)
 			STy = STy * (NecrosisConfig.ShadowTranceScale / 100)
@@ -588,6 +590,12 @@ function Necrosis:SetMiscConfig()
 			ARx, ARy = NecrosisArmorReminderButton:GetCenter()
 			ARx = ARx * (NecrosisConfig.ShadowTranceScale / 100)
 			ARy = ARy * (NecrosisConfig.ShadowTranceScale / 100)
+		end
+
+		initializePositions()
+
+		frame:SetScript("OnEnter", function(self)
+			initializePositions()
 
 			ShowUIPanel(NecrosisShadowTranceButton)
 			ShowUIPanel(NecrosisShadowTranceButton)
