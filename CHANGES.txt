@@ -2,6 +2,43 @@
 NECROSIS CHANGELOG
 ================================================================================
 
+VERSION 8.6.0 (2026-04-12)
+================================================================================
+FEATURES
+--------
+- Add Armor Reminder button (hidden by default)
+  * Displays and blinks when no armor buff (Armor/Fel Armor) is active
+  * Shows texture of strongest armor spell (Fel Armor prioritized over Armor)
+  * Clickable to cast highest armor spell known
+  * 48x48 pixel round button with circular cooldown display
+  * Blinking animation with 0.5 second interval
+  * Draggable and resizable via Misc panel
+  * Integrated with "Afficher les boutons cachés" checkbox
+  * Scales with button size slider (50-200%)
+
+TECHNICAL CHANGES
+-----------------
+- Create new Armor Reminder button in XML/XML.lua:
+  * Uses SecureUnitButtonTemplate for secure spell casting
+  * Implements SetAttribute("type", "spell") for protected spell casting
+  * Creates circular cooldown frame with SetUseCircularEdge(true)
+  * Default position: bottom-center of screen (CENTER, 0, -50)
+  * Fixed position initialization logic to always set default anchor
+- Add UpdateArmorReminder() function in Necrosis.lua and Necrosis-cata.lua:
+  * Checks for active armor buffs via UnitHasAura()
+  * Manages button visibility (SetAlpha) and blinking state
+  * Updates texture based on strongest spell known
+- Integrate armor button into Misc options panel:
+  * NecrosisHiddenButtons checkbox controls visibility
+  * NecrosisHiddenSize slider controls scale
+  * Proper position initialization and dragging support
+
+QUALITY OF LIFE
+---------------
+- New reminder for critical buff (armor) that's easy to miss
+- Seamless integration with existing button control system
+- Consistent design with other Necrosis buttons
+
 VERSION 8.5.3 (2026-04-09)
 ================================================================================
 FEATURES
