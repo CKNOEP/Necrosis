@@ -714,19 +714,17 @@ function Necrosis:CreateWarlockPopup()
 	end
 
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
-	if NecrosisConfig.FramePosition then
-		if NecrosisConfig.FramePosition["NecrosisArmorReminderButton"] then
-			frame:ClearAllPoints()
-			frame:SetPoint(
-				NecrosisConfig.FramePosition["NecrosisArmorReminderButton"][1],
-				NecrosisConfig.FramePosition["NecrosisArmorReminderButton"][2],
-				NecrosisConfig.FramePosition["NecrosisArmorReminderButton"][3],
-				NecrosisConfig.FramePosition["NecrosisArmorReminderButton"][4],
-				NecrosisConfig.FramePosition["NecrosisArmorReminderButton"][5]
-			)
-		end
+	frame:ClearAllPoints()
+	if NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisArmorReminderButton"] then
+		frame:SetPoint(
+			NecrosisConfig.FramePosition["NecrosisArmorReminderButton"][1],
+			NecrosisConfig.FramePosition["NecrosisArmorReminderButton"][2],
+			NecrosisConfig.FramePosition["NecrosisArmorReminderButton"][3],
+			NecrosisConfig.FramePosition["NecrosisArmorReminderButton"][4],
+			NecrosisConfig.FramePosition["NecrosisArmorReminderButton"][5]
+		)
 	else
-		frame:ClearAllPoints()
+		-- Default position: bottom-center of screen
 		frame:SetPoint("CENTER", UIParent, "CENTER", 0, -50)
 	end
 end
