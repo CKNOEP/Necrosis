@@ -1016,6 +1016,8 @@ local function UpdateArmorReminder()
 		armorButton:SetAlpha(0)
 	else
 		Local.ArmorReminder.NoBuffWarningActive = true
+		armorButton:SetAlpha(1)  -- Make button visible when no armor buff
+
 		-- Set texture based on highest armor spell known
 		local armorSpell = Necrosis.GetSpell("armor")
 		local felArmorSpell = Necrosis.GetSpell("fel_armor")
