@@ -98,35 +98,41 @@ function Necrosis:SetMiscConfig()
 				ShowUIPanel(NecrosisBacklashButton)
 				ShowUIPanel(NecrosisAntiFearButton)
 				ShowUIPanel(NecrosisCreatureAlertButton_elemental)
-				
+
 				NecrosisCreatureAlertButton_elemental:SetAlpha(1)
 				NecrosisCreatureAlertButton_demon:SetAlpha(1)
 				NecrosisCreatureAlertButton_elemental:SetMovable(true)
-				NecrosisCreatureAlertButton_demon:SetMovable(true)				
+				NecrosisCreatureAlertButton_demon:SetMovable(true)
+				NecrosisArmorReminderButton:SetAlpha(1)
+				NecrosisArmorReminderButton:SetMovable(true)
 
-				
+
 				NecrosisShadowTranceButton:RegisterForDrag("LeftButton")
 				NecrosisBacklashButton:RegisterForDrag("LeftButton")
 				NecrosisAntiFearButton:RegisterForDrag("LeftButton")
 				NecrosisCreatureAlertButton_demon:RegisterForDrag("LeftButton")
-				NecrosisCreatureAlertButton_elemental:RegisterForDrag("LeftButton")				
-			
+				NecrosisCreatureAlertButton_elemental:RegisterForDrag("LeftButton")
+				NecrosisArmorReminderButton:RegisterForDrag("LeftButton")
+
 			else
 				HideUIPanel(NecrosisShadowTranceButton)
 				HideUIPanel(NecrosisBacklashButton)
 				HideUIPanel(NecrosisAntiFearButton)
 				HideUIPanel(NecrosisCreatureAlertButton_elemental)
-				
+
 				NecrosisCreatureAlertButton_elemental:SetAlpha(0)
 				NecrosisCreatureAlertButton_demon:SetAlpha(0)
 				NecrosisCreatureAlertButton_elemental:SetMovable(false)
 				NecrosisCreatureAlertButton_demon:SetMovable(false)
+				NecrosisArmorReminderButton:SetAlpha(0)
+				NecrosisArmorReminderButton:SetMovable(false)
 
-			    NecrosisCreatureAlertButton_elemental:RegisterForDrag("")		
-				NecrosisCreatureAlertButton_demon:RegisterForDrag("")		
+			    NecrosisCreatureAlertButton_elemental:RegisterForDrag("")
+				NecrosisCreatureAlertButton_demon:RegisterForDrag("")
 				NecrosisShadowTranceButton:RegisterForDrag("")
 				NecrosisBacklashButton:RegisterForDrag("")
 				NecrosisAntiFearButton:RegisterForDrag("")
+				NecrosisArmorReminderButton:RegisterForDrag("")
 
 			end
 		end)
@@ -167,7 +173,7 @@ function Necrosis:SetMiscConfig()
 		frame:ClearAllPoints()
 		frame:SetPoint("CENTER", NecrosisMiscConfig, "BOTTOMLEFT", 225, 60)
 
-		local STx, STy, BLx, BLy, AFx, AFy, CAx, CAy
+		local STx, STy, BLx, BLy, AFx, AFy, CAx, CAy, ARx, ARy
 		frame:SetScript("OnEnter", function(self)
 			STx, STy = NecrosisShadowTranceButton:GetCenter()
 			STx = STx * (NecrosisConfig.ShadowTranceScale / 100)
@@ -184,17 +190,22 @@ function Necrosis:SetMiscConfig()
 			CAx, CAy = NecrosisCreatureAlertButton_elemental:GetCenter()
 			CAx = CAx * (NecrosisConfig.ShadowTranceScale / 100)
 			CAy = CAy * (NecrosisConfig.ShadowTranceScale / 100)
-			
+
 			CDx, CDy = NecrosisCreatureAlertButton_demon:GetCenter()
 			CDx = CDx * (NecrosisConfig.ShadowTranceScale / 100)
 			CDy = CDy * (NecrosisConfig.ShadowTranceScale / 100)
 
+			ARx, ARy = NecrosisArmorReminderButton:GetCenter()
+			ARx = ARx * (NecrosisConfig.ShadowTranceScale / 100)
+			ARy = ARy * (NecrosisConfig.ShadowTranceScale / 100)
+
 			ShowUIPanel(NecrosisShadowTranceButton)
-			ShowUIPanel(NecrosisShadowTranceButton)			
+			ShowUIPanel(NecrosisShadowTranceButton)
 			ShowUIPanel(NecrosisBacklashButton)
 			ShowUIPanel(NecrosisAntiFearButton)
 			NecrosisCreatureAlertButton_elemental:SetAlpha(1)
 			NecrosisCreatureAlertButton_demon:SetAlpha(1)
+			NecrosisArmorReminderButton:SetAlpha(1)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 			GameTooltip:SetText(self:GetValue().."%")
 		end)
@@ -206,7 +217,8 @@ function Necrosis:SetMiscConfig()
 				HideUIPanel(NecrosisBacklashButton)
 				HideUIPanel(NecrosisAntiFearButton)
 				NecrosisCreatureAlertButton_elemental:SetAlpha(0)
-				NecrosisCreatureAlertButton_demon:SetAlpha(0)				
+				NecrosisCreatureAlertButton_demon:SetAlpha(0)
+				NecrosisArmorReminderButton:SetAlpha(0)
 			end
 			GameTooltip:Hide()
 		end)
@@ -237,6 +249,10 @@ function Necrosis:SetMiscConfig()
 				NecrosisAntiFearButton:ClearAllPoints()
 				NecrosisAntiFearButton:SetPoint("CENTER", "UIParent", "BOTTOMLEFT", AFx / (NecrosisConfig.ShadowTranceScale / 100), AFy / (NecrosisConfig.ShadowTranceScale / 100))
 				NecrosisAntiFearButton:SetScale(NecrosisConfig.ShadowTranceScale / 100)
+
+				NecrosisArmorReminderButton:ClearAllPoints()
+				NecrosisArmorReminderButton:SetPoint("CENTER", "UIParent", "BOTTOMLEFT", ARx / (NecrosisConfig.ShadowTranceScale / 100), ARy / (NecrosisConfig.ShadowTranceScale / 100))
+				NecrosisArmorReminderButton:SetScale(NecrosisConfig.ShadowTranceScale / 100)
 			end
 		end)
 
