@@ -663,24 +663,27 @@ function Necrosis:CreateWarlockPopup()
 	end
 
 	------------------------------------------------------------------------------------------------------
-	-- Create the Armor Reminder button || Creation du bouton reminder d'armure
+	-- Create the Armor Reminder button (Round button with circular cooldown, like soulstone)
+	-- || Creation du bouton reminder d'armure (Bouton rond avec cooldown circulaire, comme la pierre d'âme)
+
 	local frame = _G["NecrosisArmorReminderButton"]
 	if not frame then
-		frame = CreateFrame("Button", "NecrosisArmorReminderButton", UIParent)
+		frame = CreateFrame("Button", "NecrosisArmorReminderButton", UIParent, "SecureUnitButtonTemplate")
 	end
 
 	-- Define its attributes || Définition de ses attributs
 	frame:SetMovable(true)
+	frame:EnableMouse(true)
 	frame:SetFrameStrata("HIGH")
-	frame:SetWidth(40)
-	frame:SetHeight(40)
+	frame:SetWidth(34)
+	frame:SetHeight(34)
+	frame:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\Armor-01")
+	frame:SetHighlightTexture("Interface\\AddOns\\Necrosis\\UI\\Armor-01")
 	frame:RegisterForDrag("LeftButton")
+	frame:RegisterForClicks("AnyUp")
 	frame:SetAlpha(0)  -- Hidden by default
 
 	-- Edit the scripts associated with the button || Edition des scripts associés au bouton
-	frame:SetScript("OnMouseUp", function(self) Necrosis:OnDragStop(self) end)
-	frame:SetScript("OnDragStart", function(self) Necrosis:OnDragStart(self) end)
-	frame:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
 	frame:SetScript("OnEnter", function(self)
 		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 		GameTooltip:SetText("|cFFFF0000No Armor Buff!|r")
@@ -688,6 +691,9 @@ function Necrosis:CreateWarlockPopup()
 		GameTooltip:Show()
 	end)
 	frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
+	frame:SetScript("OnMouseUp", function(self) Necrosis:OnDragStop(self) end)
+	frame:SetScript("OnDragStart", function(self) Necrosis:OnDragStart(self) end)
+	frame:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
 	frame:SetScript("OnClick", function(self, button)
 		if button == "LeftButton" then
 			-- Cast the highest armor spell known
@@ -697,6 +703,15 @@ function Necrosis:CreateWarlockPopup()
 			end
 		end
 	end)
+
+	-- Create a native Cooldown frame for visual display (like Retail) || Créer un frame Cooldown natif pour l'affichage visuel
+	if not frame.cooldown then
+		frame.cooldown = CreateFrame("Cooldown", "NecrosisArmorReminderButtonCooldown", frame)
+		frame.cooldown:SetAllPoints()
+		frame.cooldown:SetUseCircularEdge(true)
+		frame.cooldown:SetDrawSwipe(true)
+		frame.cooldown:SetSwipeColor(0, 0, 0, 0.5)
+	end
 
 	-- Place the button window at its saved location || Placement de la fenêtre à l'endroit sauvegardé ou à l'emplacement par défaut
 	if NecrosisConfig.FramePosition then
