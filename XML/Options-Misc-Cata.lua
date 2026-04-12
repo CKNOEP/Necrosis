@@ -197,9 +197,13 @@ function Necrosis:SetMiscConfig()
 			CDx = CDx * (NecrosisConfig.ShadowTranceScale / 100)
 			CDy = CDy * (NecrosisConfig.ShadowTranceScale / 100)
 
-			ARx, ARy = NecrosisArmorReminderButton:GetCenter()
-			ARx = ARx * (NecrosisConfig.ShadowTranceScale / 100)
-			ARy = ARy * (NecrosisConfig.ShadowTranceScale / 100)
+			if NecrosisArmorReminderButton then
+				ARx, ARy = NecrosisArmorReminderButton:GetCenter()
+				if ARx and ARy then
+					ARx = ARx * (NecrosisConfig.ShadowTranceScale / 100)
+					ARy = ARy * (NecrosisConfig.ShadowTranceScale / 100)
+				end
+			end
 		end
 
 		initializePositions()
@@ -258,9 +262,11 @@ function Necrosis:SetMiscConfig()
 				NecrosisAntiFearButton:SetPoint("CENTER", "UIParent", "BOTTOMLEFT", AFx / (NecrosisConfig.ShadowTranceScale / 100), AFy / (NecrosisConfig.ShadowTranceScale / 100))
 				NecrosisAntiFearButton:SetScale(NecrosisConfig.ShadowTranceScale / 100)
 
-				NecrosisArmorReminderButton:ClearAllPoints()
-				NecrosisArmorReminderButton:SetPoint("CENTER", "UIParent", "BOTTOMLEFT", ARx / (NecrosisConfig.ShadowTranceScale / 100), ARy / (NecrosisConfig.ShadowTranceScale / 100))
-				NecrosisArmorReminderButton:SetScale(NecrosisConfig.ShadowTranceScale / 100)
+				if ARx and ARy then
+					NecrosisArmorReminderButton:ClearAllPoints()
+					NecrosisArmorReminderButton:SetPoint("CENTER", "UIParent", "BOTTOMLEFT", ARx / (NecrosisConfig.ShadowTranceScale / 100), ARy / (NecrosisConfig.ShadowTranceScale / 100))
+					NecrosisArmorReminderButton:SetScale(NecrosisConfig.ShadowTranceScale / 100)
+				end
 			end
 		end)
 
