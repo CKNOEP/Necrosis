@@ -675,8 +675,8 @@ function Necrosis:CreateWarlockPopup()
 	frame:SetMovable(true)
 	frame:EnableMouse(true)
 	frame:SetFrameStrata("HIGH")
-	frame:SetWidth(34)
-	frame:SetHeight(34)
+	frame:SetWidth(48)
+	frame:SetHeight(48)
 	frame:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\Armor-01")
 	frame:SetHighlightTexture("Interface\\AddOns\\Necrosis\\UI\\Armor-01")
 	frame:RegisterForDrag("LeftButton")
@@ -694,15 +694,27 @@ function Necrosis:CreateWarlockPopup()
 	frame:SetScript("OnMouseUp", function(self) Necrosis:OnDragStop(self) end)
 	frame:SetScript("OnDragStart", function(self) Necrosis:OnDragStart(self) end)
 	frame:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
-	frame:SetScript("OnClick", function(self, button)
-		if button == "LeftButton" then
-			-- Cast the highest armor spell known
-			local armorSpell = Necrosis.GetSpellName("armor")
-			if armorSpell then
-				CastSpellByName(armorSpell)
-			end
+	-- Set spell attributes for secure casting of armor spell
+	frame:SetAttribute("type", "spell")
+
+	-- Update spell ID based on strongest armor spell known (Fel Armor is stronger)
+	local SetArmorSpellAttribute = function()
+		local armorSpell = Necrosis.GetSpell("armor")
+		local felArmorSpell = Necrosis.GetSpell("fel_armor")
+
+		-- Fel Armor is stronger, always prioritize it
+		if felArmorSpell and felArmorSpell.ID then
+			frame:SetAttribute("spell", felArmorSpell.ID)
+		elseif armorSpell and armorSpell.ID then
+			frame:SetAttribute("spell", armorSpell.ID)
 		end
-	end)
+	end
+
+	-- Initial spell attribute setup
+	SetArmorSpellAttribute()
+
+	-- Store the function for later updates
+	frame.UpdateSpellAttribute = SetArmorSpellAttribute
 
 	-- Create a native Cooldown frame for visual display (like Retail) || Créer un frame Cooldown natif pour l'affichage visuel
 	if not frame.cooldown then

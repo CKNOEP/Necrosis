@@ -1018,24 +1018,17 @@ local function UpdateArmorReminder()
 		Local.ArmorReminder.NoBuffWarningActive = true
 		armorButton:SetAlpha(1)  -- Make button visible when no armor buff
 
-		-- Set texture based on highest armor spell known
+		-- Set texture based on strongest armor spell known
+		-- Fel Armor is always prioritized as it is stronger than Armor
 		local armorSpell = Necrosis.GetSpell("armor")
 		local felArmorSpell = Necrosis.GetSpell("fel_armor")
 
-		if armorSpell and felArmorSpell then
-			-- Compare UsageRank to determine which is highest
-			local armorRank = armorSpell.UsageRank or 0
-			local felArmorRank = felArmorSpell.UsageRank or 0
-
-			if felArmorRank > armorRank then
-				armorButton:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\FelArmor-01")
-			else
-				armorButton:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\Armor-01")
-			end
-		elseif armorSpell then
-			armorButton:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\Armor-01")
-		elseif felArmorSpell then
+		if felArmorSpell then
+			-- Fel Armor is stronger, always use it if available
 			armorButton:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\FelArmor-01")
+		elseif armorSpell then
+			-- Fall back to regular Armor if Fel Armor not known
+			armorButton:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\Armor-01")
 		end
 	end
 end
