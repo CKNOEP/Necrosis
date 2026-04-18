@@ -669,8 +669,6 @@ function CheckCorruptionRefresh(target, cast_guid, spell_id)
 										Necrosis:RetraitTimerParIndex(index, Local.TimerManagement, "spell expired")
 										--print ("spell deleted",index)
 									-- On rajoute une Corruption avec un timer refresh
-										SpellManagement(Local.SpellCasted[cast_guid])
-																			
 										Necrosis.GetSpellName("corruption")
 										local spell = Necrosis.GetSpellById(Necrosis.GetSpell("corruption").ID)
 										local cast_info = {}
@@ -685,12 +683,8 @@ function CheckCorruptionRefresh(target, cast_guid, spell_id)
 											guid = UnitGUID("Target")
 											}
 										--Local.TimerManagement = Necrosis:TimerInsert(cast_info, target, Necrosis.TimerManagement, "spell cast")
-										
+
 										Local.TimerManagement = Necrosis:TimerInsert(cast_info, target, Local.TimerManagement, "spell cast")
-										
-										
-										
-										SpellManagement(Local.SpellCasted[cast_guid])
 										
 										
 										end
