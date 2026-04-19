@@ -404,13 +404,11 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("RetraitTimer::"
 end
 
 function Necrosis:RemoveTimerByNameAndGuid(name, guid, Timer, note)
-	for index = 1, #Timer.SpellTimer, 1 do
-
+	for index = #Timer.SpellTimer, 1, -1 do
 		if Timer.SpellTimer[index].Name == name
 		and Timer.SpellTimer[index].TargetGUID == guid then
 			OutputTimer("RemoveTimerByNameAndGuid", "", index, Timer, note)
 			Timer = self:RetraitTimerParIndex(index, Timer)
-			break
 		end
 	end
 	return Timer

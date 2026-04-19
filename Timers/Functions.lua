@@ -367,8 +367,7 @@ function Necrosis:RemoveTimerByNameAndGuid(name, guid, Timer, note)
 	if Necrosis.Debug.timers then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SEARCH-REMOVE] Looking for Name:'"..tostring(name).."' GUID:'"..tostring(guid).."'")
 	end
-	for index = 1, #Timer.SpellTimer, 1 do
-
+	for index = #Timer.SpellTimer, 1, -1 do
 		if Timer.SpellTimer[index].Name == name
 		and Timer.SpellTimer[index].TargetGUID == guid then
 			if Necrosis.Debug.timers then
@@ -376,7 +375,6 @@ function Necrosis:RemoveTimerByNameAndGuid(name, guid, Timer, note)
 			end
 			OutputTimer("RemoveTimerByNameAndGuid", "", index, Timer, note)
 			Timer = self:RetraitTimerParIndex(index, Timer)
-			break
 		end
 	end
 	return Timer

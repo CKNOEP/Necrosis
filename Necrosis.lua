@@ -194,8 +194,8 @@ Local.SpeechManagement = {
 
 -- Variables used for managing summoning and stone buttons || Variables utilisées pour la gestion des boutons d'invocation et d'utilisation des pierres
 Local.Stone = {
-	Soul = {Mode = 1, Location = {}},
-	Health = {Mode = 1, Location = {}},
+	Soul = {Mode = 1, Location = {}, BlinkState = false, BlinkTimer = 0, BlinkInterval = 0.5},
+	Health = {Mode = 1, Location = {}, BlinkState = false, BlinkTimer = 0, BlinkInterval = 0.5},
 	Spell = {Mode = 1, Location = {}},
 	Hearth = {Location = {}},
 	Fire = {Mode = 1},
@@ -1167,6 +1167,67 @@ function Necrosis:OnUpdate(something, elapsed)
 			end
 		end
 	end
+
+	-- Handle soulstone button blinking when cooldown finished || Gérer le clignotement du bouton soulstone quand le CD est terminé
+	if Local.Stone.Soul.Mode == 1 then
+		Local.Stone.Soul.BlinkTimer = Local.Stone.Soul.BlinkTimer + elapsed
+		if Local.Stone.Soul.BlinkTimer > Local.Stone.Soul.BlinkInterval then
+			Local.Stone.Soul.BlinkTimer = 0
+			Local.Stone.Soul.BlinkState = not Local.Stone.Soul.BlinkState
+			local soulstoneButton = _G["NecrosisSoulstoneButton"]
+			if soulstoneButton then
+				if Local.Stone.Soul.BlinkState then
+					soulstoneButton:SetAlpha(1)
+				else
+					soulstoneButton:SetAlpha(0.3)
+				end
+			end
+		end
+	else
+		-- Reset blink state when not in mode 1
+		Local.Stone.Soul.BlinkTimer = 0
+		Local.Stone.Soul.BlinkState = false
+		local soulstoneButton = _G["NecrosisSoulstoneButton"]
+		if soulstoneButton then
+			soulstoneButton:SetAlpha(1)
+		end
+	end
+
+	-- Handle healthstone button blinking when no stone in inventory and CD finished || Gérer le clignotement du bouton healthstone quand pas de pierre en inventaire et CD fini
+	if Local.Stone.Health.Mode == 1 then
+		local startTime, duration = Necrosis:GetHealthstoneItemCooldown()
+		if not startTime or startTime == 0 then
+			Local.Stone.Health.BlinkTimer = Local.Stone.Health.BlinkTimer + elapsed
+			if Local.Stone.Health.BlinkTimer > Local.Stone.Health.BlinkInterval then
+				Local.Stone.Health.BlinkTimer = 0
+				Local.Stone.Health.BlinkState = not Local.Stone.Health.BlinkState
+				local healthstoneButton = _G["NecrosisHealthstoneButton"]
+				if healthstoneButton then
+					if Local.Stone.Health.BlinkState then
+						healthstoneButton:SetAlpha(1)
+					else
+						healthstoneButton:SetAlpha(0.3)
+					end
+				end
+			end
+		else
+			-- CD still active, no blinking
+			Local.Stone.Health.BlinkTimer = 0
+			Local.Stone.Health.BlinkState = false
+			local healthstoneButton = _G["NecrosisHealthstoneButton"]
+			if healthstoneButton then
+				healthstoneButton:SetAlpha(1)
+			end
+		end
+	else
+		-- Reset blink state when not in mode 1
+		Local.Stone.Health.BlinkTimer = 0
+		Local.Stone.Health.BlinkState = false
+		local healthstoneButton = _G["NecrosisHealthstoneButton"]
+		if healthstoneButton then
+			healthstoneButton:SetAlpha(1)
+		end
+	end
 end
 
 ------------------------------------------------------------------------------------------------------
@@ -1299,6 +1360,8 @@ function Necrosis:OnEvent(self, event,...)
 	elseif (event == "PLAYER_DEAD") then
 		-- It may hide the Twilight or Backlit buttons. || On cache éventuellement les boutons de Crépuscule ou Contrecoup.
 		Local.Dead = true
+		-- Clear all buff timers to prevent duplicates when player revives || Nettoyer tous les timers de buff pour éviter les doublons à la résurrection
+		Local.TimerManagement = Necrosis:RetraitTimerParGuid(UnitGUID("player"), Local.TimerManagement, "PLAYER_DEAD")
 		local fs = _G[Necrosis.Warlock_Buttons.trance.f]
 		local fb = _G[Necrosis.Warlock_Buttons.backlash.f]
 		fs:Hide()
@@ -1464,6 +1527,7 @@ function Necrosis:OnEvent(self, event,...)
 		if NecrosisConfig.AntiFearAlert and Local.Warning.Antifear.Immune then
 			Local.Warning.Antifear.Immune = false
 		end
+
 		if NecrosisConfig.CreatureAlert	and UnitCanAttack("player", "target") and not UnitIsDead("target") then
 
 			-- Check both spell usability AND creature type
@@ -1481,11 +1545,13 @@ function Necrosis:OnEvent(self, event,...)
 			if canEnslave then
 				if NecrosisCreatureAlertButton_demon then
 					NecrosisCreatureAlertButton_demon:SetAlpha(1)
+					NecrosisCreatureAlertButton_demon:EnableMouse(true)
 					NecrosisCreatureAlertButton_demon:SetMovable(true)
 				end
 			else
 				if NecrosisCreatureAlertButton_demon then
 					NecrosisCreatureAlertButton_demon:SetAlpha(0)
+					NecrosisCreatureAlertButton_demon:EnableMouse(false)
 				end
 			end
 
@@ -1493,22 +1559,24 @@ function Necrosis:OnEvent(self, event,...)
 			if canBanish then
 				if NecrosisCreatureAlertButton_elemental then
 					NecrosisCreatureAlertButton_elemental:SetAlpha(1)
+					NecrosisCreatureAlertButton_elemental:EnableMouse(true)
 					NecrosisCreatureAlertButton_elemental:SetMovable(true)
 				end
 			else
 				if NecrosisCreatureAlertButton_elemental then
 					NecrosisCreatureAlertButton_elemental:SetAlpha(0)
+					NecrosisCreatureAlertButton_elemental:EnableMouse(false)
 				end
 			end
 		else
-		NecrosisCreatureAlertButton_demon:SetAlpha(0)
-		NecrosisCreatureAlertButton_elemental:SetAlpha(0)
-
-		NecrosisCreatureAlertButton_demon:SetMovable(true)
-		NecrosisCreatureAlertButton_elemental:SetMovable(true)			
-		--print(UnitCreatureType("target"))
-
-			
+			if NecrosisCreatureAlertButton_demon then
+				NecrosisCreatureAlertButton_demon:SetAlpha(0)
+				NecrosisCreatureAlertButton_demon:EnableMouse(false)
+			end
+			if NecrosisCreatureAlertButton_elemental then
+				NecrosisCreatureAlertButton_elemental:SetAlpha(0)
+				NecrosisCreatureAlertButton_elemental:EnableMouse(false)
+			end
 	  end
 	-- If the Warlock learns a new spell / spell, we get the new spells list || Si le Démoniste apprend un nouveau sort / rang de sort, on récupère la nouvelle liste des sorts
 	-- If the Warlock learns a new buff or summon spell, the buttons are recreated || Si le Démoniste apprend un nouveau sort de buff ou d'invocation, on recrée les boutons
@@ -1520,8 +1588,12 @@ function Necrosis:OnEvent(self, event,...)
 	elseif (event == "PLAYER_REGEN_ENABLED") then
 		Local.PlayerInCombat = false
 		Local.TimerManagement = Necrosis:RetraitTimerCombat(Local.TimerManagement, "PLAYER_REGEN_ENABLED")
-		NecrosisCreatureAlertButton_demon:EnableMouse(true)		
-		NecrosisCreatureAlertButton_elemental:EnableMouse(true)
+		if NecrosisCreatureAlertButton_demon then
+			NecrosisCreatureAlertButton_demon:EnableMouse(true)
+		end
+		if NecrosisCreatureAlertButton_elemental then
+			NecrosisCreatureAlertButton_elemental:EnableMouse(true)
+		end
 		
 		
 		
