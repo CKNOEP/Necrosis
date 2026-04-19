@@ -2,6 +2,27 @@
 NECROSIS CHANGELOG
 ================================================================================
 
+VERSION 8.7.0 (2026-04-19)
+================================================================================
+FEATURES
+--------
+- Add soulstone button blinking when cooldown is finished
+- Add healthstone button blinking when CD finished and no stone in inventory
+
+BUG FIXES
+---------
+- Fix duplicate buff timers by removing ALL matching entries
+- Fix banish/enslave buttons not appearing when targeting creature types
+- Fix creature alert buttons throwing ADDON_ACTION_BLOCKED errors
+- Fix buff timer duplication after player death
+
+TECHNICAL CHANGES
+-----------------
+- Modify RemoveTimerByNameAndGuid() to remove ALL matching timer entries, not just first
+- Replace SecureUnitButtonTemplate Show/Hide calls with SetAlpha/EnableMouse for creature alert buttons
+- Add RetraitTimerParGuid() call on PLAYER_DEAD event to clear player timers before revival
+- Implement blinking animation for Soulstone (Mode 1) and Healthstone (Mode 1 + no CD) buttons
+
 VERSION 8.6.0 (2026-04-12)
 ================================================================================
 FEATURES
