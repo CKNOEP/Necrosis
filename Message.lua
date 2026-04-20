@@ -30,15 +30,11 @@ function Necrosis:Msg(msg, type)
 			if UnitInRaid("player") then
 				-- send to all raid members
 				SendChatMessage(msg, "RAID")
-			elseif UnitInParty("player") then
-				-- send to party members
-				SendChatMessage(msg, "PARTY")
 			elseif IsInGroup(LE_PARTY_CATEGORY_INSTANCE) then
 				SendChatMessage(msg, "INSTANCE_CHAT")
 			elseif UnitInParty("player") then
-			-- send to party members
+				-- send to party members
 				SendChatMessage(msg, "PARTY")
-			
 			else
 				-- not in a group so lets use the 'say' channel
 				if (inInstance) then SendChatMessage(msg, "SAY") end
