@@ -2,6 +2,14 @@
 NECROSIS CHANGELOG
 ================================================================================
 
+VERSION 8.8.1 (2026-04-26)
+================================================================================
+BUG FIXES
+---------
+- Fix ADDON_ACTION_BLOCKED error when targeting creatures
+  * Removed protected EnableMouse() calls on secure creature alert buttons
+  * SetAlpha() already controls button visibility and clickability
+
 VERSION 8.8.0 (2026-04-26)
 ================================================================================
 FEATURES
