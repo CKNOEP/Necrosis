@@ -1,11 +1,14 @@
 --[[
-    Necrosis 
+    Necrosis
     Copyright (C) - copyright file included in this release
 --]]
 
 -- On définit G comme étant le tableau contenant toutes les frames existantes.
 local _G = getfenv(0)
 
+-- Load localization
+local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
+if not L then L = {} end
 
 ------------------------------------------------------------------------------------------------------
 -- CREATION DE LA FRAME DES OPTIONS
@@ -42,7 +45,7 @@ function Necrosis:SetTimersConfig()
 		FontString:Show()
 		FontString:ClearAllPoints()
 		FontString:SetPoint("BOTTOM", frame, "BOTTOM", 90, 90)
-		FontString:SetText("1 / 2")
+		FontString:SetText("1 / 3")
 
 		FontString = frame:CreateFontString("NecrosisTimersConfig1Text", nil, "GameFontNormalSmall")
 		FontString:Show()
@@ -230,7 +233,7 @@ function Necrosis:SetTimersConfig()
 		FontString:Show()
 		FontString:ClearAllPoints()
 		FontString:SetPoint("BOTTOM", frame, "BOTTOM", 90, 95)
-		FontString:SetText("2 / 2")
+		FontString:SetText("2 / 3")
 
 		FontString = frame:CreateFontString("NecrosisTimersConfig2Text", nil, "GameFontNormalSmall")
 		FontString:Show()
@@ -247,7 +250,7 @@ function Necrosis:SetTimersConfig()
 		frame:SetPoint("RIGHT", NecrosisTimersConfig2, "BOTTOMRIGHT", 120, 100)
 
 		frame:SetScript("OnClick", function()
-			NecrosisTimersConfig1:Show()
+			NecrosisTimersConfig3:Show()
 			NecrosisTimersConfig2:Hide()
 		end)
 
@@ -300,7 +303,159 @@ function Necrosis:SetTimersConfig()
 			frame:SetChecked(NecrosisConfig.Timers[i].show)
 			frame:SetText(Necrosis.GetSpellName(NecrosisConfig.Timers[i].usage))
 		end
+
+		-- Create page 3
+		frame = {}
+		frame = CreateFrame("Frame", "NecrosisTimersConfig3", NecrosisTimersConfig)
+		frame:SetFrameStrata("DIALOG")
+		frame:SetMovable(false)
+		frame:EnableMouse(true)
+		frame:SetWidth(350)
+		frame:SetHeight(452)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("BOTTOMLEFT")
+
+		-- Create navigation
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("BOTTOM", frame, "BOTTOM", 90, 95)
+		FontString:SetText("3 / 3")
+
+		FontString = frame:CreateFontString("NecrosisTimersConfig3Text", nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("BOTTOM", frame, "BOTTOM", 50, 400)
+		FontString:SetText("Reminders")
+
+		-- Boutons
+		frame = CreateFrame("Button", nil, NecrosisTimersConfig3, "UIPanelButtonTemplate")
+		frame:SetText(">>>")
+		frame:EnableMouse(true)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("RIGHT", NecrosisTimersConfig3, "BOTTOMRIGHT", 120, 100)
+
+		frame:SetScript("OnClick", function()
+			NecrosisTimersConfig1:Show()
+			NecrosisTimersConfig3:Hide()
+		end)
+
+		frame = CreateFrame("Button", nil, NecrosisTimersConfig3, "UIPanelButtonTemplate")
+		frame:SetText("<<<")
+		frame:EnableMouse(true)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("LEFT", NecrosisTimersConfig3, "BOTTOMLEFT", 40, 100)
+
+		frame:SetScript("OnClick", function()
+			NecrosisTimersConfig2:Show()
+			NecrosisTimersConfig3:Hide()
+		end)
+
+		-- Healthstone reminder checkbox
+		frame = CreateFrame("CheckButton", "NecrosisShowHealthstoneReminder", NecrosisTimersConfig3, "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("LEFT", NecrosisTimersConfig3, "BOTTOMLEFT", 40, 350)
+
+		frame:SetScript("OnClick", function(self)
+			NecrosisConfig.ShowHealthstoneReminder = self:GetChecked()
+		end)
+
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		frame:SetFontString(FontString)
+
+		-- Soulstone reminder checkbox
+		frame = CreateFrame("CheckButton", "NecrosisShowSoulstoneReminder", NecrosisTimersConfig3, "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("LEFT", NecrosisTimersConfig3, "BOTTOMLEFT", 40, 325)
+
+		frame:SetScript("OnClick", function(self)
+			NecrosisConfig.ShowSoulstoneReminder = self:GetChecked()
+		end)
+
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		frame:SetFontString(FontString)
+
+		-- Armor reminder checkbox
+		frame = CreateFrame("CheckButton", "NecrosisShowArmorReminder", NecrosisTimersConfig3, "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("LEFT", NecrosisTimersConfig3, "BOTTOMLEFT", 40, 300)
+
+		frame:SetScript("OnClick", function(self)
+			NecrosisConfig.ShowArmorReminder = self:GetChecked()
+		end)
+
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		frame:SetFontString(FontString)
+
+		-- Sacrifice reminder checkbox
+		frame = CreateFrame("CheckButton", "NecrosisShowSacrificeReminder", NecrosisTimersConfig3, "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("LEFT", NecrosisTimersConfig3, "BOTTOMLEFT", 40, 275)
+
+		frame:SetScript("OnClick", function(self)
+			NecrosisConfig.ShowSacrificeReminder = self:GetChecked()
+		end)
+
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		frame:SetFontString(FontString)
+
+		-- Group/Raid only reminder checkbox
+		frame = CreateFrame("CheckButton", "NecrosisReminderInGroupRaidOnly", NecrosisTimersConfig3, "UICheckButtonTemplate")
+		frame:EnableMouse(true)
+		frame:SetWidth(24)
+		frame:SetHeight(24)
+		frame:Show()
+		frame:ClearAllPoints()
+		frame:SetPoint("LEFT", NecrosisTimersConfig3, "BOTTOMLEFT", 40, 250)
+
+		frame:SetScript("OnClick", function(self)
+			NecrosisConfig.ReminderInGroupRaidOnly = self:GetChecked()
+		end)
+
+		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
+		FontString:Show()
+		FontString:ClearAllPoints()
+		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+		FontString:SetTextColor(1, 1, 1)
+		frame:SetFontString(FontString)
+
 		NecrosisTimersConfig2:Hide()
+		NecrosisTimersConfig3:Hide()
 	end
 
 	UIDropDownMenu_Initialize(NecrosisTimerSelection, Necrosis.Timer_Init)
@@ -317,6 +472,30 @@ function Necrosis:SetTimersConfig()
 		NecrosisAlphaBar:SetValue(100)
 	end
 
+	-- Set reminder labels
+	if NecrosisShowHealthstoneReminder then
+		local hs = NecrosisShowHealthstoneReminder:GetFontString()
+		if hs then hs:SetText(L["TIMER_REMINDER_HEALTHSTONE"] or "Healthstone reminder") end
+	end
+	if NecrosisShowSoulstoneReminder then
+		local ss = NecrosisShowSoulstoneReminder:GetFontString()
+		if ss then ss:SetText(L["TIMER_REMINDER_SOULSTONE"] or "Soulstone reminder") end
+	end
+	if NecrosisShowArmorReminder then
+		local ar = NecrosisShowArmorReminder:GetFontString()
+		if ar then ar:SetText(L["TIMER_REMINDER_ARMOR"] or "Armor buff reminder") end
+	end
+	if NecrosisShowSacrificeReminder then
+		local sr = NecrosisShowSacrificeReminder:GetFontString()
+		if sr then sr:SetText(L["TIMER_REMINDER_SACRIFICE"] or "Demonic Sacrifice reminder") end
+	end
+	if NecrosisReminderInGroupRaidOnly then
+		local gr = NecrosisReminderInGroupRaidOnly:GetFontString()
+		if gr then gr:SetText(L["TIMER_REMINDER_GROUP_RAID_ONLY"] or "Only in group or raid") end
+	end
+	if NecrosisTimersConfig3Text then
+		NecrosisTimersConfig3Text:SetText(L["TIMER_REMINDER_TITLE"] or "Reminders")
+	end
 
 	UIDropDownMenu_SetSelectedID(NecrosisTimerSelection, (NecrosisConfig.TimerType + 1))
 	UIDropDownMenu_SetText(NecrosisTimerSelection, Necrosis.Config.Timers.Type[NecrosisConfig.TimerType + 1])
@@ -324,6 +503,23 @@ function Necrosis:SetTimersConfig()
 	NecrosisShowSpellTimerButton:SetChecked(NecrosisConfig.ShowSpellTimers)
 	NecrosisTimerOnLeft:SetChecked(NecrosisConfig.SpellTimerPos == -1)
 	NecrosisTimerUpward:SetChecked(NecrosisConfig.SensListe == -1)
+
+	-- Set reminder checkboxes state
+	if NecrosisShowHealthstoneReminder then
+		NecrosisShowHealthstoneReminder:SetChecked(NecrosisConfig.ShowHealthstoneReminder)
+	end
+	if NecrosisShowSoulstoneReminder then
+		NecrosisShowSoulstoneReminder:SetChecked(NecrosisConfig.ShowSoulstoneReminder)
+	end
+	if NecrosisShowArmorReminder then
+		NecrosisShowArmorReminder:SetChecked(NecrosisConfig.ShowArmorReminder)
+	end
+	if NecrosisShowSacrificeReminder then
+		NecrosisShowSacrificeReminder:SetChecked(NecrosisConfig.ShowSacrificeReminder)
+	end
+	if NecrosisReminderInGroupRaidOnly then
+		NecrosisReminderInGroupRaidOnly:SetChecked(NecrosisConfig.ReminderInGroupRaidOnly)
+	end
 
 	if NecrosisConfig.TimerType == 0 then
 		NecrosisTimerUpward:Disable()

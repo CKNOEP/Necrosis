@@ -133,6 +133,10 @@ Local.DefaultConfig = {
 		["NecrosisPetMenuButton"] = {"CENTER", "UIParent", "CENTER", 87,-100},
 		["NecrosisCurseMenuButton"] = {"CENTER", "UIParent", "CENTER", 121,-100},
 		["NecrosisDestroyShardsButton"] = {"CENTER", "UIParent", "CENTER", 154,-100},
+		["NecrosisHealthstoneReminderButton"] = {"CENTER", "UIParent", "CENTER", 50,-50},
+		["NecrosisSoulstoneReminderButton"] = {"CENTER", "UIParent", "CENTER", 100,-50},
+		["NecrosisSacrificeReminderButton"] = {"CENTER", "UIParent", "CENTER", 150,-50},
+		["NecrosisArmorReminderButton"] = {"CENTER", "UIParent", "CENTER", 0,-50},
 	},
 	
 	PetShow = {true,true,true,true,true,true,true,true,true,},
@@ -150,6 +154,13 @@ Local.DefaultConfig = {
 		[7] = {usage = "enslave", show = true},
 		[8] = {usage = "armor", show = true},
 	},
+
+	-- Reminder buttons configuration
+	ShowHealthstoneReminder = true,
+	ShowSoulstoneReminder = true,
+	ShowArmorReminder = true,
+	ShowSacrificeReminder = false,
+	ReminderInGroupRaidOnly = false,
 }
 
 -- Casted spell variables (name, rank, target, target level) || Variables des sorts castés (nom, rang, cible, niveau de la cible)
@@ -246,6 +257,30 @@ Local.ArmorReminder = {
 	BlinkTimer = 0,
 	BlinkInterval = 0.5,  -- Blink every 0.5 seconds
 	NoBuffWarningActive = false
+}
+
+-- Variables for healthstone reminder button
+Local.HealthstoneReminder = {
+	BlinkState = false,
+	BlinkTimer = 0,
+	BlinkInterval = 0.5,
+	Active = false
+}
+
+-- Variables for soulstone reminder button
+Local.SoulstoneReminder = {
+	BlinkState = false,
+	BlinkTimer = 0,
+	BlinkInterval = 0.5,
+	Active = false
+}
+
+-- Variables for sacrifice reminder button
+Local.SacrificeReminder = {
+	BlinkState = false,
+	BlinkTimer = 0,
+	BlinkInterval = 0.5,
+	Active = false
 }
 
 -- Time elapsed between two OnUpdate events || Temps écoulé entre deux event OnUpdate
@@ -986,7 +1021,16 @@ end
 -- Function to check for armor buffs and update reminder button || Fonction pour vérifier les buffs d'armure
 local function UpdateArmorReminder()
 	local armorButton = _G["NecrosisArmorReminderButton"]
-	if not armorButton then return end
+	if not armorButton or not NecrosisConfig.ShowArmorReminder then
+		if armorButton then armorButton:SetAlpha(0) end
+		Local.ArmorReminder.NoBuffWarningActive = false
+		return
+	end
+	if NecrosisConfig.ReminderInGroupRaidOnly and not IsInGroup() then
+		if armorButton then armorButton:SetAlpha(0) end
+		Local.ArmorReminder.NoBuffWarningActive = false
+		return
+	end
 
 	local hasArmorBuff = false
 
@@ -1027,6 +1071,83 @@ local function UpdateArmorReminder()
 	end
 end
 
+local function UpdateHealthstoneReminder()
+	local btn = _G["NecrosisHealthstoneReminderButton"]
+	if not btn or not NecrosisConfig.ShowHealthstoneReminder then
+		if btn then btn:SetAlpha(0) end
+		Local.HealthstoneReminder.Active = false
+		return
+	end
+	if NecrosisConfig.ReminderInGroupRaidOnly and not IsInGroup() then
+		if btn then btn:SetAlpha(0) end
+		Local.HealthstoneReminder.Active = false
+		return
+	end
+	if not Local.Stone.Health.OnHand then
+		Local.HealthstoneReminder.Active = true
+		btn:SetAlpha(1)
+	else
+		Local.HealthstoneReminder.Active = false
+		btn:SetAlpha(0)
+	end
+end
+
+local function UpdateSoulstoneReminder()
+	local btn = _G["NecrosisSoulstoneReminderButton"]
+	if not btn or not NecrosisConfig.ShowSoulstoneReminder then
+		if btn then btn:SetAlpha(0) end
+		Local.SoulstoneReminder.Active = false
+		return
+	end
+	if NecrosisConfig.ReminderInGroupRaidOnly and not IsInGroup() then
+		if btn then btn:SetAlpha(0) end
+		Local.SoulstoneReminder.Active = false
+		return
+	end
+	if Local.Stone.Soul.Mode == 1 then
+		Local.SoulstoneReminder.Active = true
+		btn:SetAlpha(1)
+	else
+		Local.SoulstoneReminder.Active = false
+		btn:SetAlpha(0)
+	end
+end
+
+local function UpdateSacrificeReminder()
+	local btn = _G["NecrosisSacrificeReminderButton"]
+	if not btn or not NecrosisConfig.ShowSacrificeReminder then
+		if btn then btn:SetAlpha(0) end
+		Local.SacrificeReminder.Active = false
+		return
+	end
+	if NecrosisConfig.ReminderInGroupRaidOnly and not IsInGroup() then
+		if btn then btn:SetAlpha(0) end
+		Local.SacrificeReminder.Active = false
+		return
+	end
+	if not IsSpellKnown(18788) then
+		btn:SetAlpha(0)
+		Local.SacrificeReminder.Active = false
+		return
+	end
+	local sacrificeBuffIds = {18789, 18790, 18791, 18792, 35701}
+	local hasSacrifice = false
+	for _, buffId in ipairs(sacrificeBuffIds) do
+		local buffName = GetSpellInfo(buffId)
+		if buffName and UnitHasAura("player", buffName, false) then
+			hasSacrifice = true
+			break
+		end
+	end
+	if not hasSacrifice then
+		Local.SacrificeReminder.Active = true
+		btn:SetAlpha(1)
+	else
+		Local.SacrificeReminder.Active = false
+		btn:SetAlpha(0)
+	end
+end
+
 local function StartInit(fm)
 	-- unregister, server can spam unrelated ids  !?
 	fm:UnregisterEvent("GET_ITEM_INFO_RECEIVED")
@@ -1035,8 +1156,11 @@ local function StartInit(fm)
 	-- Set timers if any buffs are on
 	SetupBuffTimers()
 
-	-- Initialize armor reminder button
+	-- Initialize reminder buttons
 	UpdateArmorReminder()
+	UpdateHealthstoneReminder()
+	UpdateSoulstoneReminder()
+	UpdateSacrificeReminder()
 
 	--[[ Once the localized strings are known, build the buttons.
 	--]]
@@ -1120,8 +1244,11 @@ function Necrosis:OnUpdate(something, elapsed)
 			SetupBuffTimers()
 		end
 
-		-- Update armor reminder button
+		-- Update reminder buttons
 		UpdateArmorReminder()
+		UpdateHealthstoneReminder()
+		UpdateSoulstoneReminder()
+		UpdateSacrificeReminder()
 
 		Local.LastUpdate[1] = 0
 	-- Every half second || Toutes les demies secondes
@@ -1164,6 +1291,45 @@ function Necrosis:OnUpdate(something, elapsed)
 				else
 					armorButton:SetAlpha(0.3)
 				end
+			end
+		end
+	end
+
+	-- Handle healthstone reminder button blinking
+	if Local.HealthstoneReminder.Active then
+		Local.HealthstoneReminder.BlinkTimer = Local.HealthstoneReminder.BlinkTimer + elapsed
+		if Local.HealthstoneReminder.BlinkTimer > Local.HealthstoneReminder.BlinkInterval then
+			Local.HealthstoneReminder.BlinkTimer = 0
+			Local.HealthstoneReminder.BlinkState = not Local.HealthstoneReminder.BlinkState
+			local btn = _G["NecrosisHealthstoneReminderButton"]
+			if btn then
+				btn:SetAlpha(Local.HealthstoneReminder.BlinkState and 1 or 0.3)
+			end
+		end
+	end
+
+	-- Handle soulstone reminder button blinking
+	if Local.SoulstoneReminder.Active then
+		Local.SoulstoneReminder.BlinkTimer = Local.SoulstoneReminder.BlinkTimer + elapsed
+		if Local.SoulstoneReminder.BlinkTimer > Local.SoulstoneReminder.BlinkInterval then
+			Local.SoulstoneReminder.BlinkTimer = 0
+			Local.SoulstoneReminder.BlinkState = not Local.SoulstoneReminder.BlinkState
+			local btn = _G["NecrosisSoulstoneReminderButton"]
+			if btn then
+				btn:SetAlpha(Local.SoulstoneReminder.BlinkState and 1 or 0.3)
+			end
+		end
+	end
+
+	-- Handle sacrifice reminder button blinking
+	if Local.SacrificeReminder.Active then
+		Local.SacrificeReminder.BlinkTimer = Local.SacrificeReminder.BlinkTimer + elapsed
+		if Local.SacrificeReminder.BlinkTimer > Local.SacrificeReminder.BlinkInterval then
+			Local.SacrificeReminder.BlinkTimer = 0
+			Local.SacrificeReminder.BlinkState = not Local.SacrificeReminder.BlinkState
+			local btn = _G["NecrosisSacrificeReminderButton"]
+			if btn then
+				btn:SetAlpha(Local.SacrificeReminder.BlinkState and 1 or 0.3)
 			end
 		end
 	end
