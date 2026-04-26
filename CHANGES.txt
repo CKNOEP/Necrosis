@@ -2,6 +2,37 @@
 NECROSIS CHANGELOG
 ================================================================================
 
+VERSION 8.8.0 (2026-04-26)
+================================================================================
+FEATURES
+--------
+- Add third timer configuration page for reminders
+  * Healthstone reminder (alerts when no stone in bags)
+  * Soulstone reminder (alerts when no stone placed/resurrected)
+  * Armor buff reminder (alerts when Demon Armor/Fel Armor inactive)
+  * Demonic Sacrifice reminder (Destruction spec only)
+  * All reminders feature blinking visual feedback when active
+- Add "ReminderInGroupRaidOnly" option
+  * When enabled, reminders only activate when player is in group or raid
+  * Useful for solo farming/grinding scenarios
+- Create 3 new reminder buttons (Healthstone, Soulstone, Sacrifice)
+  * 48x48 pixel buttons with circular cooldown display
+  * Draggable positioning via configuration
+  * Clickable to cast corresponding spell directly
+  * Display appropriate textures (HealthstoneButton, SoulstoneButton, Sacrifice)
+
+TECHNICAL CHANGES
+-----------------
+- Add ShowHealthstoneReminder, ShowSoulstoneReminder, ShowArmorReminder, ShowSacrificeReminder, ReminderInGroupRaidOnly config options
+- Implement UpdateHealthstoneReminder(), UpdateSoulstoneReminder(), UpdateSacrificeReminder() functions
+- Add Local.HealthstoneReminder, Local.SoulstoneReminder, Local.SacrificeReminder state variables with blinking management
+- Modify UpdateArmorReminder() to respect ShowArmorReminder config option
+- Update OnUpdate loop to call all reminder update functions every second
+- Add blinking animation (0.5s interval) for all active reminders
+- Add NecrosisHealthstoneReminderButton, NecrosisSoulstoneReminderButton, NecrosisSacrificeReminderButton frames to XML.lua
+- Extend timer config UI from 2 pages to 3 pages with navigation between pages
+- Add localization keys for all reminder UI labels (EN/FR)
+
 VERSION 8.7.0 (2026-04-19)
 ================================================================================
 FEATURES
