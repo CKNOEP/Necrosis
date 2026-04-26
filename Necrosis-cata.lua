@@ -1525,13 +1525,11 @@ function Necrosis:OnEvent(self, event,...)
 			if canEnslave then
 				if NecrosisCreatureAlertButton_demon then
 					NecrosisCreatureAlertButton_demon:SetAlpha(1)
-					NecrosisCreatureAlertButton_demon:EnableMouse(true)
 					NecrosisCreatureAlertButton_demon:SetMovable(true)
 				end
 			else
 				if NecrosisCreatureAlertButton_demon then
 					NecrosisCreatureAlertButton_demon:SetAlpha(0)
-					NecrosisCreatureAlertButton_demon:EnableMouse(false)
 				end
 			end
 
@@ -1539,23 +1537,19 @@ function Necrosis:OnEvent(self, event,...)
 			if canBanish then
 				if NecrosisCreatureAlertButton_elemental then
 					NecrosisCreatureAlertButton_elemental:SetAlpha(1)
-					NecrosisCreatureAlertButton_elemental:EnableMouse(true)
 					NecrosisCreatureAlertButton_elemental:SetMovable(true)
 				end
 			else
 				if NecrosisCreatureAlertButton_elemental then
 					NecrosisCreatureAlertButton_elemental:SetAlpha(0)
-					NecrosisCreatureAlertButton_elemental:EnableMouse(false)
 				end
 			end
 		else
 			if NecrosisCreatureAlertButton_demon then
 				NecrosisCreatureAlertButton_demon:SetAlpha(0)
-				NecrosisCreatureAlertButton_demon:EnableMouse(false)
 			end
 			if NecrosisCreatureAlertButton_elemental then
 				NecrosisCreatureAlertButton_elemental:SetAlpha(0)
-				NecrosisCreatureAlertButton_elemental:EnableMouse(false)
 			end
 	  end
 	-- If the Warlock learns a new spell / spell, we get the new spells list || Si le Démoniste apprend un nouveau sort / rang de sort, on récupère la nouvelle liste des sorts
@@ -1568,12 +1562,6 @@ function Necrosis:OnEvent(self, event,...)
 	elseif (event == "PLAYER_REGEN_ENABLED") then
 		Local.PlayerInCombat = false
 		Local.TimerManagement = Necrosis:RetraitTimerCombat(Local.TimerManagement, "PLAYER_REGEN_ENABLED")
-		if NecrosisCreatureAlertButton_demon then
-			NecrosisCreatureAlertButton_demon:EnableMouse(true)
-		end
-		if NecrosisCreatureAlertButton_elemental then
-			NecrosisCreatureAlertButton_elemental:EnableMouse(true)
-		end
 		
 		
 		
