@@ -22,19 +22,24 @@ end
 
 
 -- Listen for layout changes and specialization changes
+-- Only register events that exist in this WoW version
 local layoutChangeFrame = CreateFrame("Frame")
-layoutChangeFrame:RegisterEvent("EDIT_MODE_LAYOUTS_UPDATED")
-layoutChangeFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
-layoutChangeFrame:SetScript("OnEvent", function(self, event)
-	if event == "EDIT_MODE_LAYOUTS_UPDATED" then
-		-- Layout change detected, update handled automatically
-	elseif event == "ACTIVE_TALENT_GROUP_CHANGED" then
-		-- Restore NecrosisUI layout when specialization changes
-		C_Timer.After(0.5, function()
-			NUI:RestoreNecrosisLayout()
-		end)
-	end
-end)
+
+-- EDIT_MODE_LAYOUTS_UPDATED only exists in Retail (TWW+)
+if C_EditMode and C_EditMode.GetNumLayouts then
+	layoutChangeFrame:RegisterEvent("EDIT_MODE_LAYOUTS_UPDATED")
+	layoutChangeFrame:RegisterEvent("ACTIVE_TALENT_GROUP_CHANGED")
+	layoutChangeFrame:SetScript("OnEvent", function(self, event)
+		if event == "EDIT_MODE_LAYOUTS_UPDATED" then
+			-- Layout change detected, update handled automatically
+		elseif event == "ACTIVE_TALENT_GROUP_CHANGED" then
+			-- Restore NecrosisUI layout when specialization changes
+			C_Timer.After(0.5, function()
+				NUI:RestoreNecrosisLayout()
+			end)
+		end
+	end)
+end
 
 -- Create main NecrosisUI container frame
 local necrosisUIFrame = CreateFrame("Frame", "NecrosisUI", UIParent)
