@@ -1137,24 +1137,22 @@ end
 function Necrosis.GetSpellCastName(usage)
 
 	if Necrosis.Warlock_Spell_Use[usage] then
-		local spellID = Necrosis.Warlock_Spell_Use[usage]
-		local fullName = Necrosis.Warlock_Spells[spellID].CastName
 
-		-- Debug output
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG GetSpellCastName] usage='"..tostring(usage).."' spellID="..tostring(spellID).." fullName='"..tostring(fullName).."'")
+		if usage == "soulstone" then
+		--print("SS",Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].CastName)
+		end
+
+		local fullName = Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].CastName
 
 		-- Remove rank from spell name: "Spell Name(Rank X)" -> "Spell Name"
 		-- This is needed for SecureActionButton macros to work
 		if fullName then
 			local nameOnly = fullName:match("^(.-)%(") or fullName
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG GetSpellCastName] returning nameOnly='"..tostring(nameOnly).."'")
 			return nameOnly
 		end
 
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG GetSpellCastName] returning fullName='"..tostring(fullName).."'")
 		return fullName
 	else
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG GetSpellCastName] usage='"..tostring(usage).."' NOT FOUND in Warlock_Spell_Use")
 		return ""
 	end
 end
