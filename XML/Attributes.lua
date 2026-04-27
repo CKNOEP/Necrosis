@@ -76,9 +76,9 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage(">>>"
 
 		-- if the 'Ritual of Summoning' spell is known, then associate it to the soulstone icon as shift-click.
 		if Necrosis.IsSpellKnown("summoning") then
-			f:SetAttribute("shift-type*", "spell")
-			f:SetAttribute("shift-spell*", 
-				Necrosis.GetSpellCastName("summoning")) 
+			f:SetAttribute("shift-type1", "spell")
+			f:SetAttribute("shift-spell1",
+				Necrosis.GetSpellCastName("summoning"))
 		end
 	end
 
@@ -258,13 +258,13 @@ function Necrosis:SetBuffSpellAttribute(button)
 				f:SetAttribute("ctrl-spell"..r_click, Rank1)
 			else -- only have rank 1
 				-- left & right click will perform the same macro
-				f:SetAttribute("type*", "macro")
-				f:SetAttribute("macrotext*", "/focus\n/cast "..Rank1) 
+				f:SetAttribute("type1", "macro")
+				f:SetAttribute("macrotext1", "/focus\n/cast "..Rank1)
 
 				-- Si le démoniste control + click le bouton de banish || if the warlock uses ctrl-click then
 				-- On rebanish la dernière cible bannie || rebanish the previously banished target
-				f:SetAttribute("ctrl-type*", "spell")
-				f:SetAttribute("ctrl-spell*", Rank1) 
+				f:SetAttribute("ctrl-type1", "spell")
+				f:SetAttribute("ctrl-spell1", Rank1)
 			end
 		else
 			f:SetAttribute("type", "spell")
@@ -454,9 +454,9 @@ function Necrosis:StoneAttribute(Steed)
 		local f = _G[Necrosis.Warlock_Buttons.health_stone.f]
 		if f then
 			f:SetAttribute("type2", "spell")
-			f:SetAttribute("spell2", Necrosis.GetSpellCastName("healthstone")) 
-			f:SetAttribute("shift-type*", "spell")
-			f:SetAttribute("shift-spell*", Necrosis.GetSpellCastName("Ritual_of_Souls")) 			
+			f:SetAttribute("spell2", Necrosis.GetSpellCastName("healthstone"))
+			f:SetAttribute("shift-type1", "spell")
+			f:SetAttribute("shift-spell1", Necrosis.GetSpellCastName("Ritual_of_Souls"))
 
 		end
 	end
@@ -552,7 +552,7 @@ function Necrosis:StoneAttribute(Steed)
 				f:SetAttribute("spell1", Rank2)
 				f:SetAttribute("spell2", Rank1)
 			else
-				f:SetAttribute("spell*", Rank1)
+				f:SetAttribute("spell1", Rank1)
 			end			
 		end
 		
@@ -752,14 +752,14 @@ function Necrosis:NoCombatAttribute(SoulstoneMode, FirestoneMode, SpellstoneMode
 	local f = _G[Necrosis.Warlock_Buttons.spell_stone.f]
 	if NecrosisConfig.ItemSwitchCombat[1] and f then
 		f:SetAttribute("type1", "macro")
-		f:SetAttribute("macrotext*","/cast "..NecrosisConfig.ItemSwitchCombat[1].."\n/use 16")
+		f:SetAttribute("macrotext1", "/cast "..NecrosisConfig.ItemSwitchCombat[1].."\n/use 16")
 	end
 	-- Si on connait l'emplacement de la pierre de feu,
 	-- Alors cliquer sur le bouton de pierre de feu l'équipe.
 	local f = _G[Necrosis.Warlock_Buttons.fire_stone.f]
 	if NecrosisConfig.ItemSwitchCombat[2] and f then
 		f:SetAttribute("type1", "macro")
-		f:SetAttribute("macrotext*", "/cast "..NecrosisConfig.ItemSwitchCombat[2].."\n/use 16")
+		f:SetAttribute("macrotext1", "/cast "..NecrosisConfig.ItemSwitchCombat[2].."\n/use 16")
 	end
 end
 
@@ -813,7 +813,7 @@ function Necrosis:InCombatAttribute(Pet, Buff, Curse)
 	f = _G[f]
 	if NecrosisConfig.ItemSwitchCombat[1] and f then
 		f:SetAttribute("type1", "macro")
-		f:SetAttribute("macrotext*", "/cast "..NecrosisConfig.ItemSwitchCombat[1].."\n/use 16")
+		f:SetAttribute("macrotext1", "/cast "..NecrosisConfig.ItemSwitchCombat[1].."\n/use 16")
 	end
 
 	-- Si on connait le nom de la pierre de feu,
@@ -822,7 +822,7 @@ function Necrosis:InCombatAttribute(Pet, Buff, Curse)
 	f = _G[f]
 	if NecrosisConfig.ItemSwitchCombat[2] and f then
 		f:SetAttribute("type1", "macro")
-		f:SetAttribute("macrotext*", "/cast "..NecrosisConfig.ItemSwitchCombat[2].."\n/use 16")
+		f:SetAttribute("macrotext1", "/cast "..NecrosisConfig.ItemSwitchCombat[2].."\n/use 16")
 	end
 
 	-- Si on connait le nom de la pierre de soin,
@@ -897,12 +897,6 @@ function Necrosis:HealthstoneUpdateAttribute(nostone)
 	if NecrosisConfig.ItemSwitchCombat[3] then
 		f:SetAttribute("type1", "macro")
 		f:SetAttribute("macrotext1", "/stopcasting \n/use "..NecrosisConfig.ItemSwitchCombat[3])
-		f:SetAttribute("type3", "Trade")
-		f:SetAttribute("ctrl-type1", "Trade")
-		f:SetAttribute("shift-type*", "spell")
-		f:SetAttribute("shift-spell*", Necrosis.GetSpellCastName("Ritual_of_Souls")) 
-		
-		f.Trade = function () self:TradeStone() end
 	end
 end
 
@@ -927,7 +921,7 @@ function Necrosis:SpellstoneUpdateAttribute(nostone)
 	-- Un clic gauche crée la pierre
 	if nostone then
 		f:SetAttribute("type1", "spell") -- 53
-		f:SetAttribute("spell*", Necrosis.GetSpellCastName("spellstone")) 
+		f:SetAttribute("spell1", Necrosis.GetSpellCastName("spellstone"))
 		return
 	end
 
@@ -935,7 +929,7 @@ function Necrosis:SpellstoneUpdateAttribute(nostone)
 --	f:SetAttribute("type1", "item")
 --	f:SetAttribute("item1", NecrosisConfig.ItemSwitchCombat[1])
 	f:SetAttribute("type1", "macro")
-	f:SetAttribute("macrotext*", "/cast "..NecrosisConfig.ItemSwitchCombat[1].."\n/use 16")
+	f:SetAttribute("macrotext1", "/cast "..NecrosisConfig.ItemSwitchCombat[1].."\n/use 16")
 	end
 
 end
@@ -960,7 +954,7 @@ function Necrosis:FirestoneUpdateAttribute(nostone)
 	-- Un clic gauche crée la pierre
 	if nostone then
 		f:SetAttribute("type1", "spell") -- 54
-		f:SetAttribute("spell*", Necrosis.GetSpellCastName("firestone")) 
+		f:SetAttribute("spell1", Necrosis.GetSpellCastName("firestone"))
 		return
 	end
 
