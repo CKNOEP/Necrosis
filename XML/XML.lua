@@ -212,6 +212,22 @@ local function CreateStoneButton(stone)
 		end)
 	end
 
+	-- Attributes specific to the soulstone button || Attributs spécifiques à la pierre d'âme
+	-- if there are no restrictions while in combat, then allow the stone to be cast || Ils permettent de caster la pierre sur soi si pas de cible et hors combat
+	if stone == Necrosis.Warlock_Buttons.soul_stone.f then
+		frame:SetScript("PreClick", function(self)
+			if not (InCombatLockdown() or UnitIsFriend("player","target")) then
+				self:SetAttribute("unit", "player")
+			end
+		end)
+		frame:SetScript("PostClick", function(self)
+			if not InCombatLockdown() then
+				self:SetAttribute("unit", "target")
+			end
+		end)
+	end
+
+
 	-- Create a place for text
 	-- Create the soulshard counter || Création du compteur de fragments d'âme
 	local FontString = _G[b.f.."Text"]
@@ -738,68 +754,6 @@ function Necrosis:CreateWarlockPopup()
 	else
 		-- Default position: bottom-center of screen
 		frame:SetPoint("CENTER", UIParent, "CENTER", 0, -50)
-	end
-
-	-- Create the Sacrifice Reminder button
-	------------------------------------------------------------------------------------------------------
-
-	local frame = _G["NecrosisSacrificeReminderButton"]
-	if not frame then
-		frame = CreateFrame("Button", "NecrosisSacrificeReminderButton", UIParent, "SecureUnitButtonTemplate")
-	end
-
-	frame:SetMovable(true)
-	frame:EnableMouse(true)
-	frame:SetFrameStrata("HIGH")
-	frame:SetWidth(48)
-	frame:SetHeight(48)
-	frame:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\Sacrifice-01")
-	frame:SetHighlightTexture("Interface\\AddOns\\Necrosis\\UI\\Sacrifice-01")
-	frame:RegisterForDrag("LeftButton")
-	frame:RegisterForClicks("AnyUp")
-	frame:SetAlpha(0)
-
-	frame:SetScript("OnEnter", function(self)
-		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
-		GameTooltip:SetText("|cFFFF0000No Demonic Sacrifice!|r")
-		GameTooltip:AddLine("Click to cast Demonic Sacrifice")
-		GameTooltip:Show()
-	end)
-	frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
-	frame:SetScript("OnMouseUp", function(self) Necrosis:OnDragStop(self) end)
-	frame:SetScript("OnDragStart", function(self) Necrosis:OnDragStart(self) end)
-	frame:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
-	frame:SetAttribute("type", "spell")
-
-	local SetSacrificeSpellAttribute = function()
-		local sacrificeSpell = Necrosis.GetSpell("sacrifice")
-		if sacrificeSpell and sacrificeSpell.ID then
-			frame:SetAttribute("spell", sacrificeSpell.ID)
-		end
-	end
-
-	SetSacrificeSpellAttribute()
-	frame.UpdateSpellAttribute = SetSacrificeSpellAttribute
-
-	if not frame.cooldown then
-		frame.cooldown = CreateFrame("Cooldown", "NecrosisSacrificeReminderButtonCooldown", frame)
-		frame.cooldown:SetAllPoints()
-		frame.cooldown:SetUseCircularEdge(true)
-		frame.cooldown:SetDrawSwipe(true)
-		frame.cooldown:SetSwipeColor(0, 0, 0, 0.5)
-	end
-
-	frame:ClearAllPoints()
-	if NecrosisConfig.FramePosition and NecrosisConfig.FramePosition["NecrosisSacrificeReminderButton"] then
-		frame:SetPoint(
-			NecrosisConfig.FramePosition["NecrosisSacrificeReminderButton"][1],
-			NecrosisConfig.FramePosition["NecrosisSacrificeReminderButton"][2],
-			NecrosisConfig.FramePosition["NecrosisSacrificeReminderButton"][3],
-			NecrosisConfig.FramePosition["NecrosisSacrificeReminderButton"][4],
-			NecrosisConfig.FramePosition["NecrosisSacrificeReminderButton"][5]
-		)
-	else
-		frame:SetPoint("CENTER", UIParent, "CENTER", 150, -50)
 	end
 end
 

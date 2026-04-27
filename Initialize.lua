@@ -376,6 +376,15 @@ C_Timer.After(1, function()
 			btn:Hide()
 		end
 	end
+
+	-- Initialize stone button attributes UNCONDITIONALLY so buttons are always functional
+	-- These will be updated later when items are found or spells are cast
+	if Necrosis and Necrosis.HealthstoneUpdateAttribute then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[Initialize] Initializing stone button attributes")
+		Necrosis:HealthstoneUpdateAttribute() -- Initialize with no stone
+		Necrosis:SpellstoneUpdateAttribute() -- Initialize with no stone
+		Necrosis:FirestoneUpdateAttribute() -- Initialize with no stone
+	end
 end)
 
 -- Create separate frame for event handling (NOT the button itself!)

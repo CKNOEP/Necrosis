@@ -3,9 +3,17 @@
     Copyright (C) - copyright file included in this release
 --]]
 
--- On définit G comme étant le tableau contenant toutes les frames existantes.
+-- On d�finit G comme �tant le tableau contenant toutes les frames existantes.
 local _G = getfenv(0)
 local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
+
+local function GetStoneSpellName(usage)
+	if Necrosis.Warlock_Spell_Use and Necrosis.Warlock_Spell_Use[usage] then
+		local spellID = Necrosis.Warlock_Spell_Use[usage]
+		return GetSpellInfo(spellID)
+	end
+	return nil
+end
 
 ------------------------------------------------------------------------------------------------------
 -- DEFINITION OF INITIAL MENU ATTRIBUTES || DEFINITION INITIALE DES ATTRIBUTS DES MENUS
@@ -83,7 +91,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage(">>>"
 	end
 
 end
--- On crée les menus sécurisés pour les différents sorts Buff / Démon / Malédictions
+-- On cr�e les menus s�curis�s pour les diff�rents sorts Buff / D�mon / Mal�dictions
 function Necrosis:MenuAttribute(menu)
 	if InCombatLockdown() then
 		return
@@ -219,7 +227,7 @@ local r_click = 2
 -- DEFINITION INITIALE DES ATTRIBUTS DES SORTS
 ------------------------------------------------------------------------------------------------------
 
--- On associe les malédictions au clic sur le bouton concerné
+-- On associe les mal�dictions au clic sur le bouton concern�
 function Necrosis:SetBuffSpellAttribute(button)
 	if InCombatLockdown() then
 		return
@@ -261,8 +269,8 @@ function Necrosis:SetBuffSpellAttribute(button)
 				f:SetAttribute("type1", "macro")
 				f:SetAttribute("macrotext1", "/focus\n/cast "..Rank1)
 
-				-- Si le démoniste control + click le bouton de banish || if the warlock uses ctrl-click then
-				-- On rebanish la dernière cible bannie || rebanish the previously banished target
+				-- Si le d�moniste control + click le bouton de banish || if the warlock uses ctrl-click then
+				-- On rebanish la derni�re cible bannie || rebanish the previously banished target
 				f:SetAttribute("ctrl-type1", "spell")
 				f:SetAttribute("ctrl-spell1", Rank1)
 			end
@@ -278,7 +286,7 @@ function Necrosis:SetBuffSpellAttribute(button)
 	end
 end
 
--- On associe les buffs au clic sur le bouton concerné
+-- On associe les buffs au clic sur le bouton concern�
 function Necrosis:BuffSpellAttribute()
 	if InCombatLockdown() then
 		return
@@ -295,7 +303,7 @@ function Necrosis:BuffSpellAttribute()
 	end
 end
 
--- On associe les démons au clic sur le bouton concerné
+-- On associe les d�mons au clic sur le bouton concern�
 function Necrosis:SetPetSpellAttribute(button)
 	if InCombatLockdown() then
 		return
@@ -377,7 +385,7 @@ function Necrosis:PetSpellAttribute()
 	end
 end
 
--- On associe les malédictions au clic sur le bouton concerné
+-- On associe les mal�dictions au clic sur le bouton concern�
 function Necrosis:SetCurseSpellAttribute(button)
 
 	if InCombatLockdown() then
@@ -422,7 +430,7 @@ function Necrosis:CurseSpellAttribute()
 end
 
 -- Associating the frames to buttons, and creating stones on right-click.
--- Association de la monture au bouton, et de la création des pierres sur un clic droit + bouton destroy shards over limit
+-- Association de la monture au bouton, et de la cr�ation des pierres sur un clic droit + bouton destroy shards over limit
 function Necrosis:StoneAttribute(Steed)
 	
 	if InCombatLockdown() then
@@ -439,25 +447,20 @@ function Necrosis:StoneAttribute(Steed)
 	if Necrosis.IsSpellKnown("firestone") then
 		local f = _G[Necrosis.Warlock_Buttons.fire_stone.f]
 		if f then
-			f:SetAttribute("type2", "spell")
-			f:SetAttribute("spell2", Necrosis.GetSpellCastName("firestone")) 
+			-- type2 removed: conflicts with type= in FirestoneUpdateAttribute
 		end
 	end
 	if Necrosis.IsSpellKnown("spellstone") then
 		local f = _G[Necrosis.Warlock_Buttons.spell_stone.f]
 		if f then
-			f:SetAttribute("type2", "spell")
-			f:SetAttribute("spell2", Necrosis.GetSpellCastName("spellstone")) 
+			-- type2 removed: conflicts with type= in SpellstoneUpdateAttribute
 		end
 	end
 	if Necrosis.IsSpellKnown("healthstone") then
 		local f = _G[Necrosis.Warlock_Buttons.health_stone.f]
 		if f then
-			f:SetAttribute("type2", "spell")
-			f:SetAttribute("spell2", Necrosis.GetSpellCastName("healthstone"))
-			f:SetAttribute("shift-type1", "spell")
-			f:SetAttribute("shift-spell1", Necrosis.GetSpellCastName("Ritual_of_Souls"))
-
+			-- type2 removed: conflicts with type= in HealthstoneUpdateAttribute
+			-- shift-type1 removed: conflicts with type= in HealthstoneUpdateAttribute
 		end
 	end
 	
@@ -684,7 +687,7 @@ function Necrosis:NoCombatAttribute(SoulstoneMode, FirestoneMode, SpellstoneMode
 	f = _G[f]
 
 	-- Si on veut que le menu s'engage automatiquement en combat
-	-- Et se désengage à la fin
+	-- Et se d�sengage � la fin
 	if NecrosisConfig.AutomaticMenu and not NecrosisConfig.BlockedMenu then
 		if f then
 			if f:GetAttribute("lastClick") == "RightButton" then
@@ -748,14 +751,14 @@ function Necrosis:NoCombatAttribute(SoulstoneMode, FirestoneMode, SpellstoneMode
 	end
 
 	-- Si on connait l'emplacement de la pierre de sort,
-	-- Alors cliquer sur le bouton de pierre de sort l'équipe.
+	-- Alors cliquer sur le bouton de pierre de sort l'�quipe.
 	local f = _G[Necrosis.Warlock_Buttons.spell_stone.f]
 	if NecrosisConfig.ItemSwitchCombat[1] and f then
 		f:SetAttribute("type1", "macro")
 		f:SetAttribute("macrotext1", "/cast "..NecrosisConfig.ItemSwitchCombat[1].."\n/use 16")
 	end
 	-- Si on connait l'emplacement de la pierre de feu,
-	-- Alors cliquer sur le bouton de pierre de feu l'équipe.
+	-- Alors cliquer sur le bouton de pierre de feu l'�quipe.
 	local f = _G[Necrosis.Warlock_Buttons.fire_stone.f]
 	if NecrosisConfig.ItemSwitchCombat[2] and f then
 		f:SetAttribute("type1", "macro")
@@ -817,7 +820,7 @@ function Necrosis:InCombatAttribute(Pet, Buff, Curse)
 	end
 
 	-- Si on connait le nom de la pierre de feu,
-	-- Alors le clic sur le bouton équipera la pierre
+	-- Alors le clic sur le bouton �quipera la pierre
 	local f = Necrosis.Warlock_Buttons.fire_stone.f
 	f = _G[f]
 	if NecrosisConfig.ItemSwitchCombat[2] and f then
@@ -836,7 +839,7 @@ function Necrosis:InCombatAttribute(Pet, Buff, Curse)
 --[[
 	-- If we know the name of the soul stone,
 	-- Then the left click on the button will use the stone
-	-- Si on connait le nom de la pierre d'âme,
+	-- Si on connait le nom de la pierre d'�me,
 	-- Alors le clic gauche sur le bouton utilisera la pierre
 	local f = Necrosis.Warlock_Buttons.soul_stone.f
 	f = _G[f]
@@ -853,7 +856,7 @@ end
 ------------------------------------------------------------------------------------------------------
 
 function Necrosis:SoulstoneUpdateAttribute(nostone)
-	-- Si le démoniste est en combat, on ne fait rien :)
+	-- Si le d�moniste est en combat, on ne fait rien :)
 	if InCombatLockdown() then
 		return
 	end
@@ -874,7 +877,7 @@ function Necrosis:HealthstoneUpdateAttribute(nostone)
 	local f = Necrosis.Warlock_Buttons.health_stone.f
 	f = _G[f]
 
-	-- Si le démoniste est en combat, on ne fait rien :)
+	-- Si le d�moniste est en combat, on ne fait rien :)
 	if InCombatLockdown() or not f then
 		return
 	end
@@ -886,20 +889,19 @@ function Necrosis:HealthstoneUpdateAttribute(nostone)
 		)
 	end
 
-	-- Left click: Use item if exists, otherwise cast spell to create
+	-- Si le d�moniste n'a pas de pierre dans son inventaire,
+	-- Un clic gauche cr�e la pierre
 	if nostone then
-		f:SetAttribute("type1", "spell") -- 52
-		f:SetAttribute("spell1", Necrosis.GetSpellCastName("healthstone"))
-	else
-		if NecrosisConfig.ItemSwitchCombat[3] then
-			f:SetAttribute("type1", "macro")
-			f:SetAttribute("macrotext1", "/stopcasting \n/use "..NecrosisConfig.ItemSwitchCombat[3])
-		end
+		f:SetAttribute("type", "spell")
+		f:SetAttribute("spell", GetStoneSpellName("healthstone"))
+		return
 	end
 
-	-- Right click to create new healthstone
-	f:SetAttribute("type2", "spell")
-	f:SetAttribute("spell2", Necrosis.GetSpellCastName("healthstone"))
+	-- Has a stone: can use it
+	if NecrosisConfig.ItemSwitchCombat[3] then
+		f:SetAttribute("type", "item")
+		f:SetAttribute("item", NecrosisConfig.ItemSwitchCombat[3])
+	end
 end
 
 function Necrosis:SpellstoneUpdateAttribute(nostone)
@@ -907,7 +909,7 @@ function Necrosis:SpellstoneUpdateAttribute(nostone)
 	local f = Necrosis.Warlock_Buttons.spell_stone.f
 	f = _G[f]
 
-	-- Si le démoniste est en combat, on ne fait rien :)
+	-- Si le d�moniste est en combat, on ne fait rien :)
 	if InCombatLockdown() or not f then
 		return
 	end
@@ -919,22 +921,19 @@ function Necrosis:SpellstoneUpdateAttribute(nostone)
 		)
 	end
 
-	-- Left click: Use item if exists, otherwise cast spell to create
+	-- Si le d�moniste n'a pas de pierre dans son inventaire,
+	-- Un clic gauche cr�e la pierre
 	if nostone then
-		f:SetAttribute("type1", "spell") -- 53
-		f:SetAttribute("spell1", Necrosis.GetSpellCastName("spellstone"))
-	else
-		if NecrosisConfig.ItemSwitchCombat[1] then
---	f:SetAttribute("type1", "item")
---	f:SetAttribute("item1", NecrosisConfig.ItemSwitchCombat[1])
-		f:SetAttribute("type1", "macro")
-		f:SetAttribute("macrotext1", "/cast "..NecrosisConfig.ItemSwitchCombat[1].."\n/use 16")
-		end
+		f:SetAttribute("type", "spell")
+		f:SetAttribute("spell", GetStoneSpellName("spellstone"))
+		return
 	end
 
-	-- Right click to create new spellstone
-	f:SetAttribute("type2", "spell")
-	f:SetAttribute("spell2", Necrosis.GetSpellCastName("spellstone"))
+	-- Has a stone: can use it
+	if NecrosisConfig.ItemSwitchCombat[1] then
+		f:SetAttribute("type", "item")
+		f:SetAttribute("item", NecrosisConfig.ItemSwitchCombat[1])
+	end
 
 end
 
@@ -942,7 +941,7 @@ function Necrosis:FirestoneUpdateAttribute(nostone)
 	local f = Necrosis.Warlock_Buttons.fire_stone.f
 	f = _G[f]
 
-	-- Si le démoniste est en combat, on ne fait rien :)
+	-- Si le d�moniste est en combat, on ne fait rien :)
 	if InCombatLockdown() or not f then
 		return
 	end
@@ -954,20 +953,19 @@ function Necrosis:FirestoneUpdateAttribute(nostone)
 		)
 	end
 
-	-- Left click: Use item if exists, otherwise cast spell to create
+	-- Si le d�moniste n'a pas de pierre dans son inventaire,
+	-- Un clic cr�e la pierre
 	if nostone then
-		f:SetAttribute("type1", "spell") -- 54
-		f:SetAttribute("spell1", Necrosis.GetSpellCastName("firestone"))
-	else
-		f:SetAttribute("type1", "item")
-		f:SetAttribute("item1", NecrosisConfig.ItemSwitchCombat[2])
-	--	f:SetAttribute("type1", "macro")
-	--	f:SetAttribute("macrotext*", "/cast "..NecrosisConfig.ItemSwitchCombat[2].."\n/use 16")
+		f:SetAttribute("type", "spell")
+		f:SetAttribute("spell", GetStoneSpellName("firestone"))
+		return
 	end
 
-	-- Right click to create new firestone
-	f:SetAttribute("type2", "spell")
-	f:SetAttribute("spell2", Necrosis.GetSpellCastName("firestone"))
+	-- Has a stone: can use it
+	f:SetAttribute("type", "item")
+	f:SetAttribute("item", NecrosisConfig.ItemSwitchCombat[2])
+--	f:SetAttribute("type1", "macro")
+--	f:SetAttribute("macrotext*", "/cast "..NecrosisConfig.ItemSwitchCombat[2].."\n/use 16")
 end
 
 --[[ https://wowwiki.fandom.com/wiki/SecureActionButtonTemplate
