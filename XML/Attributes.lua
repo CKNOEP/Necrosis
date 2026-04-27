@@ -890,7 +890,10 @@ function Necrosis:HealthstoneUpdateAttribute(nostone)
 	-- Un clic gauche crée la pierre
 	if nostone then
 		f:SetAttribute("type1", "spell") -- 52
-		f:SetAttribute("spell1", Necrosis.GetSpellCastName("healthstone")) 
+		f:SetAttribute("spell1", Necrosis.GetSpellCastName("healthstone"))
+		-- Right click to create new healthstone
+		f:SetAttribute("type2", "spell")
+		f:SetAttribute("spell2", Necrosis.GetSpellCastName("healthstone"))
 		return
 	end
 
@@ -922,6 +925,9 @@ function Necrosis:SpellstoneUpdateAttribute(nostone)
 	if nostone then
 		f:SetAttribute("type1", "spell") -- 53
 		f:SetAttribute("spell1", Necrosis.GetSpellCastName("spellstone"))
+		-- Right click to create new spellstone
+		f:SetAttribute("type2", "spell")
+		f:SetAttribute("spell2", Necrosis.GetSpellCastName("spellstone"))
 		return
 	end
 
@@ -955,6 +961,9 @@ function Necrosis:FirestoneUpdateAttribute(nostone)
 	if nostone then
 		f:SetAttribute("type1", "spell") -- 54
 		f:SetAttribute("spell1", Necrosis.GetSpellCastName("firestone"))
+		-- Right click to create new firestone
+		f:SetAttribute("type2", "spell")
+		f:SetAttribute("spell2", Necrosis.GetSpellCastName("firestone"))
 		return
 	end
 
