@@ -1136,24 +1136,25 @@ end
 
 function Necrosis.GetSpellCastName(usage)
 
-	if Necrosis.Warlock_Spell_Use[usage] --
-	then
+	if Necrosis.Warlock_Spell_Use[usage] then
+		local spellID = Necrosis.Warlock_Spell_Use[usage]
+		local fullName = Necrosis.Warlock_Spells[spellID].CastName
 
-		if usage == "soulstone" then
-		--print("SS",Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].CastName)
-		end
-
-		local fullName = Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].CastName
+		-- Debug output
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG GetSpellCastName] usage='"..tostring(usage).."' spellID="..tostring(spellID).." fullName='"..tostring(fullName).."'")
 
 		-- Remove rank from spell name: "Spell Name(Rank X)" -> "Spell Name"
 		-- This is needed for SecureActionButton macros to work
 		if fullName then
 			local nameOnly = fullName:match("^(.-)%(") or fullName
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG GetSpellCastName] returning nameOnly='"..tostring(nameOnly).."'")
 			return nameOnly
 		end
 
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG GetSpellCastName] returning fullName='"..tostring(fullName).."'")
 		return fullName
 	else
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DEBUG GetSpellCastName] usage='"..tostring(usage).."' NOT FOUND in Warlock_Spell_Use")
 		return ""
 	end
 end
@@ -1443,6 +1444,7 @@ function Necrosis:SpellSetup(reason)
 		end
 		Necrosis.Warlock_Spells[id].Name = spell_name
 		Necrosis.Warlock_Spells[id].ID = id -- redundant to the 'id' but allows the spell to be self contained if returned as a table
+		Necrosis.Warlock_Spells[id].CastName = spell_name -- Initialize CastName early so it's available even for unknown spells
 
 		-- Add the name by usage even if the warlock does not know the spell. 
 		-- Use the 'lowest' usage. Will be updated to highest if known by warlock
