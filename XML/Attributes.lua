@@ -886,25 +886,24 @@ function Necrosis:HealthstoneUpdateAttribute(nostone)
 		)
 	end
 
-	-- Si le démoniste n'a pas de pierre dans son inventaire,
-	-- Un clic gauche crée la pierre
+	-- Left click: Use item if exists, otherwise cast spell to create
 	if nostone then
 		f:SetAttribute("type1", "spell") -- 52
 		f:SetAttribute("spell1", Necrosis.GetSpellCastName("healthstone"))
-		-- Right click to create new healthstone
-		f:SetAttribute("type2", "spell")
-		f:SetAttribute("spell2", Necrosis.GetSpellCastName("healthstone"))
-		return
+	else
+		if NecrosisConfig.ItemSwitchCombat[3] then
+			f:SetAttribute("type1", "macro")
+			f:SetAttribute("macrotext1", "/stopcasting \n/use "..NecrosisConfig.ItemSwitchCombat[3])
+		end
 	end
 
-	if NecrosisConfig.ItemSwitchCombat[3] then
-		f:SetAttribute("type1", "macro")
-		f:SetAttribute("macrotext1", "/stopcasting \n/use "..NecrosisConfig.ItemSwitchCombat[3])
-	end
+	-- Right click to create new healthstone
+	f:SetAttribute("type2", "spell")
+	f:SetAttribute("spell2", Necrosis.GetSpellCastName("healthstone"))
 end
 
 function Necrosis:SpellstoneUpdateAttribute(nostone)
-	
+
 	local f = Necrosis.Warlock_Buttons.spell_stone.f
 	f = _G[f]
 
@@ -920,23 +919,22 @@ function Necrosis:SpellstoneUpdateAttribute(nostone)
 		)
 	end
 
-	-- Si le démoniste n'a pas de pierre dans son inventaire,
-	-- Un clic gauche crée la pierre
+	-- Left click: Use item if exists, otherwise cast spell to create
 	if nostone then
 		f:SetAttribute("type1", "spell") -- 53
 		f:SetAttribute("spell1", Necrosis.GetSpellCastName("spellstone"))
-		-- Right click to create new spellstone
-		f:SetAttribute("type2", "spell")
-		f:SetAttribute("spell2", Necrosis.GetSpellCastName("spellstone"))
-		return
-	end
-
-	if NecrosisConfig.ItemSwitchCombat[1] then
+	else
+		if NecrosisConfig.ItemSwitchCombat[1] then
 --	f:SetAttribute("type1", "item")
 --	f:SetAttribute("item1", NecrosisConfig.ItemSwitchCombat[1])
-	f:SetAttribute("type1", "macro")
-	f:SetAttribute("macrotext1", "/cast "..NecrosisConfig.ItemSwitchCombat[1].."\n/use 16")
+		f:SetAttribute("type1", "macro")
+		f:SetAttribute("macrotext1", "/cast "..NecrosisConfig.ItemSwitchCombat[1].."\n/use 16")
+		end
 	end
+
+	-- Right click to create new spellstone
+	f:SetAttribute("type2", "spell")
+	f:SetAttribute("spell2", Necrosis.GetSpellCastName("spellstone"))
 
 end
 
@@ -956,21 +954,20 @@ function Necrosis:FirestoneUpdateAttribute(nostone)
 		)
 	end
 
-	-- Si le démoniste n'a pas de pierre dans son inventaire,
-	-- Un clic gauche crée la pierre
+	-- Left click: Use item if exists, otherwise cast spell to create
 	if nostone then
 		f:SetAttribute("type1", "spell") -- 54
 		f:SetAttribute("spell1", Necrosis.GetSpellCastName("firestone"))
-		-- Right click to create new firestone
-		f:SetAttribute("type2", "spell")
-		f:SetAttribute("spell2", Necrosis.GetSpellCastName("firestone"))
-		return
+	else
+		f:SetAttribute("type1", "item")
+		f:SetAttribute("item1", NecrosisConfig.ItemSwitchCombat[2])
+	--	f:SetAttribute("type1", "macro")
+	--	f:SetAttribute("macrotext*", "/cast "..NecrosisConfig.ItemSwitchCombat[2].."\n/use 16")
 	end
 
-	f:SetAttribute("type1", "item")
-	f:SetAttribute("item1", NecrosisConfig.ItemSwitchCombat[2])
---	f:SetAttribute("type1", "macro")
---	f:SetAttribute("macrotext*", "/cast "..NecrosisConfig.ItemSwitchCombat[2].."\n/use 16")
+	-- Right click to create new firestone
+	f:SetAttribute("type2", "spell")
+	f:SetAttribute("spell2", Necrosis.GetSpellCastName("firestone"))
 end
 
 --[[ https://wowwiki.fandom.com/wiki/SecureActionButtonTemplate
