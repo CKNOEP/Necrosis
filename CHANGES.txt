@@ -2,12 +2,19 @@
 NECROSIS CHANGELOG
 ================================================================================
 
-VERSION 8.8.1 (2026-04-26)
+VERSION 8.8.1 (2026-04-27)
 ================================================================================
 BUG FIXES
 ---------
+- Fix stone buttons (Healthstone, Spellstone, Firestone) not creating stones in Classic Era
 - Fix ADDON_ACTION_BLOCKED error when targeting creatures
   * Removed protected EnableMouse() calls on secure creature alert buttons
+
+TECHNICAL CHANGES
+-----------------
+- Refactor stone button attributes to use global type/spell attributes in Classic Era
+- Add GetStoneSpellName() helper function to retrieve correct spell names from Warlock_Spell_Use
+- Remove conflicting type2 attributes from stone buttons to prevent attribute conflicts
   * SetAlpha() already controls button visibility and clickability
 
 VERSION 8.8.0 (2026-04-26)
