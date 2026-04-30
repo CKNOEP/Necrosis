@@ -76,7 +76,7 @@ Timers\OtherTimers.lua
 
 
 
-XML\Attributes.lua
+XML\Attributes-Anniversary.lua
 
 XML\Options-Messages.lua
 XML\Options-SummonQueue.lua
