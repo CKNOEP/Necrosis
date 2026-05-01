@@ -204,7 +204,7 @@ end)
 -- Simple version storage (from TOC file)
 Necrosis.Data = {
 	AppName = "Necrosis",
-	Version = "8.8.1",  -- Update manually when releasing
+	Version = "8.8.2",  -- Update manually when releasing
 	Enabled = false,
 }
 

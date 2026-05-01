@@ -2,6 +2,14 @@
 NECROSIS CHANGELOG
 ================================================================================
 
+VERSION 8.8.2 (2026-05-01)
+================================================================================
+BUG FIXES
+---------
+- Fix Attributes.lua compatibility for Anniversary (TBC alternative)
+  * Separate Attributes.lua implementation for TBC variants
+  * Ensures proper stone button behavior across all WoW versions
+
 VERSION 8.8.1 (2026-04-27)
 ================================================================================
 BUG FIXES
