@@ -1613,18 +1613,26 @@ function Necrosis:OnEvent(self, event,...)
 			local banishUsable, _ = IsUsableSpell(Necrosis.GetSpellName("banish"))
 			local targetType = UnitCreatureType("target")
 
+			local isElemental = Necrosis.Unit:IsCreatureType(targetType, Necrosis.Unit.ElementalVariants)
+
 			-- Only show enslave if spell is usable AND target is a demon (handles all variants/locales)
 			local canEnslave = enslaveUsable and Necrosis.Unit:IsCreatureType(targetType, Necrosis.Unit.DemonVariants)
 			-- Only show banish if spell is usable AND target is an elemental (handles all variants/locales)
-			local canBanish = banishUsable and Necrosis.Unit:IsCreatureType(targetType, Necrosis.Unit.ElementalVariants)
+			local canBanish = banishUsable and isElemental
 
 			-- Show enslave button if can be enslaved
 			if canEnslave then
 				if NecrosisCreatureAlertButton_demon then
+					if not InCombatLockdown() then
+						NecrosisCreatureAlertButton_demon:Show()
+					end
 					NecrosisCreatureAlertButton_demon:SetAlpha(1)
 					NecrosisCreatureAlertButton_demon:SetMovable(true)
 				end
 			else
+				if NecrosisCreatureAlertButton_demon and not InCombatLockdown() then
+					NecrosisCreatureAlertButton_demon:Hide()
+				end
 				if NecrosisCreatureAlertButton_demon then
 					NecrosisCreatureAlertButton_demon:SetAlpha(0)
 				end
@@ -1633,10 +1641,16 @@ function Necrosis:OnEvent(self, event,...)
 			-- Show banish button if can be banished
 			if canBanish then
 				if NecrosisCreatureAlertButton_elemental then
+					if not InCombatLockdown() then
+						NecrosisCreatureAlertButton_elemental:Show()
+					end
 					NecrosisCreatureAlertButton_elemental:SetAlpha(1)
 					NecrosisCreatureAlertButton_elemental:SetMovable(true)
 				end
 			else
+				if NecrosisCreatureAlertButton_elemental and not InCombatLockdown() then
+					NecrosisCreatureAlertButton_elemental:Hide()
+				end
 				if NecrosisCreatureAlertButton_elemental then
 					NecrosisCreatureAlertButton_elemental:SetAlpha(0)
 				end
@@ -1659,13 +1673,58 @@ function Necrosis:OnEvent(self, event,...)
 	elseif (event == "PLAYER_REGEN_ENABLED") then
 		Local.PlayerInCombat = false
 		Local.TimerManagement = Necrosis:RetraitTimerCombat(Local.TimerManagement, "PLAYER_REGEN_ENABLED")
-		
-		
-		
+
+
+
 		--Necrosis:Msg("regen enabled", "USER")
 		-- We are redefining the attributes of spell buttons in a situational way || On redéfinit les attributs des boutons de sorts de manière situationnelle
 		Necrosis:NoCombatAttribute(Local.Stone.Soul.Mode, Local.Stone.Fire.Mode, Local.Stone.Spell.Mode, Local.Menu.Pet, Local.Menu.Buff, Local.Menu.Curse)
 		UpdateIcons()
+
+		-- Re-trigger creature button visibility after leaving combat || Re-déclencher la visibilité des boutons de créature après le combat
+		if NecrosisConfig.CreatureAlert and UnitCanAttack("player", "target") and not UnitIsDead("target") then
+			local enslaveUsable, _ = IsUsableSpell(Necrosis.GetSpellName("enslave"))
+			local banishUsable, _ = IsUsableSpell(Necrosis.GetSpellName("banish"))
+			local targetType = UnitCreatureType("target")
+			local isElemental = Necrosis.Unit:IsCreatureType(targetType, Necrosis.Unit.ElementalVariants)
+			local canEnslave = enslaveUsable and Necrosis.Unit:IsCreatureType(targetType, Necrosis.Unit.DemonVariants)
+			local canBanish = banishUsable and isElemental
+
+			if canEnslave then
+				if NecrosisCreatureAlertButton_demon then
+					NecrosisCreatureAlertButton_demon:Show()
+					NecrosisCreatureAlertButton_demon:SetAlpha(1)
+					NecrosisCreatureAlertButton_demon:SetMovable(true)
+				end
+			else
+				if NecrosisCreatureAlertButton_demon then
+					NecrosisCreatureAlertButton_demon:Hide()
+					NecrosisCreatureAlertButton_demon:SetAlpha(0)
+				end
+			end
+
+			if canBanish then
+				if NecrosisCreatureAlertButton_elemental then
+					NecrosisCreatureAlertButton_elemental:Show()
+					NecrosisCreatureAlertButton_elemental:SetAlpha(1)
+					NecrosisCreatureAlertButton_elemental:SetMovable(true)
+				end
+			else
+				if NecrosisCreatureAlertButton_elemental then
+					NecrosisCreatureAlertButton_elemental:Hide()
+					NecrosisCreatureAlertButton_elemental:SetAlpha(0)
+				end
+			end
+		else
+			if NecrosisCreatureAlertButton_demon then
+				NecrosisCreatureAlertButton_demon:Hide()
+				NecrosisCreatureAlertButton_demon:SetAlpha(0)
+			end
+			if NecrosisCreatureAlertButton_elemental then
+				NecrosisCreatureAlertButton_elemental:Hide()
+				NecrosisCreatureAlertButton_elemental:SetAlpha(0)
+			end
+		end
 
 	-- When the warlock changes demon || Quand le démoniste change de démon
 	elseif (event == "UNIT_PET" and arg1 == "player") then
