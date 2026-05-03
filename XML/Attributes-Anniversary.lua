@@ -7,6 +7,9 @@
 local _G = getfenv(0)
 local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
 
+-- Test: verify this file is loaded
+print("[Attributes-Anniversary.lua] FILE LOADED")
+
 local function GetStoneSpellName(usage)
 	if Necrosis.Warlock_Spell_Use and Necrosis.Warlock_Spell_Use[usage] then
 		local spellID = Necrosis.Warlock_Spell_Use[usage]
@@ -23,28 +26,61 @@ local function SetSSAttribs(nostone, reason)
 	local f = Necrosis.Warlock_Buttons.soul_stone.f
 	f = _G[f]
 	if not f then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SetSSAttribs] ERROR: Button frame not found!")
 		return
 	end
 
-	if Necrosis.IsSpellKnown("soulstone") then
-		local str = ""
-		-- R click to create; will cause an error if one is in bags
-		f:SetAttribute("type2", "spell")
-		str = Necrosis.GetSpellCastName("soulstone")
-		f:SetAttribute("spell2", str)
-		-- L click or Middle click to use; will not cause error if a stone not in bag
-		f:SetAttribute("type1", "item")
-		f:SetAttribute("type3", "item")
-		f:SetAttribute("item1", NecrosisConfig.ItemSwitchCombat[4])
-		f:SetAttribute("item3", NecrosisConfig.ItemSwitchCombat[4])
+	-- Always configure soulstone button, even if spell not learned yet
+	local str = Necrosis.GetSpellCastName("soulstone")
 
-		-- if the 'Ritual of Summoning' spell is known, then associate it to the soulstone icon as shift-click.
-		if Necrosis.IsSpellKnown("summoning") then
-			f:SetAttribute("shift-type*", "spell")
-			f:SetAttribute("shift-spell*",
-				Necrosis.GetSpellCastName("summoning"))
-		end
+	-- Test: change button color to verify function is called
+	if f.SetHighlightTexture then
+		f:SetHighlightTexture("Interface\\AddOns\\Necrosis\\UI\\SoulstoneButton-04")
 	end
+
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SetSSAttribs] Called for "..reason..". Spell: "..tostring(str))
+
+	-- Configure button as spell type to display cooldown
+	f:SetAttribute("type", "spell")
+	f:SetAttribute("spell", str)
+
+	-- Left click: Use item if exists, otherwise cast spell to create
+	if NecrosisConfig.ItemSwitchCombat[4] then
+		f:SetAttribute("type1", "item")
+		f:SetAttribute("item1", NecrosisConfig.ItemSwitchCombat[4])
+	else
+		f:SetAttribute("type1", "spell")
+		f:SetAttribute("spell1", str)
+	end
+
+	-- Right click to create new soulstone
+	f:SetAttribute("type2", "spell")
+	f:SetAttribute("spell2", str)
+
+	-- Middle click to use
+	f:SetAttribute("type3", "macro")
+	if NecrosisConfig.ItemSwitchCombat[4] then
+		f:SetAttribute("macrotext3", "/stopcasting 
+/use "..NecrosisConfig.ItemSwitchCombat[4])
+		f:SetAttribute("item3", NecrosisConfig.ItemSwitchCombat[4])
+	else
+		f:SetAttribute("macrotext3", "/stopcasting 
+/cast "..str)
+	end
+
+	-- if the 'Ritual of Summoning' spell is known, then associate it to the soulstone icon as shift-click.
+	if Necrosis.IsSpellKnown("summoning") then
+		f:SetAttribute("shift-type*", "spell")
+		f:SetAttribute("shift-spell*",
+			Necrosis.GetSpellCastName("summoning"))
+	end
+
+	-- Debug: Show all attributes after setting them
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SetSSAttribs] Button: "..tostring(f:GetName()))
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SetSSAttribs] type="..tostring(f:GetAttribute("type")).." spell="..tostring(f:GetAttribute("spell")))
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SetSSAttribs] type1="..tostring(f:GetAttribute("type1")).." spell1="..tostring(f:GetAttribute("spell1")).." item1="..tostring(f:GetAttribute("item1")))
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SetSSAttribs] type2="..tostring(f:GetAttribute("type2")).." spell2="..tostring(f:GetAttribute("spell2")))
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SetSSAttribs] type3="..tostring(f:GetAttribute("type3")).." macrotext3="..tostring(f:GetAttribute("macrotext3")))
 
 end
 -- On crée les menus sécurisés pour les différents sorts Buff / Démon / Malédictions
@@ -812,31 +848,36 @@ end
 ------------------------------------------------------------------------------------------------------
 
 function Necrosis:SoulstoneUpdateAttribute(nostone)
+	local buttonName = Necrosis.Warlock_Buttons.soul_stone.f
+	local f = _G[buttonName]
+
 	-- Si le démoniste est en combat, on ne fait rien :)
 	if InCombatLockdown() then
 		return
 	end
 
-	if Necrosis.Debug.buttons then
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("SoulstoneUpdateAttribute"
-		.." a'"..(tostring(nostone) or "nyl")..'"'
-		.." s'"..(tostring(NecrosisConfig.ItemSwitchCombat[4]))..'"'
-		.." f'"..(tostring(Necrosis.Warlock_Buttons.soul_stone.f))..'"'
-		.." '"..(str)..'"'
-		)
+	-- Check if button exists before trying to configure it
+	if not f then
+		return
 	end
+
+	-- Test: Change button width to verify function is executed
+	f:SetWidth(50)
 
 	SetSSAttribs(nostone, "Soul stone found or used")
 end
 
 function Necrosis:HealthstoneUpdateAttribute(nostone)
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[HealthstoneUpdateAttribute] Called")
 	local f = Necrosis.Warlock_Buttons.health_stone.f
 	f = _G[f]
 
 	-- Si le démoniste est en combat, on ne fait rien :)
 	if InCombatLockdown() or not f then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[HealthstoneUpdateAttribute] In combat or button missing, aborting")
 		return
 	end
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[HealthstoneUpdateAttribute] Proceeding with attribute setup")
 
 	if Necrosis.Debug.buttons then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("HealthstoneUpdateAttribute"
@@ -865,14 +906,17 @@ function Necrosis:HealthstoneUpdateAttribute(nostone)
 end
 
 function Necrosis:SpellstoneUpdateAttribute(nostone)
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SpellstoneUpdateAttribute] Called")
 
 	local f = Necrosis.Warlock_Buttons.spell_stone.f
 	f = _G[f]
 
 	-- Si le démoniste est en combat, on ne fait rien :)
 	if InCombatLockdown() or not f then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SpellstoneUpdateAttribute] In combat or button missing, aborting")
 		return
 	end
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[SpellstoneUpdateAttribute] Proceeding with attribute setup")
  --Necrosis.Debug.buttons = true
 	if Necrosis.Debug.buttons then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("SpellstoneUpdateAttribute"
@@ -898,13 +942,16 @@ function Necrosis:SpellstoneUpdateAttribute(nostone)
 end
 
 function Necrosis:FirestoneUpdateAttribute(nostone)
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[FirestoneUpdateAttribute] Called")
 	local f = Necrosis.Warlock_Buttons.fire_stone.f
 	f = _G[f]
 
 	-- Si le démoniste est en combat, on ne fait rien :)
 	if InCombatLockdown() or not f then
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[FirestoneUpdateAttribute] In combat or button missing, aborting")
 		return
 	end
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[FirestoneUpdateAttribute] Proceeding with attribute setup")
 
 	if Necrosis.Debug.buttons then
 		_G["DEFAULT_CHAT_FRAME"]:AddMessage("FirestoneUpdateAttribute"

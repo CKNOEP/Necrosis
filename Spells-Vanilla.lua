@@ -802,10 +802,10 @@ It seemed better to collect the various lists in one place for ease of change.
 --]=]
 Necrosis.Warlock_Lists = {
 	["on_sphere"] = {
-		[1] = {f_ptr = "fire_stone", high_of = "firestone",},
-		[2] = {f_ptr = "spell_stone", high_of = "spellstone",},
-		[3] = {f_ptr = "health_stone", high_of = "healthstone",},
-		[4] = {f_ptr = "soul_stone", high_of = "soulstone",},
+		[1] = {f_ptr = "fire_stone", high_of = "firestone", item = true},
+		[2] = {f_ptr = "spell_stone", high_of = "spellstone", item = true},
+		[3] = {f_ptr = "health_stone", high_of = "healthstone", item = true},
+		[4] = {f_ptr = "soul_stone", high_of = "soulstone", item = true},
 		[5] = {f_ptr = "buffs",	menu = "buffs", },
 		[6] = {f_ptr = "mounts", high_of = "mounts",},
 		[7] = {f_ptr = "pets", menu = "pets", },

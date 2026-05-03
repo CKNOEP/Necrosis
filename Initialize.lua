@@ -377,14 +377,8 @@ C_Timer.After(1, function()
 		end
 	end
 
-	-- Initialize stone button attributes UNCONDITIONALLY so buttons are always functional
-	-- These will be updated later when items are found or spells are cast
-	if Necrosis and Necrosis.HealthstoneUpdateAttribute then
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[Initialize] Initializing stone button attributes")
-		Necrosis:HealthstoneUpdateAttribute() -- Initialize with no stone
-		Necrosis:SpellstoneUpdateAttribute() -- Initialize with no stone
-		Necrosis:FirestoneUpdateAttribute() -- Initialize with no stone
-	end
+	-- Stone button attributes are now initialized in StartInit() after buttons are created
+	-- This avoids timing issues with CreateStoneButtons()
 end)
 
 -- Create separate frame for event handling (NOT the button itself!)

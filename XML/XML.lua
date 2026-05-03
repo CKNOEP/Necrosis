@@ -759,6 +759,57 @@ end
 
 
 ------------------------------------------------------------------------------------------------------
+function Necrosis:CreateStoneButtons()
+	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[CreateStoneButtons] Called!")
+	-- Create all stone buttons if they don't exist
+	local stones = {
+		{name = "Firestone", key = "fire_stone"},
+		{name = "Spellstone", key = "spell_stone"},
+		{name = "Healthstone", key = "health_stone"},
+		{name = "Soulstone", key = "soul_stone"}
+	}
+	
+	for _, stone_info in ipairs(stones) do
+		local button_info = Necrosis.Warlock_Buttons[stone_info.key]
+		local frame_name = button_info.f
+		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[CreateStoneButtons] Processing "..stone_info.name.." button: "..frame_name)
+		
+		if not _G[frame_name] then
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[CreateStoneButtons] Creating "..stone_info.name.." button")
+			local frame = CreateFrame("Button", frame_name, UIParent, "SecureUnitButtonTemplate")
+			
+			frame:SetMovable(true)
+			frame:EnableMouse(true)
+			frame:SetWidth(34)
+			frame:SetHeight(34)
+			frame:SetNormalTexture(button_info.norm)
+			frame:SetHighlightTexture(button_info.high)
+			frame:RegisterForDrag("LeftButton")
+			frame:RegisterForClicks("AnyUp")
+
+			-- Keep buttons hidden - ButtonSetup() will show them based on config
+			frame:Hide()
+			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[CreateStoneButtons] Created "..stone_info.name.." button (hidden for now)")
+			
+			frame:SetScript("OnEnter", function(self) Necrosis:BuildButtonTooltip(self) end)
+			frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
+			frame:SetScript("OnMouseUp", function(self) Necrosis:OnDragStop(self) end)
+			frame:SetScript("OnDragStart", function(self)
+				if not NecrosisConfig.NecrosisLockServ then
+					Necrosis:OnDragStart(self)
+				end
+			end)
+			frame:SetScript("OnDragStop", function(self) Necrosis:OnDragStop(self) end)
+			
+			-- Create FontString for timer display
+			local FontString = frame:CreateFontString(frame_name.."Text", nil, "GameFontNormal")
+			frame.font_string = FontString
+			FontString:SetText("")
+			FontString:SetPoint("CENTER")
+		end
+	end
+end
+
 -- CREATE BUTTONS ON DEMAND || CREATION DES BOUTONS A LA DEMANDE
 ------------------------------------------------------------------------------------------------------
 function Necrosis:CreateSphereButtons(button_info)
