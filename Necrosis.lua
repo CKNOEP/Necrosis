@@ -2501,9 +2501,10 @@ function Necrosis:BuildButtonTooltip(button)
 	elseif (Type == "Doom")			then --AddCastAndCost("doom")
 	elseif (Type == "Corruption")	then --AddCastAndCost("corruption")
 	elseif (Type == "Reckless")		then --AddCastAndCost("recklessness")
-	elseif (Type == "TP")			then AddCastAndCost("summoning"); AddShard()
-	elseif (Type == "SoulLink")		then AddCastAndCost("link")
-	elseif (Type == "ShadowProtection") then AddCastAndCost("ward")
+	elseif (Type == "TP")			then --AddCastAndCost("summoning");
+		AddShard()
+	elseif (Type == "SoulLink")		then --AddCastAndCost("link")
+	elseif (Type == "ShadowProtection") then --AddCastAndCost("ward")
 		if start2 > 0 and duration2 > 0 then
 			local seconde = duration2 - ( GetTime() - start2)
 			local affiche
