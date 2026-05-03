@@ -3137,8 +3137,6 @@ dist = dist * (NecrosisConfig.NecrosisButtonRadius or 1.0)
 		
 			if not f then
 				f = Necrosis:CreateSphereButtons(Necrosis.Warlock_Buttons[v.f_ptr])
-
-				Necrosis:StoneAttribute(Local.Summon.SteedAvailable)
 			end
 					
 			f:ClearAllPoints()
