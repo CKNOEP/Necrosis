@@ -60,12 +60,10 @@ local function SetSSAttribs(nostone, reason)
 	-- Middle click to use
 	f:SetAttribute("type3", "macro")
 	if NecrosisConfig.ItemSwitchCombat[4] then
-		f:SetAttribute("macrotext3", "/stopcasting 
-/use "..NecrosisConfig.ItemSwitchCombat[4])
+		f:SetAttribute("macrotext3", "/stopcasting \n/use "..NecrosisConfig.ItemSwitchCombat[4])
 		f:SetAttribute("item3", NecrosisConfig.ItemSwitchCombat[4])
 	else
-		f:SetAttribute("macrotext3", "/stopcasting 
-/cast "..str)
+		f:SetAttribute("macrotext3", "/stopcasting \n/cast "..str)
 	end
 
 	-- if the 'Ritual of Summoning' spell is known, then associate it to the soulstone icon as shift-click.
