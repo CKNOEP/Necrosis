@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "../../../../_ptr_/Interface/AddOns/Necrosis"
+		},
+		{
+			"path": "."
+		},
+		{
+			"path": "../BananaBar3"
+		},
+		{
+			"path": "../../../../_retail_/Interface/AddOns/Necrosis"
+		},
+		{
+			"path": "../../../../_retail_/Interface/AddOns/VuhDo"
+		}
+	],
+	"settings": {}
+}

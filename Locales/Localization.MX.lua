@@ -1,0 +1,382 @@
+--[[
+    Necrosis 
+    Copyright (C) - copyright file included in this release
+--]]
+
+local L = LibStub("AceLocale-3.0"):NewLocale(NECROSIS_ID,"esMX")
+if not L then return end
+
+L["NECROSIS"] = "Necrosis";
+L["NECROSIS_ONLY"] = "Necrosis";
+L["NECROSIS_DEBUG"] = "<Necrosis>";
+L["NECROSIS_PRINT"] = "Necrosis";
+
+-- Configuration
+L["HEALTHSTONE_COOLDOWN"] = "Tiempo de regeneraci\195\179n Piedra de Salud"
+L["USE"] = "Use"
+L["TRADE"] = "Trade"
+L["NECROSIS_LABEL"] = "|c00FFFFFF".."Necrosis".."|r"
+L["YES"] = "S\195\173"
+L["NO"] = "No"
+L["ON"] = "Activar"
+L["OFF"] = "Desactivar"
+--
+L["SOUL_SHARD"] = "Fragmento de Alma"
+L["SOUL_SHARD_LABEL"] = "Fragmento(s) de Alma: "
+L["INFERNAL_STONE"] = "Piedra infernal"
+L["INFERNAL_STONE_LABEL"] = "Piedra(s) Infernal(es): "
+L["DEMONIAC_STONE"] = "Figura demon\195\173aca"
+L["DEMONIAC_STONE_LABEL"] = "Figura(s) Demon\195\173aca(s): "
+L["SOUL_STONE"] = "Piedra de alma"
+L["SOUL_STONE_LABEL"] = "\nPiedra de Alma: "
+L["HEALTH_STONE"] = "Piedra de salud"
+L["HEALTH_STONE_LABEL"] = "Piedra de Salud: "
+L["SPELL_STONE"] = "Piedra de hechizo"
+L["SPELL_STONE_LABEL"] = "Piedra de Hechizo: "
+L["FIRE_STONE"] = "Piedra de fuego"
+L["FIRE_STONE_LABEL"] = "Piedra de Fuego: "
+L["CURRENT_DEMON"] = "Demonio: "
+L["ENSLAVED_DEMON"] = "Demonio: Esclavizado"
+L["NO_CURRENT_DEMON"] = "Demonio: Ninguno"
+L["HEARTH_STONE"] = "Piedra de hogar"
+--
+L["SOULSTONE_TEXT_1"] = "Click derecho para crear"
+L["SOULSTONE_TEXT_2"] = "Click izquierdo para usar"
+L["SOULSTONE_TEXT_3"] = "Usada\nClick derecho para recrear"
+L["SOULSTONE_TEXT_4"] = "Esperando"
+L["SOULSTONE_RITUAL"] = "|c00FFFFFF".."Shift+Click para empezar Ritual de invocaci\195\179n".."|r"
+L["HEALTHSTONE_TEXT_1_1"] = "Click derecho para crear"
+L["HEALTHSTONE_TEXT_1_2"] = "Click izquierdo para usar"
+L["HEALTHSTONE_TEXT_2"] = "Middle click or Ctrl+left click to trade"
+L["HEALTHSTONE_RITUAL"] = "|c00FFFFFF".."Shift+Click para empezar el Ritual de Almas".."|r"
+L["SPELLSTONE_TEXT_1"] = "Click derecho para crear"
+L["SPELLSTONE_TEXT_2"] = "En el inventario\nClick izquierdo para usar"
+L["SPELLSTONE_TEXT_3"] = "Usada"
+L["SPELLSTONE_TEXT_4"] = "Usada\nClick derecho para crear"
+L["FIRESTONE_TEXT_1"] = "Click derecho para crear"
+L["FIRESTONE_TEXT_2"] = "En el inventario\nClick izquierdo para usar"
+L["FIRESTONE_TEXT_3"] = "Usada"
+L["FIRESTONE_TEXT_4"] = "Usada\nClick derecho para crear"
+L["SPELLTIMER_LABEL"] = "|c00FFFFFF".."Duraci\195\179n de Hechizos".."|r"
+L["SPELLTIMER_TEXT"] = "Hechizos activos en el objetivo"
+L["SPELLTIMER_RIGHT"] = "Click derecho para usar Piedra de Hogar a "
+L["SHADOW_TRANCE_LABEL"] = "|c00FFFFFF".."Trance de las Sombra".."|r"
+L["BACKLASH_LABEL"] = "|c00FFFFFF".."Latigazo".."|r"
+L["BANISH_TEXT"] = "Click derecho para invocar Rango 1"
+-- Pets
+L["IMP_LABEL"] = "|c00FFFFFF".."Diablillo".."|r"
+L["IMP"] = "Diablillo"
+L["VOIDWALKER_LABEL"] = "|c00FFFFFF".."Abisario".."|r"
+L["VOIDWALKER"] = "Abisario"
+L["SUCCUBUS_LABEL"] = "|c00FFFFFF".."S\195\186cubo".."|r"
+L["SUCCUBUS"] = "S\195\186cubo"
+L["INCCUBUS_LABEL"] = "|c00FFFFFF".."Íncubo".."|r"
+L["INCCUBUS"] = "Íncubo"
+L["FELHUNTER_LABEL"] = "|c00FFFFFF".."Man\195\161fago".."|r"
+L["FELHUNTER"] = "Man\195\161fago"
+L["FELGUARD_LABEL"] = "|c00FFFFFF".."Guardia maldito".."|r"
+L["FELGUARD"] = "Guardia maldito"
+L["INFERNAL_LABEL"] = "|c00FFFFFF".."Inferno".."|r"
+L["INFERNAL"] = "Inferno"
+L["DOOMGUARD_LABEL"] = "|c00FFFFFF".."Guardia Apocal\195\173ptico".."|r"
+L["DOOMGUARD"] = "Guardia apocal\195\173ptico"
+-- 
+L["MOUNTS_LABEL"] = "|c00FFFFFF".."Corcel".."|r"
+L["MOUNT_TEXT"] = "Left click to summon Dreadsteed\nRight click to summon Felsteed"
+L["BUFF_MENU_LABEL"] = "|c00FFFFFF".."Men\195\186 de Hechizos".."|r"
+L["BUFF_MENU_TEXT_1"] = "Click Derecho para mantener el men\195\186 abierto"
+L["BUFF_MENU_TEXT_2"] = "Modo autom\195\161tico: Se cierra cuando sales de combate"
+L["PET_MENU_LABEL"] = "|c00FFFFFF".."Men\195\186 de Demonio".."|r"
+L["PET_MENU_TEXT_1"] = "Click Derecho para mantener el men\195\186 abierto"
+L["PET_MENU_TEXT_2"] = "Modo autom\195\161tico: Se cierra cuando sales de combate"
+L["CURSE_MENU_LABEL"] = "|c00FFFFFF".."Men\195\186 de Maldici\195\179n".."|r"
+L["CURSE_MENU_TEXT_1"] = "Click Derecho para mantener el men\195\186 abierto"
+L["CURSE_MENU_TEXT_2"] = "Modo autom\195\161tico: Se cierra cuando sales de combate"
+L["DOMINATION_COOLDOWN"] = "Click Derecho para invocaci\195\179n r\195\161pida"
+--
+L["SOUND_FEAR"] = "Interface\\AddOns\\Necrosis\\sounds\\Fear-En.mp3"
+L["SOUND_SOUL_STONE_END"] = "Interface\\AddOns\\Necrosis\\sounds\\SoulstoneEnd-En.mp3"
+L["SOUND_ENSLAVE_END"] = "Interface\\AddOns\\Necrosis\\sounds\\EnslaveDemonEnd-En.mp3"
+L["SOUND_SHADOW_TRANCE"] = "Interface\\AddOns\\Necrosis\\sounds\\ShadowTrance-En.mp3"
+L["SOUND_BACKLASH"] = "Interface\\AddOns\\Necrosis\\sounds\\Backlash-Fr.mp3"
+--
+L["PROC_SHADOW_TRANCE"] = "<white>Tr<lightPurple1>a<lightPurple2>n<purple>c<darkPurple1>e<darkPurple2> de las S<darkPurple1>o<purple>m<lightPurple2>b<lightPurple1>r<white>as"
+L["PROC_BACKLASH"] = "<white>B<lightPurple1>a<lightPurple2>c<purple>k<darkPurple1>l<darkPurple2>a<darkPurple1>s<purple>h"
+L["PROC_MOLTENCORE"] = "<white>M<lightPurple1>o<lightPurple2>l<purple>t<darkPurple1>e<darkPurple2>n<darkPurple1>c<purple>o<lightPurple2>r<lightPurple1>e"
+
+L["BAG_FULL_PREFIX"] = "\194\161 Tu "
+L["BAG_FULL_SUFFIX"] = " est\195\161 llena !"
+L["BAG_FULL_DESTROY_PREFIX"] = " est\195\161 llena; \194\161 Los pr\195\179ximos Fragmentos de Alma ser\195\161n destruidos !"
+L["INTERFACE_WELCOME"] = "<white>\194\161 /necrosis para mostrar el men\195\186 de preferencias !"
+L["RETAIL_ANNOUNCEMENT"] = "|cffff6600🔥 \194\161 El ritual está completo! \194\161 ¡Necrosis ha ascendido a RETAIL! 🔥|r\n|cffffffff Tus deseos oscuros nos importan - ¡comparte tus anhelos demoníacos!|r"
+L["INTERFACE_TOOLTIP_ON"] = "Consejos detallados activados"
+L["INTERFACE_TOOLTIP_OFF"] = "Consejos detallados desactivados"
+L["INTERFACE_MESSAGE_ON"] = "Mensaje Chat activado"
+L["INTERFACE_MESSAGE_OFF"] = "Mensaje Chat desactivado"
+L["INTERFACE_DEFAULT_CONFIG"] = "<lightYellow>Configuraci\195\179n por defecto cargada."
+L["INTERFACE_USER_CONFIG"] = "<lightYellow>Configuraci\195\179n cargada."
+L["HELP_1"] = "/necrosis <lightOrange>recall<white> -- <lightBlue>Centrar Necrosis y todos los botones en el medio de la pantalla"
+L["HELP_2"] = "/necrosis <lightOrange>reset<white> -- <lightBlue>Reinicia Necrosis entero"
+L["INFO_FEAR_PROTECT"] = "\194\161\194\161\194\161 Tu objetivo tiene una protecci\195\179n contra miedo !!!"
+L["INFO_ENSLAVE_BREAK"] = "Tu demonio rompi\195\179 sus cadenas..."
+L["INFO_SOUL_STONE_END"] = "<lightYellow>Tu Piedra de Alma se ha disipado."
+--
+L["CONFIG_MESSAGE"] = "Opci\195\179nes de Mensaje"
+L["CONFIG_SPHERE"] = "Opci\195\179nes de la Esfera"
+L["CONFIG_BUTTON"] = "Opci\195\179nes de Bot\195\179n"
+L["CONFIG_MENU"] = "Opci\195\179nes de Men\195\186s"
+L["CONFIG_TIMER"] = "Opci\195\179nes de Temporizador"
+L["CONFIG_MISC"] = "Miscel\195\161neos"
+--
+L["MSG_POSITION"] = "<- Los mensajes de Sistema de Necrosis aparecer\195\161n aqu\195\173 ->"
+L["MSG_SHOW_TIPS"] = "Mostrar consejos detallados"
+L["MSG_SHOW_SYS"] = "Mensajes de Necrosis como mensajes de sistema"
+L["MSG_RANDOM"] = "Activar discursos aleatorios"
+L["MSG_USE_SHORT"] = "Usar mensajes cortos"
+L["MSG_RANDOM_SUMMONS"] = "Activar discursos aleatorios para Ritual of Summoning"
+L["MSG_RANDOM_SOULSTONE"] = "Activa discursos aleatorios al lanzar Soulstone"
+L["MSG_RANDOM_DEMON"] = "Activar discursos aleatorios (demonio)"
+L["MSG_RANDOM_STEED"] = "Activar discursos aleatorios (corcel)"
+L["MSG_RANDOM_SOULS"] = "Activar discursos aleatorios para el Ritual de las Almas"
+L["MSG_SOUNDS"] = "Activar sonidos"
+L["MSG_WARN_FEAR"] = "Av\195\173same cuando mi objetivo no pueda ser asustado"
+L["MSG_WARN_BANISH"] = "Av\195\173same cuando mi objetivo pueda ser desterrado o esclavizado"
+L["MSG_WARN_TRANCE"] = "Al\195\169rtame cuando entre en un Trance/Backlash/Moltencore"
+--
+L["SPHERE_SIZE"] = "Tama\195\177o del bot\195\179n Necrosis"
+L["SPHERE_SKIN"] = "Color de la Esfera Necrosis"
+L["SPHERE_EVENT"] = "Evento mostrado en la Esfera"
+L["SPHERE_SPELL"] = "Hechizo lanzado desde la Esfera"
+L["SPHERE_COUNTER"] = "Mostrar la contabilizaci\195\179n de Fragmentos en Necrosis"
+L["SPHERE_STONE"] = "Tipo de Piedra contabilizada"
+--	Colour
+L["PINK"] = "Rosa"
+L["BLUE"] = "Azul"
+L["ORANGE"] = "Naranja"
+L["TURQUOISE"] = "Turquesa"
+L["PURPLE"] = "P\195\186rpura"
+L["666"] = "666"
+L["X"] = "X"
+-- Count
+L["SOUL_SHARDS"] = "Fragmentos de Alma"
+L["DEMON_SUMMON_STONES"] = "Piedras de invocaci\195\179n de Demonios"
+L["REZ_TIMER"] = "Temporizador de Resurrecci\195\179n"
+L["MANA"] = "Man\195\161"
+L["HEALTH"] = "Salud"
+-- Buttons
+L["BUTTONS_ROTATION"] = "Rotaci\195\179n de los botones"
+L["BUTTONS_STICK"] = "Fijar los botones alrededor de la Esfera"
+L["BUTTONS_MOUNT"] = "Use my own mounts"
+L["BUTTONS_SELECTION"] = "Selection of buttons to be shown"
+L["BOUTONS_PIERRES"] = "Botones de Piedra"
+L["BOUTONS_ACTION"] = "Botones de Accion"
+L["MOUNTS_TITLE"] = "Monturas"
+L["BUTTONS_LEFT"] = "Left click"
+L["BUTTONS_RIGHT"] = "Right click"
+--
+L["SHOW_FIRE_STONE"] = "Mostrar bot\195\179n Piedra de Fuego"
+L["SHOW_SPELL_STONE"] = "Mostrar bot\195\179n Piedra de Hechizo"
+L["SHOW_HEALTH_STONE"] = "Mostrar bot\195\179n Piedra de Salud"
+L["SHOW_SOUL_STONE"] = "Mostrar bot\195\179n Piedra de Alma"
+L["SHOW_SPELL"] = "Mostrar bot\195\179n del men\195\186 Hechizos"
+L["SHOW_STEED"] = "Mostrar bot\195\179n Corcel"
+L["SHOW_DEMON"] = "Mostrar bot\195\179n del men\195\186 Demonio"
+L["SHOW_CURSE"] = "Mostrar bot\195\179n del men\195\186 Maldici\195\179n"
+--
+L["MENU_GENERAL"] = "Opciones Generales"
+L["MENU_SPELLS"] = "Men\195\186 de Hechizos"
+L["MENU_DEMONS"] = "Men\195\186 de Demonios"
+L["MENU_CURSES"] = "Men\195\186 de Maldiciones"
+L["MENU_ALWAYS"] = "Mostrar los men\195\186s siempre"
+L["MENU_AUTO_COMBAT"] = "Abrir autom\195\161ticamente los men\195\186s mientras est\195\169s en combate"
+L["MENU_CLOSE_CLICK"] = "Cerrar el men\195\186 cuando pulses uno de sus botones"
+L["MENU_ORIENTATION"] = "Orientaci\195\179n de men\195\186s"
+L["MENU_VERT"] = "Cambiar la simetr\195\173a vertical de los botones"
+L["MENU_BANISH"] = "Tama\195\177o del bot\195\179n Desterrar"
+--
+L["HORIZONTAL"] = "Horizontal"
+L["UPWARDS"] = "Hacia arriba"
+L["DOWNWARDS"] = "Hacia abajo"
+--
+L["TIMER_TYPE"] = "Tipo de temporizadores"
+L["TIMER_SPELL"] = "Mostrar el bot\195\179n de los temporizadores"
+L["TIMER_LEFT"] = "Mostrar los temporizadores a la izquierda del bot\195\179n"
+L["TIMER_UP"] = "Los temporizadores se incrementan ascendentemente"
+--
+L["NO_TIMER"] = "Ninguno"
+L["GRAPHICAL"] = "Modo Gr\195\161fico"
+L["TEXTUAL"] = "Modo texto"
+--
+L["MISC_SHARDS_BAG"] = "Poner los Fragmentos en la bolsa seleccionada."
+L["MISC_SHARDS_DESTROY"] = "Destruir nuevos fragmentos si la bolsa est\195\161 llena."
+L["MISC_BAG"] = "Selecci\195\179n de Contenedor de Fragmentos de Alma"
+L["MISC_SHARDS_MAX"] = "N\195\186mero m\195\161ximo de fragmentos a guardar"
+L["MISC_LOCK"] = "Bloquear Necrosis"
+L["MISC_HIDDEN"] = "Perm\195\173teme ver los botones ocultos para arrastrarlos"
+L["MISC_HIDDEN_SIZE"] = "Tama\195\177o de los botones de aviso"
+-- Functions
+L["UNDEAD"] = "No-muerto"
+L["DEMON"] = "Demon"
+L["ELEMENTAL"] = "Elemental"
+--
+L["BACKLASH"] = "Contragolpe"
+L["SHADOW_TRANCE"] = "Trance de las Sombras"
+--
+L["BAG_SOUL_POUCH"] = "Faltriquera de almas"
+L["BAG_SMALL_SOUL_POUCH"] = "Faltriquera de almas"
+L["BAG_BOX_OF_SOULS"] = "Caja de almas"
+L["BAG_FELCLOTH_BAG"] = "Bolsa de tela vil"
+L["BAG_EBON_SHADOW_BAG"] = "Bolsa de tela vil del N\195\186cleo"
+L["BAG_CORE_FELCLOTH_BAG"] = "Bolsa abisal"
+L["BAG_ABYSSAL_BAG"] = "Bolsa de las Sombras de \195\169bano"
+--
+L["MINOR"] = "Minor"
+L["MAJOR"] = "Major"
+L["LESSER"] = "Lesser"
+L["GREATER"] = "Greater"
+--
+L["COOLDOWN"] = "Tiempo de reutilizaci\195\179n restante"
+L["RANK"] = "Rango"
+L["CREATE"] = "Crear"
+--
+L["ANTI_FEAR_BUFF_FEAR_WARD"]	= "Custodia de miedo"
+L["ANTI_FEAR_BUFF_FORSAKEN"]	= "Voluntad de los Renegados"
+L["ANTI_FEAR_BUFF_FEARLESS"]	= "Audacia"
+L["ANTI_FEAR_BUFF_BERSERK"]		= "Ira rabiosa"
+L["ANTI_FEAR_BUFF_RECKLESS"]	= "Temeridad"
+L["ANTI_FEAR_BUFF_WISH"]		= "Deseo de la muerte"
+L["ANTI_FEAR_BUFF_WRATH"]		= "C\195\179lera de las bestias"
+L["ANTI_FEAR_BUFF_ICE"]			= "Bloqueo de hielo"
+L["ANTI_FEAR_BUFF_PROTECT"]		= "Protecci\195\179n divina"
+L["ANTI_FEAR_BUFF_SHIELD"]		= "Escudo divino"
+L["ANTI_FEAR_BUFF_TREMOR"]		= "T\195\179tem de tremor"
+L["ANTI_FEAR_BUFF_ABOLISH"]		= "Suprimir magia"
+L["ANTI_FEAR_DEBUFF_RECKLESS"]	= "Curse of Recklessness"
+
+-- Speech
+
+--
+L["ABOUT_VERSION"] = "Version";
+L["ABOUT_AUTHOR"] = "Author";
+L["ABOUT_CREDITS"] = "Credits";
+L["ABOUT_CATEGORY"] = "Category";
+L["ABOUT_EMAIL"] = "E-mail";
+L["ABOUT_WEB"] = "Website";
+L["ABOUT_LICENSE"] = "License";
+
+-- Threat Meter & NecrosisUI
+L["THREAT_METER_ENABLED"] = "Activar Threat Meter (indicador circular)"
+L["NECROSISUI_ENABLED"] = "Activar NecrosisUI (marco avanzado)"
+
+-- Missing translations (added automatically)
+L["SPHERE_SPELL2"] = "Hechizo lanzado por la Esfera (Mayús+clic)"
+L["SPHERE_SPELL_RIGHTCLICK"] = "Clic derecho en la Esfera para eliminar el exceso"
+L["SPHERE_SPELL_RIGHTCLICK_L2"] = "Ctrl+Clic izquierdo para abrir el menú de configuración"
+L["SPHERE_SPELL+CTRL"] = "Abrir menú de opciones"
+L["BUTTONS_CTRL-LEFT"] = "Montura Ctrl+Clic izquierdo"
+L["BUTTONS_CTRL-RIGHT"] = "Montura Ctrl+Clic derecho"
+L["BUTTONS_L"] = "Montura Clic izquierdo"
+L["BUTTONS_R"] = "Montura Clic derecho"
+L["CATA"] = "Catacismo"
+L["PURPLE2"] = "Purple2"
+L["MENU_QUICK_SACRIFICE"] = "Sacrificio rápido"
+L["TIMER_ALPHA"] = "Transparencia del temporizador"
+L["SPEECH_API"] = "API de síntesis de voz"
+L["SHOW_DESTROY_SHARDS"] = "Mostrar botón destruir fragmentos"
+
+-- Missing UI Labels (from config pages)
+L["UNFORTUNATELY_TBC_SHARD_MSG"] = "Desafortunadamente con TBC, Blizzard decidió eliminar la capacidad de los complementos para eliminar automáticamente fragmentos. La clasificación automática después del combate ya no es compatible. Ahora use el botón de fragmento para administrar Fragmentos"
+L["OPEN_OPTIONS_OVERLAY"] = "Abrir Opciones SpellOverlay"
+L["AFK_SCREEN"] = "Pantalla AFK"
+L["MOUNT_DRAG_DROP_INSTRUCTIONS"] = "Seleccione sus monturas: arrastre y suelte la Montura en el marco para vincularla"
+L["OFFSET_X"] = "Desplazamiento X"
+L["OFFSET_Y"] = "Desplazamiento Y"
+L["SELECT_MOUNTS"] = "Seleccione sus monturas:"
+L["OPEN_COLLECTIONS"] = "Abrir Colecciones"
+L["PAGE_OF_N"] = "Página %d de %d"
+L["RESET"] = "Restablecer"
+L["TEST_OVERLAY"] = "Probar Overlay"
+
+-- Summon Queue Module
+L["SUMMON_QUEUE_LABEL"] = "|c00FFFFFF".."Cola de Invocación".."|r"
+L["SUMMON_QUEUE_ENABLED"] = "Habilitar cola de invocación"
+L["SUMMON_QUEUE_TRIGGER"] = "Código(s) de activación"
+L["SUMMON_QUEUE_TRIGGER_DESC"] = "Mensaje(s) de chat para unirse. Separe múltiples códigos con comas: 123, summon, inv"
+L["SUMMON_QUEUE_AUTO_REMOVE"] = "Eliminar automáticamente en rango"
+L["SUMMON_QUEUE_AUDIO"] = "Alertas de audio"
+L["SUMMON_QUEUE_SYNC"] = "Sincronizar con otros brujos"
+L["SUMMON_QUEUE_SHOW"] = "Cola"
+L["SUMMON_QUEUE_WINDOW"] = "Mostrar ventana de cola"
+L["SUMMON_QUEUE_ADDED"] = "<player> agregado a la cola de invocación"
+L["SUMMON_QUEUE_REMOVED"] = "<player> eliminado de la cola"
+L["SUMMON_QUEUE_YOUR_TURN"] = "¡Es tu turno para ser invocado!"
+L["SUMMON_QUEUE_POSITION"] = "Posición en cola: <pos>/<total>"
+L["SUMMON_QUEUE_CLEAR"] = "Limpiar cola"
+L["SUMMON_QUEUE_MANUAL_ADD"] = "Agregar objetivo"
+L["SUMMON_QUEUE_EMPTY"] = "Cola vacía"
+
+-- Version Check Module
+L["VERSION_UPDATE_AVAILABLE"] = "Actualización disponible"
+L["CURRENT_VERSION"] = "Versión actual"
+L["DOWNLOAD"] = "Descargar"
+L["GITHUB"] = "GitHub"
+L["TYPE"] = "Escribe"
+L["VERSION_CHECK_MANUAL"] = "Comprueba actualizaciones manualmente"
+L["CURSEFORGE"] = "CurseForge"
+L["UPDATE_AVAILABLE"] = "Actualización disponible"
+L["UP_TO_DATE"] = "¡Tienes la versión actualizada!"
+L["VERSION"] = "Versión"
+L["UPDATE"] = "Actualizar"
+
+-- About Panel
+L["ABOUT_SUBTITLE"] = "Interfaz de Brujo y Gestión de Fragmentos de Alma"
+L["ABOUT_DESCRIPTION"] = [[
+Necrosis es el addon definitivo para Brujos, proporcionando gestión completa de la interfaz para fragmentos de alma, hechizos, invocación de demonios, buffs, maldiciones y cronómetros. Más de 20 años de desarrollo continuo y apoyo comunitario.
+
+Este addon ofrece una interfaz de botones radiales, visualización gráfica de fragmentos de alma, amplias opciones de personalización, y funciones avanzadas como la gestión de cola de invocación con sincronización de banda.
+
+Desarrollado con pasión por la comunidad de Brujos.
+]]
+L["DOWNLOAD_SUPPORT"] = "Descargar y Soporte"
+L["CREDITS"] = "Equipo de Desarrollo y Créditos"
+
+-- Tooltip Labels (for main sphere)
+L["TOOLTIP_LEFT_CLICK"] = "Clic Izquierdo"
+L["TOOLTIP_SHIFT_LEFT_CLICK"] = "Shift+Clic Izquierdo"
+L["TOOLTIP_RIGHT_CLICK"] = "Clic Derecho"
+L["TOOLTIP_CONFIGURATION"] = "Configuración"
+L["TOOLTIP_DRAG"] = "Drag"
+L["TOOLTIP_MOVE"] = "Mover"
+
+-- Stone Labels (for tooltip display)
+L["STONE_SOULSTONE_LABEL"] = "Piedra de Alma: "
+L["STONE_HEALTHSTONE_LABEL"] = "Piedra de Salud: "
+L["STONE_SPELLSTONE_LABEL"] = "Piedra de Hechizo: "
+L["STONE_FIRESTONE_LABEL"] = "Piedra de Fuego: "
+L["STONE_INFERNAL_LABEL"] = "Piedra Infernal: "
+
+-- Soul Shard Management Tooltip
+L["SHARD_MOUSEWHEEL_HELP"] = "Use la rueda del ratón para aumentar o disminuir el límite"
+L["SHARD_LEFTCLICK_HELP"] = "Use clic izquierdo para mover el fragmento de alma al bolso específico"
+
+-- Spellstone Charges
+L["SPELLSTONE_CHARGES"] = "Cargas"
+
+-- Demon Cooldown Display
+L["DEMON_COOLDOWN"] = "Recarga : "
+
+-- Summon Queue Config UI
+L["ENABLED"] = "Habilitado"
+L["OPTIONS"] = "Opciones"
+L["SETTINGS"] = "Configuración"
+L["SUMMON_QUEUE_SHOW"] = "Cola"
+
+-- Additional Skin Colors (Mexican Spanish)
+if not L["ROSE"] then
+L["ROSE"] = "Rosa"
+L["BLEU"] = "Azul"
+L["VIOLET1"] = "Púrpura"
+L["VIOLET2"] = "Púrpura 2"
+L["666"] = "666"
+L["X"] = "Especial"
+end
