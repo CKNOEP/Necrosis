@@ -2639,9 +2639,12 @@ function Necrosis:UpdateMana()
 			local f = _G[Necrosis.Warlock_Buttons[v.f_ptr].f]
 			local spell = Necrosis.GetSpell(v.high_of)
 			SetTexPerMana(f, spell, mana)
-			-- Update mana text display
-			if f and f.manaText and spell and spell.Mana then
-				f.manaText:SetText(spell.Mana .. " Mana")
+			-- Update mana text display - DISABLED: mana cost should only show in tooltip, not on button
+			--if f and f.manaText and spell and spell.Mana then
+			--	f.manaText:SetText(spell.Mana .. " Mana")
+			--end
+			if f and f.manaText then
+				f.manaText:SetText("")  -- Clear mana text
 			end
 		end
 		-- buffs
@@ -2649,9 +2652,12 @@ function Necrosis:UpdateMana()
 			local f = _G[Necrosis.Warlock_Buttons[v.f_ptr].f]
 			local spell = Necrosis.GetSpell(v.high_of)
 			SetTexPerMana(f, spell, mana)
-			-- Update mana text display
-			if f and f.manaText and spell and spell.Mana then
-				f.manaText:SetText(spell.Mana .. " Mana")
+			-- Update mana text display - DISABLED: mana cost should only show in tooltip, not on button
+			--if f and f.manaText and spell and spell.Mana then
+			--	f.manaText:SetText(spell.Mana .. " Mana")
+			--end
+			if f and f.manaText then
+				f.manaText:SetText("")  -- Clear mana text
 			end
 		end
 		-- pets
