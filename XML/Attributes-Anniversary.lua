@@ -851,7 +851,6 @@ function Necrosis:SoulstoneUpdateAttribute(nostone)
 end
 
 function Necrosis:HealthstoneUpdateAttribute(nostone)
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[HealthstoneUpdateAttribute] Called")
 	local f = Necrosis.Warlock_Buttons.health_stone.f
 	f = _G[f]
 
