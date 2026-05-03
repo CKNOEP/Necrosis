@@ -173,8 +173,8 @@ local function CreateStoneButton(stone)
 	-- Define its attributes || Définition de ses attributs
 	frame:SetMovable(true)
 	frame:EnableMouse(true)
-	frame:SetWidth(34)
-	frame:SetHeight(34)
+	frame:SetWidth(40)
+	frame:SetHeight(40)
 	frame:SetNormalTexture(b.norm) --("Interface\\AddOns\\Necrosis\\UI\\"..stone.."Button-01")
 	frame:SetHighlightTexture(b.high) --("Interface\\AddOns\\Necrosis\\UI\\"..stone.."Button-0"..num)
 	frame:RegisterForDrag("LeftButton")
@@ -774,11 +774,11 @@ function Necrosis:CreateStoneButtons()
 		
 		if not _G[frame_name] then
 			local frame = CreateFrame("Button", frame_name, UIParent, "SecureUnitButtonTemplate")
-			
+
 			frame:SetMovable(true)
 			frame:EnableMouse(true)
-			frame:SetWidth(34)
-			frame:SetHeight(34)
+			frame:SetWidth(40)
+			frame:SetHeight(40)
 			frame:SetNormalTexture(button_info.norm)
 			frame:SetHighlightTexture(button_info.high)
 			frame:RegisterForDrag("LeftButton")
