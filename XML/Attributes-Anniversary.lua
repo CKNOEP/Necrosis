@@ -844,9 +844,6 @@ function Necrosis:SoulstoneUpdateAttribute(nostone)
 		return
 	end
 
-	-- Test: Change button width to verify function is executed
-	f:SetWidth(50)
-
 	SetSSAttribs(nostone, "Soul stone found or used")
 end
 
