@@ -2483,28 +2483,28 @@ function Necrosis:BuildButtonTooltip(button)
 
 	--End ToolTip Mount
 
-	elseif (Type == "Armor") 		then --AddCastAndCost("armor")
-	elseif (Type == "FelArmor") 	then --AddCastAndCost("fel_armor")
-	elseif (Type == "Invisible")	then --AddCastAndCost("invisible")
-	elseif (Type == "Aqua")			then --AddCastAndCost("breath")
-	elseif (Type == "Kilrogg")		then --AddCastAndCost("eye")
-	elseif (Type == "Banish") 		then --AddCastAndCost("banish")
+	elseif (Type == "Armor") 		then AddCastAndCost("armor")
+	elseif (Type == "FelArmor") 	then AddCastAndCost("fel_armor")
+	elseif (Type == "Invisible")	then AddCastAndCost("invisible")
+	elseif (Type == "Aqua")			then AddCastAndCost("breath")
+	elseif (Type == "Kilrogg")		then AddCastAndCost("eye")
+	elseif (Type == "Banish") 		then AddCastAndCost("banish")
 --		if Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use["banish"]].SpellRank == 2 then
 		if Necrosis.GetSpellRank("banish") == 2 then
 			GameTooltip:AddLine(Necrosis.TooltipData[Type].Text) -- R click rank 1
 		end
-	elseif (Type == "Weakness")		then --AddCastAndCost("weakness")
-	elseif (Type == "Agony")		then --AddCastAndCost("agony")
-	elseif (Type == "Tongues")		then --AddCastAndCost("tongues")
-	elseif (Type == "Exhaust")		then --AddCastAndCost("exhaustion")
-	elseif (Type == "Elements")		then --AddCastAndCost("elements")
-	elseif (Type == "Doom")			then --AddCastAndCost("doom")
-	elseif (Type == "Corruption")	then --AddCastAndCost("corruption")
-	elseif (Type == "Reckless")		then --AddCastAndCost("recklessness")
-	elseif (Type == "TP")			then --AddCastAndCost("summoning");
+	elseif (Type == "Weakness")		then AddCastAndCost("weakness")
+	elseif (Type == "Agony")		then AddCastAndCost("agony")
+	elseif (Type == "Tongues")		then AddCastAndCost("tongues")
+	elseif (Type == "Exhaust")		then AddCastAndCost("exhaustion")
+	elseif (Type == "Elements")		then AddCastAndCost("elements")
+	elseif (Type == "Doom")			then AddCastAndCost("doom")
+	elseif (Type == "Corruption")	then AddCastAndCost("corruption")
+	elseif (Type == "Reckless")		then AddCastAndCost("recklessness")
+	elseif (Type == "TP")			then AddCastAndCost("summoning")
 		AddShard()
-	elseif (Type == "SoulLink")		then --AddCastAndCost("link")
-	elseif (Type == "ShadowProtection") then --AddCastAndCost("ward")
+	elseif (Type == "SoulLink")		then AddCastAndCost("link")
+	elseif (Type == "ShadowProtection") then AddCastAndCost("ward")
 		if start2 > 0 and duration2 > 0 then
 			local seconde = duration2 - ( GetTime() - start2)
 			local affiche
