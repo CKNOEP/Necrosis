@@ -1109,7 +1109,6 @@ local function StartInit(fm)
 	Necrosis:CreateStoneButtons()
 
 	-- Configure all stone buttons attributes directly (bypass function cache issues)
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[StartInit] Configuring stone button attributes")
 
 	-- Firestone
 	local fsButton = _G["NecrosisFirestoneButton"]
@@ -1178,15 +1177,11 @@ local function StartInit(fm)
 				soButton:SetAttribute("shift-spell*", Necrosis.GetSpellCastName("summoning"))
 			end
 
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[StartInit] Soulstone fully configured")
 		end
 	end
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[StartInit] Stone buttons configured")
 
 	-- Refresh button visibility after stone buttons are created
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[StartInit] Calling ButtonSetup()")
 	Necrosis:ButtonSetup()
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[StartInit] ButtonSetup() completed")
 
 	-- Display Retail release announcement after everything is set up
 	C_Timer.After(0.1, function()

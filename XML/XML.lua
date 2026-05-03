@@ -760,7 +760,6 @@ end
 
 ------------------------------------------------------------------------------------------------------
 function Necrosis:CreateStoneButtons()
-	_G["DEFAULT_CHAT_FRAME"]:AddMessage("[CreateStoneButtons] Called!")
 	-- Create all stone buttons if they don't exist
 	local stones = {
 		{name = "Firestone", key = "fire_stone"},
@@ -772,10 +771,8 @@ function Necrosis:CreateStoneButtons()
 	for _, stone_info in ipairs(stones) do
 		local button_info = Necrosis.Warlock_Buttons[stone_info.key]
 		local frame_name = button_info.f
-		_G["DEFAULT_CHAT_FRAME"]:AddMessage("[CreateStoneButtons] Processing "..stone_info.name.." button: "..frame_name)
 		
 		if not _G[frame_name] then
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[CreateStoneButtons] Creating "..stone_info.name.." button")
 			local frame = CreateFrame("Button", frame_name, UIParent, "SecureUnitButtonTemplate")
 			
 			frame:SetMovable(true)
@@ -789,7 +786,6 @@ function Necrosis:CreateStoneButtons()
 
 			-- Keep buttons hidden - ButtonSetup() will show them based on config
 			frame:Hide()
-			_G["DEFAULT_CHAT_FRAME"]:AddMessage("[CreateStoneButtons] Created "..stone_info.name.." button (hidden for now)")
 			
 			frame:SetScript("OnEnter", function(self) Necrosis:BuildButtonTooltip(self) end)
 			frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
