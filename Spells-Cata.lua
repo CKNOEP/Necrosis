@@ -875,22 +875,13 @@ function Necrosis.GetSpellName(usage)
 			return spell.Name
 		end
 	end
-
-	-- Fallback: search for any spell with this usage in Warlock_Spells
-	-- This handles cases where spell is not in player's spellbook yet
-	for spellId, spellData in pairs(Necrosis.Warlock_Spells) do
-		if spellData.Usage == usage and spellData.Name then
-			return spellData.Name
-		end
-	end
-
 	return ""
 end
 
 function Necrosis.GetSpell(usage) -- return the Warlock_Spells table (pointer)
-	if Necrosis.Warlock_Spell_Use[usage] --
+	if Necrosis.Warlock_Spell_Use[usage] -- 
 	then
-		return
+		return 
 			Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]]
 	else
 		return nil

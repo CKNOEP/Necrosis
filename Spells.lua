@@ -229,8 +229,8 @@ Notes:
 	[691]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "felhunter", PetId = 417, reagent = "soul_shard", }, -- Felhunter
 	[30146]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "felguard", PetId = 17252, reagent = "soul_shard", }, -- Felguard
 
-	[1122]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "inferno", Length = 5, Cooldown = 3600, }, -- 5852 Inferno || https://classicdb.ch/?spell=1122 -- Infernals https://classic.wowhead.com/spell=23426 Needs research
-	[18540]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "rit_of_doom", Length = 0, Cooldown = 3600, }, -- 11859 Ritual of Doom || Rituel funeste || https://classicdb.ch/?spell=18540
+	[1122]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "inferno", Length = 5, Cooldown = 3600, reagent = "infernal_stone", }, -- 5852 Inferno || https://classicdb.ch/?spell=1122 -- Infernals https://classic.wowhead.com/spell=23426 Needs research
+	[18540] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "rit_of_doom", Length = 0, Cooldown = 3600, reagent = "demonic_figurine", }, -- 11859 Ritual of Doom || Rituel funeste || https://classicdb.ch/?spell=18540
 	
 	-- ::: Stones
 	-- Create Soulstone minor || Création pierre d'âme
@@ -273,7 +273,7 @@ Notes:
 	-- ::: Buffs
 	[687]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Demon Skin || Peau de démon 
 	[696]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --  
-	[706]	= {UsageRank = 3, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Demon Armor || Armure démoniaque
+	[706]	= {UsageRank = 3, SpellRank = 1, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Demon Armor || Armure démoniaque
 	[1086]	= {UsageRank = 4, SpellRank = 2, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
 	[11733] = {UsageRank = 5, SpellRank = 3, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
 	[11734] = {UsageRank = 6, SpellRank = 4, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
@@ -628,8 +628,8 @@ Necrosis.Warlock_Buttons = {
 					high = "Interface\\AddOns\\Necrosis\\UI\\Kilrogg-02",
 					}, --
 	summoning 	= {f = "NecrosisBuffMenu05", tip = "TP", anchor = "ANCHOR_RIGHT", can_target = true,
-					norm = "Interface\\AddOns\\Necrosis\\UI\\TP-RitualOfSummon",
-					high = "Interface\\AddOns\\Necrosis\\UI\\TP-RitualOfSummon",
+					norm = "Interface\\AddOns\\Necrosis\\UI\\TP-01",
+					high = "Interface\\AddOns\\Necrosis\\UI\\TP-02",
 					}, --
 	link 		= {f = "NecrosisBuffMenu06", tip = "SoulLink", anchor = "ANCHOR_RIGHT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\SoulLink-01",
@@ -700,25 +700,36 @@ Necrosis.Warlock_Buttons = {
 	destroy_shards = {f = "NecrosisDestroyShardsButton", tip = "DestroyShards", anchor = "ANCHOR_RIGHT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\ShardDestroy-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\ShardDestroy-02",
-					func = function(self,arg1)
-
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DestroyShards] Button clicked! arg1 = " .. tostring(arg1))
-
+					func = function(self,arg1) 
+					
 						if arg1 == "RightButton" then
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DestroyShards] ✅ RIGHT CLICK detected - Calling DeleteShards()")
 						Necrosis:DeleteShards()
 						Necrosis:BuildButtonTooltip(self)
 						elseif arg1 == "LeftButton" then
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DestroyShards] 🟦 LEFT CLICK detected - Moving shards to bag")
 						--Move shard to the specific bag
 						--Necrosis:SoulshardSwitch("CHECK")
 						for i=1, GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id) do
 						--print ("Move Shard ",i," to ", GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id))
 						Necrosis:SoulshardSwitch(i)
 						end
-
+						
+						elseif arg1 == 1 then
+						
+							if NecrosisConfig.DestroyCount < 32 then 
+							NecrosisConfig.DestroyCount = NecrosisConfig.DestroyCount + 1 
+							Necrosis:BuildButtonTooltip(self)
+							Necrosis:BagExplore()
+							end
+						elseif arg1 == -1 then
+							if NecrosisConfig.DestroyCount >0 then 
+							NecrosisConfig.DestroyCount = NecrosisConfig.DestroyCount - 1 
+							Necrosis:BuildButtonTooltip(self)
+							Necrosis:BagExplore()
+							end
+						
+						
+						
 						else
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DestroyShards] ⚠️ UNKNOWN CLICK TYPE: " .. tostring(arg1))
 						end
 					end
 					}, --				
@@ -1018,16 +1029,19 @@ function Necrosis.IsSpellKnown(usage)
 	if usage and usage =="mounts" then
 	--print ("usage "..usage)
 	end
-
+	
 	if usage and usage =="destroy_shards" then
 	return true
 	end
-
-
+	
+	
 	if Necrosis.Warlock_Spell_Use[usage] -- get spell id
 	then
-		-- Check if spell is actually in player's spell book using InSpellBook flag
-		return Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].InSpellBook or false
+		if GetSpellInfo(GetSpellInfo(Necrosis.Warlock_Spell_Use[usage])) then --- test if spell is know
+		return true
+		
+		--return Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].InSpellBook
+		end
 	else
 		return false -- safety
 	end
@@ -1095,21 +1109,14 @@ function Necrosis.GetSpellName(usage)
 			return spell.Name
 		end
 	end
-
-	-- Fallback: search for any spell with this usage in Warlock_Spells
-	-- This handles cases where spell is not in player's spellbook yet
-	for spellId, spellData in pairs(Necrosis.Warlock_Spells) do
-		if spellData.Usage == usage and spellData.Name then
-			return spellData.Name
-		end
-	end
-
 	return ""
 end
 
 function Necrosis.GetSpell(usage) -- return the Warlock_Spells table (pointer)
-	if Necrosis.Warlock_Spell_Use[usage] then
-		return Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]]
+	if Necrosis.Warlock_Spell_Use[usage] -- 
+	then
+		return 
+			Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]]
 	else
 		return nil
 	end

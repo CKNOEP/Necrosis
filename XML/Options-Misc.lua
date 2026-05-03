@@ -7,7 +7,16 @@
 local _G = getfenv(0)
 local AddonName, SAO = ...
 local iamNecrosis = strlower(AddonName):sub(0,8) == "necrosis"
-local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
+
+-- Fonction helper pour rendre les sliders visibles
+local function AddSliderBackdrop(slider)
+	if not slider.bg then
+		slider.bg = slider:CreateTexture(nil, "BACKGROUND")
+		slider.bg:SetColorTexture(0.2, 0.2, 0.2, 0.8)
+		slider.bg:SetPoint("TOPLEFT", slider, "TOPLEFT", 0, -2)
+		slider.bg:SetPoint("BOTTOMRIGHT", slider, "BOTTOMRIGHT", 0, 2)
+	end
+end
 
 ------------------------------------------------------------------------------------------------------
 -- CREATION DE LA FRAME DES OPTIONS
@@ -69,7 +78,9 @@ function Necrosis:SetMiscConfig()
 		Glow:ClearAllPoints()
 		Glow:SetPoint("LEFT", frame, "TOPLEFT" , 40, 25 )
 		Glow:SetTextColor(1, 0.5, 0)
-		Glow:SetText((L and L["UNFORTUNATELY_TBC_SHARD_MSG"]) or "Unfortunately with TBC, Blizzard has decided to remove the ability for addons to automatically delete shards. Auto-sorting after combat is no longer supported. Now use shard button to manage Shards")
+		Glow:SetText("Unfortunately with TBC, Blizzard has decided to remove    the ability for addons to automatically delete shards.    "..
+		"auto-sorting after combat is no longer supported.  "..
+		"Now use shard button to manage Shards")
 	
 		
 		-- Destruction des fragments quand le sac est plein
@@ -101,23 +112,10 @@ function Necrosis:SetMiscConfig()
 		frame:SetStepsPerPage(1)
 		frame:SetWidth(150)
 		frame:SetHeight(15)
-
-		-- Create slider visual elements with circular dot cursor
-		local track = frame:CreateTexture(nil, "BACKGROUND")
-		track:SetWidth(150)
-		track:SetHeight(4)
-		track:SetColorTexture(0.2, 0.2, 0.2, 1)
-		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
-
-		local thumb = frame:GetThumbTexture()
-		if thumb then
-			thumb:SetTexture("Interface\Common\Indicator-Yellow")
-			thumb:SetColorTexture(1, 0.8, 0, 1)
-			thumb:SetSize(6, 6)
-		end
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("CENTER", NecrosisMiscConfig, "BOTTOMLEFT", 225, 320)
+		AddSliderBackdrop(frame)
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -135,6 +133,7 @@ function Necrosis:SetMiscConfig()
 			
 			NecrosisConfig.SoulshardContainer = 4 - math.floor(self:GetValue())
 			
+			-- print(NecrosisConfig.SoulshardContainer)
 			--Count the Shard to move a loop 
 			
 			for i=1, GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id) do
@@ -156,7 +155,7 @@ function Necrosis:SetMiscConfig()
 
 		-- Boutons oVERLAY
 			frame = CreateFrame("Button", nil, NecrosisMiscConfig, "UIPanelButtonTemplate")
-			frame:SetText((L and L["OPEN_OPTIONS_OVERLAY"]) or "Open Options SpellOverlay")
+			frame:SetText("Open Options SpellOverlay")
 			frame:SetSize(200 ,22) -- width, height
 			frame:EnableMouse(true)
 			frame:Show()
@@ -202,23 +201,10 @@ function Necrosis:SetMiscConfig()
 		frame:SetStepsPerPage(1)
 		frame:SetWidth(150)
 		frame:SetHeight(15)
-
-		-- Create slider visual elements with circular dot cursor
-		local track = frame:CreateTexture(nil, "BACKGROUND")
-		track:SetWidth(150)
-		track:SetHeight(4)
-		track:SetColorTexture(0.2, 0.2, 0.2, 1)
-		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
-
-		local thumb = frame:GetThumbTexture()
-		if thumb then
-			thumb:SetTexture("Interface\Common\Indicator-Yellow")
-			thumb:SetColorTexture(1, 0.8, 0, 1)
-			thumb:SetSize(6, 6)
-		end
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("CENTER", NecrosisMiscConfig, "BOTTOMLEFT", 225, 255)
+		AddSliderBackdrop(frame)
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
@@ -261,194 +247,17 @@ function Necrosis:SetMiscConfig()
 		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
 		FontString:SetTextColor(1, 1, 1)
 		frame:SetFontString(FontString)
+		
 
-		-- Enable/Disable Threat Meter
-		frame = CreateFrame("CheckButton", "ThreatMeterEnabledCheckButton", NecrosisMiscConfig, "UICheckButtonTemplate")
-		frame:EnableMouse(true)
-		frame:SetWidth(24)
-		frame:SetHeight(24)
-		frame:Show()
-		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 150)
-
-		frame:SetScript("OnClick", function(self)
-			if (self:GetChecked()) then
-				-- Checkbox is checked - ENABLE Threat Meter
-				NecrosisConfig.ThreatMeterEnabled = true
-			else
-				-- Checkbox is unchecked - DISABLE Threat Meter
-				NecrosisConfig.ThreatMeterEnabled = false
-				-- Hide the threat ring when disabled
-				local threatRing = _G["NecrosisThreatRing"]
-				if threatRing then
-					threatRing:Hide()
-				end
-			end
-		end)
-
-		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
-		FontString:Show()
-		FontString:ClearAllPoints()
-		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
-		FontString:SetTextColor(1, 1, 1)
-		FontString:SetText((L and L["THREAT_METER_ENABLED"]) or "Enable Threat Meter (circular indicator)")
-		frame:SetFontString(FontString)
-
-		-- Prevent hovering from affecting threat ring display
-		frame:SetScript("OnEnter", function() end)
-		frame:SetScript("OnLeave", function() end)
-
-		-- Enable/Disable NecrosisUI
-		frame = CreateFrame("CheckButton", "NecrosisUIEnabledCheckButton", NecrosisMiscConfig, "UICheckButtonTemplate")
-		frame:EnableMouse(true)
-		frame:SetWidth(24)
-		frame:SetHeight(24)
-		frame:Show()
-		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 120)
-
-		frame:SetScript("OnClick", function(self)
-			if (self:GetChecked()) then
-				-- Checkbox is checked - SHOW NecrosisUI
-				NecrosisConfig.NecrosisUIEnabled = true
-				if NUI and type(NUI.Show) == "function" then
-					pcall(function() NUI:Show() end)
-				end
-
-				-- Position and scale the main sphere when NUI is activated
-				-- Use a timer to ensure the frame exists before repositioning
-				local function RepositionSphere()
-					local mainSphere = _G["NecrosisMainSphere"]
-					if mainSphere then
-						mainSphere:ClearAllPoints()
-						mainSphere:SetPoint("BOTTOM", UIParent, "BOTTOM", -57.357116699219, 61.293731689453)
-						mainSphere:SetScale(1.33)
-						-- Save the position and scale to SavedVariables so it persists across reloads
-						if not NecrosisConfig.FramePosition then
-							NecrosisConfig.FramePosition = {}
-						end
-						NecrosisConfig.FramePosition["NecrosisMainSphere"] = {"BOTTOM", "UIParent", "BOTTOM", -57.357116699219, 61.293731689453, 1.33}
-						return true
-					else
-						return false
-					end
-				end
-				
-				-- Try immediately first
-				if not RepositionSphere() then
-					-- If frame doesn't exist, try again after 0.5 second
-					C_Timer.After(0.5, function()
-						if not RepositionSphere() then
-							-- Last attempt after 1 second
-							C_Timer.After(1, function()
-								RepositionSphere()
-							end)
-						end
-					end)
-				end
-			else
-				-- Checkbox is unchecked - HIDE NecrosisUI
-				NecrosisConfig.NecrosisUIEnabled = false
-				if NUI and type(NUI.Hide) == "function" then
-					pcall(function() NUI:Hide() end)
-				end
-				-- NOTE: Sphere position and scale remain unchanged when NUI is disabled
-			end
-		end)
-
-		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
-		FontString:Show()
-		FontString:ClearAllPoints()
-		FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
-		FontString:SetTextColor(1, 1, 1)
-		FontString:SetText((L and L["NECROSISUI_ENABLED"]) or "Enable NecrosisUI (advanced framework)")
-		frame:SetFontString(FontString)
-
-		-- Prevent hovering from affecting UI display
-		frame:SetScript("OnEnter", function() end)
-		frame:SetScript("OnLeave", function() end)
-
-		---------------------------------------------
-		-- Slider pour scaler le bandeau en bas
-		---------------------------------------------
-		frame = CreateFrame("Slider", "BottomBannerScaleSlider", NecrosisMiscConfig, "OptionsSliderTemplate")
-		frame:SetMinMaxValues(1.0, 1.2)
-		frame:SetValueStep(0.05)
-		frame:SetObeyStepOnDrag(true)
-		frame:SetStepsPerPage(0.05)
-		frame:SetWidth(120)
-		frame:SetHeight(15)
-
-		-- Create slider visual elements with circular dot cursor
-		local track = frame:CreateTexture(nil, "BACKGROUND")
-		track:SetWidth(120)
-		track:SetHeight(4)
-		track:SetColorTexture(0.2, 0.2, 0.2, 1)
-		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
-
-		local thumb = frame:GetThumbTexture()
-		if thumb then
-			thumb:SetTexture("Interface\\Common\\Indicator-Yellow")
-			thumb:SetColorTexture(1, 0.8, 0, 1)
-			thumb:SetSize(6, 6)
-		end
-		frame:Show()
-		frame:ClearAllPoints()
-		frame:SetPoint("LEFT", FontString, "RIGHT", 20, 0)
-
-		frame:SetScript("OnEnter", function(self)
-			GameTooltip:SetOwner(frame, "ANCHOR_RIGHT")
-			GameTooltip:SetText(string.format("Taille bandeau: %.2fx", self:GetValue()))
-		end)
-		frame:SetScript("OnLeave", function() GameTooltip:Hide() end)
-		frame:SetScript("OnValueChanged", function(self)
-			-- Sauvegarder immédiatement la valeur
-			NecrosisConfig.BottomBannerScale = self:GetValue()
-			-- Mettre à jour le tooltip
-			GameTooltip:SetText(string.format("Taille bandeau: %.2fx", self:GetValue()))
-			-- Mettre à jour le scale du bandeau en temps réel
-			if NUI and NUI.UpdateBottomBannerScale then
-				NUI:UpdateBottomBannerScale()
-			end
-		end)
-
-		BottomBannerScaleSliderLow:SetText("1.0")
-		BottomBannerScaleSliderHigh:SetText("1.2")
+		
+	
 
 	NecrosisMoveShard:SetChecked(NecrosisConfig.SoulshardSort)
 	--NecrosisDestroyShardBag:SetChecked(NecrosisConfig.SoulshardDestroy)
 	NecrosisShardBag:SetValue(4 - NecrosisConfig.SoulshardContainer)
 	NecrosisDestroyShard:SetChecked(NecrosisConfig.DestroyShard)
 	NecrosisAFK:SetChecked(NecrosisConfig.AFK)
-
-	-- Initialize Threat Meter checkbox state
-	if ThreatMeterEnabledCheckButton then
-		local desiredState = NecrosisConfig.ThreatMeterEnabled and 1 or nil
-		ThreatMeterEnabledCheckButton:SetChecked(desiredState)
-	end
-
-	if NecrosisUIEnabledCheckButton then
-		-- Set checkbox state from config (GetChecked returns 1 or nil, convert to match that)
-		local desiredState = NecrosisConfig.NecrosisUIEnabled and 1 or nil
-		NecrosisUIEnabledCheckButton:SetChecked(desiredState)
-
-		-- Apply the saved state to the NecrosisUI frame when opening the Misc panel
-		if NecrosisConfig.NecrosisUIEnabled then
-			if NUI and type(NUI.Show) == "function" then
-				pcall(function() NUI:Show() end)
-			end
-		else
-			if NUI and type(NUI.Hide) == "function" then
-				pcall(function() NUI:Hide() end)
-			end
-		end
-	end
-
-	-- Initialize BottomBanner scale slider
-	if BottomBannerScaleSlider then
-		BottomBannerScaleSlider:SetValue(NecrosisConfig.BottomBannerScale or 1.0)
-	end
-
+	
 	if NecrosisConfig.DestroyCount then
 		NecrosisDestroyCount:SetValue(NecrosisConfig.DestroyCount)
 		
@@ -462,7 +271,7 @@ function Necrosis:SetMiscConfig()
 	--NecrosisDestroyShardBag:SetText(self.Config.Misc["Detruit les fragments si le sac plein"])--deprecated
 	NecrosisShardBagText:SetText(self.Config.Misc["Choix du sac contenant les fragments"])
 	NecrosisDestroyShard:SetText(self.Config.Misc["Nombre maximum de fragments a conserver"])
-	NecrosisAFK:SetText((L and L["AFK_SCREEN"]) or "AFK Screen")
+	NecrosisAFK:SetText("AFK Screen")
 
 
 	if NecrosisConfig.SoulshardSort then --See Necrosis:SoulshardSwitch("MOVE")
@@ -488,41 +297,35 @@ function Necrosis:SetMiscConfig()
 				ShowUIPanel(NecrosisBacklashButton)
 				ShowUIPanel(NecrosisAntiFearButton)
 				ShowUIPanel(NecrosisCreatureAlertButton_elemental)
-
+				
 				NecrosisCreatureAlertButton_elemental:SetAlpha(1)
 				NecrosisCreatureAlertButton_demon:SetAlpha(1)
 				NecrosisCreatureAlertButton_elemental:SetMovable(true)
-				NecrosisCreatureAlertButton_demon:SetMovable(true)
-				NecrosisArmorReminderButton:SetAlpha(1)
-				NecrosisArmorReminderButton:SetMovable(true)
+				NecrosisCreatureAlertButton_demon:SetMovable(true)				
 
-
+				
 				NecrosisShadowTranceButton:RegisterForDrag("LeftButton")
 				NecrosisBacklashButton:RegisterForDrag("LeftButton")
 				NecrosisAntiFearButton:RegisterForDrag("LeftButton")
 				NecrosisCreatureAlertButton_demon:RegisterForDrag("LeftButton")
-				NecrosisCreatureAlertButton_elemental:RegisterForDrag("LeftButton")
-				NecrosisArmorReminderButton:RegisterForDrag("LeftButton")
-
+				NecrosisCreatureAlertButton_elemental:RegisterForDrag("LeftButton")				
+			
 			else
 				HideUIPanel(NecrosisShadowTranceButton)
 				HideUIPanel(NecrosisBacklashButton)
 				HideUIPanel(NecrosisAntiFearButton)
 				HideUIPanel(NecrosisCreatureAlertButton_elemental)
-
+				
 				NecrosisCreatureAlertButton_elemental:SetAlpha(0)
 				NecrosisCreatureAlertButton_demon:SetAlpha(0)
 				NecrosisCreatureAlertButton_elemental:SetMovable(false)
 				NecrosisCreatureAlertButton_demon:SetMovable(false)
-				NecrosisArmorReminderButton:SetAlpha(0)
-				NecrosisArmorReminderButton:SetMovable(false)
 
-			    NecrosisCreatureAlertButton_elemental:RegisterForDrag("")
-				NecrosisCreatureAlertButton_demon:RegisterForDrag("")
+			    NecrosisCreatureAlertButton_elemental:RegisterForDrag("")		
+				NecrosisCreatureAlertButton_demon:RegisterForDrag("")		
 				NecrosisShadowTranceButton:RegisterForDrag("")
 				NecrosisBacklashButton:RegisterForDrag("")
 				NecrosisAntiFearButton:RegisterForDrag("")
-				NecrosisArmorReminderButton:RegisterForDrag("")
 
 			end
 		end)
@@ -545,28 +348,13 @@ function Necrosis:SetMiscConfig()
 		frame:SetObeyStepOnDrag(true)
 		frame:SetWidth(150)
 		frame:SetHeight(15)
-
-		-- Create slider visual elements with circular dot cursor
-		local track = frame:CreateTexture(nil, "BACKGROUND")
-		track:SetWidth(150)
-		track:SetHeight(4)
-		track:SetColorTexture(0.2, 0.2, 0.2, 1)
-		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
-
-		local thumb = frame:GetThumbTexture()
-		if thumb then
-			thumb:SetTexture("Interface\Common\Indicator-Yellow")
-			thumb:SetColorTexture(1, 0.8, 0, 1)
-			thumb:SetSize(6, 6)
-		end
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("CENTER", NecrosisMiscConfig, "BOTTOMLEFT", 225, 60)
+		AddSliderBackdrop(frame)
 
-		local STx, STy, BLx, BLy, AFx, AFy, CAx, CAy, CDx, CDy, ARx, ARy
-
-		-- Initialize button positions on first load
-		local initializePositions = function()
+		local STx, STy, BLx, BLy, AFx, AFy, CAx, CAy
+		frame:SetScript("OnEnter", function(self)
 			STx, STy = NecrosisShadowTranceButton:GetCenter()
 			STx = STx * (NecrosisConfig.ShadowTranceScale / 100)
 			STy = STy * (NecrosisConfig.ShadowTranceScale / 100)
@@ -582,32 +370,17 @@ function Necrosis:SetMiscConfig()
 			CAx, CAy = NecrosisCreatureAlertButton_elemental:GetCenter()
 			CAx = CAx * (NecrosisConfig.ShadowTranceScale / 100)
 			CAy = CAy * (NecrosisConfig.ShadowTranceScale / 100)
-
+			
 			CDx, CDy = NecrosisCreatureAlertButton_demon:GetCenter()
 			CDx = CDx * (NecrosisConfig.ShadowTranceScale / 100)
 			CDy = CDy * (NecrosisConfig.ShadowTranceScale / 100)
 
-			if NecrosisArmorReminderButton then
-				ARx, ARy = NecrosisArmorReminderButton:GetCenter()
-				if ARx and ARy then
-					ARx = ARx * (NecrosisConfig.ShadowTranceScale / 100)
-					ARy = ARy * (NecrosisConfig.ShadowTranceScale / 100)
-				end
-			end
-		end
-
-		initializePositions()
-
-		frame:SetScript("OnEnter", function(self)
-			initializePositions()
-
 			ShowUIPanel(NecrosisShadowTranceButton)
-			ShowUIPanel(NecrosisShadowTranceButton)
+			ShowUIPanel(NecrosisShadowTranceButton)			
 			ShowUIPanel(NecrosisBacklashButton)
 			ShowUIPanel(NecrosisAntiFearButton)
 			NecrosisCreatureAlertButton_elemental:SetAlpha(1)
 			NecrosisCreatureAlertButton_demon:SetAlpha(1)
-			NecrosisArmorReminderButton:SetAlpha(1)
 			GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
 			GameTooltip:SetText(self:GetValue().."%")
 		end)
@@ -619,8 +392,7 @@ function Necrosis:SetMiscConfig()
 				HideUIPanel(NecrosisBacklashButton)
 				HideUIPanel(NecrosisAntiFearButton)
 				NecrosisCreatureAlertButton_elemental:SetAlpha(0)
-				NecrosisCreatureAlertButton_demon:SetAlpha(0)
-				NecrosisArmorReminderButton:SetAlpha(0)
+				NecrosisCreatureAlertButton_demon:SetAlpha(0)				
 			end
 			GameTooltip:Hide()
 		end)
@@ -651,12 +423,6 @@ function Necrosis:SetMiscConfig()
 				NecrosisAntiFearButton:ClearAllPoints()
 				NecrosisAntiFearButton:SetPoint("CENTER", "UIParent", "BOTTOMLEFT", AFx / (NecrosisConfig.ShadowTranceScale / 100), AFy / (NecrosisConfig.ShadowTranceScale / 100))
 				NecrosisAntiFearButton:SetScale(NecrosisConfig.ShadowTranceScale / 100)
-
-				if ARx and ARy then
-					NecrosisArmorReminderButton:ClearAllPoints()
-					NecrosisArmorReminderButton:SetPoint("CENTER", "UIParent", "BOTTOMLEFT", ARx / (NecrosisConfig.ShadowTranceScale / 100), ARy / (NecrosisConfig.ShadowTranceScale / 100))
-					NecrosisArmorReminderButton:SetScale(NecrosisConfig.ShadowTranceScale / 100)
-				end
 			end
 		end)
 
@@ -666,12 +432,116 @@ function Necrosis:SetMiscConfig()
 
 
 	
+	
+	-------------------------------------------------
+	-- Options Threat Meter (Indicateur de menace)
+	-------------------------------------------------
+	
+	-- Checkbox pour activer/désactiver le threat meter
+	frame = CreateFrame("CheckButton", "NecrosisThreatMeterEnabled", NecrosisMiscConfig, "UICheckButtonTemplate")
+	frame:SetWidth(26)
+	frame:SetHeight(26)
+	frame:Show()
+	frame:ClearAllPoints()
+	frame:SetPoint("LEFT", NecrosisMiscConfig, "BOTTOMLEFT", 40, 170)
+	frame:SetScript("OnClick", function(self)
+		if self:GetChecked() then
+			NecrosisConfig.ThreatMeterEnabled = true
+		else
+			NecrosisConfig.ThreatMeterEnabled = false
+			-- Masquer l'anneau immédiatement
+			local ring = _G["NecrosisThreatRing"]
+			if ring then ring:Hide() end
+		end
+	end)
+
+	FontString = frame:CreateFontString("NecrosisThreatMeterEnabledText", "OVERLAY", "GameFontNormalSmall")
+	FontString:Show()
+	FontString:ClearAllPoints()
+	FontString:SetPoint("LEFT", frame, "RIGHT", 5, 1)
+	FontString:SetTextColor(1, 1, 1)
+	
+	-- Slider pour l'épaisseur de l'anneau (1-10px)
+	frame = CreateFrame("Slider", "NecrosisThreatRingThickness", NecrosisMiscConfig, "OptionsSliderTemplate")
+	frame:SetMinMaxValues(1, 10)
+	frame:SetValueStep(1)
+	frame:SetObeyStepOnDrag(true)
+	frame:SetStepsPerPage(1)
+	frame:SetWidth(135)
+	frame:SetHeight(15)
+	frame:Show()
+	frame:ClearAllPoints()
+	frame:SetPoint("CENTER", NecrosisMiscConfig, "CENTER", 0, -86)
+
+	FontString = frame:CreateFontString("NecrosisThreatRingThicknessText", "OVERLAY", "GameFontNormalSmall")
+	FontString:Show()
+	FontString:ClearAllPoints()
+	FontString:SetPoint("LEFT", frame, "RIGHT", 10, 0)
+	FontString:SetTextColor(1, 1, 1)
+	AddSliderBackdrop(frame)
+
+	frame:SetScript("OnEnter", function(self)
+		GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+		GameTooltip:SetText(self:GetValue().." px")
+		-- Afficher le cercle pour prévisualisation
+		local ring = _G["NecrosisThreatRing"]
+		if ring then
+			ring.isPreview = true
+			-- Colorer tous les segments en orange
+			if ring.segments then
+				for _, segment in ipairs(ring.segments) do
+					segment:SetVertexColor(1, 0.6, 0, 0.8)  -- Orange pour prévisualisation
+				end
+			end
+			ring:Show()
+		end
+	end)
+	frame:SetScript("OnLeave", function()
+		GameTooltip:Hide()
+		-- Masquer le cercle sauf si en combat
+		local ring = _G["NecrosisThreatRing"]
+		if ring and ring.isPreview then
+			ring.isPreview = false
+			if not UnitAffectingCombat("player") then
+				ring:Hide()
+			else
+				-- En combat : remettre à jour avec la vraie couleur de menace
+				if Necrosis and Necrosis.UpdateThreatMeter then
+					Necrosis:UpdateThreatMeter()
+				end
+			end
+		end
+	end)
+	frame:SetScript("OnValueChanged", function(self)
+		NecrosisConfig.ThreatRingThickness = math.floor(self:GetValue())
+		GameTooltip:SetText(math.floor(self:GetValue()).." px")
+		-- Mettre à jour l'épaisseur de l'anneau
+		if Necrosis and Necrosis.UpdateThreatRingThickness then
+			Necrosis:UpdateThreatRingThickness()
+		end
+		-- Afficher le cercle pendant la modification
+		local ring = _G["NecrosisThreatRing"]
+		if ring then
+			ring.isPreview = true
+			-- Colorer tous les segments en orange
+			if ring.segments then
+				for _, segment in ipairs(ring.segments) do
+					segment:SetVertexColor(1, 0.6, 0, 0.8)  -- Orange pour prévisualisation
+				end
+			end
+			ring:Show()
+		end
+	end)
+
+	NecrosisThreatRingThicknessLow:SetText("1 px")
+	NecrosisThreatRingThicknessHigh:SetText("10 px")
+
 	-- Test Button SAO
 	
 	
 	-- Boutons test oVERLAY
 	testButton = CreateFrame("Button", nil, NecrosisMiscConfig, "UIPanelButtonTemplate")
-	testButton:SetText((L and L["TEST_OVERLAY"]) or "Test Overlay")
+	testButton:SetText("Test Overlay")
 	testButton:SetSize(120 ,22) -- width, height
 	testButton:EnableMouse(true)
 	testButton:Show()
@@ -681,8 +551,8 @@ function Necrosis:SetMiscConfig()
 	
     testButton.fakeSpellID = 42;
     testButton.isTesting = false;
-    local testTextureLeftRight = SAO.IsEra() and "echo_of_the_elements" or "imp_empowerment";
-    local testTextureTop = SAO.IsEra() and "fury_of_stormrage" or "brain_freeze";
+    local testTextureLeftRight = SAO.IsEra() and "nightfall";
+    local testTextureTop = SAO.IsEra() and  "backlash";
     local testPositionTop = SAO.IsCata() and "Top (CW)" or "Top";
 	local testButtonStatus = NecrosisSpellActivationOverlayOptionsPanelSpellAlertTestButton;
 	
@@ -723,12 +593,21 @@ function Necrosis:SetMiscConfig()
             NecrosisSpellActivationOverlayFrame_SetForceAlpha1(false);
  	
 	end)
-
+	
 	end
-
+	
 	NecrosisHiddenButtons:SetText(self.Config.Misc["Afficher les boutons caches"])
 	NecrosisHiddenSizeText:SetText(self.Config.Misc["Taille des boutons caches"])
 	NecrosisHiddenSize:SetValue(NecrosisConfig.ShadowTranceScale)
+	
+	-- Initialisation Threat Meter
+	NecrosisThreatMeterEnabledText:SetText(self.Config.Misc["Afficher indicateur de menace"])
+	if NecrosisConfig.ThreatMeterEnabled == nil then
+		NecrosisConfig.ThreatMeterEnabled = true
+	end
+	NecrosisThreatMeterEnabled:SetChecked(NecrosisConfig.ThreatMeterEnabled)
+	NecrosisThreatRingThicknessText:SetText(self.Config.Misc["Epaisseur anneau de menace"])
+	NecrosisThreatRingThickness:SetValue(NecrosisConfig.ThreatRingThickness or 7)
 	
 	
 	frame:Show()

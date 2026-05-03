@@ -96,11 +96,14 @@ function Necrosis:MenuAttribute(menu)
 	menuButton:SetAttribute("_onclick", [[
 		self:SetAttribute("lastClick", button)
 		local Etat = self:GetAttribute("state")
-
+		
 		if  button == "MiddleButton" then
-			-- Handled by type3 macro attribute on main sphere
+		
+		
+		
+		
 		end
-
+		
 		if  Etat == "Ferme" then
 			if button == "RightButton" then
 				self:SetAttribute("state", "ClicDroit")
@@ -787,42 +790,22 @@ function Necrosis:HealthstoneUpdateAttribute(nostone)
 	end
 
 	-- Si le démoniste n'a pas de pierre dans son inventaire,
-	-- Un clic gauche crée la pierre (strongest available)
+	-- Un clic gauche crée la pierre
 	if nostone then
 		f:SetAttribute("type1", "spell") -- 52
-
-		-- Test for strongest healthstone spell available
-		-- Priority: Demonic Healthstone (452930) > Regular Healthstone (23517)
-		local spellToCreate = nil
-		if Necrosis.IsSpellKnown("demonic_healthstone") or IsSpellKnownOrOverridesKnown(452930) then
-			spellToCreate = Necrosis.GetSpellCastName("demonic_healthstone") or GetSpellInfo(452930)
-		elseif Necrosis.IsSpellKnown("healthstone") or IsSpellKnownOrOverridesKnown(23517) then
-			spellToCreate = Necrosis.GetSpellCastName("healthstone") or GetSpellInfo(23517)
-		end
-
-		if spellToCreate then
-			f:SetAttribute("spell1", spellToCreate)
-		end
+		f:SetAttribute("spell1", Necrosis.GetSpellCastName("healthstone")) 
 		return
 	end
 
 	if NecrosisConfig.ItemSwitchCombat[3] then
 		f:SetAttribute("type1", "macro")
-		f:SetAttribute("macrotext1", "/use "..NecrosisConfig.ItemSwitchCombat[3])
-
-		-- Check if it's Demonic Healthstone (ID 224464 or old Cata IDs 36889-36891) - NOT tradeable
-		local itemId = GetItemInfoInstant(NecrosisConfig.ItemSwitchCombat[3])
-		local isDemonicHealthstone = itemId == 224464 or itemId == 36889 or itemId == 36890 or itemId == 36891
-
-		if not isDemonicHealthstone then
-			-- Only enable Trade for other healthstones (not Demonic)
-			f:SetAttribute("type3", "Trade")
-			f:SetAttribute("ctrl-type1", "Trade")
-			f.Trade = function () self:TradeStone() end
-		end
-
+		f:SetAttribute("macrotext1", "/stopcasting \n/use "..NecrosisConfig.ItemSwitchCombat[3])
+		f:SetAttribute("type3", "Trade")
+		f:SetAttribute("ctrl-type1", "Trade")
 		f:SetAttribute("shift-type*", "spell")
-		f:SetAttribute("shift-spell*", Necrosis.GetSpellCastName("Ritual_of_Souls"))
+		f:SetAttribute("shift-spell*", Necrosis.GetSpellCastName("Ritual_of_Souls")) 
+		
+		f.Trade = function () self:TradeStone() end
 	end
 end
 

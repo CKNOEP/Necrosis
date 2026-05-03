@@ -6,10 +6,6 @@ L["NECROSIS_ONLY"] = "Necrosis";
 L["NECROSIS_DEBUG"] = "<Necrosis>";
 L["NECROSIS_PRINT"] = "Necrosis";
 
--- General UI
-L["OPTIONS"] = "Options"
-L["SETTINGS"] = "Paramètres"
-
 -- Dialog
 L["HEALTHSTONE_COOLDOWN"] = "Temps de recharge Pierre de soins"
 L["USE"] = "Utilisation"
@@ -73,20 +69,10 @@ L["VOIDWALKER_LABEL"] = "|c00FFFFFF".."Marcheur \195\169th\195\169r\195\169".."|
 L["VOIDWALKER"] = "Marcheur \195\169th\195\169r\195\169"
 L["SUCCUBUS_LABEL"] = "|c00FFFFFF".."Succube".."|r"
 L["SUCCUBUS"] = "Succube"
-L["INCCUBUS_LABEL"] = "|c00FFFFFF".."Incube".."|r"
-L["INCCUBUS"] = "Incube"
-L["SAYAAD_LABEL"] = "|c00FFFFFF".."Sayaad".."|r"
-L["SAYAAD"] = "Sayaad"
 L["FELHUNTER_LABEL"] = "|c00FFFFFF".."Chasseur corrompu".."|r"
 L["FELHUNTER"] = "Chasseur corrompu"
 L["FELGUARD_LABEL"] = "|c00FFFFFF".."Gangregarde".."|r"
 L["FELGUARD"] = "Gangregarde"
-L["DARKGLARE_LABEL"] = "|c00FFFFFF".."Regard-noir".."|r"
-L["DARKGLARE"] = "Regard-noir"
-L["VILEFIEND_LABEL"] = "|c00FFFFFF".."Démon abject".."|r"
-L["VILEFIEND"] = "Démon abject"
-L["TYRANT_LABEL"] = "|c00FFFFFF".."Tyran démoniaque".."|r"
-L["TYRANT"] = "Tyran démoniaque"
 L["INFERNAL_LABEL"] = "|c00FFFFFF".."Infernal".."|r"
 L["INFERNAL"] = "Infernal"
 L["DOOMGUARD_LABEL"] = "|c00FFFFFF".."Garde funeste".."|r"
@@ -118,7 +104,6 @@ L["BAG_FULL_PREFIX"] = "Votre "
 L["BAG_FULL_SUFFIX"] = " est plein !"
 L["BAG_FULL_DESTROY_PREFIX"] = " est plein ; Les prochains fragments seront d\195\169truits !"
 L["INTERFACE_WELCOME"] = "<white>/necrosis pour les options !"
-L["RETAIL_ANNOUNCEMENT"] = "|cffff6600🔥 Le rituel est complet! Necrosis a ascensionné sur RETAIL! 🔥|r\n|cffffffff Vos vœux ténébreux nous intéressent - partagez vos désirs démoniaques!|r"
 L["INTERFACE_TOOLTIP_ON"] = "Bulles d'aide activ\195\169es"
 L["INTERFACE_TOOLTIP_OFF"] = "Bulles d'aide d\195\169sactiv\195\169es"
 L["INTERFACE_MESSAGE_ON"] = "Messages Pierre d'\195\162me et Invocation de joueur activ\195\169s"
@@ -149,8 +134,6 @@ L["MSG_RANDOM_DEMON"] = "Activer \195\169galement les messages pour les D\195\16
 L["MSG_RANDOM_STEED"] = "Activer \195\169galement les messages pour les Montures"
 L["MSG_RANDOM_SOULS"] = "Activer \195\169galement les messages pour le Rituel des \195\162mes"
 L["MSG_SOUNDS"] = "Activer les sons"
-L["THREAT_METER_ENABLED"] = "Activer le Threat Meter (indicateur circulaire)"
-L["NECROSISUI_ENABLED"] = "Activer NecrosisUI (interface avancée)"
 L["MSG_WARN_FEAR"] = "Alerter quand la cible est insensible \195\160 la peur"
 L["MSG_WARN_BANISH"] = "Alerter quand la cible peut \195\170tre banie ou asservie"
 L["MSG_WARN_TRANCE"] = "Alerter pour Proc: Transe/Backlash/Moltencore.."
@@ -159,26 +142,16 @@ L["SPHERE_SIZE"] = "Taille de la sph\195\168re"
 L["SPHERE_SKIN"] = "Skin de la sph\195\168re"
 L["SPHERE_EVENT"] = "Ev\195\168nement montr\195\169 par la sph\195\168re"
 L["SPHERE_SPELL"] = "Sort cast\195\169 par la sph\195\168re"
-L["SPHERE_SPELL2"] = "Sort castépar la sphère (Maj+clic)"
-L["SPHERE_SPELL_RIGHTCLICK"] = "Clic droit sur la sphère pour supprimer l'excédent"
-L["SPHERE_SPELL_RIGHTCLICK_L2"] = "Ctrl+Clic gauche pour ouvrir le menu config"
-L["SPHERE_SPELL+CTRL"] = "Ouvrir le menu des options"
 L["SPHERE_COUNTER"] = "Afficher le compteur num\195\169rique"
 L["SPHERE_STONE"] = "Type de compteur num\195\169rique"
 --	Colour
-L["ROSE"] = "Rose"
-L["BLEU"] = "Bleu"
+L["PINK"] = "Pink"
+L["BLUE"] = "Bleu"
 L["ORANGE"] = "Orange"
 L["TURQUOISE"] = "Turquoise"
-L["VIOLET1"] = "Violet"
-L["VIOLET2"] = "Violet 2"
+L["PURPLE"] = "Purple"
 L["666"] = "666"
-L["X"] = "Spécial"
-L["CATA"] = "Cataclysme"
-L["PINK"] = "Rose"
-L["BLUE"] = "Bleu"
-L["PURPLE"] = "Violet"
-L["PURPLE2"] = "Violet2"
+L["X"] = "X"
 -- Count
 L["SOUL_SHARDS"] = "Fragments d'\195\162me"
 L["DEMON_SUMMON_STONES"] = "Pierres d'invocations"
@@ -190,9 +163,6 @@ L["BUTTONS_ROTATION"] = "Rotation des boutons"
 L["BUTTONS_STICK"] = "Fixer les boutons autour de la sph\195\168re"
 L["BUTTONS_MOUNT"] = "Utiliser mes propres montures"
 L["BUTTONS_SELECTION"] = "Choix des boutons \195\160 afficher"
-L["BOUTONS_PIERRES"] = "Boutons Pierres"
-L["BOUTONS_ACTION"] = "Boutons d'Action"
-L["MOUNTS_TITLE"] = "Montures"
 L["BUTTONS_LEFT"] = "Monture Clic gauche"
 L["BUTTONS_RIGHT"] = "Monture Clic droit"
 --
@@ -226,12 +196,6 @@ L["TIMER_TYPE"] = "Type de timers"
 L["TIMER_SPELL"] = "Afficher le bouton des timers"
 L["TIMER_LEFT"] = "Afficher les timers sur la gauche du bouton"
 L["TIMER_UP"] = "Afficher les timers de bas en haut"
-L["TIMER_REMINDER_TITLE"] = "Rappels"
-L["TIMER_REMINDER_HEALTHSTONE"] = "Rappel pierre de soins (absente de l'inventaire)"
-L["TIMER_REMINDER_SOULSTONE"] = "Rappel pierre de rez (non pos\195\169e)"
-L["TIMER_REMINDER_ARMOR"] = "Rappel buff armure"
-L["TIMER_REMINDER_SACRIFICE"] = "Rappel sacrifice d\195\169moniaque (Destruction)"
-L["TIMER_REMINDER_GROUP_RAID_ONLY"] = "Rappeler seulement en groupe ou raid"
 --
 L["NO_TIMER"] = "Aucun"
 L["GRAPHICAL"] = "Graphiques"
@@ -336,158 +300,3 @@ L["ABOUT_CATEGORY"] = "Category";
 L["ABOUT_EMAIL"] = "E-mail";
 L["ABOUT_WEB"] = "Website";
 L["ABOUT_LICENSE"] = "License";
-
--- Missing translations (added automatically)
-L["BUTTONS_CTRL-LEFT"] = "Montage Ctrl+Clic gauche"
-L["BUTTONS_CTRL-RIGHT"] = "Monture Ctrl+Clic droit"
-L["BUTTONS_L"] = "Monture Clic gauche"
-L["BUTTONS_R"] = "Monture Clic droit"
-L["CATA"] = "Cataclysme"
-L["PURPLE2"] = "Purple2"
--- Sphere skins (all 8 colors)
-L["ROSE"] = "Rose"
-L["BLEU"] = "Bleu"
-L["VIOLET1"] = "Violet1"
-L["VIOLET2"] = "Violet2"
-L["MENU_QUICK_SACRIFICE"] = "Sacrifice rapide"
-L["TIMER_ALPHA"] = "Transparence du timer"
-L["SPEECH_API"] = "API de synthèse vocale"
-
--- Missing UI Labels (from config pages)
-L["UNFORTUNATELY_TBC_SHARD_MSG"] = "Malheureusement avec TBC, Blizzard a décidé de supprimer la capacité des addons à supprimer automatiquement les shards. Le tri automatique après le combat n'est plus supporté. Utilisez maintenant le bouton shard pour gérer les Shards"
-L["OPEN_OPTIONS_OVERLAY"] = "Ouvrir les Options SpellOverlay"
-L["AFK_SCREEN"] = "Écran AFK"
-L["MOUNT_DRAG_DROP_INSTRUCTIONS"] = "Sélectionnez vos montures : glissez-déposez la Monture dans le cadre pour la lier"
-L["OFFSET_X"] = "Décalage X"
-L["OFFSET_Y"] = "Décalage Y"
-L["SELECT_MOUNTS"] = "Sélectionnez vos montures :"
-L["OPEN_COLLECTIONS"] = "Ouvrir Collections"
-L["PAGE_OF_N"] = "Page %d sur %d"
-L["RESET"] = "Réinitialiser"
-L["TEST_OVERLAY"] = "Tester Overlay"
-
--- Summon Queue Module
-L["SUMMON_QUEUE_LABEL"] = "|c00FFFFFF".."File d'invocation".."|r"
-L["SUMMON_QUEUE_ENABLED"] = "Activer la file d'invocation"
-L["SUMMON_QUEUE_TRIGGER"] = "Code(s) de déclenchement"
-L["SUMMON_QUEUE_TRIGGER_DESC"] = "Message(s) chat pour rejoindre la file. Séparez plusieurs codes par des virgules: 123, summon, inv"
-L["SUMMON_QUEUE_AUTO_REMOVE"] = "Retrait auto à portée"
-L["SUMMON_QUEUE_AUDIO"] = "Alertes audio"
-L["SUMMON_QUEUE_SYNC"] = "Sync avec autres démonistes"
-L["SUMMON_QUEUE_WINDOW"] = "Afficher la fenêtre"
-L["SUMMON_QUEUE_SHOW"] = "File d'attente"
-L["SUMMON_QUEUE_ADDED"] = "<player> ajouté à la file d'invocation"
-L["SUMMON_QUEUE_REMOVED"] = "<player> retiré de la file"
-L["SUMMON_QUEUE_YOUR_TURN"] = "C'est votre tour d'être invoqué !"
-L["SUMMON_QUEUE_POSITION"] = "Position: <pos>/<total>"
-L["SUMMON_QUEUE_CLEAR"] = "Vider la file"
-L["SUMMON_QUEUE_MANUAL_ADD"] = "Ajouter la cible"
-L["SUMMON_QUEUE_EMPTY"] = "File vide"
-
--- Version Check Module
-L["VERSION_UPDATE_AVAILABLE"] = "Mise à jour disponible"
-L["CURRENT_VERSION"] = "Version actuelle"
-L["DOWNLOAD"] = "Télécharger"
-L["GITHUB"] = "GitHub"
-L["TYPE"] = "Tapez"
-L["VERSION_CHECK_MANUAL"] = "Vérifiez les mises à jour manuellement"
-L["CURSEFORGE"] = "CurseForge"
-L["UPDATE_AVAILABLE"] = "Mise à jour disponible"
-L["UP_TO_DATE"] = "Vous avez la version à jour !"
-L["VERSION"] = "Version"
-L["UPDATE"] = "Mettre à jour"
-
--- About Panel
-L["ABOUT_SUBTITLE"] = "Gestion de l'interface Démoniste et des fragments d'âme"
-L["ABOUT_DESCRIPTION"] = [[
-Necrosis est l'addon ultime pour Démoniste, offrant une gestion complète de l'interface pour les fragments d'âme, les sorts, l'invocation de démons, les buffs, les malédictions et les timeurs. Plus de 20 ans de développement continu et de soutien communautaire.
-
-Cet addon propose une interface de boutons radiaux, un affichage graphique des fragments d'âme, de nombreuses options de personnalisation, et des fonctionnalités avancées comme la gestion de la file d'invocation avec synchronisation de raid.
-
-Développé avec passion pour la communauté des Démonistes.
-]]
-L["DOWNLOAD_SUPPORT"] = "Télécharger et Support"
-L["CREDITS"] = "Équipe de Développement et Crédits"
-L["ABOUT_CREDITS"] = [[
-|c00FFD700Auteur Original:|r Lomig, lädygaga (Sulfuron EUR)
-
-|c00FFD700Contributeurs (20+ ans):|r
-• Tarcalion - Développement et fonctionnalités
-• Communauté Démonistes - Retours et tests
-• Traducteurs - Localisation 8 langues
-• Rapporteurs de bugs - Assurance qualité
-
-|c00FFD700Remerciements Spéciaux:|r
-• Équipe API WoW
-• Développeurs Ace3
-
--- Timers Options
-L["TIMER_SETTINGS"] = "Paramètres des Timers"
-L["TIMER_TYPE"] = "Type de Timer"
-L["SHOW_SPELL_TIMER"] = "Afficher le bouton des Timers"
-L["TIMER_ON_LEFT"] = "Afficher les Timers sur la gauche"
-L["TIMER_UPWARD"] = "Afficher les Timers de bas en haut"
-L["TIMER_ALPHA"] = "Transparence des Timers"
-L["SELECT_TIMERS"] = "Sélectionner les Timers"
-L["AFK_SCREEN"] = "Écran AFK"
-L["THREAT_METER_ENABLED"] = "Activer le Compteur de Menace (indicateur circulaire)"
-L["NECROSISUI_ENABLED"] = "Activer NecrosisUI (framework avancé)"
-L["OPEN_OPTIONS_OVERLAY"] = "Ouvrir les Options de l'Overlay de Sort"
-• Contributeurs LibStub
-• Communauté Mondiale Démoniste
-
-|c00FFD700Licence:|r GPL v2
-|c00FFD700Dépôt:|r github.com/CKNOEP/Necrosis
-]]
-
--- Messages Summon Queue
-L["SQ_MODULE_DISABLED"] = "[File d'invocation] Module désactivé"
-L["SQ_CHAT_RECEIVED"] = "[File d'invocation] Message reçu :"
-L["SQ_QUEUE_FULL"] = "[File d'invocation] File pleine !"
-L["SQ_ADDED_TO_QUEUE"] = "[File d'invocation] %s ajouté à la file"
-L["SQ_INVOKING"] = "[File d'invocation] Invocation : %s"
-L["SQ_SPELL_NOT_FOUND"] = "[File d'invocation] Rituel d'invocation (sort 698) non trouvé"
-L["SQ_MACRO_CREATED"] = "[File d'invocation] Macro créée : %s"
-L["SQ_MACRO_INFO"] = "Macro : /target %s + /cast %s"
-L["SQ_MACRO_CLICK"] = "Cliquez sur la macro pour invoquer, ou utilisez : /click %s"
-L["SQ_MACRO_FULL"] = "[File d'invocation] Impossible de créer la macro - vous avez trop de macros"
-L["SQ_TEST_FILLED"] = "[File d'invocation] File remplie avec 30 joueurs de test"
-L["SQ_QUEUE_CLEARED"] = "[File d'invocation] File vidée"
-L["SQ_COMMANDS_HEADER"] = "[File d'invocation] Commandes :"
-L["SQ_COMMAND_FILL"] = "/sqtest fill - Remplir la file avec des joueurs de test"
-L["SQ_COMMAND_CLEAR"] = "/sqtest clear - Vider la file"
-L["SQ_LEFT_CLICK"] = "Clic gauche : /target %s"
-L["SQ_RIGHT_CLICK"] = "Clic droit : Invoquer avec %s"
-
--- Tooltip Labels (for main sphere)
-L["TOOLTIP_LEFT_CLICK"] = "Clic gauche"
-L["TOOLTIP_SHIFT_LEFT_CLICK"] = "Shift+Clic gauche"
-L["TOOLTIP_RIGHT_CLICK"] = "Clic droit"
-L["TOOLTIP_CONFIGURATION"] = "Configuration"
-L["TOOLTIP_DRAG"] = "Drag"
-L["TOOLTIP_MOVE"] = "Déplacer"
-L["TOOLTIP_MIDDLE_CLICK"] = "Clic du milieu"
-L["TOOLTIP_OPEN_BAGS"] = "Ouvrir les sacs"
-
--- Stone Labels (for tooltip display)
-L["STONE_SOULSTONE_LABEL"] = "Pierre d'âme : "
-L["STONE_HEALTHSTONE_LABEL"] = "Pierre de soin : "
-L["STONE_SPELLSTONE_LABEL"] = "Pierre de sort : "
-L["STONE_FIRESTONE_LABEL"] = "Pierre de feu : "
-L["STONE_INFERNAL_LABEL"] = "Pierre infernale : "
-
--- Soul Shard Management Tooltip
-L["SHARD_MOUSEWHEEL_HELP"] = "Utilisez la molette pour augmenter ou diminuer la limite"
-L["SHARD_LEFTCLICK_HELP"] = "Utilisez le clic gauche pour déplacer l'éclat vers le sac spécifique"
-
--- Spellstone Charges
-L["SPELLSTONE_CHARGES"] = "Charges"
-
--- Demon Cooldown Display
-L["DEMON_COOLDOWN"] = "Délai : "
-
--- Summon Queue Config UI
-L["ENABLED"] = "Activé"
-L["OPTIONS"] = "Options"
-L["SETTINGS"] = "Paramètres"
-L["SUMMON_QUEUE_SHOW"] = "File"

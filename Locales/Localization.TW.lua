@@ -52,11 +52,11 @@ L["HEALTHSTONE_RITUAL"] = "|c00FFFFFF".."Shift+左鍵施放靈魂儀式".."|r"
 L["SPELLSTONE_TEXT_1"] = "按右鍵製造"
 L["SPELLSTONE_TEXT_2"] = "按左鍵使用"
 L["SPELLSTONE_TEXT_3"] = "已使用"
-L["SPELLSTONE_TEXT_4"] = "已使用\點擊製造"
+L["SPELLSTONE_TEXT_4"] = "已使用\n點擊製造"
 L["FIRESTONE_TEXT_1"] = "按右鍵製造"
 L["FIRESTONE_TEXT_2"] = "按左鍵使用"
 L["FIRESTONE_TEXT_3"] = "已使用"
-L["FIRESTONE_TEXT_4"] = "已使用\點擊製造"
+L["FIRESTONE_TEXT_4"] = "已使用\n點擊製造"
 L["SPELLTIMER_LABEL"] = "|c00FFFFFF".."法術持續時間".."|r"
 L["SPELLTIMER_TEXT"] = "啟用對目標的法術計時"
 L["SPELLTIMER_RIGHT"] = "右鍵使用爐石到 "
@@ -70,8 +70,6 @@ L["VOIDWALKER_LABEL"] = "|c00FFFFFF".."虛空行者".."|r"
 L["VOIDWALKER"] = "虛無行者"
 L["SUCCUBUS_LABEL"] = "|c00FFFFFF".."魅魔".."|r"
 L["SUCCUBUS"] = "魅魔"
-L["INCCUBUS_LABEL"] = "|c00FFFFFF".."男魔".."|r"
-L["INCCUBUS"] = "男魔"
 L["FELHUNTER_LABEL"] = "|c00FFFFFF".."地獄獵犬".."|r"
 L["FELHUNTER"] = "惡魔獵犬"
 L["FELGUARD_LABEL"] = "|c00FFFFFF".."地獄守衛".."|r"
@@ -108,7 +106,6 @@ L["BAG_FULL_PREFIX"] = "你的 "
 L["BAG_FULL_SUFFIX"] = " 滿了!"
 L["BAG_FULL_DESTROY_PREFIX"] = " 滿了; 下個碎片將被摧毀!"
 L["INTERFACE_WELCOME"] = "<white>/necrosis 顯示設定功能表!"
-L["RETAIL_ANNOUNCEMENT"] = "|cffff6600🔥 儀式已完成！死靈術已升華至零售版！🔥|r\n|cffffffff 你的黑暗願望對我們很重要 - 分享你的惡魔夢想吧！|r"
 L["INTERFACE_TOOLTIP_ON"] = "打開提示"
 L["INTERFACE_TOOLTIP_OFF"] = "關閉提示"
 L["INTERFACE_MESSAGE_ON"] = "打開聊天訊息通知"
@@ -168,9 +165,6 @@ L["BUTTONS_ROTATION"] = "旋轉按鈕"
 L["BUTTONS_STICK"] = "將按鈕固定於球體週圍"
 L["BUTTONS_MOUNT"] = "使用自己的坐騎"
 L["BUTTONS_SELECTION"] = "顯示選擇的按鈕"
-L["BOUTONS_PIERRES"] = "石頭按鈕"
-L["BOUTONS_ACTION"] = "動作按鈕"
-L["MOUNTS_TITLE"] = "坐騎"
 L["BUTTONS_LEFT"] = "坐騎 - 左鍵"
 L["BUTTONS_RIGHT"] = "坐騎 - 右鍵"
 --
@@ -263,119 +257,3 @@ L["ABOUT_CATEGORY"] = "Category";
 L["ABOUT_EMAIL"] = "E-mail";
 L["ABOUT_WEB"] = "Website";
 L["ABOUT_LICENSE"] = "License";
-
--- Threat Meter & NecrosisUI
-L["THREAT_METER_ENABLED"] = "啟用 Threat Meter（圓形指示器）"
-L["NECROSISUI_ENABLED"] = "啟用 NecrosisUI（進階框架）"
-
--- Missing translations (added automatically)
-L["SPHERE_SPELL2"] = "球體施放的法術（Shift+點擊）"
-L["SPHERE_SPELL_RIGHTCLICK"] = "右鍵點擊球體以刪除超額庫存"
-L["SPHERE_SPELL_RIGHTCLICK_L2"] = "Ctrl+左鍵點擊以開啟配置菜單"
-L["SPHERE_SPELL+CTRL"] = "打開選項菜單"
-L["BUTTONS_CTRL-LEFT"] = "坐騎 Ctrl+左鍵點擊"
-L["BUTTONS_CTRL-RIGHT"] = "坐騎 Ctrl+右鍵點擊"
-L["BUTTONS_L"] = "坐騎左鍵點擊"
-L["BUTTONS_R"] = "坐騎右鍵點擊"
-L["CATA"] = "大地之裂"
-L["PURPLE2"] = "紫色2"
-L["MENU_QUICK_SACRIFICE"] = "快速犧牲"
-L["TIMER_ALPHA"] = "計時器透明度"
-L["SPEECH_API"] = "語音合成API"
-L["SHOW_DESTROY_SHARDS"] = "顯示摧毀碎片按鈕"
-
--- Missing UI Labels (from config pages)
-L["UNFORTUNATELY_TBC_SHARD_MSG"] = "不幸的是，在 TBC 中，暴雪決定移除插件自動刪除碎片的能力。戰鬥後的自動分類不再受支持。現在使用碎片按鈕來管理碎片"
-L["OPEN_OPTIONS_OVERLAY"] = "打開選項法術疊加層"
-L["AFK_SCREEN"] = "AFK 屏幕"
-L["MOUNT_DRAG_DROP_INSTRUCTIONS"] = "選擇您的坐騎：將坐騎拖放到框架中以綁定它"
-L["OFFSET_X"] = "偏移 X"
-L["OFFSET_Y"] = "偏移 Y"
-L["SELECT_MOUNTS"] = "選擇您的坐騎："
-L["OPEN_COLLECTIONS"] = "打開蒐藏"
-L["PAGE_OF_N"] = "第 %d 頁，共 %d 頁"
-L["RESET"] = "重置"
-L["TEST_OVERLAY"] = "測試疊加層"
-
--- Summon Queue Module
-L["SUMMON_QUEUE_LABEL"] = "|c00FFFFFF".."召喚隊列".."|r"
-L["SUMMON_QUEUE_ENABLED"] = "啟用召喚隊列"
-L["SUMMON_QUEUE_TRIGGER"] = "觸發代碼"
-L["SUMMON_QUEUE_TRIGGER_DESC"] = "加入隊列的聊天訊息。用逗號分隔多個代碼：123, summon, inv"
-L["SUMMON_QUEUE_AUTO_REMOVE"] = "在範圍內自動移除"
-L["SUMMON_QUEUE_AUDIO"] = "音頻警報"
-L["SUMMON_QUEUE_SYNC"] = "與其他術士同步"
-L["SUMMON_QUEUE_SHOW"] = "隊列"
-L["SUMMON_QUEUE_WINDOW"] = "顯示隊列視窗"
-L["SUMMON_QUEUE_ADDED"] = "<player> 已新增至召喚隊列"
-L["SUMMON_QUEUE_REMOVED"] = "<player> 已從隊列移除"
-L["SUMMON_QUEUE_YOUR_TURN"] = "輪到你被召喚了！"
-L["SUMMON_QUEUE_POSITION"] = "隊列位置：<pos>/<total>"
-L["SUMMON_QUEUE_CLEAR"] = "清空隊列"
-L["SUMMON_QUEUE_MANUAL_ADD"] = "新增目標"
-L["SUMMON_QUEUE_EMPTY"] = "隊列為空"
-
--- Version Check Module
-L["VERSION_UPDATE_AVAILABLE"] = "有可用更新"
-L["CURRENT_VERSION"] = "當前版本"
-L["DOWNLOAD"] = "下載"
-L["GITHUB"] = "GitHub"
-L["TYPE"] = "輸入"
-L["VERSION_CHECK_MANUAL"] = "手動檢查更新"
-L["CURSEFORGE"] = "CurseForge"
-L["UPDATE_AVAILABLE"] = "有可用更新"
-L["UP_TO_DATE"] = "您已是最新版本！"
-L["VERSION"] = "版本"
-L["UPDATE"] = "更新"
-
--- About Panel
-L["ABOUT_SUBTITLE"] = "術士介面和靈魂碎片管理"
-L["ABOUT_DESCRIPTION"] = [[
-Necrosis是終極術士插件,為靈魂碎片、法術、惡魔召喚、增益、詛咒和計時器提供全面的介面管理。20多年持續開發和社區支持。
-
-該插件提供徑向按鈕介面、靈魂碎片圖形顯示、廣泛的自訂選項,以及包括召喚隊列管理和團隊同步等進階功能。
-
-為術士社區而精心開發。
-]]
-L["DOWNLOAD_SUPPORT"] = "下載和支持"
-L["CREDITS"] = "開發團隊和致謝"
-
--- Tooltip Labels (for main sphere)
-L["TOOLTIP_LEFT_CLICK"] = "左鍵點擊"
-L["TOOLTIP_SHIFT_LEFT_CLICK"] = "Shift+左鍵點擊"
-L["TOOLTIP_RIGHT_CLICK"] = "右鍵點擊"
-L["TOOLTIP_CONFIGURATION"] = "配置"
-L["TOOLTIP_DRAG"] = "拖動"
-L["TOOLTIP_MOVE"] = "移動"
-
--- Stone Labels (for tooltip display)
-L["STONE_SOULSTONE_LABEL"] = "靈魂石: "
-L["STONE_HEALTHSTONE_LABEL"] = "生命石: "
-L["STONE_SPELLSTONE_LABEL"] = "法術石: "
-L["STONE_FIRESTONE_LABEL"] = "火焰石: "
-L["STONE_INFERNAL_LABEL"] = "地獄石: "
-
--- Soul Shard Management Tooltip
-L["SHARD_MOUSEWHEEL_HELP"] = "使用滑鼠滾輪增加或減少限制"
-L["SHARD_LEFTCLICK_HELP"] = "使用左鍵點擊將靈魂碎片移動到特定的袋子"
-
--- Spellstone Charges
-L["SPELLSTONE_CHARGES"] = "充能"
-
--- Demon Cooldown Display
-L["DEMON_COOLDOWN"] = "冷卻 : "
-
--- Summon Queue Config UI
-L["ENABLED"] = "啟用"
-L["OPTIONS"] = "選項"
-L["SETTINGS"] = "設定"
-L["SUMMON_QUEUE_SHOW"] = "隊列"
-
--- Additional Skin Colors (Traditional Chinese)
-if not L["ROSE"] then
-L["ROSE"] = "粉紅色"
-L["BLEU"] = "藍色"
-L["VIOLET1"] = "紫色"
-L["VIOLET2"] = "紫色 2"
-L["X"] = "特殊"
-end

@@ -7,12 +7,6 @@
 -- ENGLISH  VERSION TEXTS --
 ------------------------------------------------
 local L = LibStub("AceLocale-3.0"):GetLocale(NECROSIS_ID, true)
--- Ensure L is always a table to prevent nil errors
-if not L then
-	L = {}
-	-- Set default English strings as fallback
-	L["NECROSIS_LABEL"] = "Necrosis"
-end
 
 function Necrosis:Localization_Dialog()
 end
@@ -146,7 +140,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("WarlockItemsDone"
 	return res
 end
 
-Necrosis.HealthstoneCooldown = (L and L["NECROSIS_LABEL"]) or "Necrosis"
+Necrosis.HealthstoneCooldown = L["NECROSIS_LABEL"]
 --[[
 -- Resource: https://wow.tools/dbc/?dbc=globalstrings
 Necrosis.Localize = {
@@ -156,7 +150,7 @@ Necrosis.Localize = {
 --]]
 Necrosis.TooltipData = {
 	["Main"] = {
-		Label = (L and L["NECROSIS_LABEL"]) or "Necrosis",
+		Label = L["NECROSIS_LABEL"],
 		Stone = {
 			[true] = YES, --L["YES"], global strings
 			[false] = NO, --L["NO"],
@@ -359,7 +353,6 @@ Necrosis.ChatMessage = {
 	},
 	["Interface"] = {
 		["Welcome"] = L["INTERFACE_WELCOME"],
-		["RetailAnnouncement"] = L["RETAIL_ANNOUNCEMENT"],
 		["TooltipOn"] = L["INTERFACE_TOOLTIP_ON"],
 		["TooltipOff"] = L["INTERFACE_TOOLTIP_OFF"],
 		["MessageOn"] = L["INTERFACE_MESSAGE_ON"],
@@ -387,7 +380,7 @@ Necrosis.Config.Panel = {
 	L["CONFIG_MENU"],
 	L["CONFIG_TIMER"],
 	L["CONFIG_MISC"],
-	L["CONFIG_SUMMONQUEUE"],
+	L["CONFIG_OVERLAY"],	
 }
 
 Necrosis.Config.Messages = {
@@ -409,6 +402,8 @@ Necrosis.Config.Messages = {
 
 Necrosis.Config.Sphere = {
 	["Taille de la sphere"] = L["SPHERE_SIZE"],
+	["Rotation des boutons"] = L["BUTTONS_ROTATION"],
+	["Distance radiale des boutons"] = "Distance radiale des boutons (pixels)",
 	["Skin de la pierre Necrosis"] = L["SPHERE_SKIN"],
 	["Evenement montre par la sphere"] = L["SPHERE_EVENT"],
 	["Sort caste par la sphere"] = L["SPHERE_SPELL"],
@@ -436,7 +431,6 @@ Necrosis.Config.Sphere.Count = {
 }
 
 Necrosis.Config.Buttons = {
-	["Rotation des boutons"] = L["BUTTONS_ROTATION"],
 	["Fixer les boutons autour de la sphere"] = L["BUTTONS_STICK"],
 	["Utiliser mes propres montures"] = L["BUTTONS_MOUNT"],
 	["Choix des boutons a afficher"] = L["BUTTONS_SELECTION"],
@@ -444,9 +438,6 @@ Necrosis.Config.Buttons = {
 	["Monture - Clic droit"] = L["BUTTONS_RIGHT"],
 	["Monture - Ctrl+Clic gauche"] = L["BUTTONS_CTRL-LEFT"],
 	["Monture - Ctrl+Clic droit"] = L["BUTTONS_CTRL-RIGHT"],
-	["Boutons Pierres"] = L["BOUTONS_PIERRES"],
-	["Boutons d'Action"] = L["BOUTONS_ACTION"],
-	["Montures"] = L["MOUNTS_TITLE"],
 
 }
 Necrosis.Config.Buttons.Name = {
@@ -501,6 +492,8 @@ Necrosis.Config.Misc = {
 	["Verrouiller Necrosis sur l'interface"] = L["MISC_LOCK"],
 	["Afficher les boutons caches"] = L["MISC_HIDDEN"],
 	["Taille des boutons caches"] = L["MISC_HIDDEN_SIZE"],
+	["Afficher indicateur de menace"] = "Afficher indicateur de menace (threat meter)",
+	["Epaisseur anneau de menace"] = "Épaisseur anneau de menace (pixels)",
 }
 
 -- From Functions.lua

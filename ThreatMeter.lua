@@ -57,13 +57,18 @@ function Necrosis:UpdateThreatMeter()
 		return
 	end
 
-	-- Récupérer le pourcentage de menace détaillé (0% si pas de cible)
-	local threatpct = 0
-	if UnitAffectingCombat("player") and UnitExists("target") then
-		local isTanking, status, tp, rawthreatpct, threatvalue = UnitDetailedThreatSituation("player", "target")
-		if tp then
-			threatpct = tp
-		end
+	-- Vérifier si en combat et avec une cible
+	if not UnitAffectingCombat("player") or not UnitExists("target") then
+		threatRing:Hide()
+		return
+	end
+
+	-- Récupérer le pourcentage de menace détaillé
+	local isTanking, status, threatpct, rawthreatpct, threatvalue = UnitDetailedThreatSituation("player", "target")
+
+	if not threatpct then
+		threatRing:Hide()
+		return
 	end
 
 	-- Calculer la couleur avec dégradé
@@ -72,34 +77,12 @@ function Necrosis:UpdateThreatMeter()
 	-- Calculer l'alpha (transparence) selon la menace
 	-- 0% menace = presque invisible (0.2)
 	-- 100% menace = opaque (1.0)
-	local alpha = math.min(1, 0.2 + (threatpct / 100) * 0.8)
+	local alpha = 0.2 + (threatpct / 100) * 0.8
 
 	-- Appliquer la couleur sur tous les segments de l'anneau
 	if threatRing.segments then
 		for _, segment in ipairs(threatRing.segments) do
 			segment:SetVertexColor(r, g, b, alpha)
-		end
-	end
-
-	-- Position white threat indicator based on threat percentage
-	-- 0% = top (12 o'clock), 100% = almost full circle
-	if threatRing.threatNeedle then
-		local mainButton = _G["NecrosisButton"]
-		if mainButton then
-			local buttonWidth = mainButton:GetWidth() or 58
-			local buttonHeight = mainButton:GetHeight() or 58
-			local buttonSize = math.max(buttonWidth, buttonHeight)
-			local thickness = NecrosisConfig.ThreatRingThickness or 8
-
-			local needleAngle = 90 - (threatpct / 100) * 359  -- 0% = 90° (midi), 100% = -269° (clockwise rotation)
-			local needleRad = math.rad(needleAngle)
-			local needleRadius = buttonSize / 2 + thickness / 4
-			local needleX = needleRadius * math.cos(needleRad)
-			local needleY = needleRadius * math.sin(needleRad)
-
-			threatRing.threatNeedle:ClearAllPoints()
-			threatRing.threatNeedle:SetPoint("CENTER", threatRing, "CENTER", needleX, needleY)
-			threatRing.threatNeedle:SetRotation(needleRad)
 		end
 	end
 
@@ -111,12 +94,7 @@ function Necrosis:UpdateThreatMeter()
 		threatRing.alertShown = false
 	end
 
-	-- Afficher le ring seulement en combat
-	if UnitAffectingCombat("player") then
-		threatRing:Show()
-	else
-		threatRing:Hide()
-	end
+	threatRing:Show()
 end
 
 ------------------------------------------------------------------------------------------------------
@@ -140,8 +118,8 @@ function Necrosis:CreateThreatRing()
 	local buttonSize = math.max(buttonWidth, buttonHeight)
 
 	-- L'anneau doit être légèrement plus grand que la sphère
-	local thickness = NecrosisConfig.ThreatRingThickness or 8
-	local ringSize = buttonSize + (thickness * 2) + 20  -- Larger ring to accommodate bigger circle
+	local thickness = NecrosisConfig.ThreatRingThickness or 7
+	local ringSize = buttonSize + (thickness * 2)
 
 	ring:SetSize(ringSize, ringSize)
 
@@ -151,9 +129,9 @@ function Necrosis:CreateThreatRing()
 
 	-- Approche simple : créer plusieurs barres disposées en cercle pour former un anneau
 	local numSegments = 120  -- Nombre de segments pour former le cercle (plus = plus lisse)
-	local segmentWidth = 12  -- Increased width for visibility
-	local segmentHeight = 4  -- Fixed height
-	local radius = buttonSize / 2 + 2  -- Rayon du cercle (proche de la sphère)
+	local segmentWidth = thickness
+	local segmentHeight = 8  -- Hauteur augmentée pour un cercle plus continu
+	local radius = buttonSize / 2 + thickness / 2  -- Rayon du cercle
 
 	ring.segments = {}
 	for i = 1, numSegments do
@@ -161,8 +139,7 @@ function Necrosis:CreateThreatRing()
 		local segment = ring:CreateTexture(nil, "OVERLAY")
 		segment:SetTexture("Interface\\Buttons\\WHITE8X8")
 		segment:SetSize(segmentWidth, segmentHeight)
-		segment:SetVertexColor(1, 1, 1, 1)  -- Blanc opaque (test mode visible)
-		segment:SetDrawLayer("OVERLAY", 0)  -- Lower level for threat needle to be on top
+		segment:SetVertexColor(0, 1, 0, 0)  -- Vert, invisible au départ
 
 		-- Calculer la position en coordonnées polaires
 		local rad = math.rad(angle)
@@ -175,23 +152,12 @@ function Necrosis:CreateThreatRing()
 		table.insert(ring.segments, segment)
 	end
 
-	-- Create white threat indicator segment (shows current threat percentage)
-	local threatNeedle = ring:CreateTexture(nil, "OVERLAY")
-	threatNeedle:SetTexture("Interface\\Buttons\\WHITE8X8")
-	threatNeedle:SetSize(10, segmentHeight)  -- Wider to be more visible
-	threatNeedle:SetVertexColor(1, 1, 1, 1)  -- White color
-	threatNeedle:SetPoint("CENTER", ring, "CENTER", 0, 0)  -- Will be repositioned based on threat %
-	threatNeedle:SetDrawLayer("OVERLAY", 7)  -- Put above circle segments (max level)
-	ring.threatNeedle = threatNeedle
-
 	ring.outerTexture = ring.segments[1]  -- Pour compatibilité avec le code existant
 
 	ring:Hide()  -- Masqué par défaut (hors combat)
 	ring.alertShown = false
 
 	threatRing = ring
-
-	-- print("|cFF00FF00Necrosis:|r Threat ring created! Size: " .. ringSize .. "px, Thickness: " .. thickness .. "px, Segments: " .. numSegments)
 
 	return ring
 end
@@ -211,10 +177,9 @@ function Necrosis:UpdateThreatRingThickness()
 	local buttonSize = math.max(buttonWidth, buttonHeight)
 
 	-- Calculer la nouvelle taille de l'anneau
-	local thickness = NecrosisConfig.ThreatRingThickness or 8
-	local ringSize = buttonSize + (thickness * 2) + 20  -- Larger ring to accommodate bigger circle
-	local radius = buttonSize / 2 + 15
-	local segmentHeight = 4  -- Fixed height
+	local thickness = NecrosisConfig.ThreatRingThickness or 7
+	local ringSize = buttonSize + (thickness * 2)
+	local radius = buttonSize / 2 + thickness / 2
 
 	-- Redimensionner le frame principal
 	threatRing:SetSize(ringSize, ringSize)
@@ -223,7 +188,7 @@ function Necrosis:UpdateThreatRingThickness()
 	if threatRing.segments then
 		local numSegments = #threatRing.segments
 		for i, segment in ipairs(threatRing.segments) do
-			segment:SetSize(segmentWidth, segmentHeight)
+			segment:SetSize(thickness, 8)
 
 			-- Recalculer la position
 			local angle = (i / numSegments) * 360
@@ -234,11 +199,6 @@ function Necrosis:UpdateThreatRingThickness()
 			segment:ClearAllPoints()
 			segment:SetPoint("CENTER", threatRing, "CENTER", x, y)
 		end
-	end
-
-	-- Update threat indicator size when ring thickness changes
-	if threatRing.threatNeedle then
-		threatRing.threatNeedle:SetSize(thickness, segmentHeight)
 	end
 
 	-- Forcer une mise à jour visuelle
@@ -254,23 +214,14 @@ threatFrame:RegisterEvent("PLAYER_REGEN_DISABLED")  -- Enter combat
 threatFrame:RegisterEvent("PLAYER_REGEN_ENABLED")   -- Leave combat
 threatFrame:RegisterEvent("PLAYER_TARGET_CHANGED")
 
-local lastThreatUpdate = 0
-
 threatFrame:SetScript("OnEvent", function(self, event, ...)
 	if event == "PLAYER_REGEN_ENABLED" then
 		-- Sortie de combat : masquer l'anneau
 		if threatRing then
 			threatRing:Hide()
 		end
-	elseif event == "UNIT_THREAT_SITUATION_UPDATE" then
-		-- Immediate threat update with debounce
-		local now = GetTime()
-		if now - lastThreatUpdate >= 0.05 then  -- Allow updates max every 50ms
-			lastThreatUpdate = now
-			Necrosis:UpdateThreatMeter()
-		end
 	else
-		-- Other events: trigger immediate update
+		-- Mise à jour de la menace
 		Necrosis:UpdateThreatMeter()
 	end
 end)
@@ -281,7 +232,6 @@ threatFrame:SetScript("OnUpdate", function(self, elapsed)
 	if self.elapsed >= 0.2 then
 		self.elapsed = 0
 		if UnitAffectingCombat("player") and NecrosisConfig.ThreatMeterEnabled then
-			lastThreatUpdate = GetTime()
 			Necrosis:UpdateThreatMeter()
 		end
 	end

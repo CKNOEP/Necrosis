@@ -70,8 +70,6 @@ L["VOIDWALKER_LABEL"] = "|c00FFFFFF".."Abisario".."|r"
 L["VOIDWALKER"] = "Abisario"
 L["SUCCUBUS_LABEL"] = "|c00FFFFFF".."S\195\186cubo".."|r"
 L["SUCCUBUS"] = "S\195\186cubo"
-L["INCCUBUS_LABEL"] = "|c00FFFFFF".."Íncubo".."|r"
-L["INCCUBUS"] = "Íncubo"
 L["FELHUNTER_LABEL"] = "|c00FFFFFF".."Man\195\161fago".."|r"
 L["FELHUNTER"] = "Man\195\161fago"
 L["FELGUARD_LABEL"] = "|c00FFFFFF".."Guardia maldito".."|r"
@@ -108,7 +106,6 @@ L["BAG_FULL_PREFIX"] = "\194\161 Tu "
 L["BAG_FULL_SUFFIX"] = " est\195\161 llena !"
 L["BAG_FULL_DESTROY_PREFIX"] = " est\195\161 llena; \194\161 Los pr\195\179ximos Fragmentos de Alma ser\195\161n destruidos !"
 L["INTERFACE_WELCOME"] = "<white>\194\161 /necrosis para mostrar el men\195\186 de preferencias !"
-L["RETAIL_ANNOUNCEMENT"] = "|cffff6600🔥 \194\161 El ritual está completo! \194\161 ¡Necrosis ha ascendido a RETAIL! 🔥|r\n|cffffffff Tus deseos oscuros nos importan - ¡comparte tus anhelos demoníacos!|r"
 L["INTERFACE_TOOLTIP_ON"] = "Consejos detallados activados"
 L["INTERFACE_TOOLTIP_OFF"] = "Consejos detallados desactivados"
 L["INTERFACE_MESSAGE_ON"] = "Mensaje Chat activado"
@@ -168,9 +165,6 @@ L["BUTTONS_ROTATION"] = "Rotaci\195\179n de los botones"
 L["BUTTONS_STICK"] = "Fijar los botones alrededor de la Esfera"
 L["BUTTONS_MOUNT"] = "Use my own mounts"
 L["BUTTONS_SELECTION"] = "Selection of buttons to be shown"
-L["BOUTONS_PIERRES"] = "Botones de Piedra"
-L["BOUTONS_ACTION"] = "Botones de Accion"
-L["MOUNTS_TITLE"] = "Monturas"
 L["BUTTONS_LEFT"] = "Left click"
 L["BUTTONS_RIGHT"] = "Right click"
 --
@@ -263,138 +257,3 @@ L["ABOUT_CATEGORY"] = "Category";
 L["ABOUT_EMAIL"] = "E-mail";
 L["ABOUT_WEB"] = "Website";
 L["ABOUT_LICENSE"] = "License";
-
--- Threat Meter & NecrosisUI
-L["THREAT_METER_ENABLED"] = "Activar Threat Meter (indicador circular)"
-L["NECROSISUI_ENABLED"] = "Activar NecrosisUI (marco avanzado)"
-
--- Missing translations (added automatically)
-L["SPHERE_SPELL2"] = "Hechizo lanzado por la Esfera (Mayús+clic)"
-L["SPHERE_SPELL_RIGHTCLICK"] = "Clic derecho en la Esfera para eliminar el exceso"
-L["SPHERE_SPELL_RIGHTCLICK_L2"] = "Ctrl+Clic izquierdo para abrir el menú de configuración"
-L["SPHERE_SPELL+CTRL"] = "Abrir menú de opciones"
-L["BUTTONS_CTRL-LEFT"] = "Montura Ctrl+Clic izquierdo"
-L["BUTTONS_CTRL-RIGHT"] = "Montura Ctrl+Clic derecho"
-L["BUTTONS_L"] = "Montura Clic izquierdo"
-L["BUTTONS_R"] = "Montura Clic derecho"
-L["CATA"] = "Catacismo"
-L["PURPLE2"] = "Purple2"
-L["MENU_QUICK_SACRIFICE"] = "Sacrificio rápido"
-L["TIMER_ALPHA"] = "Transparencia del temporizador"
-L["SPEECH_API"] = "API de síntesis de voz"
-L["SHOW_DESTROY_SHARDS"] = "Mostrar botón destruir fragmentos"
-
--- Missing UI Labels (from config pages)
-L["UNFORTUNATELY_TBC_SHARD_MSG"] = "Desafortunadamente con TBC, Blizzard decidió eliminar la capacidad de los complementos para eliminar automáticamente fragmentos. La clasificación automática después del combate ya no es compatible. Ahora use el botón de fragmento para administrar Fragmentos"
-L["OPEN_OPTIONS_OVERLAY"] = "Abrir Opciones SpellOverlay"
-L["AFK_SCREEN"] = "Pantalla AFK"
-L["MOUNT_DRAG_DROP_INSTRUCTIONS"] = "Seleccione sus monturas: arrastre y suelte la Montura en el marco para vincularla"
-L["OFFSET_X"] = "Desplazamiento X"
-L["OFFSET_Y"] = "Desplazamiento Y"
-L["SELECT_MOUNTS"] = "Seleccione sus monturas:"
-L["OPEN_COLLECTIONS"] = "Abrir Colecciones"
-L["PAGE_OF_N"] = "Página %d de %d"
-L["RESET"] = "Restablecer"
-L["TEST_OVERLAY"] = "Probar Overlay"
-
--- Summon Queue Module
-L["SUMMON_QUEUE_LABEL"] = "|c00FFFFFF".."Cola de Invocación".."|r"
-L["SUMMON_QUEUE_ENABLED"] = "Habilitar cola de invocación"
-L["SUMMON_QUEUE_TRIGGER"] = "Código(s) de activación"
-L["SUMMON_QUEUE_TRIGGER_DESC"] = "Mensaje(s) de chat para unirse. Separe múltiples códigos con comas: 123, summon, inv"
-L["SUMMON_QUEUE_AUTO_REMOVE"] = "Eliminar automáticamente en rango"
-L["SUMMON_QUEUE_AUDIO"] = "Alertas de audio"
-L["SUMMON_QUEUE_SYNC"] = "Sincronizar con otros brujos"
-L["SUMMON_QUEUE_SHOW"] = "Cola"
-L["SUMMON_QUEUE_WINDOW"] = "Mostrar ventana de cola"
-L["SUMMON_QUEUE_ADDED"] = "<player> agregado a la cola de invocación"
-L["SUMMON_QUEUE_REMOVED"] = "<player> eliminado de la cola"
-L["SUMMON_QUEUE_YOUR_TURN"] = "¡Es tu turno para ser invocado!"
-L["SUMMON_QUEUE_POSITION"] = "Posición en cola: <pos>/<total>"
-L["SUMMON_QUEUE_CLEAR"] = "Limpiar cola"
-L["SUMMON_QUEUE_MANUAL_ADD"] = "Agregar objetivo"
-L["SUMMON_QUEUE_EMPTY"] = "Cola vacía"
-
--- Version Check Module
-L["VERSION_UPDATE_AVAILABLE"] = "Actualización disponible"
-L["CURRENT_VERSION"] = "Versión actual"
-L["DOWNLOAD"] = "Descargar"
-L["GITHUB"] = "GitHub"
-L["TYPE"] = "Escribe"
-L["VERSION_CHECK_MANUAL"] = "Comprueba actualizaciones manualmente"
-L["CURSEFORGE"] = "CurseForge"
-L["UPDATE_AVAILABLE"] = "Actualización disponible"
-L["UP_TO_DATE"] = "¡Tienes la versión actualizada!"
-L["VERSION"] = "Versión"
-L["UPDATE"] = "Actualizar"
-
--- About Panel
-L["ABOUT_SUBTITLE"] = "Interfaz de Brujo y Gestión de Fragmentos de Alma"
-L["ABOUT_DESCRIPTION"] = [[
-Necrosis es el addon definitivo para Brujos, proporcionando gestión completa de la interfaz para fragmentos de alma, hechizos, invocación de demonios, buffs, maldiciones y cronómetros. Más de 20 años de desarrollo continuo y apoyo comunitario.
-
-Este addon ofrece una interfaz de botones radiales, visualización gráfica de fragmentos de alma, amplias opciones de personalización, y funciones avanzadas como la gestión de cola de invocación con sincronización de banda.
-
-Desarrollado con pasión por la comunidad de Brujos.
-]]
-L["DOWNLOAD_SUPPORT"] = "Descargar y Soporte"
-L["CREDITS"] = "Equipo de Desarrollo y Créditos"
-L["ABOUT_CREDITS"] = [[
-|c00FFD700Autor Original:|r Lomig, lädygaga (Sulfuron EUR)
-
-|c00FFD700Contribuidores (20+ años):|r
-• Tarcalion - Desarrollo y características
-• Comunidad de Brujos - Comentarios y pruebas
-• Traductores - Localización 8 idiomas
-• Reporteros de Bugs - Garantía de calidad
-
-|c00FFD700Agradecimientos Especiales:|r
-• Equipo de Documentación API WoW
-• Desarrolladores de Ace3
-• Contribuidores de LibStub
-• Comunidad Global de Brujos
-
-|c00FFD700Licencia:|r GPL v2
-|c00FFD700Repositorio:|r github.com/CKNOEP/Necrosis
-]]
-
--- Tooltip Labels (for main sphere)
-L["TOOLTIP_LEFT_CLICK"] = "Clic Izquierdo"
-L["TOOLTIP_SHIFT_LEFT_CLICK"] = "Shift+Clic Izquierdo"
-L["TOOLTIP_RIGHT_CLICK"] = "Clic Derecho"
-L["TOOLTIP_CONFIGURATION"] = "Configuración"
-L["TOOLTIP_DRAG"] = "Drag"
-L["TOOLTIP_MOVE"] = "Mover"
-
--- Stone Labels (for tooltip display)
-L["STONE_SOULSTONE_LABEL"] = "Piedra de Alma: "
-L["STONE_HEALTHSTONE_LABEL"] = "Piedra de Salud: "
-L["STONE_SPELLSTONE_LABEL"] = "Piedra de Hechizo: "
-L["STONE_FIRESTONE_LABEL"] = "Piedra de Fuego: "
-L["STONE_INFERNAL_LABEL"] = "Piedra Infernal: "
-
--- Soul Shard Management Tooltip
-L["SHARD_MOUSEWHEEL_HELP"] = "Utilice la rueda del ratón para aumentar o disminuir el límite"
-L["SHARD_LEFTCLICK_HELP"] = "Utilice clic izquierdo para mover la esquirla a la bolsa específica"
-
--- Spellstone Charges
-L["SPELLSTONE_CHARGES"] = "Cargas"
-
--- Demon Cooldown Display
-L["DEMON_COOLDOWN"] = "Recarga : "
-
--- Summon Queue Config UI
-L["ENABLED"] = "Habilitado"
-L["OPTIONS"] = "Opciones"
-L["SETTINGS"] = "Configuración"
-L["SUMMON_QUEUE_SHOW"] = "Cola"
-
--- Additional Skin Colors (Spanish)
-if not L["ROSE"] then
-L["ROSE"] = "Rosa"
-L["BLEU"] = "Azul"
-L["VIOLET1"] = "Púrpura"
-L["VIOLET2"] = "Púrpura 2"
-L["666"] = "666"
-L["X"] = "Especial"
-end

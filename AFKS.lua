@@ -43,11 +43,7 @@ local UnitIsAFK = UnitIsAFK
 local GetLocale = GetLocale
 local UnitClass = UnitClass
 local UnitRace = UnitRace
--- GetColoredName only exists in Retail, create fallback for Classic/Wrath
-local GetColoredName = GetColoredName or function(event, arg1, arg2, arg3, arg4, arg5, ...)
-	-- Fallback: return the player name (arg5 in chat events)
-	return arg5 or arg2 or ""
-end
+local GetColoredName = GetColoredName
 local GetScreenHeight = GetScreenHeight
 local GetScreenWidth = GetScreenWidth
 local GetPhysicalScreenSize = GetPhysicalScreenSize
@@ -72,30 +68,8 @@ local UnitCastingInfo
 
 if wowVersion ~= "classic" then
 	C_DateAndTime_GetCurrentCalendarTime = C_DateAndTime.GetCurrentCalendarTime
-	-- Initialize C_Calendar functions (may be nil in some versions)
-	C_Calendar_GetNumDayEvents = C_Calendar.GetNumDayEvents
-	C_Calendar_GetDayEvent = C_Calendar.GetDayEvent
-	-- Initialize C_Club functions (Discord communities)
-	C_Club_GetStreamInfo = C_Club.GetStreamInfo
-	C_Club_GetClubInfo = C_Club.GetClubInfo
-	-- Initialize C_TradeSkillUI functions (may not exist in all versions)
-	if C_TradeSkillUI then
-		C_TradeSkillUI_IsRecipeRepeating = C_TradeSkillUI.IsRecipeRepeating
-	else
-		-- Fallback for versions where TradeSkillUI doesn't exist
-		C_TradeSkillUI_IsRecipeRepeating = function() return false end
-	end
 end
 
--- Initialize C_PetBattles_IsInBattle with safe fallback (Midnight 12.0.1 compatibility)
-if C_PetBattles and C_PetBattles.IsInBattle then
-	C_PetBattles_IsInBattle = C_PetBattles.IsInBattle
-elseif _G.C_PetBattles_IsInBattle then
-	C_PetBattles_IsInBattle = _G.C_PetBattles_IsInBattle
-else
-	-- Fallback for Midnight 12.0+ where pet battles don't exist
-	C_PetBattles_IsInBattle = function() return false end
-end
 
 	UnitCastingInfo = _G.UnitCastingInfo
 
@@ -589,8 +563,6 @@ function AFKS:Init()
 			self:SetAnimation(0)
 			self.isIdle = true
 			AFKS.animTimer = C_TimerNewTimer(self.idleDuration, LoopAnimations)
-			-- Disable this OnUpdate handler once idle to avoid polling unnecessarily
-			self:SetScript("OnUpdate", nil)
 		end
 	end)
 
@@ -600,18 +572,14 @@ end
 
 
 do
-	-- Only initialize AFKS for Warlock class
-	local _, playerClass = UnitClass("player")
-	if playerClass == "WARLOCK" then
-		AFKS:Init()
+	AFKS:Init()
 
-		if wowVersion == "retail" then
-			hooksecurefunc ("LFGListInviteDialog_Show", function()
-				if not InCombatLockdown() then
-					AFKS:SetAFK(false)
-				end
-			end)
-		end
+	if wowVersion == "retail" then
+		hooksecurefunc ("LFGListInviteDialog_Show", function()
+			if not InCombatLockdown() then
+				AFKS:SetAFK(false)
+			end
+		end)
 	end
 end
 

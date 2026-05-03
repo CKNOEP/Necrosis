@@ -229,8 +229,8 @@ Notes:
 	[691]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "felhunter", PetId = 417, reagent = "soul_shard", }, -- Felhunter
 	[30146]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "felguard", PetId = 17252, reagent = "soul_shard", }, -- Felguard
 
-	[1122]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "inferno", Length = 5, Cooldown = 3600, }, -- 5852 Inferno || https://classicdb.ch/?spell=1122 -- Infernals https://classic.wowhead.com/spell=23426 Needs research
-	[18540]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "rit_of_doom", Length = 0, Cooldown = 3600, }, -- 11859 Ritual of Doom || Rituel funeste || https://classicdb.ch/?spell=18540
+	[1122]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "inferno", Length = 5, Cooldown = 3600, reagent = "infernal_stone", }, -- 5852 Inferno || https://classicdb.ch/?spell=1122 -- Infernals https://classic.wowhead.com/spell=23426 Needs research
+	[18540] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "rit_of_doom", Length = 0, Cooldown = 3600, reagent = "demonic_figurine", }, -- 11859 Ritual of Doom || Rituel funeste || https://classicdb.ch/?spell=18540
 	
 	-- ::: Stones
 	-- Create Soulstone minor || Création pierre d'âme
@@ -239,7 +239,7 @@ Notes:
 	[20755] = {UsageRank = 3, SpellRank = 3, Timer = false, Usage = "soulstone",}, -- 40 || https://classicdb.ch/?spell=20755 || https://classicdb.ch/?item=16893
 	[20756] = {UsageRank = 4, SpellRank = 4, Timer = false, Usage = "soulstone",}, -- greater 50|| https://classicdb.ch/?spell=20756 || https://classicdb.ch/?item=16895
 	[20757] = {UsageRank = 5, SpellRank = 5, Timer = false, Usage = "soulstone",}, -- major 60|| https://classicdb.ch/?spell=20757 || https://classicdb.ch/?item=16896
-	[27238] = {UsageRank = 6, SpellRank = 6, Timer = true, Usage = "soulstone", Length = 1800, Buff = true,}, --  TBC 70 (30 min duration in Anniversary)
+	[27238] = {UsageRank = 6, SpellRank = 6, Timer = false, Usage = "soulstone",}, --  TBC 70
 	[47884] = {UsageRank = 7, SpellRank = 7, Timer = false, Usage = "soulstone",}, --  WOLTK	
 
 	
@@ -273,7 +273,7 @@ Notes:
 	-- ::: Buffs
 	[687]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Demon Skin || Peau de démon 
 	[696]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --  
-	[706]	= {UsageRank = 3, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Demon Armor || Armure démoniaque
+	[706]	= {UsageRank = 3, SpellRank = 1, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Demon Armor || Armure démoniaque
 	[1086]	= {UsageRank = 4, SpellRank = 2, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
 	[11733] = {UsageRank = 5, SpellRank = 3, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
 	[11734] = {UsageRank = 6, SpellRank = 4, Timer = false, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
@@ -285,9 +285,10 @@ Notes:
 	--TBC Fel Armor
 	--[28176]	= {UsageRank = 8, SpellRank = 1, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
 	--[28189]	= {UsageRank = 9, SpellRank = 2, Timer = true, Usage = "armor", Length = 1800, Buff = true, SelfOnly = true, }, --  
-	--TBC Fel Armor
-	[28176]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
-	[28189]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, --
+	--SOD Fel Armor
+	[403619]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
+	--[28176]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- Fel Armor || Gangrarmure
+	--[28189]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 
 	--[47892]	= {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 	
 	--[47893]	= {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "fel_armor", Length = 1800, Buff = true, SelfOnly = true, }, -- 		
 	--
@@ -516,11 +517,11 @@ Notes:
 	From the id, WoW knows the health and mana to give if the soul stone is used.
 	Note: WoW will only allow one soul stone at a time so we do not have to worry about multiple stones...
 	--]] 
-	[20707] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "minor_ss_used",   Result = true, Cooldown = 900, Group = 1, Buff = true, }, -- Soulstone buff restoration
-	[20762] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "lesser_ss_used",  Result = true, Cooldown = 900, Group = 1, Buff = true, }, -- Soulstone buff restoration
-	[20763] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ss_used",         Result = true, Cooldown = 900, Group = 1, Buff = true, }, -- Soulstone buff restoration
-	[20764] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "greater_ss_used", Result = true, Cooldown = 900, Group = 1, Buff = true, }, -- Soulstone buff restoration
-	[20765] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "major_ss_used",   Result = true, Cooldown = 900, Group = 1, Buff = true, }, -- Soulstone buff restoration
+	[20707] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "minor_ss_used",   Result = true, Cooldown = 900, Group = 1, }, -- ss_rez
+	[20762] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "lesser_ss_used",  Result = true, Cooldown = 900, Group = 1, }, -- 
+	[20763] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ss_used",         Result = true, Cooldown = 900, Group = 1, }, -- 
+	[20764] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "greater_ss_used", Result = true, Cooldown = 900, Group = 1, }, -- 
+	[20765] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "major_ss_used",   Result = true, Cooldown = 900, Group = 1, }, --
 	--[27239] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "master_ss_used",  Result = true, Cooldown = 900, Group = 1, }, -- 
 	--[47883] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "demonic_ss_used",  Result = true, Cooldown = 900, Group = 1, }, -- 	
 
@@ -628,8 +629,8 @@ Necrosis.Warlock_Buttons = {
 					high = "Interface\\AddOns\\Necrosis\\UI\\Kilrogg-02",
 					}, --
 	summoning 	= {f = "NecrosisBuffMenu05", tip = "TP", anchor = "ANCHOR_RIGHT", can_target = true,
-					norm = "Interface\\AddOns\\Necrosis\\UI\\TP-RitualOfSummon",
-					high = "Interface\\AddOns\\Necrosis\\UI\\TP-RitualOfSummon",
+					norm = "Interface\\AddOns\\Necrosis\\UI\\TP-01",
+					high = "Interface\\AddOns\\Necrosis\\UI\\TP-02",
 					}, --
 	link 		= {f = "NecrosisBuffMenu06", tip = "SoulLink", anchor = "ANCHOR_RIGHT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\SoulLink-01",
@@ -700,42 +701,36 @@ Necrosis.Warlock_Buttons = {
 	destroy_shards = {f = "NecrosisDestroyShardsButton", tip = "DestroyShards", anchor = "ANCHOR_RIGHT",
 					norm = "Interface\\AddOns\\Necrosis\\UI\\ShardDestroy-01",
 					high = "Interface\\AddOns\\Necrosis\\UI\\ShardDestroy-02",
-					func = function(self,arg1)
-
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DestroyShards] Button clicked! arg1 = " .. tostring(arg1))
-
+					func = function(self,arg1) 
+					
 						if arg1 == "RightButton" then
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DestroyShards] ✅ RIGHT CLICK detected - Calling DeleteShards()")
 						Necrosis:DeleteShards()
 						Necrosis:BuildButtonTooltip(self)
 						elseif arg1 == "LeftButton" then
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DestroyShards] 🟦 LEFT CLICK detected - Moving shards to bag")
 						--Move shard to the specific bag
 						--Necrosis:SoulshardSwitch("CHECK")
 						for i=1, GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id) do
 						--print ("Move Shard ",i," to ", GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id))
 						Necrosis:SoulshardSwitch(i)
 						end
-
+						
 						elseif arg1 == 1 then
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DestroyShards] 🔼 WHEEL UP detected - Increasing DestroyCount to " .. (NecrosisConfig.DestroyCount + 1))
-							if NecrosisConfig.DestroyCount < 32 then
-							NecrosisConfig.DestroyCount = NecrosisConfig.DestroyCount + 1
+						
+							if NecrosisConfig.DestroyCount < 32 then 
+							NecrosisConfig.DestroyCount = NecrosisConfig.DestroyCount + 1 
 							Necrosis:BuildButtonTooltip(self)
 							Necrosis:BagExplore()
 							end
 						elseif arg1 == -1 then
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DestroyShards] 🔽 WHEEL DOWN detected - Decreasing DestroyCount to " .. (NecrosisConfig.DestroyCount - 1))
-							if NecrosisConfig.DestroyCount >0 then
-							NecrosisConfig.DestroyCount = NecrosisConfig.DestroyCount - 1
+							if NecrosisConfig.DestroyCount >0 then 
+							NecrosisConfig.DestroyCount = NecrosisConfig.DestroyCount - 1 
 							Necrosis:BuildButtonTooltip(self)
 							Necrosis:BagExplore()
 							end
-
-
-
+						
+						
+						
 						else
-						_G["DEFAULT_CHAT_FRAME"]:AddMessage("[DestroyShards] ⚠️ UNKNOWN CLICK TYPE: " .. tostring(arg1))
 						end
 					end
 					}, --				
@@ -1114,22 +1109,13 @@ function Necrosis.GetSpellName(usage)
 			return spell.Name
 		end
 	end
-
-	-- Fallback: search for any spell with this usage in Warlock_Spells
-	-- This handles cases where spell is not in player's spellbook yet
-	for spellId, spellData in pairs(Necrosis.Warlock_Spells) do
-		if spellData.Usage == usage and spellData.Name then
-			return spellData.Name
-		end
-	end
-
 	return ""
 end
 
 function Necrosis.GetSpell(usage) -- return the Warlock_Spells table (pointer)
-	if Necrosis.Warlock_Spell_Use[usage] --
+	if Necrosis.Warlock_Spell_Use[usage] -- 
 	then
-		return
+		return 
 			Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]]
 	else
 		return nil
@@ -1142,7 +1128,8 @@ end
 
 function Necrosis.GetSpellCastName(usage)
 
-	if Necrosis.Warlock_Spell_Use[usage] then
+	if Necrosis.Warlock_Spell_Use[usage] --
+	then
 
 		if usage == "soulstone" then
 		--print("SS",Necrosis.Warlock_Spells[Necrosis.Warlock_Spell_Use[usage]].CastName)
@@ -1448,7 +1435,6 @@ function Necrosis:SpellSetup(reason)
 		end
 		Necrosis.Warlock_Spells[id].Name = spell_name
 		Necrosis.Warlock_Spells[id].ID = id -- redundant to the 'id' but allows the spell to be self contained if returned as a table
-		Necrosis.Warlock_Spells[id].CastName = spell_name -- Initialize CastName early so it's available even for unknown spells
 
 		-- Add the name by usage even if the warlock does not know the spell. 
 		-- Use the 'lowest' usage. Will be updated to highest if known by warlock

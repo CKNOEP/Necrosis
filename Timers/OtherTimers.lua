@@ -33,7 +33,7 @@ function Necrosis:RezStoneUpdate(SpellTimer)
 		Secondes = mod(Secondes, 60)
 
 		if (Minutes > 0) then
-			if f then f.font_string:SetText("|CFFFFC4FF"..string.format("%02d", Minutes).."|r") end -- white
+			if f then f.font_string:SetText("|CFFFFC4FF"..string.format("%02d",tostring(Minutes)).."|r") end -- white
 		else
 			if f then f.font_string:SetText("|CFFFF00FF"..tostring(Secondes).."|r") end -- purple
 		end
@@ -55,7 +55,7 @@ end
 function Necrosis:RezTimerUpdate(SpellTimer, LastUpdate)
 	local Time, TimeMax, Minutes, Secondes
 	for index, valeur in ipairs(SpellTimer) do
-		if Necrosis.IsSpellRez(Necrosis.GetSpellName(valeur.Usage)) then
+		if Necrosis.IsSpellRez(valeur) then 
 			Time = valeur.Time
 			TimeMax = valeur.TimeMax
 			break
@@ -73,27 +73,12 @@ function Necrosis:RezTimerUpdate(SpellTimer, LastUpdate)
 	Minutes = floor(Secondes/60)
 	Secondes = mod(Secondes, 60)
 
-	-- Get spell cooldown for Soulstone (spell ID 20707)
-	local spellStart, spellDuration, spellEnabled = GetSpellCooldown(20707)
-	local cdText = ""
-	if spellStart == 0 then
-		-- No cooldown
-		cdText = ""
-	else
-		local cdTimeRemaining = ((spellStart - GetTime()) + spellDuration)
-		if cdTimeRemaining > 0 then
-			local cdMin = floor(cdTimeRemaining / 60)
-			local cdSec = mod(cdTimeRemaining, 60)
-			cdText = string.format("\n|cFFFFFFFFcd: %d:%02d|r", cdMin, cdSec)
-		end
-	end
-
 	-- Le timer numérique
 	if NecrosisConfig.CountType == 3 then
 		if (Minutes > 0) then
-			NecrosisShardCount:SetText(Minutes.." m"..cdText)
+			NecrosisShardCount:SetText(Minutes.." m")
 		else
-			NecrosisShardCount:SetText(Secondes..cdText)
+			NecrosisShardCount:SetText(Secondes)
 		end
 	end
 	-- Le timer graphique
@@ -169,7 +154,15 @@ function Necrosis:TextTimerUpdate(SpellTimer, SpellGroup)
 		else
 			display = display.."0"..seconds
 		end
-		display = display.." - <close>"..color..SpellTimer[index].Name.."<close>"
+		-- Afficher SpellLink si disponible, sinon texte brut
+		local spellText = SpellTimer[index].Name
+		if SpellTimer[index].SpellID then
+			local spellLink = GetSpellLink(SpellTimer[index].SpellID)
+			if spellLink then
+				spellText = spellLink
+			end
+		end
+		display = display.." - <close>"..color..spellText.."<close>"
 		
 		if (SpellTimer[index].Target == nil) then
 			SpellTimer[index].Target = "";

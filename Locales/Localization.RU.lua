@@ -76,8 +76,6 @@ L["SUCCUBUS_LABEL"] = "|c00FFFFFF".."Суккуба".."|r"
 L["SUCCUBUS"] = "Суккуба"
 L["INCCUBUS_LABEL"] = "|c00FFFFFF".."Инккуб".."|r"
 L["INCCUBUS"] = "Инккуб"
-L["SAYAAD_LABEL"] = "|c00FFFFFF".."Инккуб".."|r"
-L["SAYAAD"] = "Инккуб"
 L["FELHUNTER_LABEL"] = "|c00FFFFFF".."Охотник Скверны".."|r"
 L["FELHUNTER"] = "Охотник Скверны"
 L["FELGUARD_LABEL"] = "|c00FFFFFF".."Страж Скверны".."|r"
@@ -114,7 +112,6 @@ L["BAG_FULL_PREFIX"] = "Ваша "
 L["BAG_FULL_SUFFIX"] = " полна!"
 L["BAG_FULL_DESTROY_PREFIX"] = " полна. Следующий осколок души будет уничтожен!"
 L["INTERFACE_WELCOME"] = "<white>Введите /necrosis для отображения окна настроек!"
-L["RETAIL_ANNOUNCEMENT"] = "|cffff6600🔥 Ритуал завершён! Некроз возвысился на RETAIL! 🔥|r\n|cffffffff Ваши тёмные желания важны для нас - поделитесь своими демоническими мечтами!|r"
 L["INTERFACE_TOOLTIP_ON"] = "[+] Всплывающие подсказки включены"
 L["INTERFACE_TOOLTIP_OFF"] = "[-] Всплывающие подскажки выключены"
 L["INTERFACE_MESSAGE_ON"] = "[+] Оповещения в окне чата - включены"
@@ -181,9 +178,6 @@ L["BUTTONS_ROTATION"] = "Вращение кнопок"
 L["BUTTONS_STICK"] = "Закрепить кнопки вокруг Сферы"
 L["BUTTONS_MOUNT"] = "Использовать мой транспорт"
 L["BUTTONS_SELECTION"] = "Выбор кнопок, которые будут показаны"
-L["BOUTONS_PIERRES"] = "Knopki Kamnej"
-L["BOUTONS_ACTION"] = "Knopki Dejstvij"
-L["MOUNTS_TITLE"] = "Верховые животные"
 L["BUTTONS_LEFT"] = "Прикреплено - [Левый Клик]"
 L["BUTTONS_RIGHT"] = "Прикреплено - [Правый Клик]"
 L["BUTTONS_L"] = "[Левый Клик]"
@@ -273,10 +267,6 @@ L["ANTI_FEAR_BUFF_TREMOR"]		= "Тотем трепета"
 L["ANTI_FEAR_BUFF_ABOLISH"]		= "Рассеяние чар"
 L["ANTI_FEAR_DEBUFF_RECKLESS"]	= "Проклятие безрассудства"
 
--- NecrosisUI
-L["NECROSISUI_ENABLED"] = "Включить NecrosisUI (расширенный интерфейс)"
-L["THREAT_METER_ENABLED"] = "Включить Threat Meter (круглый индикатор)"
-
 -- Speech
 
 --
@@ -295,108 +285,3 @@ AFKS_CAMPOFF = "\124cFFFFEA00ОТДЫХ ВыКЛ\124r"
 AFKS_NOGUILD = "Нет Гильдии"
 AFKS_DATEFORMAT = "%d-%d-%d\n%s\n\n%s"
 
-
--- Missing translations (added automatically)
-L["SPHERE_SPELL2"] = "Заклинание, накладываемое Сферой (Shift+клик)"
-L["SPHERE_SPELL_RIGHTCLICK"] = "Правый клик на Сфере для удаления излишков"
-L["SPHERE_SPELL_RIGHTCLICK_L2"] = "Ctrl+Левый клик для открытия меню конфигурации"
-L["SPHERE_SPELL+CTRL"] = "Открыть меню опций"
-L["CATA"] = "Катаклизм"
-L["PURPLE2"] = "Фиолетовый2"
-L["SPEECH_API"] = "API синтеза речи"
-
--- Missing UI Labels (from config pages)
-L["UNFORTUNATELY_TBC_SHARD_MSG"] = "К сожалению, в TBC Blizzard решила удалить возможность аддонов автоматически удалять осколки. Автоматическая сортировка после боя больше не поддерживается. Теперь используйте кнопку осколка для управления осколками"
-L["OPEN_OPTIONS_OVERLAY"] = "Открыть параметры SpellOverlay"
-L["AFK_SCREEN"] = "Экран AFK"
-L["MOUNT_DRAG_DROP_INSTRUCTIONS"] = "Выберите ваши ездовых животных: перетащите ездовое животное в рамку, чтобы связать его"
-L["OFFSET_X"] = "Смещение X"
-L["OFFSET_Y"] = "Смещение Y"
-L["SELECT_MOUNTS"] = "Выберите ваших ездовых животных:"
-L["OPEN_COLLECTIONS"] = "Открыть коллекцию"
-L["PAGE_OF_N"] = "Страница %d из %d"
-L["RESET"] = "Сброс"
-L["TEST_OVERLAY"] = "Тестовый оверлей"
-
--- Summon Queue Module
-L["SUMMON_QUEUE_LABEL"] = "|c00FFFFFF".."Очередь Призыва".."|r"
-L["SUMMON_QUEUE_ENABLED"] = "Включить очередь призыва"
-L["SUMMON_QUEUE_TRIGGER"] = "Коды активации"
-L["SUMMON_QUEUE_TRIGGER_DESC"] = "Сообщение(я) в чате для присоединения. Разделите несколько кодов запятыми: 123, summon, inv"
-L["SUMMON_QUEUE_AUTO_REMOVE"] = "Автоматически удалять в пределах досягаемости"
-L["SUMMON_QUEUE_AUDIO"] = "Звуковые оповещения"
-L["SUMMON_QUEUE_SYNC"] = "Синхронизация с другими чернокнижниками"
-L["SUMMON_QUEUE_SHOW"] = "Очередь"
-L["SUMMON_QUEUE_WINDOW"] = "Показать окно очереди"
-L["SUMMON_QUEUE_ADDED"] = "<player> добавлен в очередь призыва"
-L["SUMMON_QUEUE_REMOVED"] = "<player> удален из очереди"
-L["SUMMON_QUEUE_YOUR_TURN"] = "Ваша очередь быть призванным!"
-L["SUMMON_QUEUE_POSITION"] = "Позиция в очереди: <pos>/<total>"
-L["SUMMON_QUEUE_CLEAR"] = "Очистить очередь"
-L["SUMMON_QUEUE_MANUAL_ADD"] = "Добавить цель"
-L["SUMMON_QUEUE_EMPTY"] = "Очередь пуста"
-
--- Version Check Module
-L["VERSION_UPDATE_AVAILABLE"] = "Доступно обновление"
-L["CURRENT_VERSION"] = "Текущая версия"
-L["DOWNLOAD"] = "Скачать"
-L["GITHUB"] = "GitHub"
-L["TYPE"] = "Введите"
-L["VERSION_CHECK_MANUAL"] = "Проверьте обновления вручную"
-L["CURSEFORGE"] = "CurseForge"
-L["UPDATE_AVAILABLE"] = "Доступно обновление"
-L["UP_TO_DATE"] = "У вас последняя версия!"
-L["VERSION"] = "Версия"
-L["UPDATE"] = "Обновить"
-
--- About Panel
-L["ABOUT_SUBTITLE"] = "Интерфейс Чернокнижника и управление осколками души"
-L["ABOUT_DESCRIPTION"] = [[
-Necrosis - это лучший аддон для Чернокнижников, предоставляющий полное управление интерфейсом для осколков души, заклинаний, вызова демонов, баффов, проклятий и таймеров. Более 20 лет непрерывной разработки и поддержки сообщества.
-
-Этот аддон предлагает интерфейс радиальных кнопок, графическое отображение осколков души, обширные возможности настройки и продвинутые функции, такие как управление очередью вызова с синхронизацией группы.
-
-Разработан с любовью для сообщества Чернокнижников.
-]]
-L["DOWNLOAD_SUPPORT"] = "Загрузить и поддержка"
-L["CREDITS"] = "Команда разработчиков и благодарности"
-
--- Tooltip Labels (for main sphere)
-L["TOOLTIP_LEFT_CLICK"] = "Левый клик"
-L["TOOLTIP_SHIFT_LEFT_CLICK"] = "Shift+Левый клик"
-L["TOOLTIP_RIGHT_CLICK"] = "Правый клик"
-L["TOOLTIP_CONFIGURATION"] = "Конфигурация"
-L["TOOLTIP_DRAG"] = "Drag"
-L["TOOLTIP_MOVE"] = "Переместить"
-
--- Stone Labels (for tooltip display)
-L["STONE_SOULSTONE_LABEL"] = "Камень душ: "
-L["STONE_HEALTHSTONE_LABEL"] = "Камень здоровья: "
-L["STONE_SPELLSTONE_LABEL"] = "Камень заклинаний: "
-L["STONE_FIRESTONE_LABEL"] = "Огненный камень: "
-L["STONE_INFERNAL_LABEL"] = "Адский камень: "
-
--- Soul Shard Management Tooltip
-L["SHARD_MOUSEWHEEL_HELP"] = "Используйте колесо мыши, чтобы увеличить или уменьшить лимит"
-L["SHARD_LEFTCLICK_HELP"] = "Используйте левый клик, чтобы переместить осколок в конкретный мешок"
-
--- Spellstone Charges
-L["SPELLSTONE_CHARGES"] = "Заряды"
-
--- Summon Queue Config UI
-L["ENABLED"] = "Включено"
-L["OPTIONS"] = "Опции"
-L["SETTINGS"] = "Настройки"
-L["SUMMON_QUEUE_SHOW"] = "Очередь"
-
--- Demon Cooldown Display
-L["DEMON_COOLDOWN"] = "Перезарядка : "
-
--- Additional Skin Colors (Russian)
-if not L["ROSE"] then
-L["ROSE"] = "Розовый"
-L["BLEU"] = "Синий"
-L["VIOLET1"] = "Фиолетовый"
-L["VIOLET2"] = "Фиолетовый 2"
-L["X"] = "Специальный"
-end

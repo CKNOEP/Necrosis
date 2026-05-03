@@ -6,6 +6,16 @@
 -- On définit G comme étant le tableau contenant toutes les frames existantes.
 local _G = getfenv(0)
 
+-- Fonction helper pour rendre les sliders visibles
+local function AddSliderBackdrop(slider)
+	if not slider.bg then
+		slider.bg = slider:CreateTexture(nil, "BACKGROUND")
+		slider.bg:SetColorTexture(0.2, 0.2, 0.2, 0.8)
+		slider.bg:SetPoint("TOPLEFT", slider, "TOPLEFT", 0, -2)
+		slider.bg:SetPoint("BOTTOMRIGHT", slider, "BOTTOMRIGHT", 0, 2)
+	end
+end
+
 
 ------------------------------------------------------------------------------------------------------
 -- CREATION DE LA FRAME DES OPTIONS
@@ -97,6 +107,14 @@ function Necrosis:SetMenusConfig()
 		FontString:ClearAllPoints()
 		FontString:SetPoint("BOTTOM", frame, "BOTTOM", 50, 400)
 
+		-- Icône du menu à gauche du titre
+		local icon = frame:CreateTexture("NecrosisMenusConfig2Icon", "ARTWORK")
+		icon:SetTexture("Interface\\AddOns\\Necrosis\\UI\\BuffMenuButton-01")
+		icon:SetSize(32, 32)
+		icon:ClearAllPoints()
+		icon:SetPoint("RIGHT", FontString, "LEFT", -10, 0)
+		icon:Show()
+
 		-- Boutons
 		frame = CreateFrame("Button", nil, NecrosisMenusConfig2, "UIPanelButtonTemplate")
 		frame:SetText(">>>")
@@ -144,6 +162,14 @@ function Necrosis:SetMenusConfig()
 		FontString:ClearAllPoints()
 		FontString:SetPoint("BOTTOM", frame, "BOTTOM", 50, 400)
 
+		-- Icône du menu à gauche du titre
+		local icon = frame:CreateTexture("NecrosisMenusConfig3Icon", "ARTWORK")
+		icon:SetTexture("Interface\\AddOns\\Necrosis\\UI\\PetMenuButton-01")
+		icon:SetSize(32, 32)
+		icon:ClearAllPoints()
+		icon:SetPoint("RIGHT", FontString, "LEFT", -10, 0)
+		icon:Show()
+
 		-- Boutons
 		frame = CreateFrame("Button", nil, NecrosisMenusConfig3, "UIPanelButtonTemplate")
 		frame:SetText(">>>")
@@ -190,6 +216,14 @@ function Necrosis:SetMenusConfig()
 		FontString:Show()
 		FontString:ClearAllPoints()
 		FontString:SetPoint("BOTTOM", frame, "BOTTOM", 50, 400)
+
+		-- Icône du menu à gauche du titre
+		local icon = frame:CreateTexture("NecrosisMenusConfig4Icon", "ARTWORK")
+		icon:SetTexture("Interface\\AddOns\\Necrosis\\UI\\CurseMenuButton-01")
+		icon:SetSize(32, 32)
+		icon:ClearAllPoints()
+		icon:SetPoint("RIGHT", FontString, "LEFT", -10, 0)
+		icon:Show()
 
 		-- Boutons
 		frame = CreateFrame("Button", nil, NecrosisMenusConfig4, "UIPanelButtonTemplate")
@@ -349,23 +383,10 @@ function Necrosis:SetMenusConfig()
 		frame:SetObeyStepOnDrag(true)
 		frame:SetWidth(150)
 		frame:SetHeight(15)
-
-		-- Create slider visual elements with circular dot cursor
-		local track = frame:CreateTexture(nil, "BACKGROUND")
-		track:SetWidth(150)
-		track:SetHeight(4)
-		track:SetColorTexture(0.2, 0.2, 0.2, 1)
-		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
-
-		local thumb = frame:GetThumbTexture()
-		if thumb then
-			thumb:SetTexture("Interface\Common\Indicator-Yellow")
-			thumb:SetColorTexture(1, 0.8, 0, 1)
-			thumb:SetSize(6, 6)
-		end
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("CENTER", NecrosisMenusConfig2, "BOTTOM", 50, 265)
+		AddSliderBackdrop(frame)
 
 		local f = _G[Necrosis.Warlock_Buttons.banish.f]
 		frame:SetScript("OnEnter", function(self)
@@ -403,23 +424,10 @@ function Necrosis:SetMenusConfig()
 		frame:SetObeyStepOnDrag(true)
 		frame:SetWidth(140)
 		frame:SetHeight(15)
-
-		-- Create slider visual elements with circular dot cursor
-		local track = frame:CreateTexture(nil, "BACKGROUND")
-		track:SetWidth(150)
-		track:SetHeight(4)
-		track:SetColorTexture(0.2, 0.2, 0.2, 1)
-		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
-
-		local thumb = frame:GetThumbTexture()
-		if thumb then
-			thumb:SetTexture("Interface\Common\Indicator-Yellow")
-			thumb:SetColorTexture(1, 0.8, 0, 1)
-			thumb:SetSize(6, 6)
-		end
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("LEFT", NecrosisMenusConfig2, "BOTTOMLEFT", 35, 200)
+		AddSliderBackdrop(frame)
 
 		local State = "Ferme"
 		if NecrosisConfig.BlockedMenu then
@@ -440,7 +448,7 @@ function Necrosis:SetMenusConfig()
 			Necrosis:SetOfxy("Buff")
 		end)
 
-		NecrosisBuffOxText:SetText((L and L["OFFSET_X"]) or "Offset X")
+		NecrosisBuffOxText:SetText("Offset X")
 		NecrosisBuffOxLow:SetText("")
 		NecrosisBuffOxHigh:SetText("")
 
@@ -451,23 +459,10 @@ function Necrosis:SetMenusConfig()
 		frame:SetObeyStepOnDrag(true)
 		frame:SetWidth(140)
 		frame:SetHeight(15)
-
-		-- Create slider visual elements with circular dot cursor
-		local track = frame:CreateTexture(nil, "BACKGROUND")
-		track:SetWidth(150)
-		track:SetHeight(4)
-		track:SetColorTexture(0.2, 0.2, 0.2, 1)
-		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
-
-		local thumb = frame:GetThumbTexture()
-		if thumb then
-			thumb:SetTexture("Interface\Common\Indicator-Yellow")
-			thumb:SetColorTexture(1, 0.8, 0, 1)
-			thumb:SetSize(6, 6)
-		end
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("RIGHT", NecrosisMenusConfig2, "BOTTOMRIGHT", 40, 200)
+		AddSliderBackdrop(frame)
 
 		local State = "Ferme"
 		if NecrosisConfig.BlockedMenu then
@@ -488,7 +483,7 @@ function Necrosis:SetMenusConfig()
 			Necrosis:SetOfxy("Buff")
 		end)
 
-		NecrosisBuffOyText:SetText((L and L["OFFSET_Y"]) or "Offset Y")
+		NecrosisBuffOyText:SetText("Offset Y")
 		NecrosisBuffOyLow:SetText("")
 		NecrosisBuffOyHigh:SetText("")
 		
@@ -630,23 +625,10 @@ function Necrosis:SetMenusConfig()
 		frame:SetObeyStepOnDrag(true)
 		frame:SetWidth(140)
 		frame:SetHeight(15)
-
-		-- Create slider visual elements with circular dot cursor
-		local track = frame:CreateTexture(nil, "BACKGROUND")
-		track:SetWidth(150)
-		track:SetHeight(4)
-		track:SetColorTexture(0.2, 0.2, 0.2, 1)
-		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
-
-		local thumb = frame:GetThumbTexture()
-		if thumb then
-			thumb:SetTexture("Interface\Common\Indicator-Yellow")
-			thumb:SetColorTexture(1, 0.8, 0, 1)
-			thumb:SetSize(6, 6)
-		end
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("LEFT", NecrosisMenusConfig3, "BOTTOMLEFT", 35, 160)
+		AddSliderBackdrop(frame)
 
 		local State = "Ferme"
 		if NecrosisConfig.BlockedMenu then
@@ -667,7 +649,7 @@ function Necrosis:SetMenusConfig()
 			Necrosis:SetOfxy("Pet")
 		end)
 
-		NecrosisDemonOxText:SetText((L and L["OFFSET_X"]) or "Offset X")
+		NecrosisDemonOxText:SetText("Offset X")
 		NecrosisDemonOxLow:SetText("")
 		NecrosisDemonOxHigh:SetText("")
 
@@ -678,23 +660,10 @@ function Necrosis:SetMenusConfig()
 		frame:SetObeyStepOnDrag(true)
 		frame:SetWidth(140)
 		frame:SetHeight(15)
-
-		-- Create slider visual elements with circular dot cursor
-		local track = frame:CreateTexture(nil, "BACKGROUND")
-		track:SetWidth(150)
-		track:SetHeight(4)
-		track:SetColorTexture(0.2, 0.2, 0.2, 1)
-		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
-
-		local thumb = frame:GetThumbTexture()
-		if thumb then
-			thumb:SetTexture("Interface\Common\Indicator-Yellow")
-			thumb:SetColorTexture(1, 0.8, 0, 1)
-			thumb:SetSize(6, 6)
-		end
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("RIGHT", NecrosisMenusConfig3, "BOTTOMRIGHT", 40, 160)
+		AddSliderBackdrop(frame)
 
 		local State = "Ferme"
 		if NecrosisConfig.BlockedMenu then
@@ -715,7 +684,7 @@ function Necrosis:SetMenusConfig()
 			Necrosis:SetOfxy("Pet")
 		end)
 
-		NecrosisDemonOyText:SetText((L and L["OFFSET_Y"]) or "Offset Y")
+		NecrosisDemonOyText:SetText("Offset Y")
 		NecrosisDemonOyLow:SetText("")
 		NecrosisDemonOyHigh:SetText("")
 
@@ -806,23 +775,10 @@ function Necrosis:SetMenusConfig()
 		frame:SetObeyStepOnDrag(true)
 		frame:SetWidth(140)
 		frame:SetHeight(15)
-
-		-- Create slider visual elements with circular dot cursor
-		local track = frame:CreateTexture(nil, "BACKGROUND")
-		track:SetWidth(150)
-		track:SetHeight(4)
-		track:SetColorTexture(0.2, 0.2, 0.2, 1)
-		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
-
-		local thumb = frame:GetThumbTexture()
-		if thumb then
-			thumb:SetTexture("Interface\Common\Indicator-Yellow")
-			thumb:SetColorTexture(1, 0.8, 0, 1)
-			thumb:SetSize(6, 6)
-		end
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("LEFT", NecrosisMenusConfig4, "BOTTOMLEFT", 35, 160)
+		AddSliderBackdrop(frame)
 
 		local State = "Ferme"
 		if NecrosisConfig.BlockedMenu then
@@ -843,7 +799,7 @@ function Necrosis:SetMenusConfig()
 			Necrosis:SetOfxy("Curse")
 		end)
 
-		NecrosisCurseOxText:SetText((L and L["OFFSET_X"]) or "Offset X")
+		NecrosisCurseOxText:SetText("Offset X")
 		NecrosisCurseOxLow:SetText("")
 		NecrosisCurseOxHigh:SetText("")
 
@@ -854,23 +810,10 @@ function Necrosis:SetMenusConfig()
 		frame:SetObeyStepOnDrag(true)
 		frame:SetWidth(140)
 		frame:SetHeight(15)
-
-		-- Create slider visual elements with circular dot cursor
-		local track = frame:CreateTexture(nil, "BACKGROUND")
-		track:SetWidth(150)
-		track:SetHeight(4)
-		track:SetColorTexture(0.2, 0.2, 0.2, 1)
-		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
-
-		local thumb = frame:GetThumbTexture()
-		if thumb then
-			thumb:SetTexture("Interface\Common\Indicator-Yellow")
-			thumb:SetColorTexture(1, 0.8, 0, 1)
-			thumb:SetSize(6, 6)
-		end
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("RIGHT", NecrosisMenusConfig4, "BOTTOMRIGHT", 40, 160)
+		AddSliderBackdrop(frame)
 
 		local State = "Ferme"
 		if NecrosisConfig.BlockedMenu then
@@ -891,7 +834,7 @@ function Necrosis:SetMenusConfig()
 			Necrosis:SetOfxy("Curse")
 		end)
 
-		NecrosisCurseOyText:SetText((L and L["OFFSET_Y"]) or "Offset Y")
+		NecrosisCurseOyText:SetText("Offset Y")
 		NecrosisCurseOyLow:SetText("")
 		NecrosisCurseOyHigh:SetText("")
 

@@ -75,10 +75,8 @@ L["VOIDWALKER_LABEL"] = "|c00FFFFFF".."虚空行者".."|r"
 L["VOIDWALKER"] = "虚空行者"
 L["SUCCUBUS_LABEL"] = "|c00FFFFFF".."魅魔".."|r"
 L["SUCCUBUS"] = "魅魔"
-L["INCCUBUS_LABEL"] = "|c00FFFFFF".."男魔".."|r"
-L["INCCUBUS"] = "男魔"
-L["SAYAAD_LABEL"] = "|c00FFFFFF".."夜魔".."|r"
-L["SAYAAD"] = "夜魔"
+L["INCCUBUS_LABEL"] = "|c00FFFFFF".."夜魔".."|r"
+L["INCCUBUS"] = "夜魔"
 L["FELHUNTER_LABEL"] = "|c00FFFFFF".."地狱猎犬".."|r"
 L["FELHUNTER"] = "地狱猎犬"
 L["FELGUARD_LABEL"] = "|c00FFFFFF".."地狱守卫".."|r"
@@ -116,7 +114,6 @@ L["BAG_FULL_PREFIX"] = "你的 "
 L["BAG_FULL_SUFFIX"] = " 满了 !"
 L["BAG_FULL_DESTROY_PREFIX"] = " 满了; 下个碎片将被摧毁!"
 L["INTERFACE_WELCOME"] = "<white>/necrosis 显示设置菜单!"
-L["RETAIL_ANNOUNCEMENT"] = "|cffff6600🔥 仪式完成！死灵术已升华至零售版！🔥|r\n|cffffffff 你的黑暗愿望对我们很重要 - 分享你的恶魔梦想吧！|r"
 L["INTERFACE_TOOLTIP_ON"] = "打开提示"
 L["INTERFACE_TOOLTIP_OFF"] = "关闭提示"
 L["INTERFACE_MESSAGE_ON"] = "打开聊天信息通知"
@@ -184,9 +181,6 @@ L["BUTTONS_ROTATION"] = "旋转按钮"
 L["BUTTONS_STICK"] = "将按钮固定在球体周围"
 L["BUTTONS_MOUNT"] = "坐骑设置"
 L["BUTTONS_SELECTION"] = "选择显示的按钮"
-L["BOUTONS_PIERRES"] = "石头按钮"
-L["BOUTONS_ACTION"] = "动作按钮"
-L["MOUNTS_TITLE"] = "坐骑"
 L["BUTTONS_LEFT"] = "坐骑 - 左键"
 L["BUTTONS_RIGHT"] = "坐骑 - 右键"
 L["BUTTONS_L"] = "左键"
@@ -288,103 +282,3 @@ L["ABOUT_CATEGORY"] = "Category";
 L["ABOUT_EMAIL"] = "E-mail";
 L["ABOUT_WEB"] = "Website";
 L["ABOUT_LICENSE"] = "License";
-
--- Threat Meter & NecrosisUI
-L["THREAT_METER_ENABLED"] = "启用 Threat Meter（圆形指示器）"
-L["NECROSISUI_ENABLED"] = "启用 NecrosisUI（高级框架）"
-
--- Missing UI Labels (from config pages)
-L["UNFORTUNATELY_TBC_SHARD_MSG"] = "不幸的是，在 TBC 中，暴雪决定移除插件自动删除碎片的能力。战斗后的自动分类不再受支持。现在使用碎片按钮来管理碎片"
-L["OPEN_OPTIONS_OVERLAY"] = "打开选项法术叠加层"
-L["AFK_SCREEN"] = "AFK 屏幕"
-L["MOUNT_DRAG_DROP_INSTRUCTIONS"] = "选择您的坐骑：将坐骑拖放到框架中以绑定它"
-L["OFFSET_X"] = "偏移 X"
-L["OFFSET_Y"] = "偏移 Y"
-L["SELECT_MOUNTS"] = "选择您的坐骑："
-L["OPEN_COLLECTIONS"] = "打开收藏"
-L["PAGE_OF_N"] = "第 %d 页，共 %d 页"
-L["RESET"] = "重置"
-L["TEST_OVERLAY"] = "测试叠加层"
-
--- Summon Queue Module
-L["SUMMON_QUEUE_LABEL"] = "|c00FFFFFF".."召唤队列".."|r"
-L["SUMMON_QUEUE_ENABLED"] = "启用召唤队列"
-L["SUMMON_QUEUE_TRIGGER"] = "触发代码"
-L["SUMMON_QUEUE_TRIGGER_DESC"] = "加入队列的聊天消息。用逗号分隔多个代码：123, summon, inv"
-L["SUMMON_QUEUE_AUTO_REMOVE"] = "在范围内自动移除"
-L["SUMMON_QUEUE_AUDIO"] = "音频警报"
-L["SUMMON_QUEUE_SYNC"] = "与其他术士同步"
-L["SUMMON_QUEUE_SHOW"] = "队列"
-L["SUMMON_QUEUE_WINDOW"] = "显示队列窗口"
-L["SUMMON_QUEUE_ADDED"] = "<player> 已添加到召唤队列"
-L["SUMMON_QUEUE_REMOVED"] = "<player> 已从队列中移除"
-L["SUMMON_QUEUE_YOUR_TURN"] = "轮到你被召唤了！"
-L["SUMMON_QUEUE_POSITION"] = "队列位置：<pos>/<total>"
-L["SUMMON_QUEUE_CLEAR"] = "清空队列"
-L["SUMMON_QUEUE_MANUAL_ADD"] = "添加目标"
-L["SUMMON_QUEUE_EMPTY"] = "队列为空"
-
--- Version Check Module
-L["VERSION_UPDATE_AVAILABLE"] = "有可用更新"
-L["CURRENT_VERSION"] = "当前版本"
-L["DOWNLOAD"] = "下载"
-L["GITHUB"] = "GitHub"
-L["TYPE"] = "输入"
-L["VERSION_CHECK_MANUAL"] = "手动检查更新"
-L["CURSEFORGE"] = "CurseForge"
-L["UPDATE_AVAILABLE"] = "有可用更新"
-L["UP_TO_DATE"] = "您已是最新版本！"
-L["VERSION"] = "版本"
-L["UPDATE"] = "更新"
-
--- About Panel
-L["ABOUT_SUBTITLE"] = "术士界面和灵魂碎片管理"
-L["ABOUT_DESCRIPTION"] = [[
-Necrosis是终极术士插件,为灵魂碎片、法术、恶魔召唤、增益、诅咒和计时器提供全面的界面管理。20多年持续开发和社区支持。
-
-该插件提供径向按钮界面、灵魂碎片图形显示、广泛的自定义选项,以及包括召唤队列管理和团队同步等高级功能。
-
-为术士社区而精心开发。
-]]
-L["DOWNLOAD_SUPPORT"] = "下载和支持"
-L["CREDITS"] = "开发团队和致谢"
-
--- Tooltip Labels (for main sphere)
-L["TOOLTIP_LEFT_CLICK"] = "左键点击"
-L["TOOLTIP_SHIFT_LEFT_CLICK"] = "Shift+左键点击"
-L["TOOLTIP_RIGHT_CLICK"] = "右键点击"
-L["TOOLTIP_CONFIGURATION"] = "配置"
-L["TOOLTIP_DRAG"] = "拖动"
-L["TOOLTIP_MOVE"] = "移动"
-
--- Stone Labels (for tooltip display)
-L["STONE_SOULSTONE_LABEL"] = "灵魂石: "
-L["STONE_HEALTHSTONE_LABEL"] = "生命石: "
-L["STONE_SPELLSTONE_LABEL"] = "法术石: "
-L["STONE_FIRESTONE_LABEL"] = "火焰石: "
-L["STONE_INFERNAL_LABEL"] = "地狱石: "
-
--- Soul Shard Management Tooltip
-L["SHARD_MOUSEWHEEL_HELP"] = "使用鼠标滚轮增加或减少限制"
-L["SHARD_LEFTCLICK_HELP"] = "使用左键单击将灵魂碎片移动到特定的袋子"
-
--- Spellstone Charges
-L["SPELLSTONE_CHARGES"] = "充能"
-
--- Demon Cooldown Display
-L["DEMON_COOLDOWN"] = "冷却 : "
-
--- Summon Queue Config UI
-L["ENABLED"] = "启用"
-L["OPTIONS"] = "选项"
-L["SETTINGS"] = "设置"
-L["SUMMON_QUEUE_SHOW"] = "队列"
-
--- Additional Skin Colors (Simplified Chinese)
-if not L["ROSE"] then
-L["ROSE"] = "粉红色"
-L["BLEU"] = "蓝色"
-L["VIOLET1"] = "紫色"
-L["VIOLET2"] = "紫色 2"
-L["X"] = "特殊"
-end

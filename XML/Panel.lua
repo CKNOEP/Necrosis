@@ -1,5 +1,5 @@
 --[[
-    Necrosis
+    Necrosis 
     Copyright (C) - copyright file included in this release
 --]]
 
@@ -13,8 +13,7 @@ local _G = getfenv(0)
 
 -- Ouverture du cadre des menus des options
 function Necrosis:OpenConfigPanel()
-	PlaySound(SOUNDKIT.UT_QUESTLOG_OPEN or 4384)
-
+    
 	-- On affiche les messages d'aide
 	if self.ChatMessage.Help[1] then
 		for i = 1, #self.ChatMessage.Help, 1 do
@@ -164,7 +163,6 @@ function Necrosis:OpenConfigPanel()
 			"INV_Wand_1H_Stratholme_D_02",
 			"Spell_Nature_TimeStop",
 			"Ability_Creature_Disease_05",
-		"Spell_Demonic_Summon_Infernal",  -- SummonQueue
 			--"spell_fire_playingwithfire",
 		}
 	 
@@ -193,12 +191,7 @@ function Necrosis:OpenConfigPanel()
 			texture:ClearAllPoints()
 			texture:SetPoint("TOPLEFT", -3, 11)
 
-			-- Use custom SummonQueue icon for the 7th tab
-		if i == 6 then
-			frame:SetNormalTexture("Interface\\AddOns\\Necrosis\\UI\\SummonQueue-Icon.png")
-		else
 			frame:SetNormalTexture("Interface\\Icons\\"..tex[i])
-		end
 			frame:SetHighlightTexture("Interface\\Buttons\\ButtonHilight-Square")
 			frame:GetHighlightTexture():SetBlendMode("ADD")
 			frame:SetCheckedTexture("Interface\\Buttons\\CheckButtonHilight")
@@ -224,7 +217,7 @@ end
 -- Function to display different pages of the control panel || Fonction permettant l'affichage des différentes pages du panneau de configuration
 function Necrosis:SetPanel(PanelID)
 	local TabName
-	for index=1, 7, 1 do -- index a ajuster en focntion 
+	for index=1, 6, 1 do -- index a ajuster en focntion 
 		TabName = _G["NecrosisGeneralTab"..index]
 		if index == PanelID then
 			TabName:SetChecked(1)
@@ -239,9 +232,8 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisMenusConfig)
 		HideUIPanel(NecrosisTimersConfig)
 		HideUIPanel(NecrosisMiscConfig)
-		HideUIPanel(NecrosisSummonQueueConfig)
 		--HideUIPanel(NecrosisOverlayConfig)
-
+		
 		self:SetMessagesConfig()
 	elseif PanelID == 2 then
 		HideUIPanel(NecrosisMessagesConfig)
@@ -249,7 +241,6 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisMenusConfig)
 		HideUIPanel(NecrosisTimersConfig)
 		HideUIPanel(NecrosisMiscConfig)
-		HideUIPanel(NecrosisSummonQueueConfig)
 		--HideUIPanel(NecrosisOverlayConfig)
 		self:SetSphereConfig()
 	elseif PanelID == 3 then
@@ -258,7 +249,6 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisMenusConfig)
 		HideUIPanel(NecrosisTimersConfig)
 		HideUIPanel(NecrosisMiscConfig)
-		HideUIPanel(NecrosisSummonQueueConfig)
 		--HideUIPanel(NecrosisOverlayConfig)
 		self:SetButtonsConfig()
 	elseif PanelID == 4 then
@@ -267,7 +257,6 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisButtonsConfig)
 		HideUIPanel(NecrosisTimersConfig)
 		HideUIPanel(NecrosisMiscConfig)
-		HideUIPanel(NecrosisSummonQueueConfig)
 		--HideUIPanel(NecrosisOverlayConfig)
 		self:SetMenusConfig()
 	elseif PanelID == 5 then
@@ -276,7 +265,6 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisButtonsConfig)
 		HideUIPanel(NecrosisMenusConfig)
 		HideUIPanel(NecrosisMiscConfig)
-		HideUIPanel(NecrosisSummonQueueConfig)
 		--HideUIPanel(NecrosisOverlayConfig)
 		self:SetTimersConfig()
 	elseif PanelID == 6 then
@@ -285,37 +273,7 @@ function Necrosis:SetPanel(PanelID)
 		HideUIPanel(NecrosisButtonsConfig)
 		HideUIPanel(NecrosisMenusConfig)
 		HideUIPanel(NecrosisTimersConfig)
-		HideUIPanel(NecrosisSummonQueueConfig)
 		--HideUIPanel(NecrosisOverlayConfig)
 		self:SetMiscConfig()
-	elseif PanelID == 7 then
-		HideUIPanel(NecrosisMessagesConfig)
-		HideUIPanel(NecrosisSphereConfig)
-		HideUIPanel(NecrosisButtonsConfig)
-		HideUIPanel(NecrosisMenusConfig)
-		HideUIPanel(NecrosisTimersConfig)
-		HideUIPanel(NecrosisMiscConfig)
-		if self.SetSummonQueueConfig then
-			self:SetSummonQueueConfig()
-		else
-			-- Fallback: Create a simple placeholder frame
-			if not _G["NecrosisSummonQueueConfig"] then
-				local frame = CreateFrame("Frame", "NecrosisSummonQueueConfig", NecrosisGeneralFrame)
-				frame:SetFrameStrata("DIALOG")
-				frame:SetMovable(false)
-				frame:EnableMouse(true)
-				frame:SetWidth(350)
-				frame:SetHeight(452)
-				frame:Show()
-				frame:ClearAllPoints()
-				frame:SetPoint("BOTTOMLEFT")
-
-				local text = frame:CreateFontString(nil, nil, "GameFontNormal")
-				text:SetPoint("CENTER")
-				text:SetText("SummonQueue Configuration\n(Options-SummonQueue.lua not loaded)")
-				text:Show()
-			end
-			NecrosisSummonQueueConfig:Show()
-		end
 	end
 end

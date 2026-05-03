@@ -225,25 +225,23 @@ display:addButton(button)
 display:setCombatOnly(combatOnly)
 end,
 getOrCreateBucket=function(self,name,spellID)
--- Convert spellID to a simple number to avoid WoW 12.0.1 "table index is secret" errors
 if type(spellID)~='number' then
-spellID=tonumber(tostring(spellID)) or spellID
 SAO:Warn(Module, "Creating a bucket for spellID "..tostring(spellID).." which is of type "..type(spellID).." instead of number")
 end
-local bucket=rawget(SAO.RegisteredBucketsBySpellID, spellID)
+local bucket=SAO.RegisteredBucketsBySpellID[spellID]
 local created=false
 if not bucket then
 bucket=SAO.Bucket:create(name,spellID)
-rawset(SAO.RegisteredBucketsBySpellID, spellID, bucket)
-rawset(SAO.RegisteredBucketsByName, name, bucket)
+SAO.RegisteredBucketsBySpellID[spellID]=bucket
+SAO.RegisteredBucketsByName[name]=bucket
 if SAO.IsEra() and not SAO:IsFakeSpell(spellID)then
 local spellName=SAO:GetSpellName(spellID)
 if spellName then
-local conflictingBucket=rawget(SAO.RegisteredBucketsBySpellID, spellName)
+local conflictingBucket=SAO.RegisteredBucketsBySpellID[spellName]
 if conflictingBucket then
 SAO:Debug(Module, "Registering spells with different spell IDs ("..conflictingBucket.name.." uses spell ID "..conflictingBucket.spellID.." vs. "..bucket.name.." uses spell ID "..bucket.spellID..") but sharing the same spell name '"..spellName.."', ".."this might cause issues")
 end
-rawset(SAO.RegisteredBucketsBySpellID, spellName, bucket)
+SAO.RegisteredBucketsBySpellID[spellName]=bucket
 else
 SAO:Debug(Module, "Registering bucket with unknown spell "..tostring(spellID))
 end
@@ -254,36 +252,20 @@ return bucket,created
 end,
 }
 function SAO:GetBucketByName(name)
-return rawget(self.RegisteredBucketsByName, name)
+return self.RegisteredBucketsByName[name]
 end
 function SAO:GetBucketBySpellID(spellID)
--- Convert to simple number to avoid "table index is secret" errors in WoW 12.0.1
-if type(spellID)~='number' then
-spellID=tonumber(tostring(spellID)) or spellID
-end
--- Use pcall to safely access the table without triggering "secret index" error
-local success, result = pcall(function()
-return rawget(self.RegisteredBucketsBySpellID, spellID)
-end)
-return success and result or nil
+return self.RegisteredBucketsBySpellID[spellID]
 end
 function SAO:GetBucketBySpellIDOrSpellName(spellID,fallbackSpellName)
 if not self.IsEra() or (type(spellID)=='number' and spellID~=0)then
-if type(spellID)~='number' then
-spellID=tonumber(tostring(spellID)) or spellID
-end
-local success, result = pcall(function()
-return rawget(self.RegisteredBucketsBySpellID, spellID)
-end)
-return (success and result or nil),spellID
+return self.RegisteredBucketsBySpellID[spellID],spellID
 else
-local success, bucket = pcall(function()
-return rawget(self.RegisteredBucketsBySpellID, fallbackSpellName)
-end)
-if success and bucket then
+local bucket=self.RegisteredBucketsBySpellID[fallbackSpellName]
+if bucket then
 spellID=bucket.spellID
 end
-return (success and bucket or nil),spellID
+return bucket,spellID
 end
 end
 function SAO:ForEachBucket(bucketFunc)
@@ -329,13 +311,8 @@ end
 end
 function NecrosisSpellActivationOverlay_DumpBuckets(spellID,devDump)
 if spellID then
-if type(spellID)~='number' then
-spellID=tonumber(tostring(spellID)) or spellID
-end
-local success, bucket = pcall(function()
-return rawget(SAO.RegisteredBucketsBySpellID, spellID)
-end)
-if success and bucket then
+local bucket=SAO.RegisteredBucketsBySpellID[spellID]
+if bucket then
 dumpOneBucket(bucket,devDump)
 return
 end

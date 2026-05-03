@@ -18,10 +18,6 @@ L["NECROSIS_ONLY"] = "Necrosis";
 L["NECROSIS_DEBUG"] = "<Necrosis>";
 L["NECROSIS_PRINT"] = "Necrosis";
 
--- General UI
-L["OPTIONS"] = "Options"
-L["SETTINGS"] = "Settings"
-
 -- Configuration
 L["HEALTHSTONE_COOLDOWN"] = "Healthstone Cooldown"
 L["USE"] = "Use"
@@ -86,20 +82,12 @@ L["VOIDWALKER_LABEL"] = "|c00FFFFFF".."Voidwalker".."|r"
 L["VOIDWALKER"] = "Voidwalker"
 L["SUCCUBUS_LABEL"] = "|c00FFFFFF".."Succubus".."|r"
 L["SUCCUBUS"] = "Succubus"
-L["INCCUBUS_LABEL"] = "|c00FFFFFF".."Incubus".."|r"
-L["INCCUBUS"] = "Incubus"
-L["SAYAAD_LABEL"] = "|c00FFFFFF".."Sayaad".."|r"
-L["SAYAAD"] = "Sayaad"
+L["INCCUBUS_LABEL"] = "|c00FFFFFF".."Inccubus".."|r"
+L["INCCUBUS"] = "Inccubus"
 L["FELHUNTER_LABEL"] = "|c00FFFFFF".."Felhunter".."|r"
 L["FELHUNTER"] = "Felhunter"
 L["FELGUARD_LABEL"] = "|c00FFFFFF".."Felguard".."|r"
 L["FELGUARD"] = "Felguard"
-L["DARKGLARE_LABEL"] = "|c00FFFFFF".."Darkglare".."|r"
-L["DARKGLARE"] = "Darkglare"
-L["VILEFIEND_LABEL"] = "|c00FFFFFF".."Vilefiend".."|r"
-L["VILEFIEND"] = "Vilefiend"
-L["TYRANT_LABEL"] = "|c00FFFFFF".."Demonic Tyrant".."|r"
-L["TYRANT"] = "Demonic Tyrant"
 L["INFERNAL_LABEL"] = "|c00FFFFFF".."Infernal".."|r"
 L["INFERNAL"] = "Infernal"
 L["DOOMGUARD_LABEL"] = "|c00FFFFFF".."Doomguard".."|r"
@@ -133,7 +121,6 @@ L["BAG_FULL_PREFIX"] = "Your "
 L["BAG_FULL_SUFFIX"] = " is full!"
 L["BAG_FULL_DESTROY_PREFIX"] = " is full; New shards will be destroyed!"
 L["INTERFACE_WELCOME"] = "<white>/necrosis to show the setting menu!"
-L["RETAIL_ANNOUNCEMENT"] = "|cffff6600🔥 The ritual is complete! Necrosis has ascended to RETAIL! 🔥|r\n|cffffffff Your dark wishes matter to us - share your demonic desires!|r"
 L["INTERFACE_TOOLTIP_ON"] = "Tooltips turned on"
 L["INTERFACE_TOOLTIP_OFF"] = "Tooltips turned off"
 L["INTERFACE_MESSAGE_ON"] = "Chat messaging turned on"
@@ -152,7 +139,7 @@ L["CONFIG_BUTTON"] = "Button Settings"
 L["CONFIG_MENU"] = "Menu Settings"
 L["CONFIG_TIMER"] = "Timer Settings"
 L["CONFIG_MISC"] = "Miscellaneous"
-L["CONFIG_SUMMONQUEUE"] = "Summon Queue"
+L["CONFIG_OVERLAY"] = "Overlay On Proc (Under Construction) "
 --
 L["MSG_POSITION"] = "<- Necrosis system messages will appear here ->"
 L["MSG_SHOW_TIPS"] = "Show tooltips"
@@ -165,8 +152,6 @@ L["MSG_RANDOM_DEMON"] = "Activate random speeches for demons"
 L["MSG_RANDOM_STEED"] = "Activate random speeches for steeds"
 L["MSG_RANDOM_SOULS"] = "Activate random speeches for Ritual of Souls"
 L["MSG_SOUNDS"] = "Activate sounds"
-L["THREAT_METER_ENABLED"] = "Enable Threat Meter (circular indicator)"
-L["NECROSISUI_ENABLED"] = "Enable NecrosisUI (advanced frame)"
 L["MSG_WARN_FEAR"] = "Warn when the target cannot be feared"
 L["MSG_WARN_BANISH"] = "Warn when the target is banishable or enslavable"
 L["MSG_WARN_TRANCE"] = "Warn me when I enter a Trance/Backlash/Moltencore State"
@@ -192,11 +177,6 @@ L["PURPLE"] = "Purple"
 L["PURPLE2"] = "Purple2"
 L["666"] = "666"
 L["X"] = "X"
--- Sphere skins (all 8 colors)
-L["ROSE"] = "Pink"
-L["BLEU"] = "Blue"
-L["VIOLET1"] = "Purple"
-L["VIOLET2"] = "Purple2"
 -- Count
 L["SOUL_SHARDS"] = "Soulshards"
 L["DEMON_SUMMON_STONES"] = "Demon summoning stones"
@@ -208,9 +188,6 @@ L["BUTTONS_ROTATION"] = "Buttons rotation"
 L["BUTTONS_STICK"] = "Stick buttons around the Sphere"
 L["BUTTONS_MOUNT"] = "Use my own mounts"
 L["BUTTONS_SELECTION"] = "Selection of buttons to be shown"
-L["BOUTONS_PIERRES"] = "Stone Buttons"
-L["BOUTONS_ACTION"] = "Action Buttons"
-L["MOUNTS_TITLE"] = "Mounts"
 L["BUTTONS_LEFT"] = "Mount - Left click"
 L["BUTTONS_RIGHT"] = "Mount - Right click"
 L["BUTTONS_L"] = "Left click"
@@ -250,12 +227,6 @@ L["TIMER_ALPHA"]  = "Transparency of timer bars"
 L["TIMER_SPELL"] = "Show the Spell Timer Button"
 L["TIMER_LEFT"] = "Show timers on the left side of the button"
 L["TIMER_UP"] = "Timers grow upwards"
-L["TIMER_REMINDER_TITLE"] = "Reminders"
-L["TIMER_REMINDER_HEALTHSTONE"] = "Healthstone reminder (no stone in bags)"
-L["TIMER_REMINDER_SOULSTONE"] = "Soulstone reminder (no stone placed)"
-L["TIMER_REMINDER_ARMOR"] = "Armor buff reminder"
-L["TIMER_REMINDER_SACRIFICE"] = "Demonic Sacrifice reminder (Destruction only)"
-L["TIMER_REMINDER_GROUP_RAID_ONLY"] = "Only remind when in group or raid"
 --
 L["NO_TIMER"] = "No Timer"
 L["GRAPHICAL"] = "Graphical"
@@ -326,153 +297,3 @@ AFKS_CAMPOFF = "\124cFFFFEA00CAMPING OFF\124r"
 AFKS_NOGUILD = "No Guild"
 AFKS_DATEFORMAT = "%d-%d-%d\n%s\n\n%s"
 
-
--- Missing UI Labels (from config pages)
-L["UNFORTUNATELY_TBC_SHARD_MSG"] = "Unfortunately with TBC, Blizzard has decided to remove the ability for addons to automatically delete shards. Auto-sorting after combat is no longer supported. Now use shard button to manage Shards"
-L["OPEN_OPTIONS_OVERLAY"] = "Open Options SpellOverlay"
-L["AFK_SCREEN"] = "AFK Screen"
-L["MOUNT_DRAG_DROP_INSTRUCTIONS"] = "Select your mounts: drag and drop the Mount into the frame to bind it"
-L["OFFSET_X"] = "Offset X"
-L["OFFSET_Y"] = "Offset Y"
-L["SELECT_MOUNTS"] = "Select your mounts:"
-L["OPEN_COLLECTIONS"] = "Open Collections"
-L["PAGE_OF_N"] = "Page %d of %d"
-L["RESET"] = "Reset"
-L["TEST_OVERLAY"] = "Test Overlay"
-
--- Summon Queue Module
-L["SUMMON_QUEUE_LABEL"] = "|c00FFFFFF".."Summon Queue".."|r"
-L["SUMMON_QUEUE_ENABLED"] = "Enable Summon Queue"
-L["SUMMON_QUEUE_TRIGGER"] = "Trigger Code(s)"
-L["SUMMON_QUEUE_TRIGGER_DESC"] = "Chat message(s) to join queue. Separate multiple codes with commas: 123, summon, inv"
-L["SUMMON_QUEUE_AUTO_REMOVE"] = "Auto-remove when in range"
-L["SUMMON_QUEUE_AUDIO"] = "Audio alerts"
-L["SUMMON_QUEUE_SYNC"] = "Sync with other warlocks"
-L["SUMMON_QUEUE_WINDOW"] = "Show queue window"
-L["SUMMON_QUEUE_ADDED"] = "<player> added to summon queue"
-L["SUMMON_QUEUE_REMOVED"] = "<player> removed from queue"
-L["SUMMON_QUEUE_YOUR_TURN"] = "Your turn to be summoned!"
-L["SUMMON_QUEUE_POSITION"] = "Queue position: <pos>/<total>"
-L["SUMMON_QUEUE_CLEAR"] = "Clear queue"
-L["SUMMON_QUEUE_MANUAL_ADD"] = "Add target to queue"
-L["SUMMON_QUEUE_EMPTY"] = "Queue is empty"
-L["SUMMON_QUEUE_MAX_SIZE"] = "Max queue size"
-L["SUMMON_QUEUE_RANGE_CHECK"] = "Range check interval (seconds)"
-L["SUMMON_QUEUE_SHOW"] = "Summon Queue"
-L["ENABLED"] = "Enabled"
-
--- Version Check Module
-L["VERSION_UPDATE_AVAILABLE"] = "Update available"
-L["CURRENT_VERSION"] = "Current Version"
-L["DOWNLOAD"] = "Download"
-L["GITHUB"] = "GitHub"
-L["TYPE"] = "Type"
-L["VERSION_CHECK_MANUAL"] = "Check for updates manually"
-L["CURSEFORGE"] = "CurseForge"
-L["UPDATE_AVAILABLE"] = "Update Available"
-L["UP_TO_DATE"] = "You are up to date!"
-L["VERSION"] = "Version"
-L["UPDATE"] = "Update"
-
--- About Panel
-L["ABOUT_SUBTITLE"] = "Warlock UI & Shard Management for World of Warcraft"
-L["ABOUT_DESCRIPTION"] = [[
-A Word About Necrosis Warlock
-
-Necrosis is much more than just an addon: it's a true gem of the Warlock community, kept alive for years thanks to you, Demonology players. Whether you use it to optimize your spells, manage your demons, or simply make your gameplay smoother, Necrosis has been there for every incantation, every contract… and every victory.
-
-What you see today didn't appear out of thin air: behind every bugfix and every update there are hours of work, passion, and listening. Developers, testers, and contributors who tweak the code, read your feedback, and keep coming back. Without them, Necrosis would just be a memory.
-
-A Big Thank You to the Warlock Community
-
-Thank you to all the Warlocks who play, experiment, test, give feedback, and share your ideas.
-Thank you to everyone who opens tickets, reports bugs, suggests new features, or who simply takes the time to say "Thanks, it works!"
-And thank you to those who have contributed in the past, even if they're no longer here: your work laid the foundation for what you're using today.
-
-None of this would be possible without you—your presence, your feedback, and your support. You are the real strength of the Warlock community, and it's thanks to you that Necrosis keeps evolving.
-
-Join the Maintenance Effort
-
-If you use Necrosis and enjoy it, feel free to share your feedback, report bugs, suggest improvements, and recommend the addon to new Warlocks.
-
-Together—players, Warlocks, developers, and contributors—we can keep making Necrosis a reliable, efficient, and modern addon for WoW Classic.
-]]
-L["DOWNLOAD_SUPPORT"] = "Download & Support"
-L["CREDITS"] = "Development Team & Credits"
-L["ABOUT_CREDITS"] = [[
-|c00FFD700Original Author:|r Lomig, lädygaga (Sulfuron EUR)
-
-|c00FFD700Contributors (20+ years):|r
-• Tarcalion - Core development & features
-• Community Warlocks - Feedback & testing
-• Translators - Localization in 8 languages
-• Bug Reporters - Quality assurance
-
-|c00FFD700Special Thanks To:|r
-• WoW API Documentation Team
-• Ace3 Framework Developers
-• LibStub & Library Contributors
-• The Global Warlock Community
-
-|c00FFD700License:|r GPL v2
-|c00FFD700Repository:|r github.com/CKNOEP/Necrosis
-]]
-
--- Summon Queue Messages
-L["SQ_MODULE_DISABLED"] = "[SummonQueue] Module disabled"
-L["SQ_CHAT_RECEIVED"] = "[SummonQueue] Chat message received:"
-L["SQ_QUEUE_FULL"] = "[SummonQueue] Queue is full!"
-L["SQ_ADDED_TO_QUEUE"] = "[SummonQueue] Added %s to queue"
-L["SQ_INVOKING"] = "[SummonQueue] Invoking: %s"
-L["SQ_SPELL_NOT_FOUND"] = "[SummonQueue] Ritual of Summoning (spell 698) not found"
-L["SQ_MACRO_CREATED"] = "[SummonQueue] Created macro: %s"
-L["SQ_MACRO_INFO"] = "Macro: /target %s + /cast %s"
-L["SQ_MACRO_CLICK"] = "Click the macro to invoke, or use: /click %s"
-L["SQ_MACRO_FULL"] = "[SummonQueue] Could not create macro - you may have too many macros"
-L["SQ_TEST_FILLED"] = "[SummonQueue] Test queue filled with 30 players"
-L["SQ_QUEUE_CLEARED"] = "[SummonQueue] Queue cleared"
-L["SQ_COMMANDS_HEADER"] = "[SummonQueue] Commands:"
-L["SQ_COMMAND_FILL"] = "/sqtest fill - Fill queue with test players"
-L["SQ_COMMAND_CLEAR"] = "/sqtest clear - Clear the queue"
-L["SQ_LEFT_CLICK"] = "Left Click: /target %s"
-L["SQ_RIGHT_CLICK"] = "Right Click: Invoke with %s"
-
--- Tooltip Labels (for main sphere)
-L["TOOLTIP_LEFT_CLICK"] = "Left Click"
-L["TOOLTIP_SHIFT_LEFT_CLICK"] = "Shift+Left Click"
-L["TOOLTIP_RIGHT_CLICK"] = "Right Click"
-L["TOOLTIP_CONFIGURATION"] = "Configuration"
-L["TOOLTIP_DRAG"] = "Drag"
-L["TOOLTIP_MOVE"] = "Move"
-L["TOOLTIP_MIDDLE_CLICK"] = "Middle Click"
-L["TOOLTIP_OPEN_BAGS"] = "Open Bags"
-
--- Stone Labels (for tooltip display)
-L["STONE_SOULSTONE_LABEL"] = "Soulstone: "
-L["STONE_HEALTHSTONE_LABEL"] = "Healthstone: "
-L["STONE_SPELLSTONE_LABEL"] = "Spellstone: "
-L["STONE_FIRESTONE_LABEL"] = "Firestone: "
-L["STONE_INFERNAL_LABEL"] = "Infernal Stone: "
-
--- Soul Shard Management Tooltip
-L["SHARD_MOUSEWHEEL_HELP"] = "Use MouseWheel to increase or decrease the limit"
-L["SHARD_LEFTCLICK_HELP"] = "Use LeftClick to move shard to the specific bag"
-
--- Spellstone Charges
-L["SPELLSTONE_CHARGES"] = "Charges"
-
--- Demon Cooldown Display
-L["DEMON_COOLDOWN"] = "Cooldown : "
-
--- Timers Options
-L["TIMER_SETTINGS"] = "Timer Settings"
-L["TIMER_TYPE"] = "Timer Type"
-L["SHOW_SPELL_TIMER"] = "Show Timer Button"
-L["TIMER_ON_LEFT"] = "Show Timers on Left"
-L["TIMER_UPWARD"] = "Show Timers Upward"
-L["TIMER_ALPHA"] = "Timer Transparency"
-L["SELECT_TIMERS"] = "Select Spell Timers"
-L["AFK_SCREEN"] = "AFK Screen"
-L["THREAT_METER_ENABLED"] = "Enable Threat Meter (circular indicator)"
-L["NECROSISUI_ENABLED"] = "Enable NecrosisUI (advanced framework)"
-L["OPEN_OPTIONS_OVERLAY"] = "Open Spell Overlay Options"

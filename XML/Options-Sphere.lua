@@ -92,23 +92,9 @@ function Necrosis:SetSphereConfig()
 		frame:SetObeyStepOnDrag(true)
 		frame:SetWidth(150)
 		frame:SetHeight(15)
-
-		-- Create slider visual elements with circular dot cursor
-		local track = frame:CreateTexture(nil, "BACKGROUND")
-		track:SetWidth(150)
-		track:SetHeight(4)
-		track:SetColorTexture(0.2, 0.2, 0.2, 1)
-		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
-
-		local thumb = frame:GetThumbTexture()
-		if thumb then
-			thumb:SetTexture("Interface\Common\Indicator-Yellow")
-			thumb:SetColorTexture(1, 0.8, 0, 1)
-			thumb:SetSize(6, 6)
-		end
 		frame:Show()
 		frame:ClearAllPoints()
-		frame:SetPoint("CENTER", NecrosisSphereConfig, "CENTER", -90, -20)
+		frame:SetPoint("CENTER", NecrosisSphereConfig, "BOTTOMLEFT", 133, 120)
 
 		local f = _G[Necrosis.Warlock_Buttons.main.f]
 --		local NBx, NBy = f:GetCenter()
@@ -158,9 +144,7 @@ function Necrosis:SetSphereConfig()
 
 		NecrosisSphereSizeLow:SetText("50 %")
 		NecrosisSphereSizeHigh:SetText("200 %")
-
-		NecrosisSphereSize:SetValue(NecrosisConfig.NecrosisButtonScale)
-
+		
 --------------------------------------------------------------------------------------------------------------------------------
 ------- Create a slider control for rotating the buttons around the sphere || Création du slider de rotation de Necrosis  ------
 --------------------------------------------------------------------------------------------------------------------------------
@@ -168,28 +152,12 @@ function Necrosis:SetSphereConfig()
 		frame = CreateFrame("Slider", "NecrosisRotation", NecrosisSphereConfig, "OptionsSliderTemplate")
 		frame:SetMinMaxValues(0, 360)
 		frame:SetValueStep(9)
-		frame:SetObeyStepOnDrag(true)
 		frame:SetWidth(150)
 		frame:SetHeight(15)
-
-		-- Create slider visual elements with circular dot cursor
-		local track = frame:CreateTexture(nil, "BACKGROUND")
-		track:SetWidth(150)
-		track:SetHeight(4)
-		track:SetColorTexture(0.2, 0.2, 0.2, 1)
-		track:SetPoint("CENTER", frame, "CENTER", 0, 0)
-
-		local thumb = frame:GetThumbTexture()
-		if thumb then
-			thumb:SetTexture("Interface\Common\Indicator-Yellow")
-			thumb:SetColorTexture(1, 0.8, 0, 1)
-			thumb:SetSize(6, 6)
-			thumb:Show()
-		end
 		frame:Show()
 		frame:ClearAllPoints()
 
-		frame:SetPoint("CENTER", NecrosisSphereConfig, "CENTER", 90, -20)
+		frame:SetPoint("CENTER", NecrosisSphereConfig, "BOTTOMRIGHT", 18, 120)
 
 		frame:SetScript("OnEnter", function(self)
 			GameTooltip:SetOwner(frame, "ANCHOR_RIGHT")
@@ -278,9 +246,9 @@ function Necrosis:SetSphereConfig()
 		frame:Show()
 		frame:ClearAllPoints()
 		frame:SetPoint("LEFT", NecrosisSphereConfig, "BOTTOMLEFT", 35, 240)
-		frame:SetChecked(NecrosisConfig.ShowCount)
+		frame:SetChecked(NecrosisConfig.deleteshards)
 		frame:SetScript("OnClick", function(self)
-			NecrosisConfig.ShowCount = self:GetChecked()
+			NecrosisConfig.deleteshards = self:GetChecked()
             Necrosis:BagExplore()
 		end)
 		FontString = frame:CreateFontString(nil, nil, "GameFontNormalSmall")
@@ -351,7 +319,6 @@ function Necrosis:SetSphereConfig()
 	NecrosisLock:SetChecked(NecrosisConfig.NoDragAll)
 
 	NecrosisSphereSize:SetValue(NecrosisConfig.NecrosisButtonScale)
-	NecrosisRotation:SetValue(NecrosisConfig.NecrosisAngle)
 	NecrosisShowCount:SetChecked(NecrosisConfig.ShowCount)
 
 	local couleur = {"Rose", "Bleu", "Orange", "Turquoise", "Violet1", "Violet2", "666", "X"}
@@ -373,7 +340,7 @@ function Necrosis:SetSphereConfig()
 --	Necrosis.Spell_Click(NecrosisSpellSelection)
 
 	UIDropDownMenu_SetSelectedID(NecrosisCountSelection, NecrosisConfig.CountType)
-	UIDropDownMenu_SetText(NecrosisCountSelection, self.Config.Sphere.CountType[NecrosisConfig.CountType])
+	UIDropDownMenu_SetText(NecrosisCountSelection, self.Config.Sphere.Count[NecrosisConfig.CountType])
 
 	frame:Show()
 end
@@ -511,8 +478,8 @@ end
 -- Fonctions du Dropdown des Events du compteur
 function Necrosis.Count_Init()
 	local element = {}
-	for i in ipairs(Necrosis.Config.Sphere.CountType) do
-		element.text = Necrosis.Config.Sphere.CountType[i]
+	for i in ipairs(Necrosis.Config.Sphere.Count) do
+		element.text = Necrosis.Config.Sphere.Count[i]
 		element.checked = false
 		element.func = Necrosis.Count_Click
 		UIDropDownMenu_AddButton(element)

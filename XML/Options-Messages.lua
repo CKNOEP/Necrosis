@@ -37,7 +37,7 @@ function Necrosis:SetMessagesConfig()
 
 	local frame = _G["NecrosisMessagesConfig"]
 	if not frame then
-		local y = -35 -- initial offset
+		local y = -73 -- initial offset (décalé de 38px vers le bas)
 		local y_offset = -23
 		local x_offset = 30
 
@@ -121,7 +121,7 @@ function Necrosis:SetMessagesConfig()
 		spacer_1:ClearAllPoints()
 		spacer_1:SetPoint("LEFT", NecrosisMessagesConfig, "TOPLEFT", x_offset*2, y)
 		spacer_1:SetTextColor(1, 0.5, 0)
-		spacer_1:SetText((L and L["SPEECH_API"]) or "Speech API")
+		spacer_1:SetText(L["SPEECH_API"])
 --[[
 		-- Activer les messages courts
 		y = y + y_offset

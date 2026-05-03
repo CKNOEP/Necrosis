@@ -12,7 +12,7 @@
 ## Notes: Warlock UI & Shard Management
 ## Notes-frFR: Gestion graphique des shards, interface Démoniste, ban , asservir 
 ## Notes-ruRU: Менеджер заклинаний, камней и демонов для чернокнижника.
-## Version: 8.8.2
+## Version: 8.0.6
 ## Website: https://github.com/CKNOEP/Necrosis
 ## DefaultState: Enabled
 ## X-Original-Author: Lomig,lädygaga - sulfuron EUR - As lancestre
@@ -26,10 +26,6 @@ Necrosis.xml
 libs\LibStub\LibStub.lua
 libs\CallbackHandler-1.0\CallbackHandler-1.0.xml
 libs\AceAddon-3.0\AceAddon-3.0.xml
-libs\AceEvent-3.0\AceEvent-3.0.xml
-libs\AceConsole-3.0\AceConsole-3.0.xml
-libs\AceSerializer-3.0\AceSerializer-3.0.xml
-libs\AceComm-3.0\AceComm-3.0.xml
 libs\AceHook-3.0\AceHook-3.0.xml
 libs\AceTimer-3.0\AceTimer-3.0.xml
 libs\AceGUI-3.0\AceGUI-3.0.xml
@@ -37,11 +33,13 @@ libs\AceConfig-3.0\AceConfig-3.0.xml
 libs\AceLocale-3.0\AceLocale-3.0.xml
 libs\LibSharedMedia-3.0\lib.xml
 libs\AceGUI-3.0-SharedMediaWidgets\widget.xml
+libs\LibQTip-1.0\lib.xml
 libs\!LibUIDropDownMenu\LibUIDropDownMenu\LibUIDropDownMenu.xml
 
 libs\LibDataBroker-1.1.lua
 
-Constants.lua
+Initialize.lua
+Utils.lua
 
 Locales\Localization.lua
 Locales\Localization.CN.lua
@@ -53,11 +51,8 @@ Locales\Localization.TW.lua
 Locales\Localization.MX.lua
 
 Dialog-Cata.lua
-Initialize.lua
-VersionCheck.lua
-Utils.lua
+Functions.lua
 AFKS.lua
-SummonQueue.lua
 Speech\Speech-fr.lua
 Speech\Speech-en.lua
 Speech\Speech-de.lua
@@ -67,6 +62,7 @@ Speech\Speech-cn.lua
 Speech\Speech-ru.lua
 
 Message.lua
+ThreatMeter.lua
 Spells-Cata.lua
 
 
@@ -79,21 +75,16 @@ Timers\OtherTimers.lua
 
 XML\Attributes-cata.lua
 
+XML\Panel.lua
 XML\Options-Messages.lua
-XML\Options-SummonQueue.lua
 XML\Options-Sphere-Cata.lua
 XML\Options-Buttons-Cata.lua
 XML\Options-Menus.lua
 XML\Options-Timers.lua
 XML\Options-Misc-Cata.lua
 XML\Options-Overlay.lua
-
-XML\Panel.lua
-XML\AboutPanel.lua
 Necrosis-cata.lua
 XML\XML.lua
-ThreatMeter.lua
 
-UI\BottomBanner\Init.xml
 
 SpellActivations\SpellActivations.xml

@@ -70,8 +70,6 @@ L["VOIDWALKER_LABEL"] = "|c00FFFFFF".."Leerwandler".."|r"
 L["VOIDWALKER"] = "Leerwandler"
 L["SUCCUBUS_LABEL"] = "|c00FFFFFF".."Sukkubus".."|r"
 L["SUCCUBUS"] = "Sukkubus"
-L["INCCUBUS_LABEL"] = "|c00FFFFFF".."Inkkubus".."|r"
-L["INCCUBUS"] = "Inkkubus"
 L["FELHUNTER_LABEL"] = "|c00FFFFFF".."Teufelsj\195\164ger".."|r"
 L["FELHUNTER"] = "Teufelsj\195\164ger"
 L["FELGUARD_LABEL"] = "|c00FFFFFF".."Teufelswache".."|r"
@@ -108,7 +106,6 @@ L["BAG_FULL_PREFIX"] = "Dein "
 L["BAG_FULL_SUFFIX"] = " ist voll !"
 L["BAG_FULL_DESTROY_PREFIX"] = " ist voll; folgende Seelensplitter werden zerst\195\182rt !"
 L["INTERFACE_WELCOME"] = "<white>/necrosis f\195\188r das Einstellungsmen\195\188"
-L["RETAIL_ANNOUNCEMENT"] = "|cffff6600🔥 Das Ritual ist vollendet! Necrosis ist zu RETAIL aufgestiegen! 🔥|r\n|cffffffff Eure finsteren Wünsche interessieren uns - teilt eure dämonischen Sehnsüchte!|r"
 L["INTERFACE_TOOLTIP_ON"] = "Tooltips an"
 L["INTERFACE_TOOLTIP_OFF"] = "Tooltips aus"
 L["INTERFACE_MESSAGE_ON"] = "Chat Nachrichten an"
@@ -168,9 +165,6 @@ L["BUTTONS_ROTATION"] = "Rotation der Buttons"
 L["BUTTONS_STICK"] = "Fixiere die Buttons um die Sph\195\164re"
 L["BUTTONS_MOUNT"] = "Use my own mounts"
 L["BUTTONS_SELECTION"] = "Selection of buttons to be shown"
-L["BOUTONS_PIERRES"] = "Stein-Schaltflaechen"
-L["BOUTONS_ACTION"] = "Aktions-Schaltflaechen"
-L["MOUNTS_TITLE"] = "Reittiere"
 L["BUTTONS_LEFT"] = "Left click"
 L["BUTTONS_RIGHT"] = "Right click"
 --
@@ -263,142 +257,3 @@ L["ABOUT_CATEGORY"] = "Category";
 L["ABOUT_EMAIL"] = "E-mail";
 L["ABOUT_WEB"] = "Website";
 L["ABOUT_LICENSE"] = "License";
-
--- NecrosisUI
-L["THREAT_METER_ENABLED"] = "Threat Meter aktivieren (kreisformiger Indikator)"
-L["NECROSISUI_ENABLED"] = "NecrosisUI aktivieren (erweiterter Rahmen)"
-
--- Missing translations (added automatically)
-L["SPHERE_SPELL2"] = "Von der Sphäre ausgelöster Zauber (Umschalt+Klick)"
-L["SPHERE_SPELL_RIGHTCLICK"] = "Rechtsklick auf Sphäre zum Löschen des Überbestands"
-L["SPHERE_SPELL_RIGHTCLICK_L2"] = "Strg+Linksklick zum Öffnen des Konfigurationsmenüs"
-L["SPHERE_SPELL+CTRL"] = "Optionsmenü öffnen"
-L["BUTTONS_CTRL-LEFT"] = "Begleiter Strg+Linksklick"
-L["BUTTONS_CTRL-RIGHT"] = "Begleiter Strg+Rechtsklick"
-L["BUTTONS_L"] = "Begleiter Linksklick"
-L["BUTTONS_R"] = "Begleiter Rechtsklick"
-L["CATA"] = "Kataklysmus"
-L["PURPLE2"] = "Purple2"
--- Sphere skins (all 8 colors)
-L["ROSE"] = "Pink"
-L["BLEU"] = "Blue"
-L["VIOLET1"] = "Purple"
-L["VIOLET2"] = "Purple2"
-L["MENU_QUICK_SACRIFICE"] = "Schnelles Opfer"
-L["TIMER_ALPHA"] = "Timer-Transparenz"
-L["SPEECH_API"] = "Sprachsyntheseapi"
-L["SHOW_DESTROY_SHARDS"] = "Zerstöre Shards-Button anzeigen"
-
--- Missing UI Labels (from config pages)
-L["UNFORTUNATELY_TBC_SHARD_MSG"] = "Leider hat Blizzard mit TBC beschlossen, die Möglichkeit für Add-ons zu entfernen, Shards automatisch zu löschen. Auto-Sorting nach Kampf wird nicht mehr unterstützt. Verwenden Sie jetzt die Shard-Schaltfläche, um Shards zu verwalten"
-L["OPEN_OPTIONS_OVERLAY"] = "Optionen SpellOverlay öffnen"
-L["AFK_SCREEN"] = "AFK-Bildschirm"
-L["MOUNT_DRAG_DROP_INSTRUCTIONS"] = "Wählen Sie Ihre Begleiter: Ziehen Sie den Begleiter in den Rahmen, um ihn zu binden"
-L["OFFSET_X"] = "Versatz X"
-L["OFFSET_Y"] = "Versatz Y"
-L["SELECT_MOUNTS"] = "Wählen Sie Ihre Begleiter:"
-L["OPEN_COLLECTIONS"] = "Sammlungen öffnen"
-L["PAGE_OF_N"] = "Seite %d von %d"
-L["RESET"] = "Zurücksetzen"
-L["TEST_OVERLAY"] = "Overlay testen"
-
--- Summon Queue Module
-L["SUMMON_QUEUE_LABEL"] = "|c00FFFFFF".."Beschwörungs-Warteschlange".."|r"
-L["SUMMON_QUEUE_ENABLED"] = "Beschwörungs-Warteschlange aktivieren"
-L["SUMMON_QUEUE_TRIGGER"] = "Auslösecodes"
-L["SUMMON_QUEUE_TRIGGER_DESC"] = "Chatnachricht(en) zum Beitreten. Mehrere Codes durch Kommas trennen: 123, summon, inv"
-L["SUMMON_QUEUE_AUTO_REMOVE"] = "Automatisch entfernen in Reichweite"
-L["SUMMON_QUEUE_AUDIO"] = "Audio-Benachrichtigungen"
-L["SUMMON_QUEUE_SYNC"] = "Mit anderen Hexenmeistern synchronisieren"
-L["SUMMON_QUEUE_SHOW"] = "Warteschlange"
-L["SUMMON_QUEUE_WINDOW"] = "Warteschlangen-Fenster anzeigen"
-L["SUMMON_QUEUE_ADDED"] = "<player> zur Beschwörungs-Warteschlange hinzugefügt"
-L["SUMMON_QUEUE_REMOVED"] = "<player> aus der Warteschlange entfernt"
-L["SUMMON_QUEUE_YOUR_TURN"] = "Sie sind an der Reihe, beschworen zu werden!"
-L["SUMMON_QUEUE_POSITION"] = "Position in Warteschlange: <pos>/<total>"
-L["SUMMON_QUEUE_CLEAR"] = "Warteschlange leeren"
-L["SUMMON_QUEUE_MANUAL_ADD"] = "Ziel hinzufügen"
-L["SUMMON_QUEUE_EMPTY"] = "Warteschlange ist leer"
-
--- Version Check Module
-L["VERSION_UPDATE_AVAILABLE"] = "Update verfügbar"
-L["CURRENT_VERSION"] = "Aktuelle Version"
-L["DOWNLOAD"] = "Herunterladen"
-L["GITHUB"] = "GitHub"
-L["TYPE"] = "Eingeben"
-L["VERSION_CHECK_MANUAL"] = "Überprüfen Sie manuell auf Updates"
-L["CURSEFORGE"] = "CurseForge"
-L["UPDATE_AVAILABLE"] = "Update verfügbar"
-L["UP_TO_DATE"] = "Sie haben die aktuelle Version!"
-L["VERSION"] = "Version"
-L["UPDATE"] = "Aktualisieren"
-
--- About Panel
-L["ABOUT_SUBTITLE"] = "Hexer-UI und Seelensplitter-Verwaltung"
-L["ABOUT_DESCRIPTION"] = [[
-Necrosis ist das ultimative Hexer-Addon mit umfassender UI-Verwaltung für Seelensplitter, Zauber, Dämonenbefehle, Buffs, Flüche und Timer. Über 20 Jahre kontinuierliche Entwicklung und Community-Unterstützung.
-
-Dieses Addon bietet eine radiale Schaltflächenoberfläche, grafische Seelensplitter-Anzeige, umfangreiche Anpassungsmöglichkeiten und erweiterte Funktionen wie Beschwörungswarteschlangen-Management mit Raid-Synchronisation.
-
-Mit Leidenschaft für die Hexer-Community entwickelt.
-]]
-L["DOWNLOAD_SUPPORT"] = "Download und Support"
-L["CREDITS"] = "Entwicklungsteam und Credits"
-L["ABOUT_CREDITS"] = [[
-|c00FFD700Originalautor:|r Lomig, lädygaga (Sulfuron EUR)
-
-|c00FFD700Mitwirkende (20+ Jahre):|r
-• Tarcalion - Kernentwicklung und Features
-• Hexer-Community - Feedback und Tests
-• Übersetzer - Lokalisierung in 8 Sprachen
-• Bug-Reporter - Qualitätssicherung
-
-|c00FFD700Besonderer Dank An:|r
-• WoW API Dokumentationsteam
-• Ace3 Framework-Entwickler
-• LibStub und Library-Beiträger
-• Globale Hexer-Community
-
-|c00FFD700Lizenz:|r GPL v2
-|c00FFD700Datenbank:|r github.com/CKNOEP/Necrosis
-]]
-
--- Tooltip Labels (for main sphere)
-L["TOOLTIP_LEFT_CLICK"] = "Linksklick"
-L["TOOLTIP_SHIFT_LEFT_CLICK"] = "Shift+Linksklick"
-L["TOOLTIP_RIGHT_CLICK"] = "Rechtsklick"
-L["TOOLTIP_CONFIGURATION"] = "Konfiguration"
-L["TOOLTIP_DRAG"] = "Drag"
-L["TOOLTIP_MOVE"] = "Verschieben"
-
--- Stone Labels (for tooltip display)
-L["STONE_SOULSTONE_LABEL"] = "Seelenstart: "
-L["STONE_HEALTHSTONE_LABEL"] = "Gesundheitsstein: "
-L["STONE_SPELLSTONE_LABEL"] = "Zauberstein: "
-L["STONE_FIRESTONE_LABEL"] = "Feuerstein: "
-L["STONE_INFERNAL_LABEL"] = "Höllenstein: "
-
--- Soul Shard Management Tooltip
-L["SHARD_MOUSEWHEEL_HELP"] = "Verwenden Sie das Mausrad, um die Grenze zu erhöhen oder zu verringern"
-L["SHARD_LEFTCLICK_HELP"] = "Verwenden Sie Linksklick, um den Seelenschafts in den bestimmten Beutel zu verschieben"
-
--- Spellstone Charges
-L["SPELLSTONE_CHARGES"] = "Ladungen"
-
--- Demon Cooldown Display
-L["DEMON_COOLDOWN"] = "Abklingzeit : "
-
--- Summon Queue Config UI
-L["ENABLED"] = "Aktiviert"
-L["OPTIONS"] = "Optionen"
-L["SETTINGS"] = "Einstellungen"
-L["SUMMON_QUEUE_SHOW"] = "Warteschlange"
-
--- Additional Skin Colors (German)
-if not L["ROSE"] then
-L["ROSE"] = "Rosa"
-L["BLEU"] = "Blau"
-L["VIOLET1"] = "Violett"
-L["VIOLET2"] = "Violett 2"
-L["X"] = "Spezial"
-end
