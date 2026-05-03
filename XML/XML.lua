@@ -247,6 +247,7 @@ local function CreateStoneButton(stone)
 	if stone == Necrosis.Warlock_Buttons.soul_stone.f then
 		frame.cooldown = CreateFrame("Cooldown", frame:GetName().."Cooldown", frame)
 		frame.cooldown:SetAllPoints()
+		frame.cooldown:SetUseCircularEdge(true)
 		frame.cooldown:SetDrawSwipe(true)
 		frame.cooldown:SetSwipeColor(0, 0, 0, 0.5)
 	end
