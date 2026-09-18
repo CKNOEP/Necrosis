@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Necrosis - The ultimate World of Warcraft Warlock addon with 20+ years of development">
+    <meta name="keywords" content="WoW addon, Warlock, Necrosis, soul shards, UI management">
+    <meta property="og:title" content="Necrosis - Ultimate Warlock Addon">
+    <meta property="og:description" content="Comprehensive UI management for World of Warcraft Warlocks">
+    <meta property="og:image" content="https://raw.githubusercontent.com/CKNOEP/Necrosis/main/docs/logo.png">
+
+    <title>Necrosis - Ultimate Warlock Addon</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 50%, #0f1428 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(20, 20, 40, 0.95);
+            border-bottom: 3px solid #7b2cbf;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            color: #7b2cbf;
+            text-shadow: 0 0 20px rgba(123, 44, 191, 0.5);
+            margin-bottom: 0.5rem;
+        }
+
+        .tagline {
+            font-size: 1.3rem;
+            color: #b8b8ff;
+            font-style: italic;
+        }
+
+        main {
+            padding: 3rem 0;
+        }
+
+        section {
+            background: rgba(30, 30, 50, 0.8);
+            border: 1px solid #7b2cbf;
+            border-radius: 8px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        h2 {
+            color: #7b2cbf;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #7b2cbf;
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: #b8b8ff;
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: #d0d0d0;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: rgba(50, 50, 80, 0.6);
+            border-left: 4px solid #7b2cbf;
+            padding: 1.5rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(60, 60, 100, 0.8);
+            transform: translateX(5px);
+            box-shadow: 0 0 15px rgba(123, 44, 191, 0.3);
+        }
+
+        .feature-card h4 {
+            color: #7b2cbf;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            font-size: 0.95rem;
+            color: #b8b8ff;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 2rem 0;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            font-size: 1.1rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #7b2cbf 0%, #9d4edd 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 0 20px rgba(123, 44, 191, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid #7b2cbf;
+            color: #7b2cbf;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(123, 44, 191, 0.1);
+            box-shadow: 0 0 15px rgba(123, 44, 191, 0.4);
+        }
+
+        .btn-donation {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #000;
+            border: none;
+        }
+
+        .btn-donation:hover {
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+            transform: translateY(-2px);
+        }
+
+        .contributors {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .contributor {
+            background: rgba(50, 50, 80, 0.6);
+            padding: 1.5rem;
+            border-radius: 4px;
+            text-align: center;
+            border-top: 3px solid #7b2cbf;
+        }
+
+        .contributor-name {
+            color: #7b2cbf;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .contributor-role {
+            color: #b8b8ff;
+            font-size: 0.9rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat {
+            background: rgba(123, 44, 191, 0.1);
+            border: 1px solid #7b2cbf;
+            padding: 1.5rem;
+            text-align: center;
+            border-radius: 4px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: #7b2cbf;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: #b8b8ff;
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        footer {
+            background: rgba(20, 20, 40, 0.95);
+            border-top: 3px solid #7b2cbf;
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .langs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .lang-badge {
+            background: rgba(123, 44, 191, 0.2);
+            border: 1px solid #7b2cbf;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #b8b8ff;
+        }
+
+        .version {
+            color: #7b2cbf;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>⚡ NECROSIS ⚡</h1>
+            <p class="tagline">The Ultimate Warlock Addon for World of Warcraft</p>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- About Section -->
+            <section id="about">
+                <h2>About Necrosis</h2>
+                <p class="description">
+                    Necrosis is the ultimate World of Warcraft addon for Warlocks, providing comprehensive UI management for soul shards, spells, demon summoning, buffs, curses, and timers. Built with passion and refined through <strong>over 20 years of continuous development</strong> and community support.
+                </p>
+                <p class="description">
+                    This addon features an innovative radial button interface, graphical soul shard display, extensive customization options, and advanced features like Summon Queue management with raid synchronization. Whether you're a casual Warlock or a hardcore raider, Necrosis has you covered.
+                </p>
+
+                <!-- Stats -->
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label">Years of Development</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">8</div>
+                        <div class="stat-label">Languages Supported</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">3</div>
+                        <div class="stat-label">WoW Versions</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section id="features">
+                <h2>Key Features</h2>
+
+                <div class="features">
+                    <div class="feature-card">
+                        <h4>🔮 Soul Shard Management</h4>
+                        <p>Visual shard display with real-time tracking and management options</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>⏱️ Spell Timers</h4>
+                        <p>Track buff/debuff durations with graphical timer display</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>👹 Demon Summoning</h4>
+                        <p>Quick-cast demon summoning with pet management interface</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>🎛️ Radial UI</h4>
+                        <p>Innovative circular button layout for easy spell access</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>📋 Summon Queue</h4>
+                        <p>Raid-ready summoning queue with automatic sync between Warlocks</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>⚙️ Full Customization</h4>
+                        <p>Extensive configuration options for every aspect of the addon</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Download Section -->
+            <section id="download">
+                <h2>Download & Support</h2>
+                <p class="description">
+                    Get Necrosis from one of these official sources:
+                </p>
+
+                <div class="buttons">
+                    <a href="https://www.curseforge.com/wow/addons/necrosis" class="btn btn-primary" target="_blank">
+                        📦 CurseForge
+                    </a>
+                    <a href="https://github.com/CKNOEP/Necrosis" class="btn btn-secondary" target="_blank">
+                        🐙 GitHub
+                    </a>
+                    <a href="https://www.paypal.com/donate?hosted_button_id=NECROSIS" class="btn btn-donation" target="_blank">
+                        💰 Support with PayPal
+                    </a>
+                </div>
+
+                <h3>Supported Versions</h3>
+                <div class="description">
+                    ✅ World of Warcraft Classic (11508)<br>
+                    ✅ Wrath of the Lich King (30403)<br>
+                    ✅ Cataclysm Classic (40402)
+                </div>
+            </section>
+
+            <!-- Contributors Section -->
+            <section id="credits">
+                <h2>Development Team & Credits</h2>
+
+                <h3>🎭 Original Authors</h3>
+                <div class="contributors">
+                    <div class="contributor">
+                        <div class="contributor-name">Lomig</div>
+                        <div class="contributor-role">Founder, Architecture</div>
+                    </div>
+                    <div class="contributor">
+                        <div class="contributor-name">lädygaga</div>
+                        <div class="contributor-role">Co-Founder, UI Design</div>
+                    </div>
+                    <div class="contributor">
+                        <div class="contributor-name">Tarcalion</div>
+                        <div class="contributor-role">Core Development</div>
+                    </div>
+                </div>
+
+                <h3>🌟 Major Contributors</h3>
+                <div class="description">
+                    <strong>Community Testers:</strong> Providing invaluable feedback and bug reports<br>
+                    <strong>Translators:</strong> Localizing Necrosis in 8 languages<br>
+                    <strong>Bug Reporters:</strong> Ensuring quality and stability<br>
+                    <strong>Feature Requesters:</strong> Shaping the addon's evolution
+                </div>
+
+                <h3>🌍 Localization Support</h3>
+                <p class="description">Necrosis is available in 8 languages:</p>
+                <div class="langs">
+                    <span class="lang-badge">🇬🇧 English</span>
+                    <span class="lang-badge">🇫🇷 Français</span>
+                    <span class="lang-badge">🇩🇪 Deutsch</span>
+                    <span class="lang-badge">🇪🇸 Español</span>
+                    <span class="lang-badge">🇲🇽 Español (MX)</span>
+                    <span class="lang-badge">🇷🇺 Русский</span>
+                    <span class="lang-badge">🇨🇳 简体中文</span>
+                    <span class="lang-badge">🇹🇼 繁體中文</span>
+                </div>
+            </section>
+
+            <!-- Donation Section -->
+            <section id="support">
+                <h2>Support the Development</h2>
+                <p class="description">
+                    Necrosis has been developed for <strong>20+ years</strong> with passion and dedication. If you enjoy using this addon and would like to support its continued development, consider making a donation.
+                </p>
+
+                <h3>Ways to Help</h3>
+                <div class="contributors">
+                    <div class="contributor">
+                        <div class="contributor-name">💰 PayPal Donation</div>
+                        <div class="contributor-role">Direct financial support</div>
+                    </div>
+                    <div class="contributor">
+                        <div class="contributor-name">⭐ GitHub Sponsorship</div>
+                        <div class="contributor-role">Ongoing sponsor support</div>
+                    </div>
+                    <div class="contributor">
+                        <div class="contributor-name">🐛 Report Bugs</div>
+                        <div class="contributor-role">Help us improve quality</div>
+                    </div>
+                    <div class="contributor">
+                        <div class="contributor-name">💬 Share Feedback</div>
+                        <div class="contributor-role">Shape the addon's future</div>
+                    </div>
+                </div>
+
+                <div class="buttons">
+                    <a href="https://www.paypal.com/donate?hosted_button_id=NECROSIS" class="btn btn-donation" target="_blank">
+                        💛 Donate via PayPal
+                    </a>
+                    <a href="https://github.com/CKNOEP/Necrosis/issues" class="btn btn-primary" target="_blank">
+                        📣 Report Issues
+                    </a>
+                </div>
+            </section>
+
+            <!-- Footer Links -->
+            <section id="links">
+                <h2>Quick Links</h2>
+                <div class="buttons">
+                    <a href="https://www.curseforge.com/wow/addons/necrosis" class="btn btn-primary" target="_blank">CurseForge</a>
+                    <a href="https://github.com/CKNOEP/Necrosis" class="btn btn-secondary" target="_blank">GitHub Repository</a>
+                    <a href="https://github.com/CKNOEP/Necrosis/issues" class="btn btn-secondary" target="_blank">Bug Reports</a>
+                    <a href="https://github.com/CKNOEP/Necrosis/blob/main/CREDITS.md" class="btn btn-secondary" target="_blank">Full Credits</a>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>
+                <strong>Necrosis <span class="version">v8.3.0</span></strong><br>
+                The Ultimate Warlock Addon for World of Warcraft<br>
+                <br>
+                © 2004-2026 · Licensed under <a href="https://www.gnu.org/licenses/old-licenses/gpl-2.0.html" target="_blank" style="color: #7b2cbf;">GPL v2</a><br>
+                <br>
+                <a href="https://github.com/CKNOEP/Necrosis" target="_blank" style="color: #7b2cbf;">GitHub</a> ·
+                <a href="https://www.curseforge.com/wow/addons/necrosis" target="_blank" style="color: #7b2cbf;">CurseForge</a> ·
+                <a href="https://www.paypal.com/donate?hosted_button_id=NECROSIS" target="_blank" style="color: #ffd700;">Donate</a>
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
