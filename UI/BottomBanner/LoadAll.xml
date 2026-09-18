@@ -1,0 +1,14 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/
+..\..\FrameXML\UI.xsd">
+
+	<Script>
+		print("[NecrosisUI] LoadAll.xml is being loaded!")
+	</Script>
+
+	<Script file="Framework.lua" />
+	<Script file="Global-Framework.lua" />
+	<Script file="Style.lua" />
+	<Include file="Framework.xml" />
+
+</Ui>

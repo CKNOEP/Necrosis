@@ -1,0 +1,51 @@
+VERSIONS INTERFACE À ESSAYER POUR MIDNIGHT PTR
+===============================================
+
+Les fichiers TOC suivants contiennent différentes versions interface.
+Si l'addon est incompatible, essayez les versions dans cet ordre :
+
+VERSION PAR DÉFAUT (J'AI UTILISÉ CELLE-CI)
+==========================================
+110000  ← Version Midnight standard
+
+VERSIONS ALTERNATIVES
+====================
+- 110005  ← Midnight 11.0.5
+- 110007  ← Midnight 11.0.7
+- 110010  ← Midnight 11.0.10+
+- 100007  ← Dragonflight (si PTR est ancien)
+
+COMMENT DÉTERMINER LA BONNE VERSION
+===================================
+
+1. Lancez WoW PTR Midnight
+2. Dans la console/chat, entrez :
+   /run local m,n,p,b=GetBuildInfo() print("Interface: "..m..n..p)
+
+3. WoW affichera quelque chose comme :
+   Interface: 110000
+   Interface: 110005
+   Interface: 110007
+   etc.
+
+4. Notez le numéro exact
+
+COMMENT CORRIGER LE TOC
+======================
+
+1. Éditez Necrosis_Midnight.toc
+2. Première ligne :  ## Interface: XXXXX
+3. Remplacez XXXXX par le numéro exact
+4. Sauvegardez
+5. Rechargez WoW ou tapez /reload
+
+FICHIERS CRÉÉS
+==============
+- Necrosis_Midnight.toc  (actuellement 110000)
+- Necrosis_XPTR.toc      (alternative simplifiée, 110000)
+- FIX_INCOMPATIBILITY.md (guide complet)
+
+SI TOUJOURS INCOMPATIBLE
+========================
+Donnez-moi la version interface exacte affichée par WoW
+et je corrigerai le TOC pour vous !
