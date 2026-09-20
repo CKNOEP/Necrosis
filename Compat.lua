@@ -317,3 +317,16 @@ if not _G.GetItemCount then
         return 0
     end
 end
+
+-- ============================================================================
+-- GetItemInfoInstant Compatibility Wrapper (160001+)
+-- Moved to C_Item.GetItemInfoInstant, same return signature
+-- ============================================================================
+if not _G.GetItemInfoInstant then
+    function _G.GetItemInfoInstant(item)
+        if C_Item and C_Item.GetItemInfoInstant then
+            return C_Item.GetItemInfoInstant(item)
+        end
+        return nil
+    end
+end
