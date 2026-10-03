@@ -33,8 +33,14 @@ if not _G.GetSpellCooldownOriginal then
         local cooldownInfo = C_Spell.GetSpellCooldown(spellID)
         if not cooldownInfo then return 0, 0, 1 end
 
+        local startTime, duration = cooldownInfo.startTime, cooldownInfo.duration
+        -- Secret values cannot be compared or used in arithmetic from addon code: report "ready"
+        if issecretvalue and (issecretvalue(startTime) or issecretvalue(duration) or issecretvalue(cooldownInfo.isEnabled)) then
+            return 0, 0, 1
+        end
+
         -- Return in old format: startTime, duration, isEnabled
-        return cooldownInfo.startTime or 0, cooldownInfo.duration or 0, cooldownInfo.isEnabled and 1 or 0
+        return startTime or 0, duration or 0, cooldownInfo.isEnabled and 1 or 0
     end
 end
 

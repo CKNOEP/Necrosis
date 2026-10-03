@@ -1,4 +1,4 @@
-## Interface: 160001
+## Interface: 16001
 ## X-Min-Interface: 110207
 ## X-Min-Interface-Classic: 11508
 ## X-Min-Interface-BCC: 20506
@@ -58,7 +58,7 @@ Locales\Localization.MX.lua
 Initialize_retail.lua
 Utils.lua
 
-Dialog.lua
+Dialog_retail.lua
 AFKS.lua
 SummonQueue.lua
 VersionCheck.lua
@@ -72,6 +72,7 @@ Speech\Speech-ru.lua
 
 Message.lua
 Spells-Retail.lua
+Dialog_Forever.lua
 
 Timers\Functions_retail.lua
 Timers\GraphicalTimers.lua
@@ -91,7 +92,6 @@ XML\Options-Overlay.lua
 XML\Panel_retail.lua
 XML\AboutPanel.lua
 Necrosis_retail.lua
-Necrosis.lua
 XML\XML_retail.lua
 ThreatMeter.lua
 

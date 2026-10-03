@@ -3021,9 +3021,9 @@ function Necrosis:BagExplore(arg)
 		elseif NecrosisConfig.CountType == 1 then
 			if Local.Soulshard.Count < 10 then
 				--NecrosisShardCount:SetText("0"..Local.Soulshard.Count)
-				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
+				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..(NecrosisConfig.DestroyCount or 32))
 			else
-				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..NecrosisConfig.DestroyCount)
+				NecrosisShardCount:SetText(Local.Soulshard.Count.."/"..(NecrosisConfig.DestroyCount or 32))
 			end
 		end
 	else
@@ -3655,11 +3655,11 @@ function Necrosis:DeleteShards()
     	
 	if NecrosisConfig.DestroyShard then
         Local.Soulshard.Count = GetItemCount(Necrosis.Warlock_Lists.reagents.soul_shard.id)
-        local RemainingShardsToDelete = Local.Soulshard.Count - NecrosisConfig.DestroyCount
+        local RemainingShardsToDelete = Local.Soulshard.Count - (NecrosisConfig.DestroyCount or 32)
         for container = 0, NUM_BAG_SLOTS, 1 do
             if Local.BagIsSoulPouch[container] then break end
             for slot=1, C_Container.GetContainerNumSlots(container), 1 do
-                if math.floor(NecrosisConfig.DestroyCount) >= Local.Soulshard.Count then break end
+                if math.floor((NecrosisConfig.DestroyCount or 32)) >= Local.Soulshard.Count then break end
                 local itemLink = C_Container.GetContainerItemLink(container, slot)
                 if (itemLink) then
                     local itemID, itemName = Necrosis.Utils.ParseItemLink(itemLink) --GetContainerItemLink(container, slot))
