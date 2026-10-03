@@ -1,122 +1,178 @@
-local AddonName,SAO=...
-local Module="project"
-SAO.ERA=0x0100
-SAO.SOD=0x0200
-SAO.TBC=0x0400
-SAO.WRATH=0x0800
-SAO.CATA=0x1000
-SAO.MOP=0x2000
-SAO.WOD=0x4000
-SAO.LEGION=0x8000
-SAO.RETAIL=0x10000000
-SAO.ALL_PROJECTS=SAO.ERA + SAO.SOD + SAO.TBC + SAO.WRATH + SAO.CATA + SAO.MOP
-SAO.TBC_AND_ONWARD=SAO.ALL_PROJECTS - (SAO.ERA + SAO.SOD)
-SAO.WRATH_AND_ONWARD=SAO.ALL_PROJECTS - (SAO.ERA + SAO.SOD + SAO.TBC)
-SAO.CATA_AND_ONWARD=SAO.ALL_PROJECTS - (SAO.ERA + SAO.SOD + SAO.TBC + SAO.WRATH)
-SAO.MOP_AND_ONWARD=SAO.ALL_PROJECTS - (SAO.ERA + SAO.SOD + SAO.TBC + SAO.WRATH + SAO.CATA)
+local AddonName, SAO = ...
+local Module = "project"
+
+local WOW_PROJECT_FOREVER = WOW_PROJECT_FOREVER or WOW_PROJECT_CAMELOT or 18 -- Hardcode until the variable name is stable
+
+-- List of project flags, as bit field
+-- Start high enough to be able to index project flag to a list, and avoid confusion with traditional lists
+SAO.ERA    = 0x0100
+SAO.SOD    = 0x0200 -- Special case: Era effects are available to SoD, but not the other way around
+SAO.TBC    = 0x0400
+SAO.WRATH  = 0x0800
+SAO.CATA   = 0x1000
+SAO.MOP    = 0x2000
+SAO.RETAIL = 0x10000000
+SAO.FOREVER= 0x20000000
+SAO.ALL_PROJECTS = SAO.FOREVER + SAO.ERA + SAO.SOD + SAO.TBC + SAO.WRATH + SAO.CATA + SAO.MOP + SAO.RETAIL
+SAO.TBC_AND_ONWARD   = SAO.ALL_PROJECTS - (SAO.FOREVER + SAO.ERA + SAO.SOD)
+SAO.WRATH_AND_ONWARD = SAO.ALL_PROJECTS - (SAO.FOREVER + SAO.ERA + SAO.SOD + SAO.TBC)
+SAO.CATA_AND_ONWARD  = SAO.ALL_PROJECTS - (SAO.FOREVER + SAO.ERA + SAO.SOD + SAO.TBC + SAO.WRATH)
+SAO.MOP_AND_ONWARD   = SAO.ALL_PROJECTS - (SAO.FOREVER + SAO.ERA + SAO.SOD + SAO.TBC + SAO.WRATH + SAO.CATA)
+
+function SAO.IsForever()
+    -- local interfaceVersion = tonumber((select(4, GetBuildInfo())));
+    -- return interfaceVersion >= 16000 and interfaceVersion < 20000; -- Between 1.60.0 and 1.99.99
+    return WOW_PROJECT_ID == WOW_PROJECT_FOREVER;
+end
+
 function SAO.IsEra()
-return WOW_PROJECT_ID==WOW_PROJECT_CLASSIC
+    return WOW_PROJECT_ID == WOW_PROJECT_CLASSIC;
 end
+
 function SAO.IsTBC()
-return WOW_PROJECT_ID==WOW_PROJECT_BURNING_CRUSADE_CLASSIC
+    return WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC;
 end
+
 function SAO.IsWrath()
-return WOW_PROJECT_ID==WOW_PROJECT_WRATH_CLASSIC
+    return WOW_PROJECT_ID == WOW_PROJECT_WRATH_CLASSIC;
 end
+
 function SAO.IsCata()
-return WOW_PROJECT_ID==WOW_PROJECT_CATACLYSM_CLASSIC
+    return WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC;
 end
+
 function SAO.IsMoP()
-return WOW_PROJECT_ID==WOW_PROJECT_MISTS_CLASSIC
+    return WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC;
 end
+
 function SAO.IsSoD()
-return WOW_PROJECT_ID==WOW_PROJECT_CLASSIC and C_Engraving and C_Engraving.IsEngravingEnabled()
+    return WOW_PROJECT_ID == WOW_PROJECT_CLASSIC and C_Engraving and C_Engraving.IsEngravingEnabled()
 end
+
 function SAO.IsRetail()
-return WOW_PROJECT_ID==WOW_PROJECT_MAINLINE
+    return WOW_PROJECT_ID == WOW_PROJECT_MAINLINE;
 end
-local hasMidnightUI
+
+-- UI has changed in Midnight
+-- Also applies to WoW Classic:
+-- - TBC Classic Anniversary
+-- - Titan Reforged, starting with 3.80.1
+-- - MoP Classic, starting with SoO patch
+local hasMidnightUI = nil;
 function SAO.HasMidnightUI()
-if hasMidnightUI~=nil then
-return hasMidnightUI
+    if hasMidnightUI ~= nil then
+        return hasMidnightUI;
+    end
+
+    local buildNumber = tonumber((select(2, GetBuildInfo())));
+    local interfaceVersion = tonumber((select(4, GetBuildInfo())));
+    hasMidnightUI = (SAO.IsForever())
+                 or (SAO.IsMoP() and buildNumber >= 68042) -- 68042 = first build number of MoP Classic SoO patch
+                 or (SAO.IsTBC() and buildNumber >= 65295) -- 65295 = first build number of TBC Classic Anniversary
+                 or (SAO.IsWrath() and interfaceVersion >= 38001) -- 38001 = interface version of Titan Reforged 3.80.1
+                 or (SAO.IsEra() and buildNumber >= 68808) -- 68808 = first build number of Era with 'Midnight UI'
+                 or (SAO.IsRetail() and LE_EXPANSION_LEVEL_CURRENT >= LE_EXPANSION_MIDNIGHT);
+
+    return hasMidnightUI;
 end
-local buildInfo=tonumber((select(2,GetBuildInfo())))
-hasMidnightUI=(SAO.IsTBC() and buildInfo >=65295)
-or (SAO.IsRetail() and LE_EXPANSION_LEVEL_CURRENT >=LE_EXPANSION_MIDNIGHT)
-return hasMidnightUI
-end
+
 function SAO.HasMidnightEvents()
-return SAO.IsRetail() and LE_EXPANSION_LEVEL_CURRENT >=LE_EXPANSION_MIDNIGHT
+    return (SAO.IsRetail() and LE_EXPANSION_LEVEL_CURRENT >= LE_EXPANSION_MIDNIGHT)
+        or SAO.IsForever(); -- Not sure yet but very likely
 end
+
 function SAO.IsProject(projectFlags)
-if type(projectFlags)~='number' then
-SAO:Debug(Module, "Checking project against invalid flags "..tostring(projectFlags))
-return false
+    if type(projectFlags) ~= 'number' then
+        SAO:Debug(Module, "Checking project against invalid flags "..tostring(projectFlags));
+        return false;
+    end
+    return (
+        bit.band(projectFlags, SAO.FOREVER) ~= 0 and SAO.IsForever() or
+        --
+        bit.band(projectFlags, SAO.ERA) ~= 0 and SAO.IsEra() or
+        bit.band(projectFlags, SAO.SOD) ~= 0 and SAO.IsSoD() or
+        bit.band(projectFlags, SAO.TBC) ~= 0 and SAO.IsTBC() or
+        bit.band(projectFlags, SAO.WRATH) ~= 0 and SAO.IsWrath() or
+        bit.band(projectFlags, SAO.CATA) ~= 0 and SAO.IsCata() or
+        bit.band(projectFlags, SAO.MOP) ~= 0 and SAO.IsMoP() or
+        --
+        bit.band(projectFlags, SAO.RETAIL) ~= 0 and SAO.IsRetail()
+    );
 end
-return (
-bit.band(projectFlags,SAO.ERA)~=0 and SAO.IsEra() or
-bit.band(projectFlags,SAO.SOD)~=0 and SAO.IsSoD() or
-bit.band(projectFlags,SAO.TBC)~=0 and SAO.IsTBC() or
-bit.band(projectFlags,SAO.WRATH)~=0 and SAO.IsWrath() or
-bit.band(projectFlags,SAO.CATA)~=0 and SAO.IsCata() or
-bit.band(projectFlags,SAO.MOP)~=0 and SAO.IsMoP() or
-bit.band(projectFlags,SAO.RETAIL)~=0 and SAO.IsRetail()
-)
-end
-local flavorNames={
-[WOW_PROJECT_CLASSIC or 2]="Era",
-[WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5]="TBC",
-[WOW_PROJECT_WRATH_CLASSIC or 11]="Wrath",
-[WOW_PROJECT_CATACLYSM_CLASSIC or 14]="Cata",
-[WOW_PROJECT_MISTS_CLASSIC or 19]="MoP",
-[WOW_PROJECT_MAINLINE or 1]="Retail",
-}
+
+local flavorNames = {
+    [WOW_PROJECT_FOREVER or 18] = "Forever",
+    [WOW_PROJECT_CLASSIC or 2] = "Era",
+    [WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5] = "TBC",
+    [WOW_PROJECT_WRATH_CLASSIC or 11] = "Wrath",
+    [WOW_PROJECT_CATACLYSM_CLASSIC or 14] = "Cata",
+    [WOW_PROJECT_MISTS_CLASSIC or 19] = "MoP",
+    [WOW_PROJECT_MAINLINE or 1] = "Retail",
+};
+
 function SAO.GetFlavorName()
-if SAO.IsSoD()then
-return "SoD"
+    -- Special case for flavors which do not have a dedicated WOW_PROJECT_ID
+    if SAO.IsSoD() then
+        return "SoD";
+    end
+    return flavorNames[WOW_PROJECT_ID] or "Unknown";
 end
-return flavorNames[WOW_PROJECT_ID] or "Unknown"
-end
+
+-- buildID is an internal code, such as universal, vanilla, tbc, mop-ptr, ...
+-- The main part is supposed to be the same as the suffix of package names
+-- The secondary part (after dash) is optional
 local function splitBuildID(buildID)
-if type(buildID)~="string" then
-return nil,nil
+    if type(buildID) ~= "string" then
+        return nil, nil;
+    end
+
+    -- If buildID is "mop-ptr", return "mop", "ptr"
+    local dashIndex = string.find(buildID, "-");
+    if dashIndex then
+        local a = string.sub(buildID, 1, dashIndex - 1);
+        local b = string.sub(buildID, dashIndex + 1);
+        return a, b;
+    else
+        return buildID, nil;
+    end
 end
-local dashIndex=string.find(buildID, "-")
-if dashIndex then
-local a=string.sub(buildID,1,dashIndex - 1)
-local b=string.sub(buildID,dashIndex + 1)
-return a,b
-else
-return buildID,nil
-end
-end
-local projectNameForBuildID={
-universal="*",
-vanilla=EXPANSION_NAME0 or "Classic",
-tbc=EXPANSION_NAME1 or "The Burning Crusade",
-wrath=EXPANSION_NAME2 or "Wrath of the Lich King",
-cata=EXPANSION_NAME3 or "Cataclysm",
-mop=EXPANSION_NAME4 or "Mists of Pandaria",
-retail=_G["EXPANSION_NAME"..(LE_EXPANSION_LEVEL_CURRENT or 99)] or "Retail",
-}
+
+local projectNameForBuildID = {
+    universal = "*",
+    forever   = "Forever", -- If possible: EXPANSION_NAMExx or "Forever"
+    vanilla   = EXPANSION_NAME0 or "Classic",
+    tbc       = EXPANSION_NAME1 or "The Burning Crusade",
+    wrath     = EXPANSION_NAME2 or "Wrath of the Lich King",
+    cata      = EXPANSION_NAME3 or "Cataclysm",
+    mop       = EXPANSION_NAME4 or "Mists of Pandaria",
+    retail    = _G["EXPANSION_NAME"..(LE_EXPANSION_LEVEL_CURRENT or 99)] or "Retail", -- May require adjustment depending on Forever
+};
+
 function SAO.GetFullProjectName(buildID)
-return projectNameForBuildID[select(1,splitBuildID(buildID))] or "Unknown"
+    return projectNameForBuildID[select(1, splitBuildID(buildID))] or "Unknown";
 end
-local subProjectNameForBuildID={
-ptr="PTR",
-beta="Beta",
-}
+
+local subProjectNameForBuildID = {
+    ptr  = "PTR",
+    beta = "Beta",
+};
+
 function SAO.GetSubProjectName(buildID)
-return subProjectNameForBuildID[select(2,splitBuildID(buildID))]
+    return subProjectNameForBuildID[select(2, splitBuildID(buildID))]; -- Returns nil if not found
 end
-local expectedBuildID={
-[WOW_PROJECT_CLASSIC or 2]="vanilla",
-[WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5]="tbc",
-[WOW_PROJECT_WRATH_CLASSIC or 11]="wrath",
-[WOW_PROJECT_CATACLYSM_CLASSIC or 14]="cata",
-[WOW_PROJECT_MISTS_CLASSIC or 19]="mop",
-[WOW_PROJECT_MAINLINE or 1]="retail",
-}
+
+local expectedBuildID = {
+    [WOW_PROJECT_FOREVER or 18] = "forever",
+    --
+    [WOW_PROJECT_CLASSIC or 2] = "vanilla",
+    [WOW_PROJECT_BURNING_CRUSADE_CLASSIC or 5] = "tbc",
+    [WOW_PROJECT_WRATH_CLASSIC or 11] = "wrath",
+    [WOW_PROJECT_CATACLYSM_CLASSIC or 14] = "cata",
+    [WOW_PROJECT_MISTS_CLASSIC or 19] = "mop",
+    --
+    [WOW_PROJECT_MAINLINE or 1] = "retail",
+};
+
 function SAO.GetExpectedBuildID()
-return expectedBuildID[WOW_PROJECT_ID] or ""
+    return expectedBuildID[WOW_PROJECT_ID] or "";
 end

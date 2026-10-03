@@ -4,6 +4,7 @@
 	<Script file="components/project.lua"/>
 	<Script file="components/util.lua"/>
 	<Script file="components/aura.lua"/>
+	<Script file="components/auracontainer.lua"/>
 	<Script file="components/bucket.lua"/>
 	<Script file="components/display.lua"/>
 	<Script file="components/effect.lua"/>

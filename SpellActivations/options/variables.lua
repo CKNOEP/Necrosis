@@ -1,31 +1,45 @@
-local AddonName,SAO=...
+local AddonName, SAO = ...
+
+-- Apply all values from the database to the engine
 function SAO.ApplyAllVariables(self)
-self:ApplySpellAlertOpacity()
-self:ApplySpellAlertGeometry()
-self:ApplySpellAlertTimer()
-self:ApplySpellAlertSound()
-self:ApplyGlowingButtonsToggle()
+    self:ApplySpellAlertOpacity();
+    self:ApplySpellAlertGeometry();
+    self:ApplySpellAlertTimer();
+    self:ApplySpellAlertSound();
+    self:ApplyGlowingButtonsToggle();
 end
+
+-- Apply spell alert opacity
 function SAO.ApplySpellAlertOpacity(self)
-NecrosisSpellActivationOverlayContainerFrame:SetShown(NecrosisConfig.alert.enabled)
-NecrosisSpellActivationOverlayContainerFrame:SetAlpha(NecrosisConfig.alert.opacity)
+    -- Change the main frame's visibility and opacity
+    SpellActivationOverlayContainerFrame:SetShown(SpellActivationOverlayDB.alert.enabled);
+    SpellActivationOverlayContainerFrame:SetAlpha(SpellActivationOverlayDB.alert.opacity);
 end
+
+-- Apply spell alert geometry i.e., scale and offset
 function SAO.ApplySpellAlertGeometry(self)
-NecrosisSpellActivationOverlayAddonFrame.scale=NecrosisConfig.alert.scale
-NecrosisSpellActivationOverlayAddonFrame.offset=NecrosisConfig.alert.offset
-NecrosisSpellActivationOverlay_OnChangeGeometry(NecrosisSpellActivationOverlayAddonFrame)
+    SpellActivationOverlayAddonFrame.scale = SpellActivationOverlayDB.alert.scale;
+    SpellActivationOverlayAddonFrame.offset = SpellActivationOverlayDB.alert.offset;
+    SpellActivationOverlay_OnChangeGeometry(SpellActivationOverlayAddonFrame);
 end
+
+-- Apply spell alert progressive timer effect
 function SAO.ApplySpellAlertTimer(self)
-NecrosisSpellActivationOverlayAddonFrame.useTimer=NecrosisConfig.alert.timer~=0
-NecrosisSpellActivationOverlay_OnChangeTimerVisibility(NecrosisSpellActivationOverlayAddonFrame)
+    SpellActivationOverlayAddonFrame.useTimer = SpellActivationOverlayDB.alert.timer ~= 0;
+    SpellActivationOverlay_OnChangeTimerVisibility(SpellActivationOverlayAddonFrame);
 end
+
+-- Apply spell alert sound effects toggle
 function SAO.ApplySpellAlertSound(self)
-NecrosisSpellActivationOverlayAddonFrame.useSound=NecrosisConfig.alert.sound~=0
-NecrosisSpellActivationOverlay_OnChangeSoundToggle(NecrosisSpellActivationOverlayAddonFrame)
+    SpellActivationOverlayAddonFrame.useSound = SpellActivationOverlayDB.alert.sound ~= 0;
+    SpellActivationOverlay_OnChangeSoundToggle(SpellActivationOverlayAddonFrame);
 end
+
+-- Apply glowing buttons on/off
 function SAO.ApplyGlowingButtonsToggle(self)
-self:ForEachBucket(function(bucket)
-bucket:reset()
-bucket.trigger:manualCheckAll()
-end)
+    -- @todo Find a way to only refresh spell alert when checking spell alert, or glowing button when clicking glowing button
+    self:ForEachBucket(function(bucket)
+        bucket:reset(); -- Reset hash to force re-display if needed
+        bucket.trigger:manualCheckAll();
+    end);
 end
