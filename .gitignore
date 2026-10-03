@@ -8,3 +8,7 @@
 
 # Claude Code configuration
 .claude/
+
+# Backup / temporary files
+*.bak
+*.tmp
