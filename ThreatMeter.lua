@@ -61,7 +61,8 @@ function Necrosis:UpdateThreatMeter()
 	local threatpct = 0
 	if UnitAffectingCombat("player") and UnitExists("target") then
 		local isTanking, status, tp, rawthreatpct, threatvalue = UnitDetailedThreatSituation("player", "target")
-		if tp then
+		-- A secret threat value can't be compared nor used in arithmetic by tainted code: keep 0%
+		if not (issecretvalue and issecretvalue(tp)) and tp then
 			threatpct = tp
 		end
 	end

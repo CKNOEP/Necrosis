@@ -9,6 +9,20 @@ local Local = {}
 local _G = getfenv(0)
 local NU = Necrosis.Utils -- save typing
 
+-- Equality that never touches secret values (tainted code may not compare them):
+-- a secret on either side is simply "not equal".
+local function SameValue(a, b)
+	if issecretvalue and (issecretvalue(a) or issecretvalue(b)) then
+		return false
+	end
+	return a == b
+end
+
+-- true when v is a secret value (those can't be compared, tested, indexed or used in arithmetic by tainted code)
+local function IsSecret(v)
+	return issecretvalue ~= nil and issecretvalue(v) or false
+end
+
 ------------------------------------------------------------------------------------------------------
 -- LOCAL FUNCTIONS || FONCTIONS LOCALES
 ------------------------------------------------------------------------------------------------------
@@ -333,6 +347,8 @@ local function UnitHasAura(unit, name, isDebuff)
 	local func = isDebuff and UnitDebuff or UnitBuff
 	for i = 1, 40 do
 		local auraName = func(unit, i)
+		-- Secret aura names can't be compared by tainted code: nothing can be checked
+		if issecretvalue and issecretvalue(auraName) then return false end
 		if not auraName then return false end
 		if auraName == name then return true end
 	end
@@ -355,7 +371,10 @@ local function ShowAntiFearWarning()
 	-- Checking if we have a target. Any fear need a target to be casted on
 	if UnitExists("target") and UnitCanAttack("player", "target") and not UnitIsDead("target") then
 		-- Checking if the target has natural immunity (only NPC target)
-		if not UnitIsPlayer("target") and ( UnitCreatureType("target") == Necrosis.Unit.Undead or UnitCreatureType("target") == "Mechanical" ) then
+		-- The creature type can be a secret value (tainted code can't compare it): then skip this check
+		local creatureType = UnitCreatureType("target")
+		if not (issecretvalue and issecretvalue(creatureType))
+		and not UnitIsPlayer("target") and ( creatureType == Necrosis.Unit.Undead or creatureType == "Mechanical" ) then
 			Actif = 2 -- Immun
 		end
 		-- We'll start to parse the target buffs, as his class doesn't give him natural permanent immunity
@@ -653,6 +672,7 @@ function CheckCorruptionRefresh(target, cast_guid, spell_id)
 
 -- On verifie si la corruption doit etre refresh , si le talent(Afflication eternelle) est appris, a la suite de SB ou hanter le timer de la corru est réinitialisé
 			local guid = UnitGUID("target")
+			if IsSecret(guid) then return nil end -- target is unreadable: nothing can be matched
 			local name = select(1, GetSpellInfo(spell_id))
 			
 			if not target or not guid or target == "Player" or not Necrosis.GetSpellById(spell_id)  then
@@ -665,6 +685,7 @@ function CheckCorruptionRefresh(target, cast_guid, spell_id)
 			
 				for i=1,40 do 
 						local NameDebuff, _, _, _, _,expirationTime = UnitAura("target", i, "PLAYER|HARMFUL")
+						if IsSecret(NameDebuff) then break end -- unreadable aura: stop looking
 						
 						--On verifie que sur la cible on a bien corruption
 						if NameDebuff == Necrosis.GetSpellName("corruption") then
@@ -675,7 +696,7 @@ function CheckCorruptionRefresh(target, cast_guid, spell_id)
 									-- On recherche dans la table des Timer la corruption correspondante à la cible
 									--if Local.TimerManagement.SpellTimer[index] then
 									--print(Necrosis.TimerManagement.SpellTimer[index].Name,NameDebuff,Necrosis.TimerManagement.SpellTimer[index].TargetGUID,UnitGUID("target"))
-										if Necrosis.TimerManagement.SpellTimer[index].Name == NameDebuff and  Necrosis.TimerManagement.SpellTimer[index].TargetGUID == UnitGUID("target") then
+										if Necrosis.TimerManagement.SpellTimer[index].Name == NameDebuff and  SameValue(Necrosis.TimerManagement.SpellTimer[index].TargetGUID, UnitGUID("target")) then
 										
 									-- On delete le timer actuel pour le remplacer
 										Necrosis:RetraitTimerParIndex(index, Local.TimerManagement, "spell expired")
@@ -982,17 +1003,26 @@ function SetupBuffTimers()
 	    buffs_found = true
 	    local name = auraData.name
 	    local spellId = auraData.spellId
-	    local expirationTime = auraData.expirationTime or 0
-	    local duration = auraData.duration or 0
+	    local expirationTime = auraData.expirationTime
+	    local duration = auraData.duration
+	    -- Secret aura values can't be used by tainted code: such an aura is ignored
+	    local readable = not (IsSecret(name) or IsSecret(expirationTime) or IsSecret(duration))
+	    if readable then
+	      expirationTime = expirationTime or 0
+	      duration = duration or 0
+	    end
 
-	    if Necrosis.Debug.init_path then
+	    if readable and Necrosis.Debug.init_path then
 	      print("SetupBuffTimers"
 	        .." '"..name.."'"
 	        .." "..Necrosis.Utils.TimeLeft(expirationTime-GetTime())
 	        )
 	    end
 
-	    local s_id, s_usage, s_timer, s_buff, s_cool = Necrosis.GetSpellByName(name)
+	    local s_id, s_usage, s_timer, s_buff, s_cool
+	    if readable then
+	      s_id, s_usage, s_timer, s_buff, s_cool = Necrosis.GetSpellByName(name)
+	    end
 	    -- Check if spell should be restored: s_buff=true OR special case RestoreBuff for soulstone
 	    local spell_config = Necrosis.GetSpell(s_usage)
 	    local should_restore = s_timer and (s_buff or (spell_config and spell_config.RestoreBuff))
@@ -1153,7 +1183,13 @@ local function ev_out(event, msg, init, events, spells)
 		output = true
 	end
 
-	if msg == nil or msg == "" then
+	if not output then
+		return
+	end
+	-- msg may be built from secret values (e.g. UNIT_SPELLCAST_SENT): never compare it
+	if issecretvalue and issecretvalue(msg) then
+		-- cannot be inspected, print as is
+	elseif msg == nil or msg == "" then
 		-- no additional message
 	else
 		msg = " '"..tostring(msg).."'"
@@ -1369,7 +1405,7 @@ function Necrosis:OnEvent(event,...)
 				.." a3'"..tostring(arg3).."'"
 				.." '"..tostring(GetSpellInfo(arg3)).."'"
 			ev_out(event, msg, false, false, true)
-			msg = " "..tostring((sc.Guid == cast_guid) and "ok" or "!?")..""
+			msg = " "..tostring(SameValue(sc.Guid, cast_guid) and "ok" or "!?")..""
 				.." g'"..tostring(sc.Guid or "nyl").."'"
 				.." i'"..tostring(sc.Id or "nyl").."'"
 				.." n'"..tostring(sc.Name or "nyl").."'"
@@ -1401,7 +1437,16 @@ function Necrosis:OnEvent(event,...)
 		end
 
 		local unit, target, cast_guid, spell_id = arg1, arg2, arg3, arg4
-			
+		-- Secret values can't be compared or used as table keys by tainted code.
+		-- Without a usable cast GUID the cast can't be tracked: skip it.
+		if issecretvalue and (issecretvalue(cast_guid) or issecretvalue(spell_id) or issecretvalue(unit)) then
+			return
+		end
+		-- A secret target name is treated as "no target specified" (falls back to UnitName).
+		if issecretvalue and issecretvalue(target) then
+			target = nil
+		end
+
 		msg = " sid'"..tostring(spell_id or "nyl").."'"
 			.." sg'"..tostring(cast_guid or "nyl").."'"
 			.." u'"..tostring(unit or "nyl").."'"
@@ -1492,8 +1537,10 @@ function Necrosis:OnEvent(event,...)
 		local usable = spellName and true or false
 		local nomana = false
 		--print(usable,nomana,Necrosis.Unit.Demon,Necrosis.Unit.Elemental)
+		local targetType = UnitCreatureType("target")
+		if IsSecret(targetType) then targetType = nil end -- unreadable: treated as "no alert"
 		
-			if UnitCreatureType("target") == Necrosis.Unit.Demon  then 	-- Button Alerte Demon	
+			if targetType == Necrosis.Unit.Demon  then 	-- Button Alerte Demon	
 			NecrosisCreatureAlertButton_demon:SetAlpha(1)		
 			--NecrosisCreatureAlertButton_demon:EnableMouse(true)
 			
@@ -1501,7 +1548,7 @@ function Necrosis:OnEvent(event,...)
 			--NecrosisCreatureAlertButton_elemental:EnableMouse(true)
 			NecrosisCreatureAlertButton_elemental:SetMovable(true)
 			
-			elseif UnitCreatureType("target") == Necrosis.Unit.Elemental then-- Button Alerte Elemental
+			elseif targetType == Necrosis.Unit.Elemental then-- Button Alerte Elemental
 			NecrosisCreatureAlertButton_elemental:SetAlpha(1)
 			--NecrosisCreatureAlertButton_elemental:EnableMouse(true)
 			NecrosisCreatureAlertButton_demon:SetAlpha(0)
@@ -1555,11 +1602,12 @@ function Necrosis:OnEvent(event,...)
 	elseif event == "UNIT_HEALTH" then
 		local unit = arg1  -- arg1 is the unit that changed health
 
-		if unit and UnitIsDeadOrGhost(unit) then
+		local isDead = unit and UnitIsDeadOrGhost(unit)
+		if not IsSecret(isDead) and isDead then
 			local guid = UnitGUID(unit)
 
 			-- Remove timers for this dead unit
-			if guid then
+			if not IsSecret(guid) and guid then
 				Local.TimerManagement = Necrosis:RetraitTimerParGuid(guid, Local.TimerManagement, "UNIT_HEALTH_DIED")
 			end
 		end
@@ -1572,6 +1620,11 @@ function Necrosis:OnEvent(event,...)
 			a6, a7, a8, a9, a10,
 			a11, a12, a13, a14, a15
 			= CombatLogGetCurrentEventInfo()
+		-- Secret combat log values can't be compared by tainted code: ignore such an event
+		if IsSecret(a2) or IsSecret(a4) or IsSecret(a5) or IsSecret(a8) or IsSecret(a9)
+		or IsSecret(a12) or IsSecret(a13) or IsSecret(a15) then
+			return
+		end
 		local timestamp = a1
 		local subevent = a2
 
@@ -1615,7 +1668,7 @@ function Necrosis:OnEvent(event,...)
 		-- Detection of Shadow Trance and Contrecoup || Détection de la transe de l'ombre et de  Contrecoup
 		if subevent == "SPELL_AURA_APPLIED" then
 			-- This is received for every aura with in range so output only what we process
-			if destGUID == UnitGUID("player") then
+			if SameValue(destGUID, UnitGUID("player")) then
 				msg = " e'"..tostring(Effect or "nyl").."'"
 						.." se'"..tostring(subevent or "nyl").."'"
 						.." s'"..tostring(sourceName or "nyl").."'"
@@ -1631,7 +1684,7 @@ function Necrosis:OnEvent(event,...)
 			end
 			
 		elseif subevent == "SPELL_AURA_REFRESH" then
-			if destGUID == UnitGUID("player") then
+			if SameValue(destGUID, UnitGUID("player")) then
 				msg = " e'"..tostring(Effect or "nyl").."'"
 						.." se'"..tostring(subevent or "nyl").."'"
 						.." s'"..tostring(sourceName or "nyl").."'"
@@ -1649,7 +1702,7 @@ function Necrosis:OnEvent(event,...)
 		-- Detection of the end of Shadow Trance and Contrecoup || Détection de la fin de la transe de l'ombre et de Contrecoup
 		elseif subevent == "SPELL_AURA_REMOVED" then
 			-- This is received for every aura with in range so output only what we process
-			if destGUID == UnitGUID("player") then
+			if SameValue(destGUID, UnitGUID("player")) then
 				msg = " e'"..tostring(Effect or "nyl").."'"
 						.." se'"..tostring(subevent or "nyl").."'"
 						.." s'"..tostring(sourceName or "nyl").."'"
@@ -1663,7 +1716,7 @@ function Necrosis:OnEvent(event,...)
 				SelfEffect("DEBUFF", Effect)
 				SetupBuffTimers()
 			end
-			if destGUID == UnitGUID("focus") 
+			if SameValue(destGUID, UnitGUID("focus"))
 			and Local.TimerManagement.Banish 
 			and Effect == Necrosis.GetSpellName("banish") 
 			then
@@ -1688,7 +1741,7 @@ function Necrosis:OnEvent(event,...)
 			end
 		-- Deban Detection || Détection du Déban
 		-- Resist / immune detection || Détection des résists / immunes
-		elseif subevent == "SPELL_MISSED" and sourceGUID == UnitGUID("player") then
+		elseif subevent == "SPELL_MISSED" and SameValue(sourceGUID, UnitGUID("player")) then
 			-- The 1st 8 arguments are always timestamp, event, sourceGUID, sourceName, sourceFlags, destGUID, destName, destFlags
 			-- "SPELL_MISSED" spellId, spellName, spellSchool, missType
 			-- Will cleanup timers even if not target or focus
@@ -1728,14 +1781,14 @@ function Necrosis:OnEvent(event,...)
 			end
 		-- Detection application of a spell / fire stone on a weapon || Détection application d'une pierre de sort/feu sur une arme
 		elseif subevent == "ENCHANT_APPLIED"
-			and destGUID == UnitGUID("player")
+			and SameValue(destGUID, UnitGUID("player"))
 			and (arg9 == NecrosisConfig.ItemSwitchCombat[1] or NecrosisConfig.ItemSwitchCombat[2])
 			then
 				Local.SomethingOnHand = arg9
 				UpdateIcons()
 		-- End of enchantment detection || Détection fin d'enchant
 		elseif subevent == "ENCHANT_REMOVE"
-			and destGUID == UnitGUID("player")
+			and SameValue(destGUID, UnitGUID("player"))
 			and (arg9 == NecrosisConfig.ItemSwitchCombat[1] or NecrosisConfig.ItemSwitchCombat[2])
 			then
 				Local.SomethingOnHand = "Rien"
@@ -2792,7 +2845,11 @@ function Necrosis:BagExplore(arg)
 	--sinon
 	else
 		if UnitPower then
-			Local.Soulshard.Count = UnitPower("player", Enum.PowerType.SoulShards) or 0
+			local shards = UnitPower("player", Enum.PowerType.SoulShards)
+			if IsSecret(shards) then
+				shards = Local.Soulshard.Count -- unreadable: keep the last known count
+			end
+			Local.Soulshard.Count = shards or 0
 		end
 
 	--fin
@@ -2861,7 +2918,8 @@ function Necrosis:BagExplore(arg)
 				for i = 1, 40 do
 					local auraData = C_UnitAuras.GetAuraDataByIndex("player", i)
 					if not auraData then break end
-					if tonumber(auraData.spellId) == 20707 then  -- Soulstone spell ID (convert secret number)
+					if not IsSecret(auraData.spellId) and not IsSecret(auraData.expirationTime)
+					and tonumber(auraData.spellId) == 20707 then  -- Soulstone spell ID
 						if auraData.expirationTime and auraData.expirationTime > 0 then
 							Time = GetTime()
 							TimeMax = auraData.expirationTime
@@ -3048,7 +3106,7 @@ function Necrosis:TradeStone()
 			Local.Trade.Complete = true
 			return
 		elseif UnitExists("target") and UnitIsPlayer("target")
-		and not (UnitCanAttack("player", "target") or UnitName("target") == UnitName("player")) then
+		and not (UnitCanAttack("player", "target") or SameValue(UnitName("target"), UnitName("player"))) then
 				C_Container.PickupContainerItem(Local.Stone.Health.Location[1], Local.Stone.Health.Location[2])
 				if CursorHasItem() then
 					DropItemOnUnit("target")

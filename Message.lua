@@ -151,7 +151,11 @@ end
 
 local function Out(Spell, Speech, msg, style)
 	local player = UnitName("player") or UNKNOWN
-	local target = Spell.TargetName or UNKNOWN
+	local target = Spell.TargetName
+	-- a secret name can't be used in gsub / chat text by tainted code
+	if (issecretvalue and issecretvalue(target)) or not target then
+		target = UNKNOWN
+	end
 	local pet = Speech.DemonName or UNKNOWN
 	local s = style or "USER"
 	

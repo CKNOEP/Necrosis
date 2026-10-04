@@ -7,6 +7,20 @@
 -- On définit G comme étant le tableau contenant toutes les frames existantes.
 local _G = getfenv(0)
 
+-- Equality that never touches secret values (tainted code may not compare them):
+-- a secret on either side is simply "not equal".
+local function SameValue(a, b)
+	if issecretvalue and (issecretvalue(a) or issecretvalue(b)) then
+		return false
+	end
+	return a == b
+end
+
+-- true when v is a secret value
+local function IsSecret(v)
+	return issecretvalue ~= nil and issecretvalue(v) or false
+end
+
 --[[
 ------------------------------------------------------------------------------------------------------
 -- FUNCTIONS TO ADD TIMERS || FONCTIONS D'INSERTION
@@ -35,7 +49,7 @@ local function Parsing(SpellGroup, SpellTimer)
 			local GroupeOK = false
 			for i = 1, #SpellGroup, 1 do
 				if ((SpellTimer[index].Type == i) and (i <= 3)) or
-				   (SpellTimer[index].TargetGUID == SpellGroup[i].TargetGUID)
+				   (SameValue(SpellTimer[index].TargetGUID, SpellGroup[i].TargetGUID))
 					then
 					GroupeOK = true
 					SpellTimer[index].Group = i
@@ -285,7 +299,8 @@ function Necrosis:UpdateResurrectionTimerDisplay(Timer)
 		for i = 1, 40 do
 			local auraData = C_UnitAuras.GetAuraDataByIndex("player", i)
 			if not auraData then break end
-			if tonumber(auraData.spellId) == 20707 then  -- Soulstone spell ID
+			if not IsSecret(auraData.spellId) and not IsSecret(auraData.expirationTime)
+			and tonumber(auraData.spellId) == 20707 then  -- Soulstone spell ID
 				if auraData.expirationTime and auraData.expirationTime > 0 then
 					Time = GetTime()
 					TimeMax = auraData.expirationTime
@@ -378,7 +393,7 @@ function Necrosis:RetraitTimerParGuid(guid, Timer, note)
 
 	-- Loop backwards to safely remove multiple timers with same GUID
 	for index = #Timer.SpellTimer, 1, -1 do
-		if Timer.SpellTimer[index].TargetGUID == guid then
+		if SameValue(Timer.SpellTimer[index].TargetGUID, guid) then
 			OutputTimer("RetraitTimerParGuid", "", index, Timer, note)
 			Timer = self:RetraitTimerParIndex(index, Timer)
 		end
@@ -394,7 +409,7 @@ _G["DEFAULT_CHAT_FRAME"]:AddMessage("RetraitTimer::"
 .." tg'"..(tostring(Timer.SpellTimer[index].CastGUID)).."'"
 )
 --]]
-		if Timer.SpellTimer[index].CastGUID == guid then
+		if SameValue(Timer.SpellTimer[index].CastGUID, guid) then
 			OutputTimer("RetraitTimerParCast", "", index, Timer, note)
 			Timer = self:RetraitTimerParIndex(index, Timer)
 			break
@@ -406,7 +421,7 @@ end
 function Necrosis:RemoveTimerByNameAndGuid(name, guid, Timer, note)
 	for index = #Timer.SpellTimer, 1, -1 do
 		if Timer.SpellTimer[index].Name == name
-		and Timer.SpellTimer[index].TargetGUID == guid then
+		and SameValue(Timer.SpellTimer[index].TargetGUID, guid) then
 			OutputTimer("RemoveTimerByNameAndGuid", "", index, Timer, note)
 			Timer = self:RetraitTimerParIndex(index, Timer)
 		end

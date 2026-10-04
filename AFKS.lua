@@ -317,6 +317,10 @@ end
 ]]
 
 local function Chat_OnEvent(self, event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14)
+	-- Secret chat values can't be formatted / compared by tainted code: skip such a message
+	if issecretvalue and (issecretvalue(arg1) or issecretvalue(arg2) or issecretvalue(arg4) or issecretvalue(arg11)) then
+		return
+	end
 	local coloredName = GetColoredName(event, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11, arg12, arg13, arg14);
 	local type = strsub(event, 10)
 	local info = _G.ChatTypeInfo[type]

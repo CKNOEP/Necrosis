@@ -88,7 +88,10 @@ local DrainSoulHandler = {
         if UnitCanAttack("player", "target") then
             local hp = UnitHealth("target");
             local hpMax = UnitHealthMax("target");
-            canExecute = hp > 0 and hp/hpMax <= 0.25;
+            -- Secret health values can't be compared nor used in arithmetic by tainted code
+            if not (issecretvalue and (issecretvalue(hp) or issecretvalue(hpMax))) then
+                canExecute = hp > 0 and hp/hpMax <= 0.25;
+            end
         end
 
         if canExecute and not self.glowing then

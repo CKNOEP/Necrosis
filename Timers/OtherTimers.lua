@@ -6,6 +6,11 @@
 -- On définit G comme étant le tableau contenant toutes les frames existantes.
 local _G = getfenv(0)
 
+-- true when v is a secret value (can't be compared, tested or concatenated into text we then process)
+local function IsSecret(v)
+	return issecretvalue ~= nil and issecretvalue(v) or false
+end
+
 ------------------------------------------------------------------------------------------------------
 -- NON-GRAPHICAL TIMERS FUNCTIONS || FONCTIONS D'AFFICHAGE DES TIMERS NON GRAPHIQUES
 ------------------------------------------------------------------------------------------------------
@@ -76,7 +81,10 @@ function Necrosis:RezTimerUpdate(SpellTimer, LastUpdate)
 	-- Get spell cooldown for Soulstone (spell ID 20707)
 	local spellStart, spellDuration, spellEnabled = GetSpellCooldown(20707)
 	local cdText = ""
-	if spellStart == 0 then
+	if IsSecret(spellStart) or IsSecret(spellDuration) then
+		-- cooldown unreadable: no cooldown text
+		cdText = ""
+	elseif spellStart == 0 then
 		-- No cooldown
 		cdText = ""
 	else
@@ -140,7 +148,8 @@ function Necrosis:TextTimerUpdate(SpellTimer, SpellGroup)
 		-- Affichage de l'entête si on change de groupe
 		if not (SpellTimer[index].Group == LastGroup) and SpellTimer[index].Group > 3 then
 			if SpellTimer[index].Group and SpellGroup[SpellTimer[index].Group] then
-				if SpellGroup[SpellTimer[index].Group].Name then
+				local groupName, groupSub = SpellGroup[SpellTimer[index].Group].Name, SpellGroup[SpellTimer[index].Group].SubName
+				if not IsSecret(groupName) and not IsSecret(groupSub) and groupName then
 					display = display.."<purple>-------------------------------\n"
 					display = display..SpellGroup[SpellTimer[index].Group].Name
 					display = display.." - "
@@ -171,14 +180,18 @@ function Necrosis:TextTimerUpdate(SpellTimer, SpellGroup)
 		end
 		display = display.." - <close>"..color..SpellTimer[index].Name.."<close>"
 		
-		if (SpellTimer[index].Target == nil) then
+		local timerTarget = SpellTimer[index].Target
+		if IsSecret(timerTarget) then
+			timerTarget = "" -- unreadable target name: not shown in the text timers
+		elseif (timerTarget == nil) then
 			SpellTimer[index].Target = "";
+			timerTarget = ""
 		end
 		
 		if (SpellTimer[index].Type == 1)
-			and not (SpellTimer[index].Target == "")
+			and not (timerTarget == "")
 			then
-				display = display.."<white> - "..SpellTimer[index].Target.."<close>\n";
+				display = display.."<white> - "..timerTarget.."<close>\n";
 		else
 			display = display.."\n";
 		end

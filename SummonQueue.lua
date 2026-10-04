@@ -95,6 +95,10 @@ function SummonQueue:OnEvent(event, ...)
 
 	if event:match("^CHAT_MSG_") then
 		local message, sender = ...
+		-- A secret chat message / sender can't be parsed by tainted code: ignore it
+		if issecretvalue and (issecretvalue(message) or issecretvalue(sender)) then
+			return
+		end
 		self:ProcessChatMessage(message, sender)
 	end
 end

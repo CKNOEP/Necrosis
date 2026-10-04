@@ -6,6 +6,11 @@
 -- Get a reference to the global env variable containing all the frames || On définit G comme étant le tableau contenant toutes les frames existantes.
 local _G = getfenv(0)
 
+-- true when v is a secret value (tainted code can't compare it)
+local function IsSecret(v)
+	return issecretvalue ~= nil and issecretvalue(v) or false
+end
+
 -- Pre-allocate table for timer positioning to avoid repeated allocations
 local _lastPoint = {}
 
@@ -43,7 +48,8 @@ local function CreateGroup(SpellGroup, index)
 		else
 			texte = texte.." - ?"
 		end
-		if texte == "? - ?" then
+		-- a secret text (e.g. a target name) can't be compared by tainted code: show it as is
+		if not (issecretvalue and issecretvalue(texte)) and texte == "? - ?" then
 			f:Hide()
 		else
 			FontString:SetText(texte)
@@ -86,7 +92,8 @@ local function CreateGroup(SpellGroup, index)
 		texte = texte.." - ?"
 	end
 
-	if texte == "? - ?" then
+	-- a secret text (e.g. a target name) can't be compared by tainted code: show it as is
+	if not (issecretvalue and issecretvalue(texte)) and texte == "? - ?" then
 		frame:Hide()
 	else
 		FontString:SetText(texte)
@@ -354,7 +361,7 @@ function NecrosisUpdateTimer(tableau, Changement)
 		end
 
 		if (tableau[index].Type == 1 or tableau[index].Type == 3 
-		and tableau[index].Target and not (tableau[index].Target == "")) then
+		and tableau[index].Target and (IsSecret(tableau[index].Target) or not (tableau[index].Target == ""))) then
 			if NecrosisConfig.SpellTimerPos == 1 then
 				affichage = affichage.." - "..tableau[index].Target
 			else
