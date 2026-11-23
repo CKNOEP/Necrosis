@@ -72,6 +72,7 @@ Speech\Speech-ru.lua
 
 Message.lua
 Spells-Forever.lua
+Debug-CheckSpells.lua
 Dialog_Forever.lua
 
 Timers\Functions_retail.lua

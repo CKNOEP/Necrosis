@@ -267,16 +267,16 @@ Notes:
 
 	-- Spellstone & Firestone do NOT exist in MOP (removed before Cataclysm)
 	-- These spells are commented out for reference only
-	--[[ Create Spellstone || Création pierre de sort
+	-- A1/A3 audit : Spellstone existe sur Forever (Classic) : Create Spellstone
 	[2362]	= {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "spellstone", Length = 60, Cooldown = 180,},
 	[17727]	= {UsageRank = 2, SpellRank = 2, Timer = false, Usage = "spellstone", Length = 60, Cooldown = 180,},
 	[17728]	= {UsageRank = 3, SpellRank = 3, Timer = false, Usage = "spellstone", Length = 60, Cooldown = 180,},
 	[28172]	= {UsageRank = 4, SpellRank = 4, Timer = false, Usage = "spellstone", Length = 60, Cooldown = 180,},
 	[47886]	= {UsageRank = 5, SpellRank = 5, Timer = false, Usage = "spellstone", Length = 60, Cooldown = 180,},
 	[47888]	= {UsageRank = 6, SpellRank = 6, Timer = false, Usage = "spellstone", Length = 60, Cooldown = 180,},
-	]]
+	-- fin
 
-	--[[ Create Firestone || Création pierre de feu
+	-- A1/A3 audit : Firestone existe sur Forever (Classic) : Create Firestone
 	[6366]  = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "firestone",},
 	[17951] = {UsageRank = 2, SpellRank = 2, Timer = false, Usage = "firestone",},
 	[17952] = {UsageRank = 3, SpellRank = 3, Timer = false, Usage = "firestone",},
@@ -284,7 +284,7 @@ Notes:
 	[27250] = {UsageRank = 5, SpellRank = 5, Timer = false, Usage = "firestone",},
 	[60219] = {UsageRank = 6, SpellRank = 6, Timer = false, Usage = "firestone",},
 	[60220] = {UsageRank = 7, SpellRank = 7, Timer = false, Usage = "firestone",},
-	]]
+	-- fin
 	
 	-- ::: Buffs
 	-- Demon Armor/Skin do NOT exist as castable buffs in MOP (became passive)
@@ -318,22 +318,23 @@ Notes:
 	[108416] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "dark_pact", Length = 20, Cooldown = 60, Buff = false, }, -- Sombre pacte
 
 	-- Soul Link does NOT exist in Midnight (removed)
-	--[[ Soul Link (Removed in Midnight 12.0)
+	-- A1/A3 audit : Soul Link existe sur Forever (Classic)
 	[19028] = {UsageRank = 1, SpellRank = 1, Timer = false, Usage = "link", Buff = true, SelfOnly = true, }, -- Soul Link || Lien spirituel
-	]]
+	-- fin
 
 	-- Shadow Pact (replaced Shadow Ward in Midnight)
 	[108416]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "dark_pact", Length = 30, Buff = true, }, -- Shadow Pact || Sombre Pact
 
 	-- Old Shadow Ward ranks (removed in Midnight)
-	--[[ Old Shadow Ward ranks (no longer exist)
+	-- A1 : Forever est un client Classic, Shadow Ward existe (6229 verifie en jeu, 20/11/2026)
 	[6229]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- Shadow Ward (Old ID)
 	[11739] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "ward", Length = 30, Buff = true, }, --
 	[11740] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "ward", Length = 30, Buff = true, }, --
 	[28610] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "ward", Length = 30, Buff = true, }, --
+	--[[ Rangs WotLK : 47890 / 47891 n'existent pas sur ce client
 	[47890] = {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "ward", Length = 30, Buff = true, }, -- WOLTK
 	[47891] = {UsageRank = 6, SpellRank = 6, Timer = true, Usage = "ward", Length = 30, Buff = true, }, --
-	]] 
+	]]
 		
 	[1098] 	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "enslave", Length = 300, Buff = false, }, -- Enslave Demon
 	[11725] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "enslave", Length = 300, Buff = false, }, -- 
@@ -341,13 +342,13 @@ Notes:
 	[61191] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "enslave", Length = 300, Buff = false, }, --  
 	
 	[710]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "banish", Length = 30, Buff = false, }, -- Banish (Retail 12.0: now a single talent)  
+	[18647] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "banish", Length = 30, Buff = false, }, -- Banish R2 (verifie en jeu)
 
 	-- Detect Invisibility does NOT exist in Midnight (removed in patch 4.0.1)
-	--[[ Detect Invisibility (Removed in Patch 4.0.1, no longer exists in Midnight)
+	-- A1 : existe sur le client Forever (132, 2970, 11743 verifies en jeu)
 	[132]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "invisible", Length = 600, Buff = true, }, -- 26 || Detect Invisibility
 	[2970]	= {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "invisible", Length = 600, Buff = true, }, -- 38
 	[11743]	= {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "invisible", Length = 600, Buff = true, }, -- 50
-	]]
 	
 	-- ::: Curses
 	[702]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "weakness", Length = 120, }, -- Curse of Weakness || Malédiction Faiblesse 
@@ -377,17 +378,12 @@ Notes:
 	[334275] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "exhaustion", Length = 12, }, -- Curse of Exhaustion (Midnight 12.0.1 new ID)
 	[18223] = {UsageRank = 2, SpellRank = 1, Timer = true, Usage = "exhaustion", Length = 12, }, -- Curse of Exhaustion (Old ID)
 
-	-- Curse of the Elements removed in Midnight 12.0.1 (was 44332, now does not exist)
-	--[[ [44332]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "elements", Length = 300, }, -- Curse of the Elements || Malédiction Eléments (removed in 12.0.1) ]]
-
-	-- Old Curse of the Elements ranks (removed in Midnight)
-	--[[ Old Curse of the Elements ranks (no longer exist)
-	[1490]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "elements", Length = 300, }, -- Curse of the Elements (Old ID - removed)
-	[11721] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "elements", Length = 300, }, --
-	[11722] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "elements", Length = 300, }, --
-	[27228] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "elements", Length = 300, }, --
-	[47865] = {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "elements", Length = 300, }, --
-	]] 	
+	-- A2 : sur Forever, la Malediction des elements a de nouveaux IDs (Wowhead Forever, 20/11/2026)
+	[440892]  = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "elements", Length = 300, }, -- Curse of the Elements R1 (niv. 20)
+	[1311676] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "elements", Length = 300, }, -- R2 (niv. 30)
+	[1311677] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "elements", Length = 300, }, -- R3 (niv. 40)
+	[1311680] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "elements", Length = 300, }, -- R4 (niv. 50)
+	-- Anciens IDs (1490, 11721, 11722, 27228, 44332, 47865) : inexistants sur ce client
 	
 	--[17862]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "shadow", Length = 300, }, -- Curse of Shadow 
 	--[17937] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "shadow", Length = 300, }, --  
@@ -397,6 +393,8 @@ Notes:
 	[47867]	= {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "doom", Length = 60, Cooldown = 60,}, -- r3:  https://www.wowhead.com/wotlk/spell=47867/curse-of-doom
 
 
+	-- Calvaire (Wrack) : nouveau sort Forever, canalise Ombre 6 s (Wowhead 1316697). Timer seulement, pas de bouton.
+	[1316697] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "wrack", Length = 6, },
 	[704]	= {UsageRank = 1, SpellRank = 1 , Timer = true, Usage = "recklessness", Length = 120, }, -- Curse of Recklessness - removed in patch 3.1 || Malédiction Témérité || 
 	[7658]	= {UsageRank = 2, SpellRank = 2 , Timer = true, Usage = "recklessness", Length = 120, }, --  
 	[7659]	= {UsageRank = 3, SpellRank = 3 , Timer = true, Usage = "recklessness", Length = 120, }, -- 
@@ -448,9 +446,9 @@ Notes:
 	[6215]	= {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "fear", Length = 20, }, --
 	
 	-- Fel Domination does NOT exist in 12.0.1 (replaced by Domination gangrenée which is usage "dark_pact")
-	--[[ Fel Domination (Legacy - does not exist in 12.0.1)
+	-- A1/A3 audit : Fel Domination existe sur Forever (18708 verifie en jeu)
 	[18708] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "fel_domination_legacy", Length = 15, Cooldown = 900,}, -- Fel Domination || Domination corrompue (Legacy)
-	]] 
+	-- fin
 	
 	[6353]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "soul_fire", Cooldown = 60,}, -- Soul Fire || Feu de l'âme 
 	[17924] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "soul_fire", Cooldown = 60,}, -- 
@@ -461,6 +459,8 @@ Notes:
 	
 	
 	[6789]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "death_coil", Length = 3, Cooldown = 45,}, -- Death Coil (12.0.1)
+	[17925] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "death_coil", Length = 3, Cooldown = 180,}, -- R2 (verifie en jeu)
+	[17926] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "death_coil", Length = 3, Cooldown = 120,}, -- R3 (verifie en jeu)
 	[108396] = {UsageRank = 3, SpellRank = 2, Timer = true, Usage = "death_coil", Length = 3, Cooldown = 180,}, -- Death Coil (alt/legacy)
 	
 	[17877] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "shadowburn", Cooldown = 15,}, -- Shadowburn || Brûlure de l'ombre 
@@ -485,14 +485,14 @@ Notes:
 	[63106] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "siphon_life", Length = 15, }, -- Siphon Life || Syphon de vie (Midnight 12.0 - Affliction talent)
 
 	-- Old Siphon Life ranks (removed in Midnight)
-	--[[ Old Siphon Life ranks (no longer exist)
+	-- A1/A3 audit : Siphon Life Classic (18265/18879-18881 verifies en jeu)
 	[18265] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "siphon_life", Length = 30, }, -- Siphon Life (Old ID)
 	[18879] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "siphon_life", Length = 30, }, --
 	[18880] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "siphon_life", Length = 30, }, --
 	[18881] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "siphon_life", Length = 30, }, --
 	[27264] = {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "siphon_life", Length = 30, }, --
 	[30911] = {UsageRank = 6, SpellRank = 6, Timer = true, Usage = "siphon_life", Length = 30, }, --
-	]]	
+	-- fin
 
 	
 	[5484]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "howl", Length = 10, Cooldown = 40}, -- Howl of Terror || Hurlement de terreur 
@@ -508,7 +508,7 @@ Notes:
 	[57946] = {UsageRank = 8, SpellRank = 8, Timer = false, Usage = "life_tap"}, --		
 	
 	-- Sacrifice Voidwalker does NOT exist in Midnight (removed in Patch 5.0.4)
-	--[[ Sacrifice Voidwalker (Removed in Patch 5.0.4, no longer exists in Midnight)
+	-- A1/A3 audit : Sacrifice Voidwalker existe sur Forever (7812, 19438-19443 verifies)
 	[7812]	= {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R1- Sacrifice Voidwalker
 	[19438] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R2
 	[19440] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R3
@@ -516,13 +516,12 @@ Notes:
 	[19442] = {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R5
 	[19443] = {UsageRank = 6, SpellRank = 6, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R6
 	[27273] = {UsageRank = 7, SpellRank = 7, Timer = true, Usage = "sacrifice_Void", Length = 30,  NeedPet = true,}, -- R7
-	]]	
+	-- fin
 	
 	
 	-- Demonic Sacrifice does NOT work in MOP (broken or removed)
-	--[[ Demonic Sacrifice (Broken in MOP)
+	-- A3 : existe sur le client Forever (18788 verifie en jeu)
 	[18788] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "sacrifice", Length = 30,  NeedPet = true,}, -- Demoniac sacrifice
-	]]
 
 -- buff Demonic Sacrifice
 
@@ -556,13 +555,13 @@ Notes:
 	[198590] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "drain_soul", Length = 5,}, -- Drain Soul (Midnight 12.0 - Affliction)
 
 	-- Old Drain Soul ranks (removed/replaced in Midnight)
-	--[[ Old Drain Soul ranks (no longer exist)
+	-- A1/A3 audit : Drain Soul Classic (1120, 8288, 8289, 11675 verifies)
 	[1120] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "drain_soul", Length = 15,}, -- Ignore Improved Drain Soul (Affliction talent points) - OLD
 	[8288] = {UsageRank = 2, SpellRank = 2, Timer = true, Usage = "drain_soul", Length = 15,},
 	[8289] = {UsageRank = 3, SpellRank = 3, Timer = true, Usage = "drain_soul", Length = 15,},
 	[11675] = {UsageRank = 4, SpellRank = 4, Timer = true, Usage = "drain_soul", Length = 15,},
 	[27217] = {UsageRank = 5, SpellRank = 5, Timer = true, Usage = "drain_soul", Length = 15,},
-	]]	
+	-- fin
 	
 	-- ::: Spells from using objects: These are spells we look for to create timers. They are not assigned to buttons.
 	-- Blizzard has several ids in the DB for each, not sure which are used for Classic...
@@ -579,22 +578,22 @@ Notes:
 	-- Soulstone usage results (Cataclysm only - don't exist as castables in MOP)
 	-- In MOP there is only one Soulstone spell (20707) for creation - commented out
 	--[20707] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "minor_ss_used",   Result = true, Cooldown = 900, Group = 1, }, -- ss_rez
-	--[20762] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "lesser_ss_used",  Result = true, Cooldown = 900, Group = 1, }, --
-	--[20763] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ss_used",         Result = true, Cooldown = 900, Group = 1, }, --
-	--[20764] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "greater_ss_used", Result = true, Cooldown = 900, Group = 1, }, --
-	--[20765] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "major_ss_used",   Result = true, Cooldown = 900, Group = 1, }, --
+	[20762] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "lesser_ss_used",  Result = true, Cooldown = 900, Group = 1, }, --
+	[20763] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "ss_used",         Result = true, Cooldown = 900, Group = 1, }, --
+	[20764] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "greater_ss_used", Result = true, Cooldown = 900, Group = 1, }, --
+	[20765] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "major_ss_used",   Result = true, Cooldown = 900, Group = 1, }, --
 	--[27239] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "master_ss_used",  Result = true, Cooldown = 900, Group = 1, }, --
 	--[47883] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "demonic_ss_used",  Result = true, Cooldown = 900, Group = 1, }, -- 	
 
 	-- Health stone
 	-- When a health stone is used it could be one of several spells because each gives different health amounts
 	-- These Result spells don't exist as castables in MOP - commented out
-	--[[ Healthstone usage results (Vanilla/TBC only)
+	-- A1/A3 audit : Healthstone usage results (Classic)
 	[6262] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "minor_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- minor 120
 	[6263] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "lesser_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- lesser 250
 	[5720] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "hs_used", Result = true, Cooldown = 120, Group = 2, }, -- 500
 	[5723] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "greater_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- greater 800
-	]]
+	-- fin
 	[11732] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "major_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- major 1200
 	--[27235] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "master_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- major 1200
 	--[47872] = {UsageRank = 1, SpellRank = 1, Timer = true, Usage = "demonic_hs_used", Result = true, Cooldown = 120, Group = 2, }, -- major 1200
@@ -625,10 +624,10 @@ This allows a more flexible scheme and should reduce maintenance and impact if W
 -- Spell ID mapping for button casting
 Necrosis.SpellIDMap = {
 	breath = 5697,		-- Unending Breath (Retail 12.0)
-	invisible = 11649,	-- Detect Invisibility (Retail 12.0)
+	invisible = 132,	-- Detect Invisibility (Classic)
 	eye = 126,			-- Eye of Kilrogg
 	summoning = 698,	-- Ritual of Summoning
-	ward = 47891,		-- Shadow Ward
+	ward = 6229,		-- Shadow Ward (Classic)
 	dark_pact = 47891,	-- Shadow Ward (alias used in menu lists)
 	banish = 710,		-- Banish
 	enslave = 1098,		-- Enslave Demon
@@ -921,7 +920,7 @@ Necrosis.Warlock_Lists = {
 		[4] = {f_ptr = "invis", high_of = "invisible", },  -- f_ptr="invis" refers to Warlock_Buttons.invis, high_of="invisible" refers to SpellIDMap.invisible
 		[5] = {f_ptr = "eye", high_of = "eye", },
 		[6] = {f_ptr = "summoning", high_of = "summoning", },
-		[7] = {f_ptr = "ward", high_of = "dark_pact", },
+		[7] = {f_ptr = "ward", high_of = "ward", },
 		[8] = {f_ptr = "banish", high_of = "banish", },
 		[9] = {f_ptr = "enslave", high_of = "enslave", },
 	},
@@ -953,9 +952,10 @@ Necrosis.Warlock_Lists = {
 		[3] = {f_ptr = "tongues", high_of = "tongues", },
 		[4] = {f_ptr = "wither", high_of = "wither", },
 		[5] = {f_ptr = "exhaustion", high_of = "exhaustion", },
+		[6] = {f_ptr = "elements", high_of = "elements", }, -- A2 : Malediction des elements (absente du menu)
 	  --[6] = {f_ptr = "corruption", high_of = "corruption", }, -- Replaced by Wither on PTR 12.0
 	  --[7] = {f_ptr = "doom", high_of = "doom", }, -- Removed in WoW 12.0
-	  --[8] = {f_ptr = "recklessness", high_of = "recklessness", },
+		[7] = {f_ptr = "recklessness", high_of = "recklessness", }, -- Malediction de temerite (existe sur Forever)
 --		[9] = {f_ptr = "shadow", high_of = "shadow", },
 	},
 	-- {19, 31, 37, 41, 43, 44, 55} See GetMainSpellList

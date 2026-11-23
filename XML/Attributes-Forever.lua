@@ -264,27 +264,32 @@ function Necrosis:SetPetSpellAttribute(button)
 			local spellName = Necrosis.GetSpellCastName(f.high_of)
 			f:SetAttribute("spell1", spellName) 
 						
-			--Dominiation sur clic droit
-			if Necrosis.IsSpellKnown("domination") then 
+			-- Clic droit : invocation rapide (Domination si connue), sinon invocation simple.
+			-- Fix A3 : le clic droit et le sacrifice ne dependent plus de Domination.
+			local domUsage = nil
+			if Necrosis.IsSpellKnown("domination") then
+				domUsage = "domination"
+			elseif Necrosis.IsSpellKnown("fel_domination_legacy") then
+				domUsage = "fel_domination_legacy"
+			end
+			local domName = domUsage and Necrosis.GetSpellCastName(domUsage)
+			if domName and spellName then
 				f:SetAttribute("type2", "macro")
-				local str = 
-					"/cast "..Necrosis.GetSpellCastName("domination")
-					.."\n/stopcasting\n/cast "..Necrosis.GetSpellCastName(f.high_of)
-
-
-				f:SetAttribute("macrotext2",str)
-			if Necrosis.NameDemon[NecrosisConfig.NecrosisDemonSacrifice] == f.high_of 
-			then
-			f:SetAttribute("shift-type2", "spell")
-			str2 = Necrosis.GetSpellCastName("sacrifice")			
-			f:SetAttribute("shift-spell2", str2)
-			--print (str2)
-
+				f:SetAttribute("macrotext2",
+					"/cast "..domName.."\n/stopcasting\n/cast "..spellName)
+			elseif spellName then
+				f:SetAttribute("type2", "spell")
+				f:SetAttribute("spell2", spellName)
 			end
-			
+
+			-- Maj+clic droit : sacrifice du demon choisi dans les options
+			if Necrosis.NameDemon[NecrosisConfig.NecrosisDemonSacrifice] == f.high_of then
+				local sacName = Necrosis.GetSpellCastName("sacrifice")
+				if sacName then
+					f:SetAttribute("shift-type2", "spell")
+					f:SetAttribute("shift-spell2", sacName)
+				end
 			end
-				
-		
 		else
 			-- Retail 12.0: Use numbered attributes (helpbutton1, type1, spell1)
 			f:SetAttribute("helpbutton1", "spell1")

@@ -2550,8 +2550,8 @@ function Necrosis:BuildButtonTooltip(button)
 		
 	elseif (Type == "Armor") 		then AddCastAndCost("armor")
 	elseif (Type == "FelArmor") 	then AddCastAndCost("fel_armor")
-	-- RETAIL: Detect Invisibility removed in Midnight
-	-- elseif (Type == "Invisible")	then AddCastAndCost("invisible")
+	-- A1 : Detect Invisibility existe sur le client Forever (Classic)
+	elseif (Type == "Invisible")	then AddCastAndCost("invisible")
 	elseif (Type == "Aqua")			then AddCastAndCost("breath")
 	elseif (Type == "Kilrogg")		then AddCastAndCost("eye")
 	elseif (Type == "Banish") 		then AddCastAndCost("banish")
