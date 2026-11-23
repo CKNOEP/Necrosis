@@ -1,6 +1,6 @@
 # Anomalies remontées sur Discord (Forever)
 
-Statut au 20/11/2026 : A1, A2 et A3 corrigés dans le code (à valider en jeu). A4 à A10 documentés, non corrigés.
+Statut au 20/11/2026 : A1, A2 et A3 corrigés dans le code (à valider en jeu). A4 à A16 documentés, non corrigés (A11 à A15 sont à reproduire, A16 est prête à corriger).
 
 **Constat général** : le client Forever est un Classic Era (niveau 60, rangs Vanilla). Le port « Midnight » de `Spells-Forever.lua` avait commenté ou supprimé des sorts qui existent sur ce client. Les IDs ont été vérifiés avec `/necspells` (commande de diagnostic de `Debug-CheckSpells.lua`) et avec le tableau des sorts de Démoniste de Wowhead Forever.
 Addon : Necrosis 8.8.5, TOC `Necrosis_Camelot.toc` (Interface 16001 / Forever 160001).
@@ -158,6 +158,122 @@ En combat, le nom de l'aura est illisible : la comparaison échoue, ni son ni al
 Détecter le proc par son identifiant de sort (`spellId` de la Transe de l'ombre) ou par `C_UnitAuras.GetPlayerAuraBySpellID`, plutôt que par le nom. Contrôler la même chose pour Contrecoup (Backlash). Voir aussi l'audit des valeurs secrètes (point connu : clés `arg2`).
 
 - **Priorité** : moyenne à haute (alerte de jeu).
+
+---
+
+## A11 — Montures inopérantes (bouton de monture)
+
+- **Source** : commentaire CurseForge, joueur `user_q5gvaeo3m5mvrpgk`, « il y a 13 jours » (autour du 10/11/2026, après `fix5`).
+- **Message** : « the mounts, demon button, and a few other things are not working in forever yet ».
+- **Symptôme** : les montures ne marchent pas. Pas d'autre détail (bouton grisé, absent, clic sans effet ?).
+
+### Analyse du code (première lecture)
+- `Spells-Forever.lua` (~l. 222-223) : usage `mounts` avec `5784` (Palefroi corrompu, niv. 40) et `23161` (Destrier de l'effroi, niv. 60).
+- Ces deux IDs ne figurent pas dans la liste de sorts de Démoniste de Wowhead Forever (ce sont des sorts de quête). À vérifier avec `/necspells` sur un personnage qui les a.
+- Le bouton `NecrosisMountButton` dépend de `NecrosisConfig.LeftMount` / `RightMount` (`Necrosis-Forever.lua` ~l. 804-815 et ~992). La configuration de ces valeurs n'a pas été relue.
+- Le personnage de test (niveau 20) ne peut pas tester les montures.
+
+### Piste
+Vérifier les IDs avec un joueur niveau 40+, puis l'association des montures au bouton (`LeftMount`, `RightMount`). Demander au joueur ce qu'il constate exactement.
+
+- **Priorité** : moyenne. Statut : à reproduire.
+
+---
+
+## A12 — Afficher les ennemis insensibles à la peur
+
+- **Source** : même commentaire CurseForge. Le joueur demande un addon qui signale les ennemis insensibles à la peur et propose un bouton de suppression des fragments d'âme.
+- **Symptôme / demande** : l'alerte des ennemis non « fearables » ne semble pas fonctionner pour lui. Le rapport de l'issue #46 mentionnait déjà Peur/Bannir comme point restant.
+
+### Analyse du code (première lecture)
+- Les boutons d'alerte de créature (`NecrosisCreatureAlertButton_elemental`, `_demon`) et `CreatureAlert` sont dans `Necrosis-Forever.lua` (~l. 82, 166-167, 1366-1389). `CreatureAlert` était absent des valeurs par défaut utilisées (corrigé dans l'issue #46).
+- La détection du type de créature passe par `IsCreatureType()`. En combat, le type peut être illisible (valeurs secrètes).
+- Le bouton de suppression des fragments (« Destroy Shards ») a été ajouté dans `fix5`. Le joueur ne l'avait peut-être pas encore.
+
+### Piste
+Reproduire avec une cible insensible à la peur (mort-vivant, élémentaire) et vérifier l'alerte avec `/dump UnitCreatureType("target")`. À préciser avec le joueur.
+
+- **Priorité** : basse à moyenne. Statut : à reproduire.
+
+---
+
+## A13 — Annonce de pierre d'âme : « inconnu » à la création, rien à l'utilisation
+
+- **Source** : commentaire CurseForge, joueur `GAARAtheRED`, « il y a 9 jours » (autour du 14/11/2026).
+- **Message** : en groupe, à la *création* d'une pierre d'âme, l'addon annonce qu'« unknown » (ou le membre ciblé) est ressuscité en pierre d'âme, puis n'annonce rien quand la pierre est réellement utilisée.
+- **Symptôme** : l'annonce part au mauvais moment (création) avec une cible erronée (« unknown », ou la cible courante), et pas à l'utilisation.
+
+### Analyse du code (première lecture)
+- `Spells-Forever.lua` (~l. 246-255) : les sorts de **création** (`693`, `20752`, `20755`, `20756`, `20757`, `47884`) portent l'usage `soulstone`. Les annonces de `Speech\Speech-*.lua` (« <target> is soulstoned ») sont donc déclenchées par la création.
+- `Necrosis-Forever.lua` (~l. 1640-1690, `UNIT_SPELLCAST_SENT`) prend la cible de `target` ou, à défaut, `UnitName("target")`. Sans cible : nom vide, d'où « unknown ».
+- Le sort d'**utilisation** de la pierre (« Résurrection de Pierre d'âme », `20762`–`20765`) n'était pas suivi : ces entrées étaient commentées avant le correctif `fix6`. Elles sont maintenant actives (usage `ss_used`, etc.). Aucun lien n'a été vérifié avec l'annonce.
+
+### Cause probable
+L'annonce est branchée sur la création au lieu de l'utilisation (ou sur les deux). **Non confirmé en jeu.**
+
+### Piste de correction
+Annoncer seulement quand la pierre est utilisée sur une cible (sorts `20762`–`20765`), et pas à la création. Contrôler `Message.lua` (`Speech_It`) et le message `SoulstoneEn`.
+
+- **Priorité** : moyenne. À reproduire en groupe.
+
+---
+
+## A14 — Bouton de pierre d'âme en recharge après création, clic inopérant
+
+- **Source** : même commentaire que A13.
+- **Message** : après création d'une pierre d'âme en groupe, le bouton de l'interface passe en temps de recharge et ne peut plus être cliqué pour lancer la pierre. Le joueur doit faire un clic droit sur la pierre depuis ses sacs.
+- **Symptôme** : bouton en recharge et clic sans effet.
+
+### Analyse du code (première lecture)
+- Le bouton de pierre d'âme est configuré dans `XML/Attributes-Forever.lua` (`soulstoneID`, ~l. 23) et dépend du contenu des sacs (`BAG_UPDATE`). Un correctif de pierre d'âme existait déjà dans l'issue #46.
+- Hypothèse : le bouton garde le sort de **création** (en recharge) au lieu de basculer sur l'**objet** (utilisation) une fois la pierre créée. `SetAttribute` est interdit en combat ou en groupe sous verrou, d'où un attribut resté figé.
+- **Non vérifié** : je n'ai pas relu le code d'attribution.
+
+### Piste de correction
+Après `BAG_UPDATE`, repasser le bouton en mode « objet » (`type1 = item`) quand la pierre est dans les sacs. Tester avec et sans groupe.
+
+- **Priorité** : moyenne à haute (fonction centrale du bouton). À reproduire.
+
+---
+
+## A15 — Rafale d'erreurs Lua en instance à 5 joueurs
+
+- **Source** : commentaire CurseForge, joueur `zeta_420`, « il y a 8 jours » (autour du 15/11/2026).
+- **Message** : dans une instance à 5 joueurs, « out of nowhere » une rafale d'erreurs Lua, sans arrêt, jusqu'à la désactivation de Necrosis.
+- **Symptôme** : erreurs Lua en boucle, immédiatement et en nombre, en donjon.
+- **Information manquante** : le texte des erreurs n'est pas fourni. Sans lui, on ne peut pas localiser le fichier ni la ligne.
+
+### Analyse (hypothèses, rien de vérifié)
+- Contexte typique : en instance, les valeurs « secrètes » (noms d'aura, GUID, cibles de groupe) deviennent illisibles. Le fichier gère déjà `issecretvalue` à plusieurs endroits, mais un cas oublié peut lever une erreur à chaque événement. Un audit en donjon (04/10/2026) notait déjà un point connu : les clés `arg2`.
+- Une erreur dans un gestionnaire d'événement fréquent (`UNIT_AURA`, `UNIT_SPELLCAST_*`, `GROUP_ROSTER_UPDATE`) se répète à chaque événement, d'où la « rafale ».
+
+### Piste
+1. Demander au joueur le texte exact des erreurs (BugSack, BugGrabber ou `/console scriptErrors 1`).
+2. Reproduire en groupe à 5 avec les erreurs affichées.
+3. Protéger la ligne fautive avec `issecretvalue` ou `pcall`.
+
+- **Priorité** : haute (rend l'addon inutilisable en donjon). Statut : informations insuffisantes.
+
+---
+
+## A16 — Durées de sorts : regrouper par monstre (timers qui sautent)
+
+- **Source** : commentaire CurseForge, auteur non indiqué dans le collage.
+- **Message** : dans « Spell Durations », peut-on regrouper les timers par monstre (monstre A avec ses malédictions 1 et 2, puis monstre B avec les siennes) ? Actuellement, quand des debuffs sont actifs sur 2 monstres ou plus, les durées « sautent » selon le temps restant. Exemple : malédictions 1 et 2 sur A et B donnent A-1, A-1, B-2, B-2, et les malédictions ne sont pas bien rattachées à leur monstre.
+- **Symptôme** : liste de timers mélangée, étiquettes de monstre mal placées, écran encombré.
+
+### Analyse du code (première lecture)
+- `Timers/GraphicalTimers.lua` (~l. 243), dans `NecrosisUpdateTimer` : `table.sort(tableau, function(a,b) return a.Time < b.Time end)`. Le tri se fait **uniquement sur le temps restant**, à chaque mise à jour. L'ordre change donc en continu et ignore le monstre.
+- `Timers/Functions_retail.lua` (~l. 250-255) trie aussi par `Time`, puis `Parsing` crée les groupes par nom de monstre. Le tri graphique défait ce regroupement.
+- Les titres de groupe (nom du monstre) sont posés à partir de `SpellGroup`. Deux monstres de même nom (ou un monstre sans nom lisible en combat) peuvent être fusionnés.
+
+### Cause probable
+Le tri final par `Time` écrase le regroupement par monstre.
+
+### Piste de correction
+Trier d'abord par groupe (GUID du monstre, sinon nom), puis par temps restant. Garder l'ordre des groupes stable (ordre d'apparition du premier timer) pour que la liste ne saute pas. Vérifier que l'étiquette suit bien le monstre cible de chaque sort.
+
+- **Priorité** : moyenne. Amélioration visible, correction localisée. Statut : prête à corriger.
 
 ---
 
