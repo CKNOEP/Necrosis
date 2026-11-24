@@ -290,5 +290,16 @@ Trier d'abord par groupe (GUID du monstre, sinon nom), puis par temps restant. G
 
 ---
 
+## A17 — Le menu Démon ne se ferme pas (surtout en combat)
+
+- **Source** : Discord, deux joueurs (Skript, Rhythm) le 24/11/2026. « Le menu démon ne devrait-il pas se fermer en combat plutôt que rester ouvert ? » — « il reste ouvert comme avant ».
+- **Cause** : `MenuAttribute` (`XML/Attributes-Forever.lua`) avait été simplifié pour la bêta 160001 : un `SetScript("OnClick")` non sécurisé faisait `Show()`/`Hide()` sur des boutons protégés (interdit en combat), et les `WrapScript` de fermeture (`ClosingMenu`) étaient désactivés. Le menu ne se refermait donc jamais après un clic, et `AutomaticMenu` n'avait plus d'effet.
+- **Correction** (sauvegarde : `XML/Attributes-Forever.lua.bak_A17`) : ouverture/fermeture par snippet sécurisé (`_onclick`), fermeture après clic sur un enfant via `SecureHandlerWrapScript` quand `ClosingMenu` est actif, `BlockedMenu` laisse le menu ouvert, `AutomaticMenu` ouvre en combat et ferme à la sortie (`RegisterStateDriver`).
+- **Complément** : la reconstruction du menu (`SPELLS_CHANGED` après une invocation) cachait les enfants ; `MenuAttribute` ne cache plus qu'à la première création. Le snippet de fermeture utilise `self:GetParent()` et `SecureHandlerWrapScript` exige un `preBody` non nul sur ce client.
+- **Pièges rencontrés** : `ClosingMenu` lu `nil` au premier `MenuAttribute` (config pas encore chargée) donnait `closeAfter=0` ; le post-script de `SecureHandlerWrapScript` ne s'exécute pas sur ce client, la fermeture est donc dans le pré-script. Commande de diagnostic `/necmenu` ajoutée.
+- **Statut** : corrigé, **confirmé en jeu le 24/11/2026** (menus démons, buffs et malédictions). Combat et menu bloqué non testés.
+
+---
+
 ## Remarque
 A1 et A2 montrent le même défaut : des sorts retirés « pour Midnight » alors que le client Forever les a encore. Il faudrait auditer les autres entrées commentées de `Spells-Forever.lua` (par exemple Soul Link, ligne ~322) avant de corriger.

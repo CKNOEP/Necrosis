@@ -113,46 +113,68 @@ function Necrosis:MenuAttribute(menu)
 		menuButton:SetAttribute("close", 0)
 	end
 	
-	-- run at OnLoad of button
-	if table.new then
-		menuButton:Execute([[
-			ButtonList = table.new(self:GetChildren())
-			if self:GetAttribute("state") == "Bloque" then
-				for i, button in ipairs(ButtonList) do
-					button:Show()
-				end
-			else
-				for i, button in ipairs(ButtonList) do
-					button:Hide()
-				end
-			end
-		]])
-	end
-	-- Note: Fallback for Forever 160001+ where table.new doesn't exist
-	-- The button state management is handled via SetAttribute calls instead
+	-- Secure menu (A17): open/close is done in the restricted environment, so it also works in combat.
+	-- Menu secure : ouverture/fermeture dans l'environnement restreint, donc utilisable en combat.
+	-- ClosingMenu defaults to true: nil (config not loaded yet) must count as true || nil = valeur par defaut (vrai)
+	local closing = (NecrosisConfig.ClosingMenu ~= false and not NecrosisConfig.BlockedMenu) and 1 or 0
+	menuButton:SetAttribute("closeAfter", closing)
+	menuButton:SetAttribute("blocked", NecrosisConfig.BlockedMenu and 1 or 0)
+	menuButton:SetAttribute("auto", (NecrosisConfig.AutomaticMenu and not NecrosisConfig.BlockedMenu) and 1 or 0)
 
-	-- Simplified menu handling for Forever Beta 160001
-	-- Buttons hidden by default, toggle visibility on menu button click
+	-- Left/right click toggles the children || Un clic ouvre ou ferme les boutons enfants
+	menuButton:SetAttribute("_onclick", [[
+		if self:GetAttribute("blocked") == 1 then return end
+		local kids = newtable(self:GetChildren())
+		local show = true
+		for i, k in ipairs(kids) do
+			if k:IsShown() then show = false end
+		end
+		for i, k in ipairs(kids) do
+			if show then k:Show() else k:Hide() end
+		end
+	]])
+
+	-- Automatic menu: open when entering combat, close when leaving it || Menu automatique en combat
+	menuButton:SetAttribute("_onstate-necrocombat", [[
+		if self:GetAttribute("auto") ~= 1 then return end
+		local kids = newtable(self:GetChildren())
+		for i, k in ipairs(kids) do
+			if newstate == "1" then k:Show() else k:Hide() end
+		end
+	]])
+	if not menuButton._necCombatDriver then
+		RegisterStateDriver(menuButton, "necrocombat", "[combat] 1; 0")
+		menuButton._necCombatDriver = true
+	end
+
+	-- A click on a child closes the menu (ClosingMenu) || Un clic sur un enfant referme le menu
 	local children = {menuButton:GetChildren()}
 	for i, child in ipairs(children) do
-		if child then
-			child:Hide()  -- Start hidden
+		if child and child._necWrappedTo ~= menuButton then
+			SecureHandlerWrapScript(child, "OnClick", menuButton, [[
+				local p = self:GetParent()
+				if p and p:GetAttribute("closeAfter") == 1 then
+					local kids = newtable(p:GetChildren())
+					for i, k in ipairs(kids) do k:Hide() end
+				end
+			]])
+			child._necWrappedTo = menuButton
 		end
 	end
 
-	-- Add click handler to toggle menu visibility
-	menuButton:SetScript("OnClick", function(self)
-		local isShown = children[1] and children[1]:IsShown()
-		for i, child in ipairs(children) do
-			if child then
-				if isShown then
-					child:Hide()
-				else
-					child:Show()
-				end
+	-- Initial state: closed unless blocked open || Etat initial : ferme, sauf menu bloque ouvert
+	-- Only first time (or when blocked): a rebuild (SPELLS_CHANGED after a summon) must not close an open menu
+	-- Seulement a la creation : une reconstruction ne doit pas refermer un menu ouvert
+	for i, child in ipairs(children) do
+		if child then
+			if NecrosisConfig.BlockedMenu then
+				child:Show()
+			elseif not child._necInit then
+				child:Hide()
 			end
+			child._necInit = true
 		end
-	end)
+	end
 end
 
 local l_click = 1
@@ -861,3 +883,27 @@ Type			Used attributes		Behavior
 									If the value is a string, a restricted snippet stored in the attribute specified by the value on the button is executed as if it was OnClick.
 --]]
 
+
+-- Diagnostic A17 : /necmenu affiche l'etat des menus (ouvert/ferme, attributs, enfants)
+SLASH_NECMENU1 = "/necmenu"
+SlashCmdList["NECMENU"] = function()
+	for _, key in ipairs({"pets", "buffs", "curses"}) do
+		local name = Necrosis.Warlock_Buttons[key] and Necrosis.Warlock_Buttons[key].f
+		local f = name and _G[name]
+		if not f then
+			print("necmenu", key, "bouton absent")
+		else
+			local kids = {f:GetChildren()}
+			local shown, onscreen = 0, 0
+			for _, c in ipairs(kids) do
+				if c:IsShown() then shown = shown + 1 end
+				local _, _, _, x, y = c:GetPoint()
+				if x and math.abs(x) < 2000 and math.abs(y) < 2000 then onscreen = onscreen + 1 end
+			end
+			print("necmenu", key, name, "visible="..tostring(f:IsVisible()),
+				"onclick="..tostring(f:GetAttribute("_onclick") ~= nil),
+				"closeAfter="..tostring(f:GetAttribute("closeAfter")),
+				"enfants="..#kids, "affiches="..shown, "positionnes="..onscreen)
+		end
+	end
+end
